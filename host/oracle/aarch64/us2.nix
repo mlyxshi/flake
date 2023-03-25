@@ -2,25 +2,25 @@
 
   age.secrets.miniflux-env.file = ../../../secrets/miniflux-env.age;
 
-  # systemd.services.miniflux-silent = {
-  #   after = [ "network-online.target" ];
-  #   environment = {
-  #     DATABASE_URL = "user=miniflux dbname=miniflux-silent sslmode=disable"; #localhost:5432
-  #     PORT = "9080";
-  #     CREATE_ADMIN = "1";
-  #     RUN_MIGRATIONS = "1";
-  #     POLLING_FREQUENCY = "10";
-  #     POLLING_PARSING_ERROR_LIMIT = "0";
-  #     METRICS_COLLECTOR = "1";
-  #     METRICS_ALLOWED_NETWORKS = "0.0.0.0/0";
-  #   };
-  #   serviceConfig = {
-  #     EnvironmentFile = [ config.age.secrets.miniflux-env.path ];
-  #     serviceConfig.User = "miniflux";
-  #     ExecStart = "${pkgs.miniflux}/bin/miniflux";
-  #   };
-  #   wantedBy = [ "multi-user.target" ];
-  # };
+  systemd.services.miniflux-silent = {
+    after = [ "network-online.target" ];
+    environment = {
+      DATABASE_URL = "user=miniflux dbname=miniflux-silent sslmode=disable"; #localhost:5432
+      PORT = "9080";
+      CREATE_ADMIN = "1";
+      RUN_MIGRATIONS = "1";
+      POLLING_FREQUENCY = "10";
+      POLLING_PARSING_ERROR_LIMIT = "0";
+      METRICS_COLLECTOR = "1";
+      METRICS_ALLOWED_NETWORKS = "0.0.0.0/0";
+    };
+    serviceConfig = {
+      EnvironmentFile = [ config.age.secrets.miniflux-env.path ];
+      User = "miniflux";
+      ExecStart = "${pkgs.miniflux}/bin/miniflux";
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
 
   services.postgresql.enable = true;
   services.postgresql.package = pkgs.postgresql_15;
