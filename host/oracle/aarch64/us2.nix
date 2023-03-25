@@ -5,7 +5,7 @@
   systemd.services.miniflux-silent = {
     after = [ "network-online.target" ];
     environment = {
-      DATABASE_URL = "user=miniflux dbname=miniflux-silent sslmode=disable"; #localhost:5432
+      DATABASE_URL = "user=miniflux dbname=miniflux sslmode=disable"; #localhost:5432
       PORT = "9080";
       CREATE_ADMIN = "1";
       RUN_MIGRATIONS = "1";
