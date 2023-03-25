@@ -11,8 +11,6 @@ in
   "shadowsocks-config.age".publicKeys = [ main ];
   "hydra-builder-sshkey.age".publicKeys = [ main ];
   "miniflux-env.age".publicKeys = [ main ];
-  "miniflux-database.age".publicKeys = [ main ];
-  "miniflux-silent-database.age".publicKeys = [ main ];
   "transmission-env.age".publicKeys = [ main ];
   "nodestatus-env.age".publicKeys = [ main ];
   "nodestatus-database.age".publicKeys = [ main ];
