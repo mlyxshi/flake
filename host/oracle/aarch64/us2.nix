@@ -3,9 +3,9 @@
   age.secrets.miniflux-env.file = ../../../secrets/miniflux-env.age;
 
   systemd.services.miniflux-silent = {
-    after = [ "network-online.target" ];
+    after = [ "network-online.target" "postgresql.service" ];
     environment = {
-      DATABASE_URL = "user=miniflux dbname=miniflux-silent host=/run/postgresql sslmode=disable"; #localhost:5432
+      DATABASE_URL = "user=miniflux dbname=miniflux-silent sslmode=disable"; #localhost:5432
       PORT = "9080";
       CREATE_ADMIN = "1";
       RUN_MIGRATIONS = "1";
