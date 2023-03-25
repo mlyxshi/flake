@@ -87,4 +87,9 @@
       };
     };
   };
+
+  system.activationScripts.cloudflare-dns-sync-miniflux = {
+    deps = [ "agenix" ];
+    text = "${pkgs.cloudflare-dns-sync}/bin/cloudflare-dns-sync miniflux-silent.${config.networking.domain} miniflux.${config.networking.domain}";
+  };
 }
