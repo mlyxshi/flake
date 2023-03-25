@@ -1,13 +1,15 @@
 # su postgres 
 # psql
-# DROP DATABASE "miniflux-silent"
-# CREATE DATABASE "miniflux-silent" OWNER miniflux
+# DROP DATABASE ${DB_NAME};
+# CREATE DATABASE ${DB_NAME} OWNER ${DB_USER};
 
-# su miniflux
-# psql -d miniflux-silent  < neondb.sql
+# su ${DB_USER}
+# pg_dump ${DB_NAME} > backup
+# psql ${DB_NAME} < backup
 { config, pkgs, lib, ... }: {
 
   age.secrets.miniflux-env.file = ../../secrets/miniflux-env.age;
+  age.secrets.restic-env.file = ../../secrets/restic-env.age;
 
   services.postgresql.enable = true;
   services.postgresql.package = pkgs.postgresql_15;
@@ -92,6 +94,24 @@
         }];
       };
     };
+  };
+
+
+  
+
+  systemd.services.psql-miniflux-backup = {
+    environment.RESTIC_CACHE_DIR = "%C/restic";
+    serviceConfig = {
+      Type = "oneshot";
+      EnvironmentFile = config.age.secrets.restic-env.path;
+      ExecSearchPath = "${pkgs.restic}/bin";
+      ExecStart = [
+        "restic backup %S/postgresql"
+        "restic forget --prune --keep-last 2"
+        "restic check"
+      ];
+    };
+    startAt = "05:00";
   };
 
   system.activationScripts.cloudflare-dns-sync-miniflux = {
