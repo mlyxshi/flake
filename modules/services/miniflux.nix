@@ -96,9 +96,6 @@
     };
   };
 
-
-
-
   systemd.services.psql-miniflux-backup = {
     environment.RESTIC_CACHE_DIR = "%C/restic";
     serviceConfig = {
