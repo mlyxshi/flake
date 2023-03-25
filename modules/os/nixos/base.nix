@@ -14,6 +14,7 @@
       trusted-public-keys = [ "cache:vXjiuWtSTOXj63zr+ZjMvXqvaYIK1atjyyEk+iuIqSg=" ];
       auto-optimise-store = true;
       fallback = true;
+      log-lines = 25;
       # experimental
       use-cgroups = true;
       auto-allocate-uids = true;
