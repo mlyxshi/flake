@@ -14,6 +14,7 @@
   users = {
     users.miniflux = {
       group = "miniflux";
+      isNormalUser = true;
       #isSystemUser = true;
     };
     groups.miniflux = { };
