@@ -7,7 +7,7 @@
 # psql -d miniflux-silent  < neondb.sql
 { config, pkgs, lib, ... }: {
 
-  age.secrets.miniflux-env.file = ../../../secrets/miniflux-env.age;
+  age.secrets.miniflux-env.file = ../../secrets/miniflux-env.age;
 
   services.postgresql.enable = true;
   services.postgresql.package = pkgs.postgresql_15;
