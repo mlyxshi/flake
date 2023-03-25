@@ -22,14 +22,14 @@
     wantedBy = [ "multi-user.target" ];
   };
 
-  # services.postgresql.enable = true;
-  # services.postgresql.package = pkgs.postgresql_15;
-  # services.postgresql.initialScript = pkgs.writeText "miniflux-postgresql-initScript" ''
-  #   CREATE USER miniflux;
-  #   CREATE DATABASE miniflux OWNER miniflux;
-  #   CREATE DATABASE "miniflux-silent" OWNER miniflux;
-  #   CREATE EXTENSION hstore;
-  # '';
+  services.postgresql.enable = true;
+  services.postgresql.package = pkgs.postgresql_15;
+  services.postgresql.initialScript = pkgs.writeText "miniflux-postgresql-initScript" ''
+    CREATE USER miniflux;
+    CREATE DATABASE miniflux OWNER miniflux;
+    CREATE DATABASE "miniflux-silent" OWNER miniflux;
+    CREATE EXTENSION hstore;
+  '';
 
 
   users = {
