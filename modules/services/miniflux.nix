@@ -107,6 +107,7 @@
     };
     script = '' 
       ${config.services.postgresql.package}/bin/pg_dump miniflux | ${pkgs.restic}/bin/restic backup --stdin --stdin-filename miniflux.sql
+      ${config.services.postgresql.package}/bin/pg_dump miniflux-silent | ${pkgs.restic}/bin/restic backup --stdin --stdin-filename miniflux-silent.sql
       ${pkgs.restic}/bin/restic forget --prune --keep-last 2
       ${pkgs.restic}/bin/restic check
     '';
