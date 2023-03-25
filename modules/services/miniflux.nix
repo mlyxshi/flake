@@ -97,20 +97,19 @@
   };
 
 
-  
+
 
   systemd.services.psql-miniflux-backup = {
     environment.RESTIC_CACHE_DIR = "%C/restic";
     serviceConfig = {
-      Type = "oneshot";
+      User = "miniflux";
       EnvironmentFile = config.age.secrets.restic-env.path;
-      ExecSearchPath = "${pkgs.restic}/bin";
-      ExecStart = [
-        "restic backup %S/postgresql"
-        "restic forget --prune --keep-last 2"
-        "restic check"
-      ];
     };
+    script = '' 
+      ${config.services.postgresql.package}/bin/pg_dump miniflux | ${pkgs.restic}/bin backup --stdin --stdin-filename miniflux.sql
+      ${pkgs.restic}/bin forget --prune --keep-last 2
+      ${pkgs.restic}/bin check
+    '';
     startAt = "05:00";
   };
 
