@@ -106,9 +106,9 @@
       EnvironmentFile = config.age.secrets.restic-env.path;
     };
     script = '' 
-      ${config.services.postgresql.package}/bin/pg_dump miniflux | ${pkgs.restic}/bin backup --stdin --stdin-filename miniflux.sql
-      ${pkgs.restic}/bin forget --prune --keep-last 2
-      ${pkgs.restic}/bin check
+      ${config.services.postgresql.package}/bin/pg_dump miniflux | ${pkgs.restic}/bin/restic backup --stdin --stdin-filename miniflux.sql
+      ${pkgs.restic}/bin/restic forget --prune --keep-last 2
+      ${pkgs.restic}/bin/restic check
     '';
     startAt = "05:00";
   };
