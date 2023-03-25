@@ -1,0 +1,33 @@
+name: "Package Cache"
+on:
+  push:
+    paths: 
+      - 'pkgs/transmission/default.nix'
+      - 'flake.lock'
+  workflow_dispatch:
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    services:
+      oranc:
+        image: ghcr.io/linyinfeng/oranc
+    steps:
+    - uses: actions/checkout@master
+    - uses: docker/setup-qemu-action@master
+    - uses: pierotofy/set-swap-space@master
+      with:
+        swap-size-gb: 13
+    - uses: DeterminateSystems/nix-installer-action@main
+      with:
+        extra-conf: |
+          extra-platforms = aarch64-linux
+
+    - uses: linyinfeng/oranc-action@main
+      with:
+        orancContainer: '${{ job.services.oranc.id }}'
+        signingKey: ${{ secrets.NIX_STORE_SIGN_PRIVATE }}
+    - run: nix build .#packages.aarch64-linux.transmission

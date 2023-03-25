@@ -1,0 +1,7 @@
+{
+    "download-dir": "/download/files",
+    "rpc-whitelist-enabled": false,
+    "rpc-authentication-required": true,
+    "script-torrent-done-enabled": true,
+    "script-torrent-done-filename": "/download/rclone.sh"
+}

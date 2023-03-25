@@ -1,0 +1,76 @@
+name: "Deploy x86_64"
+on: [workflow_dispatch]
+
+env:
+  NIX_SSHOPTS: -o StrictHostKeyChecking=no
+  domain: mlyxshi.com
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: pierotofy/set-swap-space@master
+      with:
+        swap-size-gb: 13
+    - uses: nixbuild/nix-quick-install-action@v19
+      with:
+        nix_conf: |
+          experimental-features = nix-command flakes
+          trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= cache.mlyxshi.com:qbWevQEhY/rV6wa21Jaivh+Lw2AArTFwCB2J6ll4xOI=
+          substituters =  https://cache.nixos.org/ http://cache.mlyxshi.com/
+
+    - run: |
+        mkdir -m 0755  ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+        chmod 600 ~/.ssh/id_ed25519
+  
+    # Oracle x86_64
+    - run: |
+        SYSTEM=$(nix build --no-link --print-out-paths .#nixosConfigurations.$host.config.system.build.toplevel)
+        nix copy --substitute-on-destination --to ssh://root@$host.$domain $SYSTEM
+        ssh -o StrictHostKeyChecking=no root@$host.$domain nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
+        ssh -o StrictHostKeyChecking=no root@$host.$domain $SYSTEM/bin/switch-to-configuration switch
+      env: 
+        host: sw2
+    
+    - run: |
+        SYSTEM=$(nix build --no-link --print-out-paths .#nixosConfigurations.$host.config.system.build.toplevel)
+        nix copy --substitute-on-destination --to ssh://root@$host.$domain $SYSTEM
+        ssh -o StrictHostKeyChecking=no root@$host.$domain nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
+        ssh -o StrictHostKeyChecking=no root@$host.$domain $SYSTEM/bin/switch-to-configuration switch
+      env: 
+        host: sw3
+
+    - run: |
+        SYSTEM=$(nix build --no-link --print-out-paths .#nixosConfigurations.$host.config.system.build.toplevel)
+        nix copy --substitute-on-destination --to ssh://root@$host.$domain $SYSTEM
+        ssh -o StrictHostKeyChecking=no root@$host.$domain nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
+        ssh -o StrictHostKeyChecking=no root@$host.$domain $SYSTEM/bin/switch-to-configuration switch
+      env: 
+        host: kr
+    
+    # Azure x86_64
+    - run: |
+        SYSTEM=$(nix build --no-link --print-out-paths .#nixosConfigurations.$host.config.system.build.toplevel)
+        nix copy --substitute-on-destination --to ssh://root@$host.$domain $SYSTEM
+        ssh -o StrictHostKeyChecking=no root@$host.$domain nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
+        ssh -o StrictHostKeyChecking=no root@$host.$domain $SYSTEM/bin/switch-to-configuration switch
+      env: 
+        host: hk1
+
+    - run: |
+        SYSTEM=$(nix build --no-link --print-out-paths .#nixosConfigurations.$host.config.system.build.toplevel)
+        nix copy --substitute-on-destination --to ssh://root@$host.$domain $SYSTEM
+        ssh -o StrictHostKeyChecking=no root@$host.$domain nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
+        ssh -o StrictHostKeyChecking=no root@$host.$domain $SYSTEM/bin/switch-to-configuration switch
+      env: 
+        host: hk2
+
+    - run: |
+        SYSTEM=$(nix build --no-link --print-out-paths .#nixosConfigurations.$host.config.system.build.toplevel)
+        nix copy --substitute-on-destination --to ssh://root@$host.$domain $SYSTEM
+        ssh -o StrictHostKeyChecking=no root@$host.$domain nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
+        ssh -o StrictHostKeyChecking=no root@$host.$domain $SYSTEM/bin/switch-to-configuration switch
+      env: 
+        host: jp3

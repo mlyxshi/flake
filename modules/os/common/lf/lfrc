@@ -1,0 +1,48 @@
+# https://pkg.go.dev/github.com/gokcehan/lf#section-documentation
+
+set hidden true
+set number true
+set drawbox true
+set dircounts true
+set incsearch true
+set period 1
+
+
+map q   quit
+map Q   quit
+map D   delete
+map X   extract
+map <tab> fzf
+
+
+cmd open ${{
+    # ${f}  file
+    # "${f}" prevent space in file name
+
+    case $(file --mime-type --dereference --brief "${f}") in
+        text/*) $EDITOR "${f}";;
+        application/json) $EDITOR "${f}";;
+        inode/x-empty) $EDITOR "${f}";; # emply file
+        audio/*) mpv "${f}" > /dev/null 2> /dev/null &;;
+        video/*) mpv "${f}" > /dev/null 2> /dev/null &;;
+        *) ${OPENER} "${f}" > /dev/null 2> /dev/null &;;
+    esac
+}}
+
+
+cmd extract ${{
+   bsdtar -xf "${f}"
+}}
+
+
+cmd fzf ${{
+    res="$(find . -maxdepth 1 | fzf --reverse --header='Jump to location' | sed 's/\\/\\\\/g;s/"/\\"/g')"
+    if [ -d "$res" ] ; then
+        cmd="cd"
+    elif [ -f "$res" ] ; then
+        cmd="select"
+    else
+        exit 0
+    fi
+    lf -remote "send $id $cmd \"$res\""
+}}

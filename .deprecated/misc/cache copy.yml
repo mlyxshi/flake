@@ -1,0 +1,43 @@
+name: "cache copy"
+on: [workflow_dispatch]
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  NIX_STORE_SIGN_PRIVATE: ${{ secrets.NIX_STORE_SIGN_PRIVATE }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: docker/setup-qemu-action@v2
+    - run: echo $NIX_STORE_SIGN_PRIVATE > /tmp/key
+
+    - uses: cachix/install-nix-action@v18
+      with:
+        extra_nix_config: |
+          extra-platforms = aarch64-linux
+          experimental-features = nix-command flakes
+          trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+          substituters = https://cache.nixos.org
+          secret-key-files = /tmp/key
+          post-build-hook = /tmp/upload.sh
+
+
+    - run: |
+        cat <<EOF > /tmp/upload.sh
+        #!/usr/bin/env bash
+        set -eu; set -f; export IFS=' '
+        export AWS_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY_ID }}"
+        export AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+        extension=$(echo \$OUT_PATHS | cut -d'.' -f 2)
+        [[ \$extension != "drv"  ]] && exec /nix/var/nix/profiles/default/bin/nix copy --to "s3://nix?endpoint=minio.mlyxshi.com"  \$OUT_PATHS
+        EOF
+
+        chmod +x /tmp/upload.sh
+        
+    # - uses: mxschmitt/action-tmate@v3
+
+    # - run: nix build .#nixosConfigurations.hk1.config.system.build.toplevel 
+    - run: nix build .#packages."x86_64-linux"."PingFang"

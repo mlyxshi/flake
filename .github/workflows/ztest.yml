@@ -1,0 +1,22 @@
+name: Github Server
+on: 
+  - workflow_dispatch
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: pierotofy/set-swap-space@master
+      with:
+        swap-size-gb: 13
+    - uses: docker/setup-qemu-action@master
+    - uses: DeterminateSystems/nix-installer-action@main
+      with:
+        extra-conf: |
+          extra-platforms = aarch64-linux
+    
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
+
+      # https://github.com/USER/PROJECT/releases/latest/download/package.zip

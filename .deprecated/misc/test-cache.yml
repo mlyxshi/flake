@@ -1,0 +1,22 @@
+# For ordinary cache and test
+# https://github.com/NickCao/flakes/blob/master/.github/workflows/nix.yml 
+# https://lantian.pub/article/modify-website/nixos-initial-config-flake-deploy.lantian/
+# https://nixos.wiki/wiki/NixOS_on_ARM
+name: "test cachix"
+on:
+  workflow_dispatch
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: cachix/install-nix-action@v18
+      with:
+        extra_nix_config: |
+          trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+          substituters = https://cache.nixos.org
+    - uses: cachix/cachix-action@v12
+      with:
+        name: mlyxshi
+        authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+    - run: nix build .#nixosConfigurations.sw2.config.system.build.toplevel   

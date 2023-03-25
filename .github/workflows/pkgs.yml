@@ -1,0 +1,18 @@
+name: "Package Update"
+on:
+  push:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *' #every hour
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: DeterminateSystems/nix-installer-action@main
+
+    - run: git config user.name github-actions && git config user.email github-actions@github.com
+    - run: nix profile install nixpkgs#nix-update
+    - run: nix-update --flake --commit transmission
+    - run: git push

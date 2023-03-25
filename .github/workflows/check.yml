@@ -1,0 +1,15 @@
+name: "Check"
+on: 
+  push:
+  workflow_dispatch:
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: docker/setup-qemu-action@master
+    - uses: DeterminateSystems/nix-installer-action@main
+      with:
+        extra-conf: |
+          extra-platforms = aarch64-linux
+    - run: nix flake check
