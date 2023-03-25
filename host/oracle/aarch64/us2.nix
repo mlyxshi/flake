@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }: {
 
-  age.secrets.miniflux-env.file = ../../secrets/miniflux-env.age;
+  age.secrets.miniflux-env.file = ../../../secrets/miniflux-env.age;
 
   systemd.services.miniflux-silent = {
     after = [ "network-online.target" ];
