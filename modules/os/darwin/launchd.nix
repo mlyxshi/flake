@@ -9,19 +9,6 @@
     serviceConfig.RunAtLoad = true;
   };
 
-  launchd.user.agents."sideloadly" = {
-    serviceConfig.ProgramArguments = [
-      "/bin/sh"
-      "-c"
-      "/Applications/Sideloadly.app/Contents/Resources/sideloadly-daemon"
-    ];
-    serviceConfig.RunAtLoad = true;
-    serviceConfig.KeepAlive = true;
-    serviceConfig.StandardErrorPath = "/tmp/launchdLogs/sideloadly/error.log";
-    serviceConfig.StandardOutPath = "/tmp/launchdLogs/sideloadly/stdout.log";
-  };
-
-
   # https://unix.stackexchange.com/a/560404
   launchd.user.agents.SSH-ADD = {
     serviceConfig.ProgramArguments = [
