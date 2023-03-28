@@ -86,12 +86,12 @@
       # hydraJobs.test-x84 = nixpkgs.legacyPackages.x86_64-linux.runCommand "readme" { } ''
       #   echo hello world1!
       #   mkdir -p $out/
-      #   echo "Hello world 1" > $out/readme
+      #   echo "Hello world" > $out/readme
       # '';
       # hydraJobs.test-arm64 = nixpkgs.legacyPackages.aarch64-linux.runCommand "readme" { } ''
       #   echo hello world1!
       #   mkdir -p $out/
-      #   echo "Hello world 1" > $out/readme
+      #   echo "Hello world" > $out/readme
       # '';
     };
 }
