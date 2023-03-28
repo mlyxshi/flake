@@ -1,7 +1,6 @@
 { pkgs, lib, config, ... }: {
 
   age.secrets.nodestatus-env.file = ../../../secrets/nodestatus-env.age;
-  age.secrets.nodestatus-database.file = ../../../secrets/nodestatus-database.age;
 
   virtualisation.oci-containers.containers = {
     "nodestatus-server" = {
