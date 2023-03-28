@@ -30,4 +30,4 @@ jobs:
       with:
         orancServerContainer: '${{ job.services.oranc.id }}'
         signingKey: ${{ secrets.NIX_STORE_SIGN_PRIVATE }}
-    - run: nix build .#packages.aarch64-linux.transmission
+    - run: nix build .#packages.x86_64-linux.Anime4k
