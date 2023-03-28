@@ -7,7 +7,6 @@ on:
   workflow_dispatch:
 
 env:
-  ORANC_SIGNING_KEY: ${{ secrets.NIX_STORE_SIGN_PRIVATE }}
   ORANC_USERNAME: ${{ github.repository_owner }}
   ORANC_PASSWORD: ${{ github.token }}
 
@@ -30,4 +29,4 @@ jobs:
 
     - run: nix profile install github:linyinfeng/oranc  --extra-substituters https://linyinfeng.cachix.org --extra-trusted-public-keys linyinfeng.cachix.org-1:sPYQXcNrnCf7Vr7T0YmjXz5dMZ7aOKG3EqLja0xr9MM=
     - run: oranc push --registry ghcr.io --repository mlyxshi/nix initialize
-    - run: nix build --no-link --print-out-paths .#packages.x86_64-linux.Anime4k | sudo /home/runner/.nix-profile/bin/oranc push --repository mlyxshi/nix
+    - run: nix build --no-link --print-out-paths .#packages.x86_64-linux.Anime4k | sudo --preserve-env /home/runner/.nix-profile/bin/oranc push --repository mlyxshi/nix --already-signed
