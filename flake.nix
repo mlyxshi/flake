@@ -2,6 +2,8 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    nixpkgs-network-pr.url = "github:NixOS/nixpkgs/pull/169116/head";
+
     hydra.url = "github:NixOS/hydra";
     impermanence.url = "github:nix-community/impermanence";
 
@@ -18,7 +20,7 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager, agenix, impermanence, hydra, nix-index-database }:
+  outputs = { self, nixpkgs, nixpkgs-network-pr, darwin, home-manager, agenix, impermanence, hydra, nix-index-database }:
     let
       oracle-arm64-serverlist = map (x: nixpkgs.lib.strings.removeSuffix ".nix" x) (builtins.attrNames (builtins.readDir ./host/oracle/aarch64));
       oracle-x64-serverlist = map (x: nixpkgs.lib.strings.removeSuffix ".nix" x) (builtins.attrNames (builtins.readDir ./host/oracle/x86_64));
@@ -35,6 +37,24 @@
         hx90 = import ./host/hx90 { inherit self nixpkgs home-manager agenix impermanence nix-index-database; };
         installer = import ./host/installer { inherit self nixpkgs agenix home-manager; };
         qemu-test-x64 = import ./host/oracle/mkTest.nix { inherit self nixpkgs agenix impermanence; };
+
+        kexec-x86_64 = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./kexec/host.nix
+            ./kexec/build.nix
+            ./kexec/initrd
+          ];
+        };
+
+        kexec-aarch64 = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          modules = [
+            ./kexec/host.nix
+            ./kexec/build.nix
+            ./kexec/initrd
+          ];
+        };
       }
       // nixpkgs.lib.genAttrs (oracle-arm64-serverlist ++ oracle-x64-serverlist) (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs home-manager agenix hydra impermanence; })
       // nixpkgs.lib.genAttrs azure-x64-serverlist (hostName: import ./host/azure/mkHost.nix { inherit hostName self nixpkgs home-manager agenix impermanence; });
@@ -57,6 +77,12 @@
 
       devShells.aarch64-darwin.wrangler = import ./shells/wrangler.nix { pkgs = nixpkgs.legacyPackages."aarch64-darwin"; };
 
+
+      packages.x86_64-linux.default = self.nixosConfigurations."kexec-x86_64".config.system.build.test;
+      packages.x86_64-linux.test0 = self.nixosConfigurations."kexec-x86_64".config.system.build.test0;
+
+      hydraJobs.aarch64 = self.nixosConfigurations."kexec-aarch64".config.system.build.kexec;
+      hydraJobs.x86_64 = self.nixosConfigurations."kexec-x86_64".config.system.build.kexec;
       # hydraJobs.test-x84 = nixpkgs.legacyPackages.x86_64-linux.runCommand "readme" { } ''
       #   echo hello world1!
       #   mkdir -p $out/
