@@ -1,4 +1,5 @@
 xh top.mlyxshi.com/api/servers Authorization:$auth type=Oracle name=US1 location=SanJose region=US username=us1 password=us1
+xh top.mlyxshi.com/api/servers Authorization:$auth type=Oracle name=US2 location=SanJose region=US username=us2 password=us2
 xh top.mlyxshi.com/api/servers Authorization:$auth type=Oracle name=JP2 location=Tokyo region=JP username=jp2 password=jp2
 xh top.mlyxshi.com/api/servers Authorization:$auth type=Oracle name=JP4 location=Osaka region=JP username=jp4 password=jp4
 xh top.mlyxshi.com/api/servers Authorization:$auth type=Oracle name=Switzerland location=Zurich region=CH username=sw password=sw
@@ -14,3 +15,8 @@ xh top.mlyxshi.com/api/servers Authorization:$auth type=Azure name=JP3 location=
 xh top.mlyxshi.com/api/servers Authorization:$auth type=Oracle name=Switzerland-2 location=Zurich region=CH username=sw2 password=sw2
 xh top.mlyxshi.com/api/servers Authorization:$auth type=Oracle name=Switzerland-3 location=Zurich region=CH username=sw3 password=sw3
 xh top.mlyxshi.com/api/servers Authorization:$auth type=Oracle name=Korean-2 location=Chuncheon region=KR username=kr2 password=kr2
+
+
+auth="Bearer xxx"
+# nodestatus reverse add server
+tac ./server
