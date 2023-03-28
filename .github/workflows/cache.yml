@@ -32,7 +32,5 @@ jobs:
           extra-platforms = aarch64-linux
 
     - run: nix profile install github:linyinfeng/oranc  --extra-substituters https://linyinfeng.cachix.org --extra-trusted-public-keys linyinfeng.cachix.org-1:sPYQXcNrnCf7Vr7T0YmjXz5dMZ7aOKG3EqLja0xr9MM=
-    # Init
     - run: oranc push --registry ghcr.io --repository mlyxshi/nix initialize
-
-
+    - run: nix build --no-link --print-out-paths .#packages.x86_64-linux.Anime4k | oranc push --repository mlyxshi/nix
