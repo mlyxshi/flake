@@ -4,6 +4,7 @@
   boot.initrd.systemd.network.wait-online.anyInterface = true;
 
   boot.initrd.network.ssh.enable = true;
+  boot.initrd.network.ssh.shell = "/bin/bash";
   boot.initrd.systemd.services.setup-ssh-authorized-keys = {
     after = [ "initrd-fs.target" ];
     before = [ "sshd.service" ];
