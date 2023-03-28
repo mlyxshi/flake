@@ -38,7 +38,7 @@
         installer = import ./host/installer { inherit self nixpkgs agenix home-manager; };
         qemu-test-x64 = import ./host/oracle/mkTest.nix { inherit self nixpkgs agenix impermanence; };
 
-        kexec-x86_64 = nixpkgs.lib.nixosSystem {
+        kexec-x86_64 = nixpkgs-network-pr.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
             ./kexec/host.nix
@@ -47,7 +47,7 @@
           ];
         };
 
-        kexec-aarch64 = nixpkgs.lib.nixosSystem {
+        kexec-aarch64 = nixpkgs-network-pr.lib.nixosSystem {
           system = "aarch64-linux";
           modules = [
             ./kexec/host.nix
