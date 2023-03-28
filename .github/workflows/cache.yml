@@ -9,6 +9,7 @@ on:
 env:
   ORANC_USERNAME: ${{ github.repository_owner }}
   ORANC_PASSWORD: ${{ github.token }}
+  ORANC_SIGNING_KEY: ${{ secrets.NIX_STORE_SIGN_PRIVATE }}
 
 jobs:
   CI:
