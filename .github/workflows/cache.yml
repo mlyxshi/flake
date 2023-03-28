@@ -26,8 +26,6 @@ jobs:
         extra-conf: |
           extra-platforms = aarch64-linux
 
-    - uses: linyinfeng/oranc-action@main
-      with:
-        orancServerContainer: '${{ job.services.oranc.id }}'
-        signingKey: ${{ secrets.NIX_STORE_SIGN_PRIVATE }}
-    - run: nix build .#packages.x86_64-linux.Anime4k
+    - run: nix profile install github:linyinfeng/oranc  --extra-substituters https://linyinfeng.cachix.org --extra-trusted-public-keys linyinfeng.cachix.org-1:sPYQXcNrnCf7Vr7T0YmjXz5dMZ7aOKG3EqLja0xr9MM=
+    
+    - run: oranc --help
