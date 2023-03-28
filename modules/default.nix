@@ -42,9 +42,8 @@
 
   container = {
     podman = import ./container/podman.nix;
-    nodestatus-server = import ./container/nodestatus-server;
+    nodestatus-server = import ./container/nodestatus-server.nix;
     change-detection = import ./container/change-detection.nix;
-    kms = import ./container/kms.nix;
     rsshub = import ./container/rsshub.nix;
     vaultwarden = import ./container/vaultwarden.nix;
   };
