@@ -4,7 +4,7 @@
 
   virtualisation.oci-containers.containers = {
     "vaultwarden" = {
-      image = "docker.io/vaultwarden/server";
+      image = "ghcr.io/dani-garcia/vaultwarden";
       environment = {
         SIGNUPS_ALLOWED = "false"; # Disable signups
         DOMAIN = "https://password.${config.networking.domain}"; # Yubikey FIDO2 WebAuthn
