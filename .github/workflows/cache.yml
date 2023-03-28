@@ -6,6 +6,11 @@ on:
       - 'flake.lock'
   workflow_dispatch:
 
+env:
+  ORANC_SIGNING_KEY: ${{ secrets.NIX_STORE_SIGN_PRIVATE }}
+  ORANC_USERNAME: mlyxshi
+  ORANC_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
   CI:
     runs-on: ubuntu-latest
@@ -28,4 +33,4 @@ jobs:
 
     - run: nix profile install github:linyinfeng/oranc  --extra-substituters https://linyinfeng.cachix.org --extra-trusted-public-keys linyinfeng.cachix.org-1:sPYQXcNrnCf7Vr7T0YmjXz5dMZ7aOKG3EqLja0xr9MM=
     
-    - run: oranc --help
+    - run: oranc push --registry ghcr.io --repository oranc-cache initialize
