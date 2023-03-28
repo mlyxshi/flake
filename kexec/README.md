@@ -1,7 +1,7 @@
 # Intro
 Based on [dep-sys/nix-dabei](https://github.com/dep-sys/nix-dabei/)
 
-[Build by Hydra](http://hydra.mlyxshi.com/jobset/kexec/build) 
+[Build by Hydra](http://hydra.mlyxshi.com/project/flake) 
 
 Modified for personal usage
 
@@ -21,7 +21,7 @@ initrd.target(default)
 # Usage
 ### From running linux distro
 ```
-curl -sL http://hydra.mlyxshi.com/job/kexec/build/$(uname -m)/latest/download-by-type/file/kexec | bash -s
+curl -sL http://hydra.mlyxshi.com/job/flake/kexec/$(uname -m)/latest/download-by-type/file/kexec | bash -s
 ```
 ### From netboot.xyz ipxe(Rescue)
 
@@ -38,10 +38,10 @@ exit
 set cmdline ssh_authorized_key=c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSU1wYVkzTHlDVzRISHFicDRTQTR0bkErMUJrZ3dydHJvMnMvREVzQmNQRGUKCg==
 ``` 
 ```
-chain http://hydra.mlyxshi.com/job/kexec/build/x86_64/latest/download-by-type/file/ipxe
+chain http://hydra.mlyxshi.com/job/flake/kexec/x86_64/latest/download-by-type/file/ipxe
 ```
 ```
-chain http://hydra.mlyxshi.com/job/kexec/build/aarch64/latest/download-by-type/file/ipxe
+chain http://hydra.mlyxshi.com/job/flake/kexec/aarch64/latest/download-by-type/file/ipxe
 ```
 # Test
 ```
