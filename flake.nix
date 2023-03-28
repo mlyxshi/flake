@@ -82,6 +82,7 @@
 
       hydraJobs.aarch64 = self.nixosConfigurations."kexec-aarch64".config.system.build.kexec;
       hydraJobs.x86_64 = self.nixosConfigurations."kexec-x86_64".config.system.build.kexec;
+      
       # hydraJobs.test-x84 = nixpkgs.legacyPackages.x86_64-linux.runCommand "readme" { } ''
       #   echo hello world1!
       #   mkdir -p $out/
