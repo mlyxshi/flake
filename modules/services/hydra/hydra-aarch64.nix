@@ -1,7 +1,7 @@
 # https://www.youtube.com/watch?v=AvOqaeK_NaE
 
 # hydra-create-user admin --password-prompt --role admin
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, hydra, ... }:
 let
   hydra-x64-publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMjY+jsCfLAuMR2LP3ZqkzV5RCqSyt+lheJ7TUSRWEfv";
 in
@@ -47,6 +47,7 @@ in
 
   services.hydra = {
     enable = true;
+    package = hydra.packages.aarch64-linux.default;
     hydraURL = "http://hydra.${config.networking.domain}";
     notificationSender = "hydra@localhost";
     buildMachinesFiles = [ "/etc/nix/machines" ];

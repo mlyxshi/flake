@@ -1,4 +1,4 @@
-{ hostName, self, nixpkgs, home-manager, agenix, impermanence }:
+{ hostName, self, nixpkgs, home-manager, agenix, impermanence, hydra }:
 let
   arch = if (builtins.readDir ./aarch64) ? "${hostName}.nix" then "aarch64" else "x86_64";
 in
@@ -32,5 +32,5 @@ nixpkgs.lib.nixosSystem {
       home-manager.verbose = true;
     }
   ];
-  specialArgs = { inherit self nixpkgs; };
+  specialArgs = { inherit self nixpkgs hydra; };
 }

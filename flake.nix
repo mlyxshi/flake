@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     impermanence.url = "github:nix-community/impermanence";
 
@@ -13,11 +13,13 @@
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
 
+    hydra.url = "github:NixOS/hydra";
+
     nix-index-database.url = "github:Mic92/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager, agenix, impermanence, nix-index-database }:
+  outputs = { self, nixpkgs, darwin, home-manager, agenix, impermanence, hydra, nix-index-database }:
     let
       oracle-arm64-serverlist = map (x: nixpkgs.lib.strings.removeSuffix ".nix" x) (builtins.attrNames (builtins.readDir ./host/oracle/aarch64));
       oracle-x64-serverlist = map (x: nixpkgs.lib.strings.removeSuffix ".nix" x) (builtins.attrNames (builtins.readDir ./host/oracle/x86_64));
@@ -35,7 +37,7 @@
         installer = import ./host/installer { inherit self nixpkgs agenix home-manager; };
         qemu-test-x64 = import ./host/oracle/mkTest.nix { inherit self nixpkgs agenix impermanence; };
       }
-      // nixpkgs.lib.genAttrs (oracle-arm64-serverlist ++ oracle-x64-serverlist) (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs home-manager agenix impermanence; })
+      // nixpkgs.lib.genAttrs (oracle-arm64-serverlist ++ oracle-x64-serverlist) (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs home-manager agenix hydra impermanence; })
       // nixpkgs.lib.genAttrs azure-x64-serverlist (hostName: import ./host/azure/mkHost.nix { inherit hostName self nixpkgs home-manager agenix impermanence; });
 
       packages.aarch64-darwin.Anime4k = nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/anime4k { };
