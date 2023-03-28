@@ -1,6 +1,9 @@
-name: "Pkgs Cache"
+name: "Package Cache"
 on:
   push:
+    paths: 
+      - 'pkgs/transmission/default.nix'
+      - 'flake.lock'
   workflow_dispatch:
 
 env:
@@ -9,7 +12,7 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
 jobs:
-  Cache:
+  CI:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
@@ -18,8 +21,8 @@ jobs:
       with:
         extra-conf: |
           extra-platforms = aarch64-linux
-          substituters = https://cache.nixos.org https://oranc.li7g.com/ghcr.io/mlyxdev/nix
+          substituters = https://cache.nixos.org https://oranc.li7g.com/ghcr.io/mlyxshi/oranc-cache?priority=41
           trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= cache:vXjiuWtSTOXj63zr+ZjMvXqvaYIK1atjyyEk+iuIqSg=
 
     - run: echo $NIX_STORE_SIGN_PRIVATE > /tmp/key
-    - run: nix copy --to 's3://nix?endpoint=https://oranc.li7g.com/ghcr.io/mlyxdev&secret-key=/tmp/key'  .#packages.aarch64-linux.transmission
+    - run: nix copy --to 's3://oranc-cache?endpoint=https://oranc.li7g.com/ghcr.io/mlyxdev&secret-key=/tmp/key'  .#packages.aarch64-linux.transmission
