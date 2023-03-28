@@ -47,7 +47,6 @@ let
     mount -o subvol=nix,compress-force=zstd    $NIXOS /mnt/nix
     mount -o subvol=persist,compress-force=zstd $NIXOS /mnt/persist
     
-    mkdir /tmp
     nix build -L --store /mnt --profile /mnt/nix/var/nix/profiles/system $flake#nixosConfigurations.$host.config.system.build.toplevel
     
     mkdir -p /mnt/{etc,tmp}
