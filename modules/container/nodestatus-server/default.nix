@@ -10,7 +10,6 @@
       ];
       environmentFiles = [
         config.age.secrets.nodestatus-env.path
-        config.age.secrets.nodestatus-database.path
       ];
       environment = {
         "VERBOSE" = "false";
