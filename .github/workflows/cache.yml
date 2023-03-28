@@ -28,6 +28,6 @@ jobs:
 
     - uses: linyinfeng/oranc-action@main
       with:
-        orancContainer: '${{ job.services.oranc.id }}'
+        orancServerContainer: '${{ job.services.oranc.id }}'
         signingKey: ${{ secrets.NIX_STORE_SIGN_PRIVATE }}
     - run: nix build .#packages.aarch64-linux.transmission
