@@ -79,7 +79,10 @@
 
       packages.x86_64-linux.default = self.nixosConfigurations."kexec-x86_64".config.system.build.test;
       packages.x86_64-linux.test0 = self.nixosConfigurations."kexec-x86_64".config.system.build.test0;
-
+       
+      # Declarative spec file: spec.json
+      # Declarative input type: Git checkout
+      # Declarative input value: https://github.com/mlyxshi/flake.git main 
       hydraJobs.aarch64 = self.nixosConfigurations."kexec-aarch64".config.system.build.kexec;
       hydraJobs.x86_64 = self.nixosConfigurations."kexec-x86_64".config.system.build.kexec;
     };
