@@ -1,0 +1,14 @@
+{
+  "kexec": {
+    "checkinterval": 0,
+    "description": "kexec",
+    "emailoverride": "",
+    "enabled": 1,
+    "enableemail": false,
+    "flake": "github:mlyxshi/flake",
+    "hidden": false,
+    "keepnr": 3,
+    "schedulingshares": 1000,
+    "type": 1
+  }
+}
