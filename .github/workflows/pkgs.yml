@@ -16,7 +16,7 @@ jobs:
         token: ${{ secrets.GIT_TOKEN }} # https://docs.github.com/en/actions/using-workflows/triggering-a-workflow#triggering-a-workflow-from-a-workflow
     - uses: DeterminateSystems/nix-installer-action@main
 
-    - run: git config user.name github-actions && git config user.email github-actions@github.com
+    - run: git config user.name github-actions[bot] && git config user.email github-actions[bot]@users.noreply.github.com
     - run: nix profile install nixpkgs#nix-update
     - run: nix-update --flake --commit transmission
     - run: git push
