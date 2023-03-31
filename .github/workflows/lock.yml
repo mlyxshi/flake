@@ -5,7 +5,7 @@ on:
     - cron: '0 0 * * *' #every day
 
 # https://docs.github.com/en/actions/using-workflows/triggering-a-workflow#triggering-a-workflow-from-a-workflow
-# if this workflow git push a commit, it need have the ability to trigger the "System Update" workflow
+# if this workflow git push a commit, it needs the ability to trigger the "System Update" workflow
 env:
   GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
 
