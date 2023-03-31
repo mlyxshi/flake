@@ -11,8 +11,7 @@ jobs:
     - uses: actions/checkout@master
     - uses: DeterminateSystems/nix-installer-action@main
 
-    - run: git config user.name github-actions && git config user.email github-actions@github.com
-    - run: |
-        nix flake update --commit-lock-file    
+    - run: git config user.name github-actions[bot] && git config user.email github-actions[bot]@users.noreply.github.com
+    - run: nix flake update --commit-lock-file    
     - run: git push
 
