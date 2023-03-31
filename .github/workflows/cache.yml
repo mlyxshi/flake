@@ -3,7 +3,6 @@ on:
   push:
     paths: 
       - 'pkgs/transmission/default.nix'
-      - 'flake.lock'
   workflow_dispatch:
 
 env:
