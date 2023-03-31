@@ -7,10 +7,10 @@ on:
 jobs:
   CI:
     runs-on: ubuntu-latest
-    permissions:
-      repository-projects: write
     steps:
     - uses: actions/checkout@master
+      with:
+        token: ${{ secrets.GIT_TOKEN }}
     - uses: DeterminateSystems/nix-installer-action@main
 
     - run: git config user.name github-actions[bot] && git config user.email github-actions[bot]@users.noreply.github.com
