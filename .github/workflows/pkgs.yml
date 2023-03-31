@@ -4,16 +4,16 @@ on:
   schedule:
     - cron: '0 * * * *' #every hour
 
-# https://docs.github.com/en/actions/using-workflows/triggering-a-workflow#triggering-a-workflow-from-a-workflow
-# if this workflow git push a commit, it needs the ability to trigger the "Cache" workflow
-env:
-  GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+
+
 
 jobs:
   CI:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
+      with:
+        token: ${{ secrets.GIT_TOKEN }} # https://docs.github.com/en/actions/using-workflows/triggering-a-workflow#triggering-a-workflow-from-a-workflow
     - uses: DeterminateSystems/nix-installer-action@main
 
     - run: git config user.name github-actions && git config user.email github-actions@github.com
