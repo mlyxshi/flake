@@ -1,5 +1,10 @@
 name: "System Update"
-on: [workflow_dispatch]
+on:
+  push:
+    paths: 
+      - 'flake.lock'
+  workflow_dispatch:
+
 jobs:
   CI:
     runs-on: ubuntu-latest
