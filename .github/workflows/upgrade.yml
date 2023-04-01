@@ -1,4 +1,4 @@
-name: "System Update"
+name: "System Upgrade"
 on:
   push:
     paths: 
