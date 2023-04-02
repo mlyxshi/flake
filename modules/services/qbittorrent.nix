@@ -14,7 +14,7 @@ let
       files_num=$3
       torrent_size=$4
       file_hash=$5
-      rclone_dest="gdrive:Download"
+      rclone_dest="gdrive:bangumi"
 
       echo "Torrent Name：$torrent_name" 
       echo "Content Path：$content_path" 
