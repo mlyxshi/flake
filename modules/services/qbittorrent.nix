@@ -32,7 +32,7 @@ let
       fi
 
       # For any defined category, after download, upload to googledrive but do not auto delete(important resource, PT share ratio requirement)
-      [[ -n category ]] || curl -X POST "http://localhost:8080/api/v2/torrents/delete" -d hashes=$file_hash -d deleteFiles=true
+      [[ -n "$category" ]] || curl -X POST "http://localhost:8080/api/v2/torrents/delete" -d hashes=$file_hash -d deleteFiles=true
 
       MESSAGE="<b>GoogleDrive Upload Success</b>%0A"
       MESSAGE+="$torrent_name"
