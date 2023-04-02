@@ -14,6 +14,7 @@ let
       files_num=$3
       torrent_size=$4
       file_hash=$5
+      category=$6
       rclone_dest="gdrive:bangumi"
 
       echo "Torrent Name：$torrent_name" 
@@ -31,12 +32,8 @@ let
       fi
 
       # For any defined category, after download, upload to googledrive but do not auto delete(important resource, PT share ratio requirement)
-      if [[ $# -eq 5 ]] 
-      then
-        echo "Category Not Defined |Delete" 
-        xh --ignore-stdin ":8080/api/v2/torrents/delete" hashes==$file_hash  deleteFiles==true
-      fi
-
+      [[ -n category ]] || xh --ignore-stdin ":8080/api/v2/torrents/delete" hashes==$file_hash  deleteFiles==true
+      
       MESSAGE="<b>GoogleDrive Upload Success</b>%0A"
       MESSAGE+="$torrent_name"
       URL="https://api.telegram.org/bot$TOKEN/sendMessage"
