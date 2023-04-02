@@ -32,12 +32,10 @@ let
       fi
 
       # For any defined category, after download, upload to googledrive but do not auto delete(important resource, PT share ratio requirement)
-      echo "Category: $category"
-      [[ -n category ]] || curl "http://localhost:8080/api/v2/torrents/delete?hashes=$file_hash&deleteFiles=true"
-      
+      [[ -n category ]] || curl -X POST "http://localhost:8080/api/v2/torrents/delete" -d hashes=$file_hash -d deleteFiles=true
+
       MESSAGE="<b>GoogleDrive Upload Success</b>%0A"
       MESSAGE+="$torrent_name"
-      echo $MESSAGE
       URL="https://api.telegram.org/bot$TOKEN/sendMessage"
       curl -X POST $URL -d parse_mode=html -d chat_id=$ID -d text="$MESSAGE" >/dev/null
       echo "-------------------------------------------------------------------------------------"
