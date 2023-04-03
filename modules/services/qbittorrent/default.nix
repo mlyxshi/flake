@@ -1,33 +1,27 @@
 #  Run external program on torrent completion
-# /run/current-system/sw/bin/qbScript "%N" "%F" "%C" "%Z" "%I" "%L"
+# /run/current-system/sw/bin/deno run --allow-net --allow-env /etc/qbScript "%N" "%F" "%C" "%Z" "%I" "%L"
 # change password
 # disable Cross-Site Request Forgery (CSRF) protection
-{ pkgs, lib, config, ... }:
-let
-  qbScript = pkgs.writeShellScriptBin "qbScript" ''
-    export DENO_DIR="/home/qbittorrent/.cache/deno"
-    exec ${pkgs.deno}/bin/deno run --allow-net --allow-env ${./main.ts} $*
-  '';
-in
-{
+{ pkgs, lib, config, ... }:{
   age.secrets.bark-ios.file = ../../../secrets/bark-ios.age;
 
   users = {
     users.qbittorrent = {
       group = "qbittorrent";
-      isNormalUser = true;
+      isSystemUser = true;
     };
     groups.qbittorrent = { };
   };
 
   environment.systemPackages = with pkgs; [
+    deno
     qbittorrent-nox
     qbScript
   ];
 
-  # https://github.com/1sixth/flakes/blob/master/modules/qbittorrent-nox.nix
-  # https://github.com/qbittorrent/qBittorrent/wiki/How-to-use-portable-mode
+  environment.etc."qbScript".source = ./main.ts;
 
+  # https://github.com/qbittorrent/qBittorrent/wiki/How-to-use-portable-mode
   systemd.services.qbittorrent-nox = {
     after = [ "local-fs.target" "network-online.target" ];
     serviceConfig = {
