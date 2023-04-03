@@ -34,10 +34,7 @@ let
       # For any defined category, after download, upload to googledrive but do not auto delete(important resource, PT share ratio requirement)
       [[ -n "$category" ]] || curl -X POST "http://localhost:8080/api/v2/torrents/delete" -d hashes=$file_hash -d deleteFiles=true
 
-      MESSAGE="<b>GoogleDrive Upload Success</b>%0A"
-      MESSAGE+="$torrent_name"
-      URL="https://api.telegram.org/bot$TOKEN/sendMessage"
-      curl -X POST $URL -d parse_mode=html -d chat_id=$ID -d text="$MESSAGE" >/dev/null
+      curl https://api.day.app/$BARK_KEY/Upload/$torrent_name?icon=https://drive.google.com/favicon.ico >/dev/null
       echo "-------------------------------------------------------------------------------------"
     '';
 
@@ -45,7 +42,7 @@ let
 in
 {
   age.secrets.rclone-env.file = ../../secrets/rclone-env.age;
-  age.secrets.telegram-env.file = ../../secrets/telegram-env.age;
+  age.secrets.bark-ios.file = ../../secrets/bark-ios.age;
 
   users = {
     users.qbittorrent = {
@@ -72,7 +69,7 @@ in
       StateDirectory = "qbittorrent-nox";
       EnvironmentFile = [
         config.age.secrets.telegram-env.path
-        config.age.secrets.rclone-env.path
+        config.age.secrets.bark-ios.path
       ];
       PrivateTmp = true;
     };

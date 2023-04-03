@@ -14,4 +14,6 @@ in
   "transmission-env.age".publicKeys = [ main ];
   "nodestatus-env.age".publicKeys = [ main ];
   "nodestatus-database.age".publicKeys = [ main ];
+
+  "bark-ios.age".publicKeys = [ main ];
 }
