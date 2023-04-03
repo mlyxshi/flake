@@ -10,4 +10,6 @@ final: prev: {
   snell-server = prev.callPackage ../pkgs/snell { };
 
   transmission = prev.callPackage ../pkgs/transmission { };
+
+  alist = prev.callPackage ../pkgs/alist { };
 }
