@@ -10,7 +10,7 @@ let
   '';
 in
 {
-  age.secrets.bark-ios.file = ../../secrets/bark-ios.age;
+  age.secrets.bark-ios.file = ../../../secrets/bark-ios.age;
 
   users = {
     users.qbittorrent = {
