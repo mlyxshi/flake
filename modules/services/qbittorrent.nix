@@ -6,7 +6,7 @@
 let
   qbScript = pkgs.writeShellApplication {
     name = "qbScript";
-    runtimeInputs = with pkgs; [ rclone curl ];
+    runtimeInputs = with pkgs; [ rclone xh ];
     checkPhase = ""; #dummy checkPhase to bypass strict shellcheck
     text = ''
       torrent_name=$1
@@ -32,9 +32,9 @@ let
       fi
 
       # For any defined category, after download, upload to googledrive but do not auto delete(important resource, PT share ratio requirement)
-      [[ -n "$category" ]] || curl -X POST "http://localhost:8080/api/v2/torrents/delete" -d hashes=$file_hash -d deleteFiles=true
+      [[ -n "$category" ]] || xh :8080/api/v2/torrents/delete hashes=$file_hash deleteFiles=true
 
-      curl https://api.day.app/$BARK_KEY/Upload/$torrent_name?icon=https://drive.google.com/favicon.ico >/dev/null
+      xh https://api.day.app/push device_key=$BARK_KEY title=Upload icon=https://drive.google.com/favicon.ico body="$torrent_name"
       echo "-------------------------------------------------------------------------------------"
     '';
 
