@@ -68,7 +68,7 @@ in
       ExecStart = "${pkgs.qbittorrent-nox}/bin/qbittorrent-nox --profile=%S/qbittorrent-nox --relative-fastresume";
       StateDirectory = "qbittorrent-nox";
       EnvironmentFile = [
-        config.age.secrets.telegram-env.path
+        config.age.secrets.rclone-env.path
         config.age.secrets.bark-ios.path
       ];
       PrivateTmp = true;
