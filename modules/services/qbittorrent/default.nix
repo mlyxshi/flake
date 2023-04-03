@@ -20,8 +20,6 @@
 
   environment.etc."qbScript"={
     source = ./main.ts;
-    user = "qbittorrent";
-    group = "qbittorrent";
   };
 
   # https://github.com/qbittorrent/qBittorrent/wiki/How-to-use-portable-mode
@@ -31,6 +29,9 @@
       User = "qbittorrent";
       ExecStart = "${pkgs.qbittorrent-nox}/bin/qbittorrent-nox --profile=%S/qbittorrent-nox --relative-fastresume";
       StateDirectory = "qbittorrent-nox";
+      environment = {
+        DENO_DIR = "%S/.deno";
+      };
       EnvironmentFile = [
         config.age.secrets.bark-ios.path
       ];
