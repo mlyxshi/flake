@@ -36,8 +36,8 @@ let
 
       xh --ignore-stdin https://api.day.app/push \
       device_key=$BARK_KEY \
-      title=Upload \
-      icon=https://drive.google.com/favicon.ico \
+      title=Infuse \
+      icon=https://static.firecore.com/images/infuse/infuse-icon_2x.png \
       body="$torrent_name" \
       url="infuse://x-callback-url/play?url=http://bangumi-index.mlyxshi.com/$torrent_name"
       echo "-------------------------------------------------------------------------------------"
