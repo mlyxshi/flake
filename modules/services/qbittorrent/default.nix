@@ -51,7 +51,7 @@
       http = {
         routers.qbittorrent-nox = {
           rule = "Host(`qb.${config.networking.domain}`)";
-          entryPoints = [ "web" ];
+          entryPoints = [ "websecure" ];
           service = "qbittorrent-nox";
         };
 
