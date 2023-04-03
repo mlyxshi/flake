@@ -1,13 +1,13 @@
 { config, pkgs, lib, ... }:
 let
   rcloneScript = pkgs.writeShellScript "rclone.sh" (''
-    export PATH=$PATH:${pkgs.rclone}/bin:${pkgs.curl}/bin:${pkgs.transmission}/bin
+    export PATH=$PATH:${pkgs.rclone}/bin:${pkgs.xh}/bin:${pkgs.transmission}/bin
   '' + builtins.readFile ./rclone.sh);
 in
 {
   age.secrets.transmission-env.file = ../../../secrets/transmission-env.age;
   age.secrets.rclone-env.file = ../../../secrets/rclone-env.age;
-  age.secrets.telegram-env.file = ../../../secrets/telegram-env.age;
+  age.secrets.bark-ios.file = ../../../secrets/bark-ios.age;
 
   users = {
     users.transmission = {
@@ -40,7 +40,7 @@ in
     };
     serviceConfig.EnvironmentFile = [
       config.age.secrets.transmission-env.path
-      config.age.secrets.telegram-env.path
+      config.age.secrets.bark-ios.path
       config.age.secrets.rclone-env.path
     ];
     serviceConfig.User = "transmission";

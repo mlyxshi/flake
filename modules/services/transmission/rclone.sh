@@ -14,8 +14,5 @@ echo $FUll_PATH
 # For any defined category, after download, upload to googledrive but do not auto delete(important resource, PT share ratio requirement)
 [[ -n "$TR_TORRENT_LABELS" ]] || transmission-remote --auth $ADMIN:$PASSWORD --torrent $TR_TORRENT_ID --remove-and-delete 
 
-MESSAGE="<b>GoogleDrive Upload Success</b>%0A"
-MESSAGE+="$TR_TORRENT_NAME"
-URL="https://api.telegram.org/bot$TOKEN/sendMessage"
-curl -X POST $URL -d parse_mode=html -d chat_id=$ID -d text="$MESSAGE" >/dev/null
+xh --ignore-stdin https://api.day.app/push device_key=$BARK_KEY title=Upload icon=https://drive.google.com/favicon.ico body="$TR_TORRENT_NAME"
 echo "-------------------------------------------------------------------------------------"
