@@ -19,8 +19,7 @@ let
     mkswap /dev/zram0
     swapon /dev/zram0
 
-    tg_id=$(get-kernel-param tg_id)
-    tg_token=$(get-kernel-param tg_token)
+    bark_key=$(get-kernel-param bark_key)
     age_key=$(get-kernel-param age_key)
     local_test=$(get-kernel-param local_test)
 
@@ -59,7 +58,7 @@ let
 
     NIXOS_INSTALL_BOOTLOADER=1 nixos-enter --root /mnt -- /run/current-system/bin/switch-to-configuration boot
 
-    [[ -n "$tg_id" && -n "$tg_token" ]] && curl -s -X POST https://api.telegram.org/bot$tg_token/sendMessage -d chat_id=$tg_id -d parse_mode=html -d text="<b>Install NixOS Completed</b>%0A$host"
+    [[ -n "$bark_key" ]] && curl https://api.day.app/$bark_key/NixOS%20Install%20Done/$host?icon=https://nixos.org/favicon.ico
         
     # In local test, force exit 1 and use emergency shell to debug
     [[ -n "$local_test" ]] && exit 1 || reboot

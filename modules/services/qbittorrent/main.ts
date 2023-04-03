@@ -18,6 +18,7 @@ const CATEGORY = ARG[5];
 // console.log("CATEGORY:", CATEGORY);
 
 const INFUSE_PLAYER_URL = encodeURIComponent(`http://bangumi-index.mlyxshi.com/${TORRENT_NAME}`);
+const INFUSE_URL_SCHEME = `infuse://x-callback-url/play?url=${INFUSE_PLAYER_URL}`;
 
 fetch(
     `https://api.day.app/push`,
@@ -31,7 +32,8 @@ fetch(
             title: "Infuse",
             icon: "https://static.firecore.com/images/infuse/infuse-icon_2x.png",
             body: TORRENT_NAME,
-            url: `infuse://x-callback-url/play?url=${INFUSE_PLAYER_URL}`,
+            url: INFUSE_URL_SCHEME,
+            copy: INFUSE_URL_SCHEME,
         }),
     },
 );
