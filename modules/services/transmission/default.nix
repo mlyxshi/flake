@@ -54,7 +54,7 @@ in
       http = {
         routers.transmission = {
           rule = "Host(`transmission.${config.networking.domain}`)";
-          entryPoints = [ "web" ];
+          entryPoints = [ "websecure" ];
           service = "transmission";
         };
 
