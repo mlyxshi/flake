@@ -26,7 +26,7 @@
   systemd.services.qbittorrent-nox = {
     after = [ "local-fs.target" "network-online.target" ];
     environment = {
-      DENO_DIR = "%S/.deno";
+      DENO_DIR = "%S/qbittorrent-nox/.deno";
     };
     serviceConfig = {
       User = "qbittorrent";
