@@ -58,7 +58,7 @@ let
 
     NIXOS_INSTALL_BOOTLOADER=1 nixos-enter --root /mnt -- /run/current-system/bin/switch-to-configuration boot
 
-    [[ -n "$bark_key" ]] && curl https://api.day.app/$bark_key/NixOS%20Install%20Done/$host?icon=https://nixos.org/favicon.ico
+    [[ -n "$bark_key" ]] && curl https://api.day.app/$bark_key/NixOS%20Install%20Done/$host?icon=https://hydra.nixos.org/logo
         
     # In local test, force exit 1 and use emergency shell to debug
     [[ -n "$local_test" ]] && exit 1 || reboot
