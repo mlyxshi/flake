@@ -5,7 +5,7 @@ stdenv.mkDerivation rec {
   version = "3.15.0";
   src = fetchzip {
     url = "https://github.com/alist-org/alist/releases/download/v${version}/alist-linux-musl-arm64.tar.gz";
-    hash = "sha256-aaa";
+    hash = "sha256-9aPk5OJKb3xihaGUBNTzmfKMpF8xqYo5GcQwO1lsZ6s=";
   };
 
   installPhase = ''
