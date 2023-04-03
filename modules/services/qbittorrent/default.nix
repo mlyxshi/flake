@@ -18,9 +18,7 @@
     qbittorrent-nox
   ];
 
-  environment.etc."qbScript" = {
-    source = ./main.ts;
-  };
+  environment.etc."qbScript".source = ./main.ts;
 
   # https://github.com/qbittorrent/qBittorrent/wiki/How-to-use-portable-mode
   systemd.services.qbittorrent-nox = {
