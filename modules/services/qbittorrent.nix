@@ -47,7 +47,7 @@ in
   users = {
     users.qbittorrent = {
       group = "qbittorrent";
-      isSystemUser = true;
+      isNormalUser = true;
     };
     groups.qbittorrent = { };
   };
