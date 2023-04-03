@@ -5,6 +5,7 @@
 { pkgs, lib, config, ... }:
 let
   qbScript = pkgs.writeShellScriptBin "qbScript" ''
+    export DENO_DIR="/home/qbittorrent/.cache/deno"
     exec ${pkgs.deno}/bin/deno run --allow-net --allow-env ${./main.ts} $*
   '';
 in
