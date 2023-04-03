@@ -34,7 +34,12 @@ let
       # For any defined category, after download, upload to googledrive but do not auto delete(important resource, PT share ratio requirement)
       [[ -n "$category" ]] || curl -X POST "http://127.0.0.1:8080/api/v2/torrents/delete" -d hashes=$file_hash -d deleteFiles=true
 
-      xh --ignore-stdin https://api.day.app/push device_key=$BARK_KEY title=Upload icon=https://drive.google.com/favicon.ico body="$torrent_name"
+      xh --ignore-stdin https://api.day.app/push \
+      device_key=$BARK_KEY \
+      title=Upload \
+      icon=https://drive.google.com/favicon.ico \
+      body="$torrent_name" \
+      url="infuse://x-callback-url/play?url=http://bangumi-index.mlyxshi.com/$torrent_name"
       echo "-------------------------------------------------------------------------------------"
     '';
 
