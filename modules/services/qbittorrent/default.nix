@@ -2,7 +2,7 @@
 # /run/current-system/sw/bin/deno run --allow-net --allow-env /etc/qbScript "%N" "%F" "%C" "%Z" "%I" "%L"
 # change password
 # disable Cross-Site Request Forgery (CSRF) protection
-{ pkgs, lib, config, ... }:{
+{ pkgs, lib, config, ... }: {
   age.secrets.bark-ios.file = ../../../secrets/bark-ios.age;
 
   users = {
@@ -18,20 +18,20 @@
     qbittorrent-nox
   ];
 
-  environment.etc."qbScript"={
+  environment.etc."qbScript" = {
     source = ./main.ts;
   };
 
   # https://github.com/qbittorrent/qBittorrent/wiki/How-to-use-portable-mode
   systemd.services.qbittorrent-nox = {
     after = [ "local-fs.target" "network-online.target" ];
+    environment = {
+      DENO_DIR = "%S/.deno";
+    };
     serviceConfig = {
       User = "qbittorrent";
       ExecStart = "${pkgs.qbittorrent-nox}/bin/qbittorrent-nox --profile=%S/qbittorrent-nox --relative-fastresume";
       StateDirectory = "qbittorrent-nox";
-      environment = {
-        DENO_DIR = "%S/.deno";
-      };
       EnvironmentFile = [
         config.age.secrets.bark-ios.path
       ];
