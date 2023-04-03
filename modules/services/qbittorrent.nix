@@ -23,13 +23,13 @@ let
       echo "Size：$(($torrent_size/1024/1024)) MB"
       echo "HASH: $file_hash"
 
-      if [ -f "$content_path" ]
-      then
-        rclone  -v copy  "$content_path" $rclone_dest
-      elif [ -d "$content_path" ]
-      then
-        rclone  -v copy --transfers 32 "$content_path" $rclone_dest/"$torrent_name"
-      fi
+      # if [ -f "$content_path" ]
+      # then
+      #   rclone  -v copy  "$content_path" $rclone_dest
+      # elif [ -d "$content_path" ]
+      # then
+      #   rclone  -v copy --transfers 32 "$content_path" $rclone_dest/"$torrent_name"
+      # fi
 
       # For any defined category, after download, upload to googledrive but do not auto delete(important resource, PT share ratio requirement)
       [[ -n "$category" ]] || curl -X POST "http://127.0.0.1:8080/api/v2/torrents/delete" -d hashes=$file_hash -d deleteFiles=true
@@ -76,6 +76,15 @@ in
     wantedBy = [ "multi-user.target" ];
   };
 
+  systemd.services.bangumi-index = {
+    after = [ "network-online.target" ];
+    serviceConfig = {
+      User = "qbittorrent";
+      ExecStart = "${pkgs.deno}/bin/deno run --allow-net --allow-read https://deno.land/std/http/file_server.ts  %S/qbittorrent-nox/qBittorrent/downloads/";
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
+
 
   services.traefik = {
     dynamicConfigOptions = {
@@ -89,12 +98,23 @@ in
         services.qbittorrent-nox.loadBalancer.servers = [{
           url = "http://127.0.0.1:8080";
         }];
+
+
+        routers.bangumi-index = {
+          rule = "Host(`bangumi-index.${config.networking.domain}`)";
+          entryPoints = [ "web" ];
+          service = "bangumi-index";
+        };
+
+        services.bangumi-index.loadBalancer.servers = [{
+          url = "http://127.0.0.1:4507";
+        }];
       };
     };
   };
 
   system.activationScripts.cloudflare-dns-sync-qbittorrent-nox = {
     deps = [ "agenix" ];
-    text = "${pkgs.cloudflare-dns-sync}/bin/cloudflare-dns-sync qb.${config.networking.domain}";
+    text = "${pkgs.cloudflare-dns-sync}/bin/cloudflare-dns-sync qb.${config.networking.domain} bangumi-index.${config.networking.domain}";
   };
 }
