@@ -5,7 +5,6 @@
 { pkgs, lib, config, ... }:
 let
   qbScript = pkgs.writeShellScriptBin "qbScript" ''
-    source ${config.age.secrets.bark-ios.path}
     exec ${pkgs.deno}/bin/deno run --allow-net --allow-env ${./main.ts} $*
   '';
 in
@@ -34,6 +33,9 @@ in
       User = "qbittorrent";
       ExecStart = "${pkgs.qbittorrent-nox}/bin/qbittorrent-nox --profile=%S/qbittorrent-nox --relative-fastresume";
       StateDirectory = "qbittorrent-nox";
+      EnvironmentFile = [
+        config.age.secrets.bark-ios.path
+      ];
     };
     wantedBy = [ "multi-user.target" ];
   };
