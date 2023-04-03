@@ -20,8 +20,10 @@
 
   environment.etc."qbScript"={
     source = ./main.ts;
-    mode = "0444";
+    user = "qbittorrent";
+    group = "qbittorrent";
   };
+
   # https://github.com/qbittorrent/qBittorrent/wiki/How-to-use-portable-mode
   systemd.services.qbittorrent-nox = {
     after = [ "local-fs.target" "network-online.target" ];
