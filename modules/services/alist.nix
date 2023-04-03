@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }: {
 
-  systemd.services.libreddit = {
+  systemd.services.alist = {
     after = [ "network.target" ];
     # environment = {
     #   LIBREDDIT_DEFAULT_WIDE = "on";
