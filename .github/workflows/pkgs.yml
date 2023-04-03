@@ -19,5 +19,4 @@ jobs:
     - run: git config user.name github-actions[bot] && git config user.email github-actions[bot]@users.noreply.github.com
     - run: nix profile install nixpkgs#nix-update
     - run: nix-update --flake --commit transmission
-    - run: nix-update --flake --commit alist
     - run: git push
