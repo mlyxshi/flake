@@ -4,49 +4,12 @@
 # disable Cross-Site Request Forgery (CSRF) protection
 { pkgs, lib, config, ... }:
 let
-  qbScript = pkgs.writeShellApplication {
-    name = "qbScript";
-    runtimeInputs = with pkgs; [ rclone curl xh ];
-    checkPhase = ""; #dummy checkPhase to bypass strict shellcheck
-    text = ''
-      torrent_name=$1
-      content_path=$2
-      files_num=$3
-      torrent_size=$4
-      file_hash=$5
-      category=$6
-      rclone_dest="gdrive:bangumi"
-
-      echo "Torrent Name：$torrent_name" 
-      echo "Content Path：$content_path" 
-      echo "File Number：$files_num" 
-      echo "Size：$(($torrent_size/1024/1024)) MB"
-      echo "HASH: $file_hash"
-
-      # if [ -f "$content_path" ]
-      # then
-      #   rclone  -v copy  "$content_path" $rclone_dest
-      # elif [ -d "$content_path" ]
-      # then
-      #   rclone  -v copy --transfers 32 "$content_path" $rclone_dest/"$torrent_name"
-      # fi
-
-      # For any defined category, after download, upload to googledrive but do not auto delete(important resource, PT share ratio requirement)
-      [[ -n "$category" ]] || curl -X POST "http://127.0.0.1:8080/api/v2/torrents/delete" -d hashes=$file_hash -d deleteFiles=true
-
-      xh --ignore-stdin https://api.day.app/push \
-      device_key=$BARK_KEY \
-      title=Infuse \
-      icon=https://static.firecore.com/images/infuse/infuse-icon_2x.png \
-      body="$torrent_name" \
-      url="infuse://x-callback-url/play?url=http://bangumi-index.mlyxshi.com/$torrent_name"
-      echo "-------------------------------------------------------------------------------------"
-    '';
-
-  };
+  qbScript = pkgs.writeShellScriptBin "qbScript" ''
+    source ${config.age.secrets.bark-ios.path}
+    exec ${pkgs.deno}/bin/deno run --allow-net --allow-env ${./main.ts} $*
+  '';
 in
 {
-  age.secrets.rclone-env.file = ../../secrets/rclone-env.age;
   age.secrets.bark-ios.file = ../../secrets/bark-ios.age;
 
   users = {
@@ -59,7 +22,6 @@ in
 
   environment.systemPackages = with pkgs; [
     qbittorrent-nox
-    rclone
     qbScript
   ];
 
@@ -72,11 +34,6 @@ in
       User = "qbittorrent";
       ExecStart = "${pkgs.qbittorrent-nox}/bin/qbittorrent-nox --profile=%S/qbittorrent-nox --relative-fastresume";
       StateDirectory = "qbittorrent-nox";
-      EnvironmentFile = [
-        config.age.secrets.rclone-env.path
-        config.age.secrets.bark-ios.path
-      ];
-      PrivateTmp = true;
     };
     wantedBy = [ "multi-user.target" ];
   };

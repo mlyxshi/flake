@@ -22,7 +22,7 @@
     libreddit = import ./services/libreddit.nix;
 
     shadowsocks = import ./services/shadowsocks.nix;
-    qbittorrent = import ./services/qbittorrent.nix;
+    qbittorrent = import ./services/qbittorrent;
 
     prometheus = import ./services/prometheus.nix;
     telegraf = import ./services/telegraf.nix;
