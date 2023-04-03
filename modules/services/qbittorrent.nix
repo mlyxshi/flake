@@ -47,7 +47,7 @@ in
   users = {
     users.qbittorrent = {
       group = "qbittorrent";
-      isNormalUser = true;
+      isSystemUser = true;
     };
     groups.qbittorrent = { };
   };
@@ -79,7 +79,6 @@ in
   systemd.services.bangumi-index = {
     after = [ "network-online.target" ];
     serviceConfig = {
-      User = "qbittorrent";
       ExecStart = "${pkgs.deno}/bin/deno run --allow-net --allow-read https://deno.land/std/http/file_server.ts  %S/qbittorrent-nox/qBittorrent/downloads/";
     };
     wantedBy = [ "multi-user.target" ];
