@@ -1,0 +1,5 @@
+web_server:
+  bind: 0.0.0.0
+  port: 5050
+  web_ui: yes
+  base_url: /flexget

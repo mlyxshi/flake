@@ -21,7 +21,6 @@ in
     unitConfig.ConditionPathExists = "!%S/transmission/settings.json";
     script = ''
       cat ${./settings.json} > settings.json
-
       cat ${rcloneScript} > rclone.sh 
       chmod +x rclone.sh
     '';
@@ -33,7 +32,7 @@ in
   };
 
   systemd.services.transmission = {
-    after = [ "transmission-init.service" ];
+    after = [ "transmission-init.service" "network-online.target" ];
     environment = {
       TRANSMISSION_HOME = "%S/transmission";
       TRANSMISSION_WEB_HOME = "${pkgs.transmission}/public_html";
@@ -48,6 +47,30 @@ in
     wantedBy = [ "multi-user.target" ];
   };
 
+  systemd.services.flexget = {
+    after = [ "flexget-init.service" ];
+    serviceConfig = {
+      User = "transmission";
+      ExecStart = "${pkgs.flexget}/bin/flexget daemon";
+      WorkingDirectory = "%S/flexget";
+      StateDirectory = "flexget";
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
+
+  systemd.services.flexget-init = {
+    after = [ "transmission.service" ];
+    unitConfig.ConditionPathExists = "!%S/flexget/config.yml";
+    serviceConfig = {
+      User = "transmission";
+      WorkingDirectory = "%S/flexget";
+      StateDirectory = "flexget";
+    };
+    script = ''
+      cat ${./flexget.yml} > config.yml
+    '';
+    wantedBy = [ "multi-user.target" ];
+  };
 
   services.traefik = {
     dynamicConfigOptions = {
@@ -61,13 +84,23 @@ in
         services.transmission.loadBalancer.servers = [{
           url = "http://127.0.0.1:9091";
         }];
+
+        routers.flexget = {
+          rule = "Host(`flexget.${config.networking.domain}`)";
+          entryPoints = [ "websecure" ];
+          service = "flexget";
+        };
+
+        services.flexget.loadBalancer.servers = [{
+          url = "http://127.0.0.1:5050";
+        }];
       };
     };
   };
 
   system.activationScripts.cloudflare-dns-sync-transmission = {
     deps = [ "agenix" ];
-    text = "${pkgs.cloudflare-dns-sync}/bin/cloudflare-dns-sync transmission.${config.networking.domain}";
+    text = "${pkgs.cloudflare-dns-sync}/bin/cloudflare-dns-sync transmission.${config.networking.domain} flexget.${config.networking.domain}";
   };
 
 
