@@ -16,5 +16,4 @@ in
   "nodestatus-database.age".publicKeys = [ main ];
 
   "bark-ios.age".publicKeys = [ main ];
-  "qbittorrent-config.age".publicKeys = [ main ];
 }

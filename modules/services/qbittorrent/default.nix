@@ -1,7 +1,8 @@
 # change password
+
 { pkgs, lib, config, ... }: 
 let
-  public-pre-config = pkgs.writeText "pre-config" ''
+  pre-config = pkgs.writeText "pre-config" ''
     [AutoRun]
     enabled=true
     program=/run/current-system/sw/bin/deno run --allow-net --allow-env /etc/qbScript \"%N\" \"%F\" \"%C\" \"%Z\" \"%I\" \"%L\"
@@ -12,11 +13,6 @@ let
 in
 {
   age.secrets.bark-ios.file = ../../../secrets/bark-ios.age;
-  age.secrets.qbittorrent-config = {
-    file = ../../../secrets/qbittorrent-config.age;
-    owner = "qbittorrent";
-    group = "qbittorrent";
-  };
 
   users = {
     users.qbittorrent = {
@@ -56,7 +52,7 @@ in
     serviceConfig.User = "qbittorrent";
     script = ''
       mkdir -p /var/lib/qbittorrent-nox/qBittorrent/config/
-      cat ${public-pre-config} ${config.age.secrets.qbittorrent-config.path} > /var/lib/qbittorrent-nox/qBittorrent/config/qBittorrent.conf
+      cat ${pre-config} > /var/lib/qbittorrent-nox/qBittorrent/config/qBittorrent.conf
     '';
     wantedBy = [ "multi-user.target" ];
   };
