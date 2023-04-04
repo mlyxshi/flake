@@ -1,4 +1,10 @@
-{ config, pkgs, lib, ... }:{
+{ config, pkgs, lib, ... }:
+let
+  transmissionScript = pkgs.writeShellScript "transmission.sh" ''
+    ${pkgs.deno}/bin/deno run --allow-net --allow-env ${./main.ts}
+  '';
+in
+{
 
   age.secrets.transmission-env.file = ../../../secrets/transmission-env.age;
   age.secrets.rclone-env.file = ../../../secrets/rclone-env.age;
@@ -18,16 +24,13 @@
     groups.transmission = { };
   };
 
-  environment.systemPackages = with pkgs; [
-    deno
-  ];
 
   systemd.services.transmission-init = {
     unitConfig.ConditionPathExists = "!%S/transmission/settings.json";
     script = ''
       cat ${./settings.json} > settings.json
-      cat ${./main.ts} > transmission.ts
-      chmod +x transmission.ts
+      cat ${transmissionScript} > transmission.sh
+      chmod +x transmission.sh
     '';
     serviceConfig.User = "transmission";
     serviceConfig.Type = "oneshot";
