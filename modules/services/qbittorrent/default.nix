@@ -1,7 +1,7 @@
 # change password
 { pkgs, lib, config, ... }: 
 let
-  pre-config = pkgs.writeText "pre-config" ''
+  public-pre-config = pkgs.writeText "pre-config" ''
     [AutoRun]
     enabled=true
     program=/run/current-system/sw/bin/deno run --allow-net --allow-env /etc/qbScript \"%N\" \"%F\" \"%C\" \"%Z\" \"%I\" \"%L\"
@@ -12,6 +12,7 @@ let
 in
 {
   age.secrets.bark-ios.file = ../../../secrets/bark-ios.age;
+  age.secrets.qbittorrent-config.path = ../../../secrets/qbittorrent-config.age;
 
   users = {
     users.qbittorrent = {
@@ -42,10 +43,16 @@ in
         config.age.secrets.bark-ios.path
       ];
     };
-    preStart = ''
+    wantedBy = [ "multi-user.target" ];
+  };
+
+  systemd.services.qbittorrent-nox-config-init = {
+    before = [ "qbittorrent-nox.service" ];
+    unitConfig.ConditionPathExists = "!%S/qbittorrent-nox/qBittorrent/config/qBittorrent.conf";
+    serviceConfig.User = "qbittorrent";
+    script = ''
       mkdir -p /var/lib/qbittorrent-nox/qBittorrent/config/
-      touch /var/lib/qbittorrent-nox/qBittorrent/config/qBittorrent.conf
-      ${pkgs.crudini}/bin/crudini --merge /var/lib/qbittorrent-nox/qBittorrent/config/qBittorrent.conf < ${pre-config}
+      cat ${public-pre-config} ${config.age.secrets.qbittorrent-config.path} > /var/lib/qbittorrent-nox/qBittorrent/config/qBittorrent.conf
     '';
     wantedBy = [ "multi-user.target" ];
   };
