@@ -2,7 +2,7 @@
 let
   transmissionScript = pkgs.writeText "transmission.ts" (''
     #!${pkgs.deno}/bin/deno run --allow-net --allow-env
-  '' + builtins.readFile ./transmission.sh);
+  '' + builtins.readFile ./transmission.ts);
 in
 {
   age.secrets.transmission-env.file = ../../../secrets/transmission-env.age;
