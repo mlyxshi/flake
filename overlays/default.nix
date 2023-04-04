@@ -11,5 +11,5 @@ final: prev: {
 
   transmission = prev.callPackage ../pkgs/transmission { };
 
-  alist = prev.callPackage ../pkgs/alist { };
+  flexget = prev.callPackage ../pkgs/flexget { };
 }
