@@ -2,10 +2,7 @@
 { pkgs, lib, config, ... }: 
 let
   pre-config = pkgs.writeText "pre-config" ''
-    [AutoRun]
-    enabled=true
-    program=program=/run/current-system/sw/bin/deno run --allow-net --allow-env /etc/qbScript \"%N\" \"%F\" \"%C\" \"%Z\" \"%I\" \"%L\"
-    
+
     [Preferences]
     WebUI\CSRFProtection=false
   '';
