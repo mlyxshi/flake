@@ -57,20 +57,20 @@ in
   };
 
   # Wait PR: https://github.com/Flexget/Flexget/pull/3716
-  systemd.services.flexget = {
-    after = [ "transmission.service" ];
-    preStart = ''
-      cat ${./flexget.yml} > config.yml
-      cat ${config.age.secrets.flexget-variables.path} > variables.yml
-    '';
-    serviceConfig = {
-      User = "transmission";
-      ExecStart = "${pkgs.flexget}/bin/flexget daemon start";
-      WorkingDirectory = "%S/flexget";
-      StateDirectory = "flexget";
-    };
-    wantedBy = [ "multi-user.target" ];
-  };
+  # systemd.services.flexget = {
+  #   after = [ "transmission.service" ];
+  #   preStart = ''
+  #     cat ${./flexget.yml} > config.yml
+  #     cat ${config.age.secrets.flexget-variables.path} > variables.yml
+  #   '';
+  #   serviceConfig = {
+  #     User = "transmission";
+  #     ExecStart = "${pkgs.flexget}/bin/flexget daemon start";
+  #     WorkingDirectory = "%S/flexget";
+  #     StateDirectory = "flexget";
+  #   };
+  #   wantedBy = [ "multi-user.target" ];
+  # };
 
   systemd.services.transmission-index = {
     after = [ "network-online.target" ];
