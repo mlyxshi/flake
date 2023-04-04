@@ -8,4 +8,4 @@ tasks:
 schedules:
   - tasks: '*'
     interval:
-      minutes: 10
+      minutes: 1
