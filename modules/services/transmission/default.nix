@@ -9,6 +9,12 @@ in
   age.secrets.rclone-env.file = ../../../secrets/rclone-env.age;
   age.secrets.bark-ios.file = ../../../secrets/bark-ios.age;
 
+  age.secrets.flexget-variables = {
+    file = ../../../secrets/flexget-variables.age;
+    owner = "transmission";
+    group = "transmission";
+  };
+
   users = {
     users.transmission = {
       group = "transmission";
@@ -51,6 +57,7 @@ in
     after = [ "transmission.service" ];
     preStart = ''
       cat ${./flexget.yml} > config.yml
+      cat ${config.age.secrets.flexget-variables.path} > variables.yml
     '';
     serviceConfig = {
       User = "transmission";
