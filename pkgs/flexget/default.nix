@@ -72,6 +72,7 @@ python.pkgs.buildPythonApplication rec {
 
     # extra
     cheroot
+    portend
   ];
 
   pythonImportsCheck = [
