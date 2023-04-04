@@ -77,6 +77,7 @@ python.pkgs.buildPythonApplication rec {
     itsdangerous
     autocommand
     zipp
+    jaraco-classes
   ];
 
   pythonImportsCheck = [
