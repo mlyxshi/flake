@@ -66,22 +66,32 @@ python.pkgs.buildPythonApplication rec {
     typing-extensions
 
     # WebUI requirements
+    cherrypy
+    flask-compress
+    flask-cors
+    flask-login
+    flask-restful
+    flask-restx
+    flask
+    pyparsing
+    werkzeug
+    zxcvbn
 
     # Plugins requirements
     transmission-rpc
 
     # extra
-    cheroot
-    portend
-    aniso8601
-    itsdangerous
-    autocommand
-    zipp
-    jaraco_classes
-    jaraco_collections
-    werkzeug
-    zxcvbn
-    zc_lockfile
+    # cheroot
+    # portend
+    # aniso8601
+    # itsdangerous
+    # autocommand
+    # zipp
+    # jaraco_classes
+    # jaraco_collections
+    # werkzeug
+    # zxcvbn
+    # zc_lockfile
   ];
 
   pythonImportsCheck = [
