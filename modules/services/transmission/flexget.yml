@@ -5,3 +5,5 @@ web_server:
   base_url: /flexget
 
 tasks:
+  example:
+    rss: http://example.com/feed.xml
