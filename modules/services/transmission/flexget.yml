@@ -1,17 +1,18 @@
 variables: variables.yml
 
 templates:
-  transmission:
-    host: 127.0.0.1
-    port: 9091
-    username: '{? tr.usr ?}'
-    password: '{? tr.pwd ?}'
+  tr:
+    transmission:
+      host: 127.0.0.1
+      port: 9091
+      username: '{? tr.usr ?}'
+      password: '{? tr.pwd ?}'
 
 tasks:
   天国大魔境:
     rss: https://mikanani.me/RSS/Bangumi?bangumiId=2970&subgroupid=370
     accept_all: yes
-    template: transmission
+    template: tr
 
 schedules:
   - tasks: '*'
