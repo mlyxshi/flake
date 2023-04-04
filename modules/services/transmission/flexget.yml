@@ -1,6 +1,7 @@
 tasks:
   天国大魔境:
     rss: https://mikanani.me/RSS/Bangumi?bangumiId=2970&subgroupid=370
+    accept_all: yes
     transmission:
       host: localhost
       port: 9091
