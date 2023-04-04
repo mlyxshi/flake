@@ -18,7 +18,8 @@ const CATEGORY = ARG[5];
 // console.log("CATEGORY:", CATEGORY);
 
 const INFUSE_PLAYER_URL = encodeURIComponent(`http://bangumi-index.mlyxshi.com/${TORRENT_NAME}`);
-const INFUSE_URL_SCHEME = `infuse://x-callback-url/play?url=${INFUSE_PLAYER_URL}`;
+const IOS_SHORTCUTS_URL = `shortcuts://run-shortcut?name=qbittorrent-delete&input=text&text=${FILE_HASH}`
+const INFUSE_URL_SCHEME = `infuse://x-callback-url/play?url=${INFUSE_PLAYER_URL}&x-success=${IOS_SHORTCUTS_URL}`;
 
 fetch(
     `https://api.day.app/push`,
