@@ -34,6 +34,15 @@
         config.age.secrets.bark-ios.path
       ];
     };
+    preStart = ''
+      cat > /var/lib/qbittorrent-nox/qBittorrent/config/qBittorrent.conf <<EOF
+      [AutoRun]
+      OnTorrentAdded\Enabled=true
+      OnTorrentAdded\Program=test1
+      enabled=true
+      program=test2
+      EOF
+    '';
     wantedBy = [ "multi-user.target" ];
   };
 
