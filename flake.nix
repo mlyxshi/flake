@@ -70,8 +70,8 @@
       packages.x86_64-linux.transmission = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/transmission { };
       packages.aarch64-linux.transmission = nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/transmission { };
 
-      packages.x86_64-linux.alist = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/alist { };
-      packages.aarch64-linux.alist = nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/alist { };
+      packages.x86_64-linux.flexget = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/flexget { };
+      packages.aarch64-linux.flexget = nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/flexget { };
 
       packages.x86_64-linux.stdenv = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/stdenv { };
       packages.aarch64-linux.stdenv = nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/stdenv { };
