@@ -32,6 +32,9 @@ stdenv.mkDerivation rec {
     sed -i 's/set(TR_VERSION_MINOR "[0-9]\+")/set(TR_VERSION_MINOR "0")/' CMakeLists.txt
     sed -i 's/set(TR_VERSION_PATCH "[0-9]\+")/set(TR_VERSION_PATCH "0")/' CMakeLists.txt
 
+    # Disable CSRF
+    sed -i '/#define REQUIRE_SESSION_ID/d'  libtransmission/rpc-server.cc
+
     mkdir build
     cd build
     cmake -DCMAKE_BUILD_TYPE=Release ..
