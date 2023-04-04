@@ -1,9 +1,11 @@
-web_server:
-  bind: 0.0.0.0
-  port: 5050
-  web_ui: yes
-  base_url: /flexget
-
 tasks:
-  example:
-    rss: http://example.com/feed.xml
+  天国大魔境:
+    rss: https://mikanani.me/RSS/Bangumi?bangumiId=2970&subgroupid=370
+    transmission:
+      host: localhost
+      port: 9091
+
+schedules:
+  - tasks: '*'
+    interval:
+      minutes: 10
