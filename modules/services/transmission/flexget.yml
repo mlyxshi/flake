@@ -3,3 +3,5 @@ web_server:
   port: 5050
   web_ui: yes
   base_url: /flexget
+
+tasks:
