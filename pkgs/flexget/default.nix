@@ -24,7 +24,7 @@ python.pkgs.buildPythonApplication rec {
     owner = "Flexget";
     repo = "Flexget";
     rev = "pull/3716/head";
-    hash = "";
+    hash = "sha256-KXtfcRBlZXwQ+217FwpQj9dpjfDamNW7zDNUmwQqlRY=";
   };
 
   postPatch = ''
