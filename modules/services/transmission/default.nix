@@ -48,27 +48,13 @@ in
   };
 
   systemd.services.flexget = {
-    after = [ "flexget-init.service" ];
-    serviceConfig = {
-      User = "transmission";
-      ExecStart = "${pkgs.flexget}/bin/flexget daemon start";
-      WorkingDirectory = "%S/flexget";
-      StateDirectory = "flexget";
-    };
-    wantedBy = [ "multi-user.target" ];
-  };
-
-  systemd.services.flexget-init = {
     after = [ "transmission.service" ];
-    unitConfig.ConditionPathExists = "!%S/flexget/config.yml";
     serviceConfig = {
       User = "transmission";
+      ExecStart = "${pkgs.flexget}/bin/flexget -c ${./flexget.yml} daemon start";
       WorkingDirectory = "%S/flexget";
       StateDirectory = "flexget";
     };
-    script = ''
-      cat ${./flexget.yml} > config.yml
-    '';
     wantedBy = [ "multi-user.target" ];
   };
 
@@ -84,23 +70,13 @@ in
         services.transmission.loadBalancer.servers = [{
           url = "http://127.0.0.1:9091";
         }];
-
-        routers.flexget = {
-          rule = "Host(`flexget.${config.networking.domain}`)";
-          entryPoints = [ "websecure" ];
-          service = "flexget";
-        };
-
-        services.flexget.loadBalancer.servers = [{
-          url = "http://127.0.0.1:5050";
-        }];
       };
     };
   };
 
   system.activationScripts.cloudflare-dns-sync-transmission = {
     deps = [ "agenix" ];
-    text = "${pkgs.cloudflare-dns-sync}/bin/cloudflare-dns-sync transmission.${config.networking.domain} flexget.${config.networking.domain}";
+    text = "${pkgs.cloudflare-dns-sync}/bin/cloudflare-dns-sync transmission.${config.networking.domain}";
   };
 
 
