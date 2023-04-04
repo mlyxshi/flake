@@ -75,6 +75,7 @@ python.pkgs.buildPythonApplication rec {
     portend
     aniso8601
     itsdangerous
+    autocommand
   ];
 
   pythonImportsCheck = [
