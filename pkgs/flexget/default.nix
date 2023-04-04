@@ -80,6 +80,7 @@ python.pkgs.buildPythonApplication rec {
     jaraco_classes
     jaraco_collections
     werkzeug
+    zxcvbn
   ];
 
   pythonImportsCheck = [
