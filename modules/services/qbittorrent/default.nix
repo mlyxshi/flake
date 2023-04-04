@@ -12,7 +12,7 @@ let
 in
 {
   age.secrets.bark-ios.file = ../../../secrets/bark-ios.age;
-  age.secrets.qbittorrent-config.path = ../../../secrets/qbittorrent-config.age;
+  age.secrets.qbittorrent-config.file = ../../../secrets/qbittorrent-config.age;
 
   users = {
     users.qbittorrent = {
