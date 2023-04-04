@@ -1,8 +1,8 @@
 { config, pkgs, lib, ... }:
 let
-  rcloneScript = pkgs.writeShellScript "rclone.sh" (''
-    export PATH=$PATH:${pkgs.rclone}/bin:${pkgs.xh}/bin:${pkgs.transmission}/bin
-  '' + builtins.readFile ./rclone.sh);
+  transmissionScript = pkgs.writeText "transmission.ts" (''
+    #!${pkgs.deno}/bin/deno run --allow-net --allow-env
+  '' + builtins.readFile ./transmission.sh);
 in
 {
   age.secrets.transmission-env.file = ../../../secrets/transmission-env.age;
@@ -27,8 +27,8 @@ in
     unitConfig.ConditionPathExists = "!%S/transmission/settings.json";
     script = ''
       cat ${./settings.json} > settings.json
-      cat ${rcloneScript} > rclone.sh 
-      chmod +x rclone.sh
+      cat ${transmissionScript} > transmission.ts
+      chmod +x transmission.ts
     '';
     serviceConfig.User = "transmission";
     serviceConfig.Type = "oneshot";
@@ -69,6 +69,14 @@ in
   #   wantedBy = [ "multi-user.target" ];
   # };
 
+  systemd.services.transmission-index = {
+    after = [ "network-online.target" ];
+    serviceConfig = {
+      ExecStart = "${pkgs.deno}/bin/deno run --allow-net --allow-read https://deno.land/std/http/file_server.ts  %S/transmission/files";
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
+
   services.traefik = {
     dynamicConfigOptions = {
       http = {
@@ -81,13 +89,23 @@ in
         services.transmission.loadBalancer.servers = [{
           url = "http://127.0.0.1:9091";
         }];
+
+        routers.transmission-index = {
+          rule = "Host(`transmission-index.${config.networking.domain}`)";
+          entryPoints = [ "web" ];
+          service = "transmission-index";
+        };
+
+        services.transmission-index.loadBalancer.servers = [{
+          url = "http://127.0.0.1:4507";
+        }];
       };
     };
   };
 
   system.activationScripts.cloudflare-dns-sync-transmission = {
     deps = [ "agenix" ];
-    text = "${pkgs.cloudflare-dns-sync}/bin/cloudflare-dns-sync transmission.${config.networking.domain}";
+    text = "${pkgs.cloudflare-dns-sync}/bin/cloudflare-dns-sync transmission.${config.networking.domain} transmission-index.${config.networking.domain}";
   };
 
 
