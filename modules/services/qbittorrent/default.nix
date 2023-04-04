@@ -43,6 +43,7 @@ in
       ];
     };
     preStart = ''
+      touch /var/lib/qbittorrent-nox/qBittorrent/config/qBittorrent.conf
       ${pkgs.crudini}/bin/crudini --merge /var/lib/qbittorrent-nox/qBittorrent/config/qBittorrent.conf < ${pre-config}
     '';
     wantedBy = [ "multi-user.target" ];
