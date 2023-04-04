@@ -51,7 +51,7 @@ in
     after = [ "flexget-init.service" ];
     serviceConfig = {
       User = "transmission";
-      ExecStart = "${pkgs.flexget}/bin/flexget daemon";
+      ExecStart = "${pkgs.flexget}/bin/flexget daemon start";
       WorkingDirectory = "%S/flexget";
       StateDirectory = "flexget";
     };
