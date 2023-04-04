@@ -74,6 +74,7 @@ python.pkgs.buildPythonApplication rec {
     cheroot
     portend
     aniso8601
+    itsdangerous
   ];
 
   pythonImportsCheck = [
