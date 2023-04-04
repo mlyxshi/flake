@@ -81,17 +81,15 @@ python.pkgs.buildPythonApplication rec {
     transmission-rpc
 
     # extra
-    # cheroot
-    # portend
-    # aniso8601
-    # itsdangerous
-    # autocommand
-    # zipp
-    # jaraco_classes
-    # jaraco_collections
-    # werkzeug
-    # zxcvbn
-    # zc_lockfile
+    cheroot
+    portend
+    aniso8601
+    itsdangerous
+    autocommand
+    zipp
+    jaraco_classes
+    jaraco_collections
+    zc_lockfile
   ];
 
   pythonImportsCheck = [
