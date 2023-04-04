@@ -1,0 +1,14 @@
+name: "System Install"
+on:
+  workflow_dispatch:
+    inputs:
+      host:
+        required: true
+        description: Which host to install
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest   
+    steps:
+    - run: mkdir -m 0755  ~/.ssh && echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519 
+    - run: ssh -o StrictHostKeyChecking=no root@${{ github.event.inputs.host }}.mlyxshi.com 'curl -sL http://hydra.mlyxshi.com/job/flake/kexec/$(uname -m)/latest/download-by-type/file/kexec | bash -s  bark_key= ${{ secrets.BARK_KEY }} age_key= ${{ secrets.AGE_KEY_URL }} host=${{ github.event.inputs.host }}' 
