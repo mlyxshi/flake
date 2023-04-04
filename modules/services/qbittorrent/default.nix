@@ -1,8 +1,16 @@
-#  Run external program on torrent completion
-# /run/current-system/sw/bin/deno run --allow-net --allow-env /etc/qbScript "%N" "%F" "%C" "%Z" "%I" "%L"
 # change password
-# disable Cross-Site Request Forgery (CSRF) protection
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: 
+let
+  pre-config = pkgs.writeText "pre-config" ''
+    [AutoRun]
+    enabled=true
+    program=program=/run/current-system/sw/bin/deno run --allow-net --allow-env /etc/qbScript \"%N\" \"%F\" \"%C\" \"%Z\" \"%I\" \"%L\"
+    
+    [Preferences]
+    WebUI\CSRFProtection=false
+  '';
+in
+{
   age.secrets.bark-ios.file = ../../../secrets/bark-ios.age;
 
   users = {
@@ -35,13 +43,7 @@
       ];
     };
     preStart = ''
-      cat > /var/lib/qbittorrent-nox/qBittorrent/config/qBittorrent.conf <<EOF
-      [AutoRun]
-      OnTorrentAdded\Enabled=true
-      OnTorrentAdded\Program=test1
-      enabled=true
-      program=test2
-      EOF
+      ${pkgs.crudini}/bin/crudini --merge /var/lib/qbittorrent-nox/qBittorrent/config/qBittorrent.conf < ${pre-config}
     '';
     wantedBy = [ "multi-user.target" ];
   };
