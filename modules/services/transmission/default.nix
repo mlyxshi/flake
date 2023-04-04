@@ -45,6 +45,7 @@ in
       TRANSMISSION_HOME = "%S/transmission";
       TRANSMISSION_WEB_HOME = "${pkgs.transmission}/public_html";
       DENO_DIR = "%S/transmission/.deno";
+      RCLONE_CONFIG_DIR="%S/transmission/.rclone";
     };
     serviceConfig.EnvironmentFile = [
       config.age.secrets.transmission-env.path
