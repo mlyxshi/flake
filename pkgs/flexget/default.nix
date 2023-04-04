@@ -69,6 +69,9 @@ python.pkgs.buildPythonApplication rec {
 
     # Plugins requirements
     transmission-rpc
+
+    # extra
+    cheroot
   ];
 
   pythonImportsCheck = [
