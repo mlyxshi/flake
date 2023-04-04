@@ -43,6 +43,7 @@ in
       ];
     };
     preStart = ''
+      mkdir -p /var/lib/qbittorrent-nox/qBittorrent/config/
       touch /var/lib/qbittorrent-nox/qBittorrent/config/qBittorrent.conf
       ${pkgs.crudini}/bin/crudini --merge /var/lib/qbittorrent-nox/qBittorrent/config/qBittorrent.conf < ${pre-config}
     '';
