@@ -7,7 +7,6 @@ templates:
       port: 9091
       username: '{? tr.usr ?}'
       password: '{? tr.pwd ?}'
-      add_paused: no
 
 tasks:
   天国大魔境:
@@ -15,7 +14,7 @@ tasks:
     accept_all: yes
     template: tr
 
-schedules:
-  - tasks: '*'
-    interval:
-      minutes: 1
+# schedules:
+#   - tasks: '*'
+#     interval:
+#       minutes: 1
