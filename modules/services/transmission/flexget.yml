@@ -5,6 +5,8 @@ tasks:
     transmission:
       host: localhost
       port: 9091
+      username: whitelist
+      password: whitelist
 
 schedules:
   - tasks: '*'
