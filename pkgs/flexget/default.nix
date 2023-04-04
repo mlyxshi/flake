@@ -81,6 +81,7 @@ python.pkgs.buildPythonApplication rec {
     jaraco_collections
     werkzeug
     zxcvbn
+    zc_lockfile
   ];
 
   pythonImportsCheck = [
