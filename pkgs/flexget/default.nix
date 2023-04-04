@@ -76,6 +76,7 @@ python.pkgs.buildPythonApplication rec {
     aniso8601
     itsdangerous
     autocommand
+    zipp
   ];
 
   pythonImportsCheck = [
