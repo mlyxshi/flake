@@ -79,6 +79,7 @@ python.pkgs.buildPythonApplication rec {
     zipp
     jaraco_classes
     jaraco_collections
+    werkzeug
   ];
 
   pythonImportsCheck = [
