@@ -73,6 +73,7 @@ python.pkgs.buildPythonApplication rec {
     # extra
     cheroot
     portend
+    aniso8601
   ];
 
   pythonImportsCheck = [
