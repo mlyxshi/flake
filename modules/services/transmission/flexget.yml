@@ -4,8 +4,8 @@ templates:
   transmission:
     host: 127.0.0.1
     port: 9091
-    username: '{? transmission.usr ?}'
-    password: '{? transmission.pwd ?}'
+    username: '{? tr.usr ?}'
+    password: '{? tr.pwd ?}'
 
 tasks:
   天国大魔境:
