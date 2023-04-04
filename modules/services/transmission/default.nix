@@ -49,9 +49,12 @@ in
 
   systemd.services.flexget = {
     after = [ "transmission.service" ];
+    preStart = ''
+      cat ${./flexget.yml} > config.yml
+    '';
     serviceConfig = {
       User = "transmission";
-      ExecStart = "${pkgs.flexget}/bin/flexget -c ${./flexget.yml} daemon start";
+      ExecStart = "${pkgs.flexget}/bin/flexget daemon start";
       WorkingDirectory = "%S/flexget";
       StateDirectory = "flexget";
     };
