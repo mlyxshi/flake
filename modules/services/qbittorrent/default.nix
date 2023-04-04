@@ -50,6 +50,7 @@ in
     before = [ "qbittorrent-nox.service" ];
     unitConfig.ConditionPathExists = "!%S/qbittorrent-nox/qBittorrent/config/qBittorrent.conf";
     serviceConfig.User = "qbittorrent";
+    serviceConfig.StateDirectory = "qbittorrent-nox";
     script = ''
       mkdir -p /var/lib/qbittorrent-nox/qBittorrent/config/
       cat ${pre-config} > /var/lib/qbittorrent-nox/qBittorrent/config/qBittorrent.conf
