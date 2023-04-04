@@ -44,6 +44,7 @@ in
     environment = {
       TRANSMISSION_HOME = "%S/transmission";
       TRANSMISSION_WEB_HOME = "${pkgs.transmission}/public_html";
+      DENO_DIR = "%S/transmission/.deno";
     };
     serviceConfig.EnvironmentFile = [
       config.age.secrets.transmission-env.path
