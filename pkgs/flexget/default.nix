@@ -90,6 +90,7 @@ python.pkgs.buildPythonApplication rec {
     jaraco_classes
     jaraco_collections
     zc_lockfile
+    importlib_metadata
   ];
 
   pythonImportsCheck = [
