@@ -1,3 +1,4 @@
+#!/usr/bin/env -S deno run --allow-net --allow-env
 const BARK_KEY = Deno.env.get("BARK_KEY");
 
 const TR_TORRENT_NAME = Deno.env.get("TR_TORRENT_NAME");
