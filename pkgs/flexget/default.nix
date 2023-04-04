@@ -78,6 +78,7 @@ python.pkgs.buildPythonApplication rec {
     autocommand
     zipp
     jaraco_classes
+    jaraco_collections
   ];
 
   pythonImportsCheck = [
