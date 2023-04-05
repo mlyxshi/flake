@@ -51,7 +51,7 @@ if (TR_TORRENT_LABELS == "infuse") {
         await p.status();
     }
      
-    fetch(
+    await fetch(
         `https://api.day.app/push`,
         {
             method: "POST",
@@ -70,7 +70,7 @@ if (TR_TORRENT_LABELS == "infuse") {
 
     if (TR_TORRENT_LABELS != "seed") {
         console.log("Delete torrent")
-        fetch(
+        await fetch(
             `http://localhost:9091/transmission/rpc`,
             {
                 method: "POST",
