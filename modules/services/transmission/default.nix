@@ -65,6 +65,7 @@ in
     preStart = ''
       cat ${./flexget.yml} > config.yml
       cat ${config.age.secrets.flexget-variables.path} > variables.yml
+      mkdir -p /var/lib/transmission/watch
     '';
     serviceConfig = {
       User = "transmission";
