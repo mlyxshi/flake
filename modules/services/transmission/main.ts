@@ -43,9 +43,20 @@ if (TR_TORRENT_LABELS == "infuse") {
 
     console.log("FILE_INFO:", FILE_INFO)
 
-    if (FILE_INFO.isFile) await exec(`rclone -v copy "${FUll_PATH}" "${RCLONE_FOLDER}"`);
-    if (FILE_INFO.isDirectory) await exec(`rclone -v copy --transfers 32 "${FUll_PATH}" "${RCLONE_FOLDER}/${TR_TORRENT_NAME}"`);
+    // if (FILE_INFO.isFile) await exec(`rclone -v copy "${FUll_PATH}" "${RCLONE_FOLDER}"`);
+    // if (FILE_INFO.isDirectory) await exec(`rclone -v copy --transfers 32 "${FUll_PATH}" "${RCLONE_FOLDER}/${TR_TORRENT_NAME}"`);
 
+    if (FILE_INFO.isFile) {
+        const cmd = ["rclone", "copy", `"${FUll_PATH}"`, `"${RCLONE_FOLDER}"`];
+        const p = Deno.run({ cmd });
+        console.log(await p.status());
+    }
+    if (FILE_INFO.isDirectory) {
+        const cmd = ["rclone", "copy", "--transfers", "32", `"${FUll_PATH}"`, `"${RCLONE_FOLDER}/${TR_TORRENT_NAME}"`];
+        const p = Deno.run({ cmd });
+        console.log(await p.status());
+    }
+    
     fetch(
         `https://api.day.app/push`,
         {
