@@ -50,9 +50,7 @@ if (TR_TORRENT_LABELS == "infuse") {
         const p = Deno.run({ cmd });
         await p.status();
     }
-
-
-    console.log("Rclone upload success")
+     
     fetch(
         `https://api.day.app/push`,
         {
@@ -89,6 +87,7 @@ if (TR_TORRENT_LABELS == "infuse") {
                 }),
             },
         );
+        console.log("Delete torrent")
     }
 
 }
