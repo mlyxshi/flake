@@ -1,5 +1,3 @@
-import { exec } from "https://deno.land/x/exec/mod.ts";
-
 const BARK_KEY = Deno.env.get("BARK_KEY");
 const ADMIN = Deno.env.get("ADMIN");
 const PASSWORD = Deno.env.get("PASSWORD");
@@ -40,23 +38,19 @@ if (TR_TORRENT_LABELS == "infuse") {
     const RCLONE_FOLDER = "gdrive:Download"
     const FUll_PATH = `/var/lib/transmission/files/${TR_TORRENT_NAME}`
     const FILE_INFO = await Deno.stat(FUll_PATH);
-
     console.log("FILE_INFO:", FILE_INFO)
 
-    // if (FILE_INFO.isFile) await exec(`rclone -v copy "${FUll_PATH}" "${RCLONE_FOLDER}"`);
-    // if (FILE_INFO.isDirectory) await exec(`rclone -v copy --transfers 32 "${FUll_PATH}" "${RCLONE_FOLDER}/${TR_TORRENT_NAME}"`);
-
     if (FILE_INFO.isFile) {
-        const cmd = ["rclone", "copy", `"${FUll_PATH}"`, `"${RCLONE_FOLDER}"`];
+        const cmd = ["rclone", "copy", FUll_PATH, RCLONE_FOLDER];
         const p = Deno.run({ cmd });
         console.log(await p.status());
     }
     if (FILE_INFO.isDirectory) {
-        const cmd = ["rclone", "copy", "--transfers", "32", `"${FUll_PATH}"`, `"${RCLONE_FOLDER}/${TR_TORRENT_NAME}"`];
+        const cmd = ["rclone", "copy", "--transfers", "32", FUll_PATH, `${RCLONE_FOLDER}/${TR_TORRENT_NAME}`];
         const p = Deno.run({ cmd });
         console.log(await p.status());
     }
-    
+
     fetch(
         `https://api.day.app/push`,
         {
