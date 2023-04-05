@@ -16,6 +16,11 @@ tasks:
     rss: https://mikanani.me/RSS/Bangumi?bangumiId=2970&subgroupid=370
     accept_all: yes
     download: /var/lib/transmission/watch
+  
+  為美好的世界獻上爆焰:
+    rss: https://share.dmhy.org/topics/rss/rss.xml?keyword=%E7%82%BA%E7%BE%8E%E5%A5%BD%E7%9A%84%E4%B8%96%E7%95%8C%E7%8D%BB%E4%B8%8A%E7%88%86%E7%84%B0+Lilith-Raws+1080 
+    accept_all: yes
+    download: /var/lib/transmission/watch
 
 schedules:
   - tasks: '*'
