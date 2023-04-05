@@ -56,6 +56,7 @@ in
     preStart = ''
       cat ${transmissionScript} > transmission.sh
       chmod +x transmission.sh
+      mkdir -p /var/lib/transmission/watch
     '';
     wantedBy = [ "multi-user.target" ];
   };
@@ -63,9 +64,8 @@ in
   systemd.services.flexget = {
     after = [ "transmission.service" ];
     preStart = ''
-      cat ${./flexget.yml} > config.yml
+      cat ${../../../rss.yml} > config.yml
       cat ${config.age.secrets.flexget-variables.path} > variables.yml
-      mkdir -p /var/lib/transmission/watch
     '';
     serviceConfig = {
       User = "transmission";
