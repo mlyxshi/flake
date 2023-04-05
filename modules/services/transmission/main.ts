@@ -39,30 +39,32 @@ if (TR_TORRENT_LABELS == "infuse") {
     const FUll_PATH = `/var/lib/transmission/files/${TR_TORRENT_NAME}`
     const FILE_INFO = await Deno.stat(FUll_PATH);
     console.log("FILE_INFO:", FILE_INFO)
-    let RCLONE_CMD="";
-    if (FILE_INFO.isFile) RCLONE_CMD = ["rclone", "copy", FUll_PATH, RCLONE_FOLDER];
-    if (FILE_INFO.isDirectory) RCLONE_CMD = ["rclone", "copy", "--transfers", "32", FUll_PATH, `${RCLONE_FOLDER}/${TR_TORRENT_NAME}`];
-    const RCLONE_PROCESS = Deno.run({ RCLONE_CMD });
-    const RCLONE_PROCESS_STATUS = await RCLONE_PROCESS.status();
 
-    if (RCLONE_PROCESS_STATUS.success) {
-        console.log("Rclone upload success")
-        fetch(
-            `https://api.day.app/push`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    device_key: BARK_KEY,
-                    title: "Upload",
-                    icon: "https://drive.google.com/favicon.ico",
-                    body: TR_TORRENT_NAME,
-                }),
-            },
-        );
+    if (FILE_INFO.isFile) {
+        const p = Deno.run({ ["rclone", "copy", FUll_PATH, RCLONE_FOLDER] });
+        await p.status();
     }
+    if (FILE_INFO.isDirectory) {
+        const p = Deno.run({ ["rclone", "copy", "--transfers", "32", FUll_PATH, `${RCLONE_FOLDER}/${TR_TORRENT_NAME}`] });
+        await p.status();
+    }
+
+    fetch(
+        `https://api.day.app/push`,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                device_key: BARK_KEY,
+                title: "Upload",
+                icon: "https://drive.google.com/favicon.ico",
+                body: TR_TORRENT_NAME,
+            }),
+        },
+    );
+
 
     if (TR_TORRENT_LABELS != "seed") {
         console.log("Delete torrent")
