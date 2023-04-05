@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 let
   transmissionScript = pkgs.writeShellScript "transmission.sh" ''
-    export PATH=$PATH:${pkgs.rclone}/bin
+    export PATH=$PATH:${pkgs.rclone}/bin:${pkgs.transmission}/bin
     ${pkgs.deno}/bin/deno run --allow-net --allow-env --allow-read --allow-run ${./main.ts}
   '';
 in

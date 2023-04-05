@@ -51,7 +51,7 @@ if (TR_TORRENT_LABELS == "infuse") {
         await p.status();
     }
      
-    await fetch(
+    fetch(
         `https://api.day.app/push`,
         {
             method: "POST",
@@ -69,25 +69,9 @@ if (TR_TORRENT_LABELS == "infuse") {
 
 
     if (TR_TORRENT_LABELS != "seed") {
-        console.log("Delete torrent")
-        await fetch(
-            `http://localhost:9091/transmission/rpc`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Basic ${btoa(`${ADMIN}:${PASSWORD}`)}`,
-                },
-                body: JSON.stringify({
-                    method: "torrent-remove",
-                    arguments: {
-                        "ids": TR_TORRENT_ID,
-                        "delete-local-data": true,
-                    },
-                }),
-            },
-        );
-        console.log("Delete torrent")
+        const cmd = ["transmission-remote", "--auth", `${ADMIN}:${PASSWORD}`, "--torrent", TR_TORRENT_ID, "--remove-and-delete" ];
+        const p = Deno.run({ cmd });
+        await p.status();
     }
 
 }

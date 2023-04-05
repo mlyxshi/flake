@@ -47,6 +47,7 @@ stdenv.mkDerivation rec {
   installPhase = ''
     mkdir -p $out/bin
     cp ./daemon/transmission-daemon  $out/bin
+    cp ./utils/transmission-remote   $out/bin
     cp -r ../web/public_html         $out   
   '';
 }
