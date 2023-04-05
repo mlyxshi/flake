@@ -16,8 +16,7 @@ if (TR_TORRENT_LABELS == "infuse") {
     const IOS_SHORTCUTS_URL = encodeURIComponent(`shortcuts://run-shortcut?name=transmission-delete&input=text&text=${TR_TORRENT_ID}`)
     const INFUSE_URL_SCHEME = `infuse://x-callback-url/play?url=${MEDIA_URL}&x-success=${IOS_SHORTCUTS_URL}`;
 
-    fetch(
-        `https://api.day.app/push`,
+    fetch(`https://api.day.app/push`,
         {
             method: "POST",
             headers: {
@@ -40,19 +39,13 @@ if (TR_TORRENT_LABELS == "infuse") {
     const FILE_INFO = await Deno.stat(FUll_PATH);
     console.log("FILE_INFO:", FILE_INFO)
 
-    if (FILE_INFO.isFile) {
-        const cmd = ["rclone", "copy", FUll_PATH, RCLONE_FOLDER];
-        const p = Deno.run({ cmd });
-        await p.status();
-    }
-    if (FILE_INFO.isDirectory) {
-        const cmd = ["rclone", "copy", "--transfers", "32", FUll_PATH, `${RCLONE_FOLDER}/${TR_TORRENT_NAME}`];
-        const p = Deno.run({ cmd });
-        await p.status();
-    }
-     
-    fetch(
-        `https://api.day.app/push`,
+    let cmd = "";
+    if (FILE_INFO.isFile) cmd = ["rclone", "copy", FUll_PATH, RCLONE_FOLDER];
+    if (FILE_INFO.isDirectory) cmd = ["rclone", "copy", "--transfers", "32", FUll_PATH, `${RCLONE_FOLDER}/${TR_TORRENT_NAME}`];
+    const RCLONE_PROCESS = Deno.run({ cmd });
+    await RCLONE_PROCESS.status();
+
+    fetch(`https://api.day.app/push`,
         {
             method: "POST",
             headers: {
@@ -68,11 +61,6 @@ if (TR_TORRENT_LABELS == "infuse") {
     );
 
 
-    if (TR_TORRENT_LABELS != "seed") {
-        const cmd = ["transmission-remote", "--auth", `${ADMIN}:${PASSWORD}`, "--torrent", TR_TORRENT_ID, "--remove-and-delete" ];
-        const p = Deno.run({ cmd });
-        await p.status();
-    }
-
+    if (TR_TORRENT_LABELS != "seed") Deno.run({ cmd: ["transmission-remote", "--auth", `${ADMIN}:${PASSWORD}`, "--torrent", TR_TORRENT_ID, "--remove-and-delete"], });
 }
 
