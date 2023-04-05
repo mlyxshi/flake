@@ -39,7 +39,7 @@ if (TR_TORRENT_LABELS == "infuse") {
     const FUll_PATH = `/var/lib/transmission/files/${TR_TORRENT_NAME}`
     const FILE_INFO = await Deno.stat(FUll_PATH);
     console.log("FILE_INFO:", FILE_INFO)
-    const RCLONE_CMD;
+    const RCLONE_CMD="";
     if (FILE_INFO.isFile) RCLONE_CMD = ["rclone", "copy", FUll_PATH, RCLONE_FOLDER];
     if (FILE_INFO.isDirectory) RCLONE_CMD = ["rclone", "copy", "--transfers", "32", FUll_PATH, `${RCLONE_FOLDER}/${TR_TORRENT_NAME}`];
     const RCLONE_PROCESS = Deno.run({ RCLONE_CMD });
