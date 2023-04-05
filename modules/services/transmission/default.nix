@@ -30,8 +30,6 @@ in
     unitConfig.ConditionPathExists = "!%S/transmission/settings.json";
     script = ''
       cat ${./settings.json} > settings.json
-      cat ${transmissionScript} > transmission.sh
-      chmod +x transmission.sh
     '';
     serviceConfig.User = "transmission";
     serviceConfig.Type = "oneshot";
@@ -54,6 +52,10 @@ in
     ];
     serviceConfig.User = "transmission";
     serviceConfig.ExecStart = "${pkgs.transmission}/bin/transmission-daemon --foreground --username $ADMIN --password $PASSWORD";
+    preStart = ''
+      cat ${transmissionScript} > transmission.sh
+      chmod +x transmission.sh
+    '';
     wantedBy = [ "multi-user.target" ];
   };
 
