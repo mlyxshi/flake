@@ -41,6 +41,8 @@ if (TR_TORRENT_LABELS == "infuse") {
     const FUll_PATH = `/var/lib/transmission/files/${TR_TORRENT_NAME}`
     const FILE_INFO = await Deno.stat(FUll_PATH);
 
+    console.log("FILE_INFO:", FILE_INFO)
+
     if (FILE_INFO.isFile) await exec(`rclone -v copy "${FUll_PATH}" "${RCLONE_FOLDER}"`);
     if (FILE_INFO.isDirectory) await exec(`rclone -v copy --transfers 32 "${FUll_PATH}" "${RCLONE_FOLDER}/${TR_TORRENT_NAME}"`);
 
