@@ -14,7 +14,11 @@ tasks:
   天国大魔境:
     rss: https://mikanani.me/RSS/Bangumi?bangumiId=2970&subgroupid=370
     accept_all: yes
-    template: tr
+    download: /var/lib/transmission/watch
+  # 天国大魔境:
+  #   rss: https://mikanani.me/RSS/Bangumi?bangumiId=2970&subgroupid=370
+  #   accept_all: yes
+  #   template: tr
 
 schedules:
   - tasks: '*'
