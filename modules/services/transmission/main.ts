@@ -39,8 +39,11 @@ if (TR_TORRENT_LABELS == "infuse") {
 } else {
     const RCLONE_FOLDER = "gdrive:Download"
     const FUll_PATH = "/var/lib/transmission/files/$TR_TORRENT_NAME"
-    // # single file OR folder
-    await exec(`[ -f "${FUll_PATH}" ] && rclone -v copy "${FUll_PATH}" ${RCLONE_FOLDER} || rclone -v copy --transfers 32 "${FUll_PATH}" "${RCLONE_FOLDER}/${TR_TORRENT_NAME}"`);
+    const FILE_INFO = await Deno.stat(FUll_PATH);
+
+    if (FILE_INFO.isFile) await exec(`rclone -v copy "${FUll_PATH}" "${RCLONE_FOLDER}"`);
+    if (FILE_INFO.isDirectory) await exec(`rclone -v copy --transfers 32 "${FUll_PATH}" "${RCLONE_FOLDER}/${TR_TORRENT_NAME}"`);
+    
     fetch(
         `https://api.day.app/push`,
         {
@@ -69,7 +72,7 @@ if (TR_TORRENT_LABELS == "infuse") {
                 body: JSON.stringify({
                     method: "torrent-remove",
                     arguments: {
-                        ids: TR_TORRENT_ID,
+                        "ids": TR_TORRENT_ID,
                         "delete-local-data": true,
                     },
                 }),
