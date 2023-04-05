@@ -8,7 +8,7 @@ templates:
       username: '{? tr.usr ?}'
       password: '{? tr.pwd ?}'
       labels: 
-        - infuse
+        - bangumi
 
 tasks:
   天国大魔境:
