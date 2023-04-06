@@ -13,7 +13,7 @@
         "PGID" = "1000";
         "AB_DOWNLOADER_USERNAME"="admin";
         "AB_DOWNLOADER_HOST"="127.0.0.1:8080";
-        "AB_DEBUG_MODE"="True";
+        # "AB_DEBUG_MODE"="True";
         "AB_INTERVAL_TIME"="1";
       };
       environmentFiles = [
