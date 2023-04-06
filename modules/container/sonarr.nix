@@ -12,9 +12,11 @@
         "PUID" = "1000";
         "PGID" = "1000";
       };
-      extraOptions = lib.concatMap (x: [ "--label" x ]) [
+      extraOptions = [
+        "--label"
         "io.containers.autoupdate=registry"
-      ] ++ [ "--net=host" ];
+        "--net=host"
+      ];
     };
 
   };
