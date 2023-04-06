@@ -14,9 +14,6 @@
       };
       extraOptions = lib.concatMap (x: [ "--label" x ]) [
         "io.containers.autoupdate=registry"
-        "traefik.enable=true"
-        "traefik.http.routers.sonarr.rule=Host(`sonarr.${config.networking.domain}`)"
-        "traefik.http.routers.sonarr.entrypoints=websecure"
       ] ++ [ "--net=host" ];
     };
 
@@ -27,6 +24,22 @@
     mkdir -p /var/lib/sonarr/{config,data,downloads}
     chown -R 1000:1000 /var/lib/sonarr/{config,data,downloads}  
   '';
+
+  services.traefik = {
+    dynamicConfigOptions = {
+      http = {
+        routers.sonarr = {
+          rule = "Host(`sonarr.${config.networking.domain}`)";
+          entryPoints = [ "websecure" ];
+          service = "sonarr";
+        };
+
+        services.sonarr.loadBalancer.servers = [{
+          url = "http://127.0.0.1:8989";
+        }];
+      };
+    };
+  };
 
   system.activationScripts.cloudflare-dns-sync-sonarr = {
     deps = [ "agenix" ];
