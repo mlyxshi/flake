@@ -35,7 +35,7 @@
       http = {
         routers.auto-bangumi = {
           rule = "Host(`auto-bangumi.${config.networking.domain}`)";
-          entryPoints = [ "websecure" ];
+          entryPoints = [ "web" ];
           service = "auto-bangumi";
         };
 
