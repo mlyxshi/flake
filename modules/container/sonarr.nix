@@ -24,6 +24,10 @@
   };
 
   systemd.services.podman-sonarr.serviceConfig.StateDirectory = "sonarr";
+  systemd.services.podman-sonarr.preStart = ''
+    mkdir -p /var/lib/sonarr/{config,data,downloads}
+    chown -R 1000:1000 /var/lib/sonarr/{config,data,downloads}  
+  '';
 
   system.activationScripts.cloudflare-dns-sync-sonarr = {
     deps = [ "agenix" ];
