@@ -20,6 +20,7 @@
 
   };
 
+  systemd.services.podman-sonarr.after = [ "qbittorrent-nox.service" ];
   systemd.services.podman-sonarr.serviceConfig.StateDirectory = "sonarr";
   systemd.services.podman-sonarr.preStart = ''
     mkdir -p /var/lib/sonarr/{config,data,downloads}
