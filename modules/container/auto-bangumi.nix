@@ -29,7 +29,7 @@
     "jellyfin" = {
       image = "ghcr.io/linuxserver/jellyfin";
       volumes = [
-        "/var/lib/jellyfin/config:/config"
+        "/var/lib/jellyfin/:/config"
         "/var/lib/qbittorrent-nox/qBittorrent/downloads/bangumi/:/data/bangumi"
       ];
       environment = {
