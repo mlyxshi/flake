@@ -9,6 +9,7 @@
       environment = {
         "PUID" = "1000";
         "PGID" = "1000";
+        "AB_WEBUI_PORT" = "7892";
       };
       extraOptions = [
         "--label"
