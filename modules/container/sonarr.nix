@@ -1,5 +1,5 @@
 { pkgs, lib, config, ... }: {
-  
+
   virtualisation.oci-containers.containers = {
     "sonarr" = {
       image = "ghcr.io/linuxserver/sonarr:develop";
@@ -23,7 +23,7 @@
 
   };
 
-  systemd.services.sonarr.serviceConfig.StateDirectory = "sonarr";
+  systemd.services.podman-sonarr.serviceConfig.StateDirectory = "sonarr";
 
   system.activationScripts.cloudflare-dns-sync-sonarr = {
     deps = [ "agenix" ];
