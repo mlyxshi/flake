@@ -13,8 +13,8 @@
         "PGID" = "1000";
         "AB_DOWNLOADER_USERNAME"="admin";
         "AB_DOWNLOADER_HOST"="127.0.0.1:8080";
-        # "AB_DEBUG_MODE"="True";
-        "AB_INTERVAL_TIME"="30";
+        "AB_INTERVAL_TIME"="60";
+        "AB_DOWNLOAD_PATH"="/var/lib/qbittorrent-nox/qBittorrent/downloads/bangumi";
       };
       environmentFiles = [
         config.age.secrets.autobangumi-env.path
