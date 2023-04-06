@@ -17,8 +17,7 @@
         "traefik.enable=true"
         "traefik.http.routers.sonarr.rule=Host(`sonarr.${config.networking.domain}`)"
         "traefik.http.routers.sonarr.entrypoints=websecure"
-        "traefik.http.routers.sonarr.middlewares=auth@file"
-      ];
+      ] ++ [ "--net=host" ];
     };
 
   };
