@@ -1,7 +1,7 @@
 { lib, ... }: {
   imports = [
     ./qbittorrent.nix
-
+    ../../container/podman.nix
     ../../container/auto-bangumi.nix
   ];
 
