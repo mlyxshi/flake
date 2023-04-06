@@ -1,6 +1,6 @@
 { lib, ... }: {
   imports = [
-    ./transmission.nix
+    ./qbittorrent.nix
 
     ../../container/podman.nix
     ../../container/sonarr.nix
