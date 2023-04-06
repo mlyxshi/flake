@@ -13,6 +13,7 @@
         "PGID" = "1000";
         "AB_DOWNLOADER_USERNAME"="admin";
         "AB_DOWNLOADER_HOST"="127.0.0.1:8080";
+        "AB_DEBUG_MODE"="True";
       };
       environmentFiles = [
         config.age.secrets.autobangumi-env.path
@@ -29,27 +30,5 @@
 
   systemd.services.podman-auto-bangumi.serviceConfig.StateDirectory = "auto-bangumi";
   systemd.services.podman-auto-bangumi.after = [ "qbittorrent-nox.service" ];
-
-  services.traefik = {
-    dynamicConfigOptions = {
-      http = {
-        routers.auto-bangumi = {
-          rule = "Host(`auto-bangumi.${config.networking.domain}`)";
-          entryPoints = [ "web" ];
-          service = "auto-bangumi";
-        };
-
-        services.auto-bangumi.loadBalancer.servers = [{
-          url = "http://127.0.0.1:7892";
-        }];
-      };
-    };
-  };
-  system.activationScripts.cloudflare-dns-sync-auto-bangumi = {
-    deps = [ "agenix" ];
-    text = "${pkgs.cloudflare-dns-sync}/bin/cloudflare-dns-sync auto-bangumi.${config.networking.domain}";
-  };
-
-
 
 }
