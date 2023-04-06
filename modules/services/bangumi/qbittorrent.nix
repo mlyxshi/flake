@@ -42,7 +42,7 @@ in
     serviceConfig.StateDirectory = "qbittorrent-nox";
     script = ''
       mkdir -p /var/lib/qbittorrent-nox/qBittorrent/config
-      mkdir -p /var/lib/qbittorrent-nox/qBittorrent/downloads
+      mkdir -p /var/lib/qbittorrent-nox/qBittorrent/downloads/bangumi
       cat ${pre-config} > /var/lib/qbittorrent-nox/qBittorrent/config/qBittorrent.conf
     '';
     wantedBy = [ "multi-user.target" ];

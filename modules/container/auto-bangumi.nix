@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }: {
 
-   age.secrets.autobangumi-env.file = ../../secrets/autobangumi-env.age;
+  age.secrets.autobangumi-env.file = ../../secrets/autobangumi-env.age;
 
   virtualisation.oci-containers.containers = {
     "auto-bangumi" = {
@@ -26,10 +26,34 @@
       ];
     };
 
-
+    "jellyfin" = {
+      image = "ghcr.io/linuxserver/jellyfin";
+      volumes = [
+        "/var/lib/jellyfin/config:/config"
+        "/var/lib/qbittorrent-nox/qBittorrent/downloads/bangumi/:/data/bangumi"
+      ];
+      environment = {
+        "PUID" = "1000";
+        "PGID" = "1000";
+      };
+      extraOptions = lib.concatMap (x: [ "--label" x ]) [
+        "io.containers.autoupdate=registry"
+        "traefik.enable=true"
+        "traefik.http.routers.jellyfin.rule=Host(`jellyfin.${config.networking.domain}`)"
+        "traefik.http.routers.jellyfin.entrypoints=websecure"
+      ];
+    };
   };
 
   systemd.services.podman-auto-bangumi.serviceConfig.StateDirectory = "auto-bangumi";
   systemd.services.podman-auto-bangumi.after = [ "qbittorrent-nox.service" ];
+
+  systemd.services.podman-jellyfin.serviceConfig.StateDirectory = "jellyfin";
+  systemd.services.podman-jellyfin.after = [ "qbittorrent-nox.service" ];
+
+  system.activationScripts.cloudflare-dns-sync-jellyfin = {
+    deps = [ "agenix" ];
+    text = "${pkgs.cloudflare-dns-sync}/bin/cloudflare-dns-sync jellyfin.${config.networking.domain}";
+  };
 
 }
