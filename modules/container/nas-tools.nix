@@ -22,6 +22,7 @@
   };
 
   systemd.services.podman-nas-tools.serviceConfig.StateDirectory = "nas-tools";
+  systemd.services.podman-nas-tools.after = [ "podman-nas-tools.service" ];
 
   services.traefik = {
     dynamicConfigOptions = {
