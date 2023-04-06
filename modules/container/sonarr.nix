@@ -5,6 +5,7 @@
       image = "ghcr.io/linuxserver/sonarr:develop";
       volumes = [
         "/var/lib/sonarr/config:/config"
+        "/var/lib/sonarr/data:/data"
         "/var/lib/qbittorrent-nox/qBittorrent/downloads:/downloads"
       ];
       environment = {
