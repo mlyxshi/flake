@@ -11,6 +11,8 @@
       environment = {
         "PUID" = "1000";
         "PGID" = "1000";
+        "AB_DOWNLOADER_USERNAME"="admin";
+        "AB_DOWNLOADER_HOST"="127.0.0.1:8080";
       };
       environmentFiles = [
         config.age.secrets.autobangumi-env.path
