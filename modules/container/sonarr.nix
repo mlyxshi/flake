@@ -4,9 +4,8 @@
     "sonarr" = {
       image = "ghcr.io/linuxserver/sonarr:develop";
       volumes = [
-        "/var/lib/sonarr/data:/data"
         "/var/lib/sonarr/config:/config"
-        "/var/lib/sonarr/downloads:/downloads"
+        "/var/lib/qbittorrent-nox/qBittorrent/downloads:/downloads"
       ];
       environment = {
         "PUID" = "1000";

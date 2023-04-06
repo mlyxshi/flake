@@ -1,3 +1,4 @@
+# https://reorx.com/blog/track-and-download-shows-automatically-with-sonarr/
 { lib, ... }: {
   imports = [
     ./qbittorrent.nix

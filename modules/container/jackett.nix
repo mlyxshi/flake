@@ -6,6 +6,10 @@
       volumes = [
         "/var/lib/jackett:/config"
       ];
+      environment = {
+        "PUID" = "1000";
+        "PGID" = "1000";
+      };
       extraOptions = [
         "--label"
         "io.containers.autoupdate=registry"
