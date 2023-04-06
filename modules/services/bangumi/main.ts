@@ -17,9 +17,9 @@ const CATEGORY = ARG[5];
 // console.log("FILE_HASH:", FILE_HASH);
 // console.log("CATEGORY:", CATEGORY);
 
-const MEDIA_URL = encodeURIComponent(`http://bangumi-index.mlyxshi.com/${TORRENT_NAME}`);
-const IOS_SHORTCUTS_URL = encodeURIComponent(`shortcuts://run-shortcut?name=qbittorrent-delete&input=text&text=${FILE_HASH}`)
-const INFUSE_URL_SCHEME = `infuse://x-callback-url/play?url=${MEDIA_URL}&x-success=${IOS_SHORTCUTS_URL}`;
+// const MEDIA_URL = encodeURIComponent(`http://bangumi-index.mlyxshi.com/${TORRENT_NAME}`);
+// const IOS_SHORTCUTS_URL = encodeURIComponent(`shortcuts://run-shortcut?name=qbittorrent-delete&input=text&text=${FILE_HASH}`)
+// const INFUSE_URL_SCHEME = `infuse://x-callback-url/play?url=${MEDIA_URL}&x-success=${IOS_SHORTCUTS_URL}`;
 
 fetch(
     `https://api.day.app/push`,
@@ -33,7 +33,7 @@ fetch(
             title: "Swiftfin",
             icon: "https://github.com/jellyfin/Swiftfin/raw/main/Swiftfin/Assets.xcassets/AppIcon.appiconset/152.png",
             body: TORRENT_NAME,
-            url: "",
+            // url: "",
         }),
     },
 );

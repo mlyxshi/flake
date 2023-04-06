@@ -3,6 +3,10 @@
 { pkgs, lib, config, ... }: 
 let
   pre-config = pkgs.writeText "pre-config" ''
+    [AutoRun]
+    enabled=true
+    program=/run/current-system/sw/bin/deno run --allow-net --allow-env /etc/qbScript \"%N\" \"%F\" \"%C\" \"%Z\" \"%I\" \"%L\"
+    
     [Preferences]
     WebUI\CSRFProtection=false
   '';
@@ -21,9 +25,18 @@ in
     };
   };
 
+  environment.systemPackages = with pkgs; [
+    deno
+  ];
+
+  environment.etc."qbScript".source = ./main.ts;
+
   # https://github.com/qbittorrent/qBittorrent/wiki/How-to-use-portable-mode
   systemd.services.qbittorrent-nox = {
     after = [ "local-fs.target" "network-online.target" ];
+    environment = {
+      DENO_DIR = "%S/qbittorrent-nox/.deno";
+    };
     serviceConfig = {
       User = "qbittorrent";
       ExecStart = "${pkgs.qbittorrent-nox}/bin/qbittorrent-nox --profile=%S/qbittorrent-nox --relative-fastresume";
