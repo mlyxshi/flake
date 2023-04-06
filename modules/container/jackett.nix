@@ -25,6 +25,7 @@
           rule = "Host(`jackett.${config.networking.domain}`)";
           entryPoints = [ "websecure" ];
           service = "jackett";
+          middlewares = "auth";
         };
 
         services.jackett.loadBalancer.servers = [{
