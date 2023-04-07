@@ -3,7 +3,7 @@
 { pkgs, lib, config, ... }: 
 let
   # send notification to bark(iOS)
-  # seed 7 days
+  # seed 7 days then delete
   # disable CSRF Protection
   pre-config = pkgs.writeText "pre-config" ''
     [AutoRun]
