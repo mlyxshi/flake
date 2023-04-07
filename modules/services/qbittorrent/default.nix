@@ -24,7 +24,6 @@ in
 
   environment.systemPackages = with pkgs; [
     deno
-    qbittorrent-nox
   ];
 
   environment.etc."qbScript".source = ./main.ts;
