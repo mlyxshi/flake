@@ -67,25 +67,4 @@ in
     '';
     wantedBy = [ "multi-user.target" ];
   };
-
-  services.traefik = {
-    dynamicConfigOptions = {
-      http = {
-        routers.qbittorrent-nox = {
-          rule = "Host(`qbittorrent-bangumi.${config.networking.domain}`)";
-          entryPoints = [ "websecure" ];
-          service = "qbittorrent-nox";
-        };
-
-        services.qbittorrent-nox.loadBalancer.servers = [{
-          url = "http://127.0.0.1:8080";
-        }];
-      };
-    };
-  };
-
-  system.activationScripts.cloudflare-dns-sync-qbittorrent-nox = {
-    deps = [ "agenix" ];
-    text = "${pkgs.cloudflare-dns-sync}/bin/cloudflare-dns-sync qbittorrent-bangumi.${config.networking.domain}";
-  };
 }
