@@ -26,10 +26,10 @@
         "/var/lib/jellyfin/:/config"
         "/var/lib/qbittorrent-nox/qBittorrent/downloads/bangumi/:/data/bangumi"
       ];
-      # environment = {
-      #   "PUID" = "1000";
-      #   "PGID" = "1000";
-      # };
+      environment = {
+        "PUID" = "1000";
+        "PGID" = "1000";
+      };
       extraOptions = lib.concatMap (x: [ "--label" x ]) [
         "io.containers.autoupdate=registry"
         "traefik.enable=true"
