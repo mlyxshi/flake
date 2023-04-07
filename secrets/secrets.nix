@@ -17,6 +17,4 @@ in
 
   "bark-ios.age".publicKeys = [ main ];
   "flexget-variables.age".publicKeys = [ main ];
-
-  "autobangumi-env.age".publicKeys = [ main ];
 }
