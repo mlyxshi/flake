@@ -9,9 +9,9 @@
       environment = {
         "PUID" = "1000";
         "PGID" = "1000";
-        "AB_RSS"="https://mikanani.me/RSS/MyBangumi?token=WX0iAPimfeV8TL5%2f4RHdvw%3d%3d";
-        "AB_INTERVAL_TIME"="60";
-        "AB_DOWNLOAD_PATH"="/var/lib/qbittorrent-nox/qBittorrent/downloads/bangumi";
+        "AB_RSS" = "https://mikanani.me/RSS/MyBangumi?token=WX0iAPimfeV8TL5%2f4RHdvw%3d%3d";
+        "AB_INTERVAL_TIME" = "60";
+        "AB_DOWNLOAD_PATH" = "/var/lib/qbittorrent-nox/qBittorrent/downloads/bangumi";
       };
       extraOptions = [
         "--label"

@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }: {
 
-  services.jellyfin={
+  services.jellyfin = {
     enable = true;
     user = "qbittorrent";
     group = "qbittorrent";

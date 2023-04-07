@@ -1,6 +1,6 @@
 # change password
 
-{ pkgs, lib, config, ... }: 
+{ pkgs, lib, config, ... }:
 let
   # send notification to bark(iOS)
   # seed 7 days then delete
@@ -27,7 +27,7 @@ in
       isNormalUser = true;
       uid = 1000;
     };
-    groups.qbittorrent = { 
+    groups.qbittorrent = {
       gid = 1000;
     };
   };

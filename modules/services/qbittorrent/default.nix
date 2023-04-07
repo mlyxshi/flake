@@ -1,6 +1,6 @@
 # change password
 
-{ pkgs, lib, config, ... }: 
+{ pkgs, lib, config, ... }:
 let
   pre-config = pkgs.writeText "pre-config" ''
     [AutoRun]
