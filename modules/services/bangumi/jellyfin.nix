@@ -11,7 +11,7 @@
       http = {
         routers.jellyfin = {
           rule = "Host(`jellyfin.${config.networking.domain}`)";
-          entryPoints = [ "websecure" ];
+          entryPoints = [ "web" ];
           service = "jellyfin";
         };
 
