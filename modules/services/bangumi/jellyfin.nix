@@ -6,7 +6,7 @@
     group = "qbittorrent";
   };
 
-  services.jellyfin = {
+  services.traefik = {
     dynamicConfigOptions = {
       http = {
         routers.jellyfin = {
