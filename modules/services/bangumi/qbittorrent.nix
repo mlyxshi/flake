@@ -1,5 +1,3 @@
-# change password
-
 { pkgs, lib, config, ... }:
 let
   # send notification to bark(iOS)
@@ -61,8 +59,9 @@ in
     serviceConfig.User = "qbittorrent";
     serviceConfig.StateDirectory = "qbittorrent-nox";
     script = ''
-      mkdir -p /var/lib/qbittorrent-nox/qBittorrent/config
       mkdir -p /var/lib/qbittorrent-nox/qBittorrent/downloads/bangumi
+
+      mkdir -p /var/lib/qbittorrent-nox/qBittorrent/config
       cat ${pre-config} > /var/lib/qbittorrent-nox/qBittorrent/config/qBittorrent.conf
     '';
     wantedBy = [ "multi-user.target" ];
