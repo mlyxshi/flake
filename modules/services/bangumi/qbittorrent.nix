@@ -1,7 +1,6 @@
 { pkgs, lib, config, ... }:
 let
   # send notification to bark(iOS)
-  # seed 7 days then delete
   # disable CSRF Protection
   pre-config = pkgs.writeText "pre-config" ''
     [AutoRun]
@@ -9,8 +8,8 @@ let
     program=/run/current-system/sw/bin/deno run --allow-net --allow-env /etc/qbScript \"%N\" \"%F\" \"%C\" \"%Z\" \"%I\" \"%L\"
     
     [BitTorrent]
-    Session\GlobalMaxSeedingMinutes=10080
-    Session\MaxRatioAction=3
+    Session\GlobalMaxRatio=0
+    Session\MaxRatioAction=1
 
     [Preferences]
     WebUI\CSRFProtection=false
