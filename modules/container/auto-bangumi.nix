@@ -1,7 +1,5 @@
 { pkgs, lib, config, ... }: {
 
-  age.secrets.autobangumi-env.file = ../../secrets/autobangumi-env.age;
-
   virtualisation.oci-containers.containers = {
     "auto-bangumi" = {
       image = "docker.io/estrellaxd/auto_bangumi";
@@ -17,9 +15,6 @@
         "AB_INTERVAL_TIME"="60";
         "AB_DOWNLOAD_PATH"="/var/lib/qbittorrent-nox/qBittorrent/downloads/bangumi";
       };
-      environmentFiles = [
-        config.age.secrets.autobangumi-env.path
-      ];
       extraOptions = [
         "--label"
         "io.containers.autoupdate=registry"
