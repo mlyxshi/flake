@@ -65,5 +65,5 @@ return {
   { 'numToStr/Comment.nvim', config = true },
 
   --Enhancement
-  'ojroques/nvim-osc52',
+  {'ojroques/nvim-osc52', config = true },
 }
