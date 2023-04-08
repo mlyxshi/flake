@@ -30,14 +30,13 @@ autocmd("BufEnter", {
 })
 
 -- Enable Copy over SSH
--- vim.opt.clipboard = vim.opt.clipboard + 'unnamedplus',  <-- Enable Copy to Local System Clipboard Also
-autocmd("TextYankPost", {
-  group = myAutoGroup,
-  pattern = "*",
-  callback = function()
-    cmd('OSCYankReg +')
-  end,
-})
+function copy()
+  if vim.v.event.operator == 'y' and vim.v.event.regname == '+' then
+    require('osc52').copy_register('+')
+  end
+end
+
+autocmd('TextYankPost', {callback = copy})
 
 
 -- 用o换行不要延续注释
