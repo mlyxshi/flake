@@ -70,6 +70,7 @@ in
     serviceConfig.User = "qbittorrent";
     serviceConfig.StateDirectory = "media";
     script = ''
+      mkdir -p /var/lib/media
     '';
     wantedBy = [ "multi-user.target" ];
   };
