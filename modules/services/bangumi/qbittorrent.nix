@@ -59,10 +59,17 @@ in
     serviceConfig.User = "qbittorrent";
     serviceConfig.StateDirectory = "qbittorrent-nox";
     script = ''
-      mkdir -p /var/lib/media
-
       mkdir -p /var/lib/qbittorrent-nox/qBittorrent/config
       cat ${pre-config} > /var/lib/qbittorrent-nox/qBittorrent/config/qBittorrent.conf
+    '';
+    wantedBy = [ "multi-user.target" ];
+  };
+
+  systemd.services.media-init = {
+    before = [ "qbittorrent-nox.service" ];
+    serviceConfig.User = "qbittorrent";
+    serviceConfig.StateDirectory = "media";
+    script = ''
     '';
     wantedBy = [ "multi-user.target" ];
   };
