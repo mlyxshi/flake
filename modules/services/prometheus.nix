@@ -20,7 +20,7 @@ in
     scrapeConfigs = [
       {
         job_name = "Node";
-        scheme = "https";
+        scheme = "http";
         static_configs = [{
           targets = map (x: "${x}.${config.networking.domain}") (oracle-arm64-serverlist ++ oracle-x64-serverlist);
         }];

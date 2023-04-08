@@ -30,7 +30,7 @@
       http = {
         routers.telegraf = {
           rule = "Host(`${config.networking.fqdn}`) && Path(`/metrics`)";
-          entryPoints = [ "websecure" ];
+          entryPoints = [ "web" ];
           service = "telegraf";
         };
 

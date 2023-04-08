@@ -15,6 +15,8 @@
     ];
 
     brews = [
+      "nodejs"
+      "protobuf"
       "neofetch"
       "iproute2mac"
       "mas"
