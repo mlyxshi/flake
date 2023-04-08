@@ -67,6 +67,7 @@ in
 
   systemd.services.media-init = {
     before = [ "qbittorrent-nox.service" ];
+    unitConfig.ConditionPathExists = "!%S/media";
     serviceConfig.User = "qbittorrent";
     serviceConfig.StateDirectory = "media";
     script = ''
