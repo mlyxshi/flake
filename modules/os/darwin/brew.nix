@@ -24,6 +24,7 @@
     ];
 
     casks = [
+      "proxyman"
       "sloth"
       "yubico-yubikey-manager"
       "google-cloud-sdk"

@@ -8,6 +8,7 @@ let
     program=/run/current-system/sw/bin/deno run --allow-net --allow-env /etc/qbScript \"%N\" \"%F\" \"%C\" \"%Z\" \"%I\" \"%L\"
     
     [BitTorrent]
+    Session\DefaultSavePath=/var/lib/media
     Session\GlobalMaxRatio=0
     Session\MaxRatioAction=1
 
@@ -58,7 +59,7 @@ in
     serviceConfig.User = "qbittorrent";
     serviceConfig.StateDirectory = "qbittorrent-nox";
     script = ''
-      mkdir -p /var/lib/qbittorrent-nox/qBittorrent/downloads/bangumi
+      mkdir -p /var/lib/media
 
       mkdir -p /var/lib/qbittorrent-nox/qBittorrent/config
       cat ${pre-config} > /var/lib/qbittorrent-nox/qBittorrent/config/qBittorrent.conf
