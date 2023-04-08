@@ -14,6 +14,7 @@ let
 
     [Preferences]
     WebUI\CSRFProtection=false
+    WebUI\LocalHostAuth=false
   '';
 in
 {
