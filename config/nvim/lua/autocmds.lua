@@ -30,13 +30,14 @@ autocmd("BufEnter", {
 })
 
 -- Enable Copy over SSH
-function copy()
-  if vim.v.event.operator == 'y' and vim.v.event.regname == '+' then
-    require('osc52').copy_register('+')
-  end
-end
 
-autocmd('TextYankPost', {callback = copy})
+autocmd('TextYankPost', {
+  group = myAutoGroup,
+  pattern = "*",
+  callback = function()
+    require('osc52').copy_register('+')
+  end,
+})
 
 
 -- 用o换行不要延续注释
