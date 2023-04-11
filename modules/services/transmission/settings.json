@@ -1,7 +1,5 @@
 {
     "download-dir": "/var/lib/transmission/files",
-    "watch-dir-enabled": true,
-    "watch-dir": "/var/lib/transmission/watch",
     "rpc-whitelist-enabled": false,
     "rpc-authentication-required": true,
     "script-torrent-done-enabled": true,
