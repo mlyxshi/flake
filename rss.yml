@@ -4,9 +4,6 @@ variables: variables.yml
 templates:
   global:
     accept_all: yes
-    download: /var/lib/transmission/watch
-
-  tr:
     transmission:
       host: 127.0.0.1
       port: 9091
@@ -15,9 +12,10 @@ templates:
       labels: 
         - bangumi
 
+
 tasks:
-  example:
-    rss: https://example.com
+  为美好的世界献上爆炎:
+    rss: https://mikanani.me/RSS/Bangumi?bangumiId=2968&subgroupid=552
   
 
 schedules:
