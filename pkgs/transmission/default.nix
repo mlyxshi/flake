@@ -8,13 +8,13 @@
 }:
 stdenv.mkDerivation rec {
   pname = "transmission";
-  version = "4.0.2";
+  version = "4.0.3";
   src = fetchFromGitHub {
     owner = "transmission";
     repo = "transmission";
     fetchSubmodules = true;
     rev = version;
-    hash = "sha256-DaaJnnWEZOl6zLVxgg+U8C5ztv7Iq0wJ9yle0Gxwybc=";
+    hash = "sha256-P7omd49xLmReo9Zrg0liO1msUVzCa5CxH7PGmH4oPzg=";
   };
 
   nativeBuildInputs = [ cmake ];
