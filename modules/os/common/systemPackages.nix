@@ -20,7 +20,6 @@
     delta
     xh
     tealdeer
-    procs
     bandwhich
     bat
     bat-extras.batman

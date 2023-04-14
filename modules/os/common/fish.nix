@@ -6,7 +6,6 @@
       l = "exa -algh";
       v = "nvim";
       r = "lf";
-      p = "procs";
       g = "lazygit";
       c = "bat";
       man = "batman";
