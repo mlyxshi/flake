@@ -70,7 +70,6 @@ in
     after = [ "initrd-fs.target" "network-online.target" ];
     before = [ "initrd.target" ];
     serviceConfig.Type = "oneshot";
-    environment.HOME = "/root";
     script = installScript;
     requiredBy = [ "initrd.target" ];
   };

@@ -5,18 +5,18 @@
     ./kernelModules.nix
   ];
 
-  boot.initrd.environment.etc = {
-    "hostname".text = "${config.networking.hostName}\n";
-    "resolv.conf".text = "nameserver 1.1.1.1\n"; # TODO replace with systemd-resolved upstream
-    "ssl/certs/ca-certificates.crt".source = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
-    "nix/nix.conf".text = ''
+  boot.initrd.systemd.contents = {
+    "/etc/hostname".text = "${config.networking.hostName}\n";
+    "/etc/resolv.conf".text = "nameserver 1.1.1.1\n"; 
+    "/etc/ssl/certs/ca-certificates.crt".source = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+    "/etc/nix/nix.conf".text = ''
       extra-experimental-features = nix-command flakes auto-allocate-uids
       auto-allocate-uids = true
       substituters = https://cache.nixos.org https://oranc.li7g.com/ghcr.io/mlyxshi/nix
       trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= cache:vXjiuWtSTOXj63zr+ZjMvXqvaYIK1atjyyEk+iuIqSg=
     '';
 
-    "lf/lfrc".text = ''
+    "/etc/lf/lfrc".text = ''
       set hidden true
       set number true
       set drawbox true
@@ -27,7 +27,7 @@
       map D   delete
     '';
 
-    "profile".text = ''
+    "/etc/profile".text = ''
       alias r='lf'
       alias status='journalctl -u auto-install -f'
     '';
