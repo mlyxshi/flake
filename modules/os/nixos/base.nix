@@ -7,6 +7,7 @@
   age.identityPaths = [ "/persist/age/sshkey" ];
 
   nix = {
+    package = pkgs.nixUnstable;
     registry.nixpkgs.flake = nixpkgs;
     settings = {
       experimental-features = [ "nix-command" "flakes" "cgroups" "auto-allocate-uids" ];
