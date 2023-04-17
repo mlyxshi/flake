@@ -32,6 +32,7 @@
         # Allow shadowsocks
         ${lib.optionalString (config.systemd.services ? shadowsocks) "tcp dport 6666 accept"}
         ${lib.optionalString (config.systemd.services ? shadowsocks) "udp dport 6666 accept"}
+
       }
     }
   '';

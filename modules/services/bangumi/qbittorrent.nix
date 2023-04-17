@@ -77,24 +77,4 @@ in
     wantedBy = [ "multi-user.target" ];
   };
 
-  services.traefik = {
-    dynamicConfigOptions = {
-      http = {
-        routers.bangumi-qb = {
-          rule = "Host(`bangumi-qb.${config.networking.domain}`)";
-          entryPoints = [ "web" ];
-          service = "bangumi-qb";
-        };
-
-        services.bangumi-qb.loadBalancer.servers = [{
-          url = "http://127.0.0.1:8080";
-        }];
-      };
-    };
-  };
-
-  system.activationScripts.cloudflare-dns-sync-bangumi-qb = {
-    deps = [ "agenix" ];
-    text = "${pkgs.cloudflare-dns-sync}/bin/cloudflare-dns-sync bangumi-qb.${config.networking.domain}";
-  };
 }
