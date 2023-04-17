@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }: {
 
-  sops.secrets.shadowsocks-pwd={};
+  sops.secrets.shadowsocks-pwd = { };
 
   sops.templates.shadowsocks-config.content = builtins.toJSON {
     server = "0.0.0.0";
@@ -10,6 +10,8 @@
     fast_open = true;
     mode = "tcp_and_udp";
   };
+
+  sops.templates.shadowsocks-config.group = "root";
 
   systemd.services.shadowsocks = {
     after = [ "network.target" ];
