@@ -1,4 +1,5 @@
 { pkgs, config, ... }: {
+  sops.secrets.cloudflare-dns-env = {};
 
   environment.systemPackages = [
     pkgs.cloudflare-dns-sync

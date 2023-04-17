@@ -12,6 +12,7 @@ let
   '';
 in
 {
+  sops.secrets.bark-ios = {};
 
   users = {
     users.qbittorrent = {
@@ -93,7 +94,7 @@ in
   };
 
   system.activationScripts.cloudflare-dns-sync-qbittorrent-nox = {
-    # deps = [ "agenix" ];
+    deps = [ "setupSecrets" ];
     text = "${pkgs.cloudflare-dns-sync}/bin/cloudflare-dns-sync qb.${config.networking.domain} bangumi-index.${config.networking.domain}";
   };
 }
