@@ -6,8 +6,7 @@ let
   hydra-x64-publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMjY+jsCfLAuMR2LP3ZqkzV5RCqSyt+lheJ7TUSRWEfv";
 in
 {
-  age.secrets.hydra-builder-sshkey = {
-    file = ../../../secrets/hydra-builder-sshkey.age;
+  sops.secrets.hydra-builder-sshkey = {
     mode = "400";
     owner = "hydra-queue-runner";
     group = "hydra";
