@@ -1,7 +1,7 @@
-{ hostName, self, nixpkgs, home-manager, agenix, impermanence }:
+{ hostName, self, nixpkgs, home-manager, sops-nix, impermanence }:
 nixpkgs.lib.nixosSystem {
   modules = [
-    agenix.nixosModules.default
+    sops-nix.nixosModules.default
     impermanence.nixosModules.impermanence
     home-manager.nixosModules.default
     self.nixosModules.os.nixos.server

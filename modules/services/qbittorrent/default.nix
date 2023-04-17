@@ -12,7 +12,6 @@ let
   '';
 in
 {
-  age.secrets.bark-ios.file = ../../../secrets/bark-ios.age;
 
   users = {
     users.qbittorrent = {
@@ -39,7 +38,7 @@ in
       ExecStart = "${pkgs.qbittorrent-nox}/bin/qbittorrent-nox --profile=%S/qbittorrent-nox --relative-fastresume";
       StateDirectory = "qbittorrent-nox";
       EnvironmentFile = [
-        config.age.secrets.bark-ios.path
+        config.sops.secrets.bark-ios.path
       ];
     };
     wantedBy = [ "multi-user.target" ];
@@ -94,7 +93,7 @@ in
   };
 
   system.activationScripts.cloudflare-dns-sync-qbittorrent-nox = {
-    deps = [ "agenix" ];
+    # deps = [ "agenix" ];
     text = "${pkgs.cloudflare-dns-sync}/bin/cloudflare-dns-sync qb.${config.networking.domain} bangumi-index.${config.networking.domain}";
   };
 }

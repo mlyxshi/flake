@@ -1,10 +1,10 @@
-{ hostName, self, nixpkgs, home-manager, agenix, impermanence, hydra }:
+{ hostName, self, nixpkgs, home-manager, sops-nix,impermanence, hydra }:
 let
   arch = if (builtins.readDir ./aarch64) ? "${hostName}.nix" then "aarch64" else "x86_64";
 in
 nixpkgs.lib.nixosSystem {
   modules = [
-    agenix.nixosModules.default
+    sops-nix.nixosModules.default
     impermanence.nixosModules.impermanence
     home-manager.nixosModules.default
     self.nixosModules.os.nixos.server

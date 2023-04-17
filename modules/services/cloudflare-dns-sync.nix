@@ -1,5 +1,4 @@
 { pkgs, config, ... }: {
-  age.secrets.cloudflare-dns-env.file = ../../secrets/cloudflare-dns-env.age;
 
   environment.systemPackages = [
     pkgs.cloudflare-dns-sync

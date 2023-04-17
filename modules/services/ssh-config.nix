@@ -1,5 +1,4 @@
 { pkgs, lib, config, ... }: {
-  age.secrets.github-private-key.file = ../../secrets/github-private-key.age;
   # ssh (client)
   programs.ssh = {
     knownHosts = {
@@ -9,7 +8,7 @@
     extraConfig = ''
       Host github.com
         User git
-        IdentityFile ${config.age.secrets.github-private-key.path}
+        IdentityFile ${config.sops.secrets.github-private-key.path}
     '';
   };
 

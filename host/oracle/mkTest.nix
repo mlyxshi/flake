@@ -1,7 +1,7 @@
-{ self, nixpkgs, agenix, impermanence }:
+{ self, nixpkgs, sops-nix, impermanence }:
 nixpkgs.lib.nixosSystem {
   modules = [
-    agenix.nixosModules.default
+    sops-nix.nixosModules.default
     impermanence.nixosModules.impermanence
     self.nixosModules.os.nixos.server
     self.nixosModules.network

@@ -4,7 +4,8 @@
     ../common
   ];
 
-  age.identityPaths = [ "/persist/age/sshkey" ];
+  sops.defaultSopsFile = ../../../key.yaml;
+  sops.age.sshKeyPaths = [ "/persist/sops/key" ];
 
   nix = {
     package = pkgs.nixUnstable;
