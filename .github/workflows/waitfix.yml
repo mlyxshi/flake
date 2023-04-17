@@ -1,5 +1,6 @@
 name: "Wait fix"
 on:
+  push:
   workflow_dispatch:
   schedule:
     - cron: '0 * * * *' #every hour
@@ -11,4 +12,4 @@ jobs:
     steps:
     - uses: docker/setup-qemu-action@master
     - uses: DeterminateSystems/nix-installer-action@main
-    - run: nix profile install nixpkgs/nixos-unstable#legacyPackages.aarch64-linux.deno
+    - run: nix build nixpkgs/nixos-unstable#legacyPackages.aarch64-linux.deno
