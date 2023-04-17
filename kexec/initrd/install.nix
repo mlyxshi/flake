@@ -50,7 +50,7 @@ let
     
     mkdir -p /mnt/{etc,tmp}
     touch /mnt/etc/NIXOS
-    [[ -n "$age_key" ]] && mkdir -p /mnt/persist/age/ && curl -sLo /mnt/persist/age/sshkey $age_key
+    [[ -n "$age_key" ]] && mkdir -p /mnt/persist/sops/ && curl -sLo /mnt/persist/sops/key $age_key
     mkdir -p /mnt/persist/etc/ssh && for i in /etc/ssh/ssh_host_ed25519_key*; do cp $i /mnt/persist/etc/ssh; done
     
     # support UEFI systemd-boot
