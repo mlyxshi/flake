@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "https://github.com/NixOS/nixpkgs/archive/64c27498901f104a11df646278c4e5c9f4d642db.tar.gz";
+    nixpkgs.url = "github:NixOS/nixpkgs/64c27498901f104a11df646278c4e5c9f4d642db";
 
     nixpkgs-network-pr.url = "github:NixOS/nixpkgs/pull/169116/head";
 
