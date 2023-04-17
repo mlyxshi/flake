@@ -12,4 +12,4 @@ jobs:
     steps:
     - uses: docker/setup-qemu-action@master
     - uses: DeterminateSystems/nix-installer-action@main
-    - run: nix build nixpkgs/nixos-unstable#legacyPackages.aarch64-linux.deno
+    - run: nix build nixpkgs/nixos-unstable#legacyPackages.aarch64-linux.deno && curl https://api.day.app/${{ secrets.BARK_KEY }}/Deno%20Build%20Done/
