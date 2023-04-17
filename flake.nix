@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/64c27498901f104a11df646278c4e5c9f4d642db";
+    nixpkgs.url = "github:NixOS/nixpkgs/64c27498901f104a11df646278c4e5c9f4d642db"; # wait deno aarch64 fix
 
     nixpkgs-network-pr.url = "github:NixOS/nixpkgs/pull/169116/head";
 
