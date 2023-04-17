@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }: {
 
-  age.secrets.restic-env.file = ../../secrets/restic-env.age;
+  sops.secrets.restic-env = {};
 
   virtualisation.oci-containers.containers = {
     "vaultwarden" = {
@@ -36,7 +36,7 @@
     before = [ "podman-vaultwarden.service" ];
     unitConfig.ConditionPathExists = "!%S/vaultwarden";
     environment.RESTIC_CACHE_DIR = "%C/restic";
-    serviceConfig.EnvironmentFile = config.age.secrets.restic-env.path;
+    serviceConfig.EnvironmentFile = config.sops.secrets.restic-env.path;
     serviceConfig.ExecSearchPath = "${pkgs.restic}/bin";
     serviceConfig.ExecStart = "restic restore latest --path %S/vaultwarden  --target /";
     wantedBy = [ "multi-user.target" ];
@@ -46,7 +46,7 @@
     environment.RESTIC_CACHE_DIR = "%C/restic";
     serviceConfig = {
       Type = "oneshot";
-      EnvironmentFile = config.age.secrets.restic-env.path;
+      EnvironmentFile = config.sops.secrets.restic-env.path;
       ExecSearchPath = "${pkgs.restic}/bin";
       ExecStart = [
         "restic backup %S/vaultwarden"
@@ -58,7 +58,7 @@
   };
 
   system.activationScripts.cloudflare-dns-sync-vaultwarden = {
-    deps = [ "agenix" ];
+    deps = [ "setupSecrets" ];
     text = "${pkgs.cloudflare-dns-sync}/bin/cloudflare-dns-sync password.${config.networking.domain}";
   };
 

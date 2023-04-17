@@ -18,7 +18,7 @@ let
   '';
 in
 {
-  age.secrets.bark-ios.file = ../../../secrets/bark-ios.age;
+  sops.secrets.bark-ios = {};
 
   users = {
     users.qbittorrent = {
@@ -48,7 +48,7 @@ in
       ExecStart = "${pkgs.qbittorrent-nox}/bin/qbittorrent-nox --profile=%S/qbittorrent-nox --relative-fastresume";
       StateDirectory = "qbittorrent-nox";
       EnvironmentFile = [
-        config.age.secrets.bark-ios.path
+        config.sops.secrets.bark-ios.path
       ];
     };
     wantedBy = [ "multi-user.target" ];

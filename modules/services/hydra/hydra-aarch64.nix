@@ -21,7 +21,7 @@ in
       Host hydra-x64
         Hostname hydra-x64.mlyxshi.com
         User hydra-builder
-        IdentityFile ${config.age.secrets.hydra-builder-sshkey.path}
+        IdentityFile ${config.sops.secrets.hydra-builder-sshkey.path}
     '';
   };
 
@@ -73,7 +73,7 @@ in
 
 
   system.activationScripts.cloudflare-dns-sync-hydra = {
-    deps = [ "agenix" ];
+    deps = [ "setupSecrets" ];
     text = ''
       ${pkgs.cloudflare-dns-sync}/bin/cloudflare-dns-sync hydra.${config.networking.domain}
     '';

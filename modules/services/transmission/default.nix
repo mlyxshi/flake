@@ -7,12 +7,10 @@ let
 in
 {
 
-  age.secrets.transmission-env.file = ../../../secrets/transmission-env.age;
-  age.secrets.rclone-env.file = ../../../secrets/rclone-env.age;
-  age.secrets.bark-ios.file = ../../../secrets/bark-ios.age;
-
-  age.secrets.flexget-variables = {
-    file = ../../../secrets/flexget-variables.age;
+  sops.secrets.transmission-env = {};
+  sops.secrets.rclone-env = {};
+  sops.secrets.bark-ios = {};
+  sops.secrets.flexget-variables = {
     owner = "transmission";
     group = "transmission";
   };
@@ -46,9 +44,9 @@ in
       DENO_DIR = "%S/transmission/.deno";
     };
     serviceConfig.EnvironmentFile = [
-      config.age.secrets.transmission-env.path
-      config.age.secrets.bark-ios.path
-      config.age.secrets.rclone-env.path
+      config.sops.secrets.transmission-env.path
+      config.sops.secrets.bark-ios.path
+      config.sops.secrets.rclone-env.path
     ];
     serviceConfig.User = "transmission";
     serviceConfig.ExecStart = "${pkgs.transmission}/bin/transmission-daemon --foreground --username $ADMIN --password $PASSWORD";
@@ -65,7 +63,7 @@ in
     after = [ "transmission.service" ];
     preStart = ''
       cat ${../../../rss.yml} > config.yml
-      cat ${config.age.secrets.flexget-variables.path} > variables.yml
+      cat ${config.sops.secrets.flexget-variables.path} > variables.yml
     '';
     serviceConfig = {
       User = "transmission";
@@ -111,7 +109,7 @@ in
   };
 
   system.activationScripts.cloudflare-dns-sync-transmission = {
-    deps = [ "agenix" ];
+    deps = [ "setupSecrets" ];
     text = "${pkgs.cloudflare-dns-sync}/bin/cloudflare-dns-sync transmission.${config.networking.domain} transmission-index.${config.networking.domain}";
   };
 

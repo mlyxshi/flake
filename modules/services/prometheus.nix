@@ -5,7 +5,7 @@ let
 in
 {
   # https://www.youtube.com/playlist?list=PLLYW3zEOaqlKhRCWqFE7iLRSh3XEFP5gj
-  age.secrets.telegram-env.file = ../../secrets/telegram-env.age;
+  sops.secrets.telegram-env = {};
 
   services.prometheus = {
     enable = true;
@@ -90,7 +90,7 @@ in
       webExternalUrl = "https://alert.${config.networking.domain}";
       listenAddress = "127.0.0.1";
       port = 9093;
-      environmentFile = config.age.secrets.telegram-env.path;
+      environmentFile = config.sops.secrets.telegram-env.path;
       extraFlags = [ ''--cluster.listen-address=""'' ]; # Disable Alertmanager's default high availability feature
       configuration = {
         receivers = [{
@@ -139,7 +139,7 @@ in
   };
 
   system.activationScripts.prometheus-alertmanager = {
-    deps = [ "agenix" ];
+    deps = [ "setupSecrets" ];
     text = ''
       ${pkgs.cloudflare-dns-sync}/bin/cloudflare-dns-sync \
       metric.${config.networking.domain} \

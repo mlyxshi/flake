@@ -33,7 +33,7 @@ in
   systemd.services."podman-${service}".serviceConfig.StateDirectory = "${service}";
 
   system.activationScripts."cloudflare-dns-sync-${service}" = {
-    deps = [ "agenix" ];
+    deps = [ "setupSecrets" ];
     text = "${pkgs.cloudflare-dns-sync}/bin/cloudflare-dns-sync ${service}.${config.networking.domain}";
   };
 

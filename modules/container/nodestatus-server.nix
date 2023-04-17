@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }: {
 
-  age.secrets.nodestatus-env.file = ../../secrets/nodestatus-env.age;
+  sops.secrets.nodestatus-env = {};
 
   virtualisation.oci-containers.containers = {
     "nodestatus-server" = {
@@ -9,7 +9,7 @@
         "/var/lib/nodestatus-server:/usr/local/NodeStatus/server"
       ];
       environmentFiles = [
-        config.age.secrets.nodestatus-env.path
+        config.sops.secrets.nodestatus-env.path
       ];
       environment = {
         "VERBOSE" = "false";
@@ -36,7 +36,7 @@
   systemd.services.podman-nodestatus-server.serviceConfig.StateDirectory = "nodestatus-server";
 
   system.activationScripts.cloudflare-dns-sync-nodestatus-server = {
-    deps = [ "agenix" ];
+    deps = [ "setupSecrets" ];
     text = "${pkgs.cloudflare-dns-sync}/bin/cloudflare-dns-sync top.${config.networking.domain}";
   };
 

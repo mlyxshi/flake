@@ -23,7 +23,7 @@
   };
 
   system.activationScripts.cloudflare-dns-sync-jellyfin = {
-    deps = [ "agenix" ];
+    deps = [ "setupSecrets" ];
     text = "${pkgs.cloudflare-dns-sync}/bin/cloudflare-dns-sync jellyfin.${config.networking.domain}";
   };
 }

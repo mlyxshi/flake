@@ -1,8 +1,8 @@
-{ self, nixpkgs, home-manager, agenix, impermanence, nix-index-database }:
+{ self, nixpkgs, home-manager, sops-nix, impermanence, nix-index-database }:
 
 nixpkgs.lib.nixosSystem {
   modules = [
-    agenix.nixosModules.default
+    sops-nix.nixosModules.default
     impermanence.nixosModules.impermanence
     home-manager.nixosModules.default
     nix-index-database.nixosModules.nix-index

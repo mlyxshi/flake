@@ -14,7 +14,7 @@
   nix.settings.trusted-users = [ "root" "hydra-builder" ];
 
   system.activationScripts.cloudflare-dns-sync-hydra = {
-    deps = [ "agenix" ];
+    deps = [ "setupSecrets" ];
     text = ''
       ${pkgs.cloudflare-dns-sync}/bin/cloudflare-dns-sync hydra-x64.${config.networking.domain}
     '';

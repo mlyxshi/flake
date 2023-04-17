@@ -1,8 +1,8 @@
-{ self, nixpkgs, agenix, home-manager }:
+{ self, nixpkgs, sops-nix, home-manager }:
 
 nixpkgs.lib.nixosSystem {
   modules = [
-    agenix.nixosModules.default
+   sops-nix.nixosModules.default
     home-manager.nixosModules.default
     self.nixosModules.os.nixos.server
     self.nixosModules.settings.nixConfigDir
