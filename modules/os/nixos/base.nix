@@ -6,6 +6,7 @@
 
   sops.defaultSopsFile = ../../../key.yaml;
   sops.age.sshKeyPaths = [ "/persist/sops/key" ];
+  sops.gnupg.sshKeyPaths = [ ];
 
   nix = {
     package = pkgs.nixUnstable;

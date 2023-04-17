@@ -1,5 +1,5 @@
 { pkgs, lib, config, ... }: {
-  sops.secrets.github-private-key = {};
+  sops.secrets.github-private-key = { };
   # ssh (client)
   programs.ssh = {
     knownHosts = {

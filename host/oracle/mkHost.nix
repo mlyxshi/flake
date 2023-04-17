@@ -1,4 +1,4 @@
-{ hostName, self, nixpkgs, home-manager, sops-nix,impermanence, hydra }:
+{ hostName, self, nixpkgs, home-manager, sops-nix, impermanence, hydra }:
 let
   arch = if (builtins.readDir ./aarch64) ? "${hostName}.nix" then "aarch64" else "x86_64";
 in

@@ -2,7 +2,7 @@
 
 nixpkgs.lib.nixosSystem {
   modules = [
-   sops-nix.nixosModules.default
+    sops-nix.nixosModules.default
     home-manager.nixosModules.default
     self.nixosModules.os.nixos.server
     self.nixosModules.settings.nixConfigDir

@@ -7,9 +7,9 @@ let
 in
 {
 
-  sops.secrets.transmission-env = {};
-  sops.secrets.rclone-env = {};
-  sops.secrets.bark-ios = {};
+  sops.secrets.transmission-env = { };
+  sops.secrets.rclone-env = { };
+  sops.secrets.bark-ios = { };
   sops.secrets.flexget-variables = {
     owner = "transmission";
     group = "transmission";

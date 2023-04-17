@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }: {
 
-  sops.secrets.traefik-cloudflare-env = {};
+  sops.secrets.traefik-cloudflare-env = { };
 
   systemd.services.traefik.serviceConfig.EnvironmentFile = config.sops.secrets.traefik-cloudflare-env.path;
 

@@ -18,7 +18,7 @@ let
   '';
 in
 {
-  sops.secrets.bark-ios = {};
+  sops.secrets.bark-ios = { };
 
   users = {
     users.qbittorrent = {

@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }: {
 
-  sops.secrets.restic-env = {};
+  sops.secrets.restic-env = { };
 
   virtualisation.oci-containers.containers = {
     "vaultwarden" = {

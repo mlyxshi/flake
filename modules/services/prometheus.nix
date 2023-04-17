@@ -5,7 +5,7 @@ let
 in
 {
   # https://www.youtube.com/playlist?list=PLLYW3zEOaqlKhRCWqFE7iLRSh3XEFP5gj
-  sops.secrets.telegram-env = {};
+  sops.secrets.telegram-env = { };
 
   services.prometheus = {
     enable = true;
