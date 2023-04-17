@@ -42,6 +42,5 @@
     parted
     below
     neofetch
-    ookla-speedtest
   ];
 }
