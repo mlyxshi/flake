@@ -8,8 +8,8 @@
 # psql ${DB_NAME} < backup
 { config, pkgs, lib, ... }: {
 
-  sops.secrets.miniflux-env.file = {};
-  sops.secrets.restic-env.file = {};
+  sops.secrets.miniflux-env = {};
+  sops.secrets.restic-env = {};
 
   services.postgresql.enable = true;
   services.postgresql.package = pkgs.postgresql_15;
