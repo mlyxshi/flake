@@ -19,6 +19,7 @@ jobs:
     - run: |
         mkdir ./path
         nix eval --raw .#nixosConfigurations.sw2.config.system.build.toplevel  > ./path/sw2
+    - run: git add .
     - run: git commit -m "test system"
     - run: git push
 
