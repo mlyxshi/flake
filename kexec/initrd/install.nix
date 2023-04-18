@@ -8,7 +8,7 @@ let
     host=$(get-kernel-param host)
 
     if [ -n "$host" ]; then
-      echo "Nix will build: $flake#nixosConfigurations.$host.config.system.build.toplevel"
+      echo "host defined: $host"
     else
       echo "No host defined for auto-installer"
       exit 1
@@ -43,11 +43,13 @@ let
     mount -o subvol=persist,compress-force=zstd $NIXOS /mnt/persist
 
     if [[ $(uname -m) == "aarch64" ]]; then
+      echo "Nix will build: $flake#nixosConfigurations.$host.config.system.build.toplevel"
       nix build -L --store /mnt --profile /mnt/nix/var/nix/profiles/system $flake#nixosConfigurations.$host.config.system.build.toplevel 
     fi
 
     if [[ $(uname -m) == "x86_64" ]]; then
       system=$(curl -sL https://raw.githubusercontent.com/mlyxshi/install/main/$host)
+      echo "Nix will copy: $system from cache"
       nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $system
     fi
 
