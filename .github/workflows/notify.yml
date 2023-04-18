@@ -1,5 +1,5 @@
 name: "Send workflow_dispatch"
-on: [push]
+on: push
 jobs:
   dispatch:
     runs-on: ubuntu-latest
@@ -11,6 +11,6 @@ jobs:
           await github.rest.actions.createWorkflowDispatch({
             owner: 'mlyxshi',
             repo: 'install',
-            workflow_id: 'main.yml',
+            workflow_id: 'path.yml',
             ref: 'main'
           })
