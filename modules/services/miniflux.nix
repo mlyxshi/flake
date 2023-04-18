@@ -8,7 +8,13 @@
 # psql ${DB_NAME} < backup
 { config, pkgs, lib, ... }: {
 
-  sops.secrets.miniflux-env = {};
+  sops.secrets.user = {};
+  sops.secrets.password = {};
+  sops.templates.miniflux-admin-credentials.content = ''
+    ADMIN_USERNAME=${config.sops.placeholder.user}
+    ADMIN_PASSWORD=${config.sops.placeholder.password}
+  '';
+
   sops.secrets.restic-env = {};
 
   services.postgresql.enable = true;
@@ -41,7 +47,7 @@
       METRICS_ALLOWED_NETWORKS = "0.0.0.0/0";
     };
     serviceConfig = {
-      EnvironmentFile = [ config.sops.secrets.miniflux-env.path ];
+      EnvironmentFile = [ config.sops.templates.miniflux-admin-credentials.path ];
       User = "miniflux";
       ExecStart = "${pkgs.miniflux}/bin/miniflux";
     };
@@ -61,7 +67,7 @@
       POLLING_PARSING_ERROR_LIMIT = "0";
     };
     serviceConfig = {
-      EnvironmentFile = [ config.sops.secrets.miniflux-env.path ];
+      EnvironmentFile = [ config.sops.templates.miniflux-admin-credentials.path ];
       User = "miniflux";
       ExecStart = "${pkgs.miniflux}/bin/miniflux";
     };
