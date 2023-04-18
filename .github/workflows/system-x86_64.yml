@@ -17,6 +17,7 @@ jobs:
     - run: git config user.name github-actions[bot] && git config user.email github-actions[bot]@users.noreply.github.com
 
     - run: |
+        mkdir ./path
         nix eval --raw .#nixosConfigurations.sw2.config.system.build.toplevel  > ./path/sw2
     - run: git commit -m "test system"
     - run: git push
