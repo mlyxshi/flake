@@ -6,6 +6,7 @@
 
     hydra.url = "github:NixOS/hydra";
     impermanence.url = "github:nix-community/impermanence";
+    sops-nix.url = "github:Mic92/sops-nix";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -13,7 +14,7 @@
     darwin.url = "github:LnL7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
-    sops-nix.url = "github:Mic92/sops-nix";
+    
 
     nix-index-database.url = "github:Mic92/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
@@ -81,6 +82,8 @@
 
       packages.x86_64-linux.default = self.nixosConfigurations."kexec-x86_64".config.system.build.test;
       packages.x86_64-linux.test0 = self.nixosConfigurations."kexec-x86_64".config.system.build.test0;
+
+      packages.x86_64-linux.sops-install-secrets = sops-nix.packages.x86_64-linux.sops-install-secrets;
 
       # Declarative spec file: spec.json
       # Declarative input type: Git checkout
