@@ -16,5 +16,7 @@ jobs:
           extra-platforms = aarch64-linux
     - run: |
         path=$(nix eval --raw  github:NixOS/nixpkgs/nixos-unstable#legacyPackages.aarch64-linux.deno)
+        # ignore error
+        set +e 
         nix path-info  --store https://cache.nixos.org/ -r $path
         [[ $? -eq 0 ]] && curl https://api.day.app/${{ secrets.BARK_KEY }}/Deno%20Build%20Done/
