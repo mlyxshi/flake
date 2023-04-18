@@ -2,7 +2,13 @@
 # https://nixos.org/manual/nix/stable/package-management/s3-substituter.html
 # https://fzakaria.github.io/nix-http-binary-cache-api-spec/
 { pkgs, lib, config, ... }: {
-  sops.secrets.minio-env = {};
+
+  sops.secrets.user = {};
+  sops.secrets.password = {};
+  sops.templates."minio-root-credentials".content = ''
+    MINIO_ROOT_USER=${config.sops.placeholder.user}
+    MINIO_ROOT_PASSWORD=${config.sops.placeholder.password}
+  '';
 
   users = {
     users.minio = {
@@ -20,7 +26,7 @@
       MINIO_BROWSER_REDIRECT_URL = "https://minio-dashboard.${config.networking.domain}";
     };
     serviceConfig.User = "minio";
-    serviceConfig.EnvironmentFile = config.sops.secrets.minio-env.path;
+    serviceConfig.EnvironmentFile = config.sops.templates.minio-root-credentials.path;
     serviceConfig.ExecStart = "${pkgs.minio}/bin/minio server --address :9000 --console-address :9001 %S/minio";
     serviceConfig.StateDirectory = "minio";
     wantedBy = [ "multi-user.target" ];
@@ -32,7 +38,7 @@
     unitConfig.ConditionPathExists = "!%S/minio/nix/nix-cache-info";
     environment.HOME = "%S/minio";
     serviceConfig.User = "minio";
-    serviceConfig.EnvironmentFile = config.sops.secrets.minio-env.path;
+    serviceConfig.EnvironmentFile = config.sops.templates.minio-root-credentials.path;
     preStart = "sleep 2"; # wait for minio server init
     script = ''
       ${pkgs.minio-client}/bin/mc alias set MY_MINIO http://127.0.0.1:9000 $MINIO_ROOT_USER $MINIO_ROOT_PASSWORD

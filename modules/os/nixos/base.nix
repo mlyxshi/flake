@@ -9,7 +9,7 @@
   sops.gnupg.sshKeyPaths = [ ];
 
   nix = {
-    package = pkgs.nixUnstable;
+    package = pkgs.nixVersions.unstable;
     registry.nixpkgs.flake = nixpkgs;
     settings = {
       experimental-features = [ "nix-command" "flakes" "cgroups" "auto-allocate-uids" ];
