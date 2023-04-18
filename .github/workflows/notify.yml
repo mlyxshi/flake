@@ -11,6 +11,6 @@ jobs:
           await github.rest.actions.createWorkflowDispatch({
             owner: 'mlyxshi',
             repo: 'install',
-            workflow_id: 'path.yml',
+            workflow_id: 'main.yml',
             ref: 'main'
           })
