@@ -40,8 +40,8 @@
       "mc alias set MY_MINIO http://127.0.0.1:9000 $MINIO_ROOT_USER $MINIO_ROOT_PASSWORD"
       "mc mb --ignore-existing MY_MINIO/nix"
       "mc anonymous set download MY_MINIO/nix"
-      "${pkgs.coreutils}/bin/echo 'StoreDir: /nix/store' > /tmp/nix-cache-info"
-      "mc cp /tmp/nix-cache-info MY_MINIO/nix"
+      "${pkgs.coreutils}/bin/echo 'StoreDir: /nix/store' > /var/lib/minio/nix-cache-info"
+      "mc cp /var/lib/minio/nix-cache-info MY_MINIO/nix"
     ];
     wantedBy = [ "multi-user.target" ];
   };
