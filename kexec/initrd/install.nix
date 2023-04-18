@@ -3,15 +3,12 @@
 let
   installScript = ''
     flake=$(get-kernel-param flake)
-    [ ! -n "$flake" ] && flake="github:mlyxshi/flake"                     # convenient for myself
+    [ ! -n "$flake" ] && flake="github:mlyxshi/flake"
     
     host=$(get-kernel-param host)
-    system=$(get-kernel-param system)
 
     if [ -n "$host" ]; then
       echo "Nix will build: $flake#nixosConfigurations.$host.config.system.build.toplevel"
-    elif [ -n "$system" ]; then
-      echo "Nix will copy $system from cache"
     else
       echo "No host defined for auto-installer"
       exit 1
@@ -45,11 +42,12 @@ let
     mount -o subvol=nix,compress-force=zstd    $NIXOS /mnt/nix
     mount -o subvol=persist,compress-force=zstd $NIXOS /mnt/persist
 
-    if [ -n "$host" ]; then
+    if [[ $(uname -m) == "aarch64" ]]; then
       nix build -L --store /mnt --profile /mnt/nix/var/nix/profiles/system $flake#nixosConfigurations.$host.config.system.build.toplevel 
     fi
 
-    if [ -n "$system" ]; then
+    if [[ $(uname -m) == "x86_64" ]]; then
+      system=$(curl -sL https://raw.githubusercontent.com/mlyxshi/install/main/$host)
       nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $system
     fi
 
