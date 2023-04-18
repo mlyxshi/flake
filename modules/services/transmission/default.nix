@@ -8,12 +8,26 @@ in
 {
 
   sops.secrets.transmission-env = { };
-  sops.secrets.rclone-env = { };
-  sops.secrets.bark-ios = { };
-  sops.secrets.flexget-variables = {
+
+  sops.secrets.user = { };
+  sops.secrets.password = { };
+  sops.templates.transmission-admin-credentials.content = ''
+    ADMIN=${config.sops.placeholder.user}
+    PASSWORD=${config.sops.placeholder.password}
+  '';
+
+  sops.templates.flexget-variables = {
+    content = ''
+      tr:
+        usr: ${config.sops.placeholder.user}
+        pwd: ${config.sops.placeholder.password}
+    '';
     owner = "transmission";
     group = "transmission";
   };
+
+  sops.secrets.rclone-env = { };
+  sops.secrets.bark-ios = { };
 
   users = {
     users.transmission = {
@@ -44,7 +58,7 @@ in
       DENO_DIR = "%S/transmission/.deno";
     };
     serviceConfig.EnvironmentFile = [
-      config.sops.secrets.transmission-env.path
+      config.sops.templates.transmission-admin-credentials.path
       config.sops.secrets.bark-ios.path
       config.sops.secrets.rclone-env.path
     ];
@@ -62,7 +76,7 @@ in
     after = [ "transmission.service" ];
     preStart = ''
       cat ${../../../rss.yml} > config.yml
-      cat ${config.sops.secrets.flexget-variables.path} > variables.yml
+      cat ${config.sops.templates.flexget-variables.path} > variables.yml
     '';
     serviceConfig = {
       User = "transmission";

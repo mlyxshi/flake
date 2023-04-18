@@ -1,6 +1,12 @@
 { pkgs, lib, config, ... }: {
 
-  sops.secrets.nodestatus-env = { };
+  sops.secrets.user = {};
+  sops.secrets.password = {};
+  sops.templates.nodestatus-admin-credentials.content = ''
+    WEB_USERNAME=${config.sops.placeholder.user}
+    WEB_PASSWORD=${config.sops.placeholder.password}
+  '';
+
   sops.secrets.restic-env = { };
 
   virtualisation.oci-containers.containers = {
@@ -10,7 +16,7 @@
         "/var/lib/nodestatus-server:/usr/local/NodeStatus/server"
       ];
       environmentFiles = [
-        config.sops.secrets.nodestatus-env.path
+        config.sops.templates.nodestatus-admin-credentials.path
       ];
       environment = {
         "VERBOSE" = "false";
