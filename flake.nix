@@ -83,6 +83,8 @@
       packages.x86_64-linux.default = self.nixosConfigurations."kexec-x86_64".config.system.build.test;
       packages.x86_64-linux.test0 = self.nixosConfigurations."kexec-x86_64".config.system.build.test0;
 
+       packages.aarch64-linux.sops-install-secrets = sops-nix.package.aarch64-linux.sops-install-secrets;
+
       # Declarative spec file: spec.json
       # Declarative input type: Git checkout
       # Declarative input value: https://github.com/mlyxshi/flake.git main 
