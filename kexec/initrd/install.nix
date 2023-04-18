@@ -78,5 +78,4 @@ in
     script = installScript;
     requiredBy = [ "initrd.target" ];
   };
-
 }
