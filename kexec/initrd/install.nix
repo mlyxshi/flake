@@ -14,11 +14,6 @@ let
       exit 1
     fi
 
-    # add extra 1G memory for evaluate nix config
-    echo 1G > /sys/block/zram0/disksize
-    mkswap /dev/zram0
-    swapon /dev/zram0
-
     bark_key=$(get-kernel-param bark_key)
     age_key=$(get-kernel-param age_key)
     local_test=$(get-kernel-param local_test)

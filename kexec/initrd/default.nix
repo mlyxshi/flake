@@ -12,7 +12,7 @@
     "/etc/nix/nix.conf".text = ''
       extra-experimental-features = nix-command flakes auto-allocate-uids
       auto-allocate-uids = true
-      substituters = https://cache.nixos.org https://oranc.li7g.com/ghcr.io/mlyxshi/nix
+      substituters = https://cache.nixos.org https://oranc.li7g.com/ghcr.io/mlyxshi/nix https://cache.mlyxshi.com
       trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= cache:vXjiuWtSTOXj63zr+ZjMvXqvaYIK1atjyyEk+iuIqSg=
     '';
 
@@ -69,8 +69,6 @@
     awk = "${pkgs.gawk}/bin/awk";
     parted = "${pkgs.parted}/bin/parted";
     lsblk = "${pkgs.util-linux}/bin/lsblk";
-    mkswap = "${pkgs.util-linux}/bin/mkswap";
-    swapon = "${pkgs.util-linux}/bin/swapon";
     curl = "${pkgs.curl}/bin/curl";
     lf = "${pkgs.lf}/bin/lf";
 

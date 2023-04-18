@@ -23,10 +23,10 @@ jobs:
     # - run: nix build --no-link --print-out-paths .#nixosConfigurations.kr2.config.system.build.toplevel > /tmp/outPathFile
     # - run: nix copy --to 's3://nix?endpoint=minio.mlyxshi.com&secret-key=/tmp/key&parallel-compression=true&compression=zstd&compression-level=20' $(cat /tmp/outPathFile)
 
-    # - run: nix copy --to 's3://nix?endpoint=minio.mlyxshi.com&secret-key=/tmp/key&parallel-compression=true&compression=zstd&compression-level=20' .#test
+    - run: nix copy --to 's3://nix?endpoint=minio.mlyxshi.com&secret-key=/tmp/key&parallel-compression=true&compression=zstd&compression-level=20' packages.x86_64-linux.Anime4k
     
     # QEMU Test 
-    - run: nix copy --to 's3://nix?endpoint=minio.mlyxshi.com&secret-key=/tmp/key&parallel-compression=true&compression=zstd&compression-level=20' .#nixosConfigurations.qemu-test-x64.config.system.build.toplevel 
+    # - run: nix copy --to 's3://nix?endpoint=minio.mlyxshi.com&secret-key=/tmp/key&parallel-compression=true&compression=zstd&compression-level=20' .#nixosConfigurations.qemu-test-x64.config.system.build.toplevel 
     # Oracle x86_64
     # - run: nix copy --to 's3://nix?endpoint=minio.mlyxshi.com&secret-key=/tmp/key&parallel-compression=true&compression=zstd&compression-level=20' .#nixosConfigurations.kr2.config.system.build.toplevel 
     # - run: nix copy --to 's3://nix?endpoint=minio.mlyxshi.com&secret-key=/tmp/key&parallel-compression=true&compression=zstd&compression-level=20' .#nixosConfigurations.sw2.config.system.build.toplevel 

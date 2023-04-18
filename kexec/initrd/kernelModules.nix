@@ -4,7 +4,7 @@ let
   # btrfs,vfat,efivarfs
   fileSystem = [ "btrfs" "crc32c" ] ++ [ "vfat" "nls_cp437" "nls_iso8859-1" ] ++ [ "efivarfs" ];
   # add extra kernel modules: https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/all-hardware.nix
-  modules = qemu ++ hyperv ++ fileSystem ++ [ "zram" ];
+  modules = qemu ++ hyperv ++ fileSystem;
 in
 {
   boot.initrd.kernelModules = modules;
