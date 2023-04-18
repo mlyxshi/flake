@@ -54,7 +54,6 @@ in
     preStart = ''
       cat ${transmissionScript} > transmission.sh
       chmod +x transmission.sh
-      mkdir -p /var/lib/transmission/watch
     '';
     wantedBy = [ "multi-user.target" ];
   };
