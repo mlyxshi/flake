@@ -27,6 +27,4 @@ jobs:
     # - run: nix copy --to 's3://nix?endpoint=minio.mlyxshi.com&secret-key=/tmp/key&parallel-compression=true&compression=zstd&compression-level=20' .#packages.x86_64-linux.Anime4k
     # - run: nix copy --to 's3://nix?endpoint=minio.mlyxshi.com&secret-key=/tmp/key&parallel-compression=true&compression=zstd&compression-level=20' .#nixosConfigurations.qemu-test-x64.config.system.build.toplevel 
 
-    # show path info
-    - run: nix build --print-out-paths .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel 
     - run: nix copy --to 's3://nix?endpoint=minio.mlyxshi.com&secret-key=/tmp/key&parallel-compression=true&compression=zstd&compression-level=20' .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel 
