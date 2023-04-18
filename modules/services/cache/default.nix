@@ -32,7 +32,6 @@
     unitConfig.ConditionPathExists = "!%S/minio/nix/nix-cache-info";
     environment.HOME = "%S/minio";
     serviceConfig.User = "minio";
-    serviceConfig.PrivateTmp = true;
     serviceConfig.EnvironmentFile = config.sops.secrets.minio-env.path;
     serviceConfig.Type = "oneshot";
     serviceConfig.ExecSearchPath = "${pkgs.minio-client}/bin";
