@@ -46,14 +46,13 @@ let
     mount -o subvol=persist,compress-force=zstd $NIXOS /mnt/persist
 
     mkdir -p /mnt/{etc,tmp}
-    export HOME=/mnt/tmp  # cache
     
     if [ -n "$host" ]; then
       nix build -L --store /mnt --profile /mnt/nix/var/nix/profiles/system $flake#nixosConfigurations.$host.config.system.build.toplevel 
     fi
 
     if [ -n "$system" ]; then
-      nix-env -p /mnt/nix/var/nix/profiles/system --set $system
+      nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $system
     fi
 
     touch /mnt/etc/NIXOS
