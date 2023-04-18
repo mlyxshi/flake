@@ -11,8 +11,6 @@
     mode = "tcp_and_udp";
   };
 
-  sops.templates.shadowsocks-config.group = "root";
-
   systemd.services.shadowsocks = {
     after = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
