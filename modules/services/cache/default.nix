@@ -2,7 +2,7 @@
 # https://nixos.org/manual/nix/stable/package-management/s3-substituter.html
 # https://fzakaria.github.io/nix-http-binary-cache-api-spec/
 { pkgs, lib, config, ... }: {
-  sops.secrets.minio-env.file = {};
+  sops.secrets.minio-env = {};
 
   users = {
     users.minio = {
