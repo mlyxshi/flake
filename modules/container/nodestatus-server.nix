@@ -38,7 +38,7 @@
 
   systemd.services.nodestatus-data-init = {
     after = [ "network-online.target" ];
-    before = [ "podman-nodestatus-server" ];
+    before = [ "podman-nodestatus-server.service" ];
     unitConfig.ConditionPathExists = "!%S/nodestatus-server";
     environment.RESTIC_CACHE_DIR = "%C/restic";
     serviceConfig.EnvironmentFile = config.sops.secrets.restic-env.path;
