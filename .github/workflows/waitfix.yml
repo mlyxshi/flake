@@ -14,4 +14,7 @@ jobs:
       with:
         extra-conf: |
           extra-platforms = aarch64-linux
-    - run: nix build nixpkgs/nixos-unstable#legacyPackages.aarch64-linux.deno && curl https://api.day.app/${{ secrets.BARK_KEY }}/Deno%20Build%20Done/
+    - run: |
+        path=$(nix eval --raw  github:NixOS/nixpkgs/nixos-unstable#legacyPackages.aarch64-linux.deno)
+        nix path-info  --store https://cache.nixos.org/ -r $path
+        [[ $? -eq 0 ]] && curl https://api.day.app/${{ secrets.BARK_KEY }}/Deno%20Build%20Done/
