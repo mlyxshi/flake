@@ -6,13 +6,17 @@ let
     [ ! -n "$flake" ] && flake="github:mlyxshi/flake"                     # convenient for myself
     
     host=$(get-kernel-param host)
-    if [ -n "$host" ]
-    then
+    system=$(get-kernel-param system)
+
+    if [ -n "$host" ]; then
       echo "Nix will build: $flake#nixosConfigurations.$host.config.system.build.toplevel"
+    elif [ -n "$system" ]; then
+      echo "Nix will copy $system from cache"
     else
       echo "No host defined for auto-installer"
       exit 1
     fi
+  
 
     bark_key=$(get-kernel-param bark_key)
     age_key=$(get-kernel-param age_key)
@@ -41,8 +45,14 @@ let
     mount -o subvol=nix,compress-force=zstd    $NIXOS /mnt/nix
     mount -o subvol=persist,compress-force=zstd $NIXOS /mnt/persist
     
-    nix build -L --store /mnt --profile /mnt/nix/var/nix/profiles/system $flake#nixosConfigurations.$host.config.system.build.toplevel
-    
+    if [ -n "$host" ]; then
+      nix build -L --store /mnt --profile /mnt/nix/var/nix/profiles/system $flake#nixosConfigurations.$host.config.system.build.toplevel 
+    fi
+
+    if [ -n "$system" ]; then
+      nix-env -p /mnt/nix/var/nix/profiles/system --set $system
+    fi
+
     mkdir -p /mnt/{etc,tmp}
     touch /mnt/etc/NIXOS
     [[ -n "$age_key" ]] && mkdir -p /mnt/persist/sops/ && curl -sLo /mnt/persist/sops/key $age_key
