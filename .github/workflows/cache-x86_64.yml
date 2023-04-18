@@ -1,5 +1,4 @@
 name: "Cache x86_64"
-# on: [  workflow_dispatch ]
 on: [ push, workflow_dispatch ]
 
 env:
@@ -10,6 +9,11 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        host: [sw2,sw3,kr2, hk1,hk2,jp3]
+
     steps:
     - uses: actions/checkout@master
     - uses: DeterminateSystems/nix-installer-action@main
@@ -21,14 +25,6 @@ jobs:
     - run: echo $NIX_STORE_SIGN_PRIVATE > /tmp/key
 
     # - run: nix copy --to 's3://nix?endpoint=minio.mlyxshi.com&secret-key=/tmp/key&parallel-compression=true&compression=zstd&compression-level=20' .#packages.x86_64-linux.Anime4k
-    
-    # QEMU Test 
-    - run: nix copy --to 's3://nix?endpoint=minio.mlyxshi.com&secret-key=/tmp/key&parallel-compression=true&compression=zstd&compression-level=20' .#nixosConfigurations.qemu-test-x64.config.system.build.toplevel 
-    # Oracle x86_64
-    - run: nix copy --to 's3://nix?endpoint=minio.mlyxshi.com&secret-key=/tmp/key&parallel-compression=true&compression=zstd&compression-level=20' .#nixosConfigurations.kr2.config.system.build.toplevel 
-    - run: nix copy --to 's3://nix?endpoint=minio.mlyxshi.com&secret-key=/tmp/key&parallel-compression=true&compression=zstd&compression-level=20' .#nixosConfigurations.sw2.config.system.build.toplevel 
-    - run: nix copy --to 's3://nix?endpoint=minio.mlyxshi.com&secret-key=/tmp/key&parallel-compression=true&compression=zstd&compression-level=20' .#nixosConfigurations.sw3.config.system.build.toplevel
-    # Azure x86_64
-    - run: nix copy --to 's3://nix?endpoint=minio.mlyxshi.com&secret-key=/tmp/key&parallel-compression=true&compression=zstd&compression-level=20' .#nixosConfigurations.hk1.config.system.build.toplevel 
-    - run: nix copy --to 's3://nix?endpoint=minio.mlyxshi.com&secret-key=/tmp/key&parallel-compression=true&compression=zstd&compression-level=20' .#nixosConfigurations.hk2.config.system.build.toplevel
-    - run: nix copy --to 's3://nix?endpoint=minio.mlyxshi.com&secret-key=/tmp/key&parallel-compression=true&compression=zstd&compression-level=20' .#nixosConfigurations.jp3.config.system.build.toplevel
+    # - run: nix copy --to 's3://nix?endpoint=minio.mlyxshi.com&secret-key=/tmp/key&parallel-compression=true&compression=zstd&compression-level=20' .#nixosConfigurations.qemu-test-x64.config.system.build.toplevel 
+
+    - run: nix copy --to 's3://nix?endpoint=minio.mlyxshi.com&secret-key=/tmp/key&parallel-compression=true&compression=zstd&compression-level=20' .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel 
