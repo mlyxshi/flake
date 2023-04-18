@@ -46,7 +46,7 @@ let
     mount -o subvol=persist,compress-force=zstd $NIXOS /mnt/persist
 
     mkdir -p /mnt/{etc,tmp}
-    export TMPDIR=/mnt/tmp
+    export HOME=/mnt/tmp  # cache
     
     if [ -n "$host" ]; then
       nix build -L --store /mnt --profile /mnt/nix/var/nix/profiles/system $flake#nixosConfigurations.$host.config.system.build.toplevel 
