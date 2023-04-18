@@ -32,3 +32,5 @@ jobs:
     - run: nix profile install github:linyinfeng/oranc  --extra-substituters https://linyinfeng.cachix.org --extra-trusted-public-keys linyinfeng.cachix.org-1:sPYQXcNrnCf7Vr7T0YmjXz5dMZ7aOKG3EqLja0xr9MM=
     - run: oranc push --registry ghcr.io --repository mlyxshi/nix initialize
     - run: nix build --no-link --print-out-paths .#packages.aarch64-linux.transmission | sudo --preserve-env /home/runner/.nix-profile/bin/oranc push --repository mlyxshi/nix
+    - run: nix build --no-link --print-out-paths github:Mic92/sops-nix#packages.x86_64-linux.sops-install-secrets | sudo --preserve-env /home/runner/.nix-profile/bin/oranc push --repository mlyxshi/nix
+  
