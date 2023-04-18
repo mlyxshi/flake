@@ -12,12 +12,10 @@ templates:
       labels: 
         - bangumi
 
-
 tasks:
   为美好的世界献上爆炎:
     rss: https://mikanani.me/RSS/Bangumi?bangumiId=2968&subgroupid=552
   
-
 schedules:
   - tasks: '*'
     interval:
