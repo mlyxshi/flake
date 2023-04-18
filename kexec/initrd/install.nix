@@ -45,8 +45,6 @@ let
     mount -o subvol=nix,compress-force=zstd    $NIXOS /mnt/nix
     mount -o subvol=persist,compress-force=zstd $NIXOS /mnt/persist
 
-    mkdir -p /mnt/{etc,tmp}
-    
     if [ -n "$host" ]; then
       nix build -L --store /mnt --profile /mnt/nix/var/nix/profiles/system $flake#nixosConfigurations.$host.config.system.build.toplevel 
     fi
@@ -55,6 +53,7 @@ let
       nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $system
     fi
 
+    mkdir -p /mnt/{etc,tmp}
     touch /mnt/etc/NIXOS
     [[ -n "$age_key" ]] && mkdir -p /mnt/persist/sops/ && curl -sLo /mnt/persist/sops/key $age_key
     mkdir -p /mnt/persist/etc/ssh && for i in /etc/ssh/ssh_host_ed25519_key*; do cp $i /mnt/persist/etc/ssh; done
