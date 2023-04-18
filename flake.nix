@@ -5,16 +5,18 @@
     nixpkgs-network-pr.url = "github:NixOS/nixpkgs/pull/169116/head";
 
     hydra.url = "github:NixOS/hydra";
+    
     impermanence.url = "github:nix-community/impermanence";
+    
     sops-nix.url = "github:Mic92/sops-nix";
-
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+    sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs";
+    
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     darwin.url = "github:LnL7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
-
-    
 
     nix-index-database.url = "github:Mic92/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";

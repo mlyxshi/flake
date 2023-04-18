@@ -40,6 +40,8 @@
 
     transmission = import ./services/transmission;
     bangumi = import ./services/bangumi;
+
+    cache = import ./services/cache;
   };
 
   container = {
