@@ -1,6 +1,7 @@
 { pkgs, lib, config, ... }: {
 
   sops.secrets.nodestatus-env = { };
+  sops.secrets.restic-env = { };
 
   virtualisation.oci-containers.containers = {
     "nodestatus-server" = {
