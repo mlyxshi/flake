@@ -1,4 +1,3 @@
-import * as pulumi from "@pulumi/pulumi";
 import * as cloudflare from "@pulumi/cloudflare";
 
 const zoneId = "9635f891a392db45a76bca59db689db0";
@@ -6,15 +5,15 @@ const zoneId = "9635f891a392db45a76bca59db689db0";
 const dns: Record<string, string[]> = {
     "130.61.171.180": ["de", "transmission", "transmission-index"],
     "140.238.198.209": ["au", "alert", "metric"],
-    "138.2.16.45":["jp2"],
-    "168.138.34.176": ["jp4","jellyfin"],
-    "155.248.196.71":["us1", "minio", "minio-dashboard","cache","youtube","reddit"],
-    "138.2.224.150":["us2","miniflux","miniflux-silent"],
-    "152.69.224.200": ["kr","hydra"],
-    "152.67.211.22":["kr2","hydra-x64"],
-    "152.67.79.165": ["sw", "rss","changeio"],
-    "152.67.76.109": ["sw2","top"],
-    "152.67.78.74":["sw3","password"],
+    "138.2.16.45": ["jp2"],
+    "168.138.34.176": ["jp4", "jellyfin"],
+    "155.248.196.71": ["us1", "minio", "minio-dashboard", "cache", "youtube", "reddit"],
+    "138.2.224.150": ["us2", "miniflux", "miniflux-silent"],
+    "152.69.224.200": ["kr", "hydra"],
+    "152.67.211.22": ["kr2", "hydra-x64"],
+    "152.67.79.165": ["sw", "rss", "changeio"],
+    "152.67.76.109": ["sw2", "top"],
+    "152.67.78.74": ["sw3", "password"],
 }
 
 Object.keys(dns).forEach(ip => {
