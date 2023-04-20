@@ -35,7 +35,6 @@
 
     nodestatus-client = import ./services/nodestatus-client.nix;
     miniflux = import ./services/miniflux.nix;
-    alist = import ./services/alist.nix;
 
     transmission = import ./services/transmission;
 
