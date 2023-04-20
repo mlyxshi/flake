@@ -4,8 +4,8 @@ import * as cloudflare from "@pulumi/cloudflare";
 const zoneId = "9635f891a392db45a76bca59db689db0";
 
 const dns: Record<string, string[]> = {
-    //"130.61.171.180": ["de", "transmission", "transmission-index"]
-    "140.238.198.209": ["au", "alert"]
+    "130.61.171.180": ["de", "transmission", "transmission-index"],
+    "140.238.198.209": ["au", "alert"],
 }
 
 Object.keys(dns).forEach(ip => {
