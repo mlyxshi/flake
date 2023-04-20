@@ -95,14 +95,4 @@
     };
   };
 
-  system.activationScripts.cloudflare-dns-sync-minio = {
-    deps = [ "setupSecrets" ];
-    text = ''
-      ${pkgs.cloudflare-dns-sync}/bin/cloudflare-dns-sync \
-      minio.${config.networking.domain} \
-      cache.${config.networking.domain} \
-      minio-dashboard.${config.networking.domain}
-    '';
-  };
-
 }

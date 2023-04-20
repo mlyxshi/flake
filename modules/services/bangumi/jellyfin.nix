@@ -22,8 +22,4 @@
     };
   };
 
-  system.activationScripts.cloudflare-dns-sync-jellyfin = {
-    deps = [ "setupSecrets" ];
-    text = "${pkgs.cloudflare-dns-sync}/bin/cloudflare-dns-sync jellyfin.${config.networking.domain}";
-  };
 }

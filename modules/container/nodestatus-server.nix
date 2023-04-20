@@ -68,10 +68,4 @@
     startAt = "04:00";
   };
 
-  system.activationScripts.cloudflare-dns-sync-nodestatus-server = {
-    deps = [ "setupSecrets" ];
-    text = "${pkgs.cloudflare-dns-sync}/bin/cloudflare-dns-sync top.${config.networking.domain}";
-  };
-
-
 }

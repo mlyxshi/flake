@@ -9,7 +9,6 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.fileSystem
     self.nixosModules.settings.nixConfigDir
     self.nixosModules.settings.developerMode
-    self.nixosModules.services.cloudflare-dns-sync
     self.nixosModules.services.nodestatus-client
     self.nixosModules.services.ssh-config
     ./hardware.nix

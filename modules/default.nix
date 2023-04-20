@@ -28,7 +28,7 @@
 
     ssh-config = import ./services/ssh-config.nix;
     traefik = import ./services/traefik.nix;
-    cloudflare-dns-sync = import ./services/cloudflare-dns-sync.nix;
+
     tftpd = import ./services/tftpd.nix;
     hydra-aarch64 = import ./services/hydra/hydra-aarch64.nix;
     hydra-x86_64 = import ./services/hydra/hydra-x86_64.nix;

@@ -121,11 +121,6 @@ in
     };
   };
 
-  system.activationScripts.cloudflare-dns-sync-transmission = {
-    deps = [ "setupSecrets" ];
-    text = "${pkgs.cloudflare-dns-sync}/bin/cloudflare-dns-sync transmission.${config.networking.domain} transmission-index.${config.networking.domain}";
-  };
-
 
   networking.nftables.enable = lib.mkForce false;
 }

@@ -138,12 +138,4 @@ in
     };
   };
 
-  system.activationScripts.prometheus-alertmanager = {
-    deps = [ "setupSecrets" ];
-    text = ''
-      ${pkgs.cloudflare-dns-sync}/bin/cloudflare-dns-sync \
-      metric.${config.networking.domain} \
-      alert.${config.networking.domain}
-    '';
-  };
 }
