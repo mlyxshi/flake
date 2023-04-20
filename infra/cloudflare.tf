@@ -7,6 +7,8 @@ terraform {
   }
 }
 
+variable "zone" {}
+
 resource "cloudflare_record" "alert" {
   name    = "alert"
   proxied = false
