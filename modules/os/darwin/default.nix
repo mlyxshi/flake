@@ -2,14 +2,13 @@
 
   imports = [
     ../common
-
     ./systemDefaults.nix
     ./launchd.nix
     ./brew.nix
   ];
 
   nix = {
-    package = pkgs.nixUnstable;
+    package = pkgs.nixVersions.unstable;
     registry.nixpkgs.flake = nixpkgs;
     settings = {
       experimental-features = [ "nix-command" "flakes" ];

@@ -34,8 +34,6 @@
     jq
     lazygit
     deno
-    cf-terraforming
-    terraform
   ] ++ lib.optionals pkgs.stdenv.isDarwin [
     restic
     rclone
