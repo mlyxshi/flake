@@ -13,7 +13,7 @@ new cloudflare.Record("alert", {
 });
 
 
-new cloudflare.Record("alert", {
+new cloudflare.Record("au", {
     name: "au",
     zoneId: zoneId,
     type: "A",
