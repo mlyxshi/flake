@@ -11,3 +11,13 @@ new cloudflare.Record("alert", {
   ttl: 1,
   proxied: false,
 });
+
+
+new cloudflare.Record("alert", {
+    name: "au",
+    zoneId: zoneId,
+    type: "A",
+    value: "140.238.198.209",
+    ttl: 1,
+    proxied: false,
+});
