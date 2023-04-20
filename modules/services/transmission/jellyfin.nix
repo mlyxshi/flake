@@ -6,17 +6,6 @@
     group = "transmission";
   };
 
-  systemd.services.media-init = {
-    before = [ "transmission.service" ];
-    unitConfig.ConditionPathExists = "!%S/media";
-    serviceConfig.User = "transmission";
-    serviceConfig.StateDirectory = "media";
-    script = ''
-      mkdir -p /var/lib/media
-    '';
-    wantedBy = [ "multi-user.target" ];
-  };
-
   services.traefik = {
     dynamicConfigOptions = {
       http = {

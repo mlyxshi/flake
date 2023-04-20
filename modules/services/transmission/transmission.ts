@@ -21,8 +21,9 @@ function isSingleVideo(str) {
     return videoSuffix.some(suffix => str.endsWith(suffix));
 }
 
-if (FILE_INFO.isFile && isSingleVideo(TR_TORRENT_NAME)) {
-
+if (TR_TORRENT_LABELS == "rss") {
+    Deno.run({ cmd: ["transmission-remote", "--auth", `${ADMIN}:${PASSWORD}`, "--torrent", TR_TORRENT_ID, "--remove"], });
+} else if (FILE_INFO.isFile && isSingleVideo(TR_TORRENT_NAME)) {
     const MEDIA_URL = encodeURIComponent(`http://transmission-index.mlyxshi.com/${TR_TORRENT_NAME}`);
     const IOS_SHORTCUTS_URL = encodeURIComponent(`shortcuts://run-shortcut?name=transmission-delete&input=text&text=${TR_TORRENT_ID}`)
     const INFUSE_URL_SCHEME = `infuse://x-callback-url/play?url=${MEDIA_URL}&x-success=${IOS_SHORTCUTS_URL}`;

@@ -1,3 +1,5 @@
 tasks:
-  为美好的世界献上爆炎:
-    rss: https://mikanani.me/RSS/Bangumi?bangumiId=2968&subgroupid=552
+  我推的孩子:
+    rss: https://mikanani.me/RSS/Bangumi?bangumiId=2995&subgroupid=552
+    transmission:
+      path: /var/lib/media/我推的孩子/Season 01/
