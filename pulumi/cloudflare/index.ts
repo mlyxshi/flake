@@ -1,3 +1,4 @@
+import * as pulumi from "@pulumi/pulumi";
 import * as cloudflare from "@pulumi/cloudflare";
 
 const record = new cloudflare.Record("sample-record", {
