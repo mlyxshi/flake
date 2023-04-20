@@ -8,14 +8,14 @@
 # psql ${DB_NAME} < backup
 { config, pkgs, lib, ... }: {
 
-  sops.secrets.user = {};
-  sops.secrets.password = {};
+  sops.secrets.user = { };
+  sops.secrets.password = { };
   sops.templates.miniflux-admin-credentials.content = ''
     ADMIN_USERNAME=${config.sops.placeholder.user}
     ADMIN_PASSWORD=${config.sops.placeholder.password}
   '';
 
-  sops.secrets.restic-env = {};
+  sops.secrets.restic-env = { };
 
   services.postgresql.enable = true;
   services.postgresql.package = pkgs.postgresql_15;

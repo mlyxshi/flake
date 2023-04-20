@@ -1,7 +1,7 @@
 { pkgs, lib, config, ... }: {
 
-  sops.secrets.user = {};
-  sops.secrets.password = {};
+  sops.secrets.user = { };
+  sops.secrets.password = { };
   sops.templates.nodestatus-admin-credentials.content = ''
     WEB_USERNAME=${config.sops.placeholder.user}
     WEB_PASSWORD=${config.sops.placeholder.password}

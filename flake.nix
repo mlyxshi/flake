@@ -1,18 +1,17 @@
 {
   inputs = {
-    # nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable;
-    nixpkgs.url = "github:NixOS/nixpkgs/64c27498901f104a11df646278c4e5c9f4d642db"; # wait deno aarch64 fix
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable"; 
 
     nixpkgs-network-pr.url = "github:NixOS/nixpkgs/pull/169116/head";
 
     hydra.url = "github:NixOS/hydra";
 
     impermanence.url = "github:nix-community/impermanence";
-    
+
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs";
-    
+
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 

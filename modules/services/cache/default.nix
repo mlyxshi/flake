@@ -3,8 +3,8 @@
 # https://fzakaria.github.io/nix-http-binary-cache-api-spec/
 { pkgs, lib, config, ... }: {
 
-  sops.secrets.user = {};
-  sops.secrets.password = {};
+  sops.secrets.user = { };
+  sops.secrets.password = { };
   sops.templates.minio-root-credentials.content = ''
     MINIO_ROOT_USER=${config.sops.placeholder.user}
     MINIO_ROOT_PASSWORD=${config.sops.placeholder.password}
