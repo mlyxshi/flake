@@ -1,22 +1,3 @@
-# https://flexget.com/en/Configuration
-variables: variables.yml
-
-templates:
-  global:
-    accept_all: yes
-    transmission:
-      host: 127.0.0.1
-      port: 9091
-      username: '{? tr.usr ?}'
-      password: '{? tr.pwd ?}'
-      labels: 
-        - bangumi
-
 tasks:
   为美好的世界献上爆炎:
     rss: https://mikanani.me/RSS/Bangumi?bangumiId=2968&subgroupid=552
-  
-schedules:
-  - tasks: '*'
-    interval:
-      minutes: 1

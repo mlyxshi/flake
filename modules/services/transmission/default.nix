@@ -16,12 +16,27 @@ in
     PASSWORD=${config.sops.placeholder.password}
   '';
 
-  sops.templates.flexget-variables = {
+  sops.templates.flexget-conf = {
+    # https://flexget.com/en/Configuration
     content = ''
-      tr:
-        usr: ${config.sops.placeholder.user}
-        pwd: ${config.sops.placeholder.password}
-    '';
+      templates:
+        global:
+          accept_all: yes
+          transmission:
+            host: 127.0.0.1
+            port: 9091
+            username: ${config.sops.placeholder.user}
+            password: ${config.sops.placeholder.password}
+            labels: 
+              - rss
+
+      schedules:
+        - tasks: '*'
+          interval:
+            minutes: 1
+
+    '' + builtins.readFile ../../../rss.yml;
+
     owner = "transmission";
     group = "transmission";
   };
@@ -75,8 +90,7 @@ in
   systemd.services.flexget = {
     after = [ "transmission.service" ];
     preStart = ''
-      cat ${../../../rss.yml} > config.yml
-      cat ${config.sops.templates.flexget-variables.path} > variables.yml
+      cat ${config.sops.templates.flexget-conf.path} > config.yml
     '';
     serviceConfig = {
       User = "transmission";
