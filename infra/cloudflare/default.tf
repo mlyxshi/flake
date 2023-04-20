@@ -55,16 +55,6 @@ resource "cloudflare_record" "de" {
   zone_id = var.zone
 }
 
-resource "cloudflare_record" "flexget" {
-  name    = "flexget"
-  proxied = false
-  ttl     = 1
-  type    = "A"
-  value   = "130.61.171.180"
-  zone_id = var.zone
-}
-
-
 resource "cloudflare_record" "hk1" {
   name    = "hk1"
   proxied = false
