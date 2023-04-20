@@ -1,3 +1,4 @@
+# https://jellyfin-plugin-bangumi.pages.dev/repository.json
 { pkgs, lib, config, ... }: {
 
   services.jellyfin = {
