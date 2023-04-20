@@ -3,7 +3,6 @@ import * as cloudflare from "@pulumi/cloudflare";
 
 const zoneId = "9635f891a392db45a76bca59db689db0";
 
-
 new cloudflare.Record("alert", {
   name: "alert",
   zoneId: zoneId,
