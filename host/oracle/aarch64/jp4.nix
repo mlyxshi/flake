@@ -1,5 +1,5 @@
 { self, config, pkgs, lib, ... }: {
   imports = [
-    self.nixosModules.services.bangumi
+    self.nixosModules.services.transmission
   ];
 }

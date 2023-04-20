@@ -2,12 +2,15 @@
 let
   transmissionScript = pkgs.writeShellScript "transmission.sh" ''
     export PATH=$PATH:${pkgs.rclone}/bin:${pkgs.transmission}/bin
-    ${pkgs.deno}/bin/deno run --allow-net --allow-env --allow-read --allow-run ${./main.ts}
+    ${pkgs.deno}/bin/deno run --allow-net --allow-env --allow-read --allow-run ${./transmission.ts}
   '';
 in
 {
-
-  sops.secrets.transmission-env = { };
+   
+  imports = [
+    ./jellyfin.nix
+    ./flexget.nix
+  ];
 
   sops.secrets.user = { };
   sops.secrets.password = { };
@@ -15,31 +18,6 @@ in
     ADMIN=${config.sops.placeholder.user}
     PASSWORD=${config.sops.placeholder.password}
   '';
-
-  sops.templates.flexget-conf = {
-    # https://flexget.com/en/Configuration
-    content = ''
-      templates:
-        global:
-          accept_all: yes
-          transmission:
-            host: 127.0.0.1
-            port: 9091
-            username: ${config.sops.placeholder.user}
-            password: ${config.sops.placeholder.password}
-            labels: 
-              - rss
-
-      schedules:
-        - tasks: '*'
-          interval:
-            minutes: 1
-
-    '' + builtins.readFile ../../../rss.yml;
-
-    owner = "transmission";
-    group = "transmission";
-  };
 
   sops.secrets.rclone-env = { };
   sops.secrets.bark-ios = { };
@@ -87,19 +65,6 @@ in
     wantedBy = [ "multi-user.target" ];
   };
 
-  systemd.services.flexget = {
-    after = [ "transmission.service" ];
-    preStart = ''
-      cat ${config.sops.templates.flexget-conf.path} > config.yml
-    '';
-    serviceConfig = {
-      User = "transmission";
-      ExecStart = "${pkgs.flexget}/bin/flexget daemon start";
-      WorkingDirectory = "%S/flexget";
-      StateDirectory = "flexget";
-    };
-    wantedBy = [ "multi-user.target" ];
-  };
 
   systemd.services.transmission-index = {
     after = [ "network-online.target" ];

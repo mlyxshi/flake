@@ -38,7 +38,6 @@
     alist = import ./services/alist.nix;
 
     transmission = import ./services/transmission;
-    bangumi = import ./services/bangumi;
 
     cache = import ./services/cache;
   };
