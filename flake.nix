@@ -18,7 +18,7 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-network-pr, darwin, home-manager, sops-nix, impermanence, hydra, nix-index-database }:
+  outputs = { self, nixpkgs, darwin, home-manager, sops-nix, impermanence, hydra, nix-index-database }:
     let
       oracle-arm64-serverlist = map (x: nixpkgs.lib.strings.removeSuffix ".nix" x) (builtins.attrNames (builtins.readDir ./host/oracle/aarch64));
       oracle-x64-serverlist = map (x: nixpkgs.lib.strings.removeSuffix ".nix" x) (builtins.attrNames (builtins.readDir ./host/oracle/x86_64));
@@ -36,23 +36,8 @@
         installer = import ./host/installer { inherit self nixpkgs sops-nix home-manager; };
         qemu-test-x64 = import ./host/oracle/mkTest.nix { inherit self nixpkgs sops-nix impermanence; };
 
-        kexec-x86_64 = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            ./kexec/host.nix
-            ./kexec/build.nix
-            ./kexec/initrd
-          ];
-        };
-
-        kexec-aarch64 = nixpkgs.lib.nixosSystem {
-          system = "aarch64-linux";
-          modules = [
-            ./kexec/host.nix
-            ./kexec/build.nix
-            ./kexec/initrd
-          ];
-        };
+        kexec-x86_64 = import ./kexec/mkKexec.nix{ arch = "x86_64"; inherit nixpkgs; };
+        kexec-aarch64 = import ./kexec/mkKexec.nix{ arch = "aarch64"; inherit nixpkgs; };
       }
       // nixpkgs.lib.genAttrs (oracle-arm64-serverlist ++ oracle-x64-serverlist) (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs home-manager sops-nix hydra impermanence; })
       // nixpkgs.lib.genAttrs azure-x64-serverlist (hostName: import ./host/azure/mkHost.nix { inherit hostName self nixpkgs home-manager sops-nix impermanence; });
