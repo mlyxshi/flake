@@ -1,5 +1,5 @@
 name: "Cache x86_64"
-on: [ push, workflow_dispatch ]
+on: [ workflow_dispatch ]
 
 env:
   NIX_STORE_SIGN_PRIVATE: ${{ secrets.NIX_STORE_SIGN_PRIVATE }}

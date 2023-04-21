@@ -1,5 +1,5 @@
 name: "Send workflow_dispatch"
-on: push
+on: [ workflow_dispatch ]
 jobs:
   dispatch:
     runs-on: ubuntu-latest
