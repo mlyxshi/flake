@@ -1,5 +1,5 @@
 tasks:
   我推的孩子:
     rss: https://mikanani.me/RSS/Bangumi?bangumiId=2995&subgroupid=552
-    transmission:
+    set:
       path: /var/lib/media/我推的孩子/Season 01/
