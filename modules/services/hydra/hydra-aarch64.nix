@@ -1,6 +1,4 @@
 # https://www.youtube.com/watch?v=AvOqaeK_NaE
-
-# hydra-create-user admin --password-prompt --role admin
 { config, pkgs, lib, hydra, ... }:
 let
   hydra-x64-publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMjY+jsCfLAuMR2LP3ZqkzV5RCqSyt+lheJ7TUSRWEfv";
