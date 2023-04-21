@@ -1,11 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-
-    nixpkgs-network-pr.url = "github:NixOS/nixpkgs/pull/169116/head";
-
     hydra.url = "github:NixOS/hydra";
-
     impermanence.url = "github:nix-community/impermanence";
 
     sops-nix.url = "github:Mic92/sops-nix";
@@ -40,7 +36,7 @@
         installer = import ./host/installer { inherit self nixpkgs sops-nix home-manager; };
         qemu-test-x64 = import ./host/oracle/mkTest.nix { inherit self nixpkgs sops-nix impermanence; };
 
-        kexec-x86_64 = nixpkgs-network-pr.lib.nixosSystem {
+        kexec-x86_64 = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
             ./kexec/host.nix
@@ -49,7 +45,7 @@
           ];
         };
 
-        kexec-aarch64 = nixpkgs-network-pr.lib.nixosSystem {
+        kexec-aarch64 = nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
           modules = [
             ./kexec/host.nix
