@@ -7,3 +7,8 @@ tasks:
     rss: https://mikanani.me/RSS/Bangumi?bangumiId=2970&subgroupid=370
     set:
       path: /var/lib/media/天国大魔境/Season 01/
+  Isekai de Cheat Skill:
+    rss: https://mikanani.me/RSS/Bangumi?bangumiId=2970&subgroupid=552
+    set:
+      path: /var/lib/media/Isekai de Cheat Skill/Season 01/
+    
