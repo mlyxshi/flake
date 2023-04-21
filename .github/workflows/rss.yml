@@ -1,4 +1,4 @@
-name: "RSS Config"
+name: "Flexget RSS Config"
 on:
   push:
     paths: 
