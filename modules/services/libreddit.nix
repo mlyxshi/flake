@@ -14,7 +14,6 @@
     wantedBy = [ "multi-user.target" ];
   };
 
-
   services.traefik = {
     dynamicConfigOptions = {
       http = {
