@@ -2,11 +2,12 @@ const BARK_KEY = Deno.env.get("BARK_KEY");
 const ADMIN = Deno.env.get("ADMIN");
 const PASSWORD = Deno.env.get("PASSWORD");
 
+const TR_TORRENT_DIR = Deno.env.get("TR_TORRENT_DIR");
 const TR_TORRENT_NAME = Deno.env.get("TR_TORRENT_NAME");
 const TR_TORRENT_ID = Deno.env.get("TR_TORRENT_ID");
 const TR_TORRENT_LABELS = Deno.env.get("TR_TORRENT_LABELS");
 
-const FUll_PATH = `/var/lib/transmission/files/${TR_TORRENT_NAME}`
+const FUll_PATH = `${TR_TORRENT_DIR}/${TR_TORRENT_NAME}`
 const FILE_INFO = await Deno.stat(FUll_PATH);
 
 const RCLONE_FOLDER = "gdrive:Download"
@@ -14,6 +15,7 @@ const RCLONE_FOLDER = "gdrive:Download"
 console.log("TR_TORRENT_NAME:", TR_TORRENT_NAME);
 console.log("TR_TORRENT_ID:", TR_TORRENT_ID);
 console.log("TR_TORRENT_LABELS:", TR_TORRENT_LABELS);
+console.log("TR_TORRENT_DIR:", TR_TORRENT_DIR);
 console.log("FILE_INFO:", FILE_INFO)
 
 function isSingleVideo(str) {
