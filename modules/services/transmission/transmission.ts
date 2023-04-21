@@ -25,6 +25,16 @@ function isSingleVideo(str) {
 
 if (TR_TORRENT_LABELS == "rss") {
     Deno.run({ cmd: ["transmission-remote", "--auth", `${ADMIN}:${PASSWORD}`, "--torrent", TR_TORRENT_ID, "--remove"], });
+    fetch(`https://api.day.app/push`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", },
+        body: JSON.stringify({
+            device_key: BARK_KEY,
+            title: "Infuse",
+            icon: "https://github.com/jellyfin/Swiftfin/raw/main/Swiftfin/Assets.xcassets/AppIcon.appiconset/152.png",
+            body: TR_TORRENT_NAME,
+        }),
+    },);
 } else if (FILE_INFO.isFile && isSingleVideo(TR_TORRENT_NAME)) {
     const MEDIA_URL = encodeURIComponent(`http://transmission-index.mlyxshi.com/${TR_TORRENT_NAME}`);
     const IOS_SHORTCUTS_URL = encodeURIComponent(`shortcuts://run-shortcut?name=transmission-delete&input=text&text=${TR_TORRENT_ID}`)
