@@ -18,4 +18,9 @@ tasks:
     rss: https://mikanani.me/RSS/Bangumi?bangumiId=2998&subgroupid=552
     set:
       path: /var/lib/media/我家的英雄/Season 01/
+  
+  为美好的世界献上爆炎:
+    rss: https://mikanani.me/RSS/Bangumi?bangumiId=2968&subgroupid=552
+    set:
+      path: /var/lib/media/为美好的世界献上爆炎/Season 01/
     
