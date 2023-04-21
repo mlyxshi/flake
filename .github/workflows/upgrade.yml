@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        host: [sw2,sw3,kr2,hk1,hk2,jp3, jp2,jp4,sw,de,us1,us2,au,kr]
+        host: [jp2,jp4,sw,de,us1,us2,au,kr]
     
     steps:
     - run: mkdir -m 0755  ~/.ssh && echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519 
