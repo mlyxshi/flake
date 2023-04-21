@@ -11,4 +11,8 @@ tasks:
     rss: https://mikanani.me/RSS/Bangumi?bangumiId=3001&subgroupid=552
     set:
       path: /var/lib/media/Isekai de Cheat Skill/Season 01/
+  我家的英雄:
+    rss: https://mikanani.me/RSS/Bangumi?bangumiId=2998&subgroupid=552
+    set:
+      path: /var/lib/media/我家的英雄/Season 01/
     
