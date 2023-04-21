@@ -26,7 +26,6 @@
 
   systemd.services.flexget = {
     after = [ "transmission.service" ];
-    restartTriggers = [ config.sops.templates.flexget-conf.content ];
     preStart = ''
       cat ${config.sops.templates.flexget-conf.path} > config.yml
     '';
