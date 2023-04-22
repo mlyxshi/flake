@@ -12,12 +12,6 @@
             password: ${config.sops.placeholder.password}
             labels: 
               - rss
-
-      schedules:
-        - tasks: '*'
-          interval:
-            minutes: 1
-
     '' + builtins.readFile ../../../rss.yml;
 
     owner = "transmission";
@@ -26,17 +20,16 @@
 
   systemd.services.flexget = {
     after = [ "transmission.service" ];
-    preStart = ''
-      cat ${config.sops.templates.flexget-conf.path} > config.yml
-    '';
     serviceConfig = {
       User = "transmission";
-      ExecStart = "${pkgs.flexget}/bin/flexget daemon start";
+      ExecStart = "${pkgs.flexget}/bin/flexget -c ${config.sops.templates.flexget-conf.path} execute";
       WorkingDirectory = "%S/flexget";
       StateDirectory = "flexget";
     };
     wantedBy = [ "multi-user.target" ];
   };
+
+  systemd.timers.flexget.timerConfig.OnUnitActiveSec = "10min";
 
   systemd.services.media-init = {
     before = [ "transmission.service" ];
