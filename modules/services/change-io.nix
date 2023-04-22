@@ -10,7 +10,7 @@
         };
 
         services.changedetection-io.loadBalancer.servers = [{
-          url = "http://127.0.0.1:${config.services.changedetection-io.port}";
+          url = "http://127.0.0.1:${toString config.services.changedetection-io.port}";
         }];
       };
     };
