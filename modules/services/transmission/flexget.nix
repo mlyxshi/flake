@@ -20,9 +20,12 @@
 
   systemd.services.flexget = {
     after = [ "transmission.service" ];
+    preStart = ''
+      cat ${config.sops.templates.flexget-conf.path} > config.yml
+    '';
     serviceConfig = {
       User = "transmission";
-      ExecStart = "${pkgs.flexget}/bin/flexget -c ${config.sops.templates.flexget-conf.path} execute";
+      ExecStart = "${pkgs.flexget}/bin/flexget execute";
       WorkingDirectory = "%S/flexget";
       StateDirectory = "flexget";
     };
