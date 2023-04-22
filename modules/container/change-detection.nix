@@ -26,7 +26,7 @@ in
         "traefik.http.routers.${service}.rule=Host(`${service}.${config.networking.domain}`)"
         "traefik.http.routers.${service}.entrypoints=websecure"
         "traefik.http.routers.${service}.middlewares=auth@file"
-      ];
+      ] ++ [ "--net=host" ];
     };
   };
 

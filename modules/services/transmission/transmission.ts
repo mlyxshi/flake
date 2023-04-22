@@ -51,7 +51,7 @@ if (TR_TORRENT_LABELS == "rss") {
             url: INFUSE_URL_SCHEME,
             copy: INFUSE_URL_SCHEME,
         }),
-    },);
+    });
 
 } else {
     let cmd = "";
