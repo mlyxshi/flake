@@ -33,6 +33,7 @@
   };
 
   systemd.timers.flexget.timerConfig.OnUnitActiveSec = "10min";
+  systemd.timers.flexget.wantedBy = [ "timers.target" ];
 
   systemd.services.media-init = {
     before = [ "transmission.service" ];
