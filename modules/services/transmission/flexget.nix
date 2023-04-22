@@ -1,22 +1,18 @@
+# # https://flexget.com/en/Configuration
 { config, pkgs, lib, ... }: {
-  sops.templates.flexget-conf = {
-    # https://flexget.com/en/Configuration
-    content = ''
-      templates:
-        global:
-          accept_all: yes
-          transmission:
-            host: 127.0.0.1
-            port: 9091
-            username: ${config.sops.placeholder.user}
-            password: ${config.sops.placeholder.password}
-            labels: 
-              - rss
-    '' + builtins.readFile ../../../rss.yml;
-
-    owner = "transmission";
-    group = "transmission";
-  };
+  sops.templates.flexget-conf.owner = "transmission";
+  sops.templates.flexget-conf.content = ''
+    templates:
+      global:
+        accept_all: yes
+        transmission:
+          host: 127.0.0.1
+          port: 9091
+          username: ${config.sops.placeholder.user}
+          password: ${config.sops.placeholder.password}
+          labels: 
+            - rss
+  '' + builtins.readFile ../../../rss.yml;
 
   systemd.services.flexget = {
     after = [ "transmission.service" ];
