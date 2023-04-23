@@ -30,7 +30,7 @@ if (TR_TORRENT_LABELS == "rss") {
         headers: { "Content-Type": "application/json", },
         body: JSON.stringify({
             device_key: BARK_KEY,
-            title: "Infuse",
+            title: "Jellyfin",
             icon: "https://github.com/jellyfin/Swiftfin/raw/main/Swiftfin/Assets.xcassets/AppIcon.appiconset/152.png",
             body: TR_TORRENT_NAME,
         }),
