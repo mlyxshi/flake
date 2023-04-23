@@ -1,5 +1,6 @@
 { pkgs, lib, config, ... }: {
   services.changedetection-io.enable = true;
+  
   services.traefik = {
     dynamicConfigOptions = {
       http = {

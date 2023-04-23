@@ -23,11 +23,11 @@
       "iproute2mac"
       "mas"
       "qemu"
-      "mpv"
       "imagemagick" #kitty image dependency
     ];
 
     casks = [
+      "mpv"
       "proxyman"
       "sloth"
       "yubico-yubikey-manager"
