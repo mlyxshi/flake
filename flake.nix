@@ -3,9 +3,6 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     hydra.url = "github:NixOS/hydra";
 
-    disko.url = "github:nix-community/disko";
-    disko.inputs.nixpkgs.follows = "nixpkgs";
-
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs";
@@ -20,7 +17,7 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager, sops-nix, disko, hydra, nix-index-database }:
+  outputs = { self, nixpkgs, darwin, home-manager, sops-nix, hydra, nix-index-database }:
     let
       oracle-arm64-serverlist = map (x: nixpkgs.lib.strings.removeSuffix ".nix" x) (builtins.attrNames (builtins.readDir ./host/oracle/aarch64));
       oracle-x64-serverlist = map (x: nixpkgs.lib.strings.removeSuffix ".nix" x) (builtins.attrNames (builtins.readDir ./host/oracle/x86_64));
@@ -34,15 +31,15 @@
       darwinConfigurations.M1 = import ./host/M1 { inherit self nixpkgs darwin home-manager; };
 
       nixosConfigurations = {
-        hx90 = import ./host/hx90 { inherit self nixpkgs home-manager sops-nix disko nix-index-database; };
+        hx90 = import ./host/hx90 { inherit self nixpkgs home-manager sops-nix nix-index-database; };
         installer = import ./host/installer { inherit self nixpkgs sops-nix home-manager; };
-        qemu-test-x64 = import ./host/oracle/mkTest.nix { inherit self nixpkgs sops-nix disko; };
+        qemu-test-x64 = import ./host/oracle/mkTest.nix { inherit self nixpkgs sops-nix; };
 
         kexec-x86_64 = import ./kexec/mkKexec.nix{ arch = "x86_64"; inherit nixpkgs; };
         kexec-aarch64 = import ./kexec/mkKexec.nix{ arch = "aarch64"; inherit nixpkgs; };
       }
-      // nixpkgs.lib.genAttrs (oracle-arm64-serverlist ++ oracle-x64-serverlist) (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs home-manager sops-nix hydra disko; })
-      // nixpkgs.lib.genAttrs azure-x64-serverlist (hostName: import ./host/azure/mkHost.nix { inherit hostName self nixpkgs home-manager sops-nix disko; });
+      // nixpkgs.lib.genAttrs (oracle-arm64-serverlist ++ oracle-x64-serverlist) (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs home-manager sops-nix hydra; })
+      // nixpkgs.lib.genAttrs azure-x64-serverlist (hostName: import ./host/azure/mkHost.nix { inherit hostName self nixpkgs home-manager sops-nix; });
 
       packages.aarch64-darwin.Anime4k = nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/anime4k { };
       packages.x86_64-linux.Anime4k = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/anime4k { };

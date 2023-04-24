@@ -9,7 +9,7 @@
   };
 
   network = import ./network;
-  fileSystem = import ./disko;
+  fileSystem = import ./fileSystem;
 
   settings = {
     nixConfigDir = import ./settings/nixConfigDir.nix;

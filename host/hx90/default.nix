@@ -1,9 +1,8 @@
-{ self, nixpkgs, home-manager, sops-nix, disko, nix-index-database }:
+{ self, nixpkgs, home-manager, sops-nix, nix-index-database }:
 
 nixpkgs.lib.nixosSystem {
   modules = [
     sops-nix.nixosModules.default
-    disko.nixosModules.disko
     home-manager.nixosModules.default
     nix-index-database.nixosModules.nix-index
     self.nixosModules.os.nixos.desktop

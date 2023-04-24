@@ -1,8 +1,7 @@
-{ hostName, self, nixpkgs, home-manager, sops-nix, disko }:
+{ hostName, self, nixpkgs, home-manager, sops-nix }:
 nixpkgs.lib.nixosSystem {
   modules = [
     sops-nix.nixosModules.default
-    disko.nixosModules.disko
     home-manager.nixosModules.default
     self.nixosModules.os.nixos.server
     self.nixosModules.network
