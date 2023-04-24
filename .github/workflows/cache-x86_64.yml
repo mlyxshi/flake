@@ -25,7 +25,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        host: [sw2,sw3,kr2, hk1,hk2,jp3]
+        host: [sw2,sw3,kr2, hk1,hk2,jp3, qemu-test-x64]
 
     steps:
     - uses: actions/checkout@master

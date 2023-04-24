@@ -26,11 +26,6 @@
       map Q   quit
       map D   delete
     '';
-
-    "/etc/profile".text = ''
-      alias r='lf'
-      alias status='journalctl -u auto-install -f'
-    '';
   };
 
 
@@ -43,18 +38,8 @@
   boot.initrd.services.udev.rules = ''
     KERNEL=="vda*", SYMLINK+="sda%n"
   '';
-
-  # This is the upstream expression, just with bashInteractive instead of bash.
-  boot.initrd.systemd.initrdBin =
-    let
-      systemd = config.boot.initrd.systemd.package;
-    in
-    lib.mkForce ([ pkgs.bashInteractive pkgs.coreutils systemd.kmod systemd ] ++ [ pkgs.dosfstools pkgs.btrfs-progs ]);
-
-  boot.initrd.systemd.storePaths = [
-    "${pkgs.ncurses}/share/terminfo/"
-    "${pkgs.bash}"
-  ];
+  
+  boot.initrd.systemd.initrdBin = [ pkgs.dosfstools pkgs.btrfs-progs ];
 
   boot.initrd.systemd.extraBin = {
     # nix & installer
