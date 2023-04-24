@@ -10,21 +10,19 @@
 
   sops.secrets.user = { };
   sops.secrets.password = { };
+  sops.secrets.postgresql = { };
   sops.templates.miniflux-admin-credentials.content = ''
     ADMIN_USERNAME=${config.sops.placeholder.user}
     ADMIN_PASSWORD=${config.sops.placeholder.password}
+    DATABASE_URL=${config.sops.placeholder.postgresql}/miniflux
   '';
 
-  sops.secrets.restic-env = { };
-
-  services.postgresql.enable = true;
-  services.postgresql.package = pkgs.postgresql_15;
-  services.postgresql.initialScript = pkgs.writeText "miniflux-postgresql-initScript" ''
-    CREATE USER miniflux;
-    CREATE DATABASE miniflux OWNER miniflux;
-    CREATE DATABASE "miniflux-silent" OWNER miniflux;
-    CREATE EXTENSION hstore;
+  sops.templates.miniflux-silent-admin-credentials.content = ''
+    ADMIN_USERNAME=${config.sops.placeholder.user}
+    ADMIN_PASSWORD=${config.sops.placeholder.password}
+    DATABASE_URL=${config.sops.placeholder.postgresql}/miniflux-silent
   '';
+
 
   users = {
     users.miniflux = {
@@ -35,9 +33,8 @@
   };
 
   systemd.services.miniflux = {
-    after = [ "network-online.target" "postgresql.service" ];
+    after = [ "network-online.target" ];
     environment = {
-      DATABASE_URL = "user=miniflux dbname=miniflux host=/run/postgresql sslmode=disable";
       PORT = "9080";
       CREATE_ADMIN = "1";
       RUN_MIGRATIONS = "1";
@@ -57,9 +54,8 @@
 
   # rss to muted tg bot <-- only for tracking Nixpkgs PR
   systemd.services.miniflux-silent = {
-    after = [ "network-online.target" "postgresql.service" ];
+    after = [ "network-online.target" ];
     environment = {
-      DATABASE_URL = "user=miniflux dbname=miniflux-silent host=/run/postgresql sslmode=disable";
       PORT = "9090";
       CREATE_ADMIN = "1";
       RUN_MIGRATIONS = "1";
@@ -67,7 +63,7 @@
       POLLING_PARSING_ERROR_LIMIT = "0";
     };
     serviceConfig = {
-      EnvironmentFile = [ config.sops.templates.miniflux-admin-credentials.path ];
+      EnvironmentFile = [ config.sops.templates.miniflux-silent-admin-credentials.path ];
       User = "miniflux";
       ExecStart = "${pkgs.miniflux}/bin/miniflux";
     };
@@ -100,21 +96,6 @@
         }];
       };
     };
-  };
-
-  systemd.services.psql-miniflux-backup = {
-    environment.RESTIC_CACHE_DIR = "%C/restic";
-    serviceConfig = {
-      User = "miniflux";
-      EnvironmentFile = config.sops.secrets.restic-env.path;
-    };
-    script = '' 
-      ${config.services.postgresql.package}/bin/pg_dump miniflux | ${pkgs.restic}/bin/restic backup --stdin --stdin-filename miniflux.sql
-      ${config.services.postgresql.package}/bin/pg_dump miniflux-silent | ${pkgs.restic}/bin/restic backup --stdin --stdin-filename miniflux-silent.sql
-      ${pkgs.restic}/bin/restic forget --prune --keep-last 2
-      ${pkgs.restic}/bin/restic check
-    '';
-    startAt = "05:00";
   };
 
 }
