@@ -22,7 +22,7 @@ let
     parted --script /dev/sda \
     mklabel gpt \
     mkpart "BOOT"  fat32  1MiB    512MiB \
-    mkpart "NIXOS" btrfs  512MiB  100% \
+    mkpart "NIXOS" ext4  512MiB  100% \
     set 1 esp on 
 
     sleep 2
@@ -30,17 +30,10 @@ let
     NIXOS=/dev/disk/by-partlabel/NIXOS
     BOOT=/dev/disk/by-partlabel/BOOT
     mkfs.fat -F 32 $BOOT
-    mkfs.btrfs -f $NIXOS
+    mkfs.ext4 -f $NIXOS
 
-    mkdir -p /fsroot
-    mount $NIXOS /fsroot
-    btrfs subvol create /fsroot/nix
-    btrfs subvol create /fsroot/persist
-
-    mkdir -p /mnt/{boot,nix,persist}
-    mount $BOOT /mnt/boot
-    mount -o subvol=nix,compress-force=zstd    $NIXOS /mnt/nix
-    mount -o subvol=persist,compress-force=zstd $NIXOS /mnt/persist
+    mount $NIXOS /mnt
+    mount --mkdir $BOOT /mnt/boot
 
     if [[ $(uname -m) == "aarch64" ]]; then
       echo "Nix will build: $flake#nixosConfigurations.$host.config.system.build.toplevel"
