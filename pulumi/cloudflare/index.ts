@@ -26,4 +26,4 @@ Object.keys(dns).forEach(ip => {
             proxied: false,
         });
     });
-});
+})
