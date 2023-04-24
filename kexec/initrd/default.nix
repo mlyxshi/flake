@@ -39,7 +39,7 @@
     KERNEL=="vda*", SYMLINK+="sda%n"
   '';
   
-  boot.initrd.systemd.initrdBin = [ pkgs.dosfstools pkgs.btrfs-progs ];
+  boot.initrd.systemd.initrdBin = [ pkgs.dosfstools pkgs.e2fsprogs ];
 
   boot.initrd.systemd.extraBin = {
     # nix & installer

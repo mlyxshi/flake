@@ -1,7 +1,6 @@
 { config, lib, pkgs, ... }: {
   imports = [
     ./hardware.nix
-    ./filesystem.nix
   ];
 
   networking = {

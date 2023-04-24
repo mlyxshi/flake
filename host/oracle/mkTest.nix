@@ -1,8 +1,8 @@
-{ self, nixpkgs, sops-nix, impermanence }:
+{ self, nixpkgs, sops-nix, disko }:
 nixpkgs.lib.nixosSystem {
   modules = [
     sops-nix.nixosModules.default
-    impermanence.nixosModules.impermanence
+    disko.nixosModules.disko
     self.nixosModules.os.nixos.server
     self.nixosModules.network
     self.nixosModules.fileSystem
