@@ -56,7 +56,6 @@
     lsblk = "${pkgs.util-linux}/bin/lsblk";
     curl = "${pkgs.curl}/bin/curl";
     lf = "${pkgs.lf}/bin/lf";
-    jq = "${pkgs.jq}/bin/jq";
 
     get-kernel-param = pkgs.writeScript "get-kernel-param" ''
       for o in $(< /proc/cmdline); do
