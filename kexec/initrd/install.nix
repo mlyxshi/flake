@@ -30,7 +30,7 @@ let
     NIXOS=/dev/disk/by-partlabel/NIXOS
     BOOT=/dev/disk/by-partlabel/BOOT
     mkfs.fat -F 32 $BOOT
-    mkfs.ext4 -f $NIXOS
+    mkfs.ext4 -F $NIXOS
 
     mount $NIXOS /mnt
     mount --mkdir $BOOT /mnt/boot
