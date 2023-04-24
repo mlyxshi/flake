@@ -15,17 +15,6 @@
       substituters = https://cache.nixos.org https://cache.mlyxshi.com
       trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= cache:vXjiuWtSTOXj63zr+ZjMvXqvaYIK1atjyyEk+iuIqSg=
     '';
-
-    "/etc/lf/lfrc".text = ''
-      set hidden true
-      set number true
-      set drawbox true
-      set dircounts true
-      set incsearch true
-      set period 1
-      map Q   quit
-      map D   delete
-    '';
   };
 
 
@@ -56,7 +45,6 @@
     parted = "${pkgs.parted}/bin/parted";
     lsblk = "${pkgs.util-linux}/bin/lsblk";
     curl = "${pkgs.curl}/bin/curl";
-    lf = "${pkgs.lf}/bin/lf";
 
     get-kernel-param = pkgs.writeScript "get-kernel-param" ''
       for o in $(< /proc/cmdline); do
@@ -68,8 +56,6 @@
       done
     '';
   };
-
-
 
   # move everything in / to /sysroot and switch-root into it. 
   # This runs a few things twice and wastes some memory
