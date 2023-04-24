@@ -39,6 +39,7 @@
     KERNEL=="vda*", SYMLINK+="sda%n"
   '';
   
+  # vfat and ext4
   boot.initrd.systemd.initrdBin = [ pkgs.dosfstools pkgs.e2fsprogs ];
 
   boot.initrd.systemd.extraBin = {

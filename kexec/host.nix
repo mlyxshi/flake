@@ -9,7 +9,6 @@
 
   system.stateVersion = lib.trivial.release;
 
-  # need for sysroot
   fileSystems."/" = {
     fsType = "tmpfs";
     options = [ "mode=0755" ];
