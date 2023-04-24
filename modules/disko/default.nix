@@ -9,7 +9,7 @@
         partitions = [
           {
             name = "ESP";
-            start = "1MiB";
+            start = "0MiB";
             end = "100MiB";
             bootable = true;
             content = {
