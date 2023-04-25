@@ -14,7 +14,6 @@
     options = [ "mode=0755" ];
   };
 
-  boot.loader.grub.enable = false;
   boot.kernelParams = [
     "systemd.show_status=true"
     "systemd.log_level=info"
