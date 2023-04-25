@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }: {
   imports = [
     ./strip.nix
-    ./patched-initrd.nix
+    ./patched-initrd.nix #remove unused crypto stuff
   ];
 
   time.timeZone = "UTC";
