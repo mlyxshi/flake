@@ -15,5 +15,7 @@
   disabledModules = [
     "tasks/lvm.nix"
     "tasks/swraid.nix"
+    "system/boot/systemd/initrd.nix"
   ];
+
 }

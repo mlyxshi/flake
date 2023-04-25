@@ -1,6 +1,7 @@
 { config, pkgs, lib, ... }: {
   imports = [
     ./strip.nix
+    ./patched-initrd.nix
   ];
 
   time.timeZone = "UTC";
