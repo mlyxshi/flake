@@ -107,5 +107,6 @@
     "system/boot/stage-1.nix"
     "system/boot/uvesafb.nix"
     "tasks/bcache.nix"
+    "system/boot/plymouth.nix"
   ];
 }
