@@ -105,5 +105,6 @@
     "system/boot/luksroot.nix"
     "tasks/encrypted-devices.nix"
     "system/boot/stage-1.nix"
+    "system/boot/uvesafb.nix"
   ];
 }
