@@ -106,5 +106,6 @@
     "tasks/encrypted-devices.nix"
     "system/boot/stage-1.nix"
     "system/boot/uvesafb.nix"
+    "tasks/bcache.nix"
   ];
 }
