@@ -1,4 +1,8 @@
 { config, pkgs, lib, ... }: {
+  imports = [
+    ./strip.nix
+  ];
+  
   time.timeZone = "UTC";
   i18n.defaultLocale = "en_US.UTF-8";
   networking = {
