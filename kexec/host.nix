@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }: {
   imports = [
-    ./strip.nix
+    ./strip.nix # disable uncessary modules
     ./patched-initrd.nix #remove unused crypto stuff
   ];
 

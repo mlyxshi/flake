@@ -1,4 +1,3 @@
-# disable uncessary modules
 { pkgs, lib, config, ... }:{
   options.services.lvm.enable = lib.mkEnableOption "lvm";
   options.boot.initrd.services.lvm.enable = lib.mkEnableOption "lvm";
