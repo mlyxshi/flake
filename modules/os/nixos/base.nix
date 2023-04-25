@@ -103,4 +103,6 @@
     "tasks/lvm.nix"
     "tasks/swraid.nix"
   ];
+
+  options.boot.initrd.services.lvm = lib.mkEnableOption "lvm";
 }
