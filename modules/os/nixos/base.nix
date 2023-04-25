@@ -104,5 +104,6 @@
     "tasks/swraid.nix" 
     "system/boot/luksroot.nix"
     "tasks/encrypted-devices.nix"
+    "system/boot/stage-1.nix"
   ];
 }
