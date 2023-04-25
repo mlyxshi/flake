@@ -15,5 +15,9 @@ tasks:
     rss: https://mikanani.me/RSS/Bangumi?bangumiId=2998&subgroupid=552
     set:
       path: /var/lib/media/我家的英雄/Season 01/
+  我心里危险的东西:
+    rss: https://mikanani.me/RSS/Bangumi?bangumiId=2961&subgroupid=370
+    set:
+      path: /var/lib/media/我心里危险的东西/Season 01/
 
     
