@@ -5,4 +5,6 @@
 
     self.nixosModules.services.change-detection
   ];
+
+  networking.nftables.enable = lib.mkForce false;
 }
