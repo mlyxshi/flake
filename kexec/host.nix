@@ -9,6 +9,8 @@
 
   system.stateVersion = lib.trivial.release;
 
+  config.services.lvm = false;
+
   fileSystems."/" = {
     fsType = "tmpfs";
     options = [ "mode=0755" ];
