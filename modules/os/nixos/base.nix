@@ -99,5 +99,8 @@
   systemd.services.systemd-resolved.stopIfChanged = false;
 
   # uncessary stuff
-  services.lvm.enable = false;
+  disabledModules = [ 
+    "tasks/lvm.nix"
+    "tasks/swraid.nix" 
+  ];
 }
