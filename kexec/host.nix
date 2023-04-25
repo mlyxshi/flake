@@ -1,5 +1,4 @@
 { config, pkgs, lib, ... }: {
-  documentation.enable = false;
   time.timeZone = "UTC";
   i18n.defaultLocale = "en_US.UTF-8";
   networking = {
@@ -22,4 +21,14 @@
     "systemd.journald.forward_to_console=1"
   ];
   boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  fonts.fontconfig.enable = false;
+
+  documentation = {
+    enable = false;
+    doc.enable = false;
+    info.enable = false;
+    man.enable = false;
+    nixos.enable = false;
+  };
 }
