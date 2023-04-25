@@ -15,6 +15,5 @@
   disabledModules = [
     "tasks/lvm.nix"
     "tasks/swraid.nix"
-    "programs/nano.nix"
   ];
 }
