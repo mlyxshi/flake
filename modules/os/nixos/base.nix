@@ -2,6 +2,7 @@
 
   imports = [
     ../common
+    ./strip.nix
   ];
 
   sops.defaultSopsFile = ../../../key.yaml;
@@ -97,12 +98,4 @@
   # https://github.com/numtide/srvos/blob/main/nixos/common/networking.nix
   systemd.services.systemd-networkd.stopIfChanged = false;
   systemd.services.systemd-resolved.stopIfChanged = false;
-
-  # uncessary stuff
-  disabledModules = [ 
-    "tasks/lvm.nix"
-    "tasks/swraid.nix"
-  ];
-
-  options.services.lvm.enable = lib.mkEnableOption "lvm";
 }
