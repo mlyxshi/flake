@@ -102,5 +102,6 @@
   disabledModules = [ 
     "tasks/lvm.nix"
     "tasks/swraid.nix" 
+    "system/boot/luksroot.nix"
   ];
 }
