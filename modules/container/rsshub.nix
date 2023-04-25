@@ -2,7 +2,7 @@
 
   virtualisation.oci-containers.containers = {
     "rsshub" = {
-      image = "ghcr.io/diygod/rsshub:latest";
+      image = "ghcr.io/diygod/rsshub:chromium-bundled-2023-04-15";
       extraOptions = lib.concatMap (x: [ "--label" x ]) [
         "io.containers.autoupdate=registry"
         "traefik.enable=true"
