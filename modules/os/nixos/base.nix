@@ -101,12 +101,6 @@
   # uncessary stuff
   disabledModules = [ 
     "tasks/lvm.nix"
-    "tasks/swraid.nix" 
-    "system/boot/luksroot.nix"
-    "tasks/encrypted-devices.nix"
-    "system/boot/stage-1.nix"
-    "system/boot/uvesafb.nix"
-    "tasks/bcache.nix"
-    "system/boot/plymouth.nix"
+    "tasks/swraid.nix"
   ];
 }
