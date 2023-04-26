@@ -14,7 +14,7 @@
   disabledModules = [
     "tasks/lvm.nix"
     "tasks/swraid.nix"
-    "system/boot/systemd/initrd.nix"
+    "system/boot/systemd/initrd.nix" # https://nixos.org/manual/nixos/unstable/#sec-replace-modules
   ];
 
 }
