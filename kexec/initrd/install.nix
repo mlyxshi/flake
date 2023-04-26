@@ -13,7 +13,6 @@ let
       echo "No host defined for auto-installer"
       exit 1
     fi
-  
 
     bark_key=$(get-kernel-param bark_key)
     age_key=$(get-kernel-param age_key)
