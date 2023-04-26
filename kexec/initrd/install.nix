@@ -21,7 +21,7 @@ let
 
     sfdisk /dev/sda <<EOT
     label: gpt
-    type="BIOS boot",        name="BOOT",  size=512M
+    type="EFI System",       name="BOOT",  size=512M
     type="Linux filesystem", name="NIXOS", size=+
     EOT
 
