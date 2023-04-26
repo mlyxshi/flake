@@ -19,11 +19,11 @@ let
     age_key=$(get-kernel-param age_key)
     local_test=$(get-kernel-param local_test)
 
-    parted --script /dev/sda \
-    mklabel gpt \
-    mkpart "BOOT"  fat32  1MiB    512MiB \
-    mkpart "NIXOS" ext4  512MiB  100% \
-    set 1 esp on 
+    sfdisk /dev/sda <<EOT
+    label: gpt
+    type="BIOS boot",        name="BOOT",  size=512M
+    type="Linux filesystem", name="NIXOS", size=+
+    EOT
 
     sleep 2
 
