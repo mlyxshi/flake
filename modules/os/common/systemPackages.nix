@@ -39,7 +39,6 @@
     rclone
     ideviceinstaller
   ] ++ lib.optionals pkgs.stdenv.isLinux [
-    parted
     below
     neofetch
   ];
