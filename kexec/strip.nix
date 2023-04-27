@@ -1,4 +1,5 @@
 { pkgs, lib, config, ... }:{
+  # dummy options to make other modules happy
   options.services.lvm.enable = lib.mkEnableOption "lvm";
   options.boot.initrd.services.lvm.enable = lib.mkEnableOption "lvm";
   options.boot.initrd.services.swraid.enable = lib.mkEnableOption "swraid";
