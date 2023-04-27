@@ -4,7 +4,7 @@
   ];
 
   systemd.services.media-init = {
-    script=''echo'';
+    serviceConfig.ExecStart = "true";
     serviceConfig.StateDirectory = "media";
     wantedBy = [ "multi-user.target" ];
   };
