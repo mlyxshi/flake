@@ -23,17 +23,11 @@
     ];
   };
 
-  systemd.services.podman-jellyfin.after = [ "media-init.service" ];
-  systemd.services.podman-jellyfin.serviceConfig.StateDirectory = "jellyfin";
-
   systemd.services.media-init = {
-    before = [ "transmission.service" ];
+    before = [ "transmission.service" "podman-jellyfin.service" ];
     unitConfig.ConditionPathExists = "!%S/media";
     serviceConfig.User = "transmission";
     serviceConfig.StateDirectory = "media";
-    script = ''
-      mkdir -p /var/lib/media
-    '';
     wantedBy = [ "multi-user.target" ];
   };
 
