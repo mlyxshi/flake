@@ -7,10 +7,6 @@
     default = "";
   };
 
-  config = { 
-
-  };
-
   # disable uncessary modules
   disabledModules = [
     "tasks/lvm.nix"
@@ -18,4 +14,8 @@
     "tasks/bcache.nix"
     "programs/nano.nix"
   ];
+
+  config = { 
+
+  };
 }
