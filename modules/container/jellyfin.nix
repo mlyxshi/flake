@@ -4,7 +4,7 @@
   virtualisation.oci-containers.containers.jellyfin = {
     image = "ghcr.io/linuxserver/jellyfin";
     volumes = [
-      "/download/jellyfin/config:/var/lib/jellyfin"
+      "/var/lib/jellyfin:/config"
       "/var/lib/media:/var/lib/media"
     ];
 
