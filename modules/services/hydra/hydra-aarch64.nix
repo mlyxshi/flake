@@ -52,6 +52,9 @@ in
     logo = "${pkgs.nixos-icons}/share/icons/hicolor/16x16/apps/nix-snowflake.png";
   };
 
+  # https://github.com/NixOS/hydra/issues/1186
+  systemd.services.hydra-evaluator.environment.GC_DONT_GC = "true";
+
   services.traefik = {
     dynamicConfigOptions = {
       http = {
