@@ -8,9 +8,12 @@ in
 {
 
   imports = [
-    ./jellyfin.nix
+    ../../container/podman.nix
+    ../../container/jellyfin.nix
     ./flexget.nix
   ];
+
+  networking.nftables.enable = lib.mkForce false;
 
   sops.secrets.user = { };
   sops.secrets.password = { };
@@ -99,7 +102,4 @@ in
       };
     };
   };
-
-
-  networking.nftables.enable = lib.mkForce false;
 }
