@@ -2,7 +2,7 @@
 
   imports = [
     ../common
-    ./strip.nix
+    ../../../strip
   ];
 
   sops.defaultSopsFile = ../../../key.yaml;
