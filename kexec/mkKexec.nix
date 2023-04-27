@@ -1,4 +1,4 @@
-{ arch, nixpkgs,}:
+{ arch, nixpkgs, }:
 nixpkgs.lib.nixosSystem {
   modules = [
     ./host.nix

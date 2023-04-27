@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:{
+{ pkgs, lib, config, ... }: {
   # dummy options to make other modules happy
   options.services.lvm.enable = lib.mkEnableOption "lvm";
   options.boot.initrd.services.lvm.enable = lib.mkEnableOption "lvm";
@@ -15,7 +15,5 @@
     "system/boot/systemd/initrd.nix" # https://nixos.org/manual/nixos/unstable/#sec-replace-modules
   ];
 
-  config = { 
-
-  };
+  config = { };
 }

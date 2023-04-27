@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:{
+{ pkgs, lib, config, ... }: {
   options.services.lvm.enable = lib.mkEnableOption "lvm";
   options.boot.initrd.services.lvm.enable = lib.mkEnableOption "lvm";
   options.boot.initrd.services.swraid.enable = lib.mkEnableOption "swraid";
@@ -15,7 +15,5 @@
     "programs/nano.nix"
   ];
 
-  config = { 
-
-  };
+  config = { };
 }

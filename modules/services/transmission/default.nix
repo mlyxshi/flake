@@ -6,7 +6,7 @@ let
   '';
 in
 {
-   
+
   imports = [
     ./jellyfin.nix
     ./flexget.nix

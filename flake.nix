@@ -35,8 +35,8 @@
         installer = import ./host/installer { inherit self nixpkgs sops-nix home-manager; };
         qemu-test-x64 = import ./host/oracle/mkTest.nix { inherit self nixpkgs sops-nix; };
 
-        kexec-x86_64 = import ./kexec/mkKexec.nix{ arch = "x86_64"; inherit nixpkgs; };
-        kexec-aarch64 = import ./kexec/mkKexec.nix{ arch = "aarch64"; inherit nixpkgs; };
+        kexec-x86_64 = import ./kexec/mkKexec.nix { arch = "x86_64"; inherit nixpkgs; };
+        kexec-aarch64 = import ./kexec/mkKexec.nix { arch = "aarch64"; inherit nixpkgs; };
       }
       // nixpkgs.lib.genAttrs (oracle-arm64-serverlist ++ oracle-x64-serverlist) (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs home-manager sops-nix hydra; })
       // nixpkgs.lib.genAttrs azure-x64-serverlist (hostName: import ./host/azure/mkHost.nix { inherit hostName self nixpkgs home-manager sops-nix; });
@@ -61,7 +61,7 @@
 
       packages.x86_64-linux.default = self.nixosConfigurations."kexec-x86_64".config.system.build.test;
       packages.x86_64-linux.test0 = self.nixosConfigurations."kexec-x86_64".config.system.build.test0;
-      
+
       # hydra-create-user admin --password-prompt --role admin
       # Declarative spec file: hydra.json
       # Declarative input type: Git checkout

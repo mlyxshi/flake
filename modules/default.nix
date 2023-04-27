@@ -46,7 +46,7 @@
   container = {
     podman = import ./container/podman.nix;
     nodestatus-server = import ./container/nodestatus-server.nix;
-    
+
     rsshub = import ./container/rsshub.nix;
     vaultwarden = import ./container/vaultwarden.nix;
   };
