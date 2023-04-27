@@ -27,6 +27,7 @@
     before = [ "transmission.service" "podman-jellyfin.service" ];
     unitConfig.ConditionPathExists = "!%S/media";
     serviceConfig.User = "transmission";
+    serviceConfig.ExecStart = "echo"; # dummy command to make StateDirectory work
     serviceConfig.StateDirectory = "media";
     wantedBy = [ "multi-user.target" ];
   };
