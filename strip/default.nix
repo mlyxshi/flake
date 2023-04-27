@@ -1,3 +1,4 @@
+# Remove and disable unnecessary modules
 { pkgs, lib, config, ... }: {
   # dummy options to make other modules happy
   options.services.lvm.enable = lib.mkEnableOption "lvm";
