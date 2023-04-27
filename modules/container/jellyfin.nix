@@ -1,27 +1,38 @@
 # https://jellyfin-plugin-bangumi.pages.dev/repository.json
 { config, pkgs, lib, ... }: {
 
- virtualisation.oci-containers.containers = {
+  virtualisation.oci-containers.containers.jellyfin = {
+    image = "ghcr.io/linuxserver/jellyfin";
+    volumes = [
+      "/download/jellyfin/config:/var/lib/jellyfin"
+      "/var/lib/media:/var/lib/media"
+    ];
 
-    "jellyfin" = {
-      image = "ghcr.io/linuxserver/jellyfin";
-      volumes = [
-        "/download/jellyfin/config:/var/lib/jellyfin"
-        "/var/lib/media:/var/lib/media"
-      ];
-
-      environment = {
-        "PUID" = "0";
-        "PGID" = "0";
-      };
-      
-      extraOptions = lib.concatMap (x: [ "--label" x ]) [
-        "io.containers.autoupdate=registry"
-        "traefik.enable=true"
-        "traefik.http.routers.jellyfin.rule=Host(`jellyfin.${config.networking.domain}`)"
-        "traefik.http.routers.jellyfin.entrypoints=web"
-      ];
+    environment = {
+      "PUID" = "0";
+      "PGID" = "0";
     };
+
+    extraOptions = lib.concatMap (x: [ "--label" x ]) [
+      "io.containers.autoupdate=registry"
+      "traefik.enable=true"
+      "traefik.http.routers.jellyfin.rule=Host(`jellyfin.${config.networking.domain}`)"
+      "traefik.http.routers.jellyfin.entrypoints=web"
+    ];
+  };
+
+  systemd.services.podman-jellyfin.after = [ "media-init.service" ];
+  systemd.services.podman-jellyfin.serviceConfig.StateDirectory = "jellyfin";
+
+  systemd.services.media-init = {
+    before = [ "transmission.service" ];
+    unitConfig.ConditionPathExists = "!%S/media";
+    serviceConfig.User = "transmission";
+    serviceConfig.StateDirectory = "media";
+    script = ''
+      mkdir -p /var/lib/media
+    '';
+    wantedBy = [ "multi-user.target" ];
   };
 
 }

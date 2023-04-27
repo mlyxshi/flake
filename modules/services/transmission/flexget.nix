@@ -30,16 +30,4 @@
 
   systemd.timers.flexget.timerConfig.OnUnitActiveSec = "10min";
   systemd.timers.flexget.wantedBy = [ "timers.target" ];
-
-  systemd.services.media-init = {
-    before = [ "transmission.service" ];
-    unitConfig.ConditionPathExists = "!%S/media";
-    serviceConfig.User = "transmission";
-    serviceConfig.StateDirectory = "media";
-    script = ''
-      mkdir -p /var/lib/media
-    '';
-    wantedBy = [ "multi-user.target" ];
-  };
-
 }
