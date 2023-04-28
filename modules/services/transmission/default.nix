@@ -8,12 +8,8 @@ in
 {
 
   imports = [
-    ../../container/podman.nix
-    ../../container/jellyfin.nix
     ./flexget.nix
   ];
-
-  networking.nftables.enable = lib.mkForce false;
 
   sops.secrets.user = { };
   sops.secrets.password = { };
