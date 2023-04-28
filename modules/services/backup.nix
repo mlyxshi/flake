@@ -2,9 +2,10 @@
 let
   cfg = config.backup;
   servicelist = {
-    changedetection = "08:00";
-    jellyfin = "05:00";
     nodestatus-server = "04:00";
+    jellyfin = "05:00";
+    vaultwarden = "06:00";
+    changedetection = "08:00";
   };
 in
 {
@@ -45,6 +46,5 @@ in
     )
     servicelist);
 
-
-
+    
 }

@@ -1,6 +1,9 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, self, ... }: {
 
-  sops.secrets.restic-env = { };
+  imports = [
+    self.nixosModules.services.backup
+  ];
+  backup.vaultwarden = true;
 
   virtualisation.oci-containers.containers.vaultwarden = {
     image = "ghcr.io/dani-garcia/vaultwarden";
@@ -28,31 +31,4 @@
       "traefik.http.services.vaultwarden-websocket.loadbalancer.server.port=3012"
     ] ++ [ "--no-healthcheck" ];
   };
-
-  systemd.services.vaultwarden-data-init = {
-    after = [ "network-online.target" ];
-    before = [ "podman-vaultwarden.service" ];
-    unitConfig.ConditionPathExists = "!%S/vaultwarden";
-    environment.RESTIC_CACHE_DIR = "%C/restic";
-    serviceConfig.EnvironmentFile = config.sops.secrets.restic-env.path;
-    serviceConfig.ExecSearchPath = "${pkgs.restic}/bin";
-    serviceConfig.ExecStart = "restic restore latest --path %S/vaultwarden  --target /";
-    wantedBy = [ "multi-user.target" ];
-  };
-
-  systemd.services.vaultwarden-backup = {
-    environment.RESTIC_CACHE_DIR = "%C/restic";
-    serviceConfig = {
-      Type = "oneshot";
-      EnvironmentFile = config.sops.secrets.restic-env.path;
-      ExecSearchPath = "${pkgs.restic}/bin";
-      ExecStart = [
-        "restic backup %S/vaultwarden"
-        "restic forget --prune --keep-last 2"
-        "restic check"
-      ];
-    };
-    startAt = "06:00";
-  };
-
 }
