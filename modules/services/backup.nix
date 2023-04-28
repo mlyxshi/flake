@@ -1,13 +1,12 @@
 { pkgs, lib, config, ... }:
 let
   cfg = config.backup;
+  service = [ "changedetection" "jellyfin" ];
+  time = [ "08:00" "05:00" ];
 in
 {
-
-  options = {
-    backup.changedetection = lib.mkEnableOption "changedetection";
-    backup.jellyfin = lib.mkEnableOption "jellyfin";
-  };
+  # jellyfin = lib.mkEnableOption "jellyfin";
+  options.backup = lib.genAttrs service (x: lib.mkEnableOption x);
 
   config = lib.mkMerge [
     {
