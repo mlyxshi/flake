@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }: {
 
   imports=[
-    ./helper.nix { name = "changedetection"; }
+    ./helper.nix { name = "changedetection"; inherit config pkgs; }
   ];
 
   virtualisation.oci-containers.containers.changedetection = {
