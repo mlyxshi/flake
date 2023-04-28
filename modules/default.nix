@@ -39,6 +39,8 @@
     transmission = import ./services/transmission;
 
     cache = import ./services/cache;
+
+    backup = import ./services/backup.nix;
   };
 
   container = {

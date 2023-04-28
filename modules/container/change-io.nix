@@ -1,7 +1,7 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, self, ... }: {
 
-  imports=[
-    ./helper.nix
+  imports = [
+    self.services.backup
   ];
 
   virtualisation.oci-containers.containers.changedetection = {
