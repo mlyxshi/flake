@@ -14,26 +14,26 @@ in
       sops.secrets.restic-env = { };
     }
   ] ++ lib.mapAttrsToList
-    (name: time: (lib.mkIf cfg.${name} {
-      systemd.services."${name}-init" = {
+    (service: time: (lib.mkIf cfg.${service} {
+      systemd.services."${service}-init" = {
         after = [ "network-online.target" ];
-        before = [ "podman-${name}.service" ];
-        unitConfig.ConditionPathExists = "!%S/${name}";
+        before = [ "podman-${service}.service" ];
+        unitConfig.ConditionPathExists = "!%S/${service}";
         environment.RESTIC_CACHE_DIR = "%C/restic";
         serviceConfig.EnvironmentFile = config.sops.secrets.restic-env.path;
         serviceConfig.ExecSearchPath = "${pkgs.restic}/bin";
-        serviceConfig.ExecStart = "restic restore latest --path %S/${name}  --target /";
+        serviceConfig.ExecStart = "restic restore latest --path %S/${service}  --target /";
         wantedBy = [ "multi-user.target" ];
       };
 
-      systemd.services."${name}-backup" = {
+      systemd.services."${service}-backup" = {
         environment.RESTIC_CACHE_DIR = "%C/restic";
         serviceConfig = {
           Type = "oneshot";
           EnvironmentFile = config.sops.secrets.restic-env.path;
           ExecSearchPath = "${pkgs.restic}/bin";
           ExecStart = [
-            "restic backup %S/${name}"
+            "restic backup %S/${service}"
             "restic forget --prune --keep-last 2"
             "restic check"
           ];
