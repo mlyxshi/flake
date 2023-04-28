@@ -14,7 +14,7 @@ in
       sops.secrets.restic-env = { };
     }
   ] ++ lib.mapAttrsToList
-    (name: value:
+    (name: time:
 
       (lib.mkIf cfg.name {
         systemd.services."${name}-init" = {
@@ -40,7 +40,7 @@ in
               "restic check"
             ];
           };
-          startAt = value;
+          startAt = time;
         };
       })
     )
