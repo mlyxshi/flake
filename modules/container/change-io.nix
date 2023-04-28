@@ -10,7 +10,7 @@
     extraOptions = lib.concatMap (x: [ "--label" x ]) [
       "io.containers.autoupdate=registry"
       "traefik.enable=true"
-      "traefik.http.routers.changedetection.rule=Host(`change.${config.networking.domain}`)"
+      "traefik.http.routers.changedetection.rule=Host(`changeio.${config.networking.domain}`)"
       "traefik.http.routers.changedetection.entrypoints=websecure"
     ];
   };
