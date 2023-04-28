@@ -2,8 +2,7 @@
   imports = [
     self.nixosModules.container.podman
     self.nixosModules.container.rsshub
-
-    self.nixosModules.services.change-detection
+    self.nixosModules.container.change-detection
   ];
 
   networking.nftables.enable = lib.mkForce false;

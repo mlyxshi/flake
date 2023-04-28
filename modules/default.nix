@@ -39,14 +39,12 @@
     transmission = import ./services/transmission;
 
     cache = import ./services/cache;
-
-    change-detection = import ./services/change-io.nix;
   };
 
   container = {
     podman = import ./container/podman.nix;
     nodestatus-server = import ./container/nodestatus-server.nix;
-
+    change-detection = import ./container/change-io.nix;
     rsshub = import ./container/rsshub.nix;
     vaultwarden = import ./container/vaultwarden.nix;
   };
