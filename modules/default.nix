@@ -49,6 +49,7 @@
     change-detection = import ./container/change-io.nix;
     rsshub = import ./container/rsshub.nix;
     vaultwarden = import ./container/vaultwarden.nix;
+    navidrome = import ./container/navidrome.nix;
   };
 
 }
