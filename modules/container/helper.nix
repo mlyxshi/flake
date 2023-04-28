@@ -1,5 +1,5 @@
   
-{ config, pkgs, name }: {  
+{ config, pkgs, name,... }: {  
   sops.secrets.restic-env = { };
 
   systemd.services."${name}-init" = {
