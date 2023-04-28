@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }: {
 
   imports=[
-    ./helper.nix { name = "changedetection"; inherit config pkgs; }
+    ./helper.nix
   ];
 
   virtualisation.oci-containers.containers.changedetection = {
@@ -19,5 +19,5 @@
 
   systemd.services.podman-changedetection.serviceConfig.StateDirectory = "changedetection";
 
-
+  backup.changedetection = true;
 }
