@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config,self, ... }: {
+
+  imports = [
+    self.nixosModules.services.backup
+  ];
+  backup.nodestatus-server = true;
 
   sops.secrets.user = { };
   sops.secrets.password = { };
@@ -6,8 +11,6 @@
     WEB_USERNAME=${config.sops.placeholder.user}
     WEB_PASSWORD=${config.sops.placeholder.password}
   '';
-
-  sops.secrets.restic-env = { };
 
   virtualisation.oci-containers.containers.nodestatus-server = {
     image = "docker.io/cokemine/nodestatus";
@@ -37,34 +40,5 @@
     ];
   };
 
-
-
   systemd.services.podman-nodestatus-server.serviceConfig.StateDirectory = "nodestatus-server";
-
-  systemd.services.nodestatus-data-init = {
-    after = [ "network-online.target" ];
-    before = [ "podman-nodestatus-server.service" ];
-    unitConfig.ConditionPathExists = "!%S/nodestatus-server";
-    environment.RESTIC_CACHE_DIR = "%C/restic";
-    serviceConfig.EnvironmentFile = config.sops.secrets.restic-env.path;
-    serviceConfig.ExecSearchPath = "${pkgs.restic}/bin";
-    serviceConfig.ExecStart = "restic restore latest --path %S/nodestatus-server  --target /";
-    wantedBy = [ "multi-user.target" ];
-  };
-
-  systemd.services.nodestatus-backup = {
-    environment.RESTIC_CACHE_DIR = "%C/restic";
-    serviceConfig = {
-      Type = "oneshot";
-      EnvironmentFile = config.sops.secrets.restic-env.path;
-      ExecSearchPath = "${pkgs.restic}/bin";
-      ExecStart = [
-        "restic backup %S/nodestatus-server"
-        "restic forget --prune --keep-last 2"
-        "restic check"
-      ];
-    };
-    startAt = "04:00";
-  };
-
 }

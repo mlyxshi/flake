@@ -4,6 +4,7 @@ let
   servicelist = {
     changedetection = "08:00";
     jellyfin = "05:00";
+    nodestatus-server = "04:00";
   };
 in
 {

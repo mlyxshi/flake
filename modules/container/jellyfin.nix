@@ -4,6 +4,7 @@
   imports = [
     self.nixosModules.services.backup
   ];
+  backup.jellyfin = true;
 
   virtualisation.oci-containers.containers.jellyfin = {
     image = "ghcr.io/linuxserver/jellyfin";
@@ -33,7 +34,4 @@
     serviceConfig.StateDirectory = "media";
     wantedBy = [ "multi-user.target" ];
   };
-
-  backup.jellyfin = true;
-
 }

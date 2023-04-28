@@ -3,6 +3,7 @@
   imports = [
     self.nixosModules.services.backup
   ];
+  backup.changedetection = true;
 
   virtualisation.oci-containers.containers.changedetection = {
     image = "ghcr.io/dgtlmoon/changedetection.io";
@@ -16,8 +17,4 @@
       "traefik.http.routers.changedetection.entrypoints=websecure"
     ];
   };
-
-  systemd.services.podman-changedetection.serviceConfig.StateDirectory = "changedetection";
-
-  backup.changedetection = true;
 }
