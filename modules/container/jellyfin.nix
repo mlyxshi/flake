@@ -11,6 +11,7 @@
     volumes = [
       "/var/lib/jellyfin:/config"
       "/var/lib/media:/var/lib/media"
+      "/var/lib/music:/var/lib/music"
     ];
 
     environment = {
