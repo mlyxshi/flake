@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
   ];
 
   configurePhase = ''
-    # Many PT sites limit allowed clients to a specific version, so fake version to 402
+    # Many PT sites limit allowed clients to a specific version, so fake version to 401
     sed -i 's/set(TR_VERSION_MAJOR "[0-9]\+")/set(TR_VERSION_MAJOR "4")/' CMakeLists.txt
     sed -i 's/set(TR_VERSION_MINOR "[0-9]\+")/set(TR_VERSION_MINOR "0")/' CMakeLists.txt
     sed -i 's/set(TR_VERSION_PATCH "[0-9]\+")/set(TR_VERSION_PATCH "3")/' CMakeLists.txt
