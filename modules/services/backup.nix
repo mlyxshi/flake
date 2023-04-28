@@ -9,7 +9,7 @@ in
 {
   options.backup = lib.genAttrs (builtins.attrNames servicelist) (x: lib.mkEnableOption x);
 
-  config = lib.mkMerge [
+  config = lib.mkMerge ([
     {
       sops.secrets.restic-env = { };
     }
@@ -38,11 +38,11 @@ in
             "restic check"
           ];
         };
-        startAt = ${time};
+        startAt = time;
       };
     })
     )
-    servicelist;
+    servicelist);
 
 
 
