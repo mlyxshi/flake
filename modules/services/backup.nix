@@ -14,7 +14,7 @@ in
       sops.secrets.restic-env = { };
     }
   ] ++ lib.mapAttrsToList
-    (name: time: (lib.mkIf cfg."${name}" {
+    (name: time: (lib.mkIf cfg.name {
       systemd.services."${name}-init" = {
         after = [ "network-online.target" ];
         before = [ "podman-${name}.service" ];
