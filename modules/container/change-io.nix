@@ -1,7 +1,7 @@
 { config, pkgs, lib, self, ... }: {
 
   imports = [
-    self.services.backup
+    self.nixosModules.services.backup
   ];
 
   virtualisation.oci-containers.containers.changedetection = {
