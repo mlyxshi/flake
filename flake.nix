@@ -52,19 +52,19 @@
 
       packages.aarch64-darwin = lib.genAttrs [ "Anime4k" "test" ] (name: nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/${name} { });
       packages.x86_64-linux = lib.genAttrs [ "Anime4k" "nodestatus-client" "transmission" "PingFang" "SF-Pro" "stdenv" "test" ] (name: nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/${name} { }) // {
-        default = self.nixosConfigurations."kexec-x86_64".config.system.build.test;
-        test0 = self.nixosConfigurations."kexec-x86_64".config.system.build.test0;
+        default = self.nixosConfigurations.kexec-x86_64.config.system.build.test;
+        test0 = self.nixosConfigurations.kexec-x86_64.config.system.build.test0;
       };
       packages.aarch64-linux = lib.genAttrs [ "transmission" "stdenv" "test" ] (name: nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/${name} { });
 
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixpkgs-fmt;
-      devShells.aarch64-darwin.wrangler = import ./shells/wrangler.nix { pkgs = nixpkgs.legacyPackages."aarch64-darwin"; };
+      devShells.aarch64-darwin.wrangler = import ./shells/wrangler.nix { pkgs = nixpkgs.legacyPackages.aarch64-darwin; };
 
       # hydra-create-user admin --password-prompt --role admin
       # Declarative spec file: hydra.json
       # Declarative input type: Git checkout
       # Declarative input value: https://github.com/mlyxshi/flake.git main 
-      hydraJobs.aarch64 = self.nixosConfigurations."kexec-aarch64".config.system.build.kexec;
-      hydraJobs.x86_64 = self.nixosConfigurations."kexec-x86_64".config.system.build.kexec;
+      hydraJobs.aarch64 = self.nixosConfigurations.kexec-aarch64.config.system.build.kexec;
+      hydraJobs.x86_64 = self.nixosConfigurations.kexec-x86_64.config.system.build.kexec;
     };
 }
