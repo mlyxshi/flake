@@ -1,5 +1,5 @@
 final: prev: {
-  Anime4k = prev.callPackage ../pkgs/anime4k { };
+  Anime4k = prev.callPackage ../pkgs/Anime4k { };
 
   PingFang = prev.callPackage ../pkgs/Fonts/PingFang { };
   SF-Pro = prev.callPackage ../pkgs/Fonts/SF-Pro { };

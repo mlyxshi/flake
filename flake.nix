@@ -19,14 +19,25 @@
 
   outputs = { self, nixpkgs, darwin, home-manager, sops-nix, hydra, nix-index-database }:
     let
-      utils = import ./utils.nix { inherit (nixpkgs) lib; };
-      oracle-arm64-serverlist = utils.pureName (utils.ls ./host/oracle/aarch64);
-      oracle-x64-serverlist = utils.pureName (utils.ls ./host/oracle/x86_64);
-      azure-x64-serverlist = utils.pureName (utils.ls ./host/azure/x86_64);
+      inherit (nixpkgs) lib;
+      ls = dir: builtins.attrNames (builtins.readDir dir);
+      pureName = pathList: map (path: lib.strings.removeSuffix ".nix" path) pathList;
+      mkFileHierarchyAttrset = basedir: dir:
+        lib.genAttrs (pureName (ls ./${basedir}/${dir}))
+          (path:
+            if lib.sources.pathIsRegularFile ./${basedir}/${dir}/${path}.nix
+            then import ./${basedir}/${dir}/${path}.nix
+            else if builtins.pathExists ./${basedir}/${dir}/${path}/default.nix
+            then import ./${basedir}/${dir}/${path}
+            else mkFileHierarchyAttrset "./${basedir}/${dir}" path
+          );
+      oracle-arm64-serverlist = pureName (ls ./host/oracle/aarch64);
+      oracle-x64-serverlist = pureName (ls ./host/oracle/x86_64);
+      azure-x64-serverlist = pureName (ls ./host/azure/x86_64);
     in
     {
       overlays.default = import ./overlays;
-      nixosModules = utils.mkFileHierarchyAttrset "." "modules";
+      nixosModules = mkFileHierarchyAttrset "." "modules";
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixpkgs-fmt;
       darwinConfigurations.M1 = import ./host/M1 { inherit self nixpkgs darwin home-manager; };
       nixosConfigurations = {
@@ -37,10 +48,12 @@
         kexec-x86_64 = import ./kexec/mkKexec.nix { arch = "x86_64"; inherit nixpkgs; };
         kexec-aarch64 = import ./kexec/mkKexec.nix { arch = "aarch64"; inherit nixpkgs; };
       }
-      // nixpkgs.lib.genAttrs (oracle-arm64-serverlist ++ oracle-x64-serverlist) (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs home-manager sops-nix hydra; })
-      // nixpkgs.lib.genAttrs azure-x64-serverlist (hostName: import ./host/azure/mkHost.nix { inherit hostName self nixpkgs home-manager sops-nix; });
+      // lib.genAttrs (oracle-arm64-serverlist ++ oracle-x64-serverlist) (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs home-manager sops-nix hydra; })
+      // lib.genAttrs azure-x64-serverlist (hostName: import ./host/azure/mkHost.nix { inherit hostName self nixpkgs home-manager sops-nix; });
 
-      packages.aarch64-darwin.Anime4k = nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/anime4k { };
+      packages.aarch64-darwin = lib.genAttrs ["Anime4k" "test"] (name: nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/${name} { });
+    
+      #packages.aarch64-darwin.Anime4k = nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/anime4k { };
       packages.x86_64-linux.Anime4k = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/anime4k { };
 
       packages.x86_64-linux.nodestatus-client = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/nodestatus-client { };
@@ -53,7 +66,7 @@
 
       packages.x86_64-linux.stdenv = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/stdenv { };
       packages.aarch64-linux.stdenv = nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/stdenv { };
-      packages.aarch64-darwin.test = nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/test { };
+
       packages.x86_64-linux.test = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/test { };
 
       devShells.aarch64-darwin.wrangler = import ./shells/wrangler.nix { pkgs = nixpkgs.legacyPackages."aarch64-darwin"; };
