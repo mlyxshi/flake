@@ -38,7 +38,6 @@
     {
       overlays.default = import ./overlays;
       nixosModules = mkFileHierarchyAttrset "." "modules";
-      formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixpkgs-fmt;
       darwinConfigurations.M1 = import ./host/M1 { inherit self nixpkgs darwin home-manager; };
       nixosConfigurations = {
         hx90 = import ./host/hx90 { inherit self nixpkgs home-manager sops-nix nix-index-database; };
@@ -51,28 +50,15 @@
       // lib.genAttrs (oracle-arm64-serverlist ++ oracle-x64-serverlist) (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs home-manager sops-nix hydra; })
       // lib.genAttrs azure-x64-serverlist (hostName: import ./host/azure/mkHost.nix { inherit hostName self nixpkgs home-manager sops-nix; });
 
-      packages.aarch64-darwin = lib.genAttrs ["Anime4k" "test"] (name: nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/${name} { });
-    
-      #packages.aarch64-darwin.Anime4k = nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/anime4k { };
-      packages.x86_64-linux.Anime4k = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/anime4k { };
+      packages.aarch64-darwin = lib.genAttrs [ "Anime4k" "test" ] (name: nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/${name} { });
+      packages.x86_64-linux = lib.genAttrs [ "Anime4k" "nodestatus-client" "transmission" "PingFang" "SF-Pro" "stdenv " "test" ] (name: nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/${name} { }) // {
+        default = self.nixosConfigurations."kexec-x86_64".config.system.build.test;
+        test0 = self.nixosConfigurations."kexec-x86_64".config.system.build.test0;
+      };
+      packages.aarch64-linux = lib.genAttrs [ "transmission" "stdenv" "test" ] (name: nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/${name} { });
 
-      packages.x86_64-linux.nodestatus-client = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/nodestatus-client { };
-
-      packages.x86_64-linux.PingFang = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/Fonts/PingFang { };
-      packages.x86_64-linux.SF-Pro = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/Fonts/SF-Pro { };
-
-      packages.x86_64-linux.transmission = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/transmission { };
-      packages.aarch64-linux.transmission = nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/transmission { };
-
-      packages.x86_64-linux.stdenv = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/stdenv { };
-      packages.aarch64-linux.stdenv = nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/stdenv { };
-
-      packages.x86_64-linux.test = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/test { };
-
+      formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixpkgs-fmt;
       devShells.aarch64-darwin.wrangler = import ./shells/wrangler.nix { pkgs = nixpkgs.legacyPackages."aarch64-darwin"; };
-
-      packages.x86_64-linux.default = self.nixosConfigurations."kexec-x86_64".config.system.build.test;
-      packages.x86_64-linux.test0 = self.nixosConfigurations."kexec-x86_64".config.system.build.test0;
 
       # hydra-create-user admin --password-prompt --role admin
       # Declarative spec file: hydra.json
