@@ -5,8 +5,8 @@ let
   mkModules = dir: lib.genAttrs (pureName (ls ./${dir})) (file: if lib.sources.pathIsDirectory ./${dir}/${file} then import ./${dir}/${file} else import ./${dir}/${file}.nix);
 in
 {
-  network = import ./network;
-  fileSystem = import ./fileSystem;
+  network = mkModules "network";
+  fileSystem = mkModules "fileSystem";
   os.darwin = import ./os/darwin;
   os.nixos = lib.genAttrs (pureName (ls ./os/nixos)) (file: import ./os/nixos/${file}.nix);
   settings = mkModules "settings";

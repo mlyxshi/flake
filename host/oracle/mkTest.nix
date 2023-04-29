@@ -3,8 +3,8 @@ nixpkgs.lib.nixosSystem {
   modules = [
     sops-nix.nixosModules.default
     self.nixosModules.os.nixos.server
-    self.nixosModules.network
-    self.nixosModules.fileSystem
+    self.nixosModules.network.default
+    self.nixosModules.fileSystem.ext4
     self.nixosModules.settings.nixConfigDir
     self.nixosModules.settings.developerMode
     self.nixosModules.services.ssh-config
