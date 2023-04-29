@@ -1,5 +1,5 @@
 { stdenv }:
 stdenv.mkDerivation {
-  pname = "test";
+  pname = "stdenv-test";
   version = "1.1.1";
 }
