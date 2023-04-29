@@ -5,7 +5,7 @@ nixpkgs.lib.nixosSystem {
     sops-nix.nixosModules.default
     home-manager.nixosModules.default
     nix-index-database.nixosModules.nix-index
-    self.nixosModules.nixos.desktop
+    self.nixosModules.os.nixos.desktop
     self.nixosModules.settings.nixConfigDir
     self.nixosModules.settings.developerMode
     self.nixosModules.services.ssh-config

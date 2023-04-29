@@ -4,7 +4,7 @@ nixpkgs.lib.nixosSystem {
   modules = [
     sops-nix.nixosModules.default
     home-manager.nixosModules.default
-    self.nixosModules.nixos.server
+    self.nixosModules.os.nixos.server
     self.nixosModules.settings.nixConfigDir
     self.nixosModules.settings.developerMode
     ./configuration.nix
