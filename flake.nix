@@ -19,13 +19,17 @@
 
   outputs = { self, nixpkgs, darwin, home-manager, sops-nix, hydra, nix-index-database }:
     let
-      oracle-arm64-serverlist = map (x: nixpkgs.lib.strings.removeSuffix ".nix" x) (builtins.attrNames (builtins.readDir ./host/oracle/aarch64));
-      oracle-x64-serverlist = map (x: nixpkgs.lib.strings.removeSuffix ".nix" x) (builtins.attrNames (builtins.readDir ./host/oracle/x86_64));
-      azure-x64-serverlist = map (x: nixpkgs.lib.strings.removeSuffix ".nix" x) (builtins.attrNames (builtins.readDir ./host/azure/x86_64));
+      ls = dir: builtins.attrNames (builtins.readDir dir);
+      pureName = pathList: map (path: nixpkgs.lib.strings.removeSuffix ".nix" path) pathList;
+      mkModules = dir: nixpkgs.lib.genAttrs (pureName (ls ./${dir})) (file: if nixpkgs.lib.sources.pathIsDirectory ./${dir}/${file} then import ./${dir}/${file} else import ./${dir}/${file}.nix);
+      
+      oracle-arm64-serverlist = pureName (ls ./host/oracle/aarch64);
+      oracle-x64-serverlist = pureName (ls ./host/oracle/x86_64);
+      azure-x64-serverlist = pureName (ls ./host/azure/x86_64);
     in
     {
       overlays.default = import ./overlays;
-      nixosModules = import ./modules { inherit (nixpkgs) lib; };
+      nixosModules = nixpkgs.lib.genAttrs (ls ./modules) (dir: mkModules dir);
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixpkgs-fmt;
       darwinConfigurations.M1 = import ./host/M1 { inherit self nixpkgs darwin home-manager; };
       nixosConfigurations = {
