@@ -2,7 +2,7 @@
 let
   ls = dir: builtins.attrNames (builtins.readDir dir);
   removeSuffix = list: map (x: lib.strings.removeSuffix ".nix" x) list;
-  importPath = path: if builtins.pathExists path then path else "${path}.nix";
+  importPath = path: if (builtins.pathExists path) then path else "${path}.nix";
 in
 {
   os = {
