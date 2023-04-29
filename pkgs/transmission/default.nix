@@ -26,11 +26,10 @@ stdenv.mkDerivation rec {
     systemd
   ];
 
-  # Many PT sites limit allowed clients to a specific version, so fake version to 401
+  # Many PT sites limit allowed clients to a specific version, so fake version to 300
   configurePhase = ''
-    sed -i 's/set(TR_VERSION_MAJOR "[0-9]\+")/set(TR_VERSION_MAJOR "3")/' CMakeLists.txt
-    sed -i 's/set(TR_VERSION_MINOR "[0-9]\+")/set(TR_VERSION_MINOR "0")/' CMakeLists.txt
-    sed -i 's/set(TR_VERSION_PATCH "[0-9]\+")/set(TR_VERSION_PATCH "0")/' CMakeLists.txt
+    sed -i 's/set(TR_USER_AGENT_PREFIX "''${TR_SEMVER}")/set(TR_USER_AGENT_PREFIX "3.00")/' CMakeLists.txt
+    sed -i 's/string(APPEND TR_PEER_ID_PREFIX "-")/set(TR_PEER_ID_PREFIX "-TR3000-")/' CMakeLists.txt
 
     # Disable CSRF
     sed -i '/#define REQUIRE_SESSION_ID/d'  libtransmission/rpc-server.cc
