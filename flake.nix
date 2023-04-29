@@ -25,7 +25,7 @@
       mkFileHierarchyAttrset = basedir: dir:
         lib.genAttrs (pureName (ls ./${basedir}/${dir}))
           (path:
-            if lib.sources.pathIsRegularFile ./${basedir}/${dir}/${path}.nix
+            if builtins.pathExists ./${basedir}/${dir}/${path}.nix
             then import ./${basedir}/${dir}/${path}.nix
             else if builtins.pathExists ./${basedir}/${dir}/${path}/default.nix
             then import ./${basedir}/${dir}/${path}

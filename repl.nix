@@ -5,7 +5,15 @@ let
   lib = pkgs.lib;
   ls = dir: builtins.attrNames (builtins.readDir dir);
   pureName = pathList: map (path: lib.strings.removeSuffix ".nix" path) pathList;
-  mkFileHierarchyAttrset = basedir: dir: nixpkgs.lib.genAttrs (pureName (ls ./${basedir}/${dir})) (file: if nixpkgs.lib.sources.pathIsRegularFile ./${basedir}/${dir}/${file}.nix then import ./${basedir}/${dir}/${file}.nix else if builtins.pathExists ./${basedir}/${dir}/${file}/default.nix then import ./${basedir}/${dir}/${file} else mkFileHierarchyAttrset "./${basedir}/${dir}" file);
+  mkFileHierarchyAttrset = basedir: dir:
+  lib.genAttrs (pureName (ls ./${basedir}/${dir}))
+    (path:
+      if builtins.pathExists ./${basedir}/${dir}/${path}.nix
+      then import ./${basedir}/${dir}/${path}.nix
+      else if builtins.pathExists ./${basedir}/${dir}/${path}/default.nix
+      then import ./${basedir}/${dir}/${path}
+      else mkFileHierarchyAttrset "./${basedir}/${dir}" path
+    );
 in
 {
   inherit mkFileHierarchyAttrset;
