@@ -51,7 +51,7 @@
       // lib.genAttrs azure-x64-serverlist (hostName: import ./host/azure/mkHost.nix { inherit hostName self nixpkgs home-manager sops-nix; });
 
       packages.aarch64-darwin = lib.genAttrs [ "Anime4k" "test" ] (name: nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/${name} { });
-      packages.x86_64-linux = lib.genAttrs [ "Anime4k" "nodestatus-client" "transmission" "PingFang" "SF-Pro" "stdenv " "test" ] (name: nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/${name} { }) // {
+      packages.x86_64-linux = lib.genAttrs [ "Anime4k" "nodestatus-client" "transmission" "PingFang" "SF-Pro" "stdenv" "test" ] (name: nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/${name} { }) // {
         default = self.nixosConfigurations."kexec-x86_64".config.system.build.test;
         test0 = self.nixosConfigurations."kexec-x86_64".config.system.build.test0;
       };
