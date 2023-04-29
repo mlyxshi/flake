@@ -4,7 +4,7 @@ darwin.lib.darwinSystem {
   system = "aarch64-darwin";
   modules = [
     home-manager.darwinModules.default
-    self.nixosModules.darwin.default
+    self.nixosModules.os.darwin
     self.nixosModules.settings.nixConfigDir
     self.nixosModules.settings.developerMode
     {
