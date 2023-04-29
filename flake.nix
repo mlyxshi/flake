@@ -21,16 +21,14 @@
     let
       ls = dir: builtins.attrNames (builtins.readDir dir);
       pureName = pathList: map (path: nixpkgs.lib.strings.removeSuffix ".nix" path) pathList;
-      mkLevel2FileHierarchyAttrset = basedir: dir: nixpkgs.lib.genAttrs (pureName (ls ./${basedir}/${dir})) (file: if nixpkgs.lib.sources.pathIsDirectory ./${basedir}/${dir}/${file} then import ./${basedir}/${dir}/${file} else import ./${basedir}/${dir}/${file}.nix);
-      mkFileHierarchyAttrset = basedir: nixpkgs.lib.genAttrs (ls ./${basedir}) (dir: mkLevel2FileHierarchyAttrset basedir dir);
-
+      mkFileHierarchyAttrset = basedir: dir: nixpkgs.lib.genAttrs (pureName (ls ./${basedir}/${dir})) (file: if nixpkgs.lib.sources.pathIsRegularFile ./${basedir}/${dir}/${file}.nix then import ./${basedir}/${dir}/${file}.nix else if builtins.pathExists ./${basedir}/${dir}/${file}/default.nix then import ./${basedir}/${dir}/${file} else mkFileHierarchyAttrset "${basedir}/${dir}" file);
       oracle-arm64-serverlist = pureName (ls ./host/oracle/aarch64);
       oracle-x64-serverlist = pureName (ls ./host/oracle/x86_64);
       azure-x64-serverlist = pureName (ls ./host/azure/x86_64);
     in
     {
       overlays.default = import ./overlays;
-      nixosModules = mkFileHierarchyAttrset "modules";
+      nixosModules = mkFileHierarchyAttrset "." "modules";
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixpkgs-fmt;
       darwinConfigurations.M1 = import ./host/M1 { inherit self nixpkgs darwin home-manager; };
       nixosConfigurations = {
