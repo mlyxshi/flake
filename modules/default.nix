@@ -1,7 +1,7 @@
 {lib}:
 let
   ls = dir: builtins.attrNames (builtins.readDir dir);
-  getPathName = pathList: map(path: if lib.sources.pathIsDirectory path then path else (lib.strings.removeSuffix ".nix" path)) pathList;
+  pureName = pathList: map(path: if lib.strings.hasSuffix ".nix" path then lib.strings.removeSuffix ".nix" path else path) pathList;
   importPath = path: if lib.sources.pathIsDirectory path then path else "${path}.nix";
 in
 {
@@ -42,7 +42,7 @@ in
 
   network = import ./network;
   fileSystem = import ./fileSystem;
-  settings =  lib.genAttrs (getPathName(ls ./settings)) (file: import ./settings/${file}.nix);
-  container = lib.genAttrs (getPathName(ls ./container)) (file: import ./container/${file}.nix);
-  services = lib.genAttrs (getPathName(ls ./services)) (file: import (importPath ./services/${file}) );
+  settings =  lib.genAttrs (pureName(ls ./settings)) (file: import ./settings/${file}.nix);
+  container = lib.genAttrs (pureName(ls ./container)) (file: import ./container/${file}.nix);
+  services = lib.genAttrs (pureName(ls ./services)) (file: import (importPath ./services/${file}) );
 }
