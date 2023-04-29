@@ -7,8 +7,8 @@ in
 {
   network = mkModules "network";
   fileSystem = mkModules "fileSystem";
-  os.darwin = import ./os/darwin;
-  os.nixos = lib.genAttrs (pureName (ls ./os/nixos)) (file: import ./os/nixos/${file}.nix);
+  darwin = mkModules "darwin";
+  nixos = mkModules "nixos";
   settings = mkModules "settings";
   containers = mkModules "containers";
   services =  mkModules "services";
