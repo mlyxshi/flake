@@ -30,10 +30,9 @@
       overlays.default = final: prev:
         let
           dirContents = builtins.readDir ./pkgs;
-          names1 = builtins.attrNames dirContents;
-          names = builtins.filter (x: x!="stdenv" || x!="test") names1;
+          names = builtins.attrNames dirContents;
         in
-        prev.lib.genAttrs names (name: prev.callPackage ./pkgs/${name} { });
+        prev.lib.genAttrs names (name: final.callPackage ./pkgs/${name} { });
       nixosModules = mkFileHierarchyAttrset "." "modules";
       darwinConfigurations.M1 = import ./host/M1 { inherit self nixpkgs darwin home-manager; };
       nixosConfigurations = {
