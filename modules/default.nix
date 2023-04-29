@@ -1,4 +1,4 @@
-lib:
+{lib}:
 let
   ls = dir: builtins.attrNames (builtins.readDir dir);
   removeSuffix = list : map (x: lib.strings.removeSuffix ".nix" x) list;
