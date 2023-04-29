@@ -2,10 +2,10 @@
 
   imports = [
     ../common
-    ../../../strip
+    ../../strip
   ];
 
-  sops.defaultSopsFile = ../../../key.yaml;
+  sops.defaultSopsFile = ../../key.yaml;
   sops.age.sshKeyPaths = [ "/persist/sops/key" ];
   sops.gnupg.sshKeyPaths = [ ];
 
