@@ -19,7 +19,7 @@
 
   outputs = { self, nixpkgs, darwin, home-manager, sops-nix, hydra, nix-index-database }:
     let
-      utils = import ./utils { inherit (nixpkgs) lib; };
+      utils = import ./utils.nix { inherit (nixpkgs) lib; };
       oracle-arm64-serverlist = utils.pureName (utils.ls ./host/oracle/aarch64);
       oracle-x64-serverlist = utils.pureName (utils.ls ./host/oracle/x86_64);
       azure-x64-serverlist = utils.pureName (utils.ls ./host/azure/x86_64);
