@@ -25,7 +25,7 @@
     in
     {
       overlays.default = import ./overlays;
-      nixosModules = import ./modules;
+      nixosModules = import ./modules { lib = nixpkgs.lib; };
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixpkgs-fmt;
 
       darwinConfigurations.M1 = import ./host/M1 { inherit self nixpkgs darwin home-manager; };
