@@ -1,7 +1,8 @@
 {lib}:
 let
   ls = dir: builtins.attrNames (builtins.readDir dir);
-  removeSuffix = list : map (x: lib.strings.removeSuffix ".nix" x) list;
+  removeSuffix = list: map (x: lib.strings.removeSuffix ".nix" x) list;
+  importPath = path: if lib.sources.pathIsDirectory then path else "${path}.nix";
 in
 {
   os = {
@@ -13,38 +14,35 @@ in
     };
   };
 
+  # services = {
+  #   invidious = import ./services/invidious.nix;
+  #   libreddit = import ./services/libreddit.nix;
 
+  #   shadowsocks = import ./services/shadowsocks.nix;
 
- 
+  #   prometheus = import ./services/prometheus.nix;
+  #   telegraf = import ./services/telegraf.nix;
 
-  services = {
-    invidious = import ./services/invidious.nix;
-    libreddit = import ./services/libreddit.nix;
+  #   ssh-config = import ./services/ssh-config.nix;
+  #   traefik = import ./services/traefik.nix;
 
-    shadowsocks = import ./services/shadowsocks.nix;
+  #   tftpd = import ./services/tftpd.nix;
+  #   hydra-aarch64 = import ./services/hydra/hydra-aarch64.nix;
+  #   hydra-x86_64 = import ./services/hydra/hydra-x86_64.nix;
 
-    prometheus = import ./services/prometheus.nix;
-    telegraf = import ./services/telegraf.nix;
+  #   nodestatus-client = import ./services/nodestatus-client.nix;
+  #   miniflux = import ./services/miniflux.nix;
 
-    ssh-config = import ./services/ssh-config.nix;
-    traefik = import ./services/traefik.nix;
+  #   transmission = import ./services/transmission;
 
-    tftpd = import ./services/tftpd.nix;
-    hydra-aarch64 = import ./services/hydra/hydra-aarch64.nix;
-    hydra-x86_64 = import ./services/hydra/hydra-x86_64.nix;
+  #   cache = import ./services/cache;
 
-    nodestatus-client = import ./services/nodestatus-client.nix;
-    miniflux = import ./services/miniflux.nix;
-
-    transmission = import ./services/transmission;
-
-    cache = import ./services/cache;
-
-    backup = import ./services/backup.nix;
-  };
+  #   backup = import ./services/backup.nix;
+  # };
 
   network = import ./network;
   fileSystem = import ./fileSystem;
   settings =  lib.genAttrs (removeSuffix(ls ./settings)) (file: import ./settings/${file}.nix);
   container = lib.genAttrs (removeSuffix(ls ./container)) (file: import ./container/${file}.nix);
+  services = lib.genAttrs (removeSuffix(ls ./services)) (file: import (importPath ./services/${file}) );
 }
