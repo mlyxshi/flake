@@ -25,11 +25,9 @@
     in
     {
       overlays.default = import ./overlays;
-      nixosModules = import ./modules { lib = nixpkgs.lib; };
+      nixosModules = import ./modules { inherit (nixpkgs) lib; };
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixpkgs-fmt;
-
       darwinConfigurations.M1 = import ./host/M1 { inherit self nixpkgs darwin home-manager; };
-
       nixosConfigurations = {
         hx90 = import ./host/hx90 { inherit self nixpkgs home-manager sops-nix nix-index-database; };
         installer = import ./host/installer { inherit self nixpkgs sops-nix home-manager; };
