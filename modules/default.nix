@@ -51,7 +51,7 @@ in
   # container = {
   #   podman = import ./container/podman.nix;
   #   nodestatus-server = import ./container/nodestatus-server.nix;
-  #   change-detection = import ./container/change-io.nix;
+  #   change-detection = import ./container/change-detection.nix;
   #   rsshub = import ./container/rsshub.nix;
   #   vaultwarden = import ./container/vaultwarden.nix;
   #   navidrome = import ./container/navidrome.nix;
