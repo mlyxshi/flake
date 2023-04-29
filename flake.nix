@@ -20,17 +20,8 @@
   outputs = { self, nixpkgs, darwin, home-manager, sops-nix, hydra, nix-index-database }:
     let
       inherit (nixpkgs) lib;
-      ls = dir: builtins.attrNames (builtins.readDir dir);
-      pureName = pathList: map (path: lib.strings.removeSuffix ".nix" path) pathList;
-      mkFileHierarchyAttrset = basedir: dir:
-        lib.genAttrs (pureName (ls ./${basedir}/${dir}))
-          (path:
-            if builtins.pathExists ./${basedir}/${dir}/${path}.nix
-            then import ./${basedir}/${dir}/${path}.nix
-            else if builtins.pathExists ./${basedir}/${dir}/${path}/default.nix
-            then import ./${basedir}/${dir}/${path}
-            else mkFileHierarchyAttrset "./${basedir}/${dir}" path
-          );
+      utils = import ./utils.nix lib;
+      inherit (utils) ls pureName mkFileHierarchyAttrset;
       oracle-arm64-serverlist = pureName (ls ./host/oracle/aarch64);
       oracle-x64-serverlist = pureName (ls ./host/oracle/x86_64);
       azure-x64-serverlist = pureName (ls ./host/azure/x86_64);
