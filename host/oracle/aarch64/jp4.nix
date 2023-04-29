@@ -2,9 +2,9 @@
   imports = [
     self.nixosModules.services.transmission
 
-    self.nixosModules.container.podman
-    self.nixosModules.container.jellyfin
-    self.nixosModules.container.navidrome
+    self.nixosModules.containers.podman
+    self.nixosModules.containers.jellyfin
+    self.nixosModules.containers.navidrome
   ];
 
   networking.nftables.enable = lib.mkForce false;

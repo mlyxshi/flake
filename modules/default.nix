@@ -9,6 +9,6 @@ in
   os.darwin = import ./os/darwin;
   os.nixos = lib.genAttrs (pureName (ls ./os/nixos)) (file: import ./os/nixos/${file}.nix);
   settings = lib.genAttrs (pureName (ls ./settings)) (file: import ./settings/${file}.nix);
-  container = lib.genAttrs (pureName (ls ./container)) (file: import ./container/${file}.nix);
+  containers = lib.genAttrs (pureName (ls ./containers)) (file: import ./containers/${file}.nix);
   services = lib.genAttrs (pureName (ls ./services)) (file: if lib.sources.pathIsDirectory ./services/${file} then import ./services/${file} else import ./services/${file}.nix);
 }

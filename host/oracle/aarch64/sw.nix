@@ -1,8 +1,8 @@
 { self, config, pkgs, lib, ... }: {
   imports = [
-    self.nixosModules.container.podman
-    self.nixosModules.container.rsshub
-    self.nixosModules.container.change-detection
+    self.nixosModules.containers.podman
+    self.nixosModules.containers.rsshub
+    self.nixosModules.containers.change-detection
   ];
 
   networking.nftables.enable = lib.mkForce false;
