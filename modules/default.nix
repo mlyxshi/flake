@@ -9,7 +9,7 @@ in
   fileSystem = import ./fileSystem;
   os.darwin = import ./os/darwin;
   os.nixos = lib.genAttrs (pureName (ls ./os/nixos)) (file: import ./os/nixos/${file}.nix);
-  settings = lib.genAttrs (pureName (ls ./settings)) (file: import ./settings/${file}.nix);
-  containers = lib.genAttrs (pureName (ls ./containers)) (file: import ./containers/${file}.nix);
+  settings = mkModules "settings";
+  containers = mkModules "containers";
   services =  mkModules "services";
 }
