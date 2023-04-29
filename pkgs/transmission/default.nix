@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
     systemd
   ];
 
-  # Many PT sites limit allowed clients to a specific version, so fake version to 300
+  # Many PT sites limit allowed clients to some specific versions(bullshit rules), so fake version to 300
   # https://github.com/transmission/transmission/commit/bb6b5a062ee594dfd4b7a12a6b6e860c43849bfd
   configurePhase = ''
     sed -i 's/set(TR_USER_AGENT_PREFIX "''${TR_SEMVER}")/set(TR_USER_AGENT_PREFIX "3.00")/' CMakeLists.txt
