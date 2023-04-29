@@ -21,7 +21,7 @@
     let
       ls = dir: builtins.attrNames (builtins.readDir dir);
       pureName = pathList: map (path: nixpkgs.lib.strings.removeSuffix ".nix" path) pathList;
-      mkFileHierarchyAttrset = basedir: dir: nixpkgs.lib.genAttrs (pureName (ls ./${basedir}/${dir})) (file: if nixpkgs.lib.sources.pathIsRegularFile ./${basedir}/${dir}/${file}.nix then import ./${basedir}/${dir}/${file}.nix else if builtins.pathExists ./${basedir}/${dir}/${file}/default.nix then import ./${basedir}/${dir}/${file} else mkFileHierarchyAttrset "./${basedir}/${dir}" file);
+      mkFileHierarchyAttrset = basedir: dir: nixpkgs.lib.genAttrs (pureName (ls ./${basedir}/${dir})) (path: if nixpkgs.lib.sources.pathIsRegularFile ./${basedir}/${dir}/${path}.nix then import ./${basedir}/${dir}/${path}.nix else if builtins.pathExists ./${basedir}/${dir}/${path}/default.nix then import ./${basedir}/${dir}/${path} else mkFileHierarchyAttrset "./${basedir}/${dir}" path);
       oracle-arm64-serverlist = pureName (ls ./host/oracle/aarch64);
       oracle-x64-serverlist = pureName (ls ./host/oracle/x86_64);
       azure-x64-serverlist = pureName (ls ./host/azure/x86_64);
