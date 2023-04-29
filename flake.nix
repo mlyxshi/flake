@@ -31,7 +31,7 @@
         let
           dirContents = builtins.readDir ./pkgs;
           names1 = builtins.attrNames dirContents;
-          names = builtins.filter (x: x!="stdenv" || x!="test") names;
+          names = builtins.filter (x: x!="stdenv" || x!="test") names1;
         in
         prev.lib.genAttrs names (name: prev.callPackage ./pkgs/${name} { });
       nixosModules = mkFileHierarchyAttrset "." "modules";
