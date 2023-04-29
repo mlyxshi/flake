@@ -58,6 +58,6 @@ in
   #   jellyfin = import ./container/jellyfin.nix;
   # };
 
-  container = lib.genAttrs removeSuffix(ls ./container) (file: import ./container/${file}.nix);
+  container = lib.genAttrs (removeSuffix(ls ./container)) (file: import ./container/${file}.nix);
 
 }
