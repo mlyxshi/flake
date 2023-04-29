@@ -1,4 +1,4 @@
-{ lib, ... }:
+lib:
 let
   ls = dir: builtins.attrNames (builtins.readDir dir);
   removeSuffix = list : map (x: lib.strings.removeSuffix ".nix" x) list;
@@ -13,14 +13,9 @@ in
     };
   };
 
-  network = import ./network;
-  fileSystem = import ./fileSystem;
 
-  settings = {
-    nixConfigDir = import ./settings/nixConfigDir.nix;
-    developerMode = import ./settings/developerMode.nix;
-  };
 
+ 
 
   services = {
     invidious = import ./services/invidious.nix;
@@ -48,16 +43,8 @@ in
     backup = import ./services/backup.nix;
   };
 
-  # container = {
-  #   podman = import ./container/podman.nix;
-  #   nodestatus-server = import ./container/nodestatus-server.nix;
-  #   change-detection = import ./container/change-detection.nix;
-  #   rsshub = import ./container/rsshub.nix;
-  #   vaultwarden = import ./container/vaultwarden.nix;
-  #   navidrome = import ./container/navidrome.nix;
-  #   jellyfin = import ./container/jellyfin.nix;
-  # };
-
+  network = import ./network;
+  fileSystem = import ./fileSystem;
+  settings =  lib.genAttrs (removeSuffix(ls ./settings)) (file: import ./settings/${file}.nix);
   container = lib.genAttrs (removeSuffix(ls ./container)) (file: import ./container/${file}.nix);
-
 }
