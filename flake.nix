@@ -27,7 +27,7 @@
       azure-x64-serverlist = pureName (ls ./host/azure/x86_64);
     in
     {
-      overlays.default = final: prev: lib.genAttrs (pureName (ls ./pkgs)) (name: prev.callPackage ./pkgs/${name} { });
+      overlays.default = final: prev: prev.genAttrs (pureName (ls ./pkgs)) (name: prev.callPackage ./pkgs/${name} { });
       nixosModules = mkFileHierarchyAttrset "." "modules";
       darwinConfigurations.M1 = import ./host/M1 { inherit self nixpkgs darwin home-manager; };
       nixosConfigurations = {
