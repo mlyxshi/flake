@@ -25,10 +25,10 @@
       oracle-arm64-serverlist = pureName (ls ./host/oracle/aarch64);
       oracle-x64-serverlist = pureName (ls ./host/oracle/x86_64);
       azure-x64-serverlist = pureName (ls ./host/azure/x86_64);
-      pkgAttrsetOverlay = lib.genAttrs pureName (ls ./pkgs) (name: nixpkgs.callPackage ./pkgs/${name} { });
+      pkgAttrsetOverlay = pkg: lib.genAttrs pureName (ls ./pkgs) (name: pkg.callPackage ./pkgs/${name} { });
     in
     {
-      overlays.default = inal: prev: pkgAttrsetOverlay;
+      overlays.default = final: prev: pkgAttrsetOverlay prev;
       nixosModules = mkFileHierarchyAttrset "." "modules";
       darwinConfigurations.M1 = import ./host/M1 { inherit self nixpkgs darwin home-manager; };
       nixosConfigurations = {
