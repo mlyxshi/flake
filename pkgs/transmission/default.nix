@@ -50,4 +50,9 @@ stdenv.mkDerivation rec {
     cp ./utils/transmission-remote   $out/bin
     cp -r ../web/public_html         $out   
   '';
+
+  meta.platforms = [
+    "x86_64-linux"
+    "aarch64-linux"
+  ];
 }

@@ -25,7 +25,6 @@
       oracle-arm64-serverlist = pureName (ls ./host/oracle/aarch64);
       oracle-x64-serverlist = pureName (ls ./host/oracle/x86_64);
       azure-x64-serverlist = pureName (ls ./host/azure/x86_64);
-      # aa = [ "Anime4k" "PingFang" "SF-Pro" "nodestatus-client" "snell"  "test" "transmission" ];
     in
     {
       overlays.default = final: prev: prev.lib.genAttrs (pureName (ls ./pkgs)) (name: prev.callPackage ./pkgs/${name} { });
@@ -43,11 +42,11 @@
       // lib.genAttrs azure-x64-serverlist (hostName: import ./host/azure/mkHost.nix { inherit hostName self nixpkgs home-manager sops-nix; });
 
       packages.aarch64-darwin = lib.genAttrs [ "Anime4k" "test" ] (name: nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/${name} { });
-      packages.x86_64-linux = lib.genAttrs [ "Anime4k" "nodestatus-client" "transmission" "PingFang" "SF-Pro" "stdenv" "test" ] (name: nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/${name} { }) // {
+      packages.x86_64-linux = lib.genAttrs [ "Anime4k" "nodestatus-client" "transmission" "PingFang" "SF-Pro" "stdenv-test" "test" ] (name: nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/${name} { }) // {
         default = self.nixosConfigurations.kexec-x86_64.config.system.build.test;
         test0 = self.nixosConfigurations.kexec-x86_64.config.system.build.test0;
       };
-      packages.aarch64-linux = lib.genAttrs [ "transmission" "stdenv" "test" ] (name: nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/${name} { });
+      packages.aarch64-linux = lib.genAttrs [ "transmission" "stdenv-test" "test" ] (name: nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/${name} { });
 
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixpkgs-fmt;
       devShells.aarch64-darwin.wrangler = import ./shells/wrangler.nix { pkgs = nixpkgs.legacyPackages.aarch64-darwin; };
