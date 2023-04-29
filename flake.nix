@@ -21,7 +21,7 @@
     let
       ls = dir: builtins.attrNames (builtins.readDir dir);
       pureName = pathList: map (path: nixpkgs.lib.strings.removeSuffix ".nix" path) pathList;
-      mkModules = dir: nixpkgs.lib.genAttrs (pureName (ls ./${dir})) (file: if nixpkgs.lib.sources.pathIsDirectory ./${dir}/${file} then import ./${dir}/${file} else import ./${dir}/${file}.nix);
+      mkModules = dir: nixpkgs.lib.genAttrs (pureName (ls ./modules/${dir})) (file: if nixpkgs.lib.sources.pathIsDirectory ./modules/${dir}/${file} then import ./modules/${dir}/${file} else import ./modules/${dir}/${file}.nix);
       
       oracle-arm64-serverlist = pureName (ls ./host/oracle/aarch64);
       oracle-x64-serverlist = pureName (ls ./host/oracle/x86_64);
