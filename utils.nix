@@ -1,7 +1,7 @@
 nixpkgs:
 let
   lib = nixpkgs.lib;
-  # only use to get meta.platforms is fine
+  # Caution! arch may be mismatched, but only use to get meta.platforms is fine
   inherit (nixpkgs.legacyPackages.aarch64-darwin) callPackage;
 in
 rec {
