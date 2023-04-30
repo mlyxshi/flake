@@ -48,7 +48,6 @@
         test0 = self.nixosConfigurations.kexec-x86_64.config.system.build.test0;
       };
 
-
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixpkgs-fmt;
       devShells.aarch64-darwin.wrangler = import ./shells/wrangler.nix { pkgs = nixpkgs.legacyPackages.aarch64-darwin; };
 
