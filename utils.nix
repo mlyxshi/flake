@@ -21,4 +21,8 @@ rec {
   packagelist = pureName (ls ./pkgs);
   getPkgPlatforms = name: (pkgs.callPackage ./pkgs/${name} { }).meta.platforms;
   getArchPkgs = arch: builtins.filter (name: builtins.any (platform: platform == arch) (getPkgPlatforms name)) packagelist;
+
+  oracle-arm64-serverlist = pureName (ls ./host/oracle/aarch64);
+  oracle-x64-serverlist = pureName (ls ./host/oracle/x86_64);
+  azure-x64-serverlist = pureName (ls ./host/azure/x86_64);
 }
