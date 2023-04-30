@@ -21,7 +21,7 @@
     let
       inherit (nixpkgs) lib;
       utils = import ./utils.nix nixpkgs;
-      inherit (utils) mkFileHierarchyAttrset packagelist getArchPkgs oracle-serverlist azure-x64-serverlist;
+      inherit (utils) mkFileHierarchyAttrset packagelist getArchPkgs oracle-serverlist azure-serverlist;
     in
     {
       overlays.default = final: prev: prev.lib.genAttrs packagelist (name: prev.callPackage ./pkgs/${name} { });
@@ -36,7 +36,7 @@
         kexec-aarch64 = import ./kexec/mkKexec.nix { arch = "aarch64"; inherit nixpkgs; };
       }
       // lib.genAttrs oracle-serverlist (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs home-manager sops-nix hydra; })
-      // lib.genAttrs azure-x64-serverlist (hostName: import ./host/azure/mkHost.nix { inherit hostName self nixpkgs home-manager sops-nix; });
+      // lib.genAttrs azure-serverlist (hostName: import ./host/azure/mkHost.nix { inherit hostName self nixpkgs home-manager sops-nix; });
 
       packages.aarch64-darwin = lib.genAttrs (getArchPkgs "aarch64-darwin") (name: nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/${name} { });
       packages.aarch64-linux = lib.genAttrs (getArchPkgs "aarch64-linux") (name: nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/${name} { });
