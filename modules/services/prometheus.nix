@@ -1,7 +1,7 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, nixpkgs, ... }:
 let
-  oracle-arm64-serverlist = map (x: lib.strings.removeSuffix ".nix" x) (builtins.attrNames (builtins.readDir ../../host/oracle/aarch64));
-  oracle-x64-serverlist = map (x: lib.strings.removeSuffix ".nix" x) (builtins.attrNames (builtins.readDir ../../host/oracle/x86_64));
+  utils = import ../../utils.nix nixpkgs;
+  inherit (utils) oracle-serverlist;
 in
 {
   # https://www.youtube.com/playlist?list=PLLYW3zEOaqlKhRCWqFE7iLRSh3XEFP5gj
@@ -22,7 +22,7 @@ in
         job_name = "Node";
         scheme = "http";
         static_configs = [{
-          targets = map (x: "${x}.${config.networking.domain}") (oracle-arm64-serverlist ++ oracle-x64-serverlist);
+          targets = map (x: "${x}.${config.networking.domain}") oracle-serverlist;
         }];
       }
 
