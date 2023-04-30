@@ -48,10 +48,6 @@
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixpkgs-fmt;
       devShells.aarch64-darwin.wrangler = import ./shells/wrangler.nix { pkgs = nixpkgs.legacyPackages.aarch64-darwin; };
 
-      # hydra-create-user admin --password-prompt --role admin
-      # Declarative spec file: hydra.json
-      # Declarative input type: Git checkout
-      # Declarative input value: https://github.com/mlyxshi/flake.git main 
       hydraJobs.aarch64 = self.nixosConfigurations.kexec-aarch64.config.system.build.kexec;
       hydraJobs.x86_64 = self.nixosConfigurations.kexec-x86_64.config.system.build.kexec;
     };

@@ -1,4 +1,9 @@
 # https://www.youtube.com/watch?v=AvOqaeK_NaE
+
+# hydra-create-user admin --password-prompt --role admin
+# Declarative spec file: hydra.json
+# Declarative input type: Git checkout
+# Declarative input value: https://github.com/mlyxshi/flake.git main 
 { config, pkgs, lib, hydra, ... }:
 let
   hydra-x64-publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMjY+jsCfLAuMR2LP3ZqkzV5RCqSyt+lheJ7TUSRWEfv";
