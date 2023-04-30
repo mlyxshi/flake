@@ -25,7 +25,7 @@
     in
     {
       overlays.default = final: prev: prev.lib.genAttrs packagelist (name: prev.callPackage ./pkgs/${name} { });
-      nixosModules = mkFileHierarchyAttrset "." "modules";
+      nixosModules = mkFileHierarchyAttrset ./. "modules";
       darwinConfigurations.M1 = import ./host/M1 { inherit self nixpkgs darwin home-manager; };
       nixosConfigurations = {
         hx90 = import ./host/hx90 { inherit self nixpkgs home-manager sops-nix nix-index-database; };

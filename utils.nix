@@ -9,14 +9,14 @@ rec {
 
   pureName = pathList: map (path: lib.strings.removeSuffix ".nix" path) pathList;
 
-  mkFileHierarchyAttrset = basedir: dir:
-    lib.genAttrs (pureName (ls ./${basedir}/${dir}))
+  mkFileHierarchyAttrset = basedir: dirName:
+    lib.genAttrs (pureName (ls /.${basedir}/${dirName}))
       (path:
-        if builtins.pathExists ./${basedir}/${dir}/${path}.nix
-        then import ./${basedir}/${dir}/${path}.nix
-        else if builtins.pathExists ./${basedir}/${dir}/${path}/default.nix
-        then import ./${basedir}/${dir}/${path}
-        else mkFileHierarchyAttrset "./${basedir}/${dir}" path
+        if builtins.pathExists /.${basedir}/${dirName}/${path}.nix
+        then import /.${basedir}/${dirName}/${path}.nix
+        else if builtins.pathExists /.${basedir}/${dirName}/${path}/default.nix
+        then import /.${basedir}/${dirName}/${path}
+        else mkFileHierarchyAttrset /.${basedir}/${dirName} path
       );
 
   packagelist = pureName (ls ./pkgs);
