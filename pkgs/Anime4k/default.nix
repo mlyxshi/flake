@@ -16,5 +16,9 @@ stdenvNoCC.mkDerivation rec {
 
   meta = {
     description = "A High-Quality Real Time Upscaler for Anime Video";
+    platforms = [
+      "x86_64-linux"
+      "aarch64-darwin"
+    ];
   };
 }

@@ -1,4 +1,8 @@
-lib:
+nixpkgs:
+let
+  lib = nixpkgs.lib;
+  pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+in
 rec {
   ls = dir: builtins.attrNames (builtins.readDir dir);
 
@@ -13,4 +17,8 @@ rec {
         then import ./${basedir}/${dir}/${path}
         else mkFileHierarchyAttrset "./${basedir}/${dir}" path
       );
+
+  packagelist = pureName (ls ./pkgs);
+  getPkgPlatforms = name: (pkgs.callPackage ./pkgs/${name} { }).meta.platforms;
+  getArchPkgs = arch: builtins.filter (name: builtins.any (platform: platform == arch) (getPkgPlatforms name)) packagelist;
 }
