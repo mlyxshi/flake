@@ -1,7 +1,8 @@
-{ pkgs, lib, config, nixpkgs, ... }: {
+{ pkgs, lib, config, nixpkgs, self, ... }: {
 
   imports = [
-    ../common
+    # ../common
+    self.nixosModules.os.common
     ./systemDefaults.nix
     ./launchd.nix
     ./brew.nix

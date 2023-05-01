@@ -21,7 +21,7 @@ darwin.lib.darwinSystem {
       home-manager.verbose = true;
     }
   ];
-  specialArgs = { inherit nixpkgs; };
+  specialArgs = { inherit self nixpkgs; };
 }
 
 

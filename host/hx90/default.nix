@@ -24,5 +24,5 @@ nixpkgs.lib.nixosSystem {
       home-manager.verbose = true;
     }
   ];
-  specialArgs = { inherit nixpkgs; };
+  specialArgs = { inherit self nixpkgs; };
 }

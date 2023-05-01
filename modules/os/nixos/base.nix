@@ -1,7 +1,7 @@
-{ config, pkgs, lib, nixpkgs, ... }: {
+{ config, pkgs, lib, nixpkgs, self, ... }: {
 
   imports = [
-    ../common
+    self.nixosModules.os.common
     ../../../strip
   ];
 

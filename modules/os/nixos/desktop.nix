@@ -1,7 +1,7 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, self, ... }: {
 
   imports = [
-    ./base.nix
+    self.nixosModules.os.nixos.base
   ];
 
   users.users.dominic = {
