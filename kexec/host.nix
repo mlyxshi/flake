@@ -1,8 +1,4 @@
 { config, pkgs, lib, ... }: {
-  imports = [
-    ../strip
-  ];
-
   time.timeZone = "UTC";
   networking.hostName = "systemd-stage1";
 

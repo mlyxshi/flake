@@ -2,7 +2,7 @@
 
   imports = [
     self.nixosModules.os.common
-    ../../../strip
+    self.nixosModules.strip
   ];
 
   sops.defaultSopsFile = ../../../key.yaml;
