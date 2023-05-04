@@ -13,7 +13,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    firefox-esr
+    firefox
   ];
 
   environment.etc."firefox/policies/policies.json".text = builtins.toJSON (import ../../../config/firefox/policy.nix);
