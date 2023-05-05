@@ -23,7 +23,7 @@ in
     userChrome = ''  
       #import-button, #fxa-toolbar-menu-button, #appMenu-passwords-button {
         display: none !important;
-    }
+      }
     '';
 
     search = {
@@ -59,7 +59,7 @@ in
           definedAliases = [ "@gpt" ];
         };
 
-        # disable defualt search engines
+        # disable default search engines
         "Amazon.com".metaData.hidden = true;
         "Bing".metaData.hidden = true;
         "DuckDuckGo".metaData.hidden = true;
@@ -70,7 +70,7 @@ in
   };
   #  https://support.mozilla.org/en-US/kb/understanding-depth-profile-installation
   #  Linux firefox wrapper set MOZ_LEGACY_PROFILES=1 by default
-  #  Under macOS, we need to set System-level environment variable MOZ_LEGACY_PROFILES=1 by launchctl setenv, See os/darwin/default.nix
+  #  Under macOS, we need to set System-level environment variable MOZ_LEGACY_PROFILES=1 by launchctl setenv, See modules/os/darwin/launchd.nix
   home.file = {
     # woodruffw/ff2mpv
     "${NativeMessagingHostsPath}/ff2mpv.json".text = ''

@@ -56,7 +56,7 @@
 
       # Already installed from offical website <-- Uncomment this when completely reinstall macos
       # "surge"
-
+      # "firefox"
 
       # "google-chrome"
       # "airbuddy"
