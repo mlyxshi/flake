@@ -19,7 +19,7 @@ let
 
   policiesJson = writeText "policies.json" (builtins.toJSON wrapperPolicies);
 
-  metaData = builtins.fromJSON (builtins.readFile ../../../config/firefox/version.json);
+  metaData = lib.importJSON ../../../config/firefox/version.json;
 in
 stdenvNoCC.mkDerivation rec {
   AppName = "Firefox.app";
