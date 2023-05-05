@@ -1,4 +1,8 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib,self, ... }: {
+
+  imports = [
+    self.nixosModules.containers.podman
+  ];
 
   virtualisation.oci-containers.containers.navidrome = {
     image = "ghcr.io/navidrome/navidrome";

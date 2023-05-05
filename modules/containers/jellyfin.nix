@@ -2,8 +2,10 @@
 { config, pkgs, lib, self, ... }: {
 
   imports = [
+    self.nixosModules.containers.podman
     self.nixosModules.services.backup
   ];
+
   backup.jellyfin = true;
 
   virtualisation.oci-containers.containers.jellyfin = {

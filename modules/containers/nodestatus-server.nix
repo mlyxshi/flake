@@ -1,8 +1,10 @@
 { pkgs, lib, config, self, ... }: {
 
   imports = [
+    self.nixosModules.containers.podman
     self.nixosModules.services.backup
   ];
+
   backup.nodestatus-server = true;
 
   sops.secrets.user = { };
