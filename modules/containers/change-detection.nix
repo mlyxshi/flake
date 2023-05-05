@@ -1,8 +1,10 @@
 { config, pkgs, lib, self, ... }: {
 
   imports = [
+    self.nixosModules.containers.podman
     self.nixosModules.services.backup
   ];
+
   backup.changedetection = true;
 
   virtualisation.oci-containers.containers.changedetection = {

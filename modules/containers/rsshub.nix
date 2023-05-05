@@ -1,4 +1,8 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, self, ... }: {
+
+  imports = [
+    self.nixosModules.containers.podman
+  ];
 
   virtualisation.oci-containers.containers.rsshub = {
     image = "ghcr.io/diygod/rsshub:chromium-bundled";
