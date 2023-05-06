@@ -14,4 +14,5 @@ tasks:
   我心里危险的东西:
     rss: https://mikanani.me/RSS/Bangumi?bangumiId=2961&subgroupid=370
     set:
-      path: /var/lib/media/我心里危险的东西/Season 01/   
+      path: /var/lib/media/我心里危险的东西/Season 01/  
+ 
