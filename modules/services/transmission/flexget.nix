@@ -16,6 +16,7 @@
 
   systemd.services.flexget = {
     after = [ "transmission.service" ];
+    unitConfig.X-Restart-Triggers = builtins.hashString "md5" config.sops.templates.flexget-conf.content;
     preStart = ''
       cat ${config.sops.templates.flexget-conf.path} > config.yml
     '';
