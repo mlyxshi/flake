@@ -2,10 +2,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     hydra.url = "github:NixOS/hydra";
-
     sops-nix.url = "github:Mic92/sops-nix";
-    # sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-    # sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -43,6 +40,7 @@
       packages.x86_64-linux = lib.genAttrs (getArchPkgs "x86_64-linux") (name: nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/${name} { }) // {
         default = self.nixosConfigurations.kexec-x86_64.config.system.build.test;
         test0 = self.nixosConfigurations.kexec-x86_64.config.system.build.test0;
+        sops-install-secrets = sops-nix.packages.x86_64-linux.sops-install-secrets;
       };
 
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixpkgs-fmt;

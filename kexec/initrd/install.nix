@@ -34,16 +34,13 @@ let
     mount $NIXOS /mnt
     mount --mkdir $BOOT /mnt/boot
 
-    # if [[ $(uname -m) == "aarch64" ]]; then
-      echo "Nix will build: $flake#nixosConfigurations.$host.config.system.build.toplevel"
-      nix build -L --store /mnt --profile /mnt/nix/var/nix/profiles/system $flake#nixosConfigurations.$host.config.system.build.toplevel 
-    # fi
+    echo "Nix will build: $flake#nixosConfigurations.$host.config.system.build.toplevel"
+    nix build -L --store /mnt --profile /mnt/nix/var/nix/profiles/system $flake#nixosConfigurations.$host.config.system.build.toplevel 
 
-    # if [[ $(uname -m) == "x86_64" ]]; then
-    #   system=$(curl -sL https://raw.githubusercontent.com/mlyxshi/install/main/$host)
-    #   echo "Nix will copy: $system from cache"
-    #   nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $system
-    # fi
+    # Copy System Closure
+    # system=$(curl -sL https://raw.githubusercontent.com/mlyxshi/install/main/$host)
+    # echo "Nix will copy: $system from cache"
+    # nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $system
 
     mkdir -p /mnt/{etc,tmp}
     touch /mnt/etc/NIXOS

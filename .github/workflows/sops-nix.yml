@@ -25,4 +25,4 @@ jobs:
           trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= cache:vXjiuWtSTOXj63zr+ZjMvXqvaYIK1atjyyEk+iuIqSg=
     
     - run: echo $NIX_STORE_SIGN_PRIVATE > /tmp/key
-    - run: nix copy --to 's3://nix?endpoint=minio.mlyxshi.com&secret-key=/tmp/key&parallel-compression=true&compression=zstd&compression-level=20' github:Mic92/sops-nix#packages.x86_64-linux.sops-install-secrets
+    - run: nix copy --to 's3://nix?endpoint=minio.mlyxshi.com&secret-key=/tmp/key&parallel-compression=true&compression=zstd&compression-level=20' .#packages.x86_64-linux.sops-install-secrets
