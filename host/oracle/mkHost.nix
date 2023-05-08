@@ -24,13 +24,11 @@ nixpkgs.lib.nixosSystem {
       networking.hostName = hostName;
       networking.domain = "mlyxshi.com";
 
-      sops.package = sops-nix.packages."${arch}-linux".sops-install-secrets;
-
       home-manager.users.root = import ../../home;
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.verbose = true;
     }
   ];
-  specialArgs = { inherit self nixpkgs hydra; };
+  specialArgs = { inherit self nixpkgs hydra sops-nix; };
 }
