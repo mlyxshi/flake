@@ -14,6 +14,7 @@ nixpkgs.lib.nixosSystem {
       nixpkgs.hostPlatform = "x86_64-linux";
       networking.hostName = "qemu-test-x86_64";
       networking.domain = "mlyxshi.com";
+      sops.package = sops-nix.packages.x86_64-linux.sops-install-secrets;
     }
   ];
   specialArgs = { inherit self nixpkgs; };

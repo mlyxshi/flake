@@ -1,4 +1,4 @@
-{ config, pkgs, lib, nixpkgs, self, ... }: {
+{ config, pkgs, lib, nixpkgs, self,... }: {
 
   imports = [
     self.nixosModules.os.common
