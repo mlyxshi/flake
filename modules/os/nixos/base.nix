@@ -14,8 +14,8 @@
     registry.nixpkgs.flake = nixpkgs;
     settings = {
       experimental-features = [ "nix-command" "flakes" "cgroups" "auto-allocate-uids" ];
-      substituters = [ "https://cache.mlyxshi.com" "https://cache.garnix.io" ]; # garnix for sops-nix sops-install-secrets
-      trusted-public-keys = [ "cache:vXjiuWtSTOXj63zr+ZjMvXqvaYIK1atjyyEk+iuIqSg=" "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g=" ];
+      substituters = [ "https://cache.mlyxshi.com" ]; # garnix for sops-nix sops-install-secrets
+      trusted-public-keys = [ "cache:vXjiuWtSTOXj63zr+ZjMvXqvaYIK1atjyyEk+iuIqSg=" ];
       auto-optimise-store = true;
       fallback = true;
       log-lines = 25;
