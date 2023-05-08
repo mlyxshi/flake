@@ -1,4 +1,4 @@
-{ config, pkgs, lib, nixpkgs, sops-nix, self,... }: {
+{ config, pkgs, lib, nixpkgs, sops-nix, self, ... }: {
 
   imports = [
     self.nixosModules.os.common
@@ -15,7 +15,7 @@
     registry.nixpkgs.flake = nixpkgs;
     settings = {
       experimental-features = [ "nix-command" "flakes" "cgroups" "auto-allocate-uids" ];
-      substituters = [ "https://cache.mlyxshi.com" ]; # garnix for sops-nix sops-install-secrets
+      substituters = [ "https://cache.mlyxshi.com" ];
       trusted-public-keys = [ "cache:vXjiuWtSTOXj63zr+ZjMvXqvaYIK1atjyyEk+iuIqSg=" ];
       auto-optimise-store = true;
       fallback = true;
