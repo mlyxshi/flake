@@ -5,6 +5,11 @@ on:
       - 'flake.lock'
   workflow_dispatch:
 
+env:
+  NIX_STORE_SIGN_PRIVATE: ${{ secrets.NIX_STORE_SIGN_PRIVATE }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
 jobs:
   cache-sops-nix:
     runs-on: ubuntu-latest
