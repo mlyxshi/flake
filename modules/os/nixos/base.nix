@@ -15,7 +15,7 @@
     registry.nixpkgs.flake = nixpkgs;
     settings = {
       experimental-features = [ "nix-command" "flakes" "cgroups" "auto-allocate-uids" ];
-      substituters = [ "https://cache.mlyxshi.com" ];
+      substituters = [ "https://oranc.li7g.com/ghcr.io/mlyxshi/nix" ];
       trusted-public-keys = [ "cache:vXjiuWtSTOXj63zr+ZjMvXqvaYIK1atjyyEk+iuIqSg=" ];
       auto-optimise-store = true;
       fallback = true;
