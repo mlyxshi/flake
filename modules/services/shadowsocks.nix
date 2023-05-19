@@ -6,7 +6,7 @@
     {
       "server":"0.0.0.0",
       "server_port":6666,
-      "method":"chacha20-ietf-poly1305",
+      "method":"aes-128-gcm",
       "password":"${config.sops.placeholder.shadowsocks-pwd}",
       "fast_open":true,
       "mode":"tcp_and_udp"
