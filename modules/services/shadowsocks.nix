@@ -4,12 +4,12 @@
 
   sops.templates.shadowsocks-config.content = ''
     {
-      "server" = "0.0.0.0",
-      "server_port" = 6666,
-      "method" = "chacha20-ietf-poly1305",
-      "password" = "${config.sops.placeholder.shadowsocks-pwd}",
-      "fast_open" = true,
-      "mode" = "tcp_and_udp"
+      "server":"0.0.0.0",
+      "server_port":6666,
+      "method":"chacha20-ietf-poly1305",
+      "password":"${config.sops.placeholder.shadowsocks-pwd}",
+      "fast_open":true,
+      "mode":"tcp_and_udp"
     }
   '';
 
