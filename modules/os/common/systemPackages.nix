@@ -6,6 +6,7 @@
     file
     tree
     htop
+    nali
     libarchive
     neovim-unwrapped
     nix-tree
