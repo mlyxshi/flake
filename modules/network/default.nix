@@ -20,6 +20,9 @@
         # Allow loopback traffic
         iifname lo accept
 
+        # Allow ICMP
+        ip protocol icmp accept
+
         # Accept traffic originated from us
         ct state {established, related} accept
 
