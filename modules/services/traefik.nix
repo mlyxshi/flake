@@ -2,7 +2,7 @@
 
   sops.secrets.traefik-cloudflare-env = { };
 
-  systemd.services.traefik.serviceConfig.EnvironmentFile = config.sops.secrets.traefik-cloudflare-env.path;
+  systemd.services.traefik.serviceConfig.EnvironmentFile = [config.sops.secrets.traefik-cloudflare-env.path];
 
   # https://traefik.io/blog/traefik-2-0-docker-101-fc2893944b9d/
   services.traefik = {
