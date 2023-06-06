@@ -11,7 +11,6 @@
     };
     certificate = config.sops.secrets.cloudflare-certificate.path;
     private_key = config.sops.secrets.cloudflare-privatekey.path;
-    congestion_control = "bbr";
   };
 
   systemd.services.tuic = {
