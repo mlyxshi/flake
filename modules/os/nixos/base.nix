@@ -48,7 +48,7 @@
     settings.PasswordAuthentication = false;
   };
 
-  time.timeZone = "America/Los_Angeles";
+  time.timeZone = "Asia/Tokyo";
 
   i18n.defaultLocale = "en_US.UTF-8";
 
