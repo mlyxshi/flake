@@ -36,6 +36,7 @@
     '';
 
     serviceConfig = {
+      Type = "oneshot";
       WorkingDirectory = "%S/tuic";
       StateDirectory = "tuic";
     };
