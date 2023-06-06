@@ -1,0 +1,43 @@
+{ pkgs, lib, config, ... }: {
+
+  sops.secrets.tuic-pwd = { };
+  sops.secrets.cloudflare-certificate = { };
+  sops.secrets.cloudflare-privatekey = { };
+
+  sops.templates.tuic-config.content = builtins.toJSON {
+    server= "[::]:6666";
+    users= {
+        "00000000-0000-0000-0000-000000000000"= config.sops.placeholder.tuic-pwd;   
+    };
+    certificate= config.sops.secrets.cloudflare-certificate.path;
+    private_key= config.sops.secrets.cloudflare-privatekey.path;
+    congestion_control= "bbr";
+  };
+  
+  systemd.services.tuic = {
+    after = [ "tuic-pre.service" ];
+    wantedBy = [ "multi-user.target" ];
+
+    serviceConfig = {
+      Restart = "always";
+      ExecStart = "%S/tuic/tuic-server -c ${config.sops.templates.tuic-config.path}";
+    };
+  };
+
+  systemd.services.tuic-pre = {
+    after = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
+    unitConfig.ConditionPathExists = "!%S/tuic/tuic-server";
+
+    script = ''
+      ${pkgs.wget}/bin/wget https://github.com/EAimTY/tuic/releases/download/tuic-server-1.0.0-rc0/tuic-server-1.0.0-rc0-$(uname -m)-unknown-linux-musl
+      mv tuic-server-1.0.0-rc0-$(uname -m)-unknown-linux-musl tuic-server
+      chmod +x tuic-server
+    '';
+
+    serviceConfig = {
+      WorkingDirectory = "%S/tuic";
+      StateDirectory = "tuic";
+    };
+  };
+}

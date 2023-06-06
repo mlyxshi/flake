@@ -32,9 +32,9 @@
         # Allow TFTP
         ${lib.optionalString (config.systemd.services ? tftpd) "udp dport 69 accept"}
 
-        # Allow shadowsocks
-        ${lib.optionalString (config.systemd.services ? shadowsocks) "tcp dport 6666 accept"}
-        ${lib.optionalString (config.systemd.services ? shadowsocks) "udp dport 6666 accept"}
+        # Allow tuic
+        ${lib.optionalString (config.systemd.services ? tuic) "tcp dport 6666 accept"}
+        ${lib.optionalString (config.systemd.services ? tuic) "udp dport 6666 accept"}
 
       }
     }
