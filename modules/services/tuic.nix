@@ -1,19 +1,19 @@
 { pkgs, lib, config, ... }: {
 
-  sops.secrets.tuic-pwd = { };
+  sops.secrets.password = { };
   sops.secrets.cloudflare-certificate = { };
   sops.secrets.cloudflare-privatekey = { };
 
   sops.templates.tuic-config.content = builtins.toJSON {
-    server= "[::]:6666";
-    users= {
-        "00000000-0000-0000-0000-000000000000"= config.sops.placeholder.tuic-pwd;   
+    server = "[::]:6666";
+    users = {
+      "00000000-0000-0000-0000-000000000000" = config.sops.placeholder.password;
     };
-    certificate= config.sops.secrets.cloudflare-certificate.path;
-    private_key= config.sops.secrets.cloudflare-privatekey.path;
-    congestion_control= "bbr";
+    certificate = config.sops.secrets.cloudflare-certificate.path;
+    private_key = config.sops.secrets.cloudflare-privatekey.path;
+    congestion_control = "bbr";
   };
-  
+
   systemd.services.tuic = {
     after = [ "tuic-pre.service" ];
     wantedBy = [ "multi-user.target" ];
