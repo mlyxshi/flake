@@ -3,6 +3,8 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     hydra.url = "github:NixOS/hydra";
 
+    joshuto.url = "github:kamiyaa/joshuto";
+
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs";
@@ -17,7 +19,7 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager, sops-nix, hydra, nix-index-database }:
+  outputs = { self, nixpkgs, darwin, home-manager, sops-nix, hydra, nix-index-database, joshuto }:
     let
       inherit (nixpkgs) lib;
       utils = import ./utils.nix nixpkgs;
@@ -26,7 +28,7 @@
     {
       overlays.default = final: prev: prev.lib.genAttrs packagelist (name: prev.callPackage ./pkgs/${name} { });
       nixosModules = mkFileHierarchyAttrset ./. "modules";
-      darwinConfigurations.M1 = import ./host/M1 { inherit self nixpkgs darwin home-manager; };
+      darwinConfigurations.M1 = import ./host/M1 { inherit self nixpkgs darwin home-manager joshuto; };
       nixosConfigurations = {
         hx90 = import ./host/hx90 { inherit self nixpkgs home-manager sops-nix nix-index-database; };
         installer = import ./host/installer { inherit self nixpkgs sops-nix home-manager; };

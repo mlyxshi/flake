@@ -1,12 +1,13 @@
 { pkgs, lib, config, nixpkgs, self, ... }: {
 
   imports = [
-    # ../common
     self.nixosModules.os.common
     ./systemDefaults.nix
     ./launchd.nix
     ./brew.nix
   ];
+
+  users.users.dominic.home="/Users/dominic";
 
   nix = {
     package = pkgs.nixVersions.unstable;

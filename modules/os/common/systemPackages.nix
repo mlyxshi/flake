@@ -13,6 +13,7 @@
     nix-init
     nix-update
     # rust
+    joshuto
     fd
     ripgrep
     starship
@@ -25,9 +26,7 @@
     bat
     bat-extras.batman
     # go
-    lf
     fzf
-    pistol
     gdu
   ] ++ lib.optionals config.settings.developerMode [
     gh

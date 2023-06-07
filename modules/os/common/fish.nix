@@ -5,7 +5,7 @@
     shellAliases = {
       l = "exa -algh";
       v = "nvim";
-      r = "lf";
+      r = "joshuto";
       g = "lazygit";
       c = "bat";
       man = "batman";

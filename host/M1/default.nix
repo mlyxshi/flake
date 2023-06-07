@@ -1,4 +1,4 @@
-{ self, nixpkgs, darwin, home-manager }:
+{ self, nixpkgs, darwin, home-manager, joshuto }:
 
 darwin.lib.darwinSystem {
   system = "aarch64-darwin";
@@ -8,7 +8,10 @@ darwin.lib.darwinSystem {
     self.nixosModules.settings.nixConfigDir
     self.nixosModules.settings.developerMode
     {
-      nixpkgs.overlays = [ self.overlays.default ];
+      nixpkgs.overlays = [ 
+        self.overlays.default 
+        joshuto.overlays.default
+      ];
       networking.hostName = "M1";
 
       settings.developerMode = true;
