@@ -29,8 +29,8 @@
     unitConfig.ConditionPathExists = "!%S/tuic/tuic-server";
 
     script = ''
-      ${pkgs.wget}/bin/wget https://github.com/EAimTY/tuic/releases/download/tuic-server-1.0.0-rc0/tuic-server-1.0.0-rc0-$(uname -m)-unknown-linux-musl
-      mv tuic-server-1.0.0-rc0-$(uname -m)-unknown-linux-musl tuic-server
+      ${pkgs.wget}/bin/wget https://github.com/EAimTY/tuic/releases/download/tuic-server-1.0.0/tuic-server-1.0.0-$(uname -m)-unknown-linux-musl
+      mv tuic-server-1.0.0-$(uname -m)-unknown-linux-musl tuic-server
       chmod +x tuic-server
     '';
 
