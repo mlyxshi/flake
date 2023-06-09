@@ -18,6 +18,7 @@
     brews = [
       "pulumi/tap/pulumi"
       "nodejs"
+      "hysteria"
       "protobuf"
       "neofetch"
       "iproute2mac"
