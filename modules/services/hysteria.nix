@@ -8,7 +8,7 @@
     listen = ":6666";
     cert = config.sops.secrets.cloudflare-certificate.path;
     key = config.sops.secrets.cloudflare-privatekey.path;
-    obfs = "mlyxshi";
+    obfs = config.sops.placeholder.password;
   };
 
   systemd.services.hysteria = {
