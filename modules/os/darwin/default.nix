@@ -7,7 +7,7 @@
     ./brew.nix
   ];
 
-  users.users.dominic.home="/Users/dominic";
+  users.users.dominic.home = "/Users/dominic";
 
   nix = {
     package = pkgs.nixVersions.unstable;
