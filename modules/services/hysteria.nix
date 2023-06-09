@@ -17,7 +17,7 @@
 
     serviceConfig = {
       Restart = "always";
-      ExecStart = "${pkgs.hysteria}/bin/hysteria server -c ${config.sops.templates.hysteria-config.path}";
+      ExecStart = "${pkgs.hysteria}/bin/hysteria server -c ${config.sops.templates.hysteria.path}";
     };
   };
 
