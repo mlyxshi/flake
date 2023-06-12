@@ -10,10 +10,10 @@ buildGoModule rec {
     owner = "HyNetwork";
     repo = pname;
     rev = "v${version}";
-    hash = "";
+    hash = "sha256-gNAK+WOowBlEzUYX25cQxywerNlMIx7cqG1wV9iLS5s=";
   };
 
-  vendorhash = "";
+  vendorhash = lib.fakeSha256;
   proxyVendor = true;
 
   ldflags = [
