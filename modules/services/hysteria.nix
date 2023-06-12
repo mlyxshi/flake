@@ -1,14 +1,15 @@
 { pkgs, lib, config, ... }: {
 
-  sops.secrets.password = { };
+  sops.secrets.hysteria-obfs = { };
+  sops.secrets.hysteria-port = { };
   sops.secrets.cloudflare-certificate = { };
   sops.secrets.cloudflare-privatekey = { };
 
   sops.templates.hysteria.content = builtins.toJSON {
-    listen = ":6667";
+    listen = ":${config.sops.placeholder.hysteria-port}";
     cert = config.sops.secrets.cloudflare-certificate.path;
     key = config.sops.secrets.cloudflare-privatekey.path;
-    obfs = config.sops.placeholder.password;
+    obfs = config.sops.placeholder.hysteria-obfs;
   };
 
   systemd.services.hysteria = {
