@@ -1,4 +1,6 @@
 { config, pkgs, lib, ... }: {
+  sops.secrets.hysteria-port = { };
+  
   networking.useNetworkd = true;
   networking.useDHCP = false; # Disable nixpkgs defined dhcp
 
