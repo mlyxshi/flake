@@ -36,7 +36,7 @@
         ${lib.optionalString (config.systemd.services ? tftpd) "udp dport 69 accept"}
 
         # Allow hysteria
-        ${lib.optionalString (config.systemd.services ? hysteria) "udp dport ${config.sops.placeholder.hysteria-port} accept"}
+        ${lib.optionalString (config.systemd.services ? hysteria) "udp dport 1111 accept"}
       }
     }
   '';
