@@ -35,7 +35,11 @@
         # Allow hysteria
         ${lib.optionalString (config.systemd.services ? hysteria) "tcp dport 20000-50000 accept"}
         ${lib.optionalString (config.systemd.services ? hysteria) "udp dport 20000-50000 accept"}
-        ${lib.optionalString (config.systemd.services ? hysteria) ''udp dport 20000-50000 iifname "enp0s3" dnat to :6666''}
+      }
+
+      chain prerouting {
+        type nat hook prerouting priority 0; policy accept;
+        udp dport 20000-50000 redirect to 6666
       }
     }
   '';
