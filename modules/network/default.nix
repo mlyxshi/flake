@@ -33,13 +33,7 @@
         ${lib.optionalString (config.systemd.services ? tftpd) "udp dport 69 accept"}
 
         # Allow hysteria
-        ${lib.optionalString (config.systemd.services ? hysteria) "tcp dport 20000-50000 accept"}
-        ${lib.optionalString (config.systemd.services ? hysteria) "udp dport 20000-50000 accept"}
-      }
-
-      chain prerouting {
-        type nat hook prerouting priority 0; policy accept;
-        udp dport 20000-50000 redirect to 6666
+        ${lib.optionalString (config.systemd.services ? hysteria) "udp dport 6667 accept"}
       }
     }
   '';
