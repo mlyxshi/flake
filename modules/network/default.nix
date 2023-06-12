@@ -11,7 +11,8 @@
 
   networking.firewall.enable = false; # Disable nixpkgs defined firewall
   networking.nftables.enable = true;
-  networking.nftables.ruleset = ''
+
+  sops.templates.nftable-rules.content = ''
     table inet FIREWALL {
       chain INPUT {
         # Drop all incoming traffic by default
@@ -33,8 +34,10 @@
         ${lib.optionalString (config.systemd.services ? tftpd) "udp dport 69 accept"}
 
         # Allow hysteria
-        ${lib.optionalString (config.systemd.services ? hysteria) "udp dport ${config.sops.secrets.hysteria-port} accept"}
+        ${lib.optionalString (config.systemd.services ? hysteria) "udp dport ${config.sops.placeholder.hysteria-port} accept"}
       }
     }
   '';
+
+  networking.nftables.rulesetFile = config.sops.templates.nftable-rules.path;
 }
