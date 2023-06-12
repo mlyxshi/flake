@@ -6,7 +6,7 @@
   sops.secrets.cloudflare-privatekey = { };
 
   sops.templates.hysteria.content = builtins.toJSON {
-    listen = ":${config.sops.placeholder.hysteria-port}";
+    listen = "${config.sops.placeholder.hysteria-port}";
     cert = config.sops.secrets.cloudflare-certificate.path;
     key = config.sops.secrets.cloudflare-privatekey.path;
     obfs = config.sops.placeholder.hysteria-obfs;
