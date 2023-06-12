@@ -18,6 +18,18 @@
     serviceConfig.RunAtLoad = true;
   };
 
+  launchd.user.agents.local-proxy = {
+    serviceConfig.ProgramArguments = [
+      "/opt/homebrew/bin/hysteria"
+      "-c"
+      "/Users/dominic/Library/Mobile Documents/iCloud~com~nssurge~inc/Documents/hysteria.json"
+    ];
+    serviceConfig.RunAtLoad = true;
+    serviceConfig.KeepAlive = true;
+    #serviceConfig.StandardErrorPath = "/tmp/launchdLogs/proxy/error.log";
+    #serviceConfig.StandardOutPath = "/tmp/launchdLogs/proxy/stdout.log";
+  };
+
   # skhd
   # Important, DO NOT USE services.skhd from nix-darwin
   # Details: 

@@ -22,6 +22,9 @@
       interval = { Hour = 24; };
       options = "--delete-older-than 7d";
     };
+    envVars = {
+      "all_proxy" = "socks5://127.0.0.1:1080";
+    };
   };
 
   services.nix-daemon.enable = true;

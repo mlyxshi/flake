@@ -18,6 +18,13 @@
     OverrideFirstRunPage = "";
     OverridePostUpdatePage = "";
 
+    Proxy = {
+      Mode = "manual";
+      SOCKSProxy = "127.0.0.1:1080";
+      SOCKSVersion = 5;
+      UseProxyForDNS = true;
+    };
+
     FirefoxHome = {
       SponsoredTopSites = false;
       Highlights = false;
