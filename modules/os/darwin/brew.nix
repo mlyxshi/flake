@@ -28,6 +28,7 @@
     ];
 
     casks = [
+      "betterdisplay"
       "mpv"
       "proxyman"
       "sloth"
