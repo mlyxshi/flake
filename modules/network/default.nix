@@ -42,7 +42,7 @@
         type nat hook prerouting priority 0; policy accept;
 
         # Redirect all incoming traffic to hysteria
-        udp dport 50000-60000 redirect to 8888
+        udp dport 50000-60000 redirect to :8888
       }
     }
   '';
