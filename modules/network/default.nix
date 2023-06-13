@@ -36,5 +36,14 @@
         ${lib.optionalString (config.systemd.services ? hysteria) "udp dport 8888 accept"}
       }
     }
+
+    table inet HYSTERIA {
+      chain prerouting {
+        type nat hook prerouting priority 0; policy accept;
+
+        # Redirect all incoming traffic to hysteria
+        udp dport 50000-60000 redirect to 8888
+      }
+    }
   '';
 }
