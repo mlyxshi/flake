@@ -31,17 +31,14 @@
 
         # Allow TFTP
         ${lib.optionalString (config.systemd.services ? tftpd) "udp dport 69 accept"}
-
-        # Allow hysteria
-        ${lib.optionalString (config.systemd.services ? hysteria) "udp dport 8888 accept"}
       }
     }
-
+  '' ++ lib.optionalString (config.systemd.services ? hysteria) ''
     table inet HYSTERIA {
-      chain prerouting {
+      chain PREROUTING {
         type nat hook prerouting priority 0; policy accept;
 
-        # Redirect all incoming traffic to hysteria
+        # https://hysteria.network/docs/port-hopping/
         udp dport 50000-60000 redirect to :8888
       }
     }
