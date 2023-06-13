@@ -33,7 +33,7 @@
         ${lib.optionalString (config.systemd.services ? tftpd) "udp dport 69 accept"}
       }
     }
-  '' ++ lib.optionalString (config.systemd.services ? hysteria) ''
+  '' + lib.optionalString (config.systemd.services ? hysteria) ''
     table inet HYSTERIA {
       chain PREROUTING {
         type nat hook prerouting priority 0; policy accept;
