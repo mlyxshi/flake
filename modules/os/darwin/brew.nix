@@ -12,11 +12,9 @@
       "homebrew/cask-fonts"
       "homebrew/cask-drivers" #yubikey
       "majd/repo"
-      "pulumi/tap"
     ];
 
     brews = [
-      "pulumi/tap/pulumi"
       "nodejs"
       "hysteria"
       "protobuf"

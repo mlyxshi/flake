@@ -36,7 +36,7 @@
     # about:config
     # https://github.com/arkenfox/user.js/blob/master/user.js
     Preferences = {
-      #Force Dark theme
+      # Force Dark theme
       "browser.theme.toolbar-theme" = 0;
       "browser.theme.content-theme" = 0;
 
