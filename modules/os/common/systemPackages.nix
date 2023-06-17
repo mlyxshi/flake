@@ -1,9 +1,9 @@
 { config, pkgs, lib, ... }: {
   environment.systemPackages = with pkgs; [
-    # basic
     wget
     dig
     file
+    iperf
     tree
     htop
     nali
@@ -12,7 +12,6 @@
     nix-tree
     nix-init
     nix-update
-    # rust
     joshuto
     fd
     ripgrep
@@ -25,7 +24,6 @@
     bandwhich
     bat
     bat-extras.batman
-    # go
     fzf
     gdu
   ] ++ lib.optionals config.settings.developerMode [
