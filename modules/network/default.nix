@@ -42,7 +42,7 @@
         type nat hook prerouting priority 0; policy accept;
 
         # https://hysteria.network/docs/port-hopping/
-        udp dport 60000-70000 redirect to :8888
+        udp dport 10000-60000 redirect to :8888
       }
     }
   '';
