@@ -27,6 +27,7 @@
     fzf
     gdu
   ] ++ lib.optionals config.settings.developerMode [
+    sops
     gh
     nixpkgs-fmt
     jq

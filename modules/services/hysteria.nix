@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }: {
 
-  sops.secrets.hysteria-obfs = { };
+  sops.secrets.proxy-pwd = { };
   sops.secrets.hysteria-port = { };
   sops.secrets.cloudflare-certificate = { };
   sops.secrets.cloudflare-privatekey = { };
@@ -9,7 +9,7 @@
     listen = config.sops.placeholder.hysteria-port;
     cert = config.sops.secrets.cloudflare-certificate.path;
     key = config.sops.secrets.cloudflare-privatekey.path;
-    obfs = config.sops.placeholder.hysteria-obfs;
+    obfs = config.sops.placeholder.proxy-pwd;
   };
 
   systemd.services.hysteria = {

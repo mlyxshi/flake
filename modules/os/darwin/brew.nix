@@ -10,12 +10,14 @@
 
     taps = [
       "homebrew/cask-fonts"
-      "homebrew/cask-drivers" #yubikey
+      "homebrew/cask-drivers" # yubikey
+      "homebrew/cask-versions" # beta
       "majd/repo"
     ];
 
     brews = [
       "nodejs"
+      "aria2"
       "hysteria"
       "protobuf"
       "neofetch"
@@ -36,7 +38,7 @@
       "input-source-pro"
       "kitty"
       "macfuse" # rclone mount
-      "utm"
+      "utm-beta"
       "font-roboto-mono-nerd-font"
       "calibre"
       "ipatool"
