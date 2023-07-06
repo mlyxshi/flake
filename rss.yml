@@ -1,22 +1,7 @@
 tasks:
-  我推的孩子:
-    rss: https://mikanani.me/RSS/Bangumi?bangumiId=2995&subgroupid=552
+  无职转生到了异世界就拿出真本事:
+    rss: https://mikanani.me/RSS/Bangumi?bangumiId=3060&subgroupid=370
     set:
-      path: /var/lib/media/我推的孩子/Season 01/
-  天国大魔境:
-    rss: https://mikanani.me/RSS/Bangumi?bangumiId=2970&subgroupid=370
-    set:
-      path: /var/lib/media/天国大魔境/Season 01/
-  Isekai:
-    rss: https://mikanani.me/RSS/Bangumi?bangumiId=3001&subgroupid=552
-    set:
-      path: /var/lib/media/Isekai de Cheat Skill/Season 01/
-  我心里危险的东西:
-    rss: https://mikanani.me/RSS/Bangumi?bangumiId=2961&subgroupid=370
-    set:
-      path: /var/lib/media/我心里危险的东西/Season 01/  
-  无神世界中的神明活动:
-    rss: https://mikanani.me/RSS/Bangumi?bangumiId=2993&subgroupid=552
-    set:
-      path: /var/lib/media/无神世界中的神明活动/Season 01/ 
+      path: /var/lib/media/无职转生到了异世界就拿出真本事/Season 02/  
+  
  
