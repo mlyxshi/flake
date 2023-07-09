@@ -7,6 +7,8 @@
     listen = 0.0.0.0:7777                                                                                                                                   
     psk = ${config.sops.placeholder.proxy-pwd}                                                                                                                    
     ipv6 = false
+    obfs = tls
+    obfs-host = www.bing.com
   '';
 
   systemd.services.snell = {
