@@ -1,12 +1,12 @@
 { stdenv, fetchzip, makeBinaryWrapper }:
 stdenv.mkDerivation {
   pname = "snell";
-  version = "4.0";
+  version = "4.0.1";
 
   src = fetchzip {
     name = "snell-server";
-    url = "https://dl.nssurge.com/snell/snell-server-v4.0.0-linux-aarch64.zip";
-    hash = "sha256-nb/b80m6pUkwxv8HouLIPFU515ts+Sp+zVfxNM9+FdQ=";
+    url = "https://dl.nssurge.com/snell/snell-server-v4.0.1-linux-aarch64.zip";
+    hash = "1d71jc2fj5n3xy3wys45njp60yxjkhhqq254xx4q55hjslh464xp";
     stripRoot = false;
   };
 
@@ -20,5 +20,10 @@ stdenv.mkDerivation {
 
   meta = {
     description = "https://manual.nssurge.com/others/snell.html";
+
+    platforms = [
+      "x86_64-linux"
+      "aarch64-linux"
+    ];
   };
 }
