@@ -40,6 +40,5 @@
   ] ++ lib.optionals pkgs.stdenv.isLinux [
     below
     neofetch
-    snell
   ];
 }
