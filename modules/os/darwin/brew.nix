@@ -16,6 +16,7 @@
     ];
 
     brews = [
+      "rclone"
       "nodejs"
       "aria2"
       "hysteria"

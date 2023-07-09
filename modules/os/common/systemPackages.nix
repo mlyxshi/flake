@@ -35,7 +35,6 @@
     deno
   ] ++ lib.optionals pkgs.stdenv.isDarwin [
     restic
-    rclone
     ideviceinstaller
   ] ++ lib.optionals pkgs.stdenv.isLinux [
     below
