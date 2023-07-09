@@ -6,7 +6,7 @@ stdenv.mkDerivation {
   src = fetchzip {
     name = "snell-server";
     url = "https://dl.nssurge.com/snell/snell-server-v4.0.1-linux-aarch64.zip";
-    hash = "1d71jc2fj5n3xy3wys45njp60yxjkhhqq254xx4q55hjslh464xp";
+    hash = "sha256-gjbT+MBlguTN9jW4Z+CaluFxbEm3evD3rkIgtWkxbLk=";
     stripRoot = false;
   };
 
