@@ -12,7 +12,6 @@
     environment = {
       SIGNUPS_ALLOWED = "false"; # Disable signups
       DOMAIN = "https://password.${config.networking.domain}"; # Yubikey FIDO2 WebAuthn
-      WEBSOCKET_ENABLED = "true"; # Websockets: real-time sync of data between server and clients (only browser and desktop Bitwarden clients)
     };
     volumes = [
       "/var/lib/vaultwarden:/data"
