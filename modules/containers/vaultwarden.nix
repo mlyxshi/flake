@@ -8,12 +8,12 @@
   backup.vaultwarden = true;
 
   # https://github.com/dani-garcia/vaultwarden/pull/3304
-  sops.secrets.vaultwarden.id = { };
-  sops.secrets.vaultwarden.key = { };
+  sops.secrets."vaultwarden/id" = { };
+  sops.secrets."vaultwarden/key" = { };
   sops.templates.vaultwarden.content = ''
     PUSH_ENABLED=true
-    PUSH_INSTALLATION_ID=${config.sops.placeholder.vaultwarden.id}
-    PUSH_INSTALLATION_KEY=${config.sops.placeholder.vaultwarden.key}
+    PUSH_INSTALLATION_ID=${config.sops.placeholder."vaultwarden/id"}
+    PUSH_INSTALLATION_KEY=${config.sops.placeholder."vaultwarden/key"}
   '';
 
   virtualisation.oci-containers.containers.vaultwarden = {
