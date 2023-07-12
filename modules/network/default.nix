@@ -43,14 +43,5 @@
         ${lib.optionalString (config.systemd.services ? hysteria) "udp dport 8888 accept"}
       }
     }
-  '' + lib.optionalString (config.systemd.services ? hysteria) ''
-    table inet HYSTERIA {
-      chain PREROUTING {
-        type nat hook prerouting priority 0; policy accept;
-
-        # https://hysteria.network/docs/port-hopping/
-        udp dport 40000-50000 redirect to :8888
-      }
-    }
   '';
 }

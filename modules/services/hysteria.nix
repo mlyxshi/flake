@@ -6,10 +6,12 @@
 
   sops.templates.hysteria.content = ''
     listen: :8888
-    tls:
+    
+    tls: 
       cert: ${config.sops.secrets.cloudflare-certificate.path}
       key: ${config.sops.secrets.cloudflare-privatekey.path}
-    auth:
+    
+    auth: 
       type: password
       password: ${config.sops.placeholder.proxy-pwd}
   '';
