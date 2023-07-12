@@ -19,7 +19,6 @@
       "rclone"
       "nodejs"
       "aria2"
-      "hysteria"
       "protobuf"
       "neofetch"
       "iproute2mac"
