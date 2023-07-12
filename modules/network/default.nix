@@ -35,10 +35,6 @@
         # Allow tuic
         ${lib.optionalString (config.systemd.services ? tuic) "udp dport 6666 accept"}
 
-        # Allow snell
-        ${lib.optionalString (config.systemd.services ? snell) "udp dport 7777 accept"}
-        ${lib.optionalString (config.systemd.services ? snell) "tcp dport 7777 accept"}
-
         # Allow hysteria
         ${lib.optionalString (config.systemd.services ? hysteria) "udp dport 8888 accept"}
       }

@@ -24,6 +24,4 @@
       ExecStart = "${pkgs.hysteria}/bin/app server -c ${config.sops.templates.hysteria.path}";
     };
   };
-
-
 }

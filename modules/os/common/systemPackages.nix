@@ -36,6 +36,7 @@
   ] ++ lib.optionals pkgs.stdenv.isDarwin [
     restic
     ideviceinstaller
+    hysteria
   ] ++ lib.optionals pkgs.stdenv.isLinux [
     below
     neofetch
