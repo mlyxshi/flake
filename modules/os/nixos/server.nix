@@ -13,4 +13,9 @@
     man.enable = false;
     nixos.enable = false;
   };
+
+  # https://github.com/NixOS/nixpkgs/pull/104828
+  system.disableInstallerTools = true;
+  boot.enableContainers = false;
+  environment.defaultPackages = [];
 }
