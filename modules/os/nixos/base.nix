@@ -66,11 +66,11 @@
   boot.kernel.sysctl = {
     "net.core.default_qdisc" = "fq";
     "net.ipv4.tcp_congestion_control" = "bbr";
-    "net.ipv4.tcp_fastopen" = "3"; # tcp fastopen
+    "net.ipv4.tcp_fastopen" = 3; # tcp fastopen
 
     # 1000mbps bandwidth: socket receive/send buffer size 16 MB
-    "net.core.rmem_max" = "16777216";
-    "net.core.wmem_max" = "16777216";
+    "net.core.rmem_max" = 16777216;
+    "net.core.wmem_max" = 16777216;
   };
 
   system.stateVersion = lib.trivial.release;
