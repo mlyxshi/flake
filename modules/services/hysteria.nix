@@ -13,6 +13,11 @@
     auth: 
       type: password
       password: ${config.sops.placeholder.proxy-pwd}
+    masquerade:
+      type: proxy
+      proxy:
+        url: https://www.baidu.com
+        rewriteHost: true
   '';
 
   systemd.services.hysteria = {
