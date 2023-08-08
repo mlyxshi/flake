@@ -25,6 +25,7 @@
       "mas"
       "qemu"
       "imagemagick" #kitty image dependency
+      "smartmontools"
     ];
 
     casks = [

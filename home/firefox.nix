@@ -61,7 +61,7 @@ in
 
         # disable default search engines
         "Amazon.com".metaData.hidden = true;
-        "Bing".metaData.hidden = true;
+        # "Bing".metaData.hidden = true;
         "DuckDuckGo".metaData.hidden = true;
         "eBay".metaData.hidden = true;
         "Wikipedia (en)".metaData.hidden = true;
