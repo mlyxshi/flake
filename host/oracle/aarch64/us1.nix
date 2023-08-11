@@ -2,4 +2,6 @@
   imports = [
     self.nixosModules.services.hysteria
   ];
+
+  networking.nftables.enable = lib.mkForce false;
 }
