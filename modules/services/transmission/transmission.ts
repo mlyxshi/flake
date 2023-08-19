@@ -31,7 +31,7 @@ if (TR_TORRENT_LABELS == "rss") {
         body: JSON.stringify({
             device_key: BARK_KEY,
             title: "Jellyfin",
-            icon: "https://github.com/jellyfin/Swiftfin/raw/main/Swiftfin/Assets.xcassets/AppIcon.appiconset/152.png",
+            icon: "https://avatars.githubusercontent.com/u/45698031",
             body: TR_TORRENT_NAME,
         }),
     },);
@@ -53,25 +53,27 @@ if (TR_TORRENT_LABELS == "rss") {
         }),
     });
 
-} else {
-    let cmd = "";
-    if (FILE_INFO.isFile) cmd = ["rclone", "copy", FUll_PATH, RCLONE_FOLDER];
-    if (FILE_INFO.isDirectory) cmd = ["rclone", "copy", "--transfers", "32", FUll_PATH, `${RCLONE_FOLDER}/${TR_TORRENT_NAME}`];
-    const RCLONE_PROCESS = Deno.run({ cmd });
-    await RCLONE_PROCESS.status();
+} 
 
-    fetch(`https://api.day.app/push`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", },
-        body: JSON.stringify({
-            device_key: BARK_KEY,
-            title: "Upload",
-            icon: "https://drive.google.com/favicon.ico",
-            body: TR_TORRENT_NAME,
-        }),
-    },);
+// else {
+//     let cmd = "";
+//     if (FILE_INFO.isFile) cmd = ["rclone", "copy", FUll_PATH, RCLONE_FOLDER];
+//     if (FILE_INFO.isDirectory) cmd = ["rclone", "copy", "--transfers", "32", FUll_PATH, `${RCLONE_FOLDER}/${TR_TORRENT_NAME}`];
+//     const RCLONE_PROCESS = Deno.run({ cmd });
+//     await RCLONE_PROCESS.status();
+
+//     fetch(`https://api.day.app/push`, {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json", },
+//         body: JSON.stringify({
+//             device_key: BARK_KEY,
+//             title: "Upload",
+//             icon: "https://drive.google.com/favicon.ico",
+//             body: TR_TORRENT_NAME,
+//         }),
+//     },);
 
 
-    if (TR_TORRENT_LABELS != "seed") Deno.run({ cmd: ["transmission-remote", "--auth", `${ADMIN}:${PASSWORD}`, "--torrent", TR_TORRENT_ID, "--remove-and-delete"], });
-}
+//     if (TR_TORRENT_LABELS != "seed") Deno.run({ cmd: ["transmission-remote", "--auth", `${ADMIN}:${PASSWORD}`, "--torrent", TR_TORRENT_ID, "--remove-and-delete"], });
+// }
 
