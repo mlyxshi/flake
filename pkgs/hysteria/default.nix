@@ -22,6 +22,10 @@ buildGoModule rec {
     "-X main.appVersion=${version}"
   ];
 
+  postInstall = ''
+    mv $out/bin/cmd $out/bin/hysteria
+  '';
+
   # Network required
   doCheck = false;
 
