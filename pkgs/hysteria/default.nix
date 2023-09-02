@@ -23,7 +23,7 @@ buildGoModule rec {
   ];
 
   postInstall = ''
-    mv $out/bin/cmd $out/bin/hysteria
+    mv $out/bin/app $out/bin/hysteria
   '';
 
   # Network required
