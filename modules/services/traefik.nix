@@ -36,6 +36,8 @@
         web = {
           address = ":80";
         };
+
+      } // lib.optionalAttrs (!(config.systemd.services ? hysteria)) {
         websecure = {
           address = ":443";
           http.tls.certResolver = "letsencrypt";

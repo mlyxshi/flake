@@ -6,7 +6,6 @@
 
   sops.templates.hysteria.name = "hysteria.yaml";
   sops.templates.hysteria.content = ''
-    listen: :8888 
     tls: 
       cert: ${config.sops.secrets.cloudflare-certificate.path}
       key: ${config.sops.secrets.cloudflare-privatekey.path}
