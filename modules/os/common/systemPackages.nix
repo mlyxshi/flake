@@ -35,7 +35,6 @@
     deno
   ] ++ lib.optionals pkgs.stdenv.isDarwin [
     restic
-    hysteria
   ] ++ lib.optionals pkgs.stdenv.isLinux [
     below
     neofetch
