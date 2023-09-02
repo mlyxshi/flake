@@ -9,11 +9,11 @@ buildGoModule rec {
   src = fetchFromGitHub {
     owner = "apernet";
     repo = "hysteria";
-    rev = "e21e5c67a828bea083387417d9a73d521141392f";
-    hash = "sha256-c1aRFNePH6kpIk6I2dwAKK09nBnbG7SEWTUaQEuW7K0=";
+    rev = "e11762a196e4fcdbde728ef160bc3c6cfeb5bc6e";
+    hash = "sha256-9Fo/qKcoZg8OYH4cok18rweA1PAFULOCJGTdUB8fbAU=";
   };
 
-  vendorHash = "sha256-wh8x0klI28qDL/JrHGGxHMHTplBguoUPCyeasI9s76Q=";
+  vendorHash = "sha256-7un8oi6pKYiJGw6mbG35crndLg35y7VkoAnQKMJduh4=";
   proxyVendor = true;
 
   ldflags = [

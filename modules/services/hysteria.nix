@@ -14,6 +14,11 @@
       type: password
       password: ${config.sops.placeholder.proxy-pwd}
     resolve_preference: 4
+    masquerade:
+      type: proxy
+      proxy:
+        url: https://news.ycombinator.com/ 
+        rewriteHost: true
   '';
 
   systemd.services.hysteria = {

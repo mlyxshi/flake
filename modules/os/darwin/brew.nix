@@ -29,6 +29,7 @@
     ];
 
     casks = [
+      "ubiquiti-unifi-controller"
       "betterdisplay"
       "mpv"
       "proxyman"
@@ -47,7 +48,6 @@
       "openineditor-lite"
       "openinterminal-lite"
       "provisionql"
-      "nrlquaker-winbox"
       "wireshark"
       "raycast"
       "visual-studio-code"
