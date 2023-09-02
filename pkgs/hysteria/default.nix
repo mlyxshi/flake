@@ -8,7 +8,7 @@ buildGoModule rec {
 
   src = fetchFromGitHub {
     owner = "apernet";
-    repo = "hysteria";
+    repo = pname;
     rev = "e11762a196e4fcdbde728ef160bc3c6cfeb5bc6e";
     hash = "sha256-9Fo/qKcoZg8OYH4cok18rweA1PAFULOCJGTdUB8fbAU=";
   };
