@@ -13,11 +13,6 @@
       type: password
       password: ${config.sops.placeholder.proxy-pwd}
     resolve_preference: 4
-    masquerade:
-      type: proxy
-      proxy:
-        url: https://tensorflow.google.cn/
-        rewriteHost: true
   '';
 
   systemd.services.hysteria = {
