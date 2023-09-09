@@ -17,7 +17,7 @@
     ripgrep
     starship
     zoxide
-    exa
+    eza
     delta
     xh
     tealdeer

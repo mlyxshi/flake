@@ -4,17 +4,20 @@
   options.services.lvm.enable = lib.mkEnableOption "lvm";
   options.boot.initrd.services.lvm.enable = lib.mkEnableOption "lvm";
 
+  # Disable security features
+  boot.initrd.systemd.enableTpm2 = false;
+  boot.initrd.systemd.package.withCryptsetup = false;
+
+
   # https://nixos.org/manual/nixos/unstable/#sec-replace-modules
   disabledModules = [
     "tasks/lvm.nix"
     "tasks/bcache.nix"
-    "system/boot/systemd/initrd.nix"
 
     "programs/nano.nix"
   ];
 
   imports = [
-    ./patched-initrd.nix
   ];
 
   config = { };

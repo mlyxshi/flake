@@ -4,7 +4,7 @@
     self.nixosModules.os.common
     ./systemDefaults.nix
     ./launchd.nix
-    ./brew.nix
+    #./brew.nix
   ];
 
   users.users.dominic.home = "/Users/dominic";

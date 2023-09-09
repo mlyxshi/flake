@@ -3,7 +3,7 @@
   programs.fish = {
     enable = true;
     shellAliases = {
-      l = "exa -algh";
+      l = "eza -algh";
       v = "nvim";
       r = "joshuto";
       g = "lazygit";

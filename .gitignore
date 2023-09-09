@@ -2,6 +2,3 @@
 /test
 /tmp
 /nixos.qcow2
-/infra/.terraform
-/infra/terraform.tfstate
-/infra/.terraform.lock.hcl
