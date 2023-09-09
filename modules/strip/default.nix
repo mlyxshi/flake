@@ -4,11 +4,6 @@
   options.services.lvm.enable = lib.mkEnableOption "lvm";
   options.boot.initrd.services.lvm.enable = lib.mkEnableOption "lvm";
 
-  # Disable security features
-  boot.initrd.systemd.enableTpm2 = false;
-  boot.initrd.systemd.package.withCryptsetup = false;
-
-
   # https://nixos.org/manual/nixos/unstable/#sec-replace-modules
   disabledModules = [
     "tasks/lvm.nix"
@@ -20,5 +15,9 @@
   imports = [
   ];
 
-  config = { };
+  config = {
+    # Disable security features
+    boot.initrd.systemd.enableTpm2 = false;
+    boot.initrd.systemd.package.withCryptsetup = false;
+  };
 }
