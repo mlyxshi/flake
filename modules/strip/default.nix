@@ -18,6 +18,16 @@
   config = {
     # Disable security features
     boot.initrd.systemd.enableTpm2 = false;
-    boot.initrd.systemd.package.withCryptsetup = false;
+
+    # I like minimal initrd, so kexec's initrd will be very small and lightweight
+    nixpkgs.overlays = [
+      (final: prev: {
+        systemdStage1 = prev.systemdStage1.override {
+          withCryptsetup = false;
+          withFido2 = false;
+          withTpm2Tss = true;
+        };
+      })
+    ];
   };
 }
