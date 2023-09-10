@@ -19,10 +19,12 @@
     # Disable security features
     boot.initrd.systemd.enableTpm2 = false;
 
-    # I like minimal initrd, so kexec's initrd will be very small and lightweight
     nixpkgs.overlays = [
       (final: prev: {
-        systemdStage1 = prev.systemdStage1.override {
+         # systemdStage1 is nomarlly used in the initrd
+         # systemdStage1Network is only used when "boot.initrd.systemd.network = true;" [ only used in the my nixos kexec's initrd(For VPS first intall)]
+         # initrd without security stuff will be very small and lightweight
+         systemdStage1Network = prev.systemdStage1Network.override {
           withCryptsetup = false;
           withFido2 = false;
           withTpm2Tss = true;
