@@ -3,15 +3,15 @@
 # Idle Always Free compute instances may be reclaimed by Oracle. Oracle will deem virtual machine and bare metal compute instances as idle if, during a 7-day period, the following are true:
 
 # CPU utilization for the 95th percentile is less than 20%
-# Network utilization is less than 10%
-# Memory utilization is less than 10% (applies to A1 shapes only)
+# Network utilization is less than 20%
+# Memory utilization is less than 20% (applies to A1 shapes only)
 
 { pkgs, lib, ... }:
 let
   waste = pkgs.writeText "waste.py" ''
     import platform
     if platform.machine()=="aarch64":
-      memory = bytearray(int(2.4*1024*1024*1024)) # 2.4G (10% of 24G)
+      memory = bytearray(int(4.8*1024*1024*1024)) # 4.8G (20% of 24G)
     while True:
       pass
   '';
