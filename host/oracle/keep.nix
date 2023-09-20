@@ -2,7 +2,7 @@
 
 # Idle Always Free compute instances may be reclaimed by Oracle. Oracle will deem virtual machine and bare metal compute instances as idle if, during a 7-day period, the following are true:
 
-# CPU utilization for the 95th percentile is less than 10%
+# CPU utilization for the 95th percentile is less than 20%
 # Network utilization is less than 10%
 # Memory utilization is less than 10% (applies to A1 shapes only)
 
@@ -23,7 +23,7 @@ in
       DynamicUser = true;
       ExecStart = "${pkgs.python3}/bin/python ${waste}";
     };
-    serviceConfig.CPUQuota = if pkgs.hostPlatform.isx86_64 then "20%" else "40%";
+    serviceConfig.CPUQuota = if pkgs.hostPlatform.isx86_64 then "40%" else "80%";
     serviceConfig.CPUWeight = 1;
     wantedBy = [ "multi-user.target" ];
   };
