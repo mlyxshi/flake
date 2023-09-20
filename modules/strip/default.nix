@@ -27,7 +27,7 @@
          systemdStage1Network = prev.systemdStage1Network.override {
           withCryptsetup = false;
           withFido2 = false;
-          withTpm2Tss = true;
+          withTpm2Tss = false;
         };
       })
     ];
