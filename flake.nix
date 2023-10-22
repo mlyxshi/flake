@@ -35,8 +35,7 @@
         kexec-x86_64 = import ./kexec/mkKexec.nix { arch = "x86_64"; inherit self nixpkgs; };
         kexec-aarch64 = import ./kexec/mkKexec.nix { arch = "aarch64"; inherit self nixpkgs; };
       }
-      // lib.genAttrs oracle-serverlist (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs home-manager sops-nix hydra; })
-      // lib.genAttrs azure-serverlist (hostName: import ./host/azure/mkHost.nix { inherit hostName self nixpkgs home-manager sops-nix; });
+      // lib.genAttrs oracle-serverlist (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs home-manager sops-nix hydra; });
 
       packages.aarch64-darwin = lib.genAttrs (getArchPkgs "aarch64-darwin") (name: nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/${name} { });
       packages.aarch64-linux = lib.genAttrs (getArchPkgs "aarch64-linux") (name: nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/${name} { });

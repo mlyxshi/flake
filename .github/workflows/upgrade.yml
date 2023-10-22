@@ -11,7 +11,7 @@ env:
   ORANC_SIGNING_KEY: ${{ secrets.NIX_STORE_SIGN_PRIVATE }}
 
 jobs:
-  cache-sops-nix:
+  cache-x86-64-sops-nix:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -27,24 +27,13 @@ jobs:
     - run: oranc push --registry ghcr.io --repository mlyxshi/nix initialize
     - run: nix build --no-link --print-out-paths .#packages.x86_64-linux.sops-install-secrets | sudo --preserve-env /home/runner/.nix-profile/bin/oranc push --repository mlyxshi/nix
   
-  upgrade-x86-64-Azure:
-    runs-on: ubuntu-latest  
-    needs:  cache-sops-nix
-    strategy:
-      fail-fast: false
-      matrix:
-        host: [kr2, sw2, sw3]  
-    steps:
-    - run: mkdir -m 0755  ~/.ssh && echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519 
-    - run: ssh -o StrictHostKeyChecking=no root@${{ matrix.host }}.mlyxshi.com '[ -e "/persist/flake" ] && rm -rf /persist/flake; update'
-
   upgrade-x86-64-Oracle:
     runs-on: ubuntu-latest  
     needs:  cache-sops-nix
     strategy:
       fail-fast: false
       matrix:
-        host: [hk1, hk2, jp3]
+        host: [kr2, sw2, sw3]
     steps:
     - run: mkdir -m 0755  ~/.ssh && echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519 
     - run: ssh -o StrictHostKeyChecking=no root@${{ matrix.host }}.mlyxshi.com '[ -e "/persist/flake" ] && rm -rf /persist/flake; systemctl stop KeepCPUMemory; update'

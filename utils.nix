@@ -26,7 +26,4 @@ rec {
   oracle-arm64-serverlist = pureName (ls ./host/oracle/aarch64);
   oracle-x64-serverlist = pureName (ls ./host/oracle/x86_64);
   oracle-serverlist = oracle-arm64-serverlist ++ oracle-x64-serverlist;
-
-  azure-x64-serverlist = pureName (ls ./host/azure/x86_64);
-  azure-serverlist = azure-x64-serverlist;
 }
