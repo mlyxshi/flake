@@ -1,10 +1,5 @@
 tasks:
-  无职转生到了异世界就拿出真本事:
-    rss: https://mikanani.me/RSS/Bangumi?bangumiId=3060&subgroupid=552
+  葬送的芙莉莲:
+    rss: https://mikanani.me/RSS/Bangumi?bangumiId=3141&subgroupid=370
     set:
-      path: /var/lib/media/无职转生到了异世界就拿出真本事/Season 02/
-
-  BangDream:
-    rss: https://mikanani.me/RSS/Bangumi?bangumiId=3052&subgroupid=552
-    set:
-      path: /var/lib/media/BanG Dream! It's MyGO/Season 01/
+      path: /var/lib/media/葬送的芙莉莲/Season 01/
