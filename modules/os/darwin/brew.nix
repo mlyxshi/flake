@@ -26,7 +26,6 @@
       "qemu"
       "imagemagick" #kitty image dependency
       "smartmontools"
-      "hysteria"
     ];
 
     casks = [

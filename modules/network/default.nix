@@ -33,7 +33,7 @@
         ${lib.optionalString (config.systemd.services ? tftpd) "udp dport 69 accept"}
         
         # Allow tuic
-        ${lib.optionalString (config.systemd.services ? tuic) "udp dport 6666 accept"}
+        # ${lib.optionalString (config.systemd.services ? tuic) "udp dport 6666 accept"}
 
         # Allow hysteria
         ${lib.optionalString (config.systemd.services ? hysteria) "udp dport 443 accept"}
