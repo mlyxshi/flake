@@ -31,7 +31,7 @@ let
     mkfs.fat -F 32 $BOOT
     mkfs.ext4 -F $NIXOS
 
-    mkdir -p /mnt/{etc,tmp}
+    mkdir -p /mnt
     mount $NIXOS /mnt
     mount --mkdir $BOOT /mnt/boot
 
@@ -43,7 +43,7 @@ let
     # echo "Nix will copy: $system from cache"
     # nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $system
 
-    
+    mkdir -p /mnt/{etc,tmp}
     touch /mnt/etc/NIXOS
     [[ -n "$age_key" ]] && mkdir -p /mnt/persist/sops/ && curl -sLo /mnt/persist/sops/key $age_key
     mkdir -p /mnt/persist/etc/ssh && for i in /etc/ssh/ssh_host_ed25519_key*; do cp $i /mnt/persist/etc/ssh; done
