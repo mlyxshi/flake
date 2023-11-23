@@ -16,7 +16,7 @@
       experimental-features = [ "nix-command" "flakes" "cgroups" "auto-allocate-uids" ];
       substituters = [ "https://oranc.li7g.com/ghcr.io/mlyxshi/nix" ];
       trusted-public-keys = [ "cache:vXjiuWtSTOXj63zr+ZjMvXqvaYIK1atjyyEk+iuIqSg=" ];
-      allowed-uris = [ "https://github.com" "https://gitlab.com" ];
+      allowed-uris = [ "https://github.com" "https://gitlab.com" "https://git.sr.ht"];
       auto-optimise-store = true;
       fallback = true;
       log-lines = 25;
