@@ -35,13 +35,18 @@ let
     mount $NIXOS /mnt
     mount --mkdir $BOOT /mnt/boot
 
-    echo "Nix will build: $flake#nixosConfigurations.$host.config.system.build.toplevel"
-    nix build -L --store /mnt --profile /mnt/nix/var/nix/profiles/system $flake#nixosConfigurations.$host.config.system.build.toplevel 
 
-    # Copy System Closure
-    # system=$(curl -sL https://raw.githubusercontent.com/mlyxshi/install/main/$host)
-    # echo "Nix will copy: $system from cache"
-    # nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $system
+    if [ $(uname -m) = "aarch64" ]
+    then
+      # Oracle aarch64 machine: 4C24G, Build directly
+      echo "Nix will build: $flake#nixosConfigurations.$host.config.system.build.toplevel"
+      nix build -L --store /mnt --profile /mnt/nix/var/nix/profiles/system $flake#nixosConfigurations.$host.config.system.build.toplevel 
+    else
+      # Oracle x64 machine: 1C1G, Copy System Closure
+      system=$(curl -sL https://raw.githubusercontent.com/mlyxshi/install/main/$host)
+      echo "Nix will copy: $system from cache"
+      nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $system
+    fi
 
     mkdir -p /mnt/{etc,tmp}
     touch /mnt/etc/NIXOS
