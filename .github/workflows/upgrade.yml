@@ -19,7 +19,6 @@ jobs:
         -H "Authorization: Bearer ${{ secrets.GIT_TOKEN }}" \
         -d '{"ref": "main"}'
 
-
   cache-sops-nix:
     runs-on: ubuntu-latest
     permissions:
