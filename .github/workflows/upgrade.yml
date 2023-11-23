@@ -13,7 +13,10 @@ env:
 jobs:
   eval-system-closure:
     runs-on: ubuntu-latest
-    - run: curl -X "POST" "https://api.github.com/repos/mlyxshi/install/actions/workflows/main.yml/dispatches" -H "Authorization: Bearer ${{ secrets.GIT_TOKEN }}" -d '{"ref": "main"}'
+    - run: |  
+        curl -X "POST" "https://api.github.com/repos/mlyxshi/install/actions/workflows/main.yml/dispatches" \
+        -H "Authorization: Bearer ${{ secrets.GIT_TOKEN }}" \
+        -d '{"ref": "main"}'
 
 
   cache-sops-nix:
