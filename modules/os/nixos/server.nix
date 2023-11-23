@@ -17,5 +17,5 @@
   # https://github.com/NixOS/nixpkgs/pull/104828
   system.disableInstallerTools = true;
   boot.enableContainers = false;
-  environment.defaultPackages = [];
+  environment.defaultPackages = [ ];
 }

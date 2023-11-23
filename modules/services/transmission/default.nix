@@ -18,7 +18,6 @@ in
     PASSWORD=${config.sops.placeholder.password}
   '';
 
-  sops.secrets.rclone-env = { };
   sops.secrets.bark-ios = { };
 
   users = {
@@ -52,7 +51,6 @@ in
     serviceConfig.EnvironmentFile = [
       config.sops.templates.transmission-admin-credentials.path
       config.sops.secrets.bark-ios.path
-      config.sops.secrets.rclone-env.path
     ];
     serviceConfig.User = "transmission";
     serviceConfig.ExecStart = "${pkgs.transmission}/bin/transmission-daemon --foreground --username $ADMIN --password $PASSWORD";

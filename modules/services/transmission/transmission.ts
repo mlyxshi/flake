@@ -10,7 +10,7 @@ const TR_TORRENT_LABELS = Deno.env.get("TR_TORRENT_LABELS");
 const FUll_PATH = `${TR_TORRENT_DIR}/${TR_TORRENT_NAME}`
 const FILE_INFO = await Deno.stat(FUll_PATH);
 
-const RCLONE_FOLDER = "gdrive:Download"
+// const RCLONE_FOLDER = "gdrive:Download"
 
 console.log("TR_TORRENT_NAME:", TR_TORRENT_NAME);
 console.log("TR_TORRENT_ID:", TR_TORRENT_ID);
