@@ -9,10 +9,9 @@ let
   hydra-x64-publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMjY+jsCfLAuMR2LP3ZqkzV5RCqSyt+lheJ7TUSRWEfv";
 in
 {
-  sops.secrets.hydra-builder-sshkey = {
-    mode = "400";
-    owner = "hydra-queue-runner";
-    group = "hydra";
+  sops.secrets = {
+    hydra-builder-sshkey = { group = "hydra"; mode = "400"; };
+    hydra-github = { group = "hydra"; mode = "400"; };
   };
 
   programs.ssh = {
@@ -55,6 +54,17 @@ in
     buildMachinesFiles = [ "/etc/nix/machines" ];
     useSubstitutes = true;
     logo = "${pkgs.nixos-icons}/share/icons/hicolor/16x16/apps/nix-snowflake.png";
+    extraConfig = ''
+      include ${config.sops.secrets.hydra-github.path}
+      <dynamicruncommand>
+        enable = 1
+      </dynamicruncommand>
+      <githubstatus>
+        jobs = nixos:flake:.*
+        excludeBuildFromContext = 1
+        useShortContext = 1
+      </githubstatus>
+    '';
   };
 
   # https://github.com/NixOS/hydra/issues/1186

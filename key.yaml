@@ -2,6 +2,7 @@ user: ENC[AES256_GCM,data:hJHyCm4=,iv:EcqXDJqLE+IDfXgBQAqInW6CfSxAoxlk9W13eTrBOP
 password: ENC[AES256_GCM,data:7skZaHxTqlyS2g==,iv:tSFFqKGM23VZd1SnNl/Gq2AeRV73WbsUv4yNFD807ds=,tag:RPu42u+3EtRpPIoOA3eLAA==,type:str]
 proxy-pwd: ENC[AES256_GCM,data:r7f6YAY=,iv:cxcdmQXihaJBRtgG2C56l/hf+xwjfOdOfoVnly518YE=,tag:46xhXOGTFPngXtGxxpClaQ==,type:str]
 postgresql: ENC[AES256_GCM,data:Ml8SSqk8JJLHG9ptB8IOjBVJMiWmvSfRnzTSDiE8Wl2RJzWgbNE4w9bQ5cSMg5aQowxa9cojPPdvY+fPMIsMCPgqXEKW9s4b2iMaRfJrgoEG,iv:dX8stM5SfabH5tbMdROsLadf2CDwA+8YaSg27EUh3i4=,tag:R0s12wunjah8xMIv4zmaXw==,type:str]
+hydra-github: ENC[AES256_GCM,data:GeiOzXa/WdqZdEzvpwDmHFs3C7eXlTdK7tX/HezQ4iGRYlImPJbpEty+lv3PvZBIv7sXBmsJ0OpZbw+KHH46O6JFNZbRi68BtH1jueP7cFgFxZisKo5MADUHcv53eb9dKX7TDO1Ohu8aag==,iv:MZ1xrROkhmwkMfWVPAiLJAxAUSOPcHnzY4snZMqf5Tc=,tag:Mz3sUbbv8hJxaFkuGIGncQ==,type:str]
 vaultwarden:
     id: ENC[AES256_GCM,data:xTL7s3jyHqgG9GqO3ZXn86zD3wtKmBX2eLmx1b/WbolZNude,iv:g2AnYRaEY16MxacQtZEQjYveVqNd2e35qY0ZyoE+smQ=,tag:Z4OFSJ0KPgUrX8U1AdVqfw==,type:str]
     key: ENC[AES256_GCM,data:TMARrhdWenNAqNM2FrzXCQdz4eY=,iv:CERvqkjqjrDo/loz1ZG9BS1u3qC3Z12isVDVQj342PU=,tag:hyXTwkKirxQ+NJsuFDM61g==,type:str]
@@ -28,8 +29,8 @@ sops:
             NHJ3QnA4ZUwrR1o2M2NFUW1OdkVjR1EKqRN4rcFPjkgW4IDZLALQXO3BfnKtRp2A
             CaFN+jIWTHM9svIIDZGygzovYjO/Ho8kfG8AkkL1B31fBIw7ReW4iQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-11-23T05:08:46Z"
-    mac: ENC[AES256_GCM,data:etUqwFB5LegnqdDYPiY9EDG85dwwQQyFLwvNDJBsVZswh2kYYwQ7sOkuDBbEz26qjsOxPq+DJqbqoq+lT1YCWajsIXwFT7Jjpit8/tGSG20L98qVyuqYw6rOC+PTQs5CquSrK7jMbW1U6mYwhhGcADYiP3SOdaXtiuF95d9hmpU=,iv:8XVCqU0ioldrdi1nEMc7SsTcOWHYpNgySsUGKR20zMk=,tag:imwDjpGEceIcg6MgMSJU9A==,type:str]
+    lastmodified: "2023-11-23T14:44:00Z"
+    mac: ENC[AES256_GCM,data:pkfkuxgOH8t/ZXoCAd0S8EK8kjA2jq5NiwaCehwD4goYHswmBZplzpZsMW4tWQDwK7t9gRNliV6sw3FoE+OjkbEHJIGEPXXS4+o8k12dYL/zZWFoQDmsPdjlx6dhiWxe6Itd9ofc3zCWW/iWH1VfeawyuwUuXObipV3OuegDDGA=,iv:Y3ncdtN3oLWgVzEGNIW2C6UrMeIxMKwJvhYETonnbdU=,tag:gE+Sty0jS3ESerSz6/VAdA==,type:str]
     pgp: []
     unencrypted_suffix: _unencrypted
     version: 3.8.1
