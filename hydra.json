@@ -1,7 +1,7 @@
 {
-  "kexec": {
+  "flake": {
     "checkinterval": 0,
-    "description": "kexec",
+    "description": "flake",
     "emailoverride": "",
     "enabled": 1,
     "enableemail": false,

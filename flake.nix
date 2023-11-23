@@ -48,8 +48,8 @@
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixpkgs-fmt;
       devShells.aarch64-darwin.wrangler = import ./shells/wrangler.nix { pkgs = nixpkgs.legacyPackages.aarch64-darwin; };
 
-      hydraJobs.aarch64 = self.nixosConfigurations.kexec-aarch64.config.system.build.kexec;
-      hydraJobs.x86_64 = self.nixosConfigurations.kexec-x86_64.config.system.build.kexec;
+      hydraJobs.kexec-aarch64 = self.nixosConfigurations.kexec-aarch64.config.system.build.kexec;
+      hydraJobs.kexec-x86_64 = self.nixosConfigurations.kexec-x86_64.config.system.build.kexec;
 
       hydraJobs.sw2 = self.nixosConfigurations.sw2.config.system.build.toplevel;
       hydraJobs.sw3 = self.nixosConfigurations.sw3.config.system.build.toplevel;
