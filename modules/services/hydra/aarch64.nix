@@ -12,6 +12,12 @@ in
   sops.secrets = {
     hydra-builder-sshkey = { group = "hydra"; mode = "440"; };
     hydra-github = { group = "hydra"; mode = "440"; };
+    nix-store-sign = { };
+  };
+
+  services.harmonia = {
+    enable = true;
+    signKeyPath = config.sops.secrets.nix-store-sign.path;
   };
 
   programs.ssh = {
@@ -72,17 +78,27 @@ in
 
   services.traefik = {
     dynamicConfigOptions = {
-      http = {
-        routers.hydra = {
-          rule = "Host(`hydra.${config.networking.domain}`)";
-          entryPoints = [ "web" ];
-          service = "hydra";
-        };
-
-        services.hydra.loadBalancer.servers = [{
-          url = "http://127.0.0.1:3000";
-        }];
+      # hydra
+      http.routers.hydra = {
+        rule = "Host(`hydra.${config.networking.domain}`)";
+        entryPoints = [ "web" ];
+        service = "hydra";
       };
+
+      http.services.hydra.loadBalancer.servers = [{
+        url = "http://127.0.0.1:3000";
+      }];
+      # cache
+      http.routers.cache = {
+        rule = "Host(`cache.${config.networking.domain}`)";
+        entryPoints = [ "web" ];
+        service = "cache";
+      };
+
+      http.services.cache.loadBalancer.servers = [{
+        url = "http://127.0.0.1:5000";
+      }];
+
     };
   };
 
