@@ -14,7 +14,7 @@
     registry.nixpkgs.flake = nixpkgs;
     settings = {
       experimental-features = [ "nix-command" "flakes" "cgroups" "auto-allocate-uids" ];
-      substituters = [  ];
+      substituters = [ "https://cache.mlyxshi.com" ];
       trusted-public-keys = [ "cache:vXjiuWtSTOXj63zr+ZjMvXqvaYIK1atjyyEk+iuIqSg=" ];
       allowed-uris = [ "https://github.com" "https://gitlab.com" "https://git.sr.ht"];
       auto-optimise-store = true;

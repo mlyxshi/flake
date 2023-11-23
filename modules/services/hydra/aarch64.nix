@@ -91,7 +91,7 @@ in
       # cache
       http.routers.cache = {
         rule = "Host(`cache.${config.networking.domain}`)";
-        entryPoints = [ "web" ];
+        entryPoints = [ "websecure" ];
         service = "cache";
       };
 
