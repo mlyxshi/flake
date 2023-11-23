@@ -5,11 +5,6 @@ on:
       - 'flake.lock'
   workflow_dispatch:
 
-env:
-  ORANC_USERNAME: ${{ github.repository_owner }}
-  ORANC_PASSWORD: ${{ github.token }}
-  ORANC_SIGNING_KEY: ${{ secrets.NIX_STORE_SIGN_PRIVATE }}
-
 jobs:
   eval-system-closure:
     runs-on: ubuntu-latest
@@ -19,28 +14,8 @@ jobs:
         -H "Authorization: Bearer ${{ secrets.GIT_TOKEN }}" \
         -d '{"ref": "main"}'
 
-  cache-x86-64:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    steps:
-    - uses: actions/checkout@master
-    - uses: DeterminateSystems/nix-installer-action@main
-      with:
-        extra-conf: |
-          substituters = https://cache.nixos.org https://oranc.li7g.com/ghcr.io/mlyxshi/nix
-          trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= cache:vXjiuWtSTOXj63zr+ZjMvXqvaYIK1atjyyEk+iuIqSg=
-    - run: nix profile install github:linyinfeng/oranc  --extra-substituters https://linyinfeng.cachix.org --extra-trusted-public-keys linyinfeng.cachix.org-1:sPYQXcNrnCf7Vr7T0YmjXz5dMZ7aOKG3EqLja0xr9MM=
-    - run: oranc push --registry ghcr.io --repository mlyxshi/nix initialize
-    - run: |
-        nix build --no-link --print-out-paths .#nixosConfigurations.sw2.config.system.build.toplevel | sudo --preserve-env /home/runner/.nix-profile/bin/oranc push --repository mlyxshi/nix
-        nix build --no-link --print-out-paths .#nixosConfigurations.sw3.config.system.build.toplevel | sudo --preserve-env /home/runner/.nix-profile/bin/oranc push --repository mlyxshi/nix
-        nix build --no-link --print-out-paths .#nixosConfigurations.kr2.config.system.build.toplevel | sudo --preserve-env /home/runner/.nix-profile/bin/oranc push --repository mlyxshi/nix
-  
   upgrade-x86-64:
     runs-on: ubuntu-latest  
-    needs:  cache-x86-64
     strategy:
       fail-fast: false
       matrix:
