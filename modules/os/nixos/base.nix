@@ -5,7 +5,6 @@
     self.nixosModules.strip
   ];
 
-  sops.package = sops-nix.packages.${config.nixpkgs.hostPlatform.system}.sops-install-secrets;
   sops.defaultSopsFile = ../../../key.yaml;
   sops.age.sshKeyPaths = [ "/persist/sops/key" ];
   sops.gnupg.sshKeyPaths = [ ];
