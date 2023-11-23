@@ -52,5 +52,6 @@
       hydraJobs.x86_64 = self.nixosConfigurations.kexec-x86_64.config.system.build.kexec;
 
       hydraJobs.sw2 = self.nixosConfigurations.sw2.config.system.build.toplevel;
+      hydraJobs.sw3 = self.nixosConfigurations.sw3.config.system.build.toplevel;
     };
 }
