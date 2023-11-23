@@ -10,8 +10,8 @@ let
 in
 {
   sops.secrets = {
-    hydra-builder-sshkey = { group = "hydra"; mode = "400"; };
-    hydra-github = { group = "hydra"; mode = "400"; };
+    hydra-builder-sshkey = { group = "hydra"; mode = "440"; };
+    hydra-github = { group = "hydra"; mode = "440"; };
   };
 
   programs.ssh = {
