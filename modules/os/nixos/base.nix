@@ -75,7 +75,7 @@
   system.stateVersion = lib.trivial.release;
 
   system.activationScripts."diff-closures".text = ''
-    [[ -e "/run/current-system" ]] && ${pkgs.nix}/bin/nix store  diff-closures /run/current-system "$systemConfig"
+    [[ -e "/run/current-system" ]] && ${pkgs.nix}/bin/nix store  diff-closures /run/current-system $systemConfig
   '';
 
   environment.systemPackages = [
