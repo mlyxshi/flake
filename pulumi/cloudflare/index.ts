@@ -10,7 +10,7 @@ const dns: Record<string, string[]> = {
     "152.69.224.200": ["kr", "hydra", "cache"],
     "152.67.211.22": ["kr2", "hydra-x64"],
     "152.67.79.165": ["sw", "rss", "changeio"],
-    "152.67.76.109": ["sw2", "top"],
+    "140.238.215.3": ["sw2", "top"],
     "152.67.78.74": ["sw3", "password"],
 }
 
