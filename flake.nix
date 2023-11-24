@@ -53,6 +53,8 @@
       hydraJobs.sw2 = self.nixosConfigurations.sw2.config.system.build.toplevel;
       hydraJobs.sw3 = self.nixosConfigurations.sw3.config.system.build.toplevel;
 
+      hydraJobs.de = self.nixosConfigurations.de.config.system.build.toplevel;
+
       hydraJobs.transmission = self.packages.aarch64-linux.transmission;
 
     };
