@@ -33,13 +33,13 @@ in
   };
 
   nix.buildMachines = [
-    # https://github.com/NixOS/nix/pull/4938
-    # {
-    #   hostName = "localhost";
-    #   systems = [ "aarch64-linux" ];
-    #   maxJobs = 4;
-    #   supportedFeatures = [ "nixos-test" "big-parallel" "benchmark" ];
-    # }
+    # https://github.com/NixOS/hydra/issues/433#issuecomment-321212080
+    {
+      hostName = "localhost";
+      systems = [ "aarch64-linux" ];
+      maxJobs = 4;
+      supportedFeatures = [ "nixos-test" "big-parallel" "benchmark" ];
+    }
     {
       hostName = "hydra-x64";
       systems = [ "x86_64-linux" ];
