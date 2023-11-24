@@ -16,7 +16,6 @@
       experimental-features = [ "nix-command" "flakes" "cgroups" "auto-allocate-uids" ];
       substituters = [ "https://cache.mlyxshi.com" ];
       trusted-public-keys = [ "cache:vXjiuWtSTOXj63zr+ZjMvXqvaYIK1atjyyEk+iuIqSg=" ];
-      allowed-uris = [ "https://github.com" "https://gitlab.com" "https://git.sr.ht/~rycee/nmd/" ];
       auto-optimise-store = true;
       fallback = true;
       log-lines = 25;
