@@ -34,12 +34,12 @@ in
 
   nix.buildMachines = [
     # https://github.com/NixOS/nix/pull/4938
-    {
-      hostName = "localhost";
-      systems = [ "aarch64-linux" ];
-      maxJobs = 4;
-      supportedFeatures = [ "nixos-test" "big-parallel" "benchmark" ];
-    }
+    # {
+    #   hostName = "localhost";
+    #   systems = [ "aarch64-linux" ];
+    #   maxJobs = 4;
+    #   supportedFeatures = [ "nixos-test" "big-parallel" "benchmark" ];
+    # }
     {
       hostName = "hydra-x64";
       systems = [ "x86_64-linux" ];
@@ -57,7 +57,6 @@ in
     package = hydra.packages.aarch64-linux.default;
     hydraURL = "http://hydra.${config.networking.domain}";
     notificationSender = "hydra@localhost";
-    buildMachinesFiles = [ "/etc/nix/machines" ];
     useSubstitutes = true;
     logo = "${pkgs.nixos-icons}/share/icons/hicolor/16x16/apps/nix-snowflake.png";
     extraConfig = ''
