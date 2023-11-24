@@ -45,6 +45,7 @@
     sfdisk = "${pkgs.util-linux}/bin/sfdisk";
     lsblk = "${pkgs.util-linux}/bin/lsblk";
     curl = "${pkgs.curl}/bin/curl";
+    jq = "${pkgs.jq}/bin/jq";
 
     get-kernel-param = pkgs.writeScript "get-kernel-param" ''
       for o in $(< /proc/cmdline); do
