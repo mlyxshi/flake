@@ -6,5 +6,5 @@
     ./joshuto.nix
   ];
 
-  home.stateVersion = "24.05";
+  home.stateVersion = "23.11";
 }
