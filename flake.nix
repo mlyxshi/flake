@@ -56,6 +56,5 @@
       hydraJobs.de = self.nixosConfigurations.de.config.system.build.toplevel;
 
       hydraJobs.transmission = self.packages.aarch64-linux.transmission;
-
     };
 }
