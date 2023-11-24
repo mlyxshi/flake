@@ -6,14 +6,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  eval-system-closure:
-    runs-on: ubuntu-latest
-    steps:
-    - run: |  
-        curl -X "POST" "https://api.github.com/repos/mlyxshi/install/actions/workflows/main.yml/dispatches" \
-        -H "Authorization: Bearer ${{ secrets.GIT_TOKEN }}" \
-        -d '{"ref": "main"}'
-
   upgrade-x86-64:
     runs-on: ubuntu-latest  
     strategy:

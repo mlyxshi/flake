@@ -42,8 +42,10 @@ let
       echo "Nix will build: $flake#nixosConfigurations.$host.config.system.build.toplevel"
       nix build -L --store /mnt --profile /mnt/nix/var/nix/profiles/system $flake#nixosConfigurations.$host.config.system.build.toplevel 
     else
-      # Oracle x64 machine: 1C1G, Copy System Closure
-      system=$(curl -sL https://raw.githubusercontent.com/mlyxshi/install/main/$host)
+      # Oracle x64 machine: 1C1G, Copy System Closure from Cache
+      # Hydra API: https://editor.swagger.io/?url=https://raw.githubusercontent.com/NixOS/hydra/master/hydra-api.yaml
+      evalId=$(curl -s -H 'accept: application/json' http://hydra.mlyxshi.com/jobset/nixos/flake/evals | jq .evals[0].id)
+      system=$(curl -s -H 'accept: application/json' http://hydra.mlyxshi.com/eval/$evalId/builds | jq '.[] | select(.job == "$host")|.buildoutputs.out.path')
       echo "Nix will copy: $system from cache"
       nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $system
     fi
