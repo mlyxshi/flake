@@ -45,7 +45,7 @@ let
       # Oracle x64 machine: 1C1G, Copy System Closure from Cache
       # Hydra API: https://editor.swagger.io/?url=https://raw.githubusercontent.com/NixOS/hydra/master/hydra-api.yaml
       evalId=$(curl -s -H 'accept: application/json' http://hydra.mlyxshi.com/jobset/nixos/flake/evals | jq .evals[0].id)
-      system=$(curl -s -H 'accept: application/json' http://hydra.mlyxshi.com/eval/$evalId/builds | jq --arg host $host '.[] | select(.job == $host)|.buildoutputs.out.path')
+      system=$(curl -s -H 'accept: application/json' http://hydra.mlyxshi.com/eval/$evalId/builds | jq --arg host $host '.[] | select(.job == $host)|.buildoutputs.out.path' | tr -d '"')
       echo "Nix will copy: $system from cache"
       nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $system
     fi
