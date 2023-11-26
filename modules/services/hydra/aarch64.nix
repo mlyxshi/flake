@@ -63,6 +63,7 @@ in
     logo = "${pkgs.nixos-icons}/share/icons/hicolor/16x16/apps/nix-snowflake.png";
     extraConfig = ''
       include ${config.sops.secrets.hydra-github.path}
+      max_output_size = ${builtins.toString (10 * 1024 * 1024 * 1024)}
       <dynamicruncommand>
         enable = 1
       </dynamicruncommand>
