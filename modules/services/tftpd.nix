@@ -25,6 +25,7 @@
   # };
   services.atftpd.enable = true;
   services.atftpd.root = "/var/lib/netboot";
+
 }
 
 # UEFI Shell

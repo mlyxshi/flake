@@ -30,7 +30,7 @@
         tcp dport { 22, 80, 443 } accept
 
         # Allow TFTP
-        ${lib.optionalString (config.systemd.services ? tftpd) "udp dport 69 accept"}
+        ${lib.optionalString (config.systemd.services ? atftpd) "udp dport 69 accept"}
         
         # Allow tuic
         # ${lib.optionalString (config.systemd.services ? tuic) "udp dport 6666 accept"}
