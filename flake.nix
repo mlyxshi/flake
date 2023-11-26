@@ -37,24 +37,24 @@
       }
       // lib.genAttrs oracle-serverlist (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs home-manager sops-nix hydra; });
 
-      packages.aarch64-darwin = lib.genAttrs (getArchPkgs "aarch64-darwin") (name: nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/${name} { });
-      packages.aarch64-linux = lib.genAttrs (getArchPkgs "aarch64-linux") (name: nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/${name} { });
-      packages.x86_64-linux = lib.genAttrs (getArchPkgs "x86_64-linux") (name: nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/${name} { }) // {
-        default = self.nixosConfigurations.kexec-x86_64.config.system.build.test;
-        test0 = self.nixosConfigurations.kexec-x86_64.config.system.build.test0;
+      packages = {
+        aarch64-darwin = lib.genAttrs (getArchPkgs "aarch64-darwin") (name: nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/${name} { });
+        aarch64-linux = lib.genAttrs (getArchPkgs "aarch64-linux") (name: nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/${name} { });
+        x86_64-linux = lib.genAttrs (getArchPkgs "x86_64-linux") (name: nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/${name} { }) // {
+          default = self.nixosConfigurations.kexec-x86_64.config.system.build.test;
+          test0 = self.nixosConfigurations.kexec-x86_64.config.system.build.test0;
+        };
       };
 
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixpkgs-fmt;
-      devShells.aarch64-darwin.wrangler = import ./shells/wrangler.nix { pkgs = nixpkgs.legacyPackages.aarch64-darwin; };
 
-      hydraJobs.kexec-aarch64 = self.nixosConfigurations.kexec-aarch64.config.system.build.kexec;
-      hydraJobs.kexec-x86_64 = self.nixosConfigurations.kexec-x86_64.config.system.build.kexec;
-
-      hydraJobs.sw2 = self.nixosConfigurations.sw2.config.system.build.toplevel;
-      hydraJobs.sw3 = self.nixosConfigurations.sw3.config.system.build.toplevel;
-
-      hydraJobs.de = self.nixosConfigurations.de.config.system.build.toplevel;
-
-      hydraJobs.transmission = self.packages.aarch64-linux.transmission;
+      hydraJobs = {
+        kexec-aarch64 = self.nixosConfigurations.kexec-aarch64.config.system.build.kexec;
+        kexec-x86_64 = self.nixosConfigurations.kexec-x86_64.config.system.build.kexec;
+        sw2 = self.nixosConfigurations.sw2.config.system.build.toplevel;
+        sw3 = self.nixosConfigurations.sw3.config.system.build.toplevel;
+        de = self.nixosConfigurations.de.config.system.build.toplevel;
+        transmission = self.packages.aarch64-linux.transmission;
+      };
     };
 }

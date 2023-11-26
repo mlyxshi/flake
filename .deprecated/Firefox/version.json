@@ -1,8 +1,0 @@
-{
-  "version": "107.0",
-  "darwin": {
-    "url": "https://download-installer.cdn.mozilla.net/pub/firefox/releases/107.0/mac/en-US/Firefox%20107.0.dmg",
-    "sha256": "05fmw7lb30nwkz4clpyzwj2mrsd1rqwwplbjb0pw77hkpyz4590z"
-  },
-  "description": "[Auto-Generated] Firefox Stable Version"
-}
