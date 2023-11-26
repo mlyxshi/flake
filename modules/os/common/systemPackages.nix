@@ -8,11 +8,12 @@
     htop
     nali
     libarchive
-    neovim-unwrapped
     nix-tree
     nix-init
     nix-update
     joshuto
+    helix
+    nil
     fd
     ripgrep
     starship

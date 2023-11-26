@@ -1,0 +1,10 @@
+[language-server.nil]
+command = "nil"
+
+[[language]]
+name = "nix"
+file-types = ["nix"]
+comment-token = "#"
+indent = { tab-width = 2, unit = "  " }
+formatter = { command = "nixpkgs-fmt" }
+language-servers = [ "nil" ]

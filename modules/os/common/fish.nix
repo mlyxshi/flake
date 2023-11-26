@@ -4,13 +4,12 @@
     enable = true;
     shellAliases = {
       l = "eza -algh";
-      v = "nvim";
       r = "joshuto";
       g = "lazygit";
       c = "bat";
       man = "batman";
       P = "echo $PATH";
-      nixpkgs = "nvim ${nixpkgs}";
+      nixpkgs = "hx ${nixpkgs}";
       # Oracle cloud console connection do not support latest openssh(>9.0)
       ssh-old = "nix-shell -p openssh -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/2cdd608fab0af07647da29634627a42852a8c97f.tar.gz";
     }
@@ -107,7 +106,7 @@
       set -g fish_pager_color_selected_background --background=$selection
 
     '' + lib.optionalString pkgs.stdenv.isDarwin ''
-      set -gx EDITOR nvim
+      set -gx EDITOR hx
       set -gx PAGER bat
         
       set PATH $PATH /opt/homebrew/bin ~/go/bin /Applications/Surge.app/Contents/Applications

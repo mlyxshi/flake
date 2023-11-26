@@ -21,7 +21,7 @@
     let
       inherit (nixpkgs) lib;
       utils = import ./utils.nix nixpkgs;
-      inherit (utils) mkFileHierarchyAttrset packagelist getArchPkgs oracle-serverlist azure-serverlist;
+      inherit (utils) mkFileHierarchyAttrset packagelist getArchPkgs oracle-serverlist;
     in
     {
       overlays.default = final: prev: prev.lib.genAttrs packagelist (name: prev.callPackage ./pkgs/${name} { });

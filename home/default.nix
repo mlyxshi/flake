@@ -2,7 +2,7 @@
 
   imports = [
     ./git.nix
-    ./nvim.nix
+    ./helix.nix
     ./joshuto.nix
   ];
 

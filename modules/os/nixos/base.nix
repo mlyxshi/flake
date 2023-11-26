@@ -52,7 +52,7 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   environment.sessionVariables = {
-    EDITOR = "nvim";
+    EDITOR = "hx";
     PAGER = "bat";
     NIX_REMOTE = "daemon"; # root user do not use nix-daemon by default when build. This force nix-daemon to be used. Nix 2.12 cgroups and auto-allocate-uids
   };

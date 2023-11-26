@@ -21,7 +21,7 @@ video_default = [
 ]
 
 text_default = [
-  { command = "nvim" },
+  { command = "hx" },
 ]
 
 reader_default = [{ command = "evince", fork = true, silent = true }]
