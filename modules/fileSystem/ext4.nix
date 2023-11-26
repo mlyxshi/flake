@@ -1,11 +1,11 @@
 {
   fileSystems."/boot" = {
-    device = "/dev/sda1";
+    device = "/dev/disk/by-label/BOOT";
     fsType = "vfat";
   };
 
   fileSystems."/" = {
-    device = "/dev/sda2";
+    device = "/dev/disk/by-label/NIXOS";
     fsType = "ext4";
   };
 
