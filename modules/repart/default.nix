@@ -8,6 +8,8 @@ in
     "${modulesPath}/image/repart.nix"
   ];
 
+  fileSystems."/".autoResize = true;
+
   boot.initrd.systemd.repart.enable = true;
   boot.initrd.systemd.repart.device = "/dev/sda";
 
