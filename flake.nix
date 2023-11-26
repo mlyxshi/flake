@@ -57,6 +57,7 @@
         transmission = self.packages.aarch64-linux.transmission;
         
         sw2-repart = self.nixosConfigurations.sw2.config.system.build.image;
+        de-repart = self.nixosConfigurations.de.config.system.build.image;
       };
     };
 }
