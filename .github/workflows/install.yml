@@ -48,7 +48,7 @@ jobs:
 
     - run: |
         image=$(nix build --no-link --print-out-paths \
-          --builders 'ssh://root@de.mlyxshi.com aarch64-linux ~/.ssh/id_ed25519 4 1 nixos-test,big-parallel,benchmark - c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUY0TGVsc2VVbTRCSThjU3JlQzFPRlJOaU4wNmdHaThXWG9TK0JmS0JPY20gcm9vdEBhcm0K' \
+          --builders 'ssh://root@de.mlyxshi.com aarch64-linux /home/runner/.ssh/id_ed25519 4 1 nixos-test,big-parallel,benchmark - c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUY0TGVsc2VVbTRCSThjU3JlQzFPRlJOaU4wNmdHaThXWG9TK0JmS0JPY20gcm9vdEBhcm0K' \
           .#nixosConfigurations.${{ inputs.host }}.config.system.build.image)
 
         echo "imagePath=$image" >> "$GITHUB_ENV"
