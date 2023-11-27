@@ -5,18 +5,23 @@ on:
       ip:
         type: string
         required: true
+      host:
+        type: string
+        required: true
 
 jobs:
-  Image:
+
+  dd:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
     - uses: DeterminateSystems/nix-installer-action@main
+    
     - run: |
         mkdir -m 0755  ~/.ssh
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
-    - run: |
-        ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} 'mkdir test'
 
-    # - run: nix build .#nixosConfigurations.sw2.config.system.build.image
+    - run: |
+        imagePath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ inputs.host }}.config.system.build.image)
+        dd if=$imagePath/image.raw bs=5M conv=fsync status=progress | gzip -1 -c | ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} "gzip -d | dd of=/dev/sda bs=5M && mount /dev/sda2 /tmp && mkdir -p /tmp/persist/sops/ && curl -sLo /tmp/persist/sops/key ${{ secrets.AGE_KEY_URL }}"
