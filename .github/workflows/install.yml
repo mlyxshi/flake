@@ -62,6 +62,8 @@ jobs:
         dd if=$imagePath/image.raw bs=5M conv=fsync status=progress | gzip -1 -c | \
           ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} \
           "gzip -d | dd of=/dev/sda bs=5M && mount /dev/sda2 /tmp && mkdir -p /tmp/persist/sops/ && curl -sLo /tmp/persist/sops/key ${{ secrets.AGE_KEY_URL }} && reboot"
+    
+    - run: curl https://api.day.app/${{ secrets.BARK_KEY }}/NixOS%20Install%20Done/${{ inputs.host }}?icon=https://hydra.nixos.org/logo
 
   dd-aarch64:
     if: inputs.arch == 'aarch64'
@@ -73,11 +75,5 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
 
-    - run: |
-        ssh -o StrictHostKeyChecking=no root@kr.mlyxshi.com  "os-dd ${{ inputs.host }} ${{ inputs.ip }} ${{ secrets.AGE_KEY_URL }}"
-
-  Notify:
-    runs-on: ubuntu-latest
-    needs: [dd-x86_64, dd-aarch64]
-    steps:
+    - run: ssh -o StrictHostKeyChecking=no root@kr.mlyxshi.com  "os-dd ${{ inputs.host }} ${{ inputs.ip }} ${{ secrets.AGE_KEY_URL }}"
     - run: curl https://api.day.app/${{ secrets.BARK_KEY }}/NixOS%20Install%20Done/${{ inputs.host }}?icon=https://hydra.nixos.org/logo
