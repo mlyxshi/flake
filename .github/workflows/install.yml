@@ -24,7 +24,7 @@ jobs:
   kexec:
     runs-on: ubuntu-latest
     continue-on-error: true
-    timeout-minutes: 3
+    timeout-minutes: 2
     steps:
     
     - run: |
@@ -54,3 +54,6 @@ jobs:
         dd if=$imagePath/image.raw bs=5M conv=fsync status=progress | gzip -1 -c | \
         ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} \
         "gzip -d | dd of=/dev/sda bs=5M && mount /dev/sda2 /tmp && mkdir -p /tmp/persist/sops/ && curl -sLo /tmp/persist/sops/key ${{ secrets.AGE_KEY_URL }} &&reboot"
+  
+    - run: |
+        curl https://api.day.app/${{ secrets.BARK_KEY }}/NixOS%20Install%20Done/$host?icon=https://hydra.nixos.org/logo
