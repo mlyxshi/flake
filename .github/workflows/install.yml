@@ -45,11 +45,10 @@ jobs:
         mkdir -m 0755  ~/.ssh
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
-        echo "de.mlyxshi.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF4LelseUm4BI8cSreC1OFRNiN06gGi8WXoS+BfKBOcm"  ~/.ssh/known_hosts
 
     - run: |
         image=$(nix build --no-link --print-out-paths \
-          --builders 'ssh://root@de.mlyxshi.com aarch64-linux - 4 1 nixos-test,big-parallel,benchmark - -' \
+          --builders 'ssh://root@de.mlyxshi.com aarch64-linux - 4 1 nixos-test,big-parallel,benchmark - c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUY0TGVsc2VVbTRCSThjU3JlQzFPRlJOaU4wNmdHaThXWG9TK0JmS0JPY20gcm9vdEBhcm0K' \
           .#nixosConfigurations.${{ inputs.host }}.config.system.build.image)
 
         echo "imagePath=$image" >> "$GITHUB_ENV"
