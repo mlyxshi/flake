@@ -8,13 +8,13 @@ in
     "${modulesPath}/image/repart.nix"
   ];
 
-  fileSystems."/".autoResize = true;
+  #fileSystems."/".autoResize = true;
 
   boot.initrd.systemd.repart.enable = true;
   boot.initrd.systemd.repart.device = "/dev/sda";
 
   image.repart = {
-    name = "repart-image";
+    name = config.networking.hostName;
     partitions = {
       "BOOT" = {
         contents = {
