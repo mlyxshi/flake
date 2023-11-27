@@ -1,12 +1,22 @@
 name: "Install OS"
 on:
   workflow_dispatch:
+    inputs:
+      ip:
+        type: string
+        required: true
 
 jobs:
-  CI:
+  Image:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
     - uses: DeterminateSystems/nix-installer-action@main
+    - run: |
+        mkdir -m 0755  ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+        chmod 600 ~/.ssh/id_ed25519
+    - run: |
+        ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} 'mkdir test'
 
-    - run: nix build .#nixosConfigurations.sw2.config.system.build.image
+    # - run: nix build .#nixosConfigurations.sw2.config.system.build.image

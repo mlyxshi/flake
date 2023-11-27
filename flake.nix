@@ -56,7 +56,6 @@
         de = self.nixosConfigurations.de.config.system.build.toplevel;
         transmission = self.packages.aarch64-linux.transmission;
 
-        img-sw2 = self.nixosConfigurations.sw2.config.system.build.image;
         img-de = self.nixosConfigurations.de.config.system.build.image;
       };
     };
