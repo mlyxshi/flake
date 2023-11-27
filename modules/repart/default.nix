@@ -8,7 +8,7 @@ in
     "${modulesPath}/image/repart.nix"
   ];
 
-  #fileSystems."/".autoResize = true;
+  fileSystems."/".autoResize = true;
 
   image.repart = {
     name = config.networking.hostName;
