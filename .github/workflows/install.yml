@@ -31,7 +31,7 @@ jobs:
         chmod 600 ~/.ssh/id_ed25519
     - run: |
         ssh -o StrictHostKeyChecking=no ${{ inputs.user }}@${{ inputs.ip }} \
-        'sudo curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | bash -s'
+        'sudo curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | bash -s && exit'
 
   dd:
     runs-on: ubuntu-latest
