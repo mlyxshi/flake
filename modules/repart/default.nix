@@ -8,7 +8,13 @@ in
     "${modulesPath}/image/repart.nix"
   ];
 
-  fileSystems."/".autoResize = true;
+  #fileSystems."/".autoResize = true;
+
+  # https://www.freedesktop.org/software/systemd/man/latest/repart.d.html#Examples
+  systemd.repart.enable = true;
+  systemd.repart.partitions = {
+    "01-root" = { Type = "root"; };
+  };
 
   image.repart = {
     name = config.networking.hostName;
