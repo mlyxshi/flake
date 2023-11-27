@@ -1,5 +1,5 @@
-# systemd-repartd: enlarge existing partitions
-# systemd-growfs: enlarge filesystems in partitions
+# systemd-repartd: enlarge existing partitions  (lsblk)
+# systemd-growfs: enlarge filesystems in partitions (df -h)
 
 { config, lib, pkgs, modulesPath, ... }:
 let
@@ -11,8 +11,10 @@ in
     "${modulesPath}/image/repart.nix"
   ];
 
+  # systemd-growfs
   fileSystems."/".autoResize = true;
 
+  # systemd-repartd
   # https://www.freedesktop.org/software/systemd/man/latest/repart.d.html#Examples
   systemd.repart.enable = true;
   systemd.repart.partitions = {
