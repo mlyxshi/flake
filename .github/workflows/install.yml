@@ -43,7 +43,7 @@ jobs:
         'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | sudo bash -s'
 
   dd-x86_64:
-    if: ${{ inputs.arch }} == "x86_64"
+    if: inputs.arch == 'x86_64'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
@@ -68,7 +68,7 @@ jobs:
 
 
   dd-aarch64:
-    if: ${{ inputs.arch }} == "aarch64"
+    if: inputs.arch == 'aarch64'
     runs-on: ubuntu-latest
     steps:
 
