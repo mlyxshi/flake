@@ -45,6 +45,7 @@ jobs:
         mkdir -m 0755  ~/.ssh
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
+        echo "de.mlyxshi.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF4LelseUm4BI8cSreC1OFRNiN06gGi8WXoS+BfKBOcm"  ~/.ssh/known_hosts
 
     - run: |
         image=$(nix build --no-link --print-out-paths \
@@ -52,8 +53,7 @@ jobs:
           .#nixosConfigurations.${{ inputs.host }}.config.system.build.image)
 
         echo "imagePath=$image" >> "$GITHUB_ENV"
-      env:
-        NIX_SSHOPTS: -o StrictHostKeyChecking=no
+
     
     - run: |
         dd if=$imagePath/image.raw bs=5M conv=fsync status=progress | gzip -1 -c | \
