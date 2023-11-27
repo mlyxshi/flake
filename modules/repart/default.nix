@@ -1,3 +1,6 @@
+# systemd-repartd: enlarge existing partitions
+# systemd-growfs: enlarge filesystems in partitions
+
 { config, lib, pkgs, modulesPath, ... }:
 let
   efiArch = pkgs.stdenv.hostPlatform.efiArch;
@@ -8,7 +11,7 @@ in
     "${modulesPath}/image/repart.nix"
   ];
 
-  #fileSystems."/".autoResize = true;
+  fileSystems."/".autoResize = true;
 
   # https://www.freedesktop.org/software/systemd/man/latest/repart.d.html#Examples
   systemd.repart.enable = true;
