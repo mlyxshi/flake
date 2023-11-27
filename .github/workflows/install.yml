@@ -1,0 +1,12 @@
+name: "Install OS"
+on:
+  workflow_dispatch:
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: DeterminateSystems/nix-installer-action@main
+
+    - run: nix build .#nixosConfigurations.sw2.config.system.build.image
