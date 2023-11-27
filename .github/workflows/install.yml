@@ -3,13 +3,35 @@ on:
   workflow_dispatch:
     inputs:
       ip:
+        description: 'ip or domain'
         type: string
         required: true
       host:
+        description: 'os config hostname'
         type: string
         required: true
+      user:
+        description: 'ssh user'
+        required: true
+        default: 'root'
+        type: choice
+        options:
+          - ubuntu
+          - root
 
 jobs:
+
+  kexec:
+    runs-on: ubuntu-latest
+    steps:
+    
+    - run: |
+        mkdir -m 0755  ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+        chmod 600 ~/.ssh/id_ed25519
+    - run: |
+        ssh -o StrictHostKeyChecking=no ${{ inputs.user }}@${{ inputs.ip }} \
+        'sudo curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | bash -s'
 
   dd:
     runs-on: ubuntu-latest
