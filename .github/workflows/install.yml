@@ -18,6 +18,13 @@ on:
         options:
           - ubuntu
           - root
+      arch:
+        required: true
+        default: 'aarch64'
+        type: choice
+        options:
+          - aarch64
+          - x86_64
 
 jobs:
 
@@ -35,7 +42,8 @@ jobs:
         ssh -o StrictHostKeyChecking=no ${{ inputs.user }}@${{ inputs.ip }} \
         'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | sudo bash -s'
 
-  dd:
+  dd-x86_64:
+    if: ${{ inputs.user }} == "x86_64"
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
@@ -47,12 +55,8 @@ jobs:
         chmod 600 ~/.ssh/id_ed25519
 
     - run: |
-        image=$(nix build --no-link --print-out-paths \
-          --option builders-use-substitutes true --builders 'ssh://root@de.mlyxshi.com aarch64-linux /home/runner/.ssh/id_ed25519 4 1 nixos-test,big-parallel,benchmark - c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUY0TGVsc2VVbTRCSThjU3JlQzFPRlJOaU4wNmdHaThXWG9TK0JmS0JPY20gcm9vdEBhcm0K' \
-          .#nixosConfigurations.${{ inputs.host }}.config.system.build.image)
-
+        image=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ inputs.host }}.config.system.build.image)
         echo "imagePath=$image" >> "$GITHUB_ENV"
-
     
     - run: |
         dd if=$imagePath/image.raw bs=5M conv=fsync status=progress | gzip -1 -c | \
@@ -61,3 +65,18 @@ jobs:
   
     - run: |
         curl https://api.day.app/${{ secrets.BARK_KEY }}/NixOS%20Install%20Done/${{ inputs.host }}?icon=https://hydra.nixos.org/logo
+
+
+  dd-aarch64:
+    if: ${{ inputs.user }} == "aarch64"
+    runs-on: ubuntu-latest
+    steps:
+
+    - run: |
+        mkdir -m 0755  ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+        chmod 600 ~/.ssh/id_ed25519
+
+    - run: |
+        ssh -o StrictHostKeyChecking=no root@kr.mlyxshi.com  "os-dd ${{ inputs.host }} ${{ inputs.ip }} ${{ secrets.AGE_KEY_URL }}"
+        
