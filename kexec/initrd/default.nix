@@ -46,6 +46,7 @@
     lsblk = "${pkgs.util-linux}/bin/lsblk";
     curl = "${pkgs.curl}/bin/curl";
     jq = "${pkgs.jq}/bin/jq";
+    gzip = "${pkgs.gzip}/bin/gzip";
 
     get-kernel-param = pkgs.writeScript "get-kernel-param" ''
       for o in $(< /proc/cmdline); do
@@ -61,20 +62,20 @@
   # move everything in / to /sysroot and switch-root into it. 
   # This runs a few things twice and wastes some memory
   # but is necessary for nix --store flag as pivot_root does not work on rootfs.
-  boot.initrd.systemd.services.remount-root = {
-    before = [ "initrd-fs.target" ];
-    serviceConfig.Type = "oneshot";
-    script = ''
-      ls -l /
-      root_fs_type="$(mount|awk '$3 == "/" { print $1 }')"
-      if [ "$root_fs_type" != "tmpfs" ]; then
-        cp -R /init /bin /etc /lib /nix /root /sbin /var  /sysroot
-        mkdir -p /sysroot/tmp
-        systemctl --no-block switch-root /sysroot /bin/init
-      fi
-    '';
-    requiredBy = [ "initrd-fs.target" ];
-  };
+  # boot.initrd.systemd.services.remount-root = {
+  #   before = [ "initrd-fs.target" ];
+  #   serviceConfig.Type = "oneshot";
+  #   script = ''
+  #     ls -l /
+  #     root_fs_type="$(mount|awk '$3 == "/" { print $1 }')"
+  #     if [ "$root_fs_type" != "tmpfs" ]; then
+  #       cp -R /init /bin /etc /lib /nix /root /sbin /var  /sysroot
+  #       mkdir -p /sysroot/tmp
+  #       systemctl --no-block switch-root /sysroot /bin/init
+  #     fi
+  #   '';
+  #   requiredBy = [ "initrd-fs.target" ];
+  # };
 
 
   # Disable default services in Nixpkgs
