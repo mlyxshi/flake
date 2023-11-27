@@ -74,7 +74,7 @@ jobs:
         chmod 600 ~/.ssh/id_ed25519
 
     - run: |
-        ssh -o StrictHostKeyChecking=no root@kr.mlyxshi.com  "os-dd ${{ inputs.host }} ${{ inputs.ip }}"
+        ssh -o StrictHostKeyChecking=no root@kr.mlyxshi.com  "os-dd ${{ inputs.host }} ${{ inputs.ip }} ${{ secrets.AGE_KEY_URL }}"
 
   Notify:
     runs-on: ubuntu-latest
