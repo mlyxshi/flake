@@ -118,15 +118,7 @@
       cd /persist/flake
       git pull 
       
-      HM=$(nix build --no-link --print-out-paths .#homeConfigurations.server-$(uname -m).activation-script)
-
-      if [ -n "$HM" ]
-      then
-        $HM/activate
-      else
-        echo "Build Failed"
-        exit 1
-      fi
+      home-manager --flake  .#server-aarch64 switch
     '')
   ];
 
