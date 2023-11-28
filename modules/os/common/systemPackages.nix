@@ -28,6 +28,7 @@
     fzf
     gdu
     home-manager
+    git
   ] ++ lib.optionals config.settings.developerMode [
     sops
     gh

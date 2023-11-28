@@ -32,7 +32,7 @@ in
   image.repart = {
     name = config.networking.hostName;
     partitions = {
-      "BOOT" = {
+      "00-esp" = {
         contents = {
           "/EFI/BOOT/BOOT${lib.toUpper efiArch}.EFI".source = "${pkgs.systemd}/lib/systemd/boot/efi/systemd-boot${efiArch}.efi";
           "/EFI/nixos/kernel.efi".source = "${config.boot.kernelPackages.kernel}/${config.system.boot.loader.kernelFile}";
@@ -51,7 +51,7 @@ in
           SizeMinBytes = "1G";
         };
       };
-      "NIXOS" = {
+      "01-root" = {
         storePaths = [ config.system.build.toplevel ];
         repartConfig = {
           Type = "root";

@@ -121,6 +121,10 @@
       
       home-manager --flake .#server-$(uname -m) switch
     '')
+
+    (pkgs.writeShellScriptBin "home-init" ''      
+      home-manager --flake github:mlyxshi/flake#server-$(uname -m) switch
+    '')
   ];
 
   # https://github.com/numtide/srvos/blob/main/nixos/common/networking.nix
