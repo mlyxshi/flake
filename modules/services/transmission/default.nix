@@ -15,7 +15,7 @@ in
     substituters = [ "https://cache.mlyxshi.com" ];
     trusted-public-keys = [ "cache:vXjiuWtSTOXj63zr+ZjMvXqvaYIK1atjyyEk+iuIqSg=" ];
   };
-  
+
   sops.secrets.user = { };
   sops.secrets.password = { };
   sops.templates.transmission-admin-credentials.content = ''

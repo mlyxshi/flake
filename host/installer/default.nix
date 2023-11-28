@@ -1,11 +1,9 @@
-{ self, nixpkgs, sops-nix, home-manager }:
+{ self, nixpkgs, sops-nix }:
 
 nixpkgs.lib.nixosSystem {
   modules = [
     sops-nix.nixosModules.default
-    home-manager.nixosModules.default
     self.nixosModules.os.nixos.server
-    self.nixosModules.settings.nixConfigDir
     self.nixosModules.settings.developerMode
     ./configuration.nix
     {
@@ -17,11 +15,6 @@ nixpkgs.lib.nixosSystem {
         useDHCP = true;
         firewall.enable = false;
       };
-
-      home-manager.users.root = import ../../home;
-      home-manager.useGlobalPkgs = true;
-      home-manager.useUserPackages = true;
-      home-manager.verbose = true;
     }
   ];
   specialArgs = { inherit self nixpkgs sops-nix; };

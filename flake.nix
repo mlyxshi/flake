@@ -26,17 +26,34 @@
     {
       overlays.default = final: prev: prev.lib.genAttrs packagelist (name: prev.callPackage ./pkgs/${name} { });
       nixosModules = mkFileHierarchyAttrset ./. "modules";
-      darwinConfigurations.M1 = import ./host/M1 { inherit self nixpkgs darwin home-manager; };
+      darwinConfigurations.M1 = import ./host/M1 { inherit self nixpkgs darwin; };
       nixosConfigurations = {
-        hx90 = import ./host/hx90 { inherit self nixpkgs home-manager sops-nix nix-index-database; };
-        installer = import ./host/installer { inherit self nixpkgs sops-nix home-manager; };
+        hx90 = import ./host/hx90 { inherit self nixpkgs sops-nix nix-index-database; };
+        installer = import ./host/installer { inherit self nixpkgs sops-nix; };
         qemu-test-x64 = import ./host/oracle/mkTest.nix { inherit self nixpkgs sops-nix; };
 
         kexec-x86_64 = import ./kexec/mkKexec.nix { arch = "x86_64"; inherit self nixpkgs; };
         kexec-aarch64 = import ./kexec/mkKexec.nix { arch = "aarch64"; inherit self nixpkgs; };
       }
-      // lib.genAttrs oracle-serverlist (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs home-manager sops-nix hydra; });
+      // lib.genAttrs oracle-serverlist (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs sops-nix hydra; });
 
+
+      homeConfigurations = {
+        darwin = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+          modules = [ ./home/darwin.nix ];
+        };
+
+        server-aarch64 = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.aarch64-linux;
+          modules = [ ./home/server.nix ];
+        };
+
+        server-x86_64 = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          modules = [ ./home/server.nix ];
+        };
+      };
       packages = {
         aarch64-darwin = lib.genAttrs (getArchPkgs "aarch64-darwin") (name: nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/${name} { });
         aarch64-linux = lib.genAttrs (getArchPkgs "aarch64-linux") (name: nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/${name} { });

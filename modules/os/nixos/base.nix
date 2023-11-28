@@ -112,6 +112,15 @@
         exit 1
       fi
     '')
+
+    (pkgs.writeShellScriptBin "home-update" ''
+      [[ -e "/persist/flake/flake.nix" ]] || git clone --depth=1  git@github.com:mlyxshi/flake /persist/flake
+      
+      cd /persist/flake
+      git pull 
+      
+      home-manager --flake .#server-$(uname -m) switch
+    '')
   ];
 
   # https://github.com/numtide/srvos/blob/main/nixos/common/networking.nix

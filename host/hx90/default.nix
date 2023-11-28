@@ -6,7 +6,6 @@ nixpkgs.lib.nixosSystem {
     home-manager.nixosModules.default
     nix-index-database.nixosModules.nix-index
     self.nixosModules.os.nixos.desktop
-    self.nixosModules.settings.nixConfigDir
     self.nixosModules.settings.developerMode
     self.nixosModules.services.ssh-config
     ./configuration.nix
@@ -14,7 +13,6 @@ nixpkgs.lib.nixosSystem {
       nixpkgs.overlays = [ self.overlays.default ];
       nixpkgs.hostPlatform = "x86_64-linux";
       networking.hostName = "hx90";
-      settings.nixConfigDir = "/persist/flake";
       settings.developerMode = true;
 
       sops.package = sops-nix.packages.x86_64-linux.sops-install-secrets;

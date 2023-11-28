@@ -3,7 +3,6 @@ theme = "catppuccin_macchiato"
 [editor]
 mouse = false
 color-modes = true
-cursorline = true
 
 [editor.cursor-shape]
 insert = "bar"

@@ -27,6 +27,7 @@
     bat-extras.batman
     fzf
     gdu
+    home-manager
   ] ++ lib.optionals config.settings.developerMode [
     sops
     gh

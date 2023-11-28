@@ -1,10 +1,10 @@
-{
-
+{ pkgs, lib, config, ... }: {
   imports = [
     ./git.nix
-    ./helix.nix
-    ./joshuto.nix
   ];
 
-  home.stateVersion = "23.11";
+  home.stateVersion = "24.05";
+
+  home.file.".config/joshuto".source = ../config/joshuto;
+  home.file.".config/helix".source = ../config/helix;
 }

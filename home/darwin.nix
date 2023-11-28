@@ -5,4 +5,9 @@
     ./mpv.nix
     ./firefox.nix
   ];
+
+  home = {
+    username = "dominic";
+    homeDirectory = "/Users/dominic";
+  };
 }
