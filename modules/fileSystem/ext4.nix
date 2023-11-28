@@ -37,6 +37,7 @@ in
           "/EFI/BOOT/BOOT${lib.toUpper efiArch}.EFI".source = "${pkgs.systemd}/lib/systemd/boot/efi/systemd-boot${efiArch}.efi";
           "/EFI/nixos/kernel.efi".source = "${config.boot.kernelPackages.kernel}/${config.system.boot.loader.kernelFile}";
           "/EFI/nixos/initrd.efi".source = "${config.system.build.initialRamdisk}/${config.system.boot.loader.initrdFile}";
+          "/EFI/systemd/systemd-boot${efiArch}.efi".source = "${pkgs.systemd}/lib/systemd/boot/efi/systemd-boot${efiArch}.efi";
           "/loader/entries/nixos.conf".source = pkgs.writeText "nixos.conf" ''
             title NixOS
             linux /EFI/nixos/kernel.efi

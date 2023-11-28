@@ -119,11 +119,11 @@
       cd /persist/flake
       git pull 
       
-      HOME=$(nix build --no-link --print-out-paths .#homeConfigurations.server-$(uname -m).activation-script)
+      HM=$(nix build --no-link --print-out-paths .#homeConfigurations.server-$(uname -m).activation-script)
 
-      if [ -n "$HOME" ]
+      if [ -n "$HM" ]
       then
-        $HOME/activate
+        $HM/activate
       else
         echo "Build Failed"
         exit 1
@@ -131,11 +131,11 @@
     '')
 
     (pkgs.writeShellScriptBin "home-init" ''      
-      HOME=$(nix build --no-link --print-out-paths ${self}#homeConfigurations.server-$(uname -m).activation-script)
+      HM=$(nix build --no-link --print-out-paths ${self}#homeConfigurations.server-$(uname -m).activation-script)
 
-      if [ -n "$HOME" ]
+      if [ -n "$HM" ]
       then
-        $HOME/activate
+        $HM/activate
       else
         echo "Build Failed"
         exit 1
