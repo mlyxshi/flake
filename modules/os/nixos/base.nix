@@ -80,7 +80,6 @@
 
   environment.systemPackages = [
     (pkgs.writeShellScriptBin "update" ''
-      export PATH=$PATH:${pkgs.git}/bin:${pkgs.nix}/bin
       [[ -e "/persist/flake/flake.nix" ]] || git clone --depth=1  git@github.com:mlyxshi/flake /persist/flake
       
       cd /persist/flake
@@ -120,18 +119,6 @@
       git pull 
       
       HM=$(nix build --no-link --print-out-paths .#homeConfigurations.server-$(uname -m).activation-script)
-
-      if [ -n "$HM" ]
-      then
-        $HM/activate
-      else
-        echo "Build Failed"
-        exit 1
-      fi
-    '')
-
-    (pkgs.writeShellScriptBin "home-init" ''      
-      HM=$(nix build --no-link --print-out-paths ${self}#homeConfigurations.server-$(uname -m).activation-script)
 
       if [ -n "$HM" ]
       then
