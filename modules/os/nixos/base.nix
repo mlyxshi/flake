@@ -118,7 +118,7 @@
       cd /persist/flake
       git pull 
       
-      home-manager --flake  .#server-aarch64 switch
+      home-manager --flake  .#server-$(uname -m) switch
     '')
   ];
 
