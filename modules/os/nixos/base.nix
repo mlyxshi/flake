@@ -119,11 +119,27 @@
       cd /persist/flake
       git pull 
       
-      home-manager --flake .#server-$(uname -m) switch
+      HOME=$(nix build --no-link --print-out-paths .#homeConfigurations.server-$(uname -m).activation-script)
+
+      if [ -n "$HOME" ]
+      then
+        $HOME/activate
+      else
+        echo "Build Failed"
+        exit 1
+      fi
     '')
 
     (pkgs.writeShellScriptBin "home-init" ''      
-      home-manager --flake github:mlyxshi/flake#server-$(uname -m) switch
+      HOME=$(nix build --no-link --print-out-paths ${self}#homeConfigurations.server-$(uname -m).activation-script)
+
+      if [ -n "$HOME" ]
+      then
+        $HOME/activate
+      else
+        echo "Build Failed"
+        exit 1
+      fi
     '')
   ];
 
