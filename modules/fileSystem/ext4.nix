@@ -56,7 +56,7 @@ in
         storePaths = [ 
           config.system.build.toplevel 
           # has a context which refers to a complete source and binary closure
-          # config.system.build.toplevel.drvPath 
+          config.system.build.toplevel.drvPath 
         ];
         repartConfig = {
           Type = "root";
