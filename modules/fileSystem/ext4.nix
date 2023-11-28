@@ -53,7 +53,10 @@ in
         };
       };
       "01-root" = {
-        storePaths = [ config.system.build.toplevel ];
+        storePaths = [ 
+          config.system.build.toplevel 
+          config.system.build.toplevel.drvPath
+        ];
         repartConfig = {
           Type = "root";
           Format = "ext4";
