@@ -10,13 +10,13 @@
   };
 
   # https://unix.stackexchange.com/a/560404
-  launchd.user.agents.SSH-ADD = {
-    serviceConfig.ProgramArguments = [
-      "/usr/bin/ssh-add"
-      "/Users/dominic/.ssh/id_ed25519"
-    ];
-    serviceConfig.RunAtLoad = true;
-  };
+  # launchd.user.agents.SSH-ADD = {
+  #   serviceConfig.ProgramArguments = [
+  #     "/usr/bin/ssh-add"
+  #     "/Users/dominic/.ssh/id_ed25519"
+  #   ];
+  #   serviceConfig.RunAtLoad = true;
+  # };
 
   # launchd.user.agents.local-proxy = {
   #   serviceConfig.ProgramArguments = [
