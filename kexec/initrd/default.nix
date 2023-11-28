@@ -1,5 +1,6 @@
 { config, pkgs, lib, ... }: {
   imports = [
+    ./install.nix
     ./network.nix
     ./kernelModules.nix
   ];
@@ -8,6 +9,12 @@
     "/etc/hostname".text = "${config.networking.hostName}\n";
     "/etc/resolv.conf".text = "nameserver 1.1.1.1\n";
     "/etc/ssl/certs/ca-certificates.crt".source = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+    "/etc/nix/nix.conf".text = ''
+      extra-experimental-features = nix-command flakes auto-allocate-uids
+      auto-allocate-uids = true
+      substituters = https://cache.nixos.org https://cache.mlyxshi.com
+      trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= cache:vXjiuWtSTOXj63zr+ZjMvXqvaYIK1atjyyEk+iuIqSg=
+    '';
   };
 
 
@@ -25,10 +32,20 @@
   boot.initrd.systemd.initrdBin = [ pkgs.dosfstools pkgs.e2fsprogs ];
 
   boot.initrd.systemd.extraBin = {
+    # nix & installer
+    nix = "${pkgs.nix}/bin/nix";
+    nix-store = "${pkgs.nix}/bin/nix-store";
+    nix-env = "${pkgs.nix}/bin/nix-env";
     busybox = "${pkgs.busybox-sandbox-shell}/bin/busybox";
+    nixos-enter = "${pkgs.nixos-install-tools}/bin/nixos-enter";
+    unshare = "${pkgs.util-linux}/bin/unshare";
+
     ssh-keygen = "${config.programs.ssh.package}/bin/ssh-keygen";
+    awk = "${pkgs.gawk}/bin/awk";
+    sfdisk = "${pkgs.util-linux}/bin/sfdisk";
     lsblk = "${pkgs.util-linux}/bin/lsblk";
     curl = "${pkgs.curl}/bin/curl";
+    jq = "${pkgs.jq}/bin/jq";
     gzip = "${pkgs.gzip}/bin/gzip";
 
     get-kernel-param = pkgs.writeScript "get-kernel-param" ''
@@ -40,6 +57,24 @@
           esac
       done
     '';
+  };
+
+  # move everything in / to /sysroot and switch-root into it. 
+  # This runs a few things twice and wastes some memory
+  # but is necessary for nix --store flag as pivot_root does not work on rootfs.
+  boot.initrd.systemd.services.remount-root = {
+    before = [ "initrd-fs.target" ];
+    serviceConfig.Type = "oneshot";
+    script = ''
+      ls -l /
+      root_fs_type="$(mount|awk '$3 == "/" { print $1 }')"
+      if [ "$root_fs_type" != "tmpfs" ]; then
+        cp -R /init /bin /etc /lib /nix /root /sbin /var  /sysroot
+        mkdir -p /sysroot/tmp
+        systemctl --no-block switch-root /sysroot /bin/init
+      fi
+    '';
+    requiredBy = [ "initrd-fs.target" ];
   };
 
 
