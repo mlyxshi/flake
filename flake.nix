@@ -54,6 +54,7 @@
           modules = [ ./home/server.nix ];
         };
       };
+
       packages = {
         aarch64-darwin = lib.genAttrs (getArchPkgs "aarch64-darwin") (name: nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/${name} { });
         aarch64-linux = lib.genAttrs (getArchPkgs "aarch64-linux") (name: nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/${name} { });
@@ -69,6 +70,7 @@
         kexec-aarch64 = self.nixosConfigurations.kexec-aarch64.config.system.build.kexec;
         kexec-x86_64 = self.nixosConfigurations.kexec-x86_64.config.system.build.kexec;
         transmission = self.packages.aarch64-linux.transmission;
+        sw2 = self.nixosConfigurations.sw2.config.system.build.toplevel;
       };
     };
 }

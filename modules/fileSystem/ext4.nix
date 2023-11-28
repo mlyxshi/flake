@@ -29,6 +29,8 @@ in
   systemd.repart.partitions = { "01-root" = { Type = "root"; }; };
 
   # OS raw image
+  # https://nixos.org/manual/nixos/unstable/#sec-image-repart-appliance
+  # This image is not switchable! https://github.com/NixOS/nixpkgs/pull/263462
   image.repart = {
     name = config.networking.hostName;
     partitions = {
@@ -53,10 +55,8 @@ in
         };
       };
       "01-root" = {
-        storePaths = [ 
-          config.system.build.toplevel 
-          # has a context which refers to a complete source and binary closure
-          config.system.build.toplevel.drvPath 
+        storePaths = [
+          config.system.build.toplevel
         ];
         repartConfig = {
           Type = "root";
