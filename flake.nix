@@ -37,17 +37,9 @@
       }
       // lib.genAttrs oracle-serverlist (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs sops-nix hydra; });
 
-
       homeConfigurations = {
-        darwin = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.aarch64-darwin;
-          modules = [ ./home/darwin.nix ];
-        };
-
-        sway = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [ ./home/sway.nix ];
-        };
+        darwin = home-manager.lib.homeManagerConfiguration { pkgs = nixpkgs.legacyPackages.aarch64-darwin; modules = [ ./home/darwin.nix ]; };
+        sway = home-manager.lib.homeManagerConfiguration { pkgs = nixpkgs.legacyPackages.x86_64-linux; modules = [ ./home/sway.nix ]; };
       };
 
       packages = {
