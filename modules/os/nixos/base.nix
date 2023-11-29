@@ -112,13 +112,14 @@
       fi
     '')
 
-    (pkgs.writeShellScriptBin "home-update" ''
+    (pkgs.writeShellScriptBin "config-update" ''
       [[ -e "/persist/flake/flake.nix" ]] || git clone --depth=1  git@github.com:mlyxshi/flake /persist/flake
       
       cd /persist/flake
       git pull 
       
-      home-manager --flake  .#server-$(uname -m) switch
+      chmod +x ./config.sh
+      ./config.sh
     '')
   ];
 

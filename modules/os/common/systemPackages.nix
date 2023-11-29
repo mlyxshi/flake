@@ -27,7 +27,6 @@
     bat-extras.batman
     fzf
     gdu
-    home-manager
     git
   ] ++ lib.optionals config.settings.developerMode [
     sops
@@ -38,6 +37,7 @@
     deno
   ] ++ lib.optionals pkgs.stdenv.isDarwin [
     restic
+    home-manager
   ] ++ lib.optionals pkgs.stdenv.isLinux [
     below
     neofetch

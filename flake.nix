@@ -44,14 +44,9 @@
           modules = [ ./home/darwin.nix ];
         };
 
-        server-aarch64 = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.aarch64-linux;
-          modules = [ ./home/server.nix ];
-        };
-
-        server-x86_64 = home-manager.lib.homeManagerConfiguration {
+        sway = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [ ./home/server.nix ];
+          modules = [ ./home/sway.nix ];
         };
       };
 

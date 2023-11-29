@@ -16,7 +16,7 @@
     firefox
   ];
 
-  environment.etc."firefox/policies/policies.json".text = builtins.toJSON (import ../../../config/firefox/policy.nix);
+  environment.etc."firefox/policies/policies.json".text = builtins.toJSON (import ../../../home/firefox/policy.nix);
 
   fonts = {
     fonts = [

@@ -1,9 +1,8 @@
 { pkgs, ... }: {
   imports = [
     ./default.nix
-    ./kitty.nix
-    ./mpv.nix
-    ./firefox.nix
+    ./mpv
+    ./firefox
   ];
 
   xdg.configFile."sway/config".source = ../config/sway/config;

@@ -13,7 +13,7 @@ let
   ff-mpv = pkgs.writeScript "ff2mpv" (''
     #!${pkgs.python3}/bin/python
   ''
-  + builtins.readFile ../config/firefox/NativeMessagingHosts/ff2mpv.py);
+  + builtins.readFile ./NativeMessagingHosts/ff2mpv.py);
 in
 {
   programs.firefox.enable = true;

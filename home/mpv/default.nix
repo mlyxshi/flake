@@ -29,8 +29,8 @@
 
   home.file.".config/mpv/mpv.conf".source =
     if pkgs.stdenv.isLinux
-    then ../config/mpv/mpv-linux.conf
-    else ../config/mpv/mpv-darwin.conf;
-  home.file.".config/mpv/scripts".source = ../config/mpv/scripts;
-  home.file.".config/mpv/script-opts".source = ../config/mpv/script-opts;
+    then ./mpv-linux.conf
+    else ./mpv-darwin.conf;
+  home.file.".config/mpv/scripts".source = ./scripts;
+  home.file.".config/mpv/script-opts".source = ./script-opts;
 }

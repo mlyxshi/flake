@@ -51,7 +51,7 @@
   system.activationScripts.postActivation.text = '' 
     [[ -e "/run/current-system" ]] && ${pkgs.nix}/bin/nix store  diff-closures /run/current-system "$systemConfig"
 
-    [[ -e "/Applications/Firefox.app/Contents/Resources/" ]] && mkdir -p /Applications/Firefox.app/Contents/Resources/distribution && cat ${pkgs.writeText "firefoxPolicy" (builtins.toJSON (import ../../../config/firefox/policy.nix))} > /Applications/Firefox.app/Contents/Resources/distribution/policies.json
+    [[ -e "/Applications/Firefox.app/Contents/Resources/" ]] && mkdir -p /Applications/Firefox.app/Contents/Resources/distribution && cat ${pkgs.writeText "firefoxPolicy" (builtins.toJSON (import ../../../home/firefox/policy.nix))} > /Applications/Firefox.app/Contents/Resources/distribution/policies.json
   '';
 
 
