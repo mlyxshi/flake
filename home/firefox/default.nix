@@ -17,7 +17,7 @@ let
 in
 {
   programs.firefox.enable = true;
-  programs.firefox.package = pkgs.runCommand "firefox-0.0.0" { } "mkdir $out";
+  programs.firefox.package = null;
 
   programs.firefox.profiles."default" = {
     userChrome = ''  

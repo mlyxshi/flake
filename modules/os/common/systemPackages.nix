@@ -38,6 +38,9 @@
   ] ++ lib.optionals pkgs.stdenv.isDarwin [
     restic
     home-manager
+    ffmpeg
+    yt-dlp
+    mediainfo
   ] ++ lib.optionals pkgs.stdenv.isLinux [
     below
     neofetch

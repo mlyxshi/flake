@@ -1,7 +1,6 @@
 {
   imports = [
     ./default.nix
-    ./mpv
     ./firefox
   ];
 
