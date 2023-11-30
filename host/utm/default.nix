@@ -14,6 +14,11 @@ nixpkgs.lib.nixosSystem {
       nixpkgs.hostPlatform = "aarch64-linux";
       networking.hostName = "utm";
       settings.developerMode = true;
+
+      fileSystems."/mnt" = {
+        device = "share";
+        fsType = "virtiofs";
+      };
     }
   ];
   specialArgs = { inherit self nixpkgs; };
