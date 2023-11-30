@@ -1,4 +1,4 @@
-{ self, nixpkgs, sops-nix }:
+{ arch, self, nixpkgs, sops-nix }:
 nixpkgs.lib.nixosSystem {
   modules = [
     sops-nix.nixosModules.default
@@ -10,8 +10,8 @@ nixpkgs.lib.nixosSystem {
     ./hardware.nix
     {
       nixpkgs.overlays = [ self.overlays.default ];
-      nixpkgs.hostPlatform = "x86_64-linux";
-      networking.hostName = "qemu-test-x86_64";
+      nixpkgs.hostPlatform = "${arch}-linux";
+      networking.hostName = "qemu-test-${arch}";
       networking.domain = "mlyxshi.com";
     }
   ];

@@ -63,7 +63,7 @@ in
 
   system.build.test = pkgs.writeShellScriptBin "test-vm" ''
     test -f disk.img || ${pkgs.qemu_kvm}/bin/qemu-img create -f qcow2 disk.img 10G
-    host=qemu-test-x64
+    host=qemu-test-${arch}
     local_test=1
     exec ${pkgs.qemu_kvm}/bin/qemu-kvm -name ${config.networking.hostName} \
       -m 2048 \

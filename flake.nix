@@ -30,7 +30,9 @@
       nixosConfigurations = {
         hx90 = import ./host/hx90 { inherit self nixpkgs sops-nix nix-index-database; };
         utm = import ./host/utm { inherit self nixpkgs sops-nix; };
-        qemu-test-x64 = import ./host/oracle/mkTest.nix { inherit self nixpkgs sops-nix; };
+
+        qemu-test-x86-64 = import ./host/oracle/mkTest.nix { arch = "x86_64"; inherit self nixpkgs sops-nix; };
+        qemu-test-aarch64 = import ./host/oracle/mkTest.nix { arch = "aarch64"; inherit self nixpkgs sops-nix; };
 
         kexec-x86_64 = import ./kexec/mkKexec.nix { arch = "x86_64"; inherit self nixpkgs; };
         kexec-aarch64 = import ./kexec/mkKexec.nix { arch = "aarch64"; inherit self nixpkgs; };
@@ -44,7 +46,10 @@
 
       packages = {
         aarch64-darwin = lib.genAttrs (getArchPkgs "aarch64-darwin") (name: nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/${name} { });
-        aarch64-linux = lib.genAttrs (getArchPkgs "aarch64-linux") (name: nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/${name} { });
+        aarch64-linux = lib.genAttrs (getArchPkgs "aarch64-linux") (name: nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/${name} { }) // {
+          default = self.nixosConfigurations.kexec-aarch64.config.system.build.test;
+          test0 = self.nixosConfigurations.kexec-aarch64.config.system.build.test0;
+        };
         x86_64-linux = lib.genAttrs (getArchPkgs "x86_64-linux") (name: nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/${name} { }) // {
           default = self.nixosConfigurations.kexec-x86_64.config.system.build.test;
           test0 = self.nixosConfigurations.kexec-x86_64.config.system.build.test0;
