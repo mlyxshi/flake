@@ -1,9 +1,7 @@
 { modulesPath, lib, pkgs, ... }: {
   imports = [
-    (modulesPath + "/installer/cd-dvd/installation-cd-base.nix")
+    (modulesPath + "/installer/cd-dvd/installation-cd-minimal-new-kernel-no-zfs.nix")
   ];
 
   services.getty.autologinUser = lib.mkForce "root";
-
-  boot.kernelPackages = lib.mkForce pkgs.zfs.latestCompatibleLinuxPackages;
 }

@@ -28,14 +28,13 @@
     fzf
     gdu
     git
-  ] ++ lib.optionals config.settings.developerMode [
+  ] ++ lib.optionals pkgs.stdenv.isDarwin [
     sops
     gh
     nixpkgs-fmt
     jq
     lazygit
     deno
-  ] ++ lib.optionals pkgs.stdenv.isDarwin [
     restic
     home-manager
     ffmpeg

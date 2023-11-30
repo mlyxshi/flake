@@ -8,7 +8,6 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.os.nixos.server
     self.nixosModules.network
     self.nixosModules.fileSystem.ext4
-    self.nixosModules.settings.developerMode
     self.nixosModules.services.nodestatus-client
     self.nixosModules.services.traefik
     self.nixosModules.services.telegraf
