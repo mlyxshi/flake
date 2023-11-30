@@ -5,7 +5,6 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.os.nixos.desktop
     self.nixosModules.settings.developerMode
     self.nixosModules.services.ssh-config
-    ./configuration.nix
     {
       nixpkgs.overlays = [ self.overlays.default ];
       nixpkgs.hostPlatform = "aarch64-linux";
