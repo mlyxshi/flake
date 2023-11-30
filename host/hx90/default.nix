@@ -15,8 +15,6 @@ nixpkgs.lib.nixosSystem {
       networking.hostName = "hx90";
       settings.developerMode = true;
 
-      sops.package = sops-nix.packages.x86_64-linux.sops-install-secrets;
-
       home-manager.users.root = import ../../home;
       home-manager.users.dominic = import ../../home/sway.nix;
       home-manager.useGlobalPkgs = true;
