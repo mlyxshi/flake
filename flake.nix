@@ -33,9 +33,9 @@
 
         qemu-test-x86-64 = import ./host/oracle/mkTest.nix { arch = "x86_64"; inherit self nixpkgs sops-nix; };
         qemu-test-aarch64 = import ./host/oracle/mkTest.nix { arch = "aarch64"; inherit self nixpkgs sops-nix; };
-        
-        installer-aarch64 =  ./installer/mkInstaller.nix { arch = "aarch64"; inherit self nixpkgs sops-nix; };
-        
+
+        installer-aarch64 = import ./installer/mkInstaller.nix { arch = "aarch64"; inherit self nixpkgs sops-nix; };
+
         kexec-x86_64 = import ./kexec/mkKexec.nix { arch = "x86_64"; inherit self nixpkgs; };
         kexec-aarch64 = import ./kexec/mkKexec.nix { arch = "aarch64"; inherit self nixpkgs; };
       }
@@ -65,6 +65,7 @@
         kexec-x86_64 = self.nixosConfigurations.kexec-x86_64.config.system.build.kexec;
         transmission = self.packages.aarch64-linux.transmission;
         sw2 = self.nixosConfigurations.sw2.config.system.build.toplevel;
+        installer-aarch64 = self.nixosConfigurations.installer-aarch64.config.system.build.isoImage;
       };
     };
 }
