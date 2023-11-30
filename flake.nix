@@ -33,7 +33,7 @@
 
         qemu-test-x86-64 = import ./host/oracle/mkTest.nix { arch = "x86_64"; inherit self nixpkgs sops-nix; };
         qemu-test-aarch64 = import ./host/oracle/mkTest.nix { arch = "aarch64"; inherit self nixpkgs sops-nix; };
-
+        
         kexec-x86_64 = import ./kexec/mkKexec.nix { arch = "x86_64"; inherit self nixpkgs; };
         kexec-aarch64 = import ./kexec/mkKexec.nix { arch = "aarch64"; inherit self nixpkgs; };
       }
