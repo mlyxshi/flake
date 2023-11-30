@@ -5,5 +5,5 @@
 
   services.getty.autologinUser = lib.mkForce "root";
 
-  nixpkgs.config.allowBroken = true;
+  boot.kernelPackages = lib.mkForce pkgs.zfs.latestCompatibleLinuxPackages;
 }
