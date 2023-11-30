@@ -16,11 +16,13 @@ nixpkgs.lib.nixosSystem {
       settings.developerMode = true;
 
       # https://docs.getutm.app/guest-support/linux/#macos-virtiofs
-      # share directory with macOS
+      # share directory with macOS  
       fileSystems."/mnt" = {
         device = "share";
         fsType = "virtiofs";
       };
+
+      services.getty.autologinUser = "root";
     }
   ];
   specialArgs = { inherit self nixpkgs; };
