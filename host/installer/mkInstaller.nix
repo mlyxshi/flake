@@ -1,10 +1,10 @@
-{ arch, nixpkgs, self, sops-nix}:
+{ arch, nixpkgs, self, sops-nix }:
 nixpkgs.lib.nixosSystem {
   modules = [
     sops-nix.nixosModules.default
     self.nixosModules.os.nixos.server
     self.nixosModules.services.ssh-config
-     ./configuration.nix
+    ./configuration.nix
     {
       nixpkgs.hostPlatform = "${arch}-linux";
       networking.hostName = "installer";
