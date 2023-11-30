@@ -19,6 +19,7 @@ stdenvNoCC.mkDerivation {
     description = "PingFang <-- Apple default font for Chinese";
     platforms = [
       "x86_64-linux"
+      "aarch64-linux"
     ];
   };
 }

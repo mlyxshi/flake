@@ -19,6 +19,7 @@ stdenvNoCC.mkDerivation {
     description = "SF-Pro <-- Apple default font for English";
     platforms = [
       "x86_64-linux"
+      "aarch64-linux"
     ];
   };
 }

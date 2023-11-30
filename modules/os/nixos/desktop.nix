@@ -19,12 +19,12 @@
   environment.etc."firefox/policies/policies.json".text = builtins.toJSON (import ../../../home/firefox/policy.nix);
 
   fonts = {
-    fonts = [
+    packages = [
       (pkgs.nerdfonts.override { fonts = [ "RobotoMono" ]; }) # Terminal Font
       pkgs.SF-Pro # English
       pkgs.PingFang # Chinese/Japanese
     ];
-    enableDefaultFonts = false; # If Sway is enabled, enableDefaultFonts is true by default <-- I don't need extra default fonts
+    enableDefaultPackages = false; # If Sway is enabled, enableDefaultPackages is true by default <-- I don't need extra default fonts
     # fc-list
     fontconfig = {
       enable = true;
