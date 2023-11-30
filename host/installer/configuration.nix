@@ -4,4 +4,6 @@
   ];
 
   services.getty.autologinUser = lib.mkForce "root";
+
+  nixpkgs.config.allowBroken = true;
 }
