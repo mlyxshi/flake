@@ -33,7 +33,7 @@ env:
 
 jobs:
 
-  kexec:
+  Kexec:
     runs-on: ubuntu-latest
     continue-on-error: true
     timeout-minutes: 1
@@ -43,6 +43,21 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
     - run: ssh -o StrictHostKeyChecking=no ${{ inputs.user }}@${{ inputs.ip }} 'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | sudo bash -s'
+
+  Format:
+    runs-on: ubuntu-latest
+    needs: Kexec
+    steps:
+    - run: |
+        mkdir -m 0755  ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+        chmod 600 ~/.ssh/id_ed25519
+    - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} parted --script /dev/sda mklabel gpt mkpart "BOOT" fat32  1MiB  512MiB mkpart "NIXOS" ext4 512MiB 100% set 1 esp on
+    - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} mkfs.fat -F 32 /dev/disk/by-partlabel/BOOT
+    - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} mkfs.ext4 -F /dev/disk/by-partlabel/NIXOS
+    - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} mkdir -p /mnt
+    - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} mount /dev/disk/by-partlabel/NIXOS /mnt
+    - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} mount --mkdir /dev/disk/by-partlabel/BOOT /mnt/boot
 
   Build:
     if: inputs.arch == 'x86_64'
@@ -57,12 +72,6 @@ jobs:
     - uses: actions/checkout@master
     - uses: DeterminateSystems/nix-installer-action@main
 
-    - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} parted --script /dev/sda mklabel gpt mkpart "BOOT" fat32  1MiB  512MiB mkpart "NIXOS" ext4 512MiB 100% set 1 esp on
-    - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} mkfs.fat -F 32 /dev/disk/by-partlabel/BOOT
-    - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} mkfs.ext4 -F /dev/disk/by-partlabel/NIXOS
-    - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} mkdir -p /mnt
-    - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} mount /dev/disk/by-partlabel/NIXOS /mnt
-    - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} mount --mkdir /dev/disk/by-partlabel/BOOT /mnt/boot
     - run: |
         outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ inputs.host }}.config.system.build.toplevel)
         echo "outPath=$outPath" >> "$GITHUB_ENV"
