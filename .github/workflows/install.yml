@@ -18,13 +18,14 @@ on:
         options:
           - root
           - ubuntu
-      # arch:
-      #   required: true
-      #   default: 'aarch64'
-      #   type: choice
-      #   options:
-      #     - aarch64
-      #     - x86_64
+      arch:
+        required: true
+        default: 'x86_64'
+        type: choice
+        options:
+          - x86_64
+          - aarch64
+
 
 
 env:
@@ -32,22 +33,19 @@ env:
 
 jobs:
 
-  # kexec:
-  #   runs-on: ubuntu-latest
-  #   continue-on-error: true
-  #   timeout-minutes: 2
-  #   steps:
-    
-  #   - run: |
-  #       mkdir -m 0755  ~/.ssh
-  #       echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-  #       chmod 600 ~/.ssh/id_ed25519
-  #   - run: |
-  #       ssh -o StrictHostKeyChecking=no ${{ inputs.user }}@${{ inputs.ip }} \
-  #       'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | sudo bash -s'
+  kexec:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    timeout-minutes: 1
+    steps:
+    - run: |
+        mkdir -m 0755  ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+        chmod 600 ~/.ssh/id_ed25519
+    - run: ssh -o StrictHostKeyChecking=no ${{ inputs.user }}@${{ inputs.ip }} 'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | sudo bash -s'
 
   Build:
-    # if: inputs.arch == 'aarch64'
+    if: inputs.arch == 'x86_64'
     runs-on: ubuntu-latest
     steps:
 
@@ -59,26 +57,12 @@ jobs:
     - uses: actions/checkout@master
     - uses: DeterminateSystems/nix-installer-action@main
 
-
-    # sfdisk /dev/sda <<EOT
-    # label: gpt
-    # type="EFI System",       name="BOOT",  size=512M
-    # type="Linux filesystem", name="NIXOS", size=+
-    # EOT
-
-    # sleep 2
-
-    # NIXOS=/dev/disk/by-partlabel/NIXOS
-    # BOOT=/dev/disk/by-partlabel/BOOT
-    # mkfs.fat -F 32 $BOOT
-    # mkfs.ext4 -F $NIXOS
-
-    # mkdir -p /mnt
-    # mount $NIXOS /mnt
-    # mount --mkdir $BOOT /mnt/boot
-
-
-    # - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }}
+    - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} parted --script /dev/sda mklabel gpt mkpart "BOOT" fat32  1MiB  512MiB mkpart "NIXOS" ext4 512MiB 100% set 1 esp on
+    - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} mkfs.fat -F 32 /dev/disk/by-partlabel/BOOT
+    - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} mkfs.ext4 -F /dev/disk/by-partlabel/NIXOS
+    - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} mkdir -p /mnt
+    - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} mount /dev/disk/by-partlabel/NIXOS /mnt
+    - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} mount --mkdir /dev/disk/by-partlabel/BOOT /mnt/boot
     - run: |
         outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ inputs.host }}.config.system.build.toplevel)
         echo "outPath=$outPath" >> "$GITHUB_ENV"
@@ -91,6 +75,6 @@ jobs:
     - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} mount -t efivarfs efivarfs /sys/firmware/efi/efivars
     - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} NIXOS_INSTALL_BOOTLOADER=1 nixos-enter --root /mnt -- /run/current-system/bin/switch-to-configuration boot
     - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} reboot
-    
+
     - run: curl https://api.day.app/${{ secrets.BARK_KEY }}/NixOS%20Install%20Done/${{ inputs.host }}?icon=https://hydra.nixos.org/logo
 
