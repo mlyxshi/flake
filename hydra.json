@@ -1,7 +1,7 @@
 {
   "flake": {
     "checkinterval": 0,
-    "description": "flake",
+    "description": "https://github.com/mlyxshi/flake",
     "emailoverride": "",
     "enabled": 1,
     "enableemail": false,
