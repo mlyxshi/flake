@@ -6,7 +6,7 @@
 # Declarative input value: https://github.com/mlyxshi/flake.git main 
 { config, pkgs, lib, hydra, ... }:
 let
-  hydra-x64-publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMjY+jsCfLAuMR2LP3ZqkzV5RCqSyt+lheJ7TUSRWEfv";
+  hydra-x64-publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICEgrMusygNAQDkrGHfLcYJT/ZcJr11mBsfqlJn/EB80";
 in
 {
   sops.secrets = {
