@@ -7,9 +7,9 @@ let
   kexecScript = pkgs.writeTextDir "script/kexec-script" ''
     #!/usr/bin/env bash
     set -e   
-    echo "Downloading ${arch} kexec-musl-bin" && curl -LO http://hydra-${arch}.mlyxshi.com/job/nixos/flake/kexec/latest/download-by-type/file/kexec && chmod +x ./kexec
-    echo "Downloading ${arch} initrd" && curl -LO http://hydra-${arch}.mlyxshi.com/job/nixos/flake/kexec/latest/download-by-type/file/initrd
-    echo "Downloading ${arch} kernel" && curl -LO http://hydra-${arch}.mlyxshi.com/job/nixos/flake/kexec/latest/download-by-type/file/kernel
+    echo "Downloading ${arch} kexec-musl-bin" && curl -LO http://hydra.mlyxshi.com/job/nixos/flake/kexec-${arch}/latest/download-by-type/file/kexec && chmod +x ./kexec
+    echo "Downloading ${arch} initrd" && curl -LO http://hydra.mlyxshi.com/job/nixos/flake/kexec-${arch}/latest/download-by-type/file/initrd
+    echo "Downloading ${arch} kernel" && curl -LO http://hydra.mlyxshi.com/job/nixos/flake/kexec-${arch}/latest/download-by-type/file/kernel
 
     for i in /etc/ssh/ssh_host_ed25519_key /persist/etc/ssh/ssh_host_ed25519_key; do
       if [[ -e $i && -s $i ]]; then 
@@ -34,8 +34,8 @@ let
 
   ipxeScript = pkgs.writeTextDir "script/ipxe-script" ''
     #!ipxe
-    kernel http://hydra-${arch}.mlyxshi.com/job/nixos/flake/kexec/latest/download-by-type/file/kernel initrd=initrd init=/bin/init ${toString config.boot.kernelParams} ''${cmdline}
-    initrd http://hydra-${arch}.mlyxshi.com/job/nixos/flake/kexec/latest/download-by-type/file/initrd
+    kernel http://hydra.mlyxshi.com/job/nixos/flake/kexec-${arch}/latest/download-by-type/file/kernel initrd=initrd init=/bin/init ${toString config.boot.kernelParams} ''${cmdline}
+    initrd http://hydra.mlyxshi.com/job/nixos/flake/kexec-${arch}/latest/download-by-type/file/initrd
     boot
   '';
 in
