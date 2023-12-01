@@ -63,8 +63,8 @@
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixpkgs-fmt;
 
       hydraJobs = {
-        sw2 = self.nixosConfigurations.sw2.config.system.build.toplevel;
-        kexec-x86_64 = self.nixosConfigurations.kexec-x86_64.config.system.build.kexec;
+        #kexec-aarch64 = self.nixosConfigurations.kexec-aarch64.config.system.build.kexec;
+        #transmission = self.packages.aarch64-linux.transmission;
       };
     };
 }
