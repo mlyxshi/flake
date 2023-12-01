@@ -13,6 +13,7 @@
 
   nix = {
     package = pkgs.nixVersions.unstable;
+    channel.enable = false;
     registry.nixpkgs.flake = nixpkgs;
     settings = {
       experimental-features = [ "nix-command" "flakes" "cgroups" "auto-allocate-uids" ];
