@@ -12,7 +12,7 @@ in
   ];
 
   nix.settings = {
-    substituters = [ "https://cache.mlyxshi.com" ];
+    substituters = [ "https://cache-aarch64.mlyxshi.com" ];
     trusted-public-keys = [ "cache:vXjiuWtSTOXj63zr+ZjMvXqvaYIK1atjyyEk+iuIqSg=" ];
   };
 
