@@ -42,7 +42,7 @@
 
     ssh-keygen = "${config.programs.ssh.package}/bin/ssh-keygen";
     awk = "${pkgs.gawk}/bin/awk";
-    sfdisk = "${pkgs.util-linux}/bin/sfdisk";
+    parted = "${pkgs.parted}/bin/parted";
     lsblk = "${pkgs.util-linux}/bin/lsblk";
     curl = "${pkgs.curl}/bin/curl";
     jq = "${pkgs.jq}/bin/jq";

@@ -18,11 +18,7 @@ let
     age_key=$(get-kernel-param age_key)
     local_test=$(get-kernel-param local_test)
 
-    sfdisk /dev/sda <<EOT
-    label: gpt
-    type="EFI System",       name="BOOT",  size=512M
-    type="Linux filesystem", name="NIXOS", size=+
-    EOT
+    parted --script /dev/sda mklabel gpt mkpart "BOOT" fat32  1MiB  512MiB mkpart "NIXOS" ext4 512MiB 100% set 1 esp on
 
     sleep 2
 
@@ -42,12 +38,7 @@ let
       echo "Nix will build: $flake#nixosConfigurations.$host.config.system.build.toplevel"
       nix build -L --store /mnt --profile /mnt/nix/var/nix/profiles/system $flake#nixosConfigurations.$host.config.system.build.toplevel 
     else
-      # Oracle x64 machine: 1C1G, Copy System Closure from Cache
-      # Hydra API: https://editor.swagger.io/?url=https://raw.githubusercontent.com/NixOS/hydra/master/hydra-api.yaml
-      evalId=$(curl -s -H 'accept: application/json' http://hydra.mlyxshi.com/jobset/nixos/flake/evals | jq .evals[0].id)
-      system=$(curl -s -H 'accept: application/json' http://hydra.mlyxshi.com/eval/$evalId/builds | jq --arg host $host '.[] | select(.job == $host)|.buildoutputs.out.path' | tr -d '"')
-      echo "Nix will copy: $system from cache"
-      nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $system
+      exit 1
     fi
 
     mkdir -p /mnt/{etc,tmp}
