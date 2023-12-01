@@ -56,6 +56,9 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
 
+    - uses: actions/checkout@master
+    - uses: DeterminateSystems/nix-installer-action@main
+
     - run: |
         outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ inputs.host }}.config.system.build.toplevel)
         echo "outPath=$outPath" >> "$GITHUB_ENV"
