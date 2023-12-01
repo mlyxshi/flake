@@ -19,7 +19,7 @@ initrd.target(default)
 # Usage
 ### From running linux distro
 ```
-curl -sL http://hydra.mlyxshi.com/job/nixos/flake/$(uname -m)/latest/download-by-type/file/kexec-script | bash -s
+curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | bash -s
 ```
 ### From netboot.xyz ipxe(Rescue)
 
