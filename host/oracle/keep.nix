@@ -16,9 +16,9 @@ let
       pass
   '';
 in
-{ } // lib.optionalAttrs (config.systemd.services ?  hydra-server) {
+{
 
-  systemd.services.KeepCPUMemory = {
+  systemd.services.KeepCPUMemory = lib.optionalAttrs (config.systemd.services ?  hydra-server) {
     serviceConfig = {
       DynamicUser = true;
       ExecStart = "${pkgs.python3}/bin/python ${waste}";
