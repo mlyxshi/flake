@@ -1,8 +1,6 @@
 # Intro
 Based on [dep-sys/nix-dabei](https://github.com/dep-sys/nix-dabei/)
 
-[Build by Hydra](http://hydra.mlyxshi.com/project/nixos) 
-
 Modified for personal usage
 
 Only support ext4 and vfat
