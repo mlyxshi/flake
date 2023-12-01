@@ -33,10 +33,10 @@ in
     hydraURL = "http://hydra.${config.networking.domain}";
     notificationSender = "hydra@localhost";
     useSubstitutes = true;
-    logo = "${pkgs.nixos-icons}/share/icons/hicolor/16x16/apps/nix-snowflake.png";
     extraConfig = ''
       include ${config.sops.secrets.hydra-github.path}
       max_output_size = ${builtins.toString (10 * 1024 * 1024 * 1024)}
+      ${lib.optionalString arch == "x86_64" "max_concurrent_evals = 1"}
       <dynamicruncommand>
         enable = 1
       </dynamicruncommand>

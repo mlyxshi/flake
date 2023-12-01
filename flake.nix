@@ -29,7 +29,7 @@
       darwinConfigurations.M1 = import ./host/M1 { inherit self nixpkgs darwin; };
       nixosConfigurations = {
         hx90 = import ./host/hx90 { inherit self nixpkgs sops-nix nix-index-database; };
-        
+
         utm = import ./host/utm { inherit self nixpkgs sops-nix; };
 
         qemu-test-x86_64 = import ./host/oracle/mkTest.nix { arch = "x86_64"; inherit self nixpkgs sops-nix; };
@@ -64,10 +64,7 @@
 
       hydraJobs = {
         kexec-aarch64 = self.nixosConfigurations.kexec-aarch64.config.system.build.kexec;
-        kexec-x86_64 = self.nixosConfigurations.kexec-x86_64.config.system.build.kexec;
         transmission = self.packages.aarch64-linux.transmission;
-        sw2 = self.nixosConfigurations.sw2.config.system.build.toplevel;
-        sw3 = self.nixosConfigurations.sw3.config.system.build.toplevel;
       };
     };
 }
