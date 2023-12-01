@@ -15,7 +15,7 @@
     enable = pkgs.hostPlatform.isx86_64;
     settings.zram0 = {
       compression-algorithm = "zstd";
-      zram-size = "ram";
+      zram-size = "2*ram";
     };
   };
 
