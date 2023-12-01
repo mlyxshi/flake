@@ -5,8 +5,8 @@
 # Declarative input type: Git checkout
 # Declarative input value: https://github.com/mlyxshi/flake.git main 
 { config, pkgs, lib, hydra, ... }:
-let 
-arch = pkgs.hostPlatform.uname.processor;
+let
+  hydra-x64-publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMjY+jsCfLAuMR2LP3ZqkzV5RCqSyt+lheJ7TUSRWEfv";
 in
 {
   sops.secrets = {
@@ -15,12 +15,38 @@ in
     nix-store-sign = { };
   };
 
-  systemd.services.KeepCPUMemory.enable = false;
-
   services.harmonia = {
     enable = true;
     signKeyPath = config.sops.secrets.nix-store-sign.path;
   };
+
+  programs.ssh = {
+    knownHosts = {
+      "hydra-x64.mlyxshi.com".publicKey = hydra-x64-publicKey;
+    };
+    extraConfig = ''
+      Host hydra-x64
+        Hostname hydra-x64.mlyxshi.com
+        User hydra-builder
+        IdentityFile ${config.sops.secrets.hydra-builder-sshkey.path}
+    '';
+  };
+
+  nix.buildMachines = [
+    # https://github.com/NixOS/hydra/issues/433#issuecomment-321212080
+    {
+      hostName = "localhost";
+      systems = [ "aarch64-linux" ];
+      maxJobs = 4;
+      supportedFeatures = [ "nixos-test" "big-parallel" "benchmark" ];
+    }
+    {
+      hostName = "hydra-x64";
+      systems = [ "x86_64-linux" ];
+      maxJobs = 4;
+      supportedFeatures = [ "nixos-test" "big-parallel" "benchmark" ];
+    }
+  ];
 
   nix.settings.allowed-uris = [ "https://github.com/NixOS/nixpkgs" "https://git.sr.ht/~rycee/nmd/" ];
 
@@ -30,13 +56,13 @@ in
 
   services.hydra = {
     enable = true;
+    package = hydra.packages.aarch64-linux.default;
     hydraURL = "http://hydra.${config.networking.domain}";
     notificationSender = "hydra@localhost";
     useSubstitutes = true;
     extraConfig = ''
       include ${config.sops.secrets.hydra-github.path}
       max_output_size = ${builtins.toString (10 * 1024 * 1024 * 1024)}
-      ${lib.optionalString (arch == "x86_64") "max_concurrent_evals = 1"}
       <dynamicruncommand>
         enable = 1
       </dynamicruncommand>
@@ -55,7 +81,7 @@ in
     dynamicConfigOptions = {
       # hydra
       http.routers.hydra = {
-        rule = "Host(`hydra-${arch}.${config.networking.domain}`)";
+        rule = "Host(`hydra.${config.networking.domain}`)";
         entryPoints = [ "web" ];
         service = "hydra";
       };
@@ -65,7 +91,7 @@ in
       }];
       # cache
       http.routers.cache = {
-        rule = "Host(`cache-${arch}.${config.networking.domain}`)";
+        rule = "Host(`cache.${config.networking.domain}`)";
         entryPoints = [ "websecure" ];
         service = "cache";
       };
