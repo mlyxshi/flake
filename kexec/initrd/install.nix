@@ -50,8 +50,6 @@ let
     [[ -n "$age_key" ]] && mkdir -p /mnt/persist/sops/ && curl -sLo /mnt/persist/sops/key $age_key
     mkdir -p /mnt/persist/etc/ssh && for i in /etc/ssh/ssh_host_ed25519_key*; do cp $i /mnt/persist/etc/ssh; done
     
-    # support UEFI systemd-boot
-    mount -t efivarfs efivarfs /sys/firmware/efi/efivars
 
     NIXOS_INSTALL_BOOTLOADER=1 nixos-enter --root /mnt -- /run/current-system/bin/switch-to-configuration boot
 

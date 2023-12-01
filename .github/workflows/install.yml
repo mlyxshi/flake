@@ -67,7 +67,6 @@ jobs:
     - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} touch /mnt/etc/NIXOS
     - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} mkdir -p /mnt/persist/sops/ 
     - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} curl -sLo /mnt/persist/sops/key ${{ secrets.AGE_KEY_URL }}
-    - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} mount -t efivarfs efivarfs /sys/firmware/efi/efivars
     - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} NIXOS_INSTALL_BOOTLOADER=1 nixos-enter --root /mnt -- /run/current-system/bin/switch-to-configuration boot
     - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} reboot
 
