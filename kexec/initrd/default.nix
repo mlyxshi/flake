@@ -12,8 +12,8 @@
     "/etc/nix/nix.conf".text = ''
       extra-experimental-features = nix-command flakes auto-allocate-uids
       auto-allocate-uids = true
-      substituters = https://cache.nixos.org https://cache.mlyxshi.com
-      trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= cache:vXjiuWtSTOXj63zr+ZjMvXqvaYIK1atjyyEk+iuIqSg=
+      substituters = https://cache.nixos.org
+      trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
     '';
   };
 

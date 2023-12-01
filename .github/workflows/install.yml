@@ -63,7 +63,7 @@ jobs:
         outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ inputs.host }}.config.system.build.toplevel)
         echo "outPath=$outPath" >> "$GITHUB_ENV"
     - run: |
-        nix copy --to ssh://root@${{ inputs.ip }}?remote-store=local?root=/mnt $outPath
+        nix copy --substitute-on-destination --to ssh://root@${{ inputs.ip }}?remote-store=local?root=/mnt $outPath
         ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $outPath
         ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} mkdir /mnt/{etc,tmp}
         ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} touch /mnt/etc/NIXOS
