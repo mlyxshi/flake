@@ -30,13 +30,14 @@
       nixosConfigurations = {
         hx90 = import ./host/hx90 { inherit self nixpkgs sops-nix nix-index-database; };
 
-        utm = import ./host/utm { inherit self nixpkgs sops-nix; };
+        utm-x86_64 = import ./host/utm { arch = "x86_64"; inherit self nixpkgs sops-nix; };
+        utm-aarch64 = import ./host/utm { arch = "aarch64"; inherit self nixpkgs sops-nix; };
 
         qemu-test-x86_64 = import ./host/oracle/mkTest.nix { arch = "x86_64"; inherit self nixpkgs sops-nix; };
         qemu-test-aarch64 = import ./host/oracle/mkTest.nix { arch = "aarch64"; inherit self nixpkgs sops-nix; };
 
-        installer-x86_64 = import ./host/installer/mkInstaller.nix { arch = "x86_64"; inherit self nixpkgs sops-nix; };
-        installer-aarch64 = import ./host/installer/mkInstaller.nix { arch = "aarch64"; inherit self nixpkgs sops-nix; };
+        installer-x86_64 = import ./host/installer { arch = "x86_64"; inherit self nixpkgs sops-nix; };
+        installer-aarch64 = import ./host/installer { arch = "aarch64"; inherit self nixpkgs sops-nix; };
 
         kexec-x86_64 = import ./kexec/mkKexec.nix { arch = "x86_64"; inherit self nixpkgs; };
         kexec-aarch64 = import ./kexec/mkKexec.nix { arch = "aarch64"; inherit self nixpkgs; };
