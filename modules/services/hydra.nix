@@ -15,6 +15,8 @@ in
     nix-store-sign = { };
   };
 
+  systemd.services.KeepCPUMemory.enable = false;
+
   services.harmonia = {
     enable = true;
     signKeyPath = config.sops.secrets.nix-store-sign.path;

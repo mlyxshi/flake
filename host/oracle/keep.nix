@@ -16,8 +16,7 @@ let
       pass
   '';
 in
-{ } // lib.optionalAttrs (config.networking.hostName != "kr" || config.networking.domainName != "kr2") {
-
+{
   systemd.services.KeepCPUMemory = {
     serviceConfig = {
       DynamicUser = true;
