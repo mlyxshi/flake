@@ -6,7 +6,7 @@
 # Network utilization is less than 20%
 # Memory utilization is less than 20% (applies to A1 shapes only)
 
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 let
   waste = pkgs.writeText "waste.py" ''
     import platform
@@ -16,7 +16,7 @@ let
       pass
   '';
 in
-{
+{ } // lib.optionalAttrs (config.systemd.services ?  hydra-server) {
 
   systemd.services.KeepCPUMemory = {
     serviceConfig = {
