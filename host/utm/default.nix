@@ -1,4 +1,4 @@
-{ arch, self, nixpkgs, sops-nix }:
+{ self, nixpkgs, sops-nix }:
 
 nixpkgs.lib.nixosSystem {
   modules = [
@@ -10,7 +10,7 @@ nixpkgs.lib.nixosSystem {
     ./hardware.nix
     {
       nixpkgs.overlays = [ self.overlays.default ];
-      nixpkgs.hostPlatform = "${arch}-linux";
+      nixpkgs.hostPlatform = "aarch64-linux";
       networking.hostName = "utm";
 
       # https://docs.getutm.app/guest-support/linux/#macos-virtiofs

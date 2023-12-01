@@ -2,10 +2,27 @@
 { pkgs, lib, config, ... }:
 let
   installScript = ''
-    flake=$(get-kernel-param flake)
-    [ ! -n "$flake" ] && flake="github:mlyxshi/flake"
+    flake="github:mlyxshi/flake"
     
     host=$(get-kernel-param host)
+    format=$(get-kernel-param format)
+
+    if [ -n "$format" ]; then
+      parted --script /dev/sda mklabel gpt mkpart "BOOT" fat32  1MiB  512MiB mkpart "NIXOS" ext4 512MiB 100% set 1 esp on
+
+      sleep 2
+
+      NIXOS=/dev/disk/by-partlabel/NIXOS
+      BOOT=/dev/disk/by-partlabel/BOOT
+      mkfs.fat -F 32 $BOOT
+      mkfs.ext4 -F $NIXOS
+
+      mkdir -p /mnt
+      mount $NIXOS /mnt
+      mount --mkdir $BOOT /mnt/boot
+    else
+      exit 1
+    fi
 
     if [ -n "$host" ]; then
       echo "host defined: $host"
@@ -17,19 +34,6 @@ let
     bark_key=$(get-kernel-param bark_key)
     age_key=$(get-kernel-param age_key)
     local_test=$(get-kernel-param local_test)
-
-    parted --script /dev/sda mklabel gpt mkpart "BOOT" fat32  1MiB  512MiB mkpart "NIXOS" ext4 512MiB 100% set 1 esp on
-
-    sleep 2
-
-    NIXOS=/dev/disk/by-partlabel/NIXOS
-    BOOT=/dev/disk/by-partlabel/BOOT
-    mkfs.fat -F 32 $BOOT
-    mkfs.ext4 -F $NIXOS
-
-    mkdir -p /mnt
-    mount $NIXOS /mnt
-    mount --mkdir $BOOT /mnt/boot
 
 
     if [ $(uname -m) = "aarch64" ]
