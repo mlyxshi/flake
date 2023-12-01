@@ -9,6 +9,8 @@
   sops.age.sshKeyPaths = [ "/persist/sops/key" ];
   sops.gnupg.sshKeyPaths = [ ];
 
+  system.stateVersion = "23.11";
+
   nix = {
     package = pkgs.nixVersions.unstable;
     registry.nixpkgs.flake = nixpkgs;
@@ -71,8 +73,6 @@
     "net.core.rmem_max" = 16777216;
     "net.core.wmem_max" = 16777216;
   };
-
-  system.stateVersion = lib.trivial.release;
 
   system.activationScripts."diff-closures".text = ''
     [[ -e "/run/current-system" ]] && ${pkgs.nix}/bin/nix store  diff-closures /run/current-system $systemConfig
