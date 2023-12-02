@@ -1,7 +1,6 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    hydra.url = "github:NixOS/hydra";
 
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
@@ -17,7 +16,7 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager, sops-nix, hydra, nix-index-database }:
+  outputs = { self, nixpkgs, darwin, home-manager, sops-nix, nix-index-database }:
     let
       inherit (nixpkgs) lib;
       utils = import ./utils.nix nixpkgs;
@@ -41,7 +40,7 @@
         kexec-x86_64 = import ./kexec/mkKexec.nix { arch = "x86_64"; inherit self nixpkgs; };
         kexec-aarch64 = import ./kexec/mkKexec.nix { arch = "aarch64"; inherit self nixpkgs; };
       }
-      // lib.genAttrs oracle-serverlist (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs sops-nix hydra; });
+      // lib.genAttrs oracle-serverlist (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs sops-nix; });
 
       homeConfigurations = {
         darwin = home-manager.lib.homeManagerConfiguration { pkgs = nixpkgs.legacyPackages.aarch64-darwin; modules = [ ./home/darwin.nix ]; };

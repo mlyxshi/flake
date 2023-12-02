@@ -4,7 +4,7 @@
 # Declarative spec file: hydra.json
 # Declarative input type: Git checkout
 # Declarative input value: https://github.com/mlyxshi/flake.git main 
-{ config, pkgs, lib, hydra, ... }:
+{ config, pkgs, lib, ... }:
 let
   hydra-x64-publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICEgrMusygNAQDkrGHfLcYJT/ZcJr11mBsfqlJn/EB80";
 in
@@ -56,7 +56,6 @@ in
 
   services.hydra = {
     enable = true;
-    package = hydra.packages.aarch64-linux.default;
     hydraURL = "http://hydra.${config.networking.domain}";
     notificationSender = "hydra@localhost";
     useSubstitutes = true;

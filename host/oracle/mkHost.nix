@@ -1,4 +1,4 @@
-{ hostName, self, nixpkgs, sops-nix, hydra }:
+{ hostName, self, nixpkgs, sops-nix }:
 let
   arch = if (builtins.readDir ./aarch64) ? "${hostName}.nix" then "aarch64" else "x86_64";
 in
@@ -22,5 +22,5 @@ nixpkgs.lib.nixosSystem {
       networking.domain = "mlyxshi.com";
     }
   ];
-  specialArgs = { inherit self nixpkgs hydra sops-nix; };
+  specialArgs = { inherit self nixpkgs sops-nix; };
 }
