@@ -9,6 +9,7 @@ let
     outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.$HOST.config.system.build.toplevel)
     
     ssh -o StrictHostKeyChecking=no root@$IP
+    while test $? -gt 0
     do
       sleep 5 
       echo "Wait kexec loading and ssh server, Trying again..."
