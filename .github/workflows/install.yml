@@ -66,7 +66,14 @@ jobs:
     - run: |
         outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ inputs.host }}.config.system.build.toplevel)
         echo "outPath=$outPath" >> "$GITHUB_ENV"
-
+    - run: |
+        $SSH root@${{ inputs.ip }}
+        while test $? -gt 0
+        do
+          sleep 5 
+          echo "Wait kexec loading, Trying again..."
+          $SSH root@${{ inputs.ip }}
+        done
     - run: $SSH root@${{ inputs.ip }} parted --script /dev/sda mklabel gpt mkpart "BOOT" fat32  1MiB  512MiB mkpart "NIXOS" ext4 512MiB 100% set 1 esp on
     - run: $SSH root@${{ inputs.ip }} mkfs.fat -F 32 /dev/disk/by-partlabel/BOOT
     - run: $SSH root@${{ inputs.ip }} mkfs.ext4 -F /dev/disk/by-partlabel/NIXOS
