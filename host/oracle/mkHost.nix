@@ -1,6 +1,6 @@
 { hostName, self, nixpkgs, sops-nix }:
 let
-  arch = if (builtins.readDir ./aarch64) ? "${hostName}.nix" then "aarch64" else "x86_64";
+  arch = if (builtins.pathExists ./aarch64/${hostName}.nix) then "aarch64" else "x86_64";
 in
 nixpkgs.lib.nixosSystem {
   modules = [
