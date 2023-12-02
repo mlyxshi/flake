@@ -6,7 +6,7 @@ on:
         description: 'ip or domain'
         type: string
         required: true
-      host:
+      flakeAttr:
         description: 'os config hostname'
         type: string
         required: true
@@ -62,7 +62,7 @@ jobs:
     - uses: DeterminateSystems/nix-installer-action@main
 
     - run: |
-        outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ inputs.host }}.config.system.build.toplevel)
+        outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ inputs.flakeAttr }}.config.system.build.toplevel)
         echo "outPath=$outPath" >> "$GITHUB_ENV"
     
     - run: |
@@ -91,5 +91,5 @@ jobs:
     - run: $SSH root@${{ inputs.ip }} NIXOS_INSTALL_BOOTLOADER=1 nixos-enter --root /mnt -- /run/current-system/bin/switch-to-configuration boot
     - run: $SSH root@${{ inputs.ip }} reboot
 
-    - run: curl https://api.day.app/${{ secrets.BARK_KEY }}/NixOS%20Install%20Done/${{ inputs.host }}?icon=https://hydra.nixos.org/logo
+    - run: curl https://api.day.app/${{ secrets.BARK_KEY }}/NixOS%20Install%20Done/${{ inputs.flakeAttr }}?icon=https://hydra.nixos.org/logo
 
