@@ -26,6 +26,10 @@ on:
           - x86_64
           - aarch64
 
+
+env:
+  SSH: ssh -o StrictHostKeyChecking=no  
+
 jobs:
 
   Kexec:
@@ -40,9 +44,9 @@ jobs:
     - run: |
         if [ ${{ inputs.user }} = "root" ]
         then
-          ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} 'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | bash -s'
+          $SSH root@${{ inputs.ip }} 'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | bash -s'
         else
-          ssh -o StrictHostKeyChecking=no ${{ inputs.user }}@${{ inputs.ip }} 'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | sudo bash -s'
+          $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | sudo bash -s'
         fi
 
 
