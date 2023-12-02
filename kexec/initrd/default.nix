@@ -47,6 +47,7 @@
     curl = "${pkgs.curl}/bin/curl";
     jq = "${pkgs.jq}/bin/jq";
     gzip = "${pkgs.gzip}/bin/gzip";
+    dmesg = "${pkgs.util-linux}/bin/dmesg";
 
     get-kernel-param = pkgs.writeScript "get-kernel-param" ''
       for o in $(< /proc/cmdline); do
