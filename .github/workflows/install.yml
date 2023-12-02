@@ -35,7 +35,7 @@ jobs:
   Kexec:
     runs-on: ubuntu-latest
     continue-on-error: true
-    timeout-minutes: 1.5
+    timeout-minutes: 2
     steps:
     - run: |
         mkdir -m 0755  ~/.ssh
@@ -48,7 +48,6 @@ jobs:
         else
           $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | sudo bash -s'
         fi
-
 
   Build:
     if: inputs.arch == 'x86_64'
@@ -71,7 +70,7 @@ jobs:
         while test $? -gt 0
         do
           sleep 5 
-          echo "Wait kexec loading, Trying again..."
+          echo "Wait kexec loading and ssh server, Trying again..."
           $SSH root@${{ inputs.ip }}
         done
     - run: $SSH root@${{ inputs.ip }} parted --script /dev/sda mklabel gpt mkpart "BOOT" fat32  1MiB  512MiB mkpart "NIXOS" ext4 512MiB 100% set 1 esp on
