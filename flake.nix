@@ -11,12 +11,9 @@
 
     darwin.url = "github:LnL7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
-
-    nix-index-database.url = "github:Mic92/nix-index-database";
-    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager, sops-nix, nix-index-database }:
+  outputs = { self, nixpkgs, darwin, home-manager, sops-nix }:
     let
       inherit (nixpkgs) lib;
       utils = import ./utils.nix nixpkgs;
@@ -27,7 +24,7 @@
       nixosModules = mkFileHierarchyAttrset ./. "modules";
       darwinConfigurations.M1 = import ./host/M1 { inherit self nixpkgs darwin; };
       nixosConfigurations = {
-        hx90 = import ./host/hx90 { inherit self nixpkgs sops-nix nix-index-database; };
+        hx90 = import ./host/hx90 { inherit self nixpkgs sops-nix; };
 
         utm = import ./host/utm { inherit self nixpkgs sops-nix; };
 

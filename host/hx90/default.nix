@@ -1,10 +1,9 @@
-{ self, nixpkgs, home-manager, sops-nix, nix-index-database }:
+{ self, nixpkgs, home-manager, sops-nix }:
 
 nixpkgs.lib.nixosSystem {
   modules = [
     sops-nix.nixosModules.default
     home-manager.nixosModules.default
-    nix-index-database.nixosModules.nix-index
     self.nixosModules.os.nixos.desktop
     self.nixosModules.services.ssh-config
     ./configuration.nix
