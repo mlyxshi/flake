@@ -3,8 +3,8 @@ let
   install-aarch64 = pkgs.writeShellScriptBin "install-aarch64" ''
     HOST=$1
     IP=$2
-    AGE_KEY_URL=$3
-    BARK_KEY=$4
+    AGE_KEY_URL=$(cat ${config.sops.secrets.age-key-url.path})
+    BARK_KEY=$(cat ${config.sops.secrets.bark-ios.path})
 
     [[ -e "/persist/flake/flake.nix" ]] || git clone --depth=1  git@github.com:mlyxshi/flake /persist/flake
       
@@ -36,6 +36,8 @@ let
 in
 
 {
+  sops.secrets.bark-ios = { };
+  sops.secrets.age-key-url = { };
 
   environment.systemPackages = [
     install-aarch64
