@@ -37,7 +37,13 @@ jobs:
         mkdir -m 0755  ~/.ssh
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
-    - run: ssh -o StrictHostKeyChecking=no ${{ inputs.user }}@${{ inputs.ip }} 'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | sudo bash -s'
+    - run: |
+        if [ ${{ inputs.user }} = "root" ]
+        then
+          ssh -o StrictHostKeyChecking=no ${{ inputs.user }}@${{ inputs.ip }} 'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | bash -s'
+        else
+          ssh -o StrictHostKeyChecking=no ${{ inputs.user }}@${{ inputs.ip }} 'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | sudo bash -s'
+        fi
 
 
   Build:
@@ -67,7 +73,7 @@ jobs:
     - run: nix copy --substitute-on-destination --to ssh://root@${{ inputs.ip }}?remote-store=local?root=/mnt $outPath
       env:
         NIX_SSHOPTS: -o StrictHostKeyChecking=no   
-        
+
     - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $outPath
     - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} mkdir /mnt/{etc,tmp}
     - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} touch /mnt/etc/NIXOS
