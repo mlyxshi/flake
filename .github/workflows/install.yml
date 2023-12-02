@@ -36,7 +36,7 @@ jobs:
   Kexec:
     runs-on: ubuntu-latest
     continue-on-error: true
-    timeout-minutes: 1
+    timeout-minutes: 1.5
     steps:
     - run: |
         mkdir -m 0755  ~/.ssh
