@@ -40,7 +40,7 @@ jobs:
     - run: |
         if [ ${{ inputs.user }} = "root" ]
         then
-          ssh -o StrictHostKeyChecking=no ${{ inputs.user }}@${{ inputs.ip }} 'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | bash -s'
+          ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} 'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | bash -s'
         else
           ssh -o StrictHostKeyChecking=no ${{ inputs.user }}@${{ inputs.ip }} 'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | sudo bash -s'
         fi
