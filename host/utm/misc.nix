@@ -39,8 +39,9 @@ in
   sops.secrets.bark-ios = { };
   sops.secrets.age-key-url = { };
 
-  environment.systemPackages = [
+  environment.systemPackages = with pkgs;[
     install-aarch64
+    gh
   ];
 
 }
