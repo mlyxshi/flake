@@ -26,11 +26,6 @@ on:
           - x86_64
           - aarch64
 
-
-
-env:
-  NIX_SSHOPTS: -o StrictHostKeyChecking=no
-
 jobs:
 
   Kexec:
@@ -70,7 +65,9 @@ jobs:
     - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} mount --mkdir /dev/disk/by-partlabel/BOOT /mnt/boot
 
     - run: nix copy --substitute-on-destination --to ssh://root@${{ inputs.ip }}?remote-store=local?root=/mnt $outPath
-    
+      env:
+        NIX_SSHOPTS: -o StrictHostKeyChecking=no   
+        
     - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $outPath
     - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} mkdir /mnt/{etc,tmp}
     - run: ssh -o StrictHostKeyChecking=no root@${{ inputs.ip }} touch /mnt/etc/NIXOS
