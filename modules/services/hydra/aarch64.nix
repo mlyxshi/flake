@@ -51,8 +51,8 @@ in
   nix.settings.allowed-uris = [ "https://github.com/NixOS/nixpkgs" "https://git.sr.ht/~rycee/nmd/" ];
 
   # turn off experimental features
-  nix.settings.use-cgroups = lib.mkForce false;
-  nix.settings.auto-allocate-uids = lib.mkForce false;
+  # nix.settings.use-cgroups = lib.mkForce false;
+  # nix.settings.auto-allocate-uids = lib.mkForce false;
 
   services.hydra = {
     enable = true;
