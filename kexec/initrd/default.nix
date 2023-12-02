@@ -45,7 +45,6 @@
     parted = "${pkgs.parted}/bin/parted";
     lsblk = "${pkgs.util-linux}/bin/lsblk";
     curl = "${pkgs.curl}/bin/curl";
-    jq = "${pkgs.jq}/bin/jq";
     gzip = "${pkgs.gzip}/bin/gzip";
 
     get-kernel-param = pkgs.writeScript "get-kernel-param" ''
