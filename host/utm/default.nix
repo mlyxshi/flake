@@ -8,6 +8,7 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.fileSystem.ext4
     self.nixosModules.services.ssh-config
     ./hardware.nix
+    ./misc.nix
     {
       nixpkgs.overlays = [ self.overlays.default ];
       nixpkgs.hostPlatform = "aarch64-linux";
