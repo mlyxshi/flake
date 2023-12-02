@@ -42,7 +42,7 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
     - run: |
-        if [ ${{ inputs.user }} = "root" ]
+        if [ ${{ inputs.user }} = root ]
         then
           $SSH root@${{ inputs.ip }} 'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | bash -s'
         else
