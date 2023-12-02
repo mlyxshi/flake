@@ -3,28 +3,21 @@ on:
   workflow_dispatch:
     inputs:
       ip:
-        description: 'ip or domain'
+        description: 'Ip or Domain'
         type: string
         required: true
       flakeAttr:
-        description: 'os config hostname'
+        description: 'X86-64 OS Config Hostname'
         type: string
         required: true
       user:
-        description: 'ssh user'
+        description: 'SSH User'
         required: true
         default: 'root'
         type: choice
         options:
           - root
           - ubuntu
-      arch:
-        required: true
-        default: 'x86_64'
-        type: choice
-        options:
-          - x86_64
-          - aarch64
 
 env:
   SSH: ssh -o StrictHostKeyChecking=no
@@ -34,7 +27,6 @@ jobs:
   kexec:
     runs-on: ubuntu-latest
     continue-on-error: true
-    timeout-minutes: 2
     steps:
     - run: |
         mkdir -m 0755  ~/.ssh
@@ -49,10 +41,8 @@ jobs:
         fi
 
   install:
-    if: inputs.arch == 'x86_64'
     runs-on: ubuntu-latest
     steps:
-
     - run: |
         mkdir -m 0755  ~/.ssh
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
@@ -64,15 +54,6 @@ jobs:
     - run: |
         outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ inputs.flakeAttr }}.config.system.build.toplevel)
         echo "outPath=$outPath" >> "$GITHUB_ENV"
-    
-    - run: |
-        $SSH root@${{ inputs.ip }}
-        while test $? -gt 0
-        do
-          sleep 5 
-          echo "Wait kexec loading and ssh server, Trying again..."
-          $SSH root@${{ inputs.ip }}
-        done
     
     - run: $SSH root@${{ inputs.ip }} parted --script /dev/sda mklabel gpt mkpart "BOOT" fat32  1MiB  512MiB mkpart "NIXOS" ext4 512MiB 100% set 1 esp on
     - run: $SSH root@${{ inputs.ip }} mkfs.fat -F 32 /dev/disk/by-partlabel/BOOT
