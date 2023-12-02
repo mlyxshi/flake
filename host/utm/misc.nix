@@ -21,11 +21,11 @@ let
     #   ssh -o StrictHostKeyChecking=no root@$IP
     # done
 
-    until ssh -o StrictHostKeyChecking=no root@$IP 2> /dev/null
-    do
-      echo "Wait kexec loading and ssh server, Trying again..."
-      sleep 5
-    done
+    # until ssh -o StrictHostKeyChecking=no root@$IP 2> /dev/null
+    # do
+    #   echo "Wait kexec loading and ssh server, Trying again..."
+    #   sleep 5
+    # done
 
     ssh -o StrictHostKeyChecking=no root@$IP parted --script /dev/sda mklabel gpt mkpart "BOOT" fat32  1MiB  512MiB mkpart "NIXOS" ext4 512MiB 100% set 1 esp on
     ssh -o StrictHostKeyChecking=no root@$IP mkfs.fat -F 32 /dev/disk/by-partlabel/BOOT
