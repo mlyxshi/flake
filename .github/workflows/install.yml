@@ -26,7 +26,6 @@ on:
           - x86_64
           - aarch64
 
-
 env:
   SSH: ssh -o StrictHostKeyChecking=no
 
@@ -65,6 +64,7 @@ jobs:
     - run: |
         outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ inputs.host }}.config.system.build.toplevel)
         echo "outPath=$outPath" >> "$GITHUB_ENV"
+    
     - run: |
         $SSH root@${{ inputs.ip }}
         while test $? -gt 0
@@ -73,6 +73,7 @@ jobs:
           echo "Wait kexec loading and ssh server, Trying again..."
           $SSH root@${{ inputs.ip }}
         done
+    
     - run: $SSH root@${{ inputs.ip }} parted --script /dev/sda mklabel gpt mkpart "BOOT" fat32  1MiB  512MiB mkpart "NIXOS" ext4 512MiB 100% set 1 esp on
     - run: $SSH root@${{ inputs.ip }} mkfs.fat -F 32 /dev/disk/by-partlabel/BOOT
     - run: $SSH root@${{ inputs.ip }} mkfs.ext4 -F /dev/disk/by-partlabel/NIXOS
@@ -80,10 +81,8 @@ jobs:
     - run: $SSH root@${{ inputs.ip }} mount /dev/disk/by-partlabel/NIXOS /mnt
     - run: $SSH root@${{ inputs.ip }} mount --mkdir /dev/disk/by-partlabel/BOOT /mnt/boot
 
-    - run: nix copy --substitute-on-destination --to ssh://root@${{ inputs.ip }}?remote-store=local?root=/mnt $outPath
-      env:
-        NIX_SSHOPTS: -o StrictHostKeyChecking=no   
-
+    - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --substitute-on-destination --to ssh://root@${{ inputs.ip }}?remote-store=local?root=/mnt $outPath
+ 
     - run: $SSH root@${{ inputs.ip }} nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $outPath
     - run: $SSH root@${{ inputs.ip }} mkdir /mnt/{etc,tmp}
     - run: $SSH root@${{ inputs.ip }} touch /mnt/etc/NIXOS

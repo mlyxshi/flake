@@ -12,20 +12,6 @@ let
     git pull 
 
     outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.$HOST.config.system.build.toplevel)
-    
-    # ssh -o StrictHostKeyChecking=no root@$IP
-    # while test $? -gt 0
-    # do
-    #   sleep 5 
-    #   echo "Wait kexec loading and ssh server, Trying again..."
-    #   ssh -o StrictHostKeyChecking=no root@$IP
-    # done
-
-    # until ssh -o StrictHostKeyChecking=no root@$IP 2> /dev/null
-    # do
-    #   echo "Wait kexec loading and ssh server, Trying again..."
-    #   sleep 5
-    # done
 
     ssh -o StrictHostKeyChecking=no root@$IP parted --script /dev/sda mklabel gpt mkpart "BOOT" fat32  1MiB  512MiB mkpart "NIXOS" ext4 512MiB 100% set 1 esp on
     ssh -o StrictHostKeyChecking=no root@$IP mkfs.fat -F 32 /dev/disk/by-partlabel/BOOT
