@@ -78,7 +78,9 @@
 
   # Get emergency shell for debugging
   boot.initrd.systemd.services.force-fail = {
-    after = [ "initrd-fs.target" ];
+    requires = [ "network-online.target" ];
+    after = [ "initrd-fs.target" "network-online.target" ];
+    before = [ "initrd.target" ];
     serviceConfig.Type = "oneshot";
     script = "exit 1";
     requiredBy = [ "initrd.target" ];
