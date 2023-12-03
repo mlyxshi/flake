@@ -41,6 +41,8 @@ chain http://hydra.mlyxshi.com/job/nixos/flake/kexec-aarch64/latest/download-by-
 # Test
 ```
 nix run -L .#
+
+# quit: [ctrl+a] then press [x]
 ```
 
 
