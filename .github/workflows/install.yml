@@ -35,6 +35,12 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
     - run: |
+        until $SSH -o ConnectTimeout=10 ${{ inputs.user }}@${{ inputs.ip }}
+        do
+          echo "Server Not Reachable, Waiting..."
+          sleep 5
+        done
+    - run: |
         if [ ${{ inputs.user }} = root ]
         then
           $SSH $HOST 'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | bash -s'
