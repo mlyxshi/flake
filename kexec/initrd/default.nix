@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }: {
   imports = [
-    #./network.nix
+    ./network.nix
     ./kernelModules.nix
   ];
 
@@ -28,7 +28,7 @@
   '';
 
   # vfat and ext4
-  boot.initrd.systemd.initrdBin = [ pkgs.dosfstools pkgs.e2fsprogs ];
+  boot.initrd.systemd.initrdBin = [ pkgs.dosfstools pkgs.e2fsprogs pkgs.iproute2];
 
   boot.initrd.systemd.extraBin = {
     # nix & installer
