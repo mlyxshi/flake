@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - uses: DeterminateSystems/nix-installer-action@master
+    - uses: DeterminateSystems/nix-installer-action@main
 
     - run: nix profile install nixpkgs#helix
     - run: nix profile install nixpkgs#joshuto
@@ -16,4 +16,4 @@ jobs:
 
   
     - name: Setup tmate session
-      uses: mxschmitt/action-tmate@main
+      uses: mxschmitt/action-tmate@master
