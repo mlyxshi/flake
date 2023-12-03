@@ -1,6 +1,5 @@
 { config, pkgs, lib, ... }: {
   imports = [
-    ./install.nix
     ./network.nix
     ./kernelModules.nix
   ];
@@ -45,6 +44,9 @@
     parted = "${pkgs.parted}/bin/parted";
     lsblk = "${pkgs.util-linux}/bin/lsblk";
     curl = "${pkgs.curl}/bin/curl";
+
+    joshuto = "${pkgs.joshuto}/bin/joshuto";
+    helix = "${pkgs.helix}/bin/helix";
 
     get-kernel-param = pkgs.writeScript "get-kernel-param" ''
       for o in $(< /proc/cmdline); do

@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }: {
   time.timeZone = "UTC";
-  networking.hostName = "systemd-stage1";
+  networking.hostName = "systemd-initrd";
 
   system.stateVersion = lib.trivial.release;
 

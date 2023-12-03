@@ -11,9 +11,6 @@ remount-root.service  [ switch-root is required, because nix --store do not supp
 initrd-fs.target
     |
     v
-auto-install.service
-    |
-    v
 initrd.target(default)
 ```
 # Usage
@@ -36,10 +33,10 @@ exit
 set cmdline ssh_authorized_key=c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSU1wYVkzTHlDVzRISHFicDRTQTR0bkErMUJrZ3dydHJvMnMvREVzQmNQRGUKCg==
 ``` 
 ```
-chain http://hydra.mlyxshi.com/job/nixos/flake/x86_64/latest/download-by-type/file/ipxe
+chain http://hydra.mlyxshi.com/job/nixos/flake/kexec-x86_64/latest/download-by-type/file/ipxe
 ```
 ```
-chain http://hydra.mlyxshi.com/job/nixos/flake/aarch64/latest/download-by-type/file/ipxe
+chain http://hydra.mlyxshi.com/job/nixos/flake/kexec-aarch64/latest/download-by-type/file/ipxe
 ```
 # Test
 ```
@@ -49,6 +46,8 @@ nix run -L .#
 
 
 
-cpio
+# cpio
 ```
+mkdir /test && cd test
+zstdcat /run/current-system/initrd | cpio -idv 
 ```
