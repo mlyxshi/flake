@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }: {
   imports = [
-    ./network.nix
+    #./network.nix
     ./kernelModules.nix
   ];
 
@@ -75,6 +75,14 @@
       fi
     '';
     requiredBy = [ "initrd-fs.target" ];
+  };
+
+  boot.initrd.systemd.services.force-fail = {
+    after = [ "initrd-fs.target" ];
+    before = [ "initrd.target" ];
+    serviceConfig.Type = "oneshot";
+    script = "exit 1";
+    requiredBy = [ "initrd.target" ];
   };
 
 
