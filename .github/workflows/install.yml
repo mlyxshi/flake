@@ -21,6 +21,7 @@ on:
 
 env:
   SSH: ssh -o StrictHostKeyChecking=no
+  HOST: root@${{ inputs.ip }}
 
 jobs:
 
@@ -36,7 +37,7 @@ jobs:
     - run: |
         if [ ${{ inputs.user }} = root ]
         then
-          $SSH root@${{ inputs.ip }} 'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | bash -s'
+          $SSH $HOST 'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | bash -s'
         else
           $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | sudo bash -s'
         fi
@@ -56,24 +57,29 @@ jobs:
         outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ inputs.flakeAttr }}.config.system.build.toplevel)
         echo "outPath=$outPath" >> "$GITHUB_ENV"
 
-    - run: until $SSH -o ConnectTimeout=10 root@${{ inputs.ip }} -- exit 0; do sleep 5; done
+    - run: |
+        until $SSH -o ConnectTimeout=10 $HOST ls /sysroot
+        do
+          echo "Kexec Environment Not Reachable, Waiting..."
+          sleep 5
+        done
     
-    - run: $SSH root@${{ inputs.ip }} parted --script /dev/sda mklabel gpt mkpart "BOOT" fat32  1MiB  512MiB mkpart "NIXOS" ext4 512MiB 100% set 1 esp on
-    - run: $SSH root@${{ inputs.ip }} mkfs.fat -F 32 /dev/disk/by-partlabel/BOOT
-    - run: $SSH root@${{ inputs.ip }} mkfs.ext4 -F /dev/disk/by-partlabel/NIXOS
-    - run: $SSH root@${{ inputs.ip }} mkdir -p /mnt
-    - run: $SSH root@${{ inputs.ip }} mount /dev/disk/by-partlabel/NIXOS /mnt
-    - run: $SSH root@${{ inputs.ip }} mount --mkdir /dev/disk/by-partlabel/BOOT /mnt/boot
+    - run: $SSH $HOST parted --script /dev/sda mklabel gpt mkpart "BOOT" fat32  1MiB  512MiB mkpart "NIXOS" ext4 512MiB 100% set 1 esp on
+    - run: $SSH $HOST mkfs.fat -F 32 /dev/disk/by-partlabel/BOOT
+    - run: $SSH $HOST mkfs.ext4 -F /dev/disk/by-partlabel/NIXOS
+    - run: $SSH $HOST mkdir -p /mnt
+    - run: $SSH $HOST mount /dev/disk/by-partlabel/NIXOS /mnt
+    - run: $SSH $HOST mount --mkdir /dev/disk/by-partlabel/BOOT /mnt/boot
 
-    - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --substitute-on-destination --to ssh://root@${{ inputs.ip }}?remote-store=local?root=/mnt $outPath
+    - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --substitute-on-destination --to ssh://$HOST?remote-store=local?root=/mnt $outPath
  
-    - run: $SSH root@${{ inputs.ip }} nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $outPath
-    - run: $SSH root@${{ inputs.ip }} mkdir /mnt/{etc,tmp}
-    - run: $SSH root@${{ inputs.ip }} touch /mnt/etc/NIXOS
-    - run: $SSH root@${{ inputs.ip }} mkdir -p /mnt/persist/sops/ 
-    - run: $SSH root@${{ inputs.ip }} curl -sLo /mnt/persist/sops/key ${{ secrets.AGE_KEY_URL }}
-    - run: $SSH root@${{ inputs.ip }} NIXOS_INSTALL_BOOTLOADER=1 nixos-enter --root /mnt -- /run/current-system/bin/switch-to-configuration boot
-    - run: $SSH root@${{ inputs.ip }} reboot
+    - run: $SSH $HOST nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $outPath
+    - run: $SSH $HOST mkdir /mnt/{etc,tmp}
+    - run: $SSH $HOST touch /mnt/etc/NIXOS
+    - run: $SSH $HOST mkdir -p /mnt/persist/sops/ 
+    - run: $SSH $HOST curl -sLo /mnt/persist/sops/key ${{ secrets.AGE_KEY_URL }}
+    - run: $SSH $HOST NIXOS_INSTALL_BOOTLOADER=1 nixos-enter --root /mnt -- /run/current-system/bin/switch-to-configuration boot
+    - run: $SSH $HOST reboot
 
     - run: curl https://api.day.app/${{ secrets.BARK_KEY }}/NixOS%20Install%20Done/${{ inputs.flakeAttr }}?icon=https://hydra.nixos.org/logo
 
