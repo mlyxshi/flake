@@ -9,7 +9,6 @@
   
 
   boot.initrd.network.ssh.enable = true;
-  boot.initrd.network.ssh.shell = "${pkgs.bashInteractive}/bin/bash";
 
   boot.initrd.systemd.services.setup-ssh-authorized-keys = {
     after = [ "initrd-fs.target" ];

@@ -76,9 +76,19 @@
     requiredBy = [ "initrd-fs.target" ];
   };
 
+  # Get emergency shell for debugging
+  boot.initrd.systemd.services.force-fail = {
+    after = [ "initrd-fs.target" ];
+    serviceConfig.Type = "oneshot";
+    script = "exit 1";
+    requiredBy = [ "initrd.target" ];
+  };
+
 
   # Disable default services in Nixpkgs
   boot.initrd.systemd.services.initrd-nixos-activation.enable = false;
   boot.initrd.systemd.services.initrd-switch-root.enable = false;
 
+  boot.initrd.systemd.services.initrd-cleanup.enable = false;
+  boot.initrd.systemd.services.initrd-parse-etc.enable = false;
 }
