@@ -39,7 +39,9 @@ jobs:
           sleep 5
         done
     - name: Run Kexec Script
-      continue-on-error: true
+      # If server doesn't reply, ServerAliveInterval option will kill ssh, and emit error 
+      # This is the normal behaviour as expected, so let github workflow treat error as success 
+      continue-on-error: true 
       run: |
         if [ ${{ inputs.user }} = root ]
         then
