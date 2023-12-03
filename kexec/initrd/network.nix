@@ -1,10 +1,12 @@
 { config, pkgs, lib, ... }: {
+  
   boot.initrd.systemd.network.enable = true;
+  boot.initrd.systemd.network.wait-online.anyInterface = true;
   boot.initrd.systemd.network.networks.ethernet-default-dhcp = {
     matchConfig = { Name = [ "en*" "eth*" ]; };
     networkConfig = { DHCP = "yes"; };
   };
-  boot.initrd.systemd.network.wait-online.anyInterface = true;
+  
 
   boot.initrd.network.ssh.enable = true;
 
