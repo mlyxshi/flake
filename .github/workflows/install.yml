@@ -27,8 +27,6 @@ jobs:
 
   kexec:
     runs-on: ubuntu-latest
-    continue-on-error: true
-    timeout-minutes: 3
     steps:
     - run: |
         mkdir -m 0755  ~/.ssh
@@ -40,12 +38,14 @@ jobs:
           echo "Server Not Reachable, Waiting..."
           sleep 5
         done
-    - run: |
+    - name: Run Kexec Script
+      continue-on-error: true
+      run: |
         if [ ${{ inputs.user }} = root ]
         then
-          $SSH $HOST 'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | bash -s'
+          $SSH -o ConnectTimeout=5 $HOST 'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | bash -s'
         else
-          $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | sudo bash -s'
+          $SSH -o ConnectTimeout=5 ${{ inputs.user }}@${{ inputs.ip }} 'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | sudo bash -s'
         fi
 
   install:

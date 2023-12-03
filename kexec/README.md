@@ -45,3 +45,10 @@ chain http://hydra.mlyxshi.com/job/nixos/flake/aarch64/latest/download-by-type/f
 ```
 nix run -L .#
 ```
+
+
+
+
+cpio
+```
+```
