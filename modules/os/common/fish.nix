@@ -10,13 +10,12 @@
       man = "batman";
       P = "echo $PATH";
       nixpkgs = "hx ${nixpkgs}";
-      # Oracle cloud console connection do not support latest openssh(>9.0)
-      ssh-old = "nix-shell -p openssh -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/2cdd608fab0af07647da29634627a42852a8c97f.tar.gz";
     }
     // lib.optionalAttrs pkgs.stdenv.isDarwin {
-      update = "cd ~/flake; git add .; darwin-rebuild switch --flake ~/flake#M1";
-      rclonemount = "rclone mount googleshare:Download /Users/dominic/rcloneMount &";
+      ssh = "kitty +kitten ssh";
       sshr = "ssh-keygen -R";
+      # Oracle cloud console connection do not support latest openssh(>9.0)
+      ssh-old = "nix-shell -p openssh -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/2cdd608fab0af07647da29634627a42852a8c97f.tar.gz";
     }
     // lib.optionalAttrs pkgs.stdenv.isLinux {
       sall = "systemctl list-units";
@@ -31,10 +30,6 @@
     shellInit = ''
       set -U fish_greeting
       zoxide init fish | source
-
-      if test "$TERM" = "xterm-kitty"
-        alias ssh 'kitty +kitten ssh'
-      end
 
       function loc
         readlink -f $(which $argv) 
