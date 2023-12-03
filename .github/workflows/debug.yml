@@ -1,0 +1,19 @@
+name: Github Server
+on: 
+  - workflow_dispatch
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: DeterminateSystems/nix-installer-action@main
+
+    - run: nix profile install nixpkgs#helix
+    - run: nix profile install nixpkgs#joshuto
+    - run: nix profile install nixpkgs#fd
+    - run: chmod +x config.sh &&  ./config.sh
+
+  
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@main
