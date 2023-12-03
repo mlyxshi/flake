@@ -46,7 +46,7 @@
     curl = "${pkgs.curl}/bin/curl";
 
     joshuto = "${pkgs.joshuto}/bin/joshuto";
-    helix = "${pkgs.helix}/bin/helix";
+    hx = "${pkgs.helix}/bin/hx";
 
     get-kernel-param = pkgs.writeScript "get-kernel-param" ''
       for o in $(< /proc/cmdline); do
@@ -59,48 +59,21 @@
     '';
   };
 
-  boot.initrd.systemd.services.initrd-switch-root.serviceConfig.ExecStart = [
-    ""
-    "FAIL"
-  ];
+  # kexec initrd -> / filesystem is rootfs
+  # However, when / filesystem is rootfs, we can not use pivot_root
+  # nix --store flag requires chroot, chroot requires pivot_root 
+  
+  # Hacky way change / filesystem from rootfs to tmpfs
+  # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/system/boot/systemd/initrd.nix
+  # https://www.freedesktop.org/software/systemd/man/latest/bootup.html
+  boot.initrd.systemd.services.initrd-switch-root.preStart = ''
+    root_fs_type="$(mount|awk '$3 == "/" { print $1 }')"
+    if [ "$root_fs_type" != "tmpfs" ]; then
+      cp -R /init /bin /etc /lib /nix /root /sbin /var /tmp  /sysroot
+    else
+      # when root fs is tmpfs, force stop endless switch-root loop, and get emergency shell for debugging
+      exit 1
+    fi
+  '';
 
-  # move everything in / to /sysroot and switch-root into it. 
-  # This runs a few things twice and wastes some memory
-  # but is necessary for nix --store flag as pivot_root does not work on rootfs.
-  # boot.initrd.systemd.services.remount-root = {
-  #   before = [ "initrd-fs.target" ];
-  #   serviceConfig.Type = "oneshot";
-  #   script = ''
-  #     ls -l /
-  #     root_fs_type="$(mount|awk '$3 == "/" { print $1 }')"
-  #     if [ "$root_fs_type" != "tmpfs" ]; then
-  #       cp -R /init /bin /etc /lib /nix /root /sbin /var  /sysroot
-  #       mkdir -p /sysroot/tmp
-  #       systemctl --no-block switch-root /sysroot /bin/init
-  #     fi
-  #   '';
-  #   requiredBy = [ "initrd-fs.target" ];
-  # };
-
-  # Get emergency shell for debugging
-  # boot.initrd.systemd.services.force-fail = {
-  #   after = [ "initrd-fs.target" ];
-  #   serviceConfig.Type = "oneshot";
-  #   script = "exit 1";
-  #   requiredBy = [ "initrd.target" ];
-  # };
-
-
-  # Disable default services in Nixpkgs
-  # boot.initrd.systemd.services.initrd-nixos-activation.enable = false;
-  # boot.initrd.systemd.services.initrd-switch-root.enable = false;
-  # keep in stage 1
-  # boot.initrd.systemd.services.initrd-cleanup.enable = false;
-  # boot.initrd.systemd.services.initrd-parse-etc.enable = false;
-
-
-
-  # When these are enabled, they prevent useful output from going to the console
-  # boot.initrd.systemd.paths.systemd-ask-password-console.enable = false;
-  # boot.initrd.systemd.services.systemd-ask-password-console.enable = false;
 }
