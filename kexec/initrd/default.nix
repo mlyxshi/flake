@@ -21,7 +21,7 @@
 
   # Real cloud provider(Oracle/Azure): device name is sda
   # Qemu local test: Paravirtualization, device name is vda (-drive file=disk.img,format=qcow2,if=virtio)
-  # This udev rule sysmlinks vda to sda so that the installer script can only use one device name.
+  # This udev rule sysmlinks vda to sda to unify device name.
   boot.initrd.services.udev.rules = ''
     KERNEL=="vda*", SYMLINK+="sda%n"
   '';
@@ -78,7 +78,7 @@
   # https://systemd-by-example.com/
   # https://www.freedesktop.org/software/systemd/man/latest/bootup.html
   boot.initrd.systemd.services.force-fail = {
-    # Invoke sshd start before this service. So that we can ssh into the machine
+    # Invoke sshd start before this service. So that we can ssh into the kexec environment.
     requires = [ "sshd.service" ];
     after = [ "initrd-fs.target" "sshd.service" ];
     # Force initrd.target failed with result 'dependency'. So that we can get emergency shell for debugging
