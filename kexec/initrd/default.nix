@@ -78,7 +78,7 @@
 
   # Get emergency shell for debugging
   boot.initrd.systemd.services.force-fail = {
-    # Invoke "network-online.target" -> sshd.service 
+    # Invoke "network-online.target" -> sshd.service  ??????
     requires = [ "network-online.target" ];
     after = [ "initrd-fs.target" "network-online.target" ];
     before = [ "initrd.target" ];
