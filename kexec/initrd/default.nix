@@ -76,9 +76,13 @@
     requiredBy = [ "initrd-fs.target" ];
   };
 
-  # Get emergency shell for debugging
+  # https://systemd-by-example.com/
+  # Force initrd.target failed with result 'dependency'. So that we can get emergency shell for debugging
   boot.initrd.systemd.services.force-fail = {
-    serviceConfig.ExecStart = "false";
+    after = [ "initrd-fs.target" ];
+    before = [ "initrd.target" ];
+    serviceConfig.Type = "oneshot";
+    serviceConfig.ExecStart = "/bin/false";
     requiredBy = [ "initrd.target" ];
   };
 
