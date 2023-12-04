@@ -45,9 +45,9 @@ jobs:
       run: |
         if [ ${{ inputs.user }} = root ]
         then
-          $SSH -o ServerAliveInterval=3 -o ServerAliveCountMax=1 $HOST 'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | bash -s'
+          $SSH -o ServerAliveInterval=10 -o ServerAliveCountMax=3 $HOST 'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | bash -s'
         else
-          $SSH -o ServerAliveInterval=3 -o ServerAliveCountMax=1 ${{ inputs.user }}@${{ inputs.ip }} 'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | sudo bash -s'
+          $SSH -o ServerAliveInterval=10 -o ServerAliveCountMax=3 ${{ inputs.user }}@${{ inputs.ip }} 'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | sudo bash -s'
         fi
 
   install:
