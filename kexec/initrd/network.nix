@@ -6,7 +6,6 @@
     matchConfig = { Name = [ "en*" "eth*" ]; };
     networkConfig = { DHCP = "yes"; };
   };
-  
 
   boot.initrd.network.ssh.enable = true;
 

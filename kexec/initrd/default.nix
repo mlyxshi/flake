@@ -77,9 +77,12 @@
   };
 
   # https://systemd-by-example.com/
-  # Force initrd.target failed with result 'dependency'. So that we can get emergency shell for debugging
+ 
   boot.initrd.systemd.services.force-fail = {
-    after = [ "initrd-fs.target" ];
+    # Invoke sshd start before this service. So that we can ssh into the machine
+    requires = [ "sshd.service" ];
+    after = [ "initrd-fs.target" "sshd.service" ];
+    # Force initrd.target failed with result 'dependency'. So that we can get emergency shell for debugging
     before = [ "initrd.target" ];
     serviceConfig.Type = "oneshot";
     serviceConfig.ExecStart = "/bin/false";
