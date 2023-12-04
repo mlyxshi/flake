@@ -16,7 +16,6 @@
     '';
   };
 
-
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.emergencyAccess = true;
 
@@ -28,7 +27,7 @@
   '';
 
   # vfat and ext4
-  boot.initrd.systemd.initrdBin = [ pkgs.dosfstools pkgs.e2fsprogs pkgs.iproute2];
+  boot.initrd.systemd.initrdBin = [ pkgs.dosfstools pkgs.e2fsprogs pkgs.iproute2 ];
 
   boot.initrd.systemd.extraBin = {
     # nix & installer
@@ -77,7 +76,7 @@
   };
 
   # https://systemd-by-example.com/
- 
+  # https://www.freedesktop.org/software/systemd/man/latest/bootup.html
   boot.initrd.systemd.services.force-fail = {
     # Invoke sshd start before this service. So that we can ssh into the machine
     requires = [ "sshd.service" ];
