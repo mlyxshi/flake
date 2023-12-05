@@ -61,24 +61,8 @@ in
     '';
   };
 
+  # Only Test on x86_64. OVMF path seems different on aarch64
   system.build.test = pkgs.writeShellScriptBin "test-vm" ''
-    test -f disk.img || ${pkgs.qemu_kvm}/bin/qemu-img create -f qcow2 disk.img 10G
-    host=qemu-test-${arch}
-    local_test=1
-    exec ${pkgs.qemu_kvm}/bin/qemu-kvm -name ${config.networking.hostName} \
-      -m 2048 \
-      -kernel ${config.system.build.kernel}/${kernelTarget}  -initrd ${config.system.build.initialRamdisk}/initrd.zst  \
-      -append "console=ttyS0 init=/bin/init ${toString config.boot.kernelParams} host=$host local_test=$local_test" \
-      -no-reboot -nographic \
-      -net nic,model=virtio \
-      -net user,net=10.0.2.0/24,host=10.0.2.2,dns=10.0.2.3,hostfwd=tcp::2222-:22 \
-      -drive file=disk.img,format=qcow2,if=virtio \
-      -device virtio-rng-pci \
-      -bios ${pkgs.OVMF.fd}/FV/OVMF.fd 
-  '';
-
-  # Fast Test without Install 
-  system.build.test0 = pkgs.writeShellScriptBin "test-vm" ''
     test -f disk.img || ${pkgs.qemu_kvm}/bin/qemu-img create -f qcow2 disk.img 10G
     exec ${pkgs.qemu_kvm}/bin/qemu-kvm -name ${config.networking.hostName} \
       -m 2048 \

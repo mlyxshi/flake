@@ -48,11 +48,9 @@
         aarch64-darwin = lib.genAttrs (getArchPkgs "aarch64-darwin") (name: nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/${name} { });
         aarch64-linux = lib.genAttrs (getArchPkgs "aarch64-linux") (name: nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/${name} { }) // {
           default = self.nixosConfigurations.kexec-aarch64.config.system.build.test;
-          test0 = self.nixosConfigurations.kexec-aarch64.config.system.build.test0;
         };
         x86_64-linux = lib.genAttrs (getArchPkgs "x86_64-linux") (name: nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/${name} { }) // {
           default = self.nixosConfigurations.kexec-x86_64.config.system.build.test;
-          test0 = self.nixosConfigurations.kexec-x86_64.config.system.build.test0;
         };
       };
 

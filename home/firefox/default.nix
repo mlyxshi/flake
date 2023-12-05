@@ -11,7 +11,7 @@ let
     else "Library/Application Support/Mozilla/NativeMessagingHosts";
 
   ff-mpv = pkgs.writeScript "ff2mpv" (''
-    #!${pkgs.python3}/bin/python
+    #!/usr/bin/python3
   ''
   + builtins.readFile ./NativeMessagingHosts/ff2mpv.py);
 in

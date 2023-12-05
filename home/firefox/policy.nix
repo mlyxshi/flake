@@ -1,6 +1,6 @@
 {
   # https://github.com/mozilla/policy-templates/
-  # https://github.com/1sixth/flakes/blob/master/nixos/toy/home/browser.nix
+
   policies = {
 
     PasswordManagerEnabled = false;
