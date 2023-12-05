@@ -4,6 +4,9 @@
     ./kernelModules.nix
   ];
 
+  boot.initrd.systemd.enable = true;
+  boot.initrd.systemd.emergencyAccess = true;
+
   boot.initrd.systemd.contents = {
     "/etc/hostname".text = "${config.networking.hostName}\n";
     "/etc/resolv.conf".text = "nameserver 1.1.1.1\n";
@@ -15,9 +18,6 @@
       trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
     '';
   };
-
-  boot.initrd.systemd.enable = true;
-  boot.initrd.systemd.emergencyAccess = true;
 
   # Real cloud provider(Oracle/Azure): device name is sda
   # Qemu local test: Paravirtualization, device name is vda (-drive file=disk.img,format=qcow2,if=virtio)
@@ -44,6 +44,7 @@
     lsblk = "${pkgs.util-linux}/bin/lsblk";
     curl = "${pkgs.curl}/bin/curl";
 
+    # File explorer and editor for debugging
     joshuto = "${pkgs.joshuto}/bin/joshuto";
     hx = "${pkgs.helix}/bin/hx";
 
@@ -60,7 +61,7 @@
 
   # move everything in / to /sysroot and switch-root into it. 
   # This runs a few things twice and wastes some memory
-  # but is necessary for nix --store flag as pivot_root does not work on rootfs.
+  # but is necessary for [nix --store flag / nixos-enter] as pivot_root does not work on rootfs.
   boot.initrd.systemd.services.remount-root = {
     before = [ "initrd-fs.target" ];
     serviceConfig.Type = "oneshot";
@@ -77,6 +78,8 @@
 
   # https://systemd-by-example.com/
   # https://www.freedesktop.org/software/systemd/man/latest/bootup.html
+  # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/system/boot/systemd/initrd.nix
+  # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/system/boot/initrd-ssh.nix
   boot.initrd.systemd.services.force-fail = {
     # Invoke sshd start before this service. So that we can ssh into the kexec environment.
     requires = [ "sshd.service" ];
