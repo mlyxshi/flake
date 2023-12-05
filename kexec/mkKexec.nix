@@ -1,7 +1,6 @@
-{ arch, nixpkgs, self }:
+{ arch, nixpkgs }:
 nixpkgs.lib.nixosSystem {
   modules = [
-    self.nixosModules.strip
     ./host.nix
     ./build.nix
     ./initrd
