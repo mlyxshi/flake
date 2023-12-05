@@ -12,8 +12,7 @@
     "/etc/resolv.conf".text = "nameserver 1.1.1.1\n";
     "/etc/ssl/certs/ca-certificates.crt".source = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
     "/etc/nix/nix.conf".text = ''
-      extra-experimental-features = nix-command flakes auto-allocate-uids
-      auto-allocate-uids = true
+      extra-experimental-features = nix-command flakes
       substituters = https://cache.nixos.org
       trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
     '';
