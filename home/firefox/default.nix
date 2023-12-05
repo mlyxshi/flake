@@ -36,7 +36,7 @@ in
         };
 
         "GitHub" = {
-          urls = [{ template = "https://github.com/search?q={searchTerms}&type=repositories"; }];
+          urls = [{ template = "https://github.com/search?q=NOT+is%3Afork+{searchTerms}&type=code"; }];
           iconURL = "https://github.com/favicon.ico";
           definedAliases = [ "@gh" ];
         };
