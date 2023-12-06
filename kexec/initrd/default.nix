@@ -50,8 +50,8 @@
     ip = "${pkgs.iproute2}/bin/ip";
 
     # File explorer and editor for debugging
-    joshuto = "${pkgs.joshuto}/bin/joshuto";
-    helix = "${pkgs.helix}/bin/hx";
+    r = "${pkgs.joshuto}/bin/joshuto";
+    hx = "${pkgs.helix}/bin/hx";
 
     get-kernel-param = pkgs.writeScript "get-kernel-param" ''
       for o in $(< /proc/cmdline); do
