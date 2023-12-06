@@ -27,11 +27,12 @@
 
   # vfat and ext4
   boot.initrd.systemd.initrdBin = lib.mkForce [ 
-    pkgs.bash 
+    # Use bashInteractive for debugging
+    pkgs.bashInteractive
     pkgs.coreutils 
     config.boot.initrd.systemd.package.kmod 
     config.boot.initrd.systemd.package
-    
+
     pkgs.dosfstools 
     pkgs.e2fsprogs 
     pkgs.iproute2 
@@ -51,6 +52,7 @@
     parted = "${pkgs.parted}/bin/parted";
     lsblk = "${pkgs.util-linux}/bin/lsblk";
     curl = "${pkgs.curl}/bin/curl";
+    htop = "${pkgs.htop}/bin/htop";
 
     # File explorer and editor for debugging
     joshuto = "${pkgs.joshuto}/bin/joshuto";
