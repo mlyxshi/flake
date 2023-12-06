@@ -26,7 +26,7 @@
   '';
 
   # vfat and ext4
-  boot.initrd.systemd.initrdBin = [ pkgs.dosfstools pkgs.e2fsprogs pkgs.iproute2 ];
+  boot.initrd.systemd.initrdBin = [ pkgs.dosfstools pkgs.e2fsprogs pkgs.iproute2 pkgs.bashInteractive ];
 
   boot.initrd.systemd.extraBin = {
     # nix & installer
@@ -42,7 +42,6 @@
     parted = "${pkgs.parted}/bin/parted";
     lsblk = "${pkgs.util-linux}/bin/lsblk";
     curl = "${pkgs.curl}/bin/curl";
-    htop = "${pkgs.htop}/bin/htop";
 
     # File explorer and editor for debugging
     joshuto = "${pkgs.joshuto}/bin/joshuto";
