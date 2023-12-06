@@ -16,7 +16,7 @@
       substituters = https://cache.nixos.org
       trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
     '';
-    "/etc/terminfo".source = "${pkgs.ncurses}/share/terminfo/";
+    "/root/.terminfo".source = "${pkgs.ncurses}/share/terminfo/";
   };
 
   # Real cloud provider(Oracle/Azure): device name is sda
