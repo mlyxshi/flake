@@ -26,7 +26,16 @@
   '';
 
   # vfat and ext4
-  boot.initrd.systemd.initrdBin = [ pkgs.dosfstools pkgs.e2fsprogs pkgs.iproute2 pkgs.bashInteractive ];
+  boot.initrd.systemd.initrdBin = lib.mkForce [ 
+    pkgs.bash 
+    pkgs.coreutils 
+    config.boot.initrd.systemd.package.kmod 
+    config.boot.initrd.systemd.package
+    
+    pkgs.dosfstools 
+    pkgs.e2fsprogs 
+    pkgs.iproute2 
+  ];
 
   boot.initrd.systemd.extraBin = {
     # nix & installer
