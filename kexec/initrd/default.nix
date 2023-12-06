@@ -7,6 +7,8 @@
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.emergencyAccess = true;
 
+  boot.initrd.systemd.storePaths = "${pkgs.ncurses}/share/terminfo/"; # add terminfo for better ssh shell experience
+
   boot.initrd.systemd.contents = {
     "/etc/hostname".text = "${config.networking.hostName}\n";
     "/etc/resolv.conf".text = "nameserver 1.1.1.1\n";
@@ -16,10 +18,10 @@
       substituters = https://cache.nixos.org
       trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
     '';
-    "/root/.terminfo".source = "${pkgs.ncurses}/share/terminfo/";
-    "/root/.config/joshuto".source = ../../config/.config/joshuto;
-    "/root/.config/helix".source = ../../config/.config/helix;
-    "/root/.bashrc".text = ''
+    # root $HOME is /var/empty https://github.com/NixOS/nixpkgs/pull/169116#discussion_r1167673214
+    "/var/empty/.config/joshuto".source = ../../config/.config/joshuto;
+    "/var/empty/.config/helix".source = ../../config/.config/helix;
+    "/var/empty/.bashrc".text = ''
       alias r='joshuto'
       alias slist='systemctl list-units'
       alias scat='systemctl cat'
