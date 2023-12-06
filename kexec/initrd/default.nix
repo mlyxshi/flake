@@ -28,7 +28,7 @@
   # vfat and ext4
   boot.initrd.systemd.initrdBin = lib.mkForce [ 
     # Use bashInteractive for debugging
-    pkgs.bashInteractive
+    pkgs.bash
     pkgs.coreutils 
     config.boot.initrd.systemd.package.kmod 
     config.boot.initrd.systemd.package
