@@ -18,16 +18,6 @@
       substituters = https://cache.nixos.org
       trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
     '';
-    # root $HOME is /var/empty https://github.com/NixOS/nixpkgs/pull/169116#discussion_r1167673214
-    "/var/empty/.config/joshuto".source = ../../config/.config/joshuto;
-    "/var/empty/.config/helix".source = ../../config/.config/helix;
-    "/var/empty/.bashrc".text = ''
-      alias r='joshuto'
-      alias slist='systemctl list-units'
-      alias scat='systemctl cat'
-      alias sstat='systemctl status'
-      alias slog='journalctl -u'
-    '';
   };
 
   # Real cloud provider(Oracle/Azure): device name is sda
@@ -96,16 +86,16 @@
   # https://www.freedesktop.org/software/systemd/man/latest/bootup.html
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/system/boot/systemd/initrd.nix
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/system/boot/initrd-ssh.nix
-  boot.initrd.systemd.services.force-fail = {
-    # Invoke sshd start before this service. So that we can ssh into the kexec environment.
-    requires = [ "sshd.service" ];
-    after = [ "initrd-fs.target" "sshd.service" ];
-    # Force initrd.target failed with result 'dependency'. So that we can get emergency shell for debugging
-    before = [ "initrd.target" ];
-    serviceConfig.Type = "oneshot";
-    serviceConfig.ExecStart = "/bin/false";
-    requiredBy = [ "initrd.target" ];
-  };
+  # boot.initrd.systemd.services.force-fail = {
+  #   # Invoke sshd start before this service. So that we can ssh into the kexec environment.
+  #   requires = [ "sshd.service" ];
+  #   after = [ "initrd-fs.target" "sshd.service" ];
+  #   # Force initrd.target failed with result 'dependency'. So that we can get emergency shell for debugging
+  #   before = [ "initrd.target" ];
+  #   serviceConfig.Type = "oneshot";
+  #   serviceConfig.ExecStart = "/bin/false";
+  #   requiredBy = [ "initrd.target" ];
+  # };
 
 
   # Disable default services in Nixpkgs
