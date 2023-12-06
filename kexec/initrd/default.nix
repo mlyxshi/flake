@@ -16,6 +16,7 @@
       substituters = https://cache.nixos.org
       trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
     '';
+    "/etc/terminfo".source = "${pkgs.ncurses}/share/terminfo/";
   };
 
   # Real cloud provider(Oracle/Azure): device name is sda
@@ -26,16 +27,16 @@
   '';
 
   # vfat and ext4
-  boot.initrd.systemd.initrdBin = lib.mkForce [ 
+  boot.initrd.systemd.initrdBin = lib.mkForce [
     # Use bashInteractive for debugging
     pkgs.bash
-    pkgs.coreutils 
-    config.boot.initrd.systemd.package.kmod 
+    pkgs.coreutils
+    config.boot.initrd.systemd.package.kmod
     config.boot.initrd.systemd.package
 
-    pkgs.dosfstools 
-    pkgs.e2fsprogs 
-    pkgs.iproute2 
+    pkgs.dosfstools
+    pkgs.e2fsprogs
+    pkgs.iproute2
   ];
 
   boot.initrd.systemd.extraBin = {
