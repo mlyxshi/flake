@@ -89,8 +89,7 @@
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/system/boot/initrd-ssh.nix
   # boot.initrd.systemd.emergencyAccess = true;
   # boot.initrd.systemd.services.force-fail = {
-  #   # Invoke sshd start before this service. So that we can ssh into the kexec environment.
-  #   requires = [ "sshd.service" ];
+  #   # Order this after sshd, so that we can also ssh into the kexec environment.
   #   after = [ "initrd-fs.target" "sshd.service" ];
   #   # Force initrd.target failed with result 'dependency'. So that we can get emergency shell for debugging
   #   before = [ "initrd.target" ];
