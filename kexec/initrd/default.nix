@@ -17,6 +17,15 @@
       trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
     '';
     "/root/.terminfo".source = "${pkgs.ncurses}/share/terminfo/";
+    "/root/.config/joshuto".source = ../../config/.config/joshuto;
+    "/root/.config/helix".source = ../../config/.config/helix;
+    "/root/.bashrc".text = ''
+      alias r='joshuto'
+      alias slist='systemctl list-units'
+      alias scat='systemctl cat'
+      alias sstat='systemctl status'
+      alias slog='journalctl -u'
+    '';
   };
 
   # Real cloud provider(Oracle/Azure): device name is sda
@@ -27,16 +36,9 @@
   '';
 
   # vfat and ext4
-  boot.initrd.systemd.initrdBin = lib.mkForce [
-    # Use bashInteractive for debugging
-    pkgs.bash
-    pkgs.coreutils
-    config.boot.initrd.systemd.package.kmod
-    config.boot.initrd.systemd.package
-
+  boot.initrd.systemd.initrdBin = [
     pkgs.dosfstools
     pkgs.e2fsprogs
-    pkgs.iproute2
   ];
 
   boot.initrd.systemd.extraBin = {
@@ -54,10 +56,11 @@
     lsblk = "${pkgs.util-linux}/bin/lsblk";
     curl = "${pkgs.curl}/bin/curl";
     htop = "${pkgs.htop}/bin/htop";
+    ip = "${pkgs.iproute2}/bin/ip";
 
     # File explorer and editor for debugging
     joshuto = "${pkgs.joshuto}/bin/joshuto";
-    hx = "${pkgs.helix}/bin/hx";
+    helix = "${pkgs.helix}/bin/hx";
 
     get-kernel-param = pkgs.writeScript "get-kernel-param" ''
       for o in $(< /proc/cmdline); do
