@@ -42,6 +42,7 @@
     parted = "${pkgs.parted}/bin/parted";
     lsblk = "${pkgs.util-linux}/bin/lsblk";
     curl = "${pkgs.curl}/bin/curl";
+    htop = "${pkgs.htop}/bin/htop";
 
     # File explorer and editor for debugging
     joshuto = "${pkgs.joshuto}/bin/joshuto";

@@ -1,4 +1,3 @@
-# personal usage
 { pkgs, lib, config, ... }:
 let
   kernelTarget = pkgs.hostPlatform.linux-kernel.target;
