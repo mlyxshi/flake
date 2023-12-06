@@ -81,6 +81,8 @@
     requiredBy = [ "initrd-fs.target" ];
   };
 
+  # Uncomment for debugging in local qemu
+
   # https://systemd-by-example.com/
   # https://www.freedesktop.org/software/systemd/man/latest/bootup.html
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/system/boot/systemd/initrd.nix
