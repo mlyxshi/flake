@@ -5,7 +5,6 @@
   ];
 
   boot.initrd.systemd.enable = true;
-  boot.initrd.systemd.emergencyAccess = true;
 
   boot.initrd.systemd.storePaths = [ "${pkgs.ncurses}/share/terminfo/" ]; # add terminfo for better ssh shell experience
 
@@ -86,6 +85,7 @@
   # https://www.freedesktop.org/software/systemd/man/latest/bootup.html
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/system/boot/systemd/initrd.nix
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/system/boot/initrd-ssh.nix
+  # boot.initrd.systemd.emergencyAccess = true;
   # boot.initrd.systemd.services.force-fail = {
   #   # Invoke sshd start before this service. So that we can ssh into the kexec environment.
   #   requires = [ "sshd.service" ];
