@@ -7,7 +7,7 @@
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.emergencyAccess = true;
 
-  boot.initrd.systemd.storePaths = "${pkgs.ncurses}/share/terminfo/"; # add terminfo for better ssh shell experience
+  boot.initrd.systemd.storePaths = [ "${pkgs.ncurses}/share/terminfo/" ]; # add terminfo for better ssh shell experience
 
   boot.initrd.systemd.contents = {
     "/etc/hostname".text = "${config.networking.hostName}\n";
