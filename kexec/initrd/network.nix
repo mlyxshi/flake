@@ -11,8 +11,8 @@
 
   boot.initrd.network.ssh.authorizedKeys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe" ];
 
-  contents."/etc/ssh/ssh_host_ed25519_key".source = ./ed25519_key;
-  contents."/etc/ssh/ssh_host_ed25519_key.pub".source = ./ed25519_key.pub; 
+  boot.initrd.systemd.contents."/etc/ssh/ssh_host_ed25519_key".source = ./ed25519_key;
+  boot.initrd.systemd.contents."/etc/ssh/ssh_host_ed25519_key.pub".source = ./ed25519_key.pub; 
 #   boot.initrd.systemd.services.setup-ssh-authorized-keys = {
 #     after = [ "initrd-fs.target" ];
 #     before = [ "sshd.service" ];
