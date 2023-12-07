@@ -9,6 +9,8 @@
 
   boot.initrd.network.ssh.enable = true;
 
+  boot.initrd.network.ssh.authorizedKeys = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe"; 
+
   boot.initrd.systemd.services.setup-ssh-authorized-keys = {
     after = [ "initrd-fs.target" ];
     before = [ "sshd.service" ];
