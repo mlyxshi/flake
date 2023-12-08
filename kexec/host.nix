@@ -10,11 +10,10 @@
   };
 
   boot.kernelParams = [
-    "systemd.show_status=true"
-    "systemd.log_level=info"
     "systemd.log_target=console"
     "systemd.journald.forward_to_console=1"
   ];
+
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   fonts.fontconfig.enable = false;
