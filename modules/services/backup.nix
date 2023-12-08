@@ -1,7 +1,7 @@
 { pkgs, lib, config, ... }:
 let
   cfg = config.backup;
-  servicelist = {
+  serviceAttr = {
     nodestatus-server = "04:00";
     jellyfin = "05:00";
     vaultwarden = "06:00";
@@ -9,7 +9,8 @@ let
   };
 in
 {
-  options.backup = lib.genAttrs (builtins.attrNames servicelist) (x: lib.mkEnableOption x);
+
+  options.backup = lib.mapAttrs (service: time: lib.mkEnableOption service) serviceAttr;
 
   config = lib.mkMerge ([
     {
@@ -44,7 +45,7 @@ in
       };
     })
     )
-    servicelist);
+    serviceAttr);
 
 
 }
