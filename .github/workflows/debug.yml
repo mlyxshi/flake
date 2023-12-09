@@ -6,6 +6,16 @@ jobs:
   CI:
     runs-on: ubuntu-latest
     steps:
+    - run: |
+        mkdir -p ~/.ssh
+        curl -s "https://api.github.com/users/$GITHUB_ACTOR/keys" | jq .[0].key -r > ~/.ssh/authorized_keys
+        chmod 600 ~/.ssh/authorized_keys
+    
+    - run: |
+        curl -L --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb  
+        sudo dpkg -i cloudflared.deb 
+        sudo cloudflared service install ${{ secrets.CLOUDFLARED_TUNNEL }}
+    
     - uses: actions/checkout@master
     - uses: DeterminateSystems/nix-installer-action@main
 
@@ -16,14 +26,6 @@ jobs:
     # github workflow do not support alias, use symlink instead
     - run: mkdir -p  ~/.local/bin/ && ln -s ~/.nix-profile/bin/joshuto  ~/.local/bin/r
 
-    - run: |
-        mkdir -p ~/.ssh
-        curl -s "https://api.github.com/users/$GITHUB_ACTOR/keys" | jq .[0].key -r > ~/.ssh/authorized_keys
-        chmod 600 ~/.ssh/authorized_keys
-    - run: |
-        curl -L --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb  
-        sudo dpkg -i cloudflared.deb 
-        sudo cloudflared service install ${{ secrets.CLOUDFLARED_TUNNEL }}
     - run: |
         sleep 1h
 
