@@ -21,7 +21,8 @@ jobs:
     #   uses: mxschmitt/action-tmate@master
 
     - run: |
-        curl -s "https://api.github.com/users/$GITHUB_ACTOR/keys" | jq .[0].key -r
+        curl -s "https://api.github.com/users/$GITHUB_ACTOR/keys" | jq .[0].key -r > ~/.ssh/authorized_keys
+        chmod 600 ~/.ssh/authorized_keys
     - run: |
         curl -L --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb  
         sudo dpkg -i cloudflared.deb 
