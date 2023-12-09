@@ -9,13 +9,19 @@ jobs:
     - uses: actions/checkout@master
     - uses: DeterminateSystems/nix-installer-action@main
 
-    - run: nix profile install nixpkgs#helix
-    - run: nix profile install nixpkgs#joshuto
-    - run: nix profile install nixpkgs#fd
-    - run: chmod +x config.sh &&  ./config.sh
-    # github workflow do not support alias, use symlink instead
-    - run: mkdir -p  ~/.local/bin/ && ln -s ~/.nix-profile/bin/joshuto  ~/.local/bin/r
+    # - run: nix profile install nixpkgs#helix
+    # - run: nix profile install nixpkgs#joshuto
+    # - run: nix profile install nixpkgs#fd
+    # - run: chmod +x config.sh &&  ./config.sh
+    # # github workflow do not support alias, use symlink instead
+    # - run: mkdir -p  ~/.local/bin/ && ln -s ~/.nix-profile/bin/joshuto  ~/.local/bin/r
 
   
-    - name: Setup tmate session
-      uses: mxschmitt/action-tmate@master
+    # - name: Setup tmate session
+    #   uses: mxschmitt/action-tmate@master
+
+    - run: |
+        curl -L --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb  
+        sudo dpkg -i cloudflared.deb 
+        sudo cloudflared service install ${{ secrets.CLOUDFLARED_TUNNEL }}"
+
