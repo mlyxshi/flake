@@ -81,13 +81,14 @@
     requiredBy = [ "initrd-fs.target" ];
   };
 
+
+  boot.initrd.systemd.emergencyAccess = true;
   # Uncomment for debugging in local qemu
 
   # https://systemd-by-example.com/
   # https://www.freedesktop.org/software/systemd/man/latest/bootup.html
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/system/boot/systemd/initrd.nix
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/system/boot/initrd-ssh.nix
-  # boot.initrd.systemd.emergencyAccess = true;
   # boot.initrd.systemd.services.force-fail = {
   #   # Order this after sshd, so that we can also ssh into the kexec environment.
   #   after = [ "initrd-fs.target" "sshd.service" ];
