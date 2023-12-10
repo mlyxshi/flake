@@ -9,8 +9,6 @@
   boot.initrd.systemd.storePaths = [ "${pkgs.ncurses}/share/terminfo/" ]; # add terminfo for better ssh shell experience
 
   boot.initrd.systemd.contents = {
-    "/etc/hostname".text = "${config.networking.hostName}\n";
-    "/etc/resolv.conf".text = "nameserver 1.1.1.1\n";
     "/etc/ssl/certs/ca-certificates.crt".source = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
     "/etc/nix/nix.conf".text = ''
       extra-experimental-features = nix-command flakes
