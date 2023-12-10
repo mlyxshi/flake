@@ -1,5 +1,7 @@
 { config, pkgs, lib, ... }: {
 
+
+  # systemd-networkd
   boot.initrd.systemd.network.enable = true;
 
   boot.initrd.systemd.network.networks.ethernet-default-dhcp = {
@@ -7,6 +9,7 @@
     networkConfig = { DHCP = "yes"; };
   };
 
+  # systemd-resolved
   boot.initrd.systemd.additionalUpstreamUnits = [
     "systemd-resolved.service"
   ];
@@ -15,10 +18,16 @@
     "${config.boot.initrd.systemd.package}/lib/systemd/systemd-resolved"
   ];
 
+  systemd.services.systemd-resolvedwantedBy = [ "initrd.target" ];
+
+  # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/system/boot/resolved.nix
+  boot.initrd.systemd.contents."/etc/resolv.conf".source = "/run/systemd/resolve/stub-resolv.conf";
+
+
   boot.initrd.systemd.users.systemd-resolve = { };
   boot.initrd.systemd.groups.systemd-resolve = { };
 
-
+  # sshd
   boot.initrd.network.ssh.enable = true;
 
   boot.initrd.systemd.services.setup-ssh-authorized-keys = {
