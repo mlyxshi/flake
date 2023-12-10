@@ -9,6 +9,8 @@
   boot.initrd.systemd.storePaths = [ "${pkgs.ncurses}/share/terminfo/" ]; # add terminfo for better ssh shell experience
 
   boot.initrd.systemd.contents = {
+    "/etc/hostname".text = "${config.networking.hostName}\n";
+    "/etc/resolv.conf".text = "nameserver 1.1.1.1\n";
     "/etc/ssl/certs/ca-certificates.crt".source = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
     "/etc/nix/nix.conf".text = ''
       extra-experimental-features = nix-command flakes
@@ -72,7 +74,8 @@
       ls -l /
       root_fs_type="$(mount|awk '$3 == "/" { print $1 }')"
       if [ "$root_fs_type" != "tmpfs" ]; then
-        cp -R /init /bin /etc /lib /nix /root /sbin /var /tmp /sysroot
+        cp -R /init /bin /etc /lib /nix /root /sbin /var /sysroot
+        mkdir -p /sysroot/tmp
         systemctl --no-block switch-root /sysroot /bin/init
       fi
     '';

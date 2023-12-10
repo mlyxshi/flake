@@ -12,7 +12,7 @@
       nixpkgs = "hx ${nixpkgs}";
     }
     // lib.optionalAttrs pkgs.stdenv.isDarwin {
-      ssh = "kitty +kitten ssh";
+      # ssh = "kitty +kitten ssh";
       sshr = "ssh-keygen -R";
       # Oracle cloud console connection do not support latest openssh(>9.0)
       ssh-old = "nix-shell -p openssh -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/2cdd608fab0af07647da29634627a42852a8c97f.tar.gz";
