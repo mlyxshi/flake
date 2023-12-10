@@ -7,6 +7,18 @@
     networkConfig = { DHCP = "yes"; };
   };
 
+  # boot.initrd.systemd.additionalUpstreamUnits = [
+  #   "systemd-resolved.service"
+  # ];
+
+  # boot.initrd.systemd.storePaths = [
+  #   "${config.boot.initrd.systemd.package}/lib/systemd/systemd-resolved"
+  # ];
+
+  # boot.initrd.systemd.users.systemd-resolve = { };
+  # boot.initrd.systemd.groups.systemd-resolve = { };
+
+
   boot.initrd.network.ssh.enable = true;
 
   boot.initrd.systemd.services.setup-ssh-authorized-keys = {
