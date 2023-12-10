@@ -18,11 +18,14 @@
     "${config.boot.initrd.systemd.package}/lib/systemd/systemd-resolved"
   ];
 
-  boot.initrd.systemd.services.systemd-resolved.wantedBy = [ "initrd.target" ];
-
-  # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/system/boot/resolved.nix
-  boot.initrd.systemd.contents."/etc/resolv.conf".source = "/run/systemd/resolve/stub-resolv.conf";
-
+  boot.initrd.systemd.services.systemd-resolved = {
+    wantedBy = [ "initrd.target" ];
+    # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/system/boot/resolved.nix
+    # In initrd, create a symlink to the stub-resolv.conf
+    postStart = ''
+      ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
+    '';
+  };
 
   boot.initrd.systemd.users.systemd-resolve = { };
   boot.initrd.systemd.groups.systemd-resolve = { };
