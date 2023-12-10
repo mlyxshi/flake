@@ -26,6 +26,7 @@
       "qemu"
       "imagemagick" #kitty image dependency
       "smartmontools"
+      "cloudflared"
     ];
 
     casks = [

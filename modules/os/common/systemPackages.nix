@@ -8,6 +8,7 @@
     htop
     nali
     libarchive
+    nix-output-monitor
     nix-tree
     nix-init
     nix-update

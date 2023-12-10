@@ -27,5 +27,5 @@ jobs:
     - run: mkdir -p  ~/.local/bin/ && ln -s ~/.nix-profile/bin/joshuto  ~/.local/bin/r
 
     - run: |
-        sleep 1h
+        sleep 2h
 
