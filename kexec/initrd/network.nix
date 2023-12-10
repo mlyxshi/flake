@@ -18,7 +18,7 @@
     "${config.boot.initrd.systemd.package}/lib/systemd/systemd-resolved"
   ];
 
-  systemd.services.systemd-resolved.wantedBy = [ "initrd.target" ];
+  boot.initrd.systemd.services.systemd-resolved.wantedBy = [ "initrd.target" ];
 
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/system/boot/resolved.nix
   boot.initrd.systemd.contents."/etc/resolv.conf".source = "/run/systemd/resolve/stub-resolv.conf";
