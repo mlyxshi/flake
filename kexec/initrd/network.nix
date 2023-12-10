@@ -16,14 +16,14 @@
 
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/system/boot/resolved.nix
   # In initrd, create a symlink to the stub-resolv.conf
-  # boot.initrd.systemd.services.symlink-etc-resolv-conf = {
-  #   after = [ "systemd-resolved.service" ];
-  #   serviceConfig.Type = "oneshot";
-  #   script = ''
-  #     ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
-  #   '';
-  #   requiredBy = [ "systemd-resolved.service" ];
-  # };
+  boot.initrd.systemd.services.symlink-etc-resolv-conf = {
+    after = [ "systemd-resolved.service" ];
+    serviceConfig.Type = "oneshot";
+    script = ''
+      ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
+    '';
+    requiredBy = [ "systemd-resolved.service" ];
+  };
 
   # sshd
   boot.initrd.network.ssh.enable = true;
