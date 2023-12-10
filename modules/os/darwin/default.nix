@@ -9,6 +9,23 @@
 
   users.users.dominic.home = "/Users/dominic";
 
+  environment.systemPackages = [
+    (pkgs.writeShellScriptBin "update" ''
+      cd /Users/dominic/flake
+      SYSTEM=$(nom build --no-link --print-out-paths .#darwinConfigurations.${config.networking.hostName}.system)
+      
+      if [ -n "$SYSTEM" ]
+      then
+        sudo -H --preserve-env=PATH env nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
+        $SYSTEM/activate-user
+        sudo -H --preserve-env=PATH $SYSTEM/activate
+      else
+        echo "Build Failed"
+        exit 1
+      fi
+    '')
+  ];
+
   nix = {
     package = pkgs.nixVersions.unstable;
     registry.nixpkgs.flake = nixpkgs;

@@ -86,7 +86,7 @@
       cd /persist/flake
       git pull 
       
-      SYSTEM=$(nix build --no-link --print-out-paths .#nixosConfigurations.$(hostnamectl hostname).config.system.build.toplevel)
+      SYSTEM=$(nom build --no-link --print-out-paths .#nixosConfigurations.$(hostnamectl hostname).config.system.build.toplevel)
       
       if [ -n "$SYSTEM" ]
       then
@@ -101,7 +101,7 @@
     (pkgs.writeShellScriptBin "local-update" ''
       cd /persist/flake
       
-      SYSTEM=$(nix build --no-link --print-out-paths .#nixosConfigurations.$(hostnamectl hostname).config.system.build.toplevel)
+      SYSTEM=$(nom build --no-link --print-out-paths .#nixosConfigurations.$(hostnamectl hostname).config.system.build.toplevel)
       
       if [ -n "$SYSTEM" ]
       then
