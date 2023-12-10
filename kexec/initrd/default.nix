@@ -6,7 +6,7 @@
 
   boot.initrd.systemd.enable = true;
 
-  boot.initrd.systemd.storePaths = [ "${pkgs.ncurses}/share/terminfo/" ]; # add terminfo for better ssh shell experience
+  boot.initrd.systemd.storePaths = [ "${pkgs.ncurses}/share/terminfo/" ]; # add terminfo for better ssh experience
 
   boot.initrd.systemd.contents = {
     "/etc/hostname".text = "${config.networking.hostName}\n";
@@ -20,7 +20,7 @@
 
   # Real cloud provider(Oracle/Azure): device name is sda
   # Qemu local test: Paravirtualization, device name is vda (-drive file=disk.img,format=qcow2,if=virtio)
-  # This udev rule sysmlinks vda to sda to unify device name.
+  # This udev rule symlinks vda to sda to unify device name.
   boot.initrd.services.udev.rules = ''
     KERNEL=="vda*", SYMLINK+="sda%n"
   '';
