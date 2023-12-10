@@ -19,9 +19,7 @@
   boot.initrd.systemd.services.symlink-etc-resolv-conf = {
     after = [ "systemd-resolved.service" ];
     serviceConfig.Type = "oneshot";
-    script = ''
-      ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
-    '';
+    script = "ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf";
     requiredBy = [ "systemd-resolved.service" ];
   };
 
