@@ -1,10 +1,17 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, modulesPath, ... }: {
+  # hyperv = [ "hv_balloon" "hv_netvsc" "hv_storvsc" "hv_utils" "hv_vmbus" ];
+  # add extra kernel modules: https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/all-hardware.nix
+
+  # NixOS also include default kernel modules: https://github.com/NixOS/nixpkgs/blob/660e7737851506374da39c0fa550c202c824a17c/nixos/modules/system/boot/kernel.nix#L214
+  # boot.initrd.includeDefaultModules = false;
   imports = [
+    (modulesPath + "/profiles/qemu-guest.nix")  # most cloud providers use qemu
     ./network.nix
-    ./kernelModules.nix
   ];
 
   boot.initrd.systemd.enable = true;
+
+  boot.initrd.supportedFilesystems = [ "vfat" "ext4" ];
 
   boot.initrd.systemd.storePaths = [ "${pkgs.ncurses}/share/terminfo/" ]; # add terminfo for better ssh experience
 
@@ -24,12 +31,6 @@
   boot.initrd.services.udev.rules = ''
     KERNEL=="vda*", SYMLINK+="sda%n"
   '';
-
-  # vfat and ext4
-  boot.initrd.systemd.initrdBin = [
-    pkgs.dosfstools
-    pkgs.e2fsprogs
-  ];
 
   boot.initrd.systemd.extraBin = {
     # nix & installer
