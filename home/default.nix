@@ -5,8 +5,4 @@
     ./firefox
   ];
 
-  home = {
-    username = "dominic";
-    homeDirectory = "/Users/dominic";
-  };
 }
