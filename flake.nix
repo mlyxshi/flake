@@ -27,6 +27,7 @@
         hx90 = import ./host/hx90 { inherit self nixpkgs sops-nix; };
 
         utm = import ./host/utm { inherit self nixpkgs sops-nix; };
+        utm-desktop = import ./host/utm/desktop.nix { inherit self nixpkgs sops-nix; };
 
         qemu-test-x86_64 = import ./host/oracle/mkTest.nix { arch = "x86_64"; inherit self nixpkgs sops-nix; };
         qemu-test-aarch64 = import ./host/oracle/mkTest.nix { arch = "aarch64"; inherit self nixpkgs sops-nix; };
