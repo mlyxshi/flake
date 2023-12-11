@@ -12,5 +12,6 @@
     })
   ];
 
+  system.disableInstallerTools = lib.mkForce false;
   services.getty.autologinUser = lib.mkForce "root";
 }
