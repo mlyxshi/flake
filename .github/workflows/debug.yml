@@ -6,6 +6,7 @@ jobs:
   CI:
     runs-on: ubuntu-latest
     steps:
+    - run: [[ $- == *i* ]] && echo ‘Interactive’ || echo ‘not-interactive’
     - run: |
         mkdir -p ~/.ssh
         curl -s "https://api.github.com/users/$GITHUB_ACTOR/keys" | jq .[0].key -r > ~/.ssh/authorized_keys
