@@ -42,7 +42,7 @@
 
       homeConfigurations = {
         darwin = home-manager.lib.homeManagerConfiguration { pkgs = nixpkgs.legacyPackages.aarch64-darwin; modules = [ ./home/darwin.nix ]; };
-        aarch64-linux = home-manager.lib.homeManagerConfiguration { pkgs = nixpkgs.legacyPackages.x86_64-linux; modules = [ ./home/linux.nix ]; };
+        aarch64-linux = home-manager.lib.homeManagerConfiguration { pkgs = nixpkgs.legacyPackages.aarch64-linux; modules = [ ./home/linux.nix ]; };
         x86_64-linux = home-manager.lib.homeManagerConfiguration { pkgs = nixpkgs.legacyPackages.x86_64-linux; modules = [ ./home/linux.nix ]; };
       };
 
