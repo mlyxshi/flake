@@ -3,7 +3,7 @@ nixpkgs.lib.nixosSystem {
   modules = [
     ./host.nix
     ./build.nix
-    ./initrd
+    ./initrd.nix
     {
       nixpkgs.hostPlatform = "${arch}-linux";
     }

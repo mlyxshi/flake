@@ -1,17 +1,37 @@
 { config, pkgs, lib, modulesPath, ... }: {
+
+  imports = [
+    ./initrd-network.nix
+  ];
+
+  boot.initrd.systemd.enable = true;
+
   # hyperv = [ "hv_balloon" "hv_netvsc" "hv_storvsc" "hv_utils" "hv_vmbus" ];
   # add extra kernel modules: https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/all-hardware.nix
 
   # NixOS also include default kernel modules: https://github.com/NixOS/nixpkgs/blob/660e7737851506374da39c0fa550c202c824a17c/nixos/modules/system/boot/kernel.nix#L214
   # boot.initrd.includeDefaultModules = false;
-  imports = [
-    (modulesPath + "/profiles/qemu-guest.nix")  # most cloud providers use qemu
-    ./network.nix
+  boot.initrd.kernelModules = [
+    #qemu 
+    "virtio_net"
+    "virtio_pci"
+    "virtio_mmio"
+    "virtio_blk"
+    "virtio_scsi"
+    "virtio_balloon"
+    "virtio_console"
+    # ext4
+    "ext4"
+    # vfat
+    "vfat"
+    "nls_cp437"
+    "nls_iso8859-1"
   ];
-
-  boot.initrd.systemd.enable = true;
-
-  boot.initrd.supportedFilesystems = [ "vfat" "ext4" ];
+  
+  boot.initrd.systemd.initrdBin = [
+    pkgs.dosfstools
+    pkgs.e2fsprogs
+  ];
 
   boot.initrd.systemd.storePaths = [ "${pkgs.ncurses}/share/terminfo/" ]; # add terminfo for better ssh experience
 
