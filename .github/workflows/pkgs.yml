@@ -1,8 +1,6 @@
 name: "Package Update"
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 * * * *' #every hour
 
 jobs:
   CI:
