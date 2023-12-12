@@ -26,6 +26,8 @@
     "vfat"
     "nls_cp437"
     "nls_iso8859-1"
+    # efivarfs
+    "efivarfs"
   ];
   
   boot.initrd.systemd.initrdBin = [
