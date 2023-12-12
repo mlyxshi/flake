@@ -20,6 +20,7 @@
     "virtio_scsi"
     "virtio_balloon"
     "virtio_console"
+    "virtio_rng"
     # ext4
     "ext4"
     # vfat
