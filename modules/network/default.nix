@@ -31,8 +31,7 @@
 
         # Allow Netboot TFTP
         ${lib.optionalString (config.systemd.services ? podman-netboot-tftp) "udp dport 69 accept"}
-        ${lib.optionalString (config.systemd.services ? podman-netboot-tftp) "tcp dport 3000 accept"}
-        
+
         # Allow hysteria
         ${lib.optionalString (config.systemd.services ? hysteria) "udp dport 443 accept"}
       }

@@ -41,4 +41,7 @@
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
 
+  services.pipewire.enable = true;
+  services.pipewire.pulse.enable = true;
+
 }
