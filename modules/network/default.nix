@@ -29,12 +29,9 @@
         # Only Allow SSH and Traefik
         tcp dport { 22, 80, 443 } accept
 
-        # Allow TFTP
-        ${lib.optionalString (config.systemd.services ? atftpd) "udp dport 69 accept"}
+        # Allow Netboot TFTP
+        ${lib.optionalString (config.systemd.services ? podman-netboot-tftp) "udp dport 69 accept"}
         
-        # Allow tuic
-        # ${lib.optionalString (config.systemd.services ? tuic) "udp dport 6666 accept"}
-
         # Allow hysteria
         ${lib.optionalString (config.systemd.services ? hysteria) "udp dport 443 accept"}
       }
