@@ -14,4 +14,6 @@
 
   system.disableInstallerTools = lib.mkForce false;
   services.getty.autologinUser = lib.mkForce "root";
+
+  users.users.root.shell = lib.mkForce pkgs.bashInteractive;
 }
