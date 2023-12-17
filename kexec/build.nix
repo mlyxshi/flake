@@ -30,13 +30,6 @@ let
     ./kexec --kexec-syscall-auto --load ./kernel --initrd=./initrd  --append "init=/bin/init ${toString config.boot.kernelParams} ssh_host_key=$ssh_host_key ssh_authorized_key=$ssh_authorized_key $*"
     ./kexec -e
   '';
-
-  ipxeScript = pkgs.writeTextDir "script/ipxe-script" ''
-    #!ipxe
-    kernel http://hydra.mlyxshi.com/job/nixos/flake/kexec-${arch}/latest/download-by-type/file/kernel initrd=initrd init=/bin/init ${toString config.boot.kernelParams} ''${cmdline}
-    initrd http://hydra.mlyxshi.com/job/nixos/flake/kexec-${arch}/latest/download-by-type/file/initrd
-    boot
-  '';
 in
 {
   system.build.kexec = pkgs.symlinkJoin {
@@ -45,7 +38,6 @@ in
       config.system.build.kernel
       config.system.build.initialRamdisk
       kexecScript
-      ipxeScript
       pkgs.pkgsStatic.kexec-tools
     ];
     postBuild = ''
@@ -54,7 +46,6 @@ in
       file initrd $out/initrd
       file kernel $out/${kernelTarget}
       file kexec-script $out/script/kexec-script
-      file ipxe $out/script/ipxe-script
       file kexec $out/bin/kexec
       EOF
     '';

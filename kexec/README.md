@@ -24,20 +24,10 @@ curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/downl
 # UEFI Shell
 FS0:
 ifconfig -s eth0 dhcp
-tftp 138.2.16.45 netboot.xyz.efi
-tftp 138.2.16.45 netboot.xyz-arm64.efi
+tftp 138.2.16.45 arm.efi
+tftp 138.2.16.45 amd.efi
 exit
-```
-```
-# Format: cat YOUR_KEY | base64 -w0
-set cmdline ssh_authorized_key=c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSU1wYVkzTHlDVzRISHFicDRTQTR0bkErMUJrZ3dydHJvMnMvREVzQmNQRGUKCg==
-``` 
-```
-chain http://hydra.mlyxshi.com/job/nixos/flake/kexec-x86_64/latest/download-by-type/file/ipxe
-```
-```
-chain http://hydra.mlyxshi.com/job/nixos/flake/kexec-aarch64/latest/download-by-type/file/ipxe
-```
+
 # Test
 ```
 nix run -L .#
