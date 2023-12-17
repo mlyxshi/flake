@@ -5,11 +5,15 @@
   ];
 
   virtualisation.oci-containers.containers.netboot-tftp = {
-    image = "ghcr.io/netbootxyz/netbootxyz";
+    image = "lscr.io/linuxserver/netbootxyz:tftp";
     ports = [
       "69:69/udp"
       "3000:3000"
     ];
+    environment = {
+      PUID = "1000";
+      PGID = "1000";
+    };
   };
 
 }
