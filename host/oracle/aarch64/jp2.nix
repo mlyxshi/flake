@@ -1,6 +1,6 @@
 { self, pkgs, lib, config, ... }: {
   imports = [
     self.nixosModules.services.hysteria
-    self.nixosModules.services.tftpd
+    self.nixosModules.containers.netboot-tftp
   ];
 }
