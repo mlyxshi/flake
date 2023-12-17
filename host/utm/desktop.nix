@@ -13,10 +13,10 @@ nixpkgs.lib.nixosSystem {
       nixpkgs.hostPlatform = "aarch64-linux";
       networking.hostName = "utm-desktop";
 
-      fileSystems."/mnt" = {
-        device = "share";
-        fsType = "virtiofs";
-      };
+      # fileSystems."/mnt" = {
+      #   device = "share";
+      #   fsType = "virtiofs";
+      # };
 
       environment.systemPackages = with pkgs;[
       ];
