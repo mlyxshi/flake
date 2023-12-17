@@ -24,7 +24,7 @@ curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/downl
 # UEFI Shell
 FS0:
 ifconfig -s eth0 dhcp
-tftp 138.2.16.45 netboot.xyz.efi
+tftp 138.2.16.45 arm.efi
 exit
 
 # Test
