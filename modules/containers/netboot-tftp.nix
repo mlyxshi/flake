@@ -8,8 +8,8 @@
     image = "docker.io/langren1353/netboot-shell-tftp";
     ports = [ "69:69/udp" ];
     environment = {
-      "PUID" = 1111;
-      "PGID" = 1112;
+      "PUID" = "1111";
+      "PGID" = "1112";
     };
   };
 
