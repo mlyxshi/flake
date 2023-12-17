@@ -18,14 +18,13 @@ initrd.target(default)
 ```
 curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | bash -s
 ```
-### From netboot.xyz ipxe(Rescue)
+### From netboot.xyz ipxe(Rescue Oracle aarch64)
 
 ```sh
 # UEFI Shell
 FS0:
 ifconfig -s eth0 dhcp
-tftp 138.2.16.45 arm.efi
-tftp 138.2.16.45 amd.efi
+tftp 138.2.16.45 netboot.xyz.efi
 exit
 
 # Test
