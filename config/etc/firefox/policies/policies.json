@@ -1,0 +1,44 @@
+{
+    "policies": {
+        "CaptivePortal": false,
+        "DisableFeedbackCommands": true,
+        "DisableFirefoxStudies": true,
+        "DisablePocket": true,
+        "DisableTelemetry": true,
+        "DisplayBookmarksToolbar": "always",
+        "DontCheckDefaultBrowser": true,
+        "ExtensionSettings": {
+            "{e9c422a1-5740-4c0a-a10e-867939119613}": {
+                "install_url": "https://github.com/pt-plugins/PT-Plugin-Plus/suites/13704627945/artifacts/757780101",
+                "installation_mode": "normal_installed"
+            }
+        },
+        "FirefoxHome": {
+            "Highlights": false,
+            "Pocket": false,
+            "Snippets": false,
+            "SponsoredPocket": false,
+            "SponsoredTopSites": false
+        },
+        "Homepage": {
+            "StartPage": "previous-session"
+        },
+        "NoDefaultBookmarks": true,
+        "OverrideFirstRunPage": "",
+        "OverridePostUpdatePage": "",
+        "PasswordManagerEnabled": false,
+        "Preferences": {
+            "browser.aboutConfig.showWarning": false,
+            "browser.aboutwelcome.enabled": false,
+            "browser.newtabpage.activity-stream.default.sites": "",
+            "browser.theme.content-theme": 0,
+            "browser.theme.toolbar-theme": 0,
+            "browser.uidensity": 1,
+            "browser.urlbar.dnsResolveSingleWordsAfterSearch": 0,
+            "browser.warnOnQuitShortcut": false,
+            "extensions.getAddons.showPane": false,
+            "extensions.htmlaboutaddons.recommendations.enabled": false,
+            "toolkit.legacyUserProfileCustomizations.stylesheets": true
+        }
+    }
+}
