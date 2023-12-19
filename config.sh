@@ -6,7 +6,7 @@ fd --base-directory "$src" --hidden --type f --exec  \
     sh -c "mkdir -p '$HOME/{//}' && ln -sf '$src/{}' '$HOME/{}'"
 
 # Firefox policy for non-NixOS linux    
-if ! [ -f "/etc/NIXOS"]; then
-   mkdir -p /etc/firefox/policies
-   ln -sf "$src/etc/firefox/policies/policies.json" /etc/firefox/policies/policies.json
-fi
+# if ! [ -f "/etc/NIXOS"]; then
+#    sudo mkdir -p /etc/firefox/policies
+#    sudo ln -sf "$src/etc/firefox/policies/policies.json" /etc/firefox/policies/policies.json
+# fi
