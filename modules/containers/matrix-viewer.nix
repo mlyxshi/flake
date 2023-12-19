@@ -4,7 +4,7 @@
     self.nixosModules.containers.podman
   ];
 
-  virtualisation.oci-containers.containers.rsshub = {
+  virtualisation.oci-containers.containers.matrix-viewer = {
     image = "ghcr.io/matrix-org/matrix-viewer";
     extraOptions = lib.concatMap (x: [ "--label" x ]) [
       "io.containers.autoupdate=registry"
