@@ -1,6 +1,6 @@
 { self, pkgs, lib, config, ... }: {
   imports = [
-    
+    self.nixosModules.containers.matrix-viewer
   ];
 
   environment.systemPackages = with pkgs; [
