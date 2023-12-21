@@ -21,4 +21,19 @@
     };
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
+
+  hardware.asahi.extractPeripheralFirmware = false;
+
+  # copy firmware from nixos-apple-silicon installer
+  # so it is friendly for flake users
+  hardware.firmware = [
+      (pkgs.stdenv.mkDerivation {
+        name = "asahi-peripheral-firmware";
+        buildCommand = ''
+          mkdir -p $out/lib/firmware/apple
+          cp ${./firmware}/* $out/lib/firmware/apple
+        '';
+      })
+    ];
+    
 }

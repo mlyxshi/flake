@@ -7,7 +7,7 @@ nixpkgs.lib.nixosSystem {
     #self.nixosModules.network
     #self.nixosModules.fileSystem.ext4
     self.nixosModules.services.ssh-config
-    self.nixosModules.apple-silicon-support.default
+    nixos-apple-silicon.nixosModules.default
     ./hardware.nix
     ./configuration.nix
   ];

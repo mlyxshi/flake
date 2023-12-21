@@ -62,7 +62,7 @@
 
   programs.command-not-found.enable = false;
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = lib.mkOverride 1501 pkgs.linuxPackages_latest;
   # https://wiki.archlinux.org/title/sysctl
   # https://www.starduster.me/2020/03/02/linux-network-tuning-kernel-parameter/
   boot.kernel.sysctl = {
