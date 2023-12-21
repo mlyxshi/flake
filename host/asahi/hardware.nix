@@ -22,10 +22,15 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 
-  hardware.asahi.extractPeripheralFirmware = false;
 
+  boot.initrd.systemd.enable = true;
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 2;
+  boot.loader.timeout = 1;
+
+  hardware.asahi.extractPeripheralFirmware = false;
   # copy firmware from nixos-apple-silicon installer
-  # so it is friendly for flake users
+  # so it is friendly(pure) for flake users
   hardware.firmware = [
       (pkgs.stdenv.mkDerivation {
         name = "asahi-peripheral-firmware";
