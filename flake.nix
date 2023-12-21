@@ -15,7 +15,7 @@
     nixos-apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager, sops-nix }:
+  outputs = { self, nixpkgs, darwin, home-manager, sops-nix, nixos-apple-silicon }:
     let
       inherit (nixpkgs) lib;
       utils = import ./utils.nix nixpkgs;
@@ -40,6 +40,8 @@
 
         kexec-x86_64 = import ./kexec/mkKexec.nix { arch = "x86_64"; inherit nixpkgs; };
         kexec-aarch64 = import ./kexec/mkKexec.nix { arch = "aarch64"; inherit nixpkgs; };
+
+        asahi = import ./host/asahi { inherit self nixpkgs sops-nix nixos-apple-silicon; };
       }
       // lib.genAttrs oracle-serverlist (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs sops-nix; });
 
