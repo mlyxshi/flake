@@ -14,6 +14,7 @@
 
   environment.systemPackages = with pkgs; [
     firefox
+    vscode
     home-manager
   ];
 

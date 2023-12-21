@@ -29,14 +29,15 @@
   boot.loader.timeout = 1;
 
   hardware.asahi.extractPeripheralFirmware = false;
-  # copy firmware from nixos-apple-silicon installer
+
+  # cat /boot/vendorfw/firmware.cpio | cpio -id --quiet --no-absolute-filenames
   # so it is friendly(pure) for flake users
   hardware.firmware = [
       (pkgs.stdenv.mkDerivation {
         name = "asahi-peripheral-firmware";
         buildCommand = ''
-          mkdir -p $out/lib/firmware/apple
-          cp ${./firmware}/* $out/lib/firmware/apple
+          mkdir -p $out/lib/firmware/
+          cp -r ${./firmware}/* $out/lib/firmware/
         '';
       })
     ];
