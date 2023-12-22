@@ -28,18 +28,11 @@
   boot.loader.systemd-boot.configurationLimit = 2;
   boot.loader.timeout = 1;
 
+  # Disable upstream firmware extraction
   hardware.asahi.extractPeripheralFirmware = false;
-
-  # cat /boot/vendorfw/firmware.cpio | cpio -id --quiet --no-absolute-filenames
-  # so it is friendly(pure) for flake users
+  # This is friendly(pure) for flake users
   hardware.firmware = [
-      (pkgs.stdenv.mkDerivation {
-        name = "asahi-peripheral-firmware";
-        buildCommand = ''
-          mkdir -p $out/lib/firmware/
-          cp -r ${./firmware}/* $out/lib/firmware/
-        '';
-      })
-    ];
-    
+    pkgs.asahi-firmware
+  ];
+
 }
