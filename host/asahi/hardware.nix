@@ -29,24 +29,29 @@
   boot.loader.systemd-boot.configurationLimit = 2;
   boot.loader.timeout = 1;
 
+  boot.extraModprobeConfig = ''
+   options hid_apple swap_ctrl_cmd=1
+  '';
+
+  boot.initrd.systemd.extraBin = {
+    cpio = "${pkgs.cpio}/bin/cpio";
+  };
 
   boot.initrd.systemd.services.asahi-vendor-firmware = {
     after = [ "initrd-fs.target" ];
     before = [ "initrd.target" ];
     serviceConfig.Type = "oneshot";
     script = ''
-      mkdir -p /sysroot/lib/firmware
-      cd /sysroot/lib/firmware
-      cat /sysroot/boot/vendorfw/firmware.cpio | ${pkgs.cpio}/bin/cpio -id --quiet --no-absolute-filenames
+      [ -e /sysroot/lib/firmware ] && rm -rf /sysroot/lib/firmware
+      mkdir -p /sysroot/lib/firmware  /tmp/.fwsetup/
+      cd /tmp/.fwsetup/
+      cat /sysroot/boot/vendorfw/firmware.cpio | cpio -id --quiet --no-absolute-filenames
+      mv vendorfw/*  /sysroot/lib/firmware
+      rm -rf /tmp/.fwsetup
     '';
     requiredBy = [ "initrd-fs.target" ];
   };
 
   # Disable upstream firmware extraction
   hardware.asahi.extractPeripheralFirmware = false;
-  # # This is friendly(pure) for flake users
-  # hardware.firmware = [
-  #   pkgs.asahi-firmware
-  # ];
-
 }
