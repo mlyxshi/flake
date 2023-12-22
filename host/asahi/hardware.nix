@@ -18,6 +18,7 @@
     {
       device = "/dev/disk/by-uuid/03E1-1B17";
       fsType = "vfat";
+      neededForBoot = true;
     };
 
   nixpkgs.hostPlatform = "aarch64-linux";
@@ -28,11 +29,24 @@
   boot.loader.systemd-boot.configurationLimit = 2;
   boot.loader.timeout = 1;
 
+
+  boot.initrd.systemd.services.asahi-vendor-firmware = {
+    after = [ "initrd-fs.target" ];
+    before = [ "initrd.target" ];
+    serviceConfig.Type = "oneshot";
+    script = ''
+      mkdir -p /sysroot/lib/firmware
+      cd /sysroot/lib/firmware
+      cat /sysroot/boot/vendorfw/firmware.cpio | ${pkgs.cpio}/bin/cpio -id --quiet --no-absolute-filenames
+    '';
+    requiredBy = [ "initrd-fs.target" ];
+  };
+
   # Disable upstream firmware extraction
   hardware.asahi.extractPeripheralFirmware = false;
-  # This is friendly(pure) for flake users
-  hardware.firmware = [
-    pkgs.asahi-firmware
-  ];
+  # # This is friendly(pure) for flake users
+  # hardware.firmware = [
+  #   pkgs.asahi-firmware
+  # ];
 
 }
