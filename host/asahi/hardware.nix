@@ -10,13 +10,13 @@
 
   fileSystems."/" =
     {
-      device = "/dev/disk/by-uuid/ba97b201-52ca-4a14-91b7-435cd2bb1498";
+      device = "/dev/nvme0n1p5";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
     {
-      device = "/dev/disk/by-uuid/03E1-1B17";
+      device = "/dev/nvme0n1p4";
       fsType = "vfat";
       neededForBoot = true;
     };
