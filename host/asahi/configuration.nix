@@ -6,6 +6,5 @@
 
 
   nixpkgs.overlays = [ self.overlays.default ];
-
 }
 

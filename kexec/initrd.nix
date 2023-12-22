@@ -30,7 +30,7 @@
     # efivarfs
     "efivarfs"
   ];
-  
+
   boot.initrd.systemd.initrdBin = [
     pkgs.dosfstools
     pkgs.e2fsprogs
