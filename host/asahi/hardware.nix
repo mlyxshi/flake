@@ -21,6 +21,14 @@
       neededForBoot = true;
     };
 
+    fileSystems."/lib/firmware" =
+    {
+      device = "none";
+      fsType = "tmpfs";
+      options = [ "mode=755" ];
+      neededForBoot = true;
+    };
+
   nixpkgs.hostPlatform = "aarch64-linux";
 
 
@@ -42,15 +50,27 @@
     before = [ "initrd.target" ];
     serviceConfig.Type = "oneshot";
     script = ''
-      [ -e /sysroot/lib/firmware ] && rm -rf /sysroot/lib/firmware
-      mkdir -p /sysroot/lib/firmware  /tmp/.fwsetup/
+      mkdir -p /tmp/.fwsetup/
       cd /tmp/.fwsetup/
       cat /sysroot/boot/vendorfw/firmware.cpio | cpio -id --quiet --no-absolute-filenames
+      echo "1 time"
       mv vendorfw/*  /sysroot/lib/firmware
       rm -rf /tmp/.fwsetup
     '';
-    requiredBy = [ "initrd-fs.target" ];
+    wantedBy = [ "initrd.target" ];
   };
+
+  environment.systemPackages = [
+    pkgs.asahi-fwextract
+    
+    (pkgs.writeShellScriptBin "asahi-fwupdate" ''
+      [ -e /boot/vendorfw.old ] && rm -rf /boot/vendorfw.old
+      mv /boot/vendorfw /boot/vendorfw.old
+      mkdir /boot/vendorfw
+      asahi-fwextract /boot/asahi /boot/vendorfw
+    '')
+  ];
+
 
   # Disable upstream firmware extraction
   hardware.asahi.extractPeripheralFirmware = false;

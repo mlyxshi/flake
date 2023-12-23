@@ -1,4 +1,4 @@
-{ config, lib, pkgs, self, ... }: {
+{ config, lib, pkgs, self, nixos-apple-silicon, ... }: {
   networking.hostName = "asahi";
 
   # KDE Plasma Desktop Network Management
@@ -7,6 +7,9 @@
   sound.enable = true;
 
 
-  nixpkgs.overlays = [ self.overlays.default ];
+  nixpkgs.overlays = [ 
+    self.overlays.default
+    nixos-apple-silicon.overlays.default
+  ];
 }
 

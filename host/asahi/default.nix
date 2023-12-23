@@ -11,5 +11,5 @@ nixpkgs.lib.nixosSystem {
     ./hardware.nix
     ./configuration.nix
   ];
-  specialArgs = { inherit self nixpkgs; };
+  specialArgs = { inherit self nixpkgs nixos-apple-silicon; };
 }
