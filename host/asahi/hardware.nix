@@ -21,7 +21,7 @@
       neededForBoot = true;
     };
 
-    fileSystems."/lib/firmware" =
+  fileSystems."/lib/firmware" =
     {
       device = "none";
       fsType = "tmpfs";
@@ -38,7 +38,7 @@
   boot.loader.timeout = 1;
 
   boot.extraModprobeConfig = ''
-   options hid_apple swap_ctrl_cmd=1
+    options hid_apple swap_ctrl_cmd=1
   '';
 
   boot.initrd.systemd.extraBin = {
@@ -62,7 +62,7 @@
 
   environment.systemPackages = [
     pkgs.asahi-fwextract
-    
+
     (pkgs.writeShellScriptBin "asahi-fwupdate" ''
       [ -e /boot/vendorfw.old ] && rm -rf /boot/vendorfw.old
       mv /boot/vendorfw /boot/vendorfw.old

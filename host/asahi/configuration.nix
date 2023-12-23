@@ -7,7 +7,7 @@
   sound.enable = true;
 
 
-  nixpkgs.overlays = [ 
+  nixpkgs.overlays = [
     self.overlays.default
     nixos-apple-silicon.overlays.default
   ];
