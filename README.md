@@ -35,9 +35,6 @@ cd ~/flake
 nix build .#homeConfigurations.asahi.activation-script
 ./result/activate
 
-chmod +x config.sh
-./config.sh
-
 sudo dnf install fish
 chsh -s /bin/fish
 

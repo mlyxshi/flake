@@ -22,7 +22,7 @@ nixpkgs.lib.nixosSystem {
       networking.hostName = hostName;
       networking.domain = "mlyxshi.com";
 
-      home-manager.users.root = import ../../home/server.nix;
+      home-manager.users.root = import ../../home;
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.verbose = true;

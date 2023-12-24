@@ -1,7 +1,7 @@
 { pkgs, lib, config, ... }: {
 
   imports = [ 
-    ./common.nix 
+    ./default.nix 
     ./firefox
   ];
 
