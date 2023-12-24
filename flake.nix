@@ -29,7 +29,6 @@
         hx90 = import ./host/hx90 { inherit self nixpkgs sops-nix; };
 
         utm = import ./host/utm { inherit self nixpkgs sops-nix; };
-        utm-desktop = import ./host/utm/desktop.nix { inherit self nixpkgs sops-nix; };
 
         qemu-test-x86_64 = import ./host/oracle/mkTest.nix { arch = "x86_64"; inherit self nixpkgs sops-nix; };
         qemu-test-aarch64 = import ./host/oracle/mkTest.nix { arch = "aarch64"; inherit self nixpkgs sops-nix; };
@@ -43,12 +42,12 @@
 
         asahi = import ./host/asahi { inherit self nixpkgs sops-nix nixos-apple-silicon; };
       }
-      // lib.genAttrs oracle-serverlist (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs sops-nix; });
+      // lib.genAttrs oracle-serverlist (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs sops-nix home-manager; });
 
       homeConfigurations = {
         darwin = home-manager.lib.homeManagerConfiguration { pkgs = nixpkgs.legacyPackages.aarch64-darwin; modules = [ ./home/darwin.nix ]; };
-        aarch64-linux = home-manager.lib.homeManagerConfiguration { pkgs = nixpkgs.legacyPackages.aarch64-linux; modules = [ ./home/linux.nix ]; };
-        x86_64-linux = home-manager.lib.homeManagerConfiguration { pkgs = nixpkgs.legacyPackages.x86_64-linux; modules = [ ./home/linux.nix ]; };
+        # aarch64-linux = home-manager.lib.homeManagerConfiguration { pkgs = nixpkgs.legacyPackages.aarch64-linux; modules = [ ./home/linux.nix ]; };
+        # x86_64-linux = home-manager.lib.homeManagerConfiguration { pkgs = nixpkgs.legacyPackages.x86_64-linux; modules = [ ./home/linux.nix ]; };
         asahi = home-manager.lib.homeManagerConfiguration { pkgs = nixpkgs.legacyPackages.aarch64-linux; modules = [ ./home/asahi.nix ]; };
       };
 

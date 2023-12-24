@@ -1,6 +1,6 @@
 {
   imports = [
-    ./default.nix
+    ./standalone.nix
   ];
 
   home = {
