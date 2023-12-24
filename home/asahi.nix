@@ -14,14 +14,13 @@
   programs.firefox.policies = (import ./firefox/policy.nix).policies;
 
   home.packages = with pkgs; [
-    exa
+    eza
     joshuto
     bat 
     bat-extras.batman
     lazygit
     helix
     git
-    starship
     zoxide
     nil
     htop
@@ -34,7 +33,6 @@
 
   programs.fish = {
     enable = true;
-    interactiveShellInit = "eval (starship init fish)";
     shellAliases = {
       l = "eza -algh";
       r = "joshuto";

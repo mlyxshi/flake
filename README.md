@@ -37,4 +37,7 @@ nix build .#homeConfigurations.asahi.activation-script
 
 chmod +x config.sh
 ./config.sh
+
+sudo dnf install fish
+chsh -s /bin/fish
 ```
