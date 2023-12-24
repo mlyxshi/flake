@@ -1,6 +1,7 @@
 {
-  imports = [
-    ./standalone.nix
+  imports = [ 
+    ./common.nix 
+    ./firefox
   ];
 
   home = {

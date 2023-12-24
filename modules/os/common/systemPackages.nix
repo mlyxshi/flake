@@ -20,7 +20,6 @@
     starship
     zoxide
     eza
-    delta
     xh
     tealdeer
     bandwhich

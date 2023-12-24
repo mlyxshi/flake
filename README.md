@@ -27,4 +27,14 @@ diskutil eraseVolume free free disk0s4
 diskutil eraseVolume free free disk0s5
 
 curl https://alx.sh | sh
+
+curl -sL https://install.determinate.systems/nix | sh -s -- install
+
+git clone https://github.com/mlyxshi/flake.git ~/flake
+cd ~/flake
+nix build .#homeConfigurations.asahi.activation-script
+./result/activate
+
+chmod +x config.sh
+./config.sh
 ```
