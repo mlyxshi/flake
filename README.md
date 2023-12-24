@@ -46,5 +46,4 @@ cd ~
 git clone https://github.com/RedBearAK/toshy
 cd toshy
 ./setup_toshy.py install
-
 ```
