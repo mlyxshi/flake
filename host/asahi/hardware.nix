@@ -53,7 +53,7 @@
       mkdir -p /tmp/.fwsetup/
       cd /tmp/.fwsetup/
       cat /sysroot/boot/vendorfw/firmware.cpio | cpio -id --quiet --no-absolute-filenames
-      echo "1 time"
+      echo "Extract firmware ...."
       mv vendorfw/*  /sysroot/lib/firmware
       rm -rf /tmp/.fwsetup
     '';

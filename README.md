@@ -18,3 +18,13 @@ nix profile install nixpkgs#helix
 chmod +x config.sh
 ./config.sh
 ```
+
+Asahi Linux
+```
+diskutil apfs deleteContainer disk0s3
+
+diskutil eraseVolume free free disk0s4
+diskutil eraseVolume free free disk0s5
+
+curl https://alx.sh | sh
+```
