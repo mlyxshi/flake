@@ -40,4 +40,8 @@ chmod +x config.sh
 
 sudo dnf install fish
 chsh -s /bin/fish
+
+mkdir -p ~/.local/share/fonts
+cd ~/.local/share/fonts
+wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/RobotoMono/Regular/RobotoMonoNerdFont-Regular.ttf
 ```
