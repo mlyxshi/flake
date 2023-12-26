@@ -29,6 +29,7 @@
     fzf
     gdu
     neofetch
+    starship
   ];
 
   programs.fish = {
@@ -49,6 +50,12 @@
       slog = "journalctl -u";
       ip = "ip --color=auto";
     };
+
+    interactiveShellInit = ''
+      if test "$TERM" != "dumb"
+        eval (${config.home.profileDirectory}/bin/starship init fish)
+      end
+    '';
 
     shellInit = ''
       set -U fish_greeting
