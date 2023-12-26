@@ -1,6 +1,6 @@
 {
-  imports = [ 
-    ./common.nix 
+  imports = [
+    ./common.nix
     ./firefox
   ];
 

@@ -1,7 +1,7 @@
 { pkgs, lib, config, ... }: {
 
-  imports = [ 
-    ./default.nix 
+  imports = [
+    ./default.nix
     ./firefox
   ];
 
@@ -16,13 +16,14 @@
   home.packages = with pkgs; [
     eza
     joshuto
-    bat 
+    bat
     bat-extras.batman
     lazygit
     helix
     git
     zoxide
     nil
+    nixpkgs-fmt
     htop
     fd
     ripgrep
@@ -30,6 +31,7 @@
     gdu
     neofetch
     starship
+    home-manager
   ];
 
   programs.fish = {
