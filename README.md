@@ -37,7 +37,8 @@ nix build .#homeConfigurations.asahi.activation-script
 
 sudo dnf remove firefox
 sudo dnf install fish kate neochat
-chsh -s /bin/fish
+
+# kconsole profile set fish
 
 mkdir -p ~/.local/share/fonts
 cd ~/.local/share/fonts
