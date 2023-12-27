@@ -88,8 +88,9 @@
 
       # bash -c '[[ $- == *i* ]] && echo Interactive || echo not-interactive
       [[ $- == *i* ]] && NIX=nom || NIX=nix 
+      HOST=''${1:-$(hostnamectl hostname)} 
       
-      SYSTEM=$($NIX build --no-link --print-out-paths .#nixosConfigurations.$(hostnamectl hostname).config.system.build.toplevel)
+      SYSTEM=$($NIX build --no-link --print-out-paths .#nixosConfigurations.$HOST.config.system.build.toplevel)
       
       if [ -n "$SYSTEM" ]
       then
