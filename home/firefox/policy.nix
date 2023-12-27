@@ -58,13 +58,13 @@
     };
 
     # https://github.com/mozilla/policy-templates#extensionsettings
-    ExtensionSettings = {
-      # PT Plugin Plus
-      "{e9c422a1-5740-4c0a-a10e-867939119613}" = {
-        installation_mode = "normal_installed";
-        install_url = "https://github.com/pt-plugins/PT-Plugin-Plus/suites/13704627945/artifacts/757780101";
-      };
-    };
+    # ExtensionSettings = {
+    #   # PT Plugin Plus
+    #   "{e9c422a1-5740-4c0a-a10e-867939119613}" = {
+    #     installation_mode = "normal_installed";
+    #     install_url = "https://github.com/pt-plugins/PT-Plugin-Plus/suites/13704627945/artifacts/757780101";
+    #   };
+    # };
 
   };
 }
