@@ -13,6 +13,9 @@
   programs.firefox.package = lib.mkForce pkgs.firefox;
   programs.firefox.policies = (import ./firefox/policy.nix).policies;
 
+  # XDG_DATA_DIRS=$HOME/.nix-profile/share:$XDG_DATA_DIRS
+  targets.genericLinux.enable = true;
+
   home.packages = with pkgs; [
     eza
     joshuto
@@ -32,6 +35,7 @@
     neofetch
     starship
     home-manager
+    telegram-desktop
   ];
 
   programs.fish = {

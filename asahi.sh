@@ -17,3 +17,5 @@ dnf check-update
 sudo dnf install code neochat
 sudo dnf remove firefox
 
+# kde connect
+sudo systemctl disable firewalld.service --now
