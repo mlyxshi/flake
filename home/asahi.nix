@@ -32,8 +32,9 @@
     neofetch
     starship
     home-manager
-    telegram-desktop
     (pkgs.nerdfonts.override { fonts = [ "RobotoMono" ]; }) # Terminal Font
+    mpv
+    youtube-dl
   ];
 
   fonts.fontconfig.enable = true;

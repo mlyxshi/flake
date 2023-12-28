@@ -12,6 +12,9 @@ sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.m
 dnf check-update
 sudo dnf install code neochat
 
+sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+flatpak install org.telegram.desktop
+
 # kde connect
 sudo systemctl disable firewalld.service --now
 
