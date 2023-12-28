@@ -11,7 +11,10 @@ sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.m
 
 dnf check-update
 sudo dnf install code neochat
-sudo dnf remove firefox
 
 # kde connect
 sudo systemctl disable firewalld.service --now
+
+
+sudo mkdir -p /etc/firefox/policies
+sudo ln -sf /home/dominic/flake/config/etc/firefox/policies/policies.json /etc/firefox/policies/policies.json
