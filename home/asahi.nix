@@ -30,11 +30,13 @@
     starship
     home-manager
     (pkgs.nerdfonts.override { fonts = [ "RobotoMono" ]; }) # Terminal Font
-    mpv
-    youtube-dl
   ];
 
   fonts.fontconfig.enable = true;
+
+  home.file.".config/yt-dlp/config".text = ''
+    --cookies-from-browser firefox
+  '';
 
   programs.fish = {
     enable = true;
