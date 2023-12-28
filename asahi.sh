@@ -2,10 +2,6 @@ cd ~/flake
 nix build .#homeConfigurations.asahi.activation-script
 ./result/activate
 
-mkdir -p ~/.local/share/fonts
-cd ~/.local/share/fonts
-wget https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/RobotoMono/Regular/RobotoMonoNerdFont-Regular.ttf
-
 git clone https://github.com/RedBearAK/toshy ~/toshy
 cd ~/toshy
 ./setup_toshy.py install

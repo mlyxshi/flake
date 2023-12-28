@@ -36,7 +36,10 @@
     starship
     home-manager
     telegram-desktop
+    (pkgs.nerdfonts.override { fonts = [ "RobotoMono" ]; }) # Terminal Font
   ];
+
+  fonts.fontconfig.enable = true;
 
   programs.fish = {
     enable = true;
