@@ -27,6 +27,9 @@
       "imagemagick" #kitty image dependency
       "smartmontools"
       "cloudflared"
+      "yt-dlp"
+      "ffmpeg"
+      "mediainfo"
     ];
 
     casks = [
