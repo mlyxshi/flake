@@ -10,9 +10,6 @@
     homeDirectory = "/home/dominic";
   };
 
-  # XDG_DATA_DIRS=$HOME/.nix-profile/share:$XDG_DATA_DIRS
-  targets.genericLinux.enable = true;
-
   home.packages = with pkgs; [
     eza
     joshuto
