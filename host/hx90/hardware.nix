@@ -13,16 +13,6 @@
   boot.loader.timeout = 3;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  fileSystems."/boot" = {
-    device = "/dev/nvme0n1p1";
-    fsType = "vfat";
-  };
-
-  fileSystems."/" = {
-    device = "/dev/nvme0n1p2";
-    fsType = "ext4";
-  };
-
 
   # hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   hardware.enableRedistributableFirmware = true;
