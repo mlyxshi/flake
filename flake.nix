@@ -24,7 +24,7 @@
       nixosModules = mkFileHierarchyAttrset ./. "modules";
       darwinConfigurations.M1 = import ./host/M1 { inherit self nixpkgs darwin; };
       nixosConfigurations = {
-        hx90 = import ./host/hx90 { inherit self nixpkgs sops-nix; };
+        hx90 = import ./host/hx90 { inherit self nixpkgs sops-nix home-manager; };
 
         utm = import ./host/utm { inherit self nixpkgs sops-nix; };
 
