@@ -13,14 +13,6 @@ nixpkgs.lib.nixosSystem {
       nixpkgs.overlays = [ self.overlays.default ];
       nixpkgs.hostPlatform = "aarch64-linux";
       networking.hostName = "utm";
-
-      # https://docs.getutm.app/guest-support/linux/#macos-virtiofs
-      # share directory with macOS  
-      # fileSystems."/mnt" = {
-      #   device = "share";
-      #   fsType = "virtiofs";
-      # };
-
       services.getty.autologinUser = "root";
     }
   ];

@@ -1,5 +1,6 @@
 { pkgs, lib, config, ... }: {
-  sops.secrets.github-private-key = { };
+  sops.secrets.github-private-key.owner = if config.users.users ? dominic then "dominic" else "root";
+
   # ssh (client)
   programs.ssh = {
     knownHosts = {
