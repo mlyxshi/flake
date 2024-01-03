@@ -12,6 +12,7 @@
     nix-tree
     nix-init
     nix-update
+    nixpkgs-fmt
     joshuto
     helix
     nil
@@ -31,7 +32,6 @@
   ] ++ lib.optionals pkgs.stdenv.isDarwin [
     sops
     gh
-    nixpkgs-fmt
     jq
     lazygit
     deno

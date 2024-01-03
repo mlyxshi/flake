@@ -1,8 +1,9 @@
 {
   imports = [
-    ./common.nix
     ./firefox
   ];
+
+  home.stateVersion = "24.05";
 
   home = {
     username = "dominic";
