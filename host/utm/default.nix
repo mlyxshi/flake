@@ -1,4 +1,4 @@
-{ self, nixpkgs, sops-nix }:
+{ self, nixpkgs, sops-nix, home-manager }:
 
 nixpkgs.lib.nixosSystem {
   modules = [
@@ -14,6 +14,12 @@ nixpkgs.lib.nixosSystem {
       nixpkgs.hostPlatform = "aarch64-linux";
       networking.hostName = "utm";
       services.getty.autologinUser = "root";
+
+      home-manager.users.root = import ../../home;
+      home-manager.users.dominic = import ../../home/desktop.nix;
+      home-manager.useGlobalPkgs = true;
+      home-manager.useUserPackages = true;
+      home-manager.verbose = true;
     }
   ];
   specialArgs = { inherit self nixpkgs; };
