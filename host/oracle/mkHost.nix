@@ -5,7 +5,7 @@ in
 nixpkgs.lib.nixosSystem {
   modules = [
     sops-nix.nixosModules.default
-    home-manager.nixosModules.default
+    self.nixosModules.home-manager
     self.nixosModules.os.nixos.server
     self.nixosModules.network
     self.nixosModules.fileSystem.ext4
@@ -21,12 +21,7 @@ nixpkgs.lib.nixosSystem {
       nixpkgs.hostPlatform = "${arch}-linux";
       networking.hostName = hostName;
       networking.domain = "mlyxshi.com";
-
-      home-manager.users.root = import ../../home;
-      home-manager.useGlobalPkgs = true;
-      home-manager.useUserPackages = true;
-      home-manager.verbose = true;
     }
   ];
-  specialArgs = { inherit self nixpkgs sops-nix; };
+  specialArgs = { inherit self nixpkgs sops-nix home-manager; };
 }

@@ -3,7 +3,7 @@
 nixpkgs.lib.nixosSystem {
   modules = [
     sops-nix.nixosModules.default
-    home-manager.nixosModules.default
+    self.nixosModules.home-manager
     self.nixosModules.os.nixos.desktop
     self.nixosModules.network
     self.nixosModules.fileSystem.ext4
@@ -19,20 +19,12 @@ nixpkgs.lib.nixosSystem {
       hardware.uinput.enable = true;
       users.groups.uinput.members = [ "dominic" ];
       users.groups.input.members = [ "dominic" ];
-
-      home-manager.sharedModules = [
-        ../../home
-      ];
-
+  
+      home-manager.users.dominic = import ../../home/desktop.nix;
       home-manager.extraSpecialArgs = {
         inherit xremap;
-      };
-
-      home-manager.users.dominic = import ../../home/desktop.nix;
-      home-manager.useGlobalPkgs = true;
-      home-manager.useUserPackages = true;
-      home-manager.verbose = true;
+      }; 
     }
   ];
-  specialArgs = { inherit self nixpkgs; };
+  specialArgs = { inherit self nixpkgs home-manager; };
 }
