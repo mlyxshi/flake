@@ -11,9 +11,11 @@
 
     darwin.url = "github:LnL7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
+
+    xremap.url = "github:xremap/nix-flake";
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager, sops-nix }:
+  outputs = { self, nixpkgs, darwin, home-manager, sops-nix, xremap }:
     let
       inherit (nixpkgs) lib;
       utils = import ./utils.nix nixpkgs;
@@ -26,7 +28,7 @@
       nixosConfigurations = {
         hx90 = import ./host/hx90 { inherit self nixpkgs sops-nix home-manager; };
 
-        utm = import ./host/utm { inherit self nixpkgs sops-nix home-manager; };
+        utm = import ./host/utm { inherit self nixpkgs sops-nix home-manager xremap; };
 
         qemu-test-x86_64 = import ./host/oracle/mkTest.nix { arch = "x86_64"; inherit self nixpkgs sops-nix; };
         qemu-test-aarch64 = import ./host/oracle/mkTest.nix { arch = "aarch64"; inherit self nixpkgs sops-nix; };

@@ -1,4 +1,4 @@
-{ self, nixpkgs, sops-nix, home-manager }:
+{ self, nixpkgs, sops-nix, home-manager, xremap }:
 
 nixpkgs.lib.nixosSystem {
   modules = [
@@ -16,8 +16,65 @@ nixpkgs.lib.nixosSystem {
       networking.hostName = "utm";
       services.getty.autologinUser = "root";
 
+      hardware.uinput.enable = true;
+      users.groups.uinput.members = [ "dominic" ];
+      users.groups.input.members = [ "dominic" ];
+
       home-manager.users.root = import ../../home;
-      home-manager.users.dominic = import ../../home/desktop.nix;
+      home-manager.users.dominic = {
+        imports = [
+          ../../home/desktop.nix
+          xremap.homeManagerModules.default
+        ];
+        services.xremap = {
+          withKDE = true;
+          config = {
+            # modmap = [
+            #   {
+            #     name = "Global";
+            #     remap = { 
+            #        = "";
+            #     }; # globally remap CapsLock to Esc
+            #   }
+            # ];
+            # other xremap settings go here
+
+            keymap = [
+              {
+                name = "edit";
+                remap = {
+                  SUPER-z = "CTRL-z";
+                  SUPER-x = "CTRL-x";
+                  SUPER-c = "CTRL-c";
+                  SUPER-v = "CTRL-v";
+                  SUPER-a = "CTRL-a";
+                  SUPER-s = "CTRL-s";
+                  SUPER-t = "CTRL-t";
+                  SUPER-f = "CTRL-f";
+                };
+                application.only = [
+                  "firefox"
+                  "code"
+                ];
+              }
+
+              {
+                name = "konsole";
+                remap = {
+                  SUPER-c = "CTRL-SHIFT-c";
+                  SUPER-v = "CTRL-SHIFT-v";
+                  SUPER-t = "CTRL-SHIFT-t";
+                  SUPER-f = "CTRL-SHIFT-f";
+                };
+                application.only = [
+                  "konsole"
+                ];
+              }
+            ];
+          };
+        };
+
+      };
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.verbose = true;
