@@ -1,6 +1,7 @@
 { pkgs, lib, config, xremap, ... }: {
 
   imports = [
+    ./.
     ./firefox
     xremap.homeManagerModules.default
   ];
@@ -8,15 +9,15 @@
   services.xremap = {
     withKDE = true;
     config = {
+      # globally remap
       # modmap = [
       #   {
       #     name = "Global";
       #     remap = { 
       #        = "";
-      #     }; # globally remap
+      #     };
       #   }
       # ];
-      # other xremap settings go here
 
       keymap = [
         {
