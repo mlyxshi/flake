@@ -94,8 +94,8 @@
       
       if [ -n "$SYSTEM" ]
       then
-        nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
-        $SYSTEM/bin/switch-to-configuration switch
+        sudo nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
+        sudo $SYSTEM/bin/switch-to-configuration switch
       else
         echo "Build Failed"
         exit 1
@@ -109,8 +109,8 @@
       
       if [ -n "$SYSTEM" ]
       then
-        nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
-        $SYSTEM/bin/switch-to-configuration switch
+        sudo nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
+        sudo $SYSTEM/bin/switch-to-configuration switch
       else
         echo "Build Failed"
         exit 1
