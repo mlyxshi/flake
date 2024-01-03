@@ -50,6 +50,13 @@
             "konsole"
           ];
         }
+
+        {
+          name = "appswitcher";
+          remap = {
+            SUPER-TAB = "ALT-TAB";
+          };
+        }
       ];
     };
   };
