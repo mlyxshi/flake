@@ -12,6 +12,8 @@
     extraGroups = [ "wheel" ];
   };
 
+  security.sudo.wheelNeedsPassword = false;
+
   environment.systemPackages = with pkgs; [
     firefox
     vscode
