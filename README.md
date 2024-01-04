@@ -2,18 +2,13 @@
 ```
 curl -sL https://install.determinate.systems/nix | sh -s -- install
 ```
-### HM
+
+### Darwin
 ```
 git clone --depth=1  https://github.com/mlyxshi/flake.git ~/flake
 cd ~/flake
 nix build .#homeConfigurations.XXX.activation-script
 ./result/activate
-```
-### Darwin Config
-```
-nix profile install nixpkgs#fd
-nix profile install nixpkgs#joshuto
-nix profile install nixpkgs#helix
 
 chmod +x config.sh
 ./config.sh
