@@ -19,11 +19,9 @@ nixpkgs.lib.nixosSystem {
       hardware.uinput.enable = true;
       users.groups.uinput.members = [ "dominic" ]; # Uinput group owns the /uinput
       users.groups.input.members = [ "dominic" ]; # To allow access to /dev/input
-  
+
       home-manager.users.dominic = import ../../home/desktop.nix;
-      home-manager.extraSpecialArgs = {
-        inherit xremap;
-      }; 
+      home-manager.extraSpecialArgs = { inherit xremap; };
     }
   ];
   specialArgs = { inherit self nixpkgs home-manager; };

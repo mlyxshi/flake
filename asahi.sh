@@ -2,9 +2,9 @@ cd ~/flake
 nix build .#homeConfigurations.asahi.activation-script
 ./result/activate
 
-git clone https://github.com/RedBearAK/toshy ~/toshy
-cd ~/toshy
-./setup_toshy.py install
+echo 'KERNEL=="uinput", GROUP="input", TAG+="uaccess"' | sudo tee /etc/udev/rules.d/input.rules
+sudo groupadd input
+sudo usermod -aG input dominic
 
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
 sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
