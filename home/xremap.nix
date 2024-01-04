@@ -1,4 +1,4 @@
-{ xremap,... }: {
+{ xremap, ... }: {
 
   imports = [
     xremap.homeManagerModules.default
@@ -7,16 +7,6 @@
   services.xremap = {
     withKDE = true;
     config = {
-      # globally remap
-      # modmap = [
-      #   {
-      #     name = "Global";
-      #     remap = { 
-      #        = "";
-      #     };
-      #   }
-      # ];
-
       keymap = [
         {
           name = "edit";
@@ -47,13 +37,6 @@
           application.only = [
             "konsole"
           ];
-        }
-
-        {
-          name = "appswitcher";
-          remap = {
-            SUPER-TAB = "ALT-TAB";
-          };
         }
       ];
     };
