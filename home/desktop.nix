@@ -4,6 +4,7 @@
     ./.
     ./firefox
     ./xremap.nix
+    ./kde.nix
   ];
 
 }

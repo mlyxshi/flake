@@ -2,6 +2,7 @@ cd ~/flake
 nix build .#homeConfigurations.asahi.activation-script
 ./result/activate
 
+# https://github.com/k0kubun/xremap
 echo 'KERNEL=="uinput", GROUP="input", TAG+="uaccess"' | sudo tee /etc/udev/rules.d/input.rules
 sudo groupadd input
 sudo usermod -aG input dominic
