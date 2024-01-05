@@ -1,7 +1,8 @@
 { pkgs, lib, config, ... }: {
 
   imports = [
-    ./desktop.nix
+    ./.
+    ./firefox
   ];
 
   home = {

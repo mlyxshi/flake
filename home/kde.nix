@@ -9,6 +9,7 @@
     enable = true;
     shortcuts.kwin = {
       "Walk Through Windows" = "Meta+Tab";
+      "Cycle Overview" = ""; # avoid collision
     };
   };
 
