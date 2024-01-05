@@ -27,7 +27,4 @@ curl -sL https://install.determinate.systems/nix | sh -s -- install
 
 git clone https://github.com/mlyxshi/flake.git ~/flake
 chmod +x asahi.sh && ./asahi.sh
-
-# kconsole default profile set fish
-# bottom pannel set autohide
 ```

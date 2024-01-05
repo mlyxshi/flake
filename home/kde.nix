@@ -1,13 +1,14 @@
-{ plasma-manager, ... }: {
+{ plasma-manager, lib, ... }@args: {
 
   imports = [
     plasma-manager.homeManagerModules.plasma-manager
   ];
 
-  # MacOS-like window switching
   programs.plasma = {
     enable = true;
-    shortcuts.kwin = {
+    # In NixOS, use xremap to remap Application specific key, use kde global shortcuts for system-window-switching
+    # In non-NixOS, use toshy, which already handles the remap of system-window-switching
+    shortcuts.kwin = lib.mkIf (args ? osConfig) {
       "Walk Through Windows" = "Meta+Tab";
       "Cycle Overview" = ""; # avoid collision
     };
