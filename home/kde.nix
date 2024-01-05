@@ -12,6 +12,18 @@
       "Walk Through Windows" = "Meta+Tab";
       "Cycle Overview" = ""; # avoid collision
     };
+
+    dataFile = {
+      "konsole/fish.profile" = {
+        "General"."Command" = "fish";
+        "General"."Name" = "fish";
+      };
+    };
+
+    configFile = {
+      "konsolerc"."Desktop Entry"."DefaultProfile" = "fish.profile";
+    };
+
   };
 
 }

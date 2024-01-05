@@ -3,6 +3,7 @@
   imports = [
     ./.
     ./firefox
+    ./kde.nix
   ];
 
   home = {
