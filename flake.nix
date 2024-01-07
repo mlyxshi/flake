@@ -46,8 +46,15 @@
       // lib.genAttrs oracle-serverlist (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs sops-nix home-manager; });
 
       homeConfigurations = {
-        darwin = home-manager.lib.homeManagerConfiguration { pkgs = nixpkgs.legacyPackages.aarch64-darwin; modules = [ ./home/darwin.nix ]; };
-        asahi = home-manager.lib.homeManagerConfiguration { pkgs = nixpkgs.legacyPackages.aarch64-linux; modules = [ ./home/asahi.nix ]; extraSpecialArgs = { inherit plasma-manager; }; };
+        darwin = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+          modules = [ ./home/darwin.nix ];
+        };
+        asahi = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.aarch64-linux // { xremap = self.packages.aarch64-linux.xremap; };
+          modules = [ ./home/asahi.nix ];
+          extraSpecialArgs = { inherit plasma-manager; };
+        };
       };
 
       packages = {
