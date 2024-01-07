@@ -16,10 +16,9 @@
     plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
     plasma-manager.inputs.home-manager.follows = "home-manager";
 
-    xremap.url = "github:xremap/nix-flake";
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager, sops-nix, xremap, plasma-manager }:
+  outputs = { self, nixpkgs, darwin, home-manager, sops-nix, plasma-manager }:
     let
       inherit (nixpkgs) lib;
       utils = import ./utils.nix nixpkgs;
@@ -32,7 +31,7 @@
       nixosConfigurations = {
         hx90 = import ./host/hx90 { inherit self nixpkgs sops-nix home-manager; };
 
-        utm = import ./host/utm { inherit self nixpkgs sops-nix home-manager xremap plasma-manager; };
+        utm = import ./host/utm { inherit self nixpkgs sops-nix home-manager plasma-manager; };
 
         qemu-test-x86_64 = import ./host/oracle/mkTest.nix { arch = "x86_64"; inherit self nixpkgs sops-nix; };
         qemu-test-aarch64 = import ./host/oracle/mkTest.nix { arch = "aarch64"; inherit self nixpkgs sops-nix; };
@@ -48,7 +47,7 @@
 
       homeConfigurations = {
         darwin = home-manager.lib.homeManagerConfiguration { pkgs = nixpkgs.legacyPackages.aarch64-darwin; modules = [ ./home/darwin.nix ]; };
-        asahi = home-manager.lib.homeManagerConfiguration { pkgs = nixpkgs.legacyPackages.aarch64-linux; modules = [ ./home/asahi.nix ]; extraSpecialArgs = { inherit xremap plasma-manager; }; };
+        asahi = home-manager.lib.homeManagerConfiguration { pkgs = nixpkgs.legacyPackages.aarch64-linux; modules = [ ./home/asahi.nix ]; extraSpecialArgs = { inherit plasma-manager; }; };
       };
 
       packages = {
