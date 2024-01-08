@@ -12,7 +12,7 @@
           password: ${config.sops.placeholder.password}
           labels: 
             - rss
-  '' + builtins.readFile ../../../rss.yml;
+  '' + builtins.readFile ./rss.yml;
 
   systemd.services.flexget = {
     after = [ "transmission.service" ];

@@ -2,7 +2,7 @@ name: "Flexget RSS Config"
 on:
   push:
     paths: 
-      - 'rss.yml'
+      - 'modules/services/transmission/rss.yml'
   workflow_dispatch:
 
 jobs:
