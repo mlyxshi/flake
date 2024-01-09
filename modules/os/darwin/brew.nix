@@ -33,6 +33,7 @@
     ];
 
     casks = [
+      "orbstack"
       "ubiquiti-unifi-controller"
       "betterdisplay"
       "mpv"
@@ -44,7 +45,7 @@
       "input-source-pro"
       "kitty"
       "macfuse" # rclone mount
-      "utm-beta"
+      "utm"
       "font-roboto-mono-nerd-font"
       "calibre"
       "ipatool"
@@ -59,7 +60,6 @@
       "google-drive"
       "istat-menus"
       "neteasemusic"
-      "telegram-desktop"
 
       # Already installed from offical website <-- Uncomment this when completely reinstall macos
       # "surge"
