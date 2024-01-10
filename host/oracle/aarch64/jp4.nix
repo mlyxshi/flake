@@ -2,8 +2,10 @@
   imports = [
     self.nixosModules.services.transmission
 
-    self.nixosModules.containers.jellyfin
     self.nixosModules.containers.navidrome
+
+    self.nixosModules.services.backup
+    self.nixosModules.containers.jellyfin
     self.nixosModules.containers.change-detection
   ];
 

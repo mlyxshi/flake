@@ -3,7 +3,6 @@
 
   imports = [
     self.nixosModules.containers.podman
-    self.nixosModules.services.backup
   ];
 
   backup.jellyfin = true;
