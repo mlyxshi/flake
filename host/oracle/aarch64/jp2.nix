@@ -2,5 +2,6 @@
   imports = [
     self.nixosModules.services.hysteria
     self.nixosModules.containers.netboot-tftp
+    self.nixosModules.containers.change-detection
   ];
 }
