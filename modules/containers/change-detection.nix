@@ -27,7 +27,7 @@
   };
 
   virtualisation.oci-containers.containers.chrome-headless = {
-    image = "browserless/chrome";
+    image = "ghcr.io/browserless/chrome";
     extraOptions = lib.concatMap (x: [ "--label" x ]) [
       "io.containers.autoupdate=registry"
     ];
