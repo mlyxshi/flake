@@ -10,7 +10,7 @@
     # In non-NixOS, use toshy, which already handles the remap of system-window-switching
     shortcuts = {
       kwin = lib.mkIf (args ? osConfig) {
-        "Walk Through Windows" = "Meta+Tab";
+        "Walk Through Windows" = [ "Meta+Tab" ];
         "Cycle Overview" = ""; # avoid collision
       };
 
@@ -20,23 +20,23 @@
 
 
     panels = [
-      # Windows-like panel at the bottom
       {
         location = "bottom";
+        hiding = "autohide";
         widgets = [
-          "org.kde.plasma.kickoff"
           "org.kde.plasma.icontasks"
-          "org.kde.plasma.marignsseperator"
-          "org.kde.plasma.systemtray"
-          "org.kde.plasma.digitalclock"
         ];
       }
-      # Global menu at the top
+      # MacOS like top bar
       {
         location = "top";
         height = 26;
         widgets = [
+          "org.kde.plasma.kickoff"
           "org.kde.plasma.appmenu"
+          "org.kde.plasma.panelspacer"
+          "org.kde.plasma.systemtray"
+          "org.kde.plasma.digitalclock"
         ];
       }
     ];
