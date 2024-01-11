@@ -11,11 +11,13 @@
     shortcuts = {
       kwin = lib.mkIf (args ? osConfig) {
         "Walk Through Windows" = [ "Meta+Tab" ];
-        "Cycle Overview" = ""; # avoid collision
+        "Cycle Overview" = ""; #default: Meta+Tab
+        "Overview" = ""; #default: Meta+W
       };
 
-      "org.kde.krunner.desktop"."_launch" = [ "Alt+Space" "Meta+Space" "Search" ];
+      "plasmashell"."manage activities" = ""; #default: Meta+Q
 
+      "org.kde.krunner.desktop"."_launch" = [ "Alt+Space" "Meta+Space" "Search" ];
     };
 
 

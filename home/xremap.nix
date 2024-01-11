@@ -13,6 +13,10 @@ let
           SUPER-s = "CTRL-s";
           SUPER-t = "CTRL-t";
           SUPER-f = "CTRL-f";
+          SUPER-MINUS = "CTRL-MINUS";
+          SUPER-EQUAL = "CTRL-EQUAL";
+          SUPER-q = "CTRL-q";
+          SUPER-w = "CTRL-w";
         };
         application.only = [
           "firefox"
@@ -27,6 +31,8 @@ let
           SUPER-v = "CTRL-SHIFT-v";
           SUPER-t = "CTRL-SHIFT-t";
           SUPER-f = "CTRL-SHIFT-f";
+          SUPER-q = "CTRL-SHIFT-q";
+          SUPER-w = "CTRL-SHIFT-w";
         };
         application.only = [
           "konsole"
