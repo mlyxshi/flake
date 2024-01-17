@@ -31,10 +31,8 @@ exit
 ```
 nix run -L .#
 
-# quit: [ctrl+a] then press [x]
-```
-
-
+# quit
+[ctrl+a] then press [x]
 
 
 # cpio
