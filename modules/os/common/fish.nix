@@ -29,6 +29,7 @@
     shellInit = ''
       set -U fish_greeting
       zoxide init fish | source
+      atuin init fish | source
 
       function loc
         readlink -f $(which $argv) 

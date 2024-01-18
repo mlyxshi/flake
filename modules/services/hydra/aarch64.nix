@@ -48,7 +48,7 @@ in
     }
   ];
 
-  nix.settings.allowed-uris = [ "https://github.com/NixOS/nixpkgs" "https://git.sr.ht/~rycee/nmd/" ];
+  nix.settings.allowed-uris = [ "https://github.com/NixOS/nixpkgs" ];
 
   # turn off experimental features
   nix.settings.use-cgroups = lib.mkForce false;

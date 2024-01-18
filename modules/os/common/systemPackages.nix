@@ -20,6 +20,7 @@
     ripgrep
     starship
     zoxide
+    atuin
     eza
     xh
     tealdeer
