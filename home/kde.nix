@@ -6,10 +6,8 @@
 
   programs.plasma = {
     enable = true;
-    # In NixOS, use xremap to remap Application specific key, use kde global shortcuts for system-window-switching
-    # In non-NixOS, use toshy, which already handles the remap of system-window-switching
     shortcuts = {
-      kwin = lib.mkIf (args ? osConfig) {
+      kwin = {
         "Walk Through Windows" = [ "Meta+Tab" ];
         "Cycle Overview" = ""; #default: Meta+Tab
         "Overview" = ""; #default: Meta+W
