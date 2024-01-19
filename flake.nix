@@ -51,9 +51,14 @@
           modules = [ ./home/darwin.nix ];
         };
         asahi = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.aarch64-linux // { xremap = self.packages.aarch64-linux.xremap; };
+          pkgs = nixpkgs.legacyPackages.aarch64-linux;
           modules = [ ./home/asahi.nix ];
-          extraSpecialArgs = { inherit plasma-manager; };
+          extraSpecialArgs = { inherit plasma-manager self; };
+        };
+        deck = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          modules = [ ./home/deck.nix ];
+          extraSpecialArgs = { inherit plasma-manager self; };
         };
       };
 

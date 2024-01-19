@@ -4,12 +4,17 @@
     ./.
     ./firefox
     ./kde.nix
+    ./xremap.nix
   ];
 
   home = {
-    username = "dominic";
-    homeDirectory = "/home/dominic";
+    username = "deck";
+    homeDirectory = "/home/deck";
   };
+
+  nixpkgs.overlays = [ self.overlays.default ];
+
+  programs.firefox.package = lib.mkForce pkgs.firefox;
 
   home.packages = with pkgs; [
     eza
@@ -69,7 +74,7 @@
       zoxide init fish | source
 
       function loc
-        readlink -f $(which $argv) 
+        readlink -f $(which $argv)
       end
 
       function pb
@@ -77,7 +82,7 @@
       end
 
       function cnar
-        curl https://cache.mlyxshi.com/$argv.narinfo  
+        curl https://cache.mlyxshi.com/$argv.narinfo
       end
 
       function drv
@@ -90,7 +95,7 @@
       end
 
       # recursive reference (All level)
-      function closure 
+      function closure
         nix-store -q --requisites $(readlink -f $(which $argv))
       end
 
