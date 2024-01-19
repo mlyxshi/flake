@@ -62,8 +62,10 @@
 
     configFile = {
       "konsolerc"."Desktop Entry"."DefaultProfile" = "fish.profile";
-    };
 
+      "katerc"."KTextEditor Document"."Auto Save" = "true";
+      "katerc"."KTextEditor Document"."Auto Save On Focus Out" = "true";
+    };
   };
 
 }
