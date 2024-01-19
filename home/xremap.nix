@@ -20,6 +20,7 @@ let
         };
         application.only = [
           "firefox"
+          "kate"
           "code"
         ];
       }
