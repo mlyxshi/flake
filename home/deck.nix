@@ -41,6 +41,7 @@
     neofetch
     starship
     home-manager
+    atuin
     (pkgs.nerdfonts.override { fonts = [ "RobotoMono" ]; }) # Terminal Font
   ];
 
@@ -78,6 +79,7 @@
     shellInit = ''
       set -U fish_greeting
       zoxide init fish | source
+      atuin init fish --disable-up-arrow | source
 
       function loc
         readlink -f $(which $argv)
