@@ -14,7 +14,7 @@
 
   nixpkgs.overlays = [ self.overlays.default ];
 
-  programs.firefox.package = lib.mkForce pkgs.firefox;k
+  programs.firefox.package = lib.mkForce pkgs.firefox;
 
   home.packages = with pkgs; [
     eza
@@ -40,9 +40,7 @@
 
 
     (pkgs.writeShellScriptBin "home-update" ''
-      cd ~/flake
-      nix build --extra-substituters https://cache.mlyxshi.com --extra-trusted-public-keys cache:vXjiuWtSTOXj63zr+ZjMvXqvaYIK1atjyyEk+iuIqSg= .#homeConfigurations.deck.activation-script
-      ./result/activate
+      
     '')
   ];
 
@@ -82,6 +80,11 @@
       zoxide init fish | source
       atuin init fish --disable-up-arrow | source
 
+      function home-update
+        cd ~/flake
+        nix run --extra-substituters https://cache.mlyxshi.com --extra-trusted-public-keys cache:vXjiuWtSTOXj63zr+ZjMvXqvaYIK1atjyyEk+iuIqSg= .#homeConfigurations.deck.activationPackage
+      end
+      
       function loc
         readlink -f $(which $argv)
       end

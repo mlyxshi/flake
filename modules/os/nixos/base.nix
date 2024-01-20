@@ -116,16 +116,6 @@
         exit 1
       fi
     '')
-
-    (pkgs.writeShellScriptBin "config-update" ''
-      [[ -e "/persist/flake/flake.nix" ]] || git clone --depth=1  git@github.com:mlyxshi/flake /persist/flake
-      
-      cd /persist/flake
-      git pull 
-      
-      chmod +x ./config.sh
-      ./config.sh
-    '')
   ];
 
   # https://github.com/numtide/srvos/blob/main/nixos/common/networking.nix

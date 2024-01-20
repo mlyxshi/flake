@@ -1,6 +1,4 @@
-cd ~/flake
-nix build .#homeConfigurations.asahi.activation-script
-./result/activate
+nix run ~/flake#homeConfigurations.asahi.activationPackage
 
 sudo mkdir -p /etc/firefox/policies
 sudo ln -sf /home/dominic/flake/config/etc/firefox/policies/policies.json /etc/firefox/policies/policies.json

@@ -7,8 +7,7 @@ curl -sL https://install.determinate.systems/nix | sh -s -- install
 ```
 git clone --depth=1  https://github.com/mlyxshi/flake.git ~/flake
 cd ~/flake
-nix build .#homeConfigurations.XXX.activation-script
-./result/activate
+nix run .#homeConfigurations.XXX.activationPackage
 
 chmod +x config.sh
 ./config.sh
