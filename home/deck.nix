@@ -14,13 +14,7 @@
 
   nixpkgs.overlays = [ self.overlays.default ];
 
-  # xremap
-  nix.settings = {
-    substituters = [ "https://cache.mlyxshi.com" ];
-    trusted-public-keys = [ "cache:vXjiuWtSTOXj63zr+ZjMvXqvaYIK1atjyyEk+iuIqSg=" ];
-  };
-
-  programs.firefox.package = lib.mkForce pkgs.firefox;
+  programs.firefox.package = lib.mkForce pkgs.firefox;k
 
   home.packages = with pkgs; [
     eza
@@ -43,6 +37,13 @@
     home-manager
     atuin
     (pkgs.nerdfonts.override { fonts = [ "RobotoMono" ]; }) # Terminal Font
+
+
+    (pkgs.writeShellScriptBin "home-update" ''
+      cd ~/flake
+      nix build --extra-substituters https://cache.mlyxshi.com --extra-trusted-public-keys cache:vXjiuWtSTOXj63zr+ZjMvXqvaYIK1atjyyEk+iuIqSg= .#homeConfigurations.deck.activation-script
+      ./result/activate
+    '')
   ];
 
   fonts.fontconfig.enable = true;
