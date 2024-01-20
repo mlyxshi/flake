@@ -78,7 +78,9 @@
       hydraJobs = {
         kexec-x86_64 = self.nixosConfigurations.kexec-x86_64.config.system.build.kexec;
         kexec-aarch64 = self.nixosConfigurations.kexec-aarch64.config.system.build.kexec;
-        transmission = self.packages.aarch64-linux.transmission;
+        transmission-aarch64 = self.packages.aarch64-linux.transmission;
+        xremap-x86_64 = self.packages.x86_64-linux.transmission;
+        xremap-aarch64 = self.packages.aarch64-linux.transmission;
       };
     };
 }

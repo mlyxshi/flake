@@ -14,6 +14,12 @@
 
   nixpkgs.overlays = [ self.overlays.default ];
 
+  # xremap
+  nix.settings = {
+    substituters = [ "https://cache.mlyxshi.com" ];
+    trusted-public-keys = [ "cache:vXjiuWtSTOXj63zr+ZjMvXqvaYIK1atjyyEk+iuIqSg=" ];
+  };
+
   programs.firefox.package = lib.mkForce pkgs.firefox;
 
   home.packages = with pkgs; [
