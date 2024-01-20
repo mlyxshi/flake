@@ -1,5 +1,5 @@
 cd ~/flake
-nix build .#homeConfigurations.deck.activation-script
+nix build --extra-substituters https://cache.mlyxshi.com --extra-trusted-public-keys cache:vXjiuWtSTOXj63zr+ZjMvXqvaYIK1atjyyEk+iuIqSg= .#homeConfigurations.deck.activation-script
 ./result/activate
 
 sudo mkdir -p /etc/firefox/policies
