@@ -28,3 +28,11 @@ curl -sL https://install.determinate.systems/nix | sh -s -- install
 git clone https://github.com/mlyxshi/flake.git ~/flake
 chmod +x asahi.sh && ./asahi.sh
 ```
+
+### Steam Deck
+```
+curl -sL https://install.determinate.systems/nix | sh -s -- install
+
+git clone https://github.com/mlyxshi/flake.git ~/flake
+chmod +x deck.sh && ./deck.sh
+```
