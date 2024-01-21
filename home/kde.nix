@@ -38,6 +38,10 @@
         widgets = [
           "org.kde.plasma.icontasks"
         ];
+        iconTasksLaunchers = [
+          "org.kde.dolphin.desktop"
+        ];
+
       }
       # MacOS like top bar
       {
