@@ -81,8 +81,7 @@
       atuin init fish --disable-up-arrow | source
 
       function home-update
-        cd ~/flake
-        nix run --extra-substituters https://cache.mlyxshi.com --extra-trusted-public-keys cache:vXjiuWtSTOXj63zr+ZjMvXqvaYIK1atjyyEk+iuIqSg= .#homeConfigurations.deck.activationPackage
+        nix run --extra-substituters https://cache.mlyxshi.com --extra-trusted-public-keys cache:vXjiuWtSTOXj63zr+ZjMvXqvaYIK1atjyyEk+iuIqSg=  ~/flake#homeConfigurations.deck.activationPackage
       end
       
       function loc
