@@ -39,9 +39,12 @@
           "org.kde.plasma.icontasks"
         ];
         iconTasksLaunchers = [
+          "systemsettings.desktop"
           "org.kde.dolphin.desktop"
+          "org.kde.konsole.desktop" 
+          "org.kde.kate.desktop"
+          "firefox.desktop"
         ];
-
       }
       # MacOS like top bar
       {
