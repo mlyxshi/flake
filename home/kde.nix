@@ -36,14 +36,18 @@
         location = "bottom";
         hiding = "autohide";
         widgets = [
-          "org.kde.plasma.icontasks"
-        ];
-        iconTasksLaunchers = [
-          "systemsettings.desktop"
-          "org.kde.dolphin.desktop"
-          "org.kde.konsole.desktop" 
-          "org.kde.kate.desktop"
-          "firefox.desktop"
+          {
+            name = "org.kde.plasma.icontasks";
+            config = {
+              General.launchers = [
+                "applications:systemsettings.desktop"
+                "applications:org.kde.dolphin.desktop"
+                "applications:org.kde.konsole.desktop"
+                "applications:org.kde.kate.desktop"
+                "applications:firefox.desktop"
+              ];
+            };
+          }
         ];
       }
       # MacOS like top bar
