@@ -38,6 +38,8 @@
         # Podman DNS
         ${lib.optionalString config.virtualisation.podman.enable "iifname podman0 accept"}
         ${lib.optionalString config.virtualisation.podman.enable "oifname podman0 accept"}
+        ${lib.optionalString config.virtualisation.podman.enable "iifname veth* accept"}
+        ${lib.optionalString config.virtualisation.podman.enable "oifname veth* accept"}
 
       }
     }
