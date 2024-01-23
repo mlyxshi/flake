@@ -20,6 +20,7 @@ in
     (service: time: (lib.mkIf cfg.${service} {
       systemd.services."${service}-init" = {
         after = [ "network-online.target" ];
+        requires = [ "network-online.target" ];
         before = [ "podman-${service}.service" ];
         unitConfig.ConditionPathExists = "!%S/${service}";
         environment.RESTIC_CACHE_DIR = "%C/restic";
