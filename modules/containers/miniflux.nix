@@ -38,7 +38,7 @@
       "traefik.enable=true"
       "traefik.http.routers.miniflux.rule=Host(`test.${config.networking.domain}`)"
       "traefik.http.routers.miniflux.entrypoints=websecure"
-    ] ++ [ "--no-healthcheck" ];
+    ];
   };
 
   virtualisation.oci-containers.containers.miniflux-postgres = {
