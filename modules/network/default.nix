@@ -34,6 +34,9 @@
 
         # Allow hysteria
         ${lib.optionalString (config.systemd.services ? hysteria) "udp dport 443 accept"}
+
+        # Podman DNS
+        ${lib.optionalString config.virtualisation.podman.enable "iifname podman0 udp dport 53 accept"}
       }
     }
   '';

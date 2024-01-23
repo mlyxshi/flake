@@ -1,5 +1,4 @@
 { config, pkgs, lib, self, ... }: {
-  networking.nftables.enable = lib.mkForce false;
 
   imports = [
     self.nixosModules.containers.podman
