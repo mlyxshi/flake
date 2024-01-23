@@ -29,7 +29,7 @@
       METRICS_COLLECTOR = "1";
       METRICS_ALLOWED_NETWORKS = "0.0.0.0/0";
       DATABASE_URL = "postgres://postgres:postgres@miniflux-postgres/miniflux?sslmode=disable";
-      BASE_URL = "https://test.${config.networking.domain}";
+      BASE_URL = "https://miniflux.${config.networking.domain}";
     };
     environmentFiles = [
       config.sops.templates.miniflux-admin-credentials.path
@@ -37,7 +37,7 @@
     extraOptions = lib.concatMap (x: [ "--label" x ]) [
       "io.containers.autoupdate=registry"
       "traefik.enable=true"
-      "traefik.http.routers.miniflux.rule=Host(`test.${config.networking.domain}`)"
+      "traefik.http.routers.miniflux.rule=Host(`miniflux.${config.networking.domain}`)"
       "traefik.http.routers.miniflux.entrypoints=websecure"
     ];
   };
@@ -71,7 +71,7 @@
       METRICS_COLLECTOR = "1";
       METRICS_ALLOWED_NETWORKS = "0.0.0.0/0";
       DATABASE_URL = "postgres://postgres:postgres@miniflux-silent-postgres/miniflux?sslmode=disable";
-      BASE_URL = "https://test-silent.${config.networking.domain}";
+      BASE_URL = "https://miniflux-silent.${config.networking.domain}";
     };
     environmentFiles = [
       config.sops.templates.miniflux-admin-credentials.path
@@ -79,7 +79,7 @@
     extraOptions = lib.concatMap (x: [ "--label" x ]) [
       "io.containers.autoupdate=registry"
       "traefik.enable=true"
-      "traefik.http.routers.miniflux.rule=Host(`test-silent.${config.networking.domain}`)"
+      "traefik.http.routers.miniflux.rule=Host(`miniflux-silent.${config.networking.domain}`)"
       "traefik.http.routers.miniflux.entrypoints=websecure"
     ];
   };
