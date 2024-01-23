@@ -6,6 +6,7 @@ let
     jellyfin = "05:00";
     vaultwarden = "06:00";
     changedetection = "08:00";
+    miniflux-postgres = "09:00";
   };
 in
 {

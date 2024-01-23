@@ -1,13 +1,12 @@
 { config, pkgs, lib, self, ... }: {
-
   networking.nftables.enable = lib.mkForce false;
 
   imports = [
     self.nixosModules.containers.podman
-    #self.nixosModules.services.backup
+    self.nixosModules.services.backup
   ];
 
-  # backup.miniflux = true;
+  backup.miniflux-postgres = true;
 
   sops.secrets.user = { };
   sops.secrets.password = { };
@@ -54,5 +53,5 @@
     ];
   };
 
-  systemd.services.podman-miniflux-postgres.serviceConfig.StateDirectory = "miniflux-postgres";
+
 }
