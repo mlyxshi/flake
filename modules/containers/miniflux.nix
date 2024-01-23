@@ -28,6 +28,7 @@
       METRICS_COLLECTOR = "1";
       METRICS_ALLOWED_NETWORKS = "0.0.0.0/0";
       DATABASE_URL = "postgres://postgres:postgres@miniflux-postgres/miniflux?sslmode=disable";
+      BASE_URL = "https://test.${config.networking.domain}";
     };
     environmentFiles = [
       config.sops.templates.miniflux-admin-credentials.path
