@@ -6,7 +6,7 @@ const dns: Record<string, string[]> = {
     "138.2.16.45": ["jp2"],
     "168.138.34.176": ["jp4", "transmission", "transmission-index", "jellyfin", "music", "changeio"],
     "155.248.196.71": ["us1"],
-    "138.2.224.150": ["us2", "miniflux", "miniflux-silent", "rss"],
+    "138.2.224.150": ["us2", "miniflux", "miniflux-silent"],
     "152.69.224.200": ["kr", "hydra", "cache"],
     "152.67.211.22": ["kr2", "hydra-x64"],
     "152.67.79.165": ["sw"],

@@ -53,6 +53,12 @@
     ];
   };
 
+  virtualisation.oci-containers.containers.rsshub = {
+    image = "ghcr.io/diygod/rsshub:chromium-bundled";
+    extraOptions = lib.concatMap (x: [ "--label" x ]) [
+      "io.containers.autoupdate=registry"
+    ];
+  };
 
   #################################
   # silent miniflux instance for unimportant feeds
