@@ -78,8 +78,8 @@
     extraOptions = lib.concatMap (x: [ "--label" x ]) [
       "io.containers.autoupdate=registry"
       "traefik.enable=true"
-      "traefik.http.routers.miniflux.rule=Host(`miniflux-silent.${config.networking.domain}`)"
-      "traefik.http.routers.miniflux.entrypoints=websecure"
+      "traefik.http.routers.miniflux-silent.rule=Host(`miniflux-silent.${config.networking.domain}`)"
+      "traefik.http.routers.miniflux-silent.entrypoints=websecure"
     ];
   };
 
