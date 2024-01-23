@@ -1,5 +1,7 @@
 { config, pkgs, lib, self, ... }: {
 
+  networking.nftables.enable = lib.mkForce false;
+
   imports = [
     self.nixosModules.containers.podman
     #self.nixosModules.services.backup
@@ -9,7 +11,6 @@
 
   sops.secrets.user = { };
   sops.secrets.password = { };
-  sops.secrets.postgresql = { };
   sops.templates.miniflux-admin-credentials.content = ''
     ADMIN_USERNAME=${config.sops.placeholder.user}
     ADMIN_PASSWORD=${config.sops.placeholder.password}
