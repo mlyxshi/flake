@@ -27,7 +27,7 @@
       POLLING_PARSING_ERROR_LIMIT = "0";
       METRICS_COLLECTOR = "1";
       METRICS_ALLOWED_NETWORKS = "0.0.0.0/0";
-      # Default DATABASE_URL: user=postgres password=postgres dbname=miniflux2 sslmode=disable
+      DATABASE_URL = "postgres://postgres:postgres@miniflux-postgres/miniflux?sslmode=disable";
     };
     environmentFiles = [
       config.sops.templates.miniflux-admin-credentials.path
@@ -45,7 +45,7 @@
     environment = {
       POSTGRES_USER = "postgres";
       POSTGRES_PASSWORD = "postgres";
-      POSTGRES_DB = "miniflux2";
+      POSTGRES_DB = "miniflux";
     };
     volumes = [
       "/var/lib/miniflux-postgres:/var/lib/postgresql/data"
