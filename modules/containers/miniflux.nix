@@ -7,6 +7,7 @@
   ];
 
   backup.miniflux-postgres = true;
+  backup.miniflux-silent-postgres = true;
 
   sops.secrets.user = { };
   sops.secrets.password = { };

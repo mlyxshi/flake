@@ -7,6 +7,7 @@ let
     vaultwarden = "06:00";
     changedetection = "08:00";
     miniflux-postgres = "09:00";
+    miniflux-silent-postgres = "10:00";
   };
 in
 {
