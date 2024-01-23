@@ -60,6 +60,7 @@
       "google-drive"
       "istat-menus"
       "neteasemusic"
+      "telegram-desktop"
 
       # Already installed from offical website <-- Uncomment this when completely reinstall macos
       # "surge"
