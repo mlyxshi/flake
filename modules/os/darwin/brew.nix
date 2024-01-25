@@ -9,6 +9,7 @@
     };
 
     taps = [
+      "homebrew/services"
       "homebrew/cask-fonts"
       "homebrew/cask-drivers" # yubikey
       "homebrew/cask-versions" # beta

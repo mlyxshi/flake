@@ -42,5 +42,5 @@
     ];
   };
 
-  systemd.services.podman-nodestatus-server.serviceConfig.StateDirectory = "nodestatus-server";
+  # systemd.services.podman-nodestatus-server.serviceConfig.StateDirectory = "nodestatus-server";
 }
