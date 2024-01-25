@@ -3,8 +3,8 @@ import * as cloudflare from "@pulumi/cloudflare";
 const dns: Record<string, string[]> = {
     "130.61.171.180": ["de"],
     "140.238.198.209": ["au", "alert", "metric"],
-    "138.2.16.45": ["jp2", "baidunetdisk"],
-    "168.138.34.176": ["jp4", "transmission", "transmission-index", "jellyfin", "music", "changeio"],
+    "138.2.16.45": ["jp2" ],
+    "168.138.34.176": ["jp4", "transmission", "transmission-index", "jellyfin", "music", "changeio","baidunetdisk"],
     "155.248.196.71": ["us1"],
     "138.2.224.150": ["us2", "miniflux", "miniflux-silent"],
     "152.69.224.200": ["kr", "hydra", "cache"],
