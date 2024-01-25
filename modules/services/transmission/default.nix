@@ -43,6 +43,7 @@ in
 
   systemd.services.transmission = {
     after = [ "transmission-init.service" "network-online.target" ];
+    wants = [ "network-online.target" ];
     environment = {
       TRANSMISSION_HOME = "%S/transmission";
       TRANSMISSION_WEB_HOME = "${pkgs.transmission}/public_html";
@@ -65,6 +66,7 @@ in
 
   systemd.services.transmission-index = {
     after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
     serviceConfig = {
       ExecStart = "${pkgs.deno}/bin/deno run --allow-net --allow-read https://deno.land/std/http/file_server.ts  %S/transmission/files";
     };
