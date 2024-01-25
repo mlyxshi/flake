@@ -13,8 +13,8 @@
     extraOptions = lib.concatMap (x: [ "--label" x ]) [
       "io.containers.autoupdate=registry"
       "traefik.enable=true"
-      "traefik.http.routers.websecure-rsshub.rule=Host(`music.${config.networking.domain}`)"
-      "traefik.http.routers.websecure-rsshub.entrypoints=websecure"
+      "traefik.http.routers.navidrome.rule=Host(`music.${config.networking.domain}`)"
+      "traefik.http.routers.navidrome.entrypoints=websecure"
     ];
   };
 }
