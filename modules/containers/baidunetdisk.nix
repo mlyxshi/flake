@@ -13,7 +13,7 @@
       "io.containers.autoupdate=registry"
       "traefik.enable=true"
       "traefik.http.routers.websecure-baidunetdisk.rule=Host(`baidunetdisk.${config.networking.domain}`)"
-      "traefik.http.routers.websecure-baidunetdisk.entrypoints=web"
+      "traefik.http.routers.websecure-baidunetdisk.entrypoints=websecure"
     ];
   };
 }
