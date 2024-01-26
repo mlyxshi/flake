@@ -49,6 +49,7 @@
         darwin = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.aarch64-darwin;
           modules = [ ./home/darwin.nix ];
+          extraSpecialArgs = { inherit self; };
         };
         asahi = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.aarch64-linux;
