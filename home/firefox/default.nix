@@ -1,10 +1,33 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }:
+let
+  FirefoxProfilePath =
+    if pkgs.stdenv.isLinux
+    then ".mozilla/firefox"
+    else "Library/Application Support/Firefox";
+
+  NativeMessagingHostsPath =
+    if pkgs.stdenv.isLinux
+    then ".mozilla/native-messaging-hosts"
+    else "Library/Application Support/Mozilla/NativeMessagingHosts";
+
+  nativeMessagingHostsJoined = pkgs.symlinkJoin {
+    name = "home_ff_nmhs";
+    paths = [
+      pkgs.ff2mpv
+    ];
+  };
+
+
+in
+{
   programs.firefox.enable = true;
   programs.firefox.package = null;
 
-  programs.firefox.nativeMessagingHosts = [
-    pkgs.ff2mpv
-  ];
+
+  home.file = {
+    "${NativeMessagingHostsPath}".source =
+      "${nativeMessagingHostsJoined}/lib/mozilla/native-messaging-hosts";
+  };
 
   programs.firefox.profiles."default" = {
     userChrome = ''  
