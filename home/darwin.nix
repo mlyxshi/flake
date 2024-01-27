@@ -2,6 +2,7 @@
   imports = [
     ./.
     ./firefox
+    ./mpv.nix
   ];
 
   home = {
