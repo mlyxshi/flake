@@ -42,7 +42,12 @@
 
       "browser.uidensity" = 1;
 
-      "browser.newtabpage.activity-stream.default.sites" = "";
+      "browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts.havePinned" = "";
+
+      "browser.newtabpage.activity-stream.topSitesRows" = 2;
+      "browser.newtabpage.pinned" = ''[{"url":"https://github.com/mlyxshi/flake","label":"flake","baseDomain":"github.com"},{"url":"https://github.com/mlyxshi?tab=stars","label":"star","baseDomain":"github.com"},{"url":"http://top.mlyxshi.com/","label":"top","baseDomain":"top.mlyxshi.com"},{"url":"https://www.youtube.com/","label":"youtube","baseDomain":"youtube.com"},{"url":"https://music.youtube.com/","label":"Music","baseDomain":"music.youtube.com"},{"url":"http://www.bilibili.com/","label":"bilibili","baseDomain":"bilibili.com"},{"url":"https://old.reddit.com/","label":"Reddit"}]'';
+      "browser.newtabpage.activity-stream.feeds.section.highlights" = true;
+      "browser.newtabpage.activity-stream.section.highlights.rows" = 2;
 
       "browser.aboutConfig.showWarning" = false;
       "browser.aboutwelcome.enabled" = false;

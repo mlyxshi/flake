@@ -6,7 +6,7 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs";
 
-    home-manager.url = "github:mlyxshi/home-manager";
+    home-manager.url = "github:nix-community/home-manager/pull/4957/head";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     darwin.url = "github:LnL7/nix-darwin";
