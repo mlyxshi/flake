@@ -1,9 +1,8 @@
-{ self, ... }: {
+{ self, lib, ... }: {
   imports = [
+    ./.
     ./firefox
   ];
-
-  home.stateVersion = "24.05";
 
   home = {
     username = "dominic";
