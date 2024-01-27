@@ -14,5 +14,9 @@ in
     recursive = true;
   };
 
+  home.file.".config/yt-dlp/config".text = ''
+    --cookies-from-browser firefox
+  '';
+
   home.file.".config/mpv/scripts".source = "${mpv-scripts}/share/mpv/scripts";
 }
