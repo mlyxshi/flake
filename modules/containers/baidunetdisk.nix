@@ -4,7 +4,7 @@
     self.nixosModules.containers.podman
   ];
 
-  virtualisation.oci-containers.containers.baidunetdisk= {
+  virtualisation.oci-containers.containers.baidunetdisk = {
     image = "docker.io/emuqi/baidunetdisk-arm64-vnc";
     volumes = [
       "/var/lib/baidunetdisk:/config"

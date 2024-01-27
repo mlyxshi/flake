@@ -1,7 +1,7 @@
 nix run ~/flake#homeConfigurations.asahi.activationPackage
 
 sudo mkdir -p /etc/firefox/policies
-sudo ln -sf /home/dominic/flake/config/etc/firefox/policies/policies.json /etc/firefox/policies/policies.json
+nix eval --json --file ./home/firefox/policy.nix  | sudo tee /etc/firefox/policies/policies.json
 
 echo 'KERNEL=="uinput", GROUP="input", TAG+="uaccess"' | sudo tee /etc/udev/rules.d/input.rules
 sudo usermod -aG input dominic

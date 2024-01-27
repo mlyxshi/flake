@@ -1,6 +1,4 @@
 {
-  # https://github.com/mozilla/policy-templates/
-
   policies = {
 
     PasswordManagerEnabled = false;
@@ -42,6 +40,7 @@
 
       "browser.uidensity" = 1;
 
+      "browser.newtabpage.activity-stream.logowordmark.alwaysVisible" = false;
       "browser.newtabpage.activity-stream.topSitesRows" = 1;
       "browser.newtabpage.pinned" = ''[{"url":"https://github.com/mlyxshi/flake","label":"flake"},{"url":"https://github.com/mlyxshi?tab=stars","label":"star"},{"url":"http://top.mlyxshi.com/","label":"top"},{"url":"https://www.youtube.com/","label":"youtube"},{"url":"https://music.youtube.com/","label":"Music"},{"url":"http://www.bilibili.com/","label":"bilibili"},{"url":"https://old.reddit.com/","label":"Reddit"},{"url":"https://bgm.tv/group","label":"bgm"}]'';
       "browser.newtabpage.activity-stream.feeds.section.highlights" = true;
