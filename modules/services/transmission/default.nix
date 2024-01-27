@@ -68,7 +68,7 @@ in
     after = [ "network-online.target" ];
     wants = [ "network-online.target" ];
     serviceConfig = {
-      ExecStart = "${pkgs.deno}/bin/deno run --allow-net --allow-read https://deno.land/std/http/file_server.ts  %S/transmission/files";
+      ExecStart = "${pkgs.caddy}/bin/caddy file-server --listen :8010 --browse --root %S/transmission/files";
     };
     wantedBy = [ "multi-user.target" ];
   };
@@ -93,7 +93,7 @@ in
         };
 
         services.transmission-index.loadBalancer.servers = [{
-          url = "http://127.0.0.1:4507";
+          url = "http://127.0.0.1:8010";
         }];
       };
     };
