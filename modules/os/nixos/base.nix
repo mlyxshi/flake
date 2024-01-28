@@ -11,6 +11,9 @@
 
   system.stateVersion = "23.11";
 
+  system.etc.overlay.enable = true;
+  systemd.sysusers.enable = true;
+
   nix = {
     package = pkgs.nixVersions.unstable;
     channel.enable = false;
