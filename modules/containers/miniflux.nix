@@ -72,7 +72,7 @@
       "miniflux-silent-postgres"
     ];
     environment = {
-      CREATE_ADMIN = "1";
+      # CREATE_ADMIN = "1";
       RUN_MIGRATIONS = "1";
       POLLING_FREQUENCY = "10";
       POLLING_PARSING_ERROR_LIMIT = "0";
