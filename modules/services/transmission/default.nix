@@ -63,10 +63,9 @@ in
   };
 
   services.caddy.enable = true;
-  services.caddy.virtualHosts."http://localhost:8010".extraConfig = ''
-    file_server browse {
-      root /var/lib/transmission/files
-    }
+  services.caddy.virtualHosts." :8010".extraConfig = ''
+    root * /var/lib/transmission/files
+    file_server browse
   '';
 
   services.traefik = {
