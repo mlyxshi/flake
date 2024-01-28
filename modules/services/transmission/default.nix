@@ -72,6 +72,15 @@ in
     wantedBy = [ "multi-user.target" ];
   };
 
+  services.caddy.enable = true;
+  services.caddy.virtualHosts."http://localhost:8010" = {
+    extraConfig = ''
+      file_server browse {
+        root /var/lib/transmission/files
+      }
+    '';
+  };
+
   services.traefik = {
     dynamicConfigOptions = {
       http = {
