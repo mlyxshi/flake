@@ -17,4 +17,26 @@
       "traefik.http.routers.baidunetdisk.middlewares=auth@file"
     ];
   };
+
+  services.caddy.enable = true;
+  services.caddy.virtualHosts.":8020".extraConfig = ''
+    root * /var/lib/baidunetdisk
+    file_server browse
+  '';
+
+  services.traefik = {
+    dynamicConfigOptions = {
+      http = {
+        routers.baidunetdisk-index = {
+          rule = "Host(`baidunetdisk-index.${config.networking.domain}`)";
+          entryPoints = [ "web" ];
+          service = "baidunetdisk-index";
+        };
+
+        services.baidunetdisk-index.loadBalancer.servers = [{
+          url = "http://127.0.0.1:8020";
+        }];
+      };
+    };
+  };
 }
