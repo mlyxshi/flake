@@ -5,7 +5,6 @@ let
 in
 {
   # https://www.youtube.com/playlist?list=PLLYW3zEOaqlKhRCWqFE7iLRSh3XEFP5gj
-  sops.secrets.telegram-env = { };
 
   services.prometheus = {
     enable = true;
@@ -90,7 +89,6 @@ in
       webExternalUrl = "https://alert.${config.networking.domain}";
       listenAddress = "127.0.0.1";
       port = 9093;
-      environmentFile = config.sops.secrets.telegram-env.path;
       extraFlags = [ ''--cluster.listen-address=""'' ]; # Disable Alertmanager's default high availability feature
       configuration = {
         receivers = [{
