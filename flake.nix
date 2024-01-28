@@ -34,9 +34,7 @@
       nixosConfigurations = {
         hx90 = import ./host/hx90 { inherit self nixpkgs sops-nix home-manager; };
 
-        utm-old = import ./host/utm { inherit self nixpkgs sops-nix home-manager plasma-manager; };
-
-        utm = self.nixosConfigurations.utm-old.extendModules {
+        utm = (import ./host/utm { inherit self nixpkgs sops-nix home-manager plasma-manager; }).extendModules {
           modules = [
             secret.nixosModules.default
           ];
