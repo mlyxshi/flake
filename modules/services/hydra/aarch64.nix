@@ -9,15 +9,15 @@ let
   hydra-x64-publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICEgrMusygNAQDkrGHfLcYJT/ZcJr11mBsfqlJn/EB80";
 in
 {
-  sops.secrets = {
-    hydra-builder-sshkey = { group = "hydra"; mode = "440"; };
-    hydra-github = { group = "hydra"; mode = "440"; };
-    nix-store-sign = { };
-  };
+  # sops.secrets = {
+  #   hydra-builder-sshkey = { group = "hydra"; mode = "440"; };
+  #   hydra-github = { group = "hydra"; mode = "440"; };
+  #   nix-store-sign = { };
+  # };
 
   services.harmonia = {
     enable = true;
-    signKeyPath = config.sops.secrets.nix-store-sign.path;
+    signKeyPath = "/etc/secret/hydra/nix-store-sign";
   };
 
   programs.ssh = {
@@ -28,7 +28,7 @@ in
       Host hydra-x64
         Hostname hydra-x64.mlyxshi.com
         User hydra-builder
-        IdentityFile ${config.sops.secrets.hydra-builder-sshkey.path}
+        IdentityFile /etc/secret/hydra/hydra-x64
     '';
   };
 
@@ -60,7 +60,7 @@ in
     notificationSender = "hydra@localhost";
     useSubstitutes = true;
     extraConfig = ''
-      include ${config.sops.secrets.hydra-github.path}
+      include /etc/secret/hydra/github
       max_output_size = ${builtins.toString (10 * 1024 * 1024 * 1024)}
       <dynamicruncommand>
         enable = 1

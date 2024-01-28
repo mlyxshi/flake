@@ -14,11 +14,7 @@ in
 
   options.backup = lib.mapAttrs (service: time: lib.mkEnableOption service) serviceAttr;
 
-  config = lib.mkMerge ([
-    {
-      sops.secrets.restic-env = { };
-    }
-  ] ++ lib.mapAttrsToList
+  config = lib.mkMerge (lib.mapAttrsToList
     (service: time: (lib.mkIf cfg.${service} {
       systemd.services."${service}-init" = {
         after = [ "network-online.target" ];
@@ -26,7 +22,7 @@ in
         before = [ "podman-${service}.service" ];
         unitConfig.ConditionPathExists = "!%S/${service}";
         environment.RESTIC_CACHE_DIR = "%C/restic";
-        serviceConfig.EnvironmentFile = config.sops.secrets.restic-env.path;
+        serviceConfig.EnvironmentFile = "/etc/secret/restic";
         serviceConfig.ExecSearchPath = "${pkgs.restic}/bin";
         serviceConfig.ExecStart = "restic restore latest --path %S/${service}  --target /";
         wantedBy = [ "multi-user.target" ];
@@ -36,7 +32,7 @@ in
         environment.RESTIC_CACHE_DIR = "%C/restic";
         serviceConfig = {
           Type = "oneshot";
-          EnvironmentFile = config.sops.secrets.restic-env.path;
+          EnvironmentFile = "/etc/secret/restic";
           ExecSearchPath = "${pkgs.restic}/bin";
           ExecStart = [
             "restic backup %S/${service}"
