@@ -46,7 +46,9 @@
         kexec-x86_64 = import ./kexec/mkKexec.nix { arch = "x86_64"; inherit nixpkgs; };
         kexec-aarch64 = import ./kexec/mkKexec.nix { arch = "aarch64"; inherit nixpkgs; };
       }
-      // lib.genAttrs oracle-serverlist (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs sops-nix home-manager; });
+      // lib.genAttrs oracle-serverlist (hostName:
+        (import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs sops-nix home-manager; }).extendModules { modules = [ secret.nixosModules.default ]; }
+      );
 
       homeConfigurations = {
         darwin = home-manager.lib.homeManagerConfiguration {
