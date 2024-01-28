@@ -12,8 +12,8 @@
   system.stateVersion = "23.11";
 
   system.etc.overlay.enable = true;
-  systemd.sysusers.enable = true;
-  #time.timeZone = "Asia/Tokyo";
+  #systemd.sysusers.enable = true;
+  time.timeZone = "Asia/Tokyo";
 
   nix = {
     package = pkgs.nixVersions.unstable;
