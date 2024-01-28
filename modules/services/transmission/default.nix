@@ -63,7 +63,7 @@ in
   };
 
   services.caddy.enable = true;
-  services.caddy.virtualHosts." :8010".extraConfig = ''
+  services.caddy.virtualHosts.":8010".extraConfig = ''
     root * /var/lib/transmission/files
     file_server browse
   '';
