@@ -4,7 +4,7 @@
 
     secret.url = "git+ssh://git@github.com/mlyxshi/secret";
 
-    home-manager.url = "github:nix-community/home-manager/pull/4957/head";
+    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     darwin.url = "github:LnL7/nix-darwin";
