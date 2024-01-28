@@ -8,8 +8,8 @@
   system.stateVersion = "23.11";
 
   time.timeZone = "Asia/Tokyo";
-  # system.etc.overlay.enable = true;
-  # systemd.sysusers.enable = true;
+  system.etc.overlay.enable = true;
+  systemd.sysusers.enable = true;
 
 
   nix = {

@@ -1,9 +1,8 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nikstur/nixpkgs/etc-overlay-leading-slash";
 
     secret.url = "git+ssh://git@github.com/mlyxshi/secret";
-    secret.inputs.nixpkgs.follows = "nixpkgs";
 
     home-manager.url = "github:nix-community/home-manager/pull/4957/head";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
