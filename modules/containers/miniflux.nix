@@ -8,13 +8,6 @@
   backup.miniflux-postgres = true;
   backup.miniflux-silent-postgres = true;
 
-  # sops.secrets.user = { };
-  # sops.secrets.password = { };
-  # sops.templates.miniflux-admin-credentials.content = ''
-  #   ADMIN_USERNAME=${config.sops.placeholder.user}
-  #   ADMIN_PASSWORD=${config.sops.placeholder.password}
-  # '';
-
   virtualisation.oci-containers.containers.miniflux = {
     image = "ghcr.io/miniflux/miniflux";
     dependsOn = [
@@ -30,9 +23,6 @@
       DATABASE_URL = "postgres://postgres:postgres@miniflux-postgres/miniflux?sslmode=disable";
       BASE_URL = "https://miniflux.${config.networking.domain}";
     };
-    # environmentFiles = [
-    #   config.sops.templates.miniflux-admin-credentials.path
-    # ];
     extraOptions = lib.concatMap (x: [ "--label" x ]) [
       "io.containers.autoupdate=registry"
       "traefik.enable=true"
@@ -81,9 +71,6 @@
       DATABASE_URL = "postgres://postgres:postgres@miniflux-silent-postgres/miniflux?sslmode=disable";
       BASE_URL = "https://miniflux-silent.${config.networking.domain}";
     };
-    # environmentFiles = [
-    #   config.sops.templates.miniflux-admin-credentials.path
-    # ];
     extraOptions = lib.concatMap (x: [ "--label" x ]) [
       "io.containers.autoupdate=registry"
       "traefik.enable=true"

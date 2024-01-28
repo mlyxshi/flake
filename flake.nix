@@ -47,7 +47,7 @@
         kexec-aarch64 = import ./kexec/mkKexec.nix { arch = "aarch64"; inherit nixpkgs; };
       }
       // lib.genAttrs oracle-serverlist (hostName:
-        (import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs sops-nix home-manager; }).extendModules { modules = [ secret.nixosModules.default ]; }
+        import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs sops-nix home-manager secret; }
       );
 
       homeConfigurations = {
