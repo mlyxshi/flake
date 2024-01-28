@@ -7,12 +7,12 @@
 
   backup.nodestatus-server = true;
 
-  sops.secrets.user = { };
-  sops.secrets.password = { };
-  sops.templates.nodestatus-admin-credentials.content = ''
-    WEB_USERNAME=${config.sops.placeholder.user}
-    WEB_PASSWORD=${config.sops.placeholder.password}
-  '';
+  # sops.secrets.user = { };
+  # sops.secrets.password = { };
+  # sops.templates.nodestatus-admin-credentials.content = ''
+  #   WEB_USERNAME=${config.sops.placeholder.user}
+  #   WEB_PASSWORD=${config.sops.placeholder.password}
+  # '';
 
   virtualisation.oci-containers.containers.nodestatus-server = {
     image = "docker.io/cokemine/nodestatus";
@@ -20,7 +20,7 @@
       "/var/lib/nodestatus-server:/usr/local/NodeStatus/server"
     ];
     environmentFiles = [
-      config.sops.templates.nodestatus-admin-credentials.path
+      "/etc/secret/nodestatus-server"
     ];
     environment = {
       "VERBOSE" = "false";
