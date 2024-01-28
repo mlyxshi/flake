@@ -62,24 +62,12 @@ in
     wantedBy = [ "multi-user.target" ];
   };
 
-
-  systemd.services.transmission-index = {
-    after = [ "network-online.target" ];
-    wants = [ "network-online.target" ];
-    serviceConfig = {
-      ExecStart = "${pkgs.caddy}/bin/caddy file-server --listen :8010 --browse --root %S/transmission/files";
-    };
-    wantedBy = [ "multi-user.target" ];
-  };
-
   services.caddy.enable = true;
-  services.caddy.virtualHosts."http://localhost:8010" = {
-    extraConfig = ''
-      file_server browse {
-        root /var/lib/transmission/files
-      }
-    '';
-  };
+  services.caddy.virtualHosts."http://localhost:8010".extraConfig = ''
+    file_server browse {
+      root /var/lib/transmission/files
+    }
+  '';
 
   services.traefik = {
     dynamicConfigOptions = {
