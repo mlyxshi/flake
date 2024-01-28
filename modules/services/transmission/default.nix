@@ -50,8 +50,7 @@ in
       DENO_DIR = "%S/transmission/.deno";
     };
     serviceConfig.EnvironmentFile = [
-      # config.sops.templates.transmission-admin-credentials.path
-      # config.sops.secrets.bark-ios.path
+      "/etc/secret/transmission"
     ];
     serviceConfig.User = "transmission";
     serviceConfig.ExecStart = "${pkgs.transmission}/bin/transmission-daemon --foreground --username $ADMIN --password $PASSWORD";
