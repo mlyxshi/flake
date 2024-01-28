@@ -21,7 +21,9 @@
   services.caddy.enable = true;
   services.caddy.virtualHosts.":8020".extraConfig = ''
     root * /var/lib/baidunetdisk
-    file_server browse
+    file_server browse {
+      hide log xdg
+    }
   '';
 
   services.traefik = {
