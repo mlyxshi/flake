@@ -14,7 +14,6 @@
     plasma-manager.url = "github:magnouvean/plasma-manager";
     plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
     plasma-manager.inputs.home-manager.follows = "home-manager";
-
   };
 
   outputs = { self, nixpkgs, darwin, home-manager, plasma-manager, secret }:
@@ -28,16 +27,16 @@
       nixosModules = mkFileHierarchyAttrset ./. "modules";
       darwinConfigurations.M1 = import ./host/M1 { inherit self nixpkgs darwin; };
       nixosConfigurations = {
-        hx90 = import ./host/hx90 { inherit self nixpkgs home-manager; };
+        hx90 = import ./host/hx90 { inherit self nixpkgs home-manager secret; };
 
-        utm = (import ./host/utm { inherit self nixpkgs home-manager plasma-manager; }).extendModules { modules = [ secret.nixosModules.default ]; };
+        utm = import ./host/utm { inherit self nixpkgs home-manager plasma-manager secret; };
 
-        qemu-test-x86_64 = import ./host/oracle/mkTest.nix { arch = "x86_64"; inherit self nixpkgs; };
-        qemu-test-aarch64 = import ./host/oracle/mkTest.nix { arch = "aarch64"; inherit self nixpkgs; };
+        qemu-test-x86_64 = import ./host/oracle/mkTest.nix { arch = "x86_64"; inherit self nixpkgs secret; };
+        qemu-test-aarch64 = import ./host/oracle/mkTest.nix { arch = "aarch64"; inherit self nixpkgs secret; };
 
         # nix build --no-link --print-out-paths github:mlyxshi/flake#nixosConfigurations.installer-aarch64.config.system.build.isoImage 
-        installer-x86_64 = import ./host/installer { arch = "x86_64"; inherit self nixpkgs; };
-        installer-aarch64 = import ./host/installer { arch = "aarch64"; inherit self nixpkgs; };
+        installer-x86_64 = import ./host/installer { arch = "x86_64"; inherit self nixpkgs secret; };
+        installer-aarch64 = import ./host/installer { arch = "aarch64"; inherit self nixpkgs secret; };
 
         kexec-x86_64 = import ./kexec/mkKexec.nix { arch = "x86_64"; inherit nixpkgs; };
         kexec-aarch64 = import ./kexec/mkKexec.nix { arch = "aarch64"; inherit nixpkgs; };
@@ -61,6 +60,10 @@
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = [ ./home/deck.nix ];
           extraSpecialArgs = { inherit plasma-manager self; };
+        };
+        github-action = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          modules = [ ./home/github-action.nix ];
         };
       };
 

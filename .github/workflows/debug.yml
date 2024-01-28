@@ -19,10 +19,9 @@ jobs:
     - uses: actions/checkout@master
     - uses: DeterminateSystems/nix-installer-action@main
 
-    - run: nix profile install nixpkgs#helix
-    - run: nix profile install nixpkgs#joshuto
-    - run: nix profile install nixpkgs#fd
-    - run: chmod +x config.sh &&  ./config.sh
+    - run: nix run ~/flake#homeConfigurations.github-action.activationPackage
+
+
     # github workflow do not support alias, use symlink instead
     - run: mkdir -p  ~/.local/bin/ && ln -s ~/.nix-profile/bin/joshuto  ~/.local/bin/r
 
