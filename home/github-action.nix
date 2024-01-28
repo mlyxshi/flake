@@ -2,12 +2,16 @@
 
   imports = [
     ./.
-    ./fish.nix
   ];
 
   home = {
     username = "runner";
     homeDirectory = "/home/runner";
   };
+
+  home.packages = with pkgs; [
+    helix
+    joshuto
+  ];
 
 }
