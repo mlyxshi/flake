@@ -10,13 +10,10 @@ let
     echo "Downloading ${arch} initrd" && curl -LO http://hydra.mlyxshi.com/job/nixos/flake/kexec-${arch}/latest/download-by-type/file/initrd
     echo "Downloading ${arch} kernel" && curl -LO http://hydra.mlyxshi.com/job/nixos/flake/kexec-${arch}/latest/download-by-type/file/kernel
 
-    for i in /etc/ssh/ssh_host_ed25519_key /persist/etc/ssh/ssh_host_ed25519_key; do
-      if [[ -e $i && -s $i ]]; then 
-        echo "Get ssh_host_ed25519_key  from: $i"
-        ssh_host_key=$(cat $i | base64 -w0)
-        break
-      fi     
-    done
+    if [[ -e /etc/ssh/ssh_host_ed25519_key && -s /etc/ssh/ssh_host_ed25519_key ]]; then 
+      echo "Get ssh_host_ed25519_key  from: /etc/ssh/ssh_host_ed25519_key"
+      ssh_host_key=$(cat $i | base64 -w0)
+    fi     
     
     for i in /home/$SUDO_USER/.ssh/authorized_keys /root/.ssh/authorized_keys /etc/ssh/authorized_keys.d/root; do
       if [[ -e $i && -s $i ]]; then 

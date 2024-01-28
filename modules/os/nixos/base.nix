@@ -10,7 +10,7 @@
   time.timeZone = "Asia/Tokyo";
   # system.etc.overlay.enable = true;
   # systemd.sysusers.enable = true;
-  
+
 
   nix = {
     package = pkgs.nixVersions.unstable;
@@ -45,7 +45,7 @@
   services.openssh = {
     enable = true;
     hostKeys = [{
-      path = "/persist/etc/ssh/ssh_host_ed25519_key";
+      path = "/etc/ssh/ssh_host_ed25519_key";
       type = "ed25519";
     }];
     settings.PasswordAuthentication = false;
@@ -80,9 +80,9 @@
 
   environment.systemPackages = [
     (pkgs.writeShellScriptBin "update" ''
-      [[ -e "/persist/flake/flake.nix" ]] || git clone --depth=1  git@github.com:mlyxshi/flake /persist/flake
+      [[ -e "/flake/flake.nix" ]] || git clone --depth=1  git@github.com:mlyxshi/flake /flake
       
-      cd /persist/flake
+      cd /flake
       git pull 
 
       # bash -c '[[ $- == *i* ]] && echo Interactive || echo not-interactive
@@ -102,7 +102,7 @@
     '')
 
     (pkgs.writeShellScriptBin "local-update" ''
-      cd /persist/flake
+      cd /flake
       
       SYSTEM=$(nom build --no-link --print-out-paths .#nixosConfigurations.$(hostnamectl hostname).config.system.build.toplevel)
       
