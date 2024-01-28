@@ -2,6 +2,9 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    secret.url = "git+ssh://git@github.com/mlyxshi/secret";
+    secret.inputs.nixpkgs.follows = "nixpkgs";
+
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs";
@@ -18,7 +21,7 @@
 
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager, sops-nix, plasma-manager }:
+  outputs = { self, nixpkgs, darwin, home-manager, sops-nix, plasma-manager, secret }:
     let
       inherit (nixpkgs) lib;
       utils = import ./utils.nix nixpkgs;
@@ -31,7 +34,13 @@
       nixosConfigurations = {
         hx90 = import ./host/hx90 { inherit self nixpkgs sops-nix home-manager; };
 
-        utm = import ./host/utm { inherit self nixpkgs sops-nix home-manager plasma-manager; };
+        utm-old = import ./host/utm { inherit self nixpkgs sops-nix home-manager plasma-manager; };
+
+        utm = self.nixosConfigurations.utm-old.extendModules {
+          modules = [
+            secret.nixosModules.default
+          ];
+        };
 
         qemu-test-x86_64 = import ./host/oracle/mkTest.nix { arch = "x86_64"; inherit self nixpkgs sops-nix; };
         qemu-test-aarch64 = import ./host/oracle/mkTest.nix { arch = "aarch64"; inherit self nixpkgs sops-nix; };

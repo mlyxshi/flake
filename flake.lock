@@ -86,7 +86,28 @@
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "plasma-manager": "plasma-manager",
+        "secret": "secret",
         "sops-nix": "sops-nix"
+      }
+    },
+    "secret": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1706429884,
+        "narHash": "sha256-ZfXg6M4cv7GSzAWRTYyTbmOgrHah8OvyH12vNK+8eqM=",
+        "ref": "refs/heads/main",
+        "rev": "19d7bca5ff8c1800f3a28eb983acd4a9e4f49440",
+        "revCount": 2,
+        "type": "git",
+        "url": "ssh://git@github.com/mlyxshi/secret"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/mlyxshi/secret"
       }
     },
     "sops-nix": {
