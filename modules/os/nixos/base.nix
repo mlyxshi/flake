@@ -13,6 +13,7 @@
 
   system.etc.overlay.enable = true;
   systemd.sysusers.enable = true;
+  time.timeZone = "Asia/Tokyo";
 
   nix = {
     package = pkgs.nixVersions.unstable;
@@ -52,8 +53,6 @@
     }];
     settings.PasswordAuthentication = false;
   };
-
-  time.timeZone = "Asia/Tokyo";
 
   i18n.defaultLocale = "en_US.UTF-8";
 
