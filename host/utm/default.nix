@@ -1,8 +1,8 @@
-{ self, nixpkgs, sops-nix, home-manager, plasma-manager }:
+{ self, nixpkgs, secret, home-manager, plasma-manager }:
 
 nixpkgs.lib.nixosSystem {
   modules = [
-    sops-nix.nixosModules.default
+    secret.nixosModules.default
     self.nixosModules.home-manager
     self.nixosModules.os.nixos.desktop
     self.nixosModules.network

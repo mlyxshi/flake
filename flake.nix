@@ -5,10 +5,6 @@
     secret.url = "git+ssh://git@github.com/mlyxshi/secret";
     secret.inputs.nixpkgs.follows = "nixpkgs";
 
-    sops-nix.url = "github:Mic92/sops-nix";
-    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-    sops-nix.inputs.nixpkgs-stable.follows = "nixpkgs";
-
     home-manager.url = "github:nix-community/home-manager/pull/4957/head";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -21,7 +17,7 @@
 
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager, sops-nix, plasma-manager, secret }:
+  outputs = { self, nixpkgs, darwin, home-manager, plasma-manager, secret }:
     let
       inherit (nixpkgs) lib;
       utils = import ./utils.nix nixpkgs;
@@ -32,22 +28,22 @@
       nixosModules = mkFileHierarchyAttrset ./. "modules";
       darwinConfigurations.M1 = import ./host/M1 { inherit self nixpkgs darwin; };
       nixosConfigurations = {
-        hx90 = import ./host/hx90 { inherit self nixpkgs sops-nix home-manager; };
+        hx90 = import ./host/hx90 { inherit self nixpkgs home-manager; };
 
-        utm = (import ./host/utm { inherit self nixpkgs sops-nix home-manager plasma-manager; }).extendModules { modules = [ secret.nixosModules.default ]; };
+        utm = (import ./host/utm { inherit self nixpkgs home-manager plasma-manager; }).extendModules { modules = [ secret.nixosModules.default ]; };
 
-        qemu-test-x86_64 = import ./host/oracle/mkTest.nix { arch = "x86_64"; inherit self nixpkgs sops-nix; };
-        qemu-test-aarch64 = import ./host/oracle/mkTest.nix { arch = "aarch64"; inherit self nixpkgs sops-nix; };
+        qemu-test-x86_64 = import ./host/oracle/mkTest.nix { arch = "x86_64"; inherit self nixpkgs; };
+        qemu-test-aarch64 = import ./host/oracle/mkTest.nix { arch = "aarch64"; inherit self nixpkgs; };
 
         # nix build --no-link --print-out-paths github:mlyxshi/flake#nixosConfigurations.installer-aarch64.config.system.build.isoImage 
-        installer-x86_64 = import ./host/installer { arch = "x86_64"; inherit self nixpkgs sops-nix; };
-        installer-aarch64 = import ./host/installer { arch = "aarch64"; inherit self nixpkgs sops-nix; };
+        installer-x86_64 = import ./host/installer { arch = "x86_64"; inherit self nixpkgs; };
+        installer-aarch64 = import ./host/installer { arch = "aarch64"; inherit self nixpkgs; };
 
         kexec-x86_64 = import ./kexec/mkKexec.nix { arch = "x86_64"; inherit nixpkgs; };
         kexec-aarch64 = import ./kexec/mkKexec.nix { arch = "aarch64"; inherit nixpkgs; };
       }
       // lib.genAttrs oracle-serverlist (hostName:
-        import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs sops-nix home-manager secret; }
+        import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs home-manager secret; }
       );
 
       homeConfigurations = {

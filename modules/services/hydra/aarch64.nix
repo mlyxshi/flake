@@ -9,11 +9,6 @@ let
   hydra-x64-publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICEgrMusygNAQDkrGHfLcYJT/ZcJr11mBsfqlJn/EB80";
 in
 {
-  # sops.secrets = {
-  #   hydra-builder-sshkey = { group = "hydra"; mode = "440"; };
-  #   hydra-github = { group = "hydra"; mode = "440"; };
-  #   nix-store-sign = { };
-  # };
 
   services.harmonia = {
     enable = true;

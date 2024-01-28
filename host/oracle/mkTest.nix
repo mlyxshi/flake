@@ -1,7 +1,7 @@
-{ arch, self, nixpkgs, sops-nix }:
+{ arch, self, nixpkgs, secret }:
 nixpkgs.lib.nixosSystem {
   modules = [
-    sops-nix.nixosModules.default
+    secret.nixosModules.default
     self.nixosModules.os.nixos.server
     self.nixosModules.network
     self.nixosModules.fileSystem.ext4
@@ -14,5 +14,5 @@ nixpkgs.lib.nixosSystem {
       networking.domain = "mlyxshi.com";
     }
   ];
-  specialArgs = { inherit self nixpkgs sops-nix; };
+  specialArgs = { inherit self nixpkgs; };
 }

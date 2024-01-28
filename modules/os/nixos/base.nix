@@ -1,13 +1,9 @@
-{ config, pkgs, lib, nixpkgs, sops-nix, self, ... }: {
+{ config, pkgs, lib, nixpkgs, self, ... }: {
 
   imports = [
     self.nixosModules.os.common
     self.nixosModules.strip
   ];
-
-  sops.defaultSopsFile = ../../../key.yaml;
-  sops.age.sshKeyPaths = [ "/persist/sops/key" ];
-  sops.gnupg.sshKeyPaths = [ ];
 
   system.stateVersion = "23.11";
 

@@ -1,8 +1,7 @@
-{ self, nixpkgs, home-manager, sops-nix }:
+{ self, nixpkgs, home-manager }:
 
 nixpkgs.lib.nixosSystem {
   modules = [
-    sops-nix.nixosModules.default
     home-manager.nixosModules.default
     self.nixosModules.os.nixos.desktop
     self.nixosModules.fileSystem.ext4
@@ -21,5 +20,5 @@ nixpkgs.lib.nixosSystem {
 
     }
   ];
-  specialArgs = { inherit self nixpkgs sops-nix; };
+  specialArgs = { inherit self nixpkgs; };
 }

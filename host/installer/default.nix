@@ -1,7 +1,7 @@
-{ arch, nixpkgs, self, sops-nix }:
+{ arch, nixpkgs, self, secret }:
 nixpkgs.lib.nixosSystem {
   modules = [
-    sops-nix.nixosModules.default
+    secret.nixosModules.default
     self.nixosModules.os.nixos.server
     self.nixosModules.services.ssh-config
     ./configuration.nix
