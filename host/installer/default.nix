@@ -3,7 +3,6 @@ nixpkgs.lib.nixosSystem {
   modules = [
     secret.nixosModules.default
     self.nixosModules.os.nixos.server
-    self.nixosModules.services.ssh-config
     ./configuration.nix
     {
       nixpkgs.hostPlatform = "${arch}-linux";

@@ -7,7 +7,6 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.os.nixos.desktop
     self.nixosModules.network
     self.nixosModules.fileSystem.ext4
-    self.nixosModules.services.ssh-config
     ./hardware.nix
     ./misc.nix
     {

@@ -5,7 +5,6 @@ nixpkgs.lib.nixosSystem {
     home-manager.nixosModules.default
     self.nixosModules.os.nixos.desktop
     self.nixosModules.fileSystem.ext4
-    self.nixosModules.services.ssh-config
     ./configuration.nix
     {
       nixpkgs.overlays = [ self.overlays.default ];

@@ -1,5 +1,4 @@
 { pkgs, lib, config, ... }: {
-
   systemd.services.hysteria = {
     after = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
