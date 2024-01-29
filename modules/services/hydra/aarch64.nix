@@ -43,7 +43,7 @@ in
     }
   ];
 
-  nix.settings.allowed-uris = "http:// https://";
+  nix.settings.allowed-uris = "github: gitlab: git+ssh://";
 
   # turn off experimental features
   nix.settings.use-cgroups = lib.mkForce false;
