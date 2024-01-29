@@ -43,7 +43,7 @@ in
     }
   ];
 
-  nix.settings.allowed-uris = [ "https://github.com/NixOS/nixpkgs" ];
+  nix.settings.allowed-uris = "http:// https://";
 
   # turn off experimental features
   nix.settings.use-cgroups = lib.mkForce false;
