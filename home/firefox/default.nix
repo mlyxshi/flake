@@ -1,6 +1,5 @@
 { pkgs, lib, config, ... }: {
   programs.firefox.enable = true;
-  programs.firefox.package = null;
 
   programs.firefox.nativeMessagingHosts = [
     pkgs.ff2mpv

@@ -3,14 +3,13 @@
   imports = [
     ./desktop.nix
     ./fish.nix
+    ./common-package.nix
   ];
 
   home = {
     username = "deck";
     homeDirectory = "/home/deck";
   };
-
-  programs.firefox.package = lib.mkForce pkgs.firefox;
 
   xdg.mimeApps.defaultApplications = {
     "text/html" = [ "firefox.desktop" ];

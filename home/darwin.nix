@@ -10,5 +10,7 @@
     homeDirectory = "/Users/dominic";
   };
 
+  programs.firefox.package = null;
+
   nixpkgs.overlays = [ self.overlays.default ];
 }

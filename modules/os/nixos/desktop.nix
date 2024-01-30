@@ -14,12 +14,6 @@
 
   security.sudo.wheelNeedsPassword = false;
 
-  environment.systemPackages = with pkgs; [
-    firefox
-    vscode
-    home-manager
-  ];
-
   environment.etc."firefox/policies/policies.json".text = builtins.toJSON (import ../../../home/firefox/policy.nix);
 
   fonts = {
