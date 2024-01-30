@@ -43,7 +43,7 @@ in
     }
   ];
 
-  nix.settings.allowed-uris = "github: gitlab: git+ssh://";
+  nix.settings.allowed-uris = "github:";
 
   # turn off experimental features
   nix.settings.use-cgroups = lib.mkForce false;
