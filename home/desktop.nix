@@ -10,8 +10,6 @@
 
   nixpkgs.overlays = [ self.overlays.default ];
 
-  programs.firefox.package = lib.mkForce pkgs.firefox;
-
   home.packages = with pkgs; [
     eza
     joshuto
