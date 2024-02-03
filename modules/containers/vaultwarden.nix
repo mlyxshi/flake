@@ -33,6 +33,6 @@
       "traefik.enable=true"
       "traefik.http.routers.vaultwarden.rule=Host(`password.${config.networking.domain}`)"
       "traefik.http.routers.vaultwarden.entrypoints=websecure"
-    ] ++ [ "--no-healthcheck" ];
+    ];
   };
 }
