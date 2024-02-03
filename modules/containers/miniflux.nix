@@ -16,6 +16,7 @@
     environment = {
       # CREATE_ADMIN = "1";
       RUN_MIGRATIONS = "1";
+      SCHEDULER_ROUND_ROBIN_MIN_INTERVAL = "10";
       POLLING_FREQUENCY = "10";
       POLLING_PARSING_ERROR_LIMIT = "0";
       METRICS_COLLECTOR = "1";
@@ -64,6 +65,7 @@
     environment = {
       # CREATE_ADMIN = "1";
       RUN_MIGRATIONS = "1";
+      SCHEDULER_ROUND_ROBIN_MIN_INTERVAL = "10";
       POLLING_FREQUENCY = "10";
       POLLING_PARSING_ERROR_LIMIT = "0";
       METRICS_COLLECTOR = "1";
