@@ -95,7 +95,7 @@
         then
           # user exists
           sudo mkdir -p /flake
-          sudo chown dominic:dominic /flake
+          sudo chown dominic /flake
           git clone --depth=1  git@github.com:mlyxshi/flake /flake
         else
           # user does not exist
