@@ -35,10 +35,6 @@
         readlink -f $(which $argv) 
       end
 
-      function pb
-        curl -Fc=@$argv https://pb.mlyxshi.com
-      end
-
       function cnar
         curl https://cache.mlyxshi.com/$argv.narinfo  
       end
