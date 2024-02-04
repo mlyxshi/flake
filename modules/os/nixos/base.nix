@@ -86,11 +86,26 @@
 
   environment.systemPackages = [
     (pkgs.writeShellScriptBin "update" ''
-      [[ -e "/flake/flake.nix" ]] || git clone --depth=1  git@github.com:mlyxshi/flake /flake
-      
-      cd /flake
-      git pull 
+      if [[ -e "/flake/flake.nix" ]]
+      then
+        cd /flake
+        git pull   
+      else
+        if id -u "dominic" >/dev/null 2>&1
+        then
+          # user exists
+          sudo mkdir -p /flake
+          sudo chown dominic:dominic /flake
+          git clone --depth=1  git@github.com:mlyxshi/flake /flake
+        else
+          # user does not exist
+          git clone --depth=1  git@github.com:mlyxshi/flake /flake
+        fi
 
+        cd /flake
+      fi  
+
+      
       # bash -c '[[ $- == *i* ]] && echo Interactive || echo not-interactive
       [[ $- == *i* ]] && NIX=nom || NIX=nix 
       HOST=''${1:-$(hostnamectl hostname)} 
