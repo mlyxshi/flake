@@ -12,7 +12,7 @@ let
 
     if [[ -e /etc/ssh/ssh_host_ed25519_key && -s /etc/ssh/ssh_host_ed25519_key ]]; then 
       echo "Get ssh_host_ed25519_key  from: /etc/ssh/ssh_host_ed25519_key"
-      ssh_host_key=$(cat $i | base64 -w0)
+      ssh_host_key=$(cat /etc/ssh/ssh_host_ed25519_key | base64 -w0)
     fi     
     
     for i in /home/$SUDO_USER/.ssh/authorized_keys /root/.ssh/authorized_keys /etc/ssh/authorized_keys.d/root; do
