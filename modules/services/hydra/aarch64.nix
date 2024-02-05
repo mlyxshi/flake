@@ -10,10 +10,10 @@ let
 in
 {
 
-  services.harmonia = {
-    enable = true;
-    signKeyPath = "/etc/secret/hydra/nix-store-sign";
-  };
+  # services.harmonia = {
+  #   enable = true;
+  #   signKeyPath = "/etc/secret/hydra/nix-store-sign";
+  # };
 
   programs.ssh = {
     knownHosts = {
@@ -84,15 +84,15 @@ in
         url = "http://127.0.0.1:3000";
       }];
       # cache
-      http.routers.cache = {
-        rule = "Host(`cache.${config.networking.domain}`)";
-        entryPoints = [ "websecure" ];
-        service = "cache";
-      };
+      # http.routers.cache = {
+      #   rule = "Host(`cache.${config.networking.domain}`)";
+      #   entryPoints = [ "websecure" ];
+      #   service = "cache";
+      # };
 
-      http.services.cache.loadBalancer.servers = [{
-        url = "http://127.0.0.1:5000";
-      }];
+      # http.services.cache.loadBalancer.servers = [{
+      #   url = "http://127.0.0.1:5000";
+      # }];
 
     };
   };
