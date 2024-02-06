@@ -91,12 +91,12 @@
       apps = {
         x86_64-linux.deck-init = {
           type = "app";
-          program = nixpkgs.legacyPackages.x86_64-linux.writeScript "init" builtins.readFile ./run/deck.sh;
+          program = "${nixpkgs.legacyPackages.x86_64-linux.writeScript "init" (builtins.readFile ./run/deck-init.sh)}";
         };
 
         aarch64-linux.asahi-init = {
           type = "app";
-          program = nixpkgs.legacyPackages.aarch64-linux.writeScript "init" builtins.readFile ./run/asahi.sh;
+          program = "${nixpkgs.legacyPackages.aarch64-linux.writeScript "init" (builtins.readFile ./run/asahi-init.sh)}";
         };
       };
     };
