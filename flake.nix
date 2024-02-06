@@ -87,5 +87,17 @@
         xremap-x86_64 = self.packages.x86_64-linux.xremap;
         xremap-aarch64 = self.packages.aarch64-linux.xremap;
       };
+
+      apps = {
+        x86_64-linux.deck-init = {
+          type = "app";
+          program = nixpkgs.legacyPackages.x86_64-linux.writeScript "init" builtins.readFile ./run/deck.sh;
+        };
+
+        aarch64-linux.asahi-init = {
+          type = "app";
+          program = nixpkgs.legacyPackages.aarch64-linux.writeScript "init" builtins.readFile ./run/asahi.sh;
+        };
+      };
     };
 }
