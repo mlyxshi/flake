@@ -32,7 +32,7 @@
       function home-update
         cd ~/flake
         git pull
-        nix run --extra-substituters https://cache.mlyxshi.com --extra-trusted-public-keys cache:vXjiuWtSTOXj63zr+ZjMvXqvaYIK1atjyyEk+iuIqSg=  .#homeConfigurations.deck.activationPackage
+        nix run .#homeConfigurations.deck.activationPackage
       end
       
       function loc
