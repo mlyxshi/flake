@@ -9,5 +9,4 @@ sudo usermod -aG input deck
 sudo systemctl enable --now sshd
 
 mkdir -p ~/.ssh
-chmod 600 ~/.ssh
 echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe" > ~/.ssh/authorized_keys
