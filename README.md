@@ -6,8 +6,7 @@ curl -sL https://install.determinate.systems/nix | sh -s -- install
 ### Darwin
 ```
 git clone --depth=1  https://github.com/mlyxshi/flake.git ~/flake
-cd ~/flake
-nix run .#homeConfigurations.XXX.activationPackage
+nix run ~/flake.#homeConfigurations.XXX.activationPackage
 ```
 
 ### Asahi Linux
