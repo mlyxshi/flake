@@ -35,7 +35,6 @@
       {
         location = "bottom";
         hiding = "autohide";
-        floating = false;
         widgets = [
           {
             name = "org.kde.plasma.icontasks";
@@ -55,6 +54,7 @@
       {
         location = "top";
         height = 26;
+        floating = true;
         widgets = [
           "org.kde.plasma.kickoff"
           "org.kde.plasma.appmenu"
