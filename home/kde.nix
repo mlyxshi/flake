@@ -34,6 +34,7 @@
     panels = [
       {
         location = "bottom";
+        floating = true;
         hiding = "autohide";
         widgets = [
           {
@@ -54,7 +55,6 @@
       {
         location = "top";
         height = 26;
-        floating = true;
         widgets = [
           "org.kde.plasma.kickoff"
           "org.kde.plasma.appmenu"
