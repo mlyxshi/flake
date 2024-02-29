@@ -35,6 +35,7 @@
       {
         location = "bottom";
         hiding = "autohide";
+        floating = false;
         widgets = [
           {
             name = "org.kde.plasma.icontasks";
