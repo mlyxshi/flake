@@ -40,6 +40,6 @@
     home-manager
   ] ++ lib.optionals pkgs.stdenv.isLinux [
     below
-    neofetch
+    fastfetch
   ];
 }

@@ -16,7 +16,7 @@
     ripgrep
     fzf
     gdu
-    neofetch
+    fastfetch
     starship
     atuin
     mpv

@@ -21,11 +21,10 @@
       "nodejs"
       "aria2"
       "protobuf"
-      "neofetch"
+      "fastfetch"
       "iproute2mac"
       "mas"
       "qemu"
-      "imagemagick" #kitty image dependency
       "smartmontools"
       "cloudflared"
       "yt-dlp"
@@ -44,7 +43,6 @@
       "android-platform-tools"
       "element"
       "input-source-pro"
-      "kitty"
       "macfuse" # rclone mount
       "utm"
       "font-roboto-mono-nerd-font"
