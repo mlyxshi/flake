@@ -18,7 +18,7 @@
     jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager, plasma-manager, secret }:
+  outputs = { self, nixpkgs, darwin, home-manager, plasma-manager, jovian, secret }:
     let
       inherit (nixpkgs) lib;
       utils = import ./utils.nix nixpkgs;
@@ -37,6 +37,7 @@
         qemu-test-aarch64 = import ./host/oracle/mkTest.nix { arch = "aarch64"; inherit self nixpkgs secret; };
 
         # nix build --no-link --print-out-paths github:mlyxshi/flake#nixosConfigurations.installer-aarch64.config.system.build.isoImage 
+        # nix build --no-link --print-out-paths github:mlyxshi/flake#nixosConfigurations.installer-x86_64.config.system.build.isoImage
         installer-x86_64 = import ./host/installer { arch = "x86_64"; inherit self nixpkgs secret; };
         installer-aarch64 = import ./host/installer { arch = "aarch64"; inherit self nixpkgs secret; };
 
