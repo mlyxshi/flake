@@ -14,11 +14,9 @@
     plasma-manager.url = "github:mlyxshi/plasma-manager";
     plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
     plasma-manager.inputs.home-manager.follows = "home-manager";
-
-    jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager, plasma-manager, jovian, secret }:
+  outputs = { self, nixpkgs, darwin, home-manager, plasma-manager, secret }:
     let
       inherit (nixpkgs) lib;
       utils = import ./utils.nix nixpkgs;
