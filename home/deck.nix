@@ -19,7 +19,7 @@
   };
 
   home.packages = with pkgs; [
-    yuzuPackages.early-access
+    qbittorrent
   ];
 
 }
