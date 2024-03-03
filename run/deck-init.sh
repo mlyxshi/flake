@@ -11,6 +11,7 @@ sudo systemctl enable --now sshd
 mkdir -p ~/.ssh
 echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe" > ~/.ssh/authorized_keys
 
-flatpak install flathub cn.xfangfang.wiliwili
-flatpak install flathub com.transmissionbt.Transmission
-flatpak install flathub tv.kodi.Kodi
+flatpak install cn.xfangfang.wiliwili
+flatpak install com.transmissionbt.Transmission
+flatpak install tv.kodi.Kodi
+flatpak install org.yuzu_emu.yuzu
