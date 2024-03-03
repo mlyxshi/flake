@@ -1,4 +1,4 @@
-{ plasma-manager, lib, ... }@args: {
+{ plasma-manager, lib, config,... }: {
 
   imports = [
     plasma-manager.homeManagerModules.plasma-manager
@@ -46,6 +46,8 @@
                 "applications:org.kde.konsole.desktop"
                 "applications:org.kde.kate.desktop"
                 "applications:firefox.desktop"
+              ] ++ lib.optionals  (config.home.username == "deck") [
+                "applications:org.qbittorrent.qBittorrent.desktop"
               ];
             };
           }

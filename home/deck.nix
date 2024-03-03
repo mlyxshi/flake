@@ -20,6 +20,7 @@
 
   home.packages = with pkgs; [
     qbittorrent
+    yuzu-mainline
   ];
 
 }

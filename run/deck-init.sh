@@ -12,6 +12,5 @@ mkdir -p ~/.ssh
 echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe" > ~/.ssh/authorized_keys
 
 flatpak install cn.xfangfang.wiliwili
-flatpak install com.transmissionbt.Transmission
 flatpak install tv.kodi.Kodi
 flatpak install org.yuzu_emu.yuzu
