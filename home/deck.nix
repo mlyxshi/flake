@@ -18,4 +18,8 @@
     "x-scheme-handler/https" = [ "firefox.desktop" ];
   };
 
+  home.packages = with pkgs; [
+    yuzuPackages.early-access
+  ];
+
 }
