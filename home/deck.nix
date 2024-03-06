@@ -1,7 +1,10 @@
 { pkgs, lib, config, self, ... }: {
 
   imports = [
-    ./desktop.nix
+    ./.
+    ./firefox
+    ./mpv.nix
+    ./kde.nix
     ./fish.nix
     ./common-package.nix
   ];
