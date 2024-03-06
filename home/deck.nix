@@ -22,4 +22,15 @@
     qbittorrent
   ];
 
+  home.activation.myScript = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    if [ ! -d ~/.ssh ]; then
+      mkdir -p ~/.ssh
+      echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe" > ~/.ssh/authorized_keys
+    fi
+
+    if [ ! -d /etc/firefox/policies ]; then
+      sudo mkdir -p /etc/firefox/policies
+      nix eval --json --file /home/deck/flake/home/firefox/policy.nix  | sudo tee /etc/firefox/policies/policies.json
+    fi
+  '';
 }
