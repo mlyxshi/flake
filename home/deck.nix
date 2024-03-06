@@ -29,8 +29,8 @@
     fi
 
     if [ ! -d /etc/firefox/policies ]; then
-      sudo mkdir -p /etc/firefox/policies
-      nix eval --json --file /home/deck/flake/home/firefox/policy.nix  | sudo tee /etc/firefox/policies/policies.json
+      /usr/bin/sudo mkdir -p /etc/firefox/policies
+      /nix/var/nix/profiles/default/bin/nix eval --json --file /home/deck/flake/home/firefox/policy.nix  | /usr/bin/sudo tee /etc/firefox/policies/policies.json
     fi
   '';
 }
