@@ -1,8 +1,13 @@
-{ config, pkgs, lib, modulesPath, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  modulesPath,
+  ...
+}:
+{
 
-  imports = [
-    ./initrd-network.nix
-  ];
+  imports = [ ./initrd-network.nix ];
 
   boot.initrd.systemd.enable = true;
 
@@ -105,7 +110,6 @@
     requiredBy = [ "initrd-fs.target" ];
   };
 
-
   boot.initrd.systemd.emergencyAccess = true;
   # Uncomment for debugging in local qemu
 
@@ -122,7 +126,6 @@
   #   serviceConfig.ExecStart = "/bin/false";
   #   requiredBy = [ "initrd.target" ];
   # };
-
 
   # Disable default services in Nixpkgs
   boot.initrd.systemd.services.initrd-nixos-activation.enable = false;

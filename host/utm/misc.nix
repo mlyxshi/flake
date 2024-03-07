@@ -1,4 +1,10 @@
-{ config, pkgs, lib, self, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  self,
+  ...
+}:
 let
   install-aarch64 = pkgs.writeShellScriptBin "install-aarch64" ''
     HOST=$1
@@ -29,9 +35,8 @@ in
 
 {
 
-  environment.systemPackages = with pkgs;[
+  environment.systemPackages = with pkgs; [
     install-aarch64
     gh
   ];
-
 }

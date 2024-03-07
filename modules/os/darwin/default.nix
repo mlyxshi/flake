@@ -1,4 +1,12 @@
-{ pkgs, lib, config, nixpkgs, self, ... }: {
+{
+  pkgs,
+  lib,
+  config,
+  nixpkgs,
+  self,
+  ...
+}:
+{
 
   imports = [
     self.nixosModules.os.common
@@ -13,7 +21,7 @@
     (pkgs.writeShellScriptBin "update" ''
       cd /Users/dominic/flake
       SYSTEM=$(nom build --no-link --print-out-paths .#darwinConfigurations.${config.networking.hostName}.system)
-      
+
       if [ -n "$SYSTEM" ]
       then
         sudo -H --preserve-env=PATH env nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
@@ -30,13 +38,21 @@
     package = pkgs.nixVersions.unstable;
     registry.nixpkgs.flake = nixpkgs;
     settings = {
-      experimental-features = [ "nix-command" "flakes" ];
-      trusted-users = [ "root" "dominic" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+      trusted-users = [
+        "root"
+        "dominic"
+      ];
     };
     gc = {
       automatic = true;
       # interval is darwin launchd syntax
-      interval = { Hour = 24; };
+      interval = {
+        Hour = 24;
+      };
       options = "--delete-older-than 7d";
     };
     # envVars = {
@@ -62,15 +78,13 @@
     };
   };
 
-
   # environment.etc."firefox/policies/policies.json".text = builtins.toJSON (import ../../config/firefox/policy.nix);
   # it seems that firefox do not support system level /etc/firefox/policies/policies.json on MacOS, create in application directory manually
-  system.activationScripts.postActivation.text = '' 
+  system.activationScripts.postActivation.text = ''
     [[ -e "/run/current-system" ]] && ${pkgs.nix}/bin/nix store  diff-closures /run/current-system "$systemConfig"
 
     [[ -e "/Applications/Firefox.app/Contents/Resources/" ]] && mkdir -p /Applications/Firefox.app/Contents/Resources/distribution && cat ${pkgs.writeText "firefoxPolicy" (builtins.toJSON (import ../../../home/firefox/policy.nix))} > /Applications/Firefox.app/Contents/Resources/distribution/policies.json
   '';
-
 
   # Add MITM CA for debug network
   security.pki.certificates = [

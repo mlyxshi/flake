@@ -1,4 +1,11 @@
-{ pkgs, lib, config, self, ... }: {
+{
+  pkgs,
+  lib,
+  config,
+  self,
+  ...
+}:
+{
 
   imports = [
     ./.
@@ -21,9 +28,7 @@
     "x-scheme-handler/https" = [ "firefox.desktop" ];
   };
 
-  home.packages = with pkgs; [
-    qbittorrent
-  ];
+  home.packages = with pkgs; [ qbittorrent ];
 
   home.activation.myScript = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     if [ ! -d ~/.ssh ]; then

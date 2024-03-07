@@ -1,17 +1,32 @@
-{ config, pkgs, lib, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+{
   # systemd-networkd
   boot.initrd.systemd.network.enable = true;
 
   boot.initrd.systemd.network.networks.ethernet-default-dhcp = {
-    matchConfig = { Name = [ "en*" "eth*" ]; };
-    networkConfig = { DHCP = "yes"; };
+    matchConfig = {
+      Name = [
+        "en*"
+        "eth*"
+      ];
+    };
+    networkConfig = {
+      DHCP = "yes";
+    };
   };
 
   # systemd-resolved
   boot.initrd.systemd.users.systemd-resolve = { };
   boot.initrd.systemd.groups.systemd-resolve = { };
   boot.initrd.systemd.additionalUpstreamUnits = [ "systemd-resolved.service" ];
-  boot.initrd.systemd.storePaths = [ "${config.boot.initrd.systemd.package}/lib/systemd/systemd-resolved" ];
+  boot.initrd.systemd.storePaths = [
+    "${config.boot.initrd.systemd.package}/lib/systemd/systemd-resolved"
+  ];
   boot.initrd.systemd.services.systemd-resolved.wantedBy = [ "initrd.target" ];
 
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/system/boot/resolved.nix

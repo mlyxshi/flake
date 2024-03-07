@@ -14,9 +14,7 @@ rustPlatform.buildRustPackage rec {
 
   cargoHash = "sha256-ABzt8PMsas9+NRvpgtZlsoYjjvwpU8f6lqhceHxq91M=";
 
-  cargoBuildFlags = [
-    "--features kde"
-  ];
+  cargoBuildFlags = [ "--features kde" ];
 
   meta.platforms = [
     "x86_64-linux"

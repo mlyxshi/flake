@@ -9,19 +9,25 @@ rec {
 
   pureName = pathList: map (path: lib.strings.removeSuffix ".nix" path) pathList;
 
-  mkFileHierarchyAttrset = basedir: dirName:
-    lib.genAttrs (pureName (ls /.${basedir}/${dirName}))
-      (path:
-        if builtins.pathExists /.${basedir}/${dirName}/${path}.nix
-        then import /.${basedir}/${dirName}/${path}.nix
-        else if builtins.pathExists /.${basedir}/${dirName}/${path}/default.nix
-        then import /.${basedir}/${dirName}/${path}
-        else mkFileHierarchyAttrset /.${basedir}/${dirName} path
-      );
+  mkFileHierarchyAttrset =
+    basedir: dirName:
+    lib.genAttrs (pureName (ls /.${basedir}/${dirName})) (
+      path:
+      if builtins.pathExists /.${basedir}/${dirName}/${path}.nix then
+        import /.${basedir}/${dirName}/${path}.nix
+      else if builtins.pathExists /.${basedir}/${dirName}/${path}/default.nix then
+        import /.${basedir}/${dirName}/${path}
+      else
+        mkFileHierarchyAttrset /.${basedir}/${dirName} path
+    );
 
   packagelist = pureName (ls ./pkgs);
   getPkgPlatforms = name: (callPackage ./pkgs/${name} { }).meta.platforms;
-  getArchPkgs = arch: builtins.filter (name: builtins.any (platform: platform == arch) (getPkgPlatforms name)) packagelist;
+  getArchPkgs =
+    arch:
+    builtins.filter (
+      name: builtins.any (platform: platform == arch) (getPkgPlatforms name)
+    ) packagelist;
 
   oracle-arm64-serverlist = pureName (ls ./host/oracle/aarch64);
   oracle-x64-serverlist = pureName (ls ./host/oracle/x86_64);

@@ -1,8 +1,12 @@
-{ pkgs, lib, config, ... }: {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+{
 
-  imports = [
-    ./.
-  ];
+  imports = [ ./. ];
 
   home = {
     username = "runner";
@@ -13,5 +17,4 @@
     helix
     joshuto
   ];
-
 }

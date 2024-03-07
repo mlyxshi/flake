@@ -1,8 +1,13 @@
-{ config, pkgs, lib, self, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  self,
+  ...
+}:
+{
 
-  imports = [
-    self.nixosModules.containers.podman
-  ];
+  imports = [ self.nixosModules.containers.podman ];
 
   virtualisation.oci-containers.containers.netboot-tftp = {
     image = "docker.io/langren1353/netboot-shell-tftp";
@@ -12,9 +17,7 @@
       "PGID" = "1112";
     };
   };
-
 }
-
 
 # UEFI Shell for aarch64
 # FS0:

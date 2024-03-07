@@ -1,8 +1,12 @@
-{ plasma-manager, lib, config,... }: {
+{
+  plasma-manager,
+  lib,
+  config,
+  ...
+}:
+{
 
-  imports = [
-    plasma-manager.homeManagerModules.plasma-manager
-  ];
+  imports = [ plasma-manager.homeManagerModules.plasma-manager ];
 
   home.file.".config/kate/lspclient/settings.json".text = ''
     {
@@ -21,15 +25,18 @@
     shortcuts = {
       kwin = {
         "Walk Through Windows" = [ "Meta+Tab" ];
-        "Cycle Overview" = ""; #default: Meta+Tab
-        "Overview" = ""; #default: Meta+W
+        "Cycle Overview" = ""; # default: Meta+Tab
+        "Overview" = ""; # default: Meta+W
       };
 
-      "plasmashell"."manage activities" = ""; #default: Meta+Q
+      "plasmashell"."manage activities" = ""; # default: Meta+Q
 
-      "org.kde.krunner.desktop"."_launch" = [ "Alt+Space" "Meta+Space" "Search" ];
+      "org.kde.krunner.desktop"."_launch" = [
+        "Alt+Space"
+        "Meta+Space"
+        "Search"
+      ];
     };
-
 
     panels = [
       {
@@ -40,15 +47,17 @@
           {
             name = "org.kde.plasma.icontasks";
             config = {
-              General.launchers = [
-                "applications:systemsettings.desktop"
-                "applications:org.kde.dolphin.desktop"
-                "applications:org.kde.konsole.desktop"
-                "applications:org.kde.kate.desktop"
-                "applications:firefox.desktop"
-              ] ++ lib.optionals  (config.home.username == "deck") [
-                "applications:org.qbittorrent.qBittorrent.desktop"
-              ];
+              General.launchers =
+                [
+                  "applications:systemsettings.desktop"
+                  "applications:org.kde.dolphin.desktop"
+                  "applications:org.kde.konsole.desktop"
+                  "applications:org.kde.kate.desktop"
+                  "applications:firefox.desktop"
+                ]
+                ++ lib.optionals (config.home.username == "deck") [
+                  "applications:org.qbittorrent.qBittorrent.desktop"
+                ];
             };
           }
         ];
@@ -81,5 +90,4 @@
       "katerc"."KTextEditor Document"."Auto Save On Focus Out" = "true";
     };
   };
-
 }

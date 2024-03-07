@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   homebrew = {
     enable = true;
 
@@ -104,4 +105,3 @@
 # Other Application not in Homebrew/Nixpkgs/Appstore
 # Install Manually
 # Hopper-Disassembler https://www.hopperapp.com/
-

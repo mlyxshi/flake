@@ -2,7 +2,7 @@
 let
   mpv-scripts = pkgs.symlinkJoin {
     name = "mpv-scripts";
-    paths = with pkgs;[
+    paths = with pkgs; [
       mpvScripts.autoload
       mpvScripts.mpv-playlistmanager
     ];

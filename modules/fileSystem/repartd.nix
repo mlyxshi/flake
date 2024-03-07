@@ -1,15 +1,19 @@
 # systemd-repartd: enlarge existing partitions  (lsblk)
 # systemd-growfs: enlarge filesystems in partitions (df -h)
 
-{ config, lib, pkgs, modulesPath, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  ...
+}:
 let
   efiArch = pkgs.stdenv.hostPlatform.efiArch;
 in
 {
 
-  imports = [
-    "${modulesPath}/image/repart.nix"
-  ];
+  imports = [ "${modulesPath}/image/repart.nix" ];
 
   fileSystems."/boot" = {
     device = "/dev/disk/by-partlabel/BOOT";
@@ -26,7 +30,11 @@ in
   # systemd-repartd
   # https://www.freedesktop.org/software/systemd/man/latest/repart.d.html#Examples
   systemd.repart.enable = true;
-  systemd.repart.partitions = { "01-root" = { Type = "root"; }; };
+  systemd.repart.partitions = {
+    "01-root" = {
+      Type = "root";
+    };
+  };
 
   # OS raw image
   # https://nixos.org/manual/nixos/unstable/#sec-image-repart-appliance
@@ -54,9 +62,7 @@ in
         };
       };
       "01-root" = {
-        storePaths = [
-          config.system.build.toplevel
-        ];
+        storePaths = [ config.system.build.toplevel ];
         repartConfig = {
           Type = "root";
           Format = "ext4";
@@ -66,6 +72,4 @@ in
       };
     };
   };
-
 }
-

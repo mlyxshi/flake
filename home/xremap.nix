@@ -35,17 +35,14 @@ let
           SUPER-q = "CTRL-SHIFT-q";
           SUPER-w = "CTRL-SHIFT-w";
         };
-        application.only = [
-          "konsole"
-        ];
+        application.only = [ "konsole" ];
       }
     ];
   };
 
   configFile = pkgs.writeTextFile {
     name = "xremap-config.yml";
-    text =
-      lib.generators.toYAML { } config;
+    text = lib.generators.toYAML { } config;
   };
 in
 {
@@ -63,5 +60,4 @@ in
     };
     Install.WantedBy = [ "graphical-session.target" ];
   };
-
 }

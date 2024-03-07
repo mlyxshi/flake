@@ -1,8 +1,13 @@
-{ pkgs, lib, config, self, ... }: {
+{
+  pkgs,
+  lib,
+  config,
+  self,
+  ...
+}:
+{
 
-  imports = [
-    self.nixosModules.os.nixos.base
-  ];
+  imports = [ self.nixosModules.os.nixos.base ];
 
   fonts.fontconfig.enable = false;
 

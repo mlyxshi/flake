@@ -1,4 +1,11 @@
-{ config, pkgs, lib, self, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  self,
+  ...
+}:
+{
 
   imports = [
     self.nixosModules.containers.podman
@@ -22,17 +29,19 @@
       SIGNUPS_ALLOWED = "false"; # Disable signups
       DOMAIN = "https://password.${config.networking.domain}"; # Yubikey FIDO2 WebAuthn
     };
-    environmentFiles = [
-      "/etc/secret/vaultwarden"
-    ];
-    volumes = [
-      "/var/lib/vaultwarden:/data"
-    ];
-    extraOptions = lib.concatMap (x: [ "--label" x ]) [
-      "io.containers.autoupdate=registry"
-      "traefik.enable=true"
-      "traefik.http.routers.vaultwarden.rule=Host(`password.${config.networking.domain}`)"
-      "traefik.http.routers.vaultwarden.entrypoints=websecure"
-    ];
+    environmentFiles = [ "/etc/secret/vaultwarden" ];
+    volumes = [ "/var/lib/vaultwarden:/data" ];
+    extraOptions =
+      lib.concatMap
+        (x: [
+          "--label"
+          x
+        ])
+        [
+          "io.containers.autoupdate=registry"
+          "traefik.enable=true"
+          "traefik.http.routers.vaultwarden.rule=Host(`password.${config.networking.domain}`)"
+          "traefik.http.routers.vaultwarden.entrypoints=websecure"
+        ];
   };
 }

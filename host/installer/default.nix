@@ -1,4 +1,9 @@
-{ arch, nixpkgs, self, secret }:
+{
+  arch,
+  nixpkgs,
+  self,
+  secret,
+}:
 nixpkgs.lib.nixosSystem {
   modules = [
     secret.nixosModules.default
@@ -14,5 +19,7 @@ nixpkgs.lib.nixosSystem {
       };
     }
   ];
-  specialArgs = { inherit self nixpkgs; };
+  specialArgs = {
+    inherit self nixpkgs;
+  };
 }

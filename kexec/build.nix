@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   kernelTarget = pkgs.hostPlatform.linux-kernel.target;
   arch = pkgs.hostPlatform.uname.processor;
@@ -14,7 +19,7 @@ let
       echo "Get ssh_host_ed25519_key  from: /etc/ssh/ssh_host_ed25519_key"
       ssh_host_key=$(cat /etc/ssh/ssh_host_ed25519_key | base64 -w0)
     fi     
-    
+
     for i in /home/$SUDO_USER/.ssh/authorized_keys /root/.ssh/authorized_keys /etc/ssh/authorized_keys.d/root; do
       if [[ -e $i && -s $i ]]; then 
         echo "Get authorized_keys       from: $i"
@@ -22,7 +27,7 @@ let
         break
       fi     
     done
-    
+
     echo "Wait ssh connection lost..., ssh root@ip and enjoy NixOS"
     ./kexec --kexec-syscall-auto --load ./kernel --initrd=./initrd  --append "init=/bin/init ${toString config.boot.kernelParams} ssh_host_key=$ssh_host_key ssh_authorized_key=$ssh_authorized_key $*"
     ./kexec -e

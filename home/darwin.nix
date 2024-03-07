@@ -1,4 +1,5 @@
-{ self, lib, ... }: {
+{ self, lib, ... }:
+{
   imports = [
     ./.
     ./firefox

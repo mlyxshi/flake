@@ -1,4 +1,10 @@
-{ pkgs, lib, config, ... }: {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+{
 
   # https://traefik.io/blog/traefik-2-0-docker-101-fc2893944b9d/
   services.traefik = {
@@ -22,37 +28,35 @@
         service = "api@internal";
         middlewares = "auth";
       };
-
     }; # dynamicConfigOptions
 
-    staticConfigOptions = {
-      api = { };
+    staticConfigOptions =
+      {
+        api = { };
 
-      entryPoints = {
-        web = {
-          address = ":80";
+        entryPoints = {
+          web = {
+            address = ":80";
+          };
+
+          websecure = {
+            address = ":443";
+            http.tls.certResolver = "letsencrypt";
+          };
         };
 
-        websecure = {
-          address = ":443";
-          http.tls.certResolver = "letsencrypt";
+        certificatesResolvers.letsencrypt.acme = {
+          dnsChallenge.provider = "cloudflare";
+          email = "blackhole@${config.networking.domain}";
+          storage = "${config.services.traefik.dataDir}/acme.json"; # "/var/lib/traefik/acme.json"
         };
-      };
+      }
+      // lib.optionalAttrs config.virtualisation.podman.enable {
 
-      certificatesResolvers.letsencrypt.acme = {
-        dnsChallenge.provider = "cloudflare";
-        email = "blackhole@${config.networking.domain}";
-        storage = "${config.services.traefik.dataDir}/acme.json"; # "/var/lib/traefik/acme.json"
-      };
-
-    } // lib.optionalAttrs config.virtualisation.podman.enable {
-
-      providers.docker = {
-        endpoint = "unix:///run/podman/podman.sock";
-        exposedByDefault = false;
-      };
-
-    }; # staticConfigOptions
-
+        providers.docker = {
+          endpoint = "unix:///run/podman/podman.sock";
+          exposedByDefault = false;
+        };
+      }; # staticConfigOptions
   }; # services.traefik
 }

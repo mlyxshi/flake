@@ -4,7 +4,12 @@
 # Declarative spec file: hydra.json
 # Declarative input type: Git checkout
 # Declarative input value: https://github.com/mlyxshi/flake.git main 
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   hydra-x64-publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICEgrMusygNAQDkrGHfLcYJT/ZcJr11mBsfqlJn/EB80";
 in
@@ -33,13 +38,21 @@ in
       hostName = "localhost";
       systems = [ "aarch64-linux" ];
       maxJobs = 4;
-      supportedFeatures = [ "nixos-test" "big-parallel" "benchmark" ];
+      supportedFeatures = [
+        "nixos-test"
+        "big-parallel"
+        "benchmark"
+      ];
     }
     {
       hostName = "hydra-x64";
       systems = [ "x86_64-linux" ];
       maxJobs = 4;
-      supportedFeatures = [ "nixos-test" "big-parallel" "benchmark" ];
+      supportedFeatures = [
+        "nixos-test"
+        "big-parallel"
+        "benchmark"
+      ];
     }
   ];
 
@@ -80,9 +93,7 @@ in
         service = "hydra";
       };
 
-      http.services.hydra.loadBalancer.servers = [{
-        url = "http://127.0.0.1:3000";
-      }];
+      http.services.hydra.loadBalancer.servers = [ { url = "http://127.0.0.1:3000"; } ];
       # cache
       # http.routers.cache = {
       #   rule = "Host(`cache.${config.networking.domain}`)";
@@ -93,8 +104,6 @@ in
       # http.services.cache.loadBalancer.servers = [{
       #   url = "http://127.0.0.1:5000";
       # }];
-
     };
   };
-
 }

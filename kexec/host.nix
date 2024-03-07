@@ -1,4 +1,10 @@
-{ config, pkgs, lib, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+{
   time.timeZone = "UTC";
   networking.hostName = "systemd-initrd";
 

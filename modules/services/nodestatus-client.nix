@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   SERVER = "top.${config.networking.domain}";
   USER = config.networking.hostName;

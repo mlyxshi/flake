@@ -1,6 +1,12 @@
-{ self, pkgs, lib, config, ... }: {
-  imports = [
-  ];
+{
+  self,
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+{
+  imports = [ ];
 
   environment.systemPackages = with pkgs; [
     nix-index

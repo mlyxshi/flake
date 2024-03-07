@@ -1,5 +1,10 @@
-{ self, config, pkgs, lib, ... }: {
-  imports = [
-    self.nixosModules.containers.vaultwarden
-  ];
+{
+  self,
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+{
+  imports = [ self.nixosModules.containers.vaultwarden ];
 }

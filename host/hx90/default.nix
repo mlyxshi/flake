@@ -1,4 +1,8 @@
-{ self, nixpkgs, home-manager }:
+{
+  self,
+  nixpkgs,
+  home-manager,
+}:
 
 nixpkgs.lib.nixosSystem {
   modules = [
@@ -16,8 +20,9 @@ nixpkgs.lib.nixosSystem {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.verbose = true;
-
     }
   ];
-  specialArgs = { inherit self nixpkgs; };
+  specialArgs = {
+    inherit self nixpkgs;
+  };
 }

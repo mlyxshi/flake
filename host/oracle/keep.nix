@@ -6,7 +6,12 @@
 # Network utilization is less than 20%
 # Memory utilization is less than 20% (applies to A1 shapes only)
 
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   waste = pkgs.writeText "waste.py" ''
     import platform

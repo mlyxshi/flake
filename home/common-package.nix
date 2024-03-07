@@ -1,4 +1,10 @@
-{ pkgs, lib, config, ... }: {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+{
 
   home.packages = with pkgs; [
     eza
@@ -10,7 +16,7 @@
     git
     zoxide
     nil
-    nixpkgs-fmt
+    nixfmt-rfc-style
     htop
     fd
     ripgrep

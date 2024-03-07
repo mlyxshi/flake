@@ -4,8 +4,6 @@ nixpkgs.lib.nixosSystem {
     ./host.nix
     ./build.nix
     ./initrd.nix
-    {
-      nixpkgs.hostPlatform = "${arch}-linux";
-    }
+    { nixpkgs.hostPlatform = "${arch}-linux"; }
   ];
 }

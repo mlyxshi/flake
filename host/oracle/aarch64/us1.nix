@@ -1,5 +1,10 @@
-{ self, config, pkgs, lib, ... }: {
-  imports = [
-    self.nixosModules.services.hysteria
-  ];
+{
+  self,
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+{
+  imports = [ self.nixosModules.services.hysteria ];
 }

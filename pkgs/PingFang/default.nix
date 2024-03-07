@@ -10,7 +10,6 @@ stdenvNoCC.mkDerivation {
     stripRoot = false;
   };
 
-
   installPhase = ''
     install -m444 -Dt  $out/share/fonts/truetype  *.ttf
   '';

@@ -1,9 +1,14 @@
 # https://jellyfin-plugin-bangumi.pages.dev/repository.json
-{ config, pkgs, lib, self, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  self,
+  ...
+}:
+{
 
-  imports = [
-    self.nixosModules.containers.podman
-  ];
+  imports = [ self.nixosModules.containers.podman ];
 
   backup.jellyfin = true;
 
@@ -19,16 +24,25 @@
       "PGID" = "0";
     };
 
-    extraOptions = lib.concatMap (x: [ "--label" x ]) [
-      "io.containers.autoupdate=registry"
-      "traefik.enable=true"
-      "traefik.http.routers.jellyfin.rule=Host(`jellyfin.${config.networking.domain}`)"
-      "traefik.http.routers.jellyfin.entrypoints=web"
-    ];
+    extraOptions =
+      lib.concatMap
+        (x: [
+          "--label"
+          x
+        ])
+        [
+          "io.containers.autoupdate=registry"
+          "traefik.enable=true"
+          "traefik.http.routers.jellyfin.rule=Host(`jellyfin.${config.networking.domain}`)"
+          "traefik.http.routers.jellyfin.entrypoints=web"
+        ];
   };
 
   systemd.services.media-init = {
-    before = [ "transmission.service" "podman-jellyfin.service" ];
+    before = [
+      "transmission.service"
+      "podman-jellyfin.service"
+    ];
     unitConfig.ConditionPathExists = "!%S/media";
     serviceConfig.User = "transmission";
     serviceConfig.ExecStart = "echo"; # dummy command to make StateDirectory work

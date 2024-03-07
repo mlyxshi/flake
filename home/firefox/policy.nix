@@ -67,6 +67,5 @@
     #     install_url = "https://github.com/pt-plugins/PT-Plugin-Plus/suites/13704627945/artifacts/757780101";
     #   };
     # };
-
   };
 }

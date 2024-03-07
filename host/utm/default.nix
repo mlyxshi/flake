@@ -1,4 +1,10 @@
-{ self, nixpkgs, secret, home-manager, plasma-manager }:
+{
+  self,
+  nixpkgs,
+  secret,
+  home-manager,
+  plasma-manager,
+}:
 
 nixpkgs.lib.nixosSystem {
   modules = [
@@ -20,8 +26,12 @@ nixpkgs.lib.nixosSystem {
       users.groups.input.members = [ "dominic" ]; # allow access to /dev/input
 
       home-manager.users.dominic = import ../../home/desktop.nix;
-      home-manager.extraSpecialArgs = { inherit plasma-manager; };
+      home-manager.extraSpecialArgs = {
+        inherit plasma-manager;
+      };
     }
   ];
-  specialArgs = { inherit self nixpkgs home-manager; };
+  specialArgs = {
+    inherit self nixpkgs home-manager;
+  };
 }

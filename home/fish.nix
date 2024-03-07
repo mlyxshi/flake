@@ -1,4 +1,5 @@
-{ config, ... }: {
+{ config, ... }:
+{
   programs.fish = {
     enable = true;
     shellAliases = {
@@ -34,7 +35,7 @@
         git pull
         nix run .#homeConfigurations.deck.activationPackage
       end
-      
+
       function loc
         readlink -f $(which $argv)
       end

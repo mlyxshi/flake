@@ -1,4 +1,5 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, ... }:
+{
   home.stateVersion = "24.05";
 
   home.file.".config/helix".source = ../config/helix;

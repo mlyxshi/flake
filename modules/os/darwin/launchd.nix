@@ -1,5 +1,11 @@
 # http://technologeeks.com/docs/launchd.pdf
-{ pkgs, lib, config, ... }: {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+{
   launchd.agents.FirefoxEnv = {
     serviceConfig.ProgramArguments = [
       "/bin/sh"

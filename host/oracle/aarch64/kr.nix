@@ -1,7 +1,12 @@
-{ config, pkgs, lib, self, ... }: {
-  imports = [
-    self.nixosModules.services.hydra.aarch64
-  ];
+{
+  config,
+  pkgs,
+  lib,
+  self,
+  ...
+}:
+{
+  imports = [ self.nixosModules.services.hydra.aarch64 ];
 
   environment.systemPackages = [
     # (pkgs.writeShellScriptBin "os-dd" ''
@@ -23,5 +28,4 @@
     #   fi
     # '')
   ];
-
 }

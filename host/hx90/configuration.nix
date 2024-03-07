@@ -1,7 +1,11 @@
-{ config, lib, pkgs, ... }: {
-  imports = [
-    ./hardware.nix
-  ];
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
+  imports = [ ./hardware.nix ];
 
   networking = {
     useNetworkd = true;
@@ -16,10 +20,5 @@
     };
   };
 
-
-  environment.systemPackages = [
-    pkgs.python3
-  ];
-
-
+  environment.systemPackages = [ pkgs.python3 ];
 }

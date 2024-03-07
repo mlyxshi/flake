@@ -1,4 +1,10 @@
-{ hostName, self, nixpkgs, home-manager, secret }:
+{
+  hostName,
+  self,
+  nixpkgs,
+  home-manager,
+  secret,
+}:
 let
   arch = if (builtins.pathExists ./aarch64/${hostName}.nix) then "aarch64" else "x86_64";
 in
@@ -22,5 +28,7 @@ nixpkgs.lib.nixosSystem {
       networking.domain = "mlyxshi.com";
     }
   ];
-  specialArgs = { inherit self nixpkgs home-manager; };
+  specialArgs = {
+    inherit self nixpkgs home-manager;
+  };
 }
