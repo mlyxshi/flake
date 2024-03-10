@@ -18,15 +18,14 @@ diskutil eraseVolume free free disk0s5
 
 curl https://alx.sh | sh
 
-curl -sL https://install.determinate.systems/nix | sh -s -- install  --extra-conf "trusted-users = root dominic"
-
+curl -sL https://install.determinate.systems/nix | sh -s -- install
 git clone https://github.com/mlyxshi/flake.git ~/flake
 nix run ~/flake#asahi-init
 ```
 
 ### Steam Deck
 ```
-curl -sL https://install.determinate.systems/nix | sh -s -- install --extra-conf "trusted-users = root deck"
+curl -sL https://install.determinate.systems/nix | sh -s -- install
 
 git clone https://github.com/mlyxshi/flake.git ~/flake
 nix run ~/flake#deck-init
