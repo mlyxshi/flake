@@ -20,7 +20,7 @@
       nix-tree
       nix-init
       nix-update
-      nixfmt-rfc-style
+      nixfmt
       joshuto
       helix
       nil

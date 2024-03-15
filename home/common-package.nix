@@ -16,7 +16,7 @@
     git
     zoxide
     nil
-    nixfmt-rfc-style
+    nixfmt
     htop
     fd
     ripgrep
