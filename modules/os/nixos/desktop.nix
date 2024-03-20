@@ -35,7 +35,10 @@
     };
   };
 
-  services.displayManager.sddm.enable = true;
+  #services.displayManager.sddm.enable = true;
+  services.xserver.enable = true;
+  services.xserver.displayManager.sddm.enable = true;
+  
   services.desktopManager.plasma6.enable = true;
 
   services.flatpak.enable = true;
