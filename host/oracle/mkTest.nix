@@ -4,7 +4,6 @@ nixpkgs.lib.nixosSystem {
     secret.nixosModules.default
     self.nixosModules.os.nixos.server
     self.nixosModules.network
-    self.nixosModules.fileSystem.ext4
     ./hardware.nix
     {
       nixpkgs.overlays = [ self.overlays.default ];

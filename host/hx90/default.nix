@@ -4,7 +4,6 @@ nixpkgs.lib.nixosSystem {
   modules = [
     home-manager.nixosModules.default
     self.nixosModules.os.nixos.desktop
-    self.nixosModules.fileSystem.ext4
     ./configuration.nix
     {
       nixpkgs.overlays = [ self.overlays.default ];

@@ -10,7 +10,6 @@ in nixpkgs.lib.nixosSystem {
     self.nixosModules.home-manager
     self.nixosModules.os.nixos.server
     self.nixosModules.network
-    # self.nixosModules.fileSystem.ext4
     self.nixosModules.services.nodestatus-client
     self.nixosModules.services.traefik
     self.nixosModules.services.telegraf

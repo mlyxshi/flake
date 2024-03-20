@@ -3,6 +3,9 @@
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.emergencyAccess = true;
 
+  boot.initrd.systemd.root = "gpt-auto";
+  boot.initrd.supportedFilesystems = [ "ext4" ];
+
   boot.initrd.availableKernelModules =
     [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
