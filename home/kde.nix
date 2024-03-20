@@ -1,10 +1,4 @@
-{
-  plasma-manager,
-  lib,
-  config,
-  ...
-}:
-{
+{ plasma-manager, lib, config, ... }: {
 
   imports = [ plasma-manager.homeManagerModules.plasma-manager ];
 
@@ -31,11 +25,8 @@
 
       "plasmashell"."manage activities" = ""; # default: Meta+Q
 
-      "org.kde.krunner.desktop"."_launch" = [
-        "Alt+Space"
-        "Meta+Space"
-        "Search"
-      ];
+      "org.kde.krunner.desktop"."_launch" =
+        [ "Alt+Space" "Meta+Space" "Search" ];
     };
 
     panels = [
@@ -43,24 +34,19 @@
         location = "bottom";
         floating = true;
         hiding = "autohide";
-        widgets = [
-          {
-            name = "org.kde.plasma.icontasks";
-            config = {
-              General.launchers =
-                [
-                  "applications:systemsettings.desktop"
-                  "applications:org.kde.dolphin.desktop"
-                  "applications:org.kde.konsole.desktop"
-                  "applications:org.kde.kate.desktop"
-                  "applications:firefox.desktop"
-                ]
-                ++ lib.optionals (config.home.username == "deck") [
-                  "applications:org.qbittorrent.qBittorrent.desktop"
-                ];
-            };
-          }
-        ];
+        widgets = [{
+          name = "org.kde.plasma.icontasks";
+          config = {
+            General.launchers = [
+              "applications:systemsettings.desktop"
+              "applications:org.kde.dolphin.desktop"
+              "applications:org.kde.konsole.desktop"
+              "applications:org.kde.kate.desktop"
+              "applications:firefox.desktop"
+            ] ++ lib.optionals (config.home.username == "deck")
+              [ "applications:org.qbittorrent.qBittorrent.desktop" ];
+          };
+        }];
       }
       # MacOS like top bar
       {

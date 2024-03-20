@@ -1,10 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}:
-{
+{ config, pkgs, lib, ... }: {
 
   users = {
     users.hydra-builder = {
@@ -19,8 +13,5 @@
   ];
 
   # https://github.com/NixOS/nix/issues/2789
-  nix.settings.trusted-users = [
-    "root"
-    "hydra-builder"
-  ];
+  nix.settings.trusted-users = [ "root" "hydra-builder" ];
 }

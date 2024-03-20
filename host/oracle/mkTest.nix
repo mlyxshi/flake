@@ -1,9 +1,4 @@
-{
-  arch,
-  self,
-  nixpkgs,
-  secret,
-}:
+{ arch, self, nixpkgs, secret, }:
 nixpkgs.lib.nixosSystem {
   modules = [
     secret.nixosModules.default
@@ -18,7 +13,5 @@ nixpkgs.lib.nixosSystem {
       networking.domain = "mlyxshi.com";
     }
   ];
-  specialArgs = {
-    inherit self nixpkgs;
-  };
+  specialArgs = { inherit self nixpkgs; };
 }

@@ -1,16 +1,12 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}:
+{ config, pkgs, lib, ... }:
 let
   transmissionScript = pkgs.writeShellScript "transmission.sh" ''
     export PATH=$PATH:${pkgs.rclone}/bin:${pkgs.transmission}/bin
-    ${pkgs.deno}/bin/deno run --allow-net --allow-env --allow-read --allow-run ${./transmission.ts}
+    ${pkgs.deno}/bin/deno run --allow-net --allow-env --allow-read --allow-run ${
+      ./transmission.ts
+    }
   '';
-in
-{
+in {
 
   imports = [
     # ./flexget.nix
@@ -46,10 +42,7 @@ in
   };
 
   systemd.services.transmission = {
-    after = [
-      "transmission-init.service"
-      "network-online.target"
-    ];
+    after = [ "transmission-init.service" "network-online.target" ];
     wants = [ "network-online.target" ];
     environment = {
       TRANSMISSION_HOME = "%S/transmission";
@@ -58,7 +51,8 @@ in
     };
     serviceConfig.EnvironmentFile = [ "/etc/secret/transmission" ];
     serviceConfig.User = "transmission";
-    serviceConfig.ExecStart = "${pkgs.transmission}/bin/transmission-daemon --foreground --username $ADMIN --password $PASSWORD";
+    serviceConfig.ExecStart =
+      "${pkgs.transmission}/bin/transmission-daemon --foreground --username $ADMIN --password $PASSWORD";
     serviceConfig.WorkingDirectory = "%S/transmission";
     preStart = ''
       cat ${transmissionScript} > transmission.sh
@@ -82,7 +76,8 @@ in
           service = "transmission";
         };
 
-        services.transmission.loadBalancer.servers = [ { url = "http://127.0.0.1:9091"; } ];
+        services.transmission.loadBalancer.servers =
+          [{ url = "http://127.0.0.1:9091"; }];
 
         routers.transmission-index = {
           rule = "Host(`transmission-index.${config.networking.domain}`)";
@@ -90,7 +85,8 @@ in
           service = "transmission-index";
         };
 
-        services.transmission-index.loadBalancer.servers = [ { url = "http://127.0.0.1:8010"; } ];
+        services.transmission-index.loadBalancer.servers =
+          [{ url = "http://127.0.0.1:8010"; }];
       };
     };
   };

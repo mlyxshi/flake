@@ -16,8 +16,5 @@ rustPlatform.buildRustPackage rec {
 
   cargoBuildFlags = [ "--features kde" ];
 
-  meta.platforms = [
-    "x86_64-linux"
-    "aarch64-linux"
-  ];
+  meta.platforms = [ "x86_64-linux" "aarch64-linux" ];
 }

@@ -1,10 +1,5 @@
-{ self, lib, ... }:
-{
-  imports = [
-    ./.
-    ./firefox
-    ./mpv.nix
-  ];
+{ self, lib, ... }: {
+  imports = [ ./. ./firefox ./mpv.nix ];
 
   home = {
     username = "dominic";

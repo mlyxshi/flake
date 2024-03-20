@@ -1,12 +1,5 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}:
-{
-  environment.systemPackages =
-    with pkgs;
+{ config, pkgs, lib, ... }: {
+  environment.systemPackages = with pkgs;
     [
       wget
       dig
@@ -38,8 +31,7 @@
       fzf
       gdu
       git
-    ]
-    ++ lib.optionals pkgs.stdenv.isDarwin [
+    ] ++ lib.optionals pkgs.stdenv.isDarwin [
       sops
       gh
       jq
@@ -47,9 +39,5 @@
       deno
       restic
       home-manager
-    ]
-    ++ lib.optionals pkgs.stdenv.isLinux [
-      below
-      fastfetch
-    ];
+    ] ++ lib.optionals pkgs.stdenv.isLinux [ below fastfetch ];
 }

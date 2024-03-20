@@ -1,6 +1,1 @@
-{
-  imports = [
-    ./fish.nix
-    ./systemPackages.nix
-  ];
-}
+{ imports = [ ./fish.nix ./systemPackages.nix ]; }

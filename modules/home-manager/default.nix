@@ -1,5 +1,4 @@
-{ home-manager, ... }:
-{
+{ home-manager, ... }: {
   imports = [ home-manager.nixosModules.default ];
 
   home-manager.users.root = import ../../home;

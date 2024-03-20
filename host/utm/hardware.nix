@@ -1,10 +1,4 @@
-{
-  modulesPath,
-  pkgs,
-  lib,
-  ...
-}:
-{
+{ modulesPath, pkgs, lib, ... }: {
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
 
   boot.initrd.systemd.enable = true;

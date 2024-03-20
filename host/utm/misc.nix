@@ -1,10 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  self,
-  ...
-}:
+{ config, pkgs, lib, self, ... }:
 let
   install-aarch64 = pkgs.writeShellScriptBin "install-aarch64" ''
     HOST=$1
@@ -31,12 +25,8 @@ let
     ssh -o StrictHostKeyChecking=no root@$IP NIXOS_INSTALL_BOOTLOADER=1 nixos-enter --root /mnt -- /run/current-system/bin/switch-to-configuration boot
     ssh -o StrictHostKeyChecking=no root@$IP reboot
   '';
-in
 
-{
+in {
 
-  environment.systemPackages = with pkgs; [
-    install-aarch64
-    gh
-  ];
+  environment.systemPackages = with pkgs; [ install-aarch64 gh ];
 }

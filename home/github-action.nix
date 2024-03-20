@@ -1,10 +1,4 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
-}:
-{
+{ pkgs, lib, config, ... }: {
 
   imports = [ ./. ];
 
@@ -13,8 +7,5 @@
     homeDirectory = "/home/runner";
   };
 
-  home.packages = with pkgs; [
-    helix
-    joshuto
-  ];
+  home.packages = with pkgs; [ helix joshuto ];
 }

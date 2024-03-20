@@ -1,11 +1,4 @@
-{
-  pkgs,
-  lib,
-  config,
-  self,
-  ...
-}:
-{
+{ pkgs, lib, config, self, ... }: {
 
   imports = [ self.nixosModules.os.nixos.base ];
 

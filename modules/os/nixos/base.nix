@@ -1,17 +1,6 @@
-{
-  config,
-  pkgs,
-  lib,
-  nixpkgs,
-  self,
-  ...
-}:
-{
+{ config, pkgs, lib, nixpkgs, self, ... }: {
 
-  imports = [
-    self.nixosModules.os.common
-    self.nixosModules.strip
-  ];
+  imports = [ self.nixosModules.os.common self.nixosModules.strip ];
 
   system.stateVersion = "23.11";
 
@@ -24,12 +13,8 @@
     channel.enable = false;
     registry.nixpkgs.flake = nixpkgs;
     settings = {
-      experimental-features = [
-        "nix-command"
-        "flakes"
-        "cgroups"
-        "auto-allocate-uids"
-      ];
+      experimental-features =
+        [ "nix-command" "flakes" "cgroups" "auto-allocate-uids" ];
       # substituters = [ "https://cache.mlyxshi.com" ];
       # trusted-public-keys = [ "cache:vXjiuWtSTOXj63zr+ZjMvXqvaYIK1atjyyEk+iuIqSg=" ];
       auto-optimise-store = true;
@@ -49,7 +34,8 @@
   nixpkgs.config.allowUnfree = true;
 
   users.users.root = {
-    hashedPassword = "$6$fwJZwHNLE640VkQd$SrYMjayP9fofIncuz3ehVLpfwGlpUj0NFZSssSy8GcIXIbDKI4JnrgfMZxSw5vxPkXkAEL/ktm3UZOyPMzA.p0";
+    hashedPassword =
+      "$6$fwJZwHNLE640VkQd$SrYMjayP9fofIncuz3ehVLpfwGlpUj0NFZSssSy8GcIXIbDKI4JnrgfMZxSw5vxPkXkAEL/ktm3UZOyPMzA.p0";
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe"
     ];
@@ -58,18 +44,17 @@
 
   services.openssh = {
     enable = true;
-    hostKeys = [
-      {
-        path = "/etc/ssh/ssh_host_ed25519_key";
-        type = "ed25519";
-      }
-    ];
+    hostKeys = [{
+      path = "/etc/ssh/ssh_host_ed25519_key";
+      type = "ed25519";
+    }];
     settings.PasswordAuthentication = false;
   };
 
   programs.ssh = {
     knownHosts = {
-      "github.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
+      "github.com".publicKey =
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
     };
   };
 
@@ -78,7 +63,8 @@
   environment.sessionVariables = {
     EDITOR = "hx";
     PAGER = "bat";
-    NIX_REMOTE = "daemon"; # root user do not use nix-daemon by default when build. This force nix-daemon to be used. Nix 2.12 cgroups and auto-allocate-uids
+    NIX_REMOTE =
+      "daemon"; # root user do not use nix-daemon by default when build. This force nix-daemon to be used. Nix 2.12 cgroups and auto-allocate-uids
   };
 
   programs.command-not-found.enable = false;

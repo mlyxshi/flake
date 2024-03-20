@@ -5,7 +5,8 @@ stdenvNoCC.mkDerivation {
 
   src = fetchzip {
     name = "SF-Pro";
-    url = "https://github.com/mlyxshi/SF-Pro/releases/download/v1.0/release.zip";
+    url =
+      "https://github.com/mlyxshi/SF-Pro/releases/download/v1.0/release.zip";
     hash = "sha256-UMNkYoSBGoKFkMlZ9ShGD3aZn8z2lEWHdugKHDlptdM=";
     stripRoot = false;
   };
@@ -17,9 +18,6 @@ stdenvNoCC.mkDerivation {
 
   meta = {
     description = "SF-Pro <-- Apple default font for English";
-    platforms = [
-      "x86_64-linux"
-      "aarch64-linux"
-    ];
+    platforms = [ "x86_64-linux" "aarch64-linux" ];
   };
 }

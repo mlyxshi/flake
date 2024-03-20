@@ -1,12 +1,4 @@
-{
-  stdenv,
-  fetchFromGitHub,
-  cmake,
-  openssl,
-  curl,
-  python3,
-  systemd,
-}:
+{ stdenv, fetchFromGitHub, cmake, openssl, curl, python3, systemd, }:
 stdenv.mkDerivation rec {
   pname = "transmission";
   version = "4.0.5";
@@ -20,12 +12,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ cmake ];
 
-  buildInputs = [
-    openssl
-    curl
-    python3
-    systemd
-  ];
+  buildInputs = [ openssl curl python3 systemd ];
 
   # Many PT sites limit allowed clients to some specific versions(bullshit rules), so fake version to 300
   # https://github.com/transmission/transmission/commit/bb6b5a062ee594dfd4b7a12a6b6e860c43849bfd
@@ -52,8 +39,5 @@ stdenv.mkDerivation rec {
     cp -r ../web/public_html         $out   
   '';
 
-  meta.platforms = [
-    "x86_64-linux"
-    "aarch64-linux"
-  ];
+  meta.platforms = [ "x86_64-linux" "aarch64-linux" ];
 }

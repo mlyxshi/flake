@@ -1,11 +1,4 @@
-{
-  pkgs,
-  lib,
-  config,
-  self,
-  ...
-}:
-{
+{ pkgs, lib, config, self, ... }: {
 
   imports = [ self.nixosModules.os.nixos.base ];
 
@@ -13,13 +6,15 @@
     isNormalUser = true;
     description = "mlyxshi";
     shell = pkgs.fish;
-    hashedPassword = "$6$fwJZwHNLE640VkQd$SrYMjayP9fofIncuz3ehVLpfwGlpUj0NFZSssSy8GcIXIbDKI4JnrgfMZxSw5vxPkXkAEL/ktm3UZOyPMzA.p0";
+    hashedPassword =
+      "$6$fwJZwHNLE640VkQd$SrYMjayP9fofIncuz3ehVLpfwGlpUj0NFZSssSy8GcIXIbDKI4JnrgfMZxSw5vxPkXkAEL/ktm3UZOyPMzA.p0";
     extraGroups = [ "wheel" ];
   };
 
   security.sudo.wheelNeedsPassword = false;
 
-  environment.etc."firefox/policies/policies.json".text = builtins.toJSON (import ../../../home/firefox/policy.nix);
+  environment.etc."firefox/policies/policies.json".text =
+    builtins.toJSON (import ../../../home/firefox/policy.nix);
 
   fonts = {
     packages = [
@@ -27,7 +22,8 @@
       pkgs.SF-Pro # English
       pkgs.PingFang # Chinese/Japanese
     ];
-    enableDefaultPackages = false; # If Sway is enabled, enableDefaultPackages is true by default <-- I don't need extra default fonts
+    enableDefaultPackages =
+      false; # If Sway is enabled, enableDefaultPackages is true by default <-- I don't need extra default fonts
     # fc-list
     fontconfig = {
       enable = true;

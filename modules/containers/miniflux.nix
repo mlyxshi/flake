@@ -1,16 +1,7 @@
-{
-  config,
-  pkgs,
-  lib,
-  self,
-  ...
-}:
-{
+{ config, pkgs, lib, self, ... }: {
 
-  imports = [
-    self.nixosModules.containers.podman
-    self.nixosModules.services.backup
-  ];
+  imports =
+    [ self.nixosModules.containers.podman self.nixosModules.services.backup ];
 
   backup.miniflux-postgres = true;
   backup.miniflux-silent-postgres = true;
@@ -26,21 +17,16 @@
       POLLING_PARSING_ERROR_LIMIT = "0";
       METRICS_COLLECTOR = "1";
       METRICS_ALLOWED_NETWORKS = "0.0.0.0/0";
-      DATABASE_URL = "postgres://postgres:postgres@miniflux-postgres/miniflux?sslmode=disable";
+      DATABASE_URL =
+        "postgres://postgres:postgres@miniflux-postgres/miniflux?sslmode=disable";
       BASE_URL = "https://miniflux.${config.networking.domain}";
     };
-    extraOptions =
-      lib.concatMap
-        (x: [
-          "--label"
-          x
-        ])
-        [
-          "io.containers.autoupdate=registry"
-          "traefik.enable=true"
-          "traefik.http.routers.miniflux.rule=Host(`miniflux.${config.networking.domain}`)"
-          "traefik.http.routers.miniflux.entrypoints=websecure"
-        ];
+    extraOptions = lib.concatMap (x: [ "--label" x ]) [
+      "io.containers.autoupdate=registry"
+      "traefik.enable=true"
+      "traefik.http.routers.miniflux.rule=Host(`miniflux.${config.networking.domain}`)"
+      "traefik.http.routers.miniflux.entrypoints=websecure"
+    ];
   };
 
   virtualisation.oci-containers.containers.miniflux-postgres = {
@@ -55,13 +41,9 @@
 
   virtualisation.oci-containers.containers.rsshub = {
     image = "ghcr.io/diygod/rsshub:chromium-bundled";
-    environment = {
-      "PORT" = "80";
-    };
-    extraOptions = lib.concatMap (x: [
-      "--label"
-      x
-    ]) [ "io.containers.autoupdate=registry" ];
+    environment = { "PORT" = "80"; };
+    extraOptions = lib.concatMap (x: [ "--label" x ])
+      [ "io.containers.autoupdate=registry" ];
   };
 
   #################################
@@ -78,21 +60,16 @@
       POLLING_PARSING_ERROR_LIMIT = "0";
       METRICS_COLLECTOR = "1";
       METRICS_ALLOWED_NETWORKS = "0.0.0.0/0";
-      DATABASE_URL = "postgres://postgres:postgres@miniflux-silent-postgres/miniflux?sslmode=disable";
+      DATABASE_URL =
+        "postgres://postgres:postgres@miniflux-silent-postgres/miniflux?sslmode=disable";
       BASE_URL = "https://miniflux-silent.${config.networking.domain}";
     };
-    extraOptions =
-      lib.concatMap
-        (x: [
-          "--label"
-          x
-        ])
-        [
-          "io.containers.autoupdate=registry"
-          "traefik.enable=true"
-          "traefik.http.routers.miniflux-silent.rule=Host(`miniflux-silent.${config.networking.domain}`)"
-          "traefik.http.routers.miniflux-silent.entrypoints=websecure"
-        ];
+    extraOptions = lib.concatMap (x: [ "--label" x ]) [
+      "io.containers.autoupdate=registry"
+      "traefik.enable=true"
+      "traefik.http.routers.miniflux-silent.rule=Host(`miniflux-silent.${config.networking.domain}`)"
+      "traefik.http.routers.miniflux-silent.entrypoints=websecure"
+    ];
   };
 
   virtualisation.oci-containers.containers.miniflux-silent-postgres = {

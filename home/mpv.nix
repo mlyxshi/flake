@@ -2,13 +2,9 @@
 let
   mpv-scripts = pkgs.symlinkJoin {
     name = "mpv-scripts";
-    paths = with pkgs; [
-      mpvScripts.autoload
-      mpvScripts.mpv-playlistmanager
-    ];
+    paths = with pkgs; [ mpvScripts.autoload mpvScripts.mpv-playlistmanager ];
   };
-in
-{
+in {
   home.file.".config/mpv" = {
     source = ../config/mpv;
     recursive = true;

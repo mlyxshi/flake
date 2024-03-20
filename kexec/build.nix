@@ -1,9 +1,4 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
-}:
+{ pkgs, lib, config, ... }:
 let
   kernelTarget = pkgs.hostPlatform.linux-kernel.target;
   arch = pkgs.hostPlatform.uname.processor;
@@ -29,11 +24,12 @@ let
     done
 
     echo "Wait ssh connection lost..., ssh root@ip and enjoy NixOS"
-    ./kexec --kexec-syscall-auto --load ./kernel --initrd=./initrd  --append "init=/bin/init ${toString config.boot.kernelParams} ssh_host_key=$ssh_host_key ssh_authorized_key=$ssh_authorized_key $*"
+    ./kexec --kexec-syscall-auto --load ./kernel --initrd=./initrd  --append "init=/bin/init ${
+      toString config.boot.kernelParams
+    } ssh_host_key=$ssh_host_key ssh_authorized_key=$ssh_authorized_key $*"
     ./kexec -e
   '';
-in
-{
+in {
   system.build.kexec = pkgs.symlinkJoin {
     name = "kexec";
     paths = [
@@ -59,7 +55,9 @@ in
     exec ${pkgs.qemu_kvm}/bin/qemu-kvm -name ${config.networking.hostName} \
       -m 2048 \
       -kernel ${config.system.build.kernel}/${kernelTarget}  -initrd ${config.system.build.initialRamdisk}/initrd.zst  \
-      -append "console=ttyS0 init=/bin/init ${toString config.boot.kernelParams}" \
+      -append "console=ttyS0 init=/bin/init ${
+        toString config.boot.kernelParams
+      }" \
       -no-reboot -nographic \
       -net nic,model=virtio \
       -net user,net=10.0.2.0/24,host=10.0.2.2,dns=10.0.2.3,hostfwd=tcp::2222-:22 \

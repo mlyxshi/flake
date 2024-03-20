@@ -1,16 +1,7 @@
-{
-  pkgs,
-  lib,
-  config,
-  self,
-  ...
-}:
-{
+{ pkgs, lib, config, self, ... }: {
 
-  imports = [
-    self.nixosModules.containers.podman
-    self.nixosModules.services.backup
-  ];
+  imports =
+    [ self.nixosModules.containers.podman self.nixosModules.services.backup ];
 
   backup.nodestatus-server = true;
 
@@ -30,18 +21,12 @@
       "WEB_SUBTITLE" = "Servers' Probes Set up with NodeStatus";
       "WEB_HEADTITLE" = "NodeStatus";
     };
-    extraOptions =
-      lib.concatMap
-        (x: [
-          "--label"
-          x
-        ])
-        [
-          "io.containers.autoupdate=registry"
-          "traefik.enable=true"
-          "traefik.http.routers.nodestatus.rule=Host(`top.${config.networking.domain}`)"
-          "traefik.http.routers.nodestatus.entrypoints=web"
-        ];
+    extraOptions = lib.concatMap (x: [ "--label" x ]) [
+      "io.containers.autoupdate=registry"
+      "traefik.enable=true"
+      "traefik.http.routers.nodestatus.rule=Host(`top.${config.networking.domain}`)"
+      "traefik.http.routers.nodestatus.entrypoints=web"
+    ];
   };
 
   # systemd.services.podman-nodestatus-server.serviceConfig.StateDirectory = "nodestatus-server";

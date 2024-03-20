@@ -1,17 +1,6 @@
-{
-  pkgs,
-  lib,
-  config,
-  self,
-  ...
-}:
-{
+{ pkgs, lib, config, self, ... }: {
 
-  imports = [
-    ./desktop.nix
-    ./fish.nix
-    ./common-package.nix
-  ];
+  imports = [ ./desktop.nix ./fish.nix ./common-package.nix ];
 
   home = {
     username = "dominic";

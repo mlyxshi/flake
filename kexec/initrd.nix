@@ -1,17 +1,10 @@
-{
-  config,
-  pkgs,
-  lib,
-  modulesPath,
-  ...
-}:
+{ config, pkgs, lib, modulesPath, ... }:
 let
   rootPartType = {
     x64 = "4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709";
     aa64 = "B921B045-1DF0-41C3-AF44-4C6F280D3FAE";
   }.${pkgs.stdenv.hostPlatform.efiArch};
-in
-{
+in {
 
   imports = [ ./initrd-network.nix ];
 
@@ -40,16 +33,18 @@ in
     "nls_iso8859-1"
   ];
 
-  boot.initrd.systemd.initrdBin = [
-    pkgs.dosfstools
-    pkgs.e2fsprogs
-  ];
+  boot.initrd.systemd.initrdBin = [ pkgs.dosfstools pkgs.e2fsprogs ];
 
-  boot.initrd.systemd.storePaths = [ "${pkgs.ncurses}/share/terminfo/" ]; # add terminfo for better ssh experience
+  boot.initrd.systemd.storePaths = [
+    "${pkgs.ncurses}/share/terminfo/"
+  ]; # add terminfo for better ssh experience
 
   boot.initrd.systemd.contents = {
-    "/etc/hostname".text = "${config.networking.hostName}\n";
-    "/etc/ssl/certs/ca-certificates.crt".source = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+    "/etc/hostname".text = ''
+      ${config.networking.hostName}
+    '';
+    "/etc/ssl/certs/ca-certificates.crt".source =
+      "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
     "/etc/nix/nix.conf".text = ''
       extra-experimental-features = nix-command flakes
       substituters = https://cache.nixos.org

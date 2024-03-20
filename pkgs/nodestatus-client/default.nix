@@ -15,9 +15,6 @@ buildGoModule rec {
   meta = {
     description = "nodestatus-client-go";
     homepage = "https://github.com/cokemine/nodestatus-client-go";
-    platforms = [
-      "x86_64-linux"
-      "aarch64-linux"
-    ];
+    platforms = [ "x86_64-linux" "aarch64-linux" ];
   };
 }

@@ -1,11 +1,4 @@
-{
-  self,
-  config,
-  pkgs,
-  lib,
-  ...
-}:
-{
+{ self, config, pkgs, lib, ... }: {
   # portal enabled firewall
   networking.nftables.enable = lib.mkForce false;
 

@@ -1,16 +1,7 @@
-{
-  config,
-  pkgs,
-  lib,
-  self,
-  ...
-}:
-{
+{ config, pkgs, lib, self, ... }: {
 
-  imports = [
-    self.nixosModules.containers.podman
-    self.nixosModules.services.backup
-  ];
+  imports =
+    [ self.nixosModules.containers.podman self.nixosModules.services.backup ];
 
   backup.vaultwarden = true;
 
@@ -27,21 +18,16 @@
     image = "ghcr.io/dani-garcia/vaultwarden";
     environment = {
       SIGNUPS_ALLOWED = "false"; # Disable signups
-      DOMAIN = "https://password.${config.networking.domain}"; # Yubikey FIDO2 WebAuthn
+      DOMAIN =
+        "https://password.${config.networking.domain}"; # Yubikey FIDO2 WebAuthn
     };
     environmentFiles = [ "/etc/secret/vaultwarden" ];
     volumes = [ "/var/lib/vaultwarden:/data" ];
-    extraOptions =
-      lib.concatMap
-        (x: [
-          "--label"
-          x
-        ])
-        [
-          "io.containers.autoupdate=registry"
-          "traefik.enable=true"
-          "traefik.http.routers.vaultwarden.rule=Host(`password.${config.networking.domain}`)"
-          "traefik.http.routers.vaultwarden.entrypoints=websecure"
-        ];
+    extraOptions = lib.concatMap (x: [ "--label" x ]) [
+      "io.containers.autoupdate=registry"
+      "traefik.enable=true"
+      "traefik.http.routers.vaultwarden.rule=Host(`password.${config.networking.domain}`)"
+      "traefik.http.routers.vaultwarden.entrypoints=websecure"
+    ];
   };
 }

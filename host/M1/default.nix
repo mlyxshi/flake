@@ -1,8 +1,4 @@
-{
-  self,
-  nixpkgs,
-  darwin,
-}:
+{ self, nixpkgs, darwin, }:
 
 darwin.lib.darwinSystem {
   system = "aarch64-darwin";
@@ -14,7 +10,5 @@ darwin.lib.darwinSystem {
       security.pam.enableSudoTouchIdAuth = true;
     }
   ];
-  specialArgs = {
-    inherit self nixpkgs;
-  };
+  specialArgs = { inherit self nixpkgs; };
 }

@@ -18,11 +18,7 @@ let
           SUPER-q = "CTRL-q";
           SUPER-w = "CTRL-w";
         };
-        application.only = [
-          "firefox"
-          "kate"
-          "code"
-        ];
+        application.only = [ "firefox" "kate" "code" ];
       }
 
       {
@@ -44,8 +40,7 @@ let
     name = "xremap-config.yml";
     text = lib.generators.toYAML { } config;
   };
-in
-{
+in {
   systemd.user.services.xremap = {
     Unit = {
       Description = "xremap service";

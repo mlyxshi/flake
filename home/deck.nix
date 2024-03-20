@@ -1,20 +1,7 @@
-{
-  pkgs,
-  lib,
-  config,
-  self,
-  ...
-}:
-{
+{ pkgs, lib, config, self, ... }: {
 
-  imports = [
-    ./.
-    ./firefox
-    ./mpv.nix
-    ./kde.nix
-    ./fish.nix
-    ./common-package.nix
-  ];
+  imports =
+    [ ./. ./firefox ./mpv.nix ./kde.nix ./fish.nix ./common-package.nix ];
 
   home = {
     username = "deck";

@@ -1,10 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}:
-{
+{ config, pkgs, lib, ... }: {
   time.timeZone = "UTC";
   networking.hostName = "systemd-initrd";
 
@@ -15,10 +9,8 @@
     options = [ "mode=0755" ];
   };
 
-  boot.kernelParams = [
-    "systemd.log_target=console"
-    "systemd.journald.forward_to_console=1"
-  ];
+  boot.kernelParams =
+    [ "systemd.log_target=console" "systemd.journald.forward_to_console=1" ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
