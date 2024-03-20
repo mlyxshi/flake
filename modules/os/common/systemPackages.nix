@@ -39,5 +39,5 @@
       deno
       restic
       home-manager
-    ] ++ lib.optionals pkgs.stdenv.isLinux [ below fastfetch ];
+    ] ++ lib.optionals pkgs.stdenv.isLinux [ below fastfetch gptfdisk ];
 }
