@@ -8,6 +8,7 @@
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
 
   boot.initrd.systemd.enable = true;
+  boot.initrd.systemd.root = "gpt-auto";
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 3;

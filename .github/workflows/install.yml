@@ -78,12 +78,8 @@ jobs:
           sleep 5
         done
     
-    - run: $SSH $HOST parted --script /dev/sda mklabel gpt mkpart "BOOT" fat32  1MiB  512MiB mkpart "NIXOS" ext4 512MiB 100% set 1 esp on
-    - run: $SSH $HOST mkfs.fat -F 32 /dev/disk/by-partlabel/BOOT
-    - run: $SSH $HOST mkfs.ext4 -F /dev/disk/by-partlabel/NIXOS
-    - run: $SSH $HOST mkdir -p /mnt
-    - run: $SSH $HOST mount /dev/disk/by-partlabel/NIXOS /mnt
-    - run: $SSH $HOST mount --mkdir /dev/disk/by-partlabel/BOOT /mnt/boot
+    - run: $SSH $HOST make-partitions
+    - run: $SSH $HOST mount-partitions
 
     - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --substitute-on-destination --to ssh://$HOST?remote-store=local?root=/mnt $outPath
  

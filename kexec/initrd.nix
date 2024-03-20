@@ -5,6 +5,12 @@
   modulesPath,
   ...
 }:
+let
+  rootPartType = {
+    x64 = "4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709";
+    aa64 = "B921B045-1DF0-41C3-AF44-4C6F280D3FAE";
+  }.${pkgs.stdenv.hostPlatform.efiArch};
+in
 {
 
   imports = [ ./initrd-network.nix ];
@@ -32,8 +38,6 @@
     "vfat"
     "nls_cp437"
     "nls_iso8859-1"
-    # efivarfs
-    "efivarfs"
   ];
 
   boot.initrd.systemd.initrdBin = [
@@ -71,7 +75,7 @@
 
     ssh-keygen = "${config.programs.ssh.package}/bin/ssh-keygen";
     awk = "${pkgs.gawk}/bin/awk";
-    parted = "${pkgs.parted}/bin/parted";
+    sgdisk = "${pkgs.gptfdisk}/bin/sgdisk";
     lsblk = "${pkgs.util-linux}/bin/lsblk";
     curl = "${pkgs.curl}/bin/curl";
     htop = "${pkgs.htop}/bin/htop";
@@ -80,6 +84,21 @@
     # File explorer and editor for debugging
     r = "${pkgs.joshuto}/bin/joshuto";
     hx = "${pkgs.helix}/bin/hx";
+
+    # https://superuser.com/questions/1572410/what-is-the-purpose-of-the-linux-home-partition-code-8302
+    make-partitions = pkgs.writeScript "make-partitions" ''
+      sgdisk --zap-all /dev/sda
+      sgdisk --new=0:0:+512M --typecode=0:ef00 /dev/sda
+      sgdisk --new=0:0:0 --typecode=0:${rootPartType} /dev/sda
+    '';
+
+    mount-partitions = pkgs.writeScript "mount-partitions" ''
+      mkfs.fat -F 32 /dev/sda1
+      mkfs.ext4 -F /dev/sda2
+      mkdir -p /mnt
+      mount /dev/sda2 /mnt
+      mount --mkdir /dev/sda1 /mnt/boot
+    '';
 
     get-kernel-param = pkgs.writeScript "get-kernel-param" ''
       for o in $(< /proc/cmdline); do
