@@ -6,7 +6,6 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.home-manager
     self.nixosModules.os.nixos.desktop
     self.nixosModules.network
-    self.nixosModules.fileSystem.ext4
     ./hardware.nix
     ./misc.nix
     {

@@ -3,6 +3,9 @@
 
   boot.initrd.systemd.enable = true;
 
+  boot.initrd.systemd.root = "gpt-auto";
+  boot.initrd.supportedFilesystems = [ "ext4" ];
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 2;
   boot.loader.timeout = 1;

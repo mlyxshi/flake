@@ -6,7 +6,7 @@ rustPlatform.buildRustPackage rec {
 
   src = fetchFromGitHub {
     # only enable kde client
-    owner = "k0kubun";
+    owner = "xremap";
     repo = "xremap";
     rev = "v${version}";
     hash = "sha256-GexVY76pfmHalJPiCfVe9C9CXtlojG/H6JjOiA0GF1c=";
