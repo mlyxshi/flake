@@ -32,4 +32,3 @@ nix run ~/flake#deck-init
 ```
 
 ### Todo
-gpt-auto-root

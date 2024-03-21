@@ -9,12 +9,8 @@ let
 
     outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.$HOST.config.system.build.toplevel)
 
-    ssh -o StrictHostKeyChecking=no root@$IP parted --script /dev/sda mklabel gpt mkpart "BOOT" fat32  1MiB  512MiB mkpart "NIXOS" ext4 512MiB 100% set 1 esp on
-    ssh -o StrictHostKeyChecking=no root@$IP mkfs.fat -F 32 /dev/disk/by-partlabel/BOOT
-    ssh -o StrictHostKeyChecking=no root@$IP mkfs.ext4 -F /dev/disk/by-partlabel/NIXOS
-    ssh -o StrictHostKeyChecking=no root@$IP mkdir -p /mnt
-    ssh -o StrictHostKeyChecking=no root@$IP mount /dev/disk/by-partlabel/NIXOS /mnt
-    ssh -o StrictHostKeyChecking=no root@$IP mount --mkdir /dev/disk/by-partlabel/BOOT /mnt/boot
+    ssh -o StrictHostKeyChecking=no root@$IP make-partitions
+    ssh -o StrictHostKeyChecking=no root@$IP mount-partitions
 
     until ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no root@$IP -- exit 0; do sleep 5; done
     NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --substitute-on-destination --to ssh://root@$IP?remote-store=local?root=/mnt $outPath       
