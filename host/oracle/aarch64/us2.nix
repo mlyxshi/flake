@@ -39,7 +39,7 @@ vpnnamespaces.wg = {
   services.transmission = {
     enable = true;
     settings = {
-      "rpc-bind-address" = "192.168.15.1"; # Bind RPC/WebUI to bridge address
+      #"rpc-bind-address" = "192.168.15.1"; # Bind RPC/WebUI to bridge address
     };
   }; 
 
