@@ -1,6 +1,6 @@
 { self, config, pkgs, lib, vpnconfinement, ... }: {
   imports = [
-    #vpnconfinement.nixosModules.default
+    vpnconfinement.nixosModules.default
   ];
 
 
@@ -14,6 +14,33 @@
     };
     groups.transmission = { };
   };
+
+  vpnnamespaces.wg = {
+    enable = true;
+    accessibleFrom = [
+      "192.168.0.0/24"
+    ];
+    wireguardConfigFile = "/etc/secret/wg";
+    portMappings = [
+      # { from = 22; to = 22; } # tcp is default
+      # { from = 22; to = 22; protocol = "tcp"; }
+      # { from = 8080; to = 80; protocol = "udp"; }
+      # { from = 443; to = 443; protocol = "both"; }
+    ];
+  };
+
+  # Enable and specify VPN namespace to confine service in.
+  systemd.services.transmission.vpnconfinement = {
+    enable = true;
+    vpnnamespace = "wg";
+  };
+
+  # services.transmission = {
+  #   enable = true;
+  #   settings = {
+  #     "rpc-bind-address" = "192.168.15.1"; # Bind RPC/WebUI to bridge address
+  #   };
+  # };
 
   systemd.services.transmission-init = {
     unitConfig.ConditionPathExists = "!%S/transmission/settings.json";
