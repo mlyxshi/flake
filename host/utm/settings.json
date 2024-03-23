@@ -1,0 +1,5 @@
+{
+    "download-dir": "/var/lib/transmission/files",
+    "rpc-whitelist-enabled": false,
+    "rpc-authentication-required": true
+}
