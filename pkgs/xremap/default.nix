@@ -2,17 +2,17 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "xremap";
-  version = "0.8.14";
+  version = "unstable-2024-03-19";
 
   src = fetchFromGitHub {
     # only enable kde client
     owner = "xremap";
     repo = "xremap";
-    rev = "v${version}";
-    hash = "sha256-GexVY76pfmHalJPiCfVe9C9CXtlojG/H6JjOiA0GF1c=";
+    rev = "8dede9f0b169eb3f50f65487be7a9e5b5d846eb8";
+    hash = "sha256-kXLNz9vZUFwvXc4xZWN8LOU1LaZVLm3MYXR2MPfR88U=";
   };
 
-  cargoHash = "sha256-ABzt8PMsas9+NRvpgtZlsoYjjvwpU8f6lqhceHxq91M=";
+  cargoHash = "sha256-mfmn9sOmDWHyKJzdSDNUaFG/hTK94+MV00jG3Z5QT/E=";
 
   cargoBuildFlags = [ "--features kde" ];
 
