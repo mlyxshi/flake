@@ -30,10 +30,6 @@
   };
 
   # Enable and specify VPN namespace to confine service in.
-  systemd.services.transmission.vpnconfinement = {
-    enable = true;
-    vpnnamespace = "wg";
-  };
 
   # services.transmission = {
   #   enable = true;
