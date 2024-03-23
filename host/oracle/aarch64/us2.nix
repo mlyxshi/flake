@@ -13,7 +13,7 @@ in
     vpnconfinement.nixosModules.default
   ];
 
-  networking.firewall.enable = true;
+  networking.firewall.enable = lib.mkForce true;
   networking.nftables.enable = lib.mkForce false;
 
 
