@@ -22,7 +22,7 @@ vpnnamespaces.wg = {
     accessibleFrom = [
       "192.168.0.0/24"
     ];
-    wireguardConfigFile = "/etc/secrets/wg0.conf";
+    wireguardConfigFile = "/etc/secret/wg0.conf";
     portMappings = [
       { from = 22; to = 22; } # tcp is default
       { from = 22; to = 22; protocol = "tcp"; }
