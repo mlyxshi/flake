@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:{
+{ config, pkgs, lib, ... }: {
 
   #environment.systemPackages = with pkgs; [  ];
   networking.useNetworkd = true;
@@ -39,8 +39,8 @@
     environment = {
       TRANSMISSION_HOME = "%S/transmission";
       TRANSMISSION_WEB_HOME = "${pkgs.transmission}/public_html";
-      ADMIN="test";
-      PASSWORD="test";
+      ADMIN = "test";
+      PASSWORD = "test";
     };
     serviceConfig.User = "transmission";
     serviceConfig.ExecStart =

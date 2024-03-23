@@ -19,7 +19,8 @@
     vpnconfinement.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager, plasma-manager, secret, vpnconfinement }:
+  outputs = { self, nixpkgs, darwin, home-manager, plasma-manager, secret
+    , vpnconfinement }:
     let
       inherit (nixpkgs) lib;
       utils = import ./utils.nix nixpkgs;
@@ -69,7 +70,7 @@
         };
       } // lib.genAttrs oracle-serverlist (hostName:
         import ./host/oracle/mkHost.nix {
-          inherit hostName self nixpkgs home-manager secret;
+          inherit hostName self nixpkgs home-manager secret vpnconfinement;
         });
 
       homeConfigurations = {

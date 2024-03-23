@@ -1,7 +1,6 @@
 { pkgs, lib, config, self, ... }: {
 
-  imports =
-    [ ./. ./firefox ./kde.nix ./fish.nix ./common-package.nix ];
+  imports = [ ./. ./firefox ./kde.nix ./fish.nix ./common-package.nix ];
 
   home = {
     username = "deck";
