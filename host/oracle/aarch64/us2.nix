@@ -30,18 +30,18 @@ vpnnamespaces.wg = {
     ];
   };
 
-  # Enable and specify VPN namespace to confine service in.
-  # systemd.services.transmission.vpnconfinement = {
-  #   enable = true;
-  #   vpnnamespace = "wg";
-  # };
+ # Enable and specify VPN namespace to confine service in.
+  systemd.services.transmission.vpnconfinement = {
+    enable = true;
+    vpnnamespace = "wg";
+  };
 
-  # services.transmission = {
-  #   enable = true;
-  #   settings = {
-  #     "rpc-bind-address" = "192.168.15.1"; # Bind RPC/WebUI to bridge address
-  #   };
-  # };
+  services.transmission = {
+    enable = true;
+    settings = {
+      "rpc-bind-address" = "192.168.15.1"; # Bind RPC/WebUI to bridge address
+    };
+  }; 
 
   # users = {
   #   users.transmission = {
