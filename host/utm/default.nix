@@ -3,7 +3,7 @@
 nixpkgs.lib.nixosSystem {
   modules = [
     secret.nixosModules.default
-    #vpnconfinement.nixosModules.default
+    vpnconfinement.nixosModules.default
     self.nixosModules.home-manager
     self.nixosModules.os.nixos.desktop
     #self.nixosModules.network
