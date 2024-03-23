@@ -1,4 +1,14 @@
-{ self, config, pkgs, lib, vpnconfinement, ... }: {
+{ self, config, pkgs, lib, vpnconfinement, ... }: 
+let
+settings = pkgs.writeText "settings.json" ''
+  {
+    "download-dir": "/var/lib/transmission/files",
+    "rpc-whitelist-enabled": false,
+    "rpc-authentication-required": true
+  }
+'';
+in
+{
   imports = [
     vpnconfinement.nixosModules.default
   ];
@@ -20,7 +30,7 @@
     accessibleFrom = [
       "192.168.0.0/24"
     ];
-    wireguardConfigFile = "/etc/secret/wg";
+    wireguardConfigFile = "/etc/secret/wg0.conf";
     portMappings = [
       # { from = 22; to = 22; } # tcp is default
       # { from = 22; to = 22; protocol = "tcp"; }
@@ -41,7 +51,7 @@
   systemd.services.transmission-init = {
     unitConfig.ConditionPathExists = "!%S/transmission/settings.json";
     script = ''
-      cat ${./settings.json} > settings.json
+      cat ${settings} > settings.json
     '';
     serviceConfig.User = "transmission";
     serviceConfig.Type = "oneshot";
