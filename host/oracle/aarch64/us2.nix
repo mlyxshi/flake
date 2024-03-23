@@ -24,10 +24,8 @@ vpnnamespaces.wg = {
     ];
     wireguardConfigFile = "/tmp/wg0.conf";
     portMappings = [
-      { from = 22; to = 22; } # tcp is default
-      { from = 22; to = 22; protocol = "tcp"; }
-      { from = 8080; to = 80; protocol = "udp"; }
-      { from = 443; to = 443; protocol = "both"; }
+      { from = 9091; to = 9091; }
+      { from = 5000; to = 5000; }
     ];
   };
 
