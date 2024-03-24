@@ -1,14 +1,14 @@
 { self, config, pkgs, lib, vpnconfinement, ... }:
 let
   peerPort = 60729; # https://airvpn.org/ports/
-  settings = pkgs.writeText "settings.json" ''
+  settings = ''
     {
       "download-dir": "/var/lib/transmission/files",
       "rpc-whitelist-enabled": false,
       "rpc-authentication-required": true,
-      "rpc-bind-address" = "192.168.15.1", 
-      "peer-port" = ${toString peerPort},
-      "port-forwarding-enabled" = false
+      "rpc-bind-address": "192.168.15.1", 
+      "peer-port": ${toString peerPort},
+      "port-forwarding-enabled": false
     }
   '';
 in {
@@ -47,16 +47,6 @@ in {
     groups.transmission = { };
   };
 
-  systemd.services.transmission-init = {
-    unitConfig.ConditionPathExists = "!%S/transmission/settings.json";
-    script = ''
-      cat ${settings} > settings.json
-    '';
-    serviceConfig.User = "transmission";
-    serviceConfig.Type = "oneshot";
-    serviceConfig.WorkingDirectory = "%S/transmission";
-    wantedBy = [ "multi-user.target" ];
-  };
 
   systemd.tmpfiles.settings."10-transmission" = {
     "/var/lib/transmission/".d = {
@@ -67,10 +57,15 @@ in {
       user = "transmission";
       group = "transmission";
     };
+    "/var/lib/transmission/settings.json".C = {
+      user = "transmission";
+      group = "transmission";
+      argument = "${settings}";
+    };
   };
 
   systemd.services.transmission = {
-    after = [ "transmission-init.service" "network-online.target" ];
+    after = [ "network-online.target" ];
     wants = [ "network-online.target" ];
     environment = {
       TRANSMISSION_HOME = "%S/transmission";
