@@ -1,7 +1,7 @@
 { self, config, pkgs, lib, vpnconfinement, ... }:
 let
   peerPort = 60729; # https://airvpn.org/ports/
-  settings = ''
+  settings = pkgs.writeText "settings.json" ''
     {
       "download-dir": "/var/lib/transmission/files",
       "rpc-whitelist-enabled": false,
