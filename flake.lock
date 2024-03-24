@@ -111,15 +111,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1711250247,
-        "narHash": "sha256-BS11W1qYKY79rMKxcWCrFXqO5RDP118JLZle7F3jFJA=",
-        "owner": "mlyxshi",
+        "lastModified": 1711289997,
+        "narHash": "sha256-BeUcHb7mpZn7M3OFSEtyjBSVsCQhnt7gwdOFKnIELN4=",
+        "owner": "Maroka-chan",
         "repo": "VPN-Confinement",
-        "rev": "db843b1b7e5c2c6743d61250cc62190f08379c90",
+        "rev": "ba61fc42139281ea1aa300e3d3d5ef45f3eb3bf3",
         "type": "github"
       },
       "original": {
-        "owner": "mlyxshi",
+        "owner": "Maroka-chan",
         "repo": "VPN-Confinement",
         "type": "github"
       }
