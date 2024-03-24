@@ -77,12 +77,12 @@ in
       http = {
         routers.transmission = {
           rule = "Host(`transmission-vpn.${config.networking.domain}`)";
-          entryPoints = [ "web" ];
+          entryPoints = [ "websecure" ];
           service = "transmission";
         };
 
         services.transmission.loadBalancer.servers =
-          [{ url = "http://192.168.1.15:9091"; }];
+          [{ url = "http://192.168.15.1:9091"; }];
       };
     };
   };
