@@ -28,6 +28,17 @@ in
       { from = 9091; to = 9091; }
       { from = 7777; to = 7777; }
     ];
+    openVPNPorts = [
+      {
+        port = 51413;
+        protocol = "both";
+      }
+
+      {
+        port = 7777;
+        protocol = "both";
+      }
+    ]
   };
 
  # Enable and specify VPN namespace to confine service in.
