@@ -97,6 +97,16 @@ in
 
         services.transmission.loadBalancer.servers =
           [{ url = "http://192.168.15.1:9091"; }];
+
+        #------
+        routers.test-port  = {
+          rule = "Host(`test-port.${config.networking.domain}`)";
+          entryPoints = [ "websecure" "web"];
+          service = "test-port";
+        };
+
+        services.test-port.loadBalancer.servers =
+          [{ url = "http://192.168.15.1:7777"; }];
       };
     };
   };
