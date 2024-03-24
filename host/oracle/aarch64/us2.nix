@@ -77,7 +77,7 @@ in
       http = {
         routers.transmission = {
           rule = "Host(`transmission-vpn.${config.networking.domain}`)";
-          entryPoints = [ "websecure" ];
+          entryPoints = [ "web" ];
           service = "transmission";
         };
 
