@@ -4,7 +4,7 @@
 
   systemd.network.wait-online.anyInterface = true;
   systemd.network.networks.ethernet-default-dhcp = {
-    matchConfig = { Name = [ "en*" "eth*" "veth-wg-br" "wg-br"]; };
+    matchConfig = { Name = [ "en*" "eth*" "veth-wg-br"]; };
     networkConfig = { DHCP = "yes"; };
   };
 
