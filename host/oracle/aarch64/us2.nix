@@ -26,7 +26,7 @@ in
     wireguardConfigFile = "/tmp/wg0.conf";
     portMappings = [
       { from = 9091; to = 9091; }
-      { from = 5000; to = 5000; }
+      { from = 51413; to = 51413; }
     ];
   };
 
