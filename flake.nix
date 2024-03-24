@@ -2,8 +2,8 @@
   inputs = {
     # nixpkgs.url = "github:NixOS/nixpkgs";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-
     secret.url = "git+ssh://git@github.com/mlyxshi/secret";
+    vpnconfinement.url = "github:Maroka-chan/VPN-Confinement";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -14,11 +14,6 @@
     plasma-manager.url = "github:pjones/plasma-manager";
     plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
     plasma-manager.inputs.home-manager.follows = "home-manager";
-
-
-    # 
-    vpnconfinement.url = "github:Maroka-chan/VPN-Confinement";
-    vpnconfinement.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, darwin, home-manager, plasma-manager, secret, vpnconfinement }:

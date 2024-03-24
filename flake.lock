@@ -56,6 +56,19 @@
         "type": "github"
       }
     },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1710272261,
+        "narHash": "sha256-g0bDwXFmTE7uGDOs9HcJsfLFhH7fOsASbAuOzDC+fhQ=",
+        "path": "/nix/store/k5l01g2zwhysjyl5zjvg5zxnj0lyxpp1-source",
+        "rev": "0ad13a6833440b8e238947e47bea7f11071dc2b2",
+        "type": "path"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
     "plasma-manager": {
       "inputs": {
         "home-manager": [
@@ -66,11 +79,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1711199893,
-        "narHash": "sha256-RljgO8GIO0ZOabOamLN7lBSRc5gBhv13PSpy5iG9sfU=",
+        "lastModified": 1711295162,
+        "narHash": "sha256-gPTTYKvdnmaLcgOSpqtKHIf8J60J3Z4jAqXTwluxxUk=",
         "owner": "pjones",
         "repo": "plasma-manager",
-        "rev": "dda62b19015736d59069e7cbeda86ea7f320fc1a",
+        "rev": "8a032af55ed686ab21e60530080462a1438812b9",
         "type": "github"
       },
       "original": {
@@ -106,9 +119,7 @@
     },
     "vpnconfinement": {
       "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "nixpkgs": "nixpkgs_2"
       },
       "locked": {
         "lastModified": 1711289997,
