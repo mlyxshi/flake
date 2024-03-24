@@ -30,7 +30,7 @@ in
     ];
     openVPNPorts = [
       {
-        port = 51413;
+        port = 60729;
         protocol = "both";
       }
 
