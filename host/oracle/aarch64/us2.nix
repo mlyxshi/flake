@@ -15,6 +15,9 @@ let
 in {
   imports = [ vpnconfinement.nixosModules.default ];
 
+  networking.useNetworkd = lib.mkForce false;
+  networking.useDHCP = true;
+
   networking.firewall.enable = lib.mkForce true;
   networking.nftables.enable = lib.mkForce false;
   networking.firewall.allowedTCPPorts = [ 443 80 ];
