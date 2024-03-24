@@ -38,7 +38,7 @@ in
         port = 7777;
         protocol = "both";
       }
-    ]
+    ];
   };
 
  # Enable and specify VPN namespace to confine service in.
