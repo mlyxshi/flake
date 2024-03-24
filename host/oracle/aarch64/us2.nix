@@ -72,12 +72,14 @@ in
     wantedBy = [ "multi-user.target" ];
   };
 
+  networking.firewall.allowedTCPPorts = [ 443 80 ];
+
    services.traefik = {
     dynamicConfigOptions = {
       http = {
         routers.transmission = {
           rule = "Host(`transmission-vpn.${config.networking.domain}`)";
-          entryPoints = [ "websecure" ];
+          entryPoints = [ "websecure" "web"];
           service = "transmission";
         };
 
