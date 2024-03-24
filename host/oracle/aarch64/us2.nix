@@ -5,7 +5,9 @@ settings = pkgs.writeText "settings.json" ''
     "download-dir": "/var/lib/transmission/files",
     "rpc-whitelist-enabled": false,
     "rpc-authentication-required": true,
-    "rpc-bind-address" = "192.168.15.1"
+    "rpc-bind-address" = "192.168.15.1", 
+    "peer-port" = 60729,
+    "port-forwarding-enabled" = false
   }
 '';
 in
