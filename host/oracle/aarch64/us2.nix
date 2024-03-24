@@ -1,43 +1,37 @@
-{ self, config, pkgs, lib, vpnconfinement, ... }: 
+{ self, config, pkgs, lib, vpnconfinement, ... }:
 let
-peerPort = 60729;
-settings = pkgs.writeText "settings.json" ''
-  {
-    "download-dir": "/var/lib/transmission/files",
-    "rpc-whitelist-enabled": false,
-    "rpc-authentication-required": true,
-    "rpc-bind-address" = "192.168.15.1", 
-    "peer-port" = ${toString peerPort},
-    "port-forwarding-enabled" = false
-  }
-'';
-in
-{
-  imports = [
-    vpnconfinement.nixosModules.default
-  ];
+  peerPort = 60729; # https://airvpn.org/ports/
+  settings = pkgs.writeText "settings.json" ''
+    {
+      "download-dir": "/var/lib/transmission/files",
+      "rpc-whitelist-enabled": false,
+      "rpc-authentication-required": true,
+      "rpc-bind-address" = "192.168.15.1", 
+      "peer-port" = ${toString peerPort},
+      "port-forwarding-enabled" = false
+    }
+  '';
+in {
+  imports = [ vpnconfinement.nixosModules.default ];
 
   networking.firewall.enable = lib.mkForce true;
   networking.nftables.enable = lib.mkForce false;
-
+  networking.firewall.allowedTCPPorts = [ 443 80 ];
 
   vpnnamespaces.wg = {
     enable = true;
-    accessibleFrom = [
-      "192.168.0.0/24"
-    ];
+    accessibleFrom = [ "192.168.0.0/24" ];
     wireguardConfigFile = "/tmp/wg0.conf";
     # allow host networknamespace to access
-    portMappings = [
-      { from = 9091; to = 9091; }
-    ];
+    portMappings = [{
+      from = 9091;
+      to = 9091;
+    }];
     # allow wireguard to access(vpn port forwarding)
-    openVPNPorts = [
-      {
-        port = peerPort;
-        protocol = "both";
-      }
-    ];
+    openVPNPorts = [{
+      port = peerPort;
+      protocol = "both";
+    }];
   };
 
   systemd.services.transmission.vpnconfinement = {
@@ -52,7 +46,6 @@ in
     };
     groups.transmission = { };
   };
-
 
   systemd.services.transmission-init = {
     unitConfig.ConditionPathExists = "!%S/transmission/settings.json";
@@ -81,19 +74,32 @@ in
     wantedBy = [ "multi-user.target" ];
   };
 
-  networking.firewall.allowedTCPPorts = [ 443 80 ];
+  services.caddy.enable = true;
+  services.caddy.virtualHosts.":8010".extraConfig = ''
+    root * /var/lib/transmission/files
+    file_server browse
+  '';
 
   services.traefik = {
     dynamicConfigOptions = {
       http = {
         routers.transmission = {
           rule = "Host(`transmission-vpn.${config.networking.domain}`)";
-          entryPoints = [ "websecure" "web"];
+          entryPoints = [ "websecure" "web" ];
           service = "transmission";
         };
 
         services.transmission.loadBalancer.servers =
           [{ url = "http://192.168.15.1:9091"; }];
+
+        routers.transmission-vpn-index = {
+          rule = "Host(`transmission-vpn-index.${config.networking.domain}`)";
+          entryPoints = [ "web" ];
+          service = "transmission-vpn-index";
+        };
+
+        services.transmission-vpn-index.loadBalancer.servers =
+          [{ url = "http://127.0.0.1:8010"; }];
       };
     };
   };

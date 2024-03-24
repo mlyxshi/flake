@@ -1,4 +1,4 @@
-{ self, nixpkgs, secret, home-manager, plasma-manager, vpnconfinement }:
+{ self, nixpkgs, secret, home-manager, plasma-manager }:
 
 nixpkgs.lib.nixosSystem {
   modules = [
@@ -6,10 +6,9 @@ nixpkgs.lib.nixosSystem {
     vpnconfinement.nixosModules.default
     self.nixosModules.home-manager
     self.nixosModules.os.nixos.desktop
-    #self.nixosModules.network
+    self.nixosModules.network
     ./hardware.nix
     ./misc.nix
-    ./vpn.nix
     {
       nixpkgs.overlays = [ self.overlays.default ];
       nixpkgs.hostPlatform = "aarch64-linux";

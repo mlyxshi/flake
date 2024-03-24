@@ -19,8 +19,7 @@
     vpnconfinement.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager, plasma-manager, secret
-    , vpnconfinement }:
+  outputs = { self, nixpkgs, darwin, home-manager, plasma-manager, secret, vpnconfinement }:
     let
       inherit (nixpkgs) lib;
       utils = import ./utils.nix nixpkgs;
@@ -37,8 +36,7 @@
         hx90 = import ./host/hx90 { inherit self nixpkgs home-manager secret; };
 
         utm = import ./host/utm {
-          inherit self nixpkgs home-manager plasma-manager secret
-            vpnconfinement;
+          inherit self nixpkgs home-manager plasma-manager secret;
         };
 
         qemu-test-x86_64 = import ./host/oracle/mkTest.nix {
