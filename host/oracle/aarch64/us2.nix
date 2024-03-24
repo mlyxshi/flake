@@ -34,7 +34,7 @@ in
     # allow wireguard to access(vpn port forwarding)
     openVPNPorts = [
       {
-        port = ${peerPort};
+        port = peerPort;
         protocol = "both";
       }
     ];
