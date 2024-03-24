@@ -57,6 +57,18 @@ in
     wantedBy = [ "multi-user.target" ];
   };
 
+  systemd.services.test-port = {
+    wantedBy = [ "multi-user.target" ];
+    script = ''
+      ${pkgs.caddy}/bin/caddy file-server --listen :7777 --root /var/lib/transmission/files  --browse
+    '';
+  };
+
+  systemd.services.test-port.vpnconfinement = {
+    enable = true;
+    vpnnamespace = "wg";
+  };
+
   systemd.services.transmission = {
     after = [ "transmission-init.service" "network-online.target" ];
     wants = [ "network-online.target" ];
