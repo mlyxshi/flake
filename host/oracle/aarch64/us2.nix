@@ -21,13 +21,12 @@ vpnnamespaces.wg = {
     enable = true;
     accessibleFrom = [
       "192.168.0.0/24"
-      "10.0.0.0/8"
     ];
     wireguardConfigFile = "/tmp/wg0.conf";
-    # portMappings = [
-    #   { from = 9091; to = 9091; }
-    #   { from = 5000; to = 5000; }
-    # ];
+    portMappings = [
+      { from = 9091; to = 9091; }
+      { from = 5000; to = 5000; }
+    ];
   };
 
  # Enable and specify VPN namespace to confine service in.
