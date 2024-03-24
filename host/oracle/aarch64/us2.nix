@@ -8,7 +8,8 @@ let
       "rpc-authentication-required": true,
       "rpc-bind-address": "192.168.15.1", 
       "peer-port": ${toString peerPort},
-      "port-forwarding-enabled": false
+      "port-forwarding-enabled": false,
+      "utp-enabled": false
     }
   '';
 in {
