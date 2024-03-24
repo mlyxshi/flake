@@ -77,7 +77,7 @@ in {
   systemd.services.caddy-index = {
     after = [ "transmission.service" ];
     wantedBy = [ "multi-user.target" ];
-    script = "${pkgs.caddy}/bin/caddy file-server --listen :8010 --root /var/lib/transmission/files";
+    script = "${pkgs.caddy}/bin/caddy file-server --listen :8010 --root /var/lib/transmission/files --browse";
   };
 
   services.traefik = {
