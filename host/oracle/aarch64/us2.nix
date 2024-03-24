@@ -1,12 +1,13 @@
 { self, config, pkgs, lib, vpnconfinement, ... }: 
 let
+peerPort = 60729;
 settings = pkgs.writeText "settings.json" ''
   {
     "download-dir": "/var/lib/transmission/files",
     "rpc-whitelist-enabled": false,
     "rpc-authentication-required": true,
     "rpc-bind-address" = "192.168.15.1", 
-    "peer-port" = 60729,
+    "peer-port" = ${peerPort},
     "port-forwarding-enabled" = false
   }
 '';
@@ -26,24 +27,19 @@ in
       "192.168.0.0/24"
     ];
     wireguardConfigFile = "/tmp/wg0.conf";
+    # allow host networknamespace to access
     portMappings = [
       { from = 9091; to = 9091; }
-      { from = 7777; to = 7777; }
     ];
+    # allow wireguard to access(vpn port forwarding)
     openVPNPorts = [
       {
-        port = 60729;
-        protocol = "both";
-      }
-
-      {
-        port = 7777;
+        port = ${peerPort};
         protocol = "both";
       }
     ];
   };
 
- # Enable and specify VPN namespace to confine service in.
   systemd.services.transmission.vpnconfinement = {
     enable = true;
     vpnnamespace = "wg";
@@ -70,18 +66,6 @@ in
     wantedBy = [ "multi-user.target" ];
   };
 
-  systemd.services.test-port = {
-    wantedBy = [ "multi-user.target" ];
-    script = ''
-      ${pkgs.caddy}/bin/caddy file-server --listen :7777 --root /var/lib/transmission/files  --browse
-    '';
-  };
-
-  systemd.services.test-port.vpnconfinement = {
-    enable = true;
-    vpnnamespace = "wg";
-  };
-
   systemd.services.transmission = {
     after = [ "transmission-init.service" "network-online.target" ];
     wants = [ "network-online.target" ];
@@ -99,7 +83,7 @@ in
 
   networking.firewall.allowedTCPPorts = [ 443 80 ];
 
-   services.traefik = {
+  services.traefik = {
     dynamicConfigOptions = {
       http = {
         routers.transmission = {
@@ -110,16 +94,6 @@ in
 
         services.transmission.loadBalancer.servers =
           [{ url = "http://192.168.15.1:9091"; }];
-
-        #------
-        routers.test-port  = {
-          rule = "Host(`test-port.${config.networking.domain}`)";
-          entryPoints = [ "websecure" "web"];
-          service = "test-port";
-        };
-
-        services.test-port.loadBalancer.servers =
-          [{ url = "http://192.168.15.1:7777"; }];
       };
     };
   };

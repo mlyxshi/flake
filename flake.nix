@@ -37,7 +37,8 @@
         hx90 = import ./host/hx90 { inherit self nixpkgs home-manager secret; };
 
         utm = import ./host/utm {
-          inherit self nixpkgs home-manager plasma-manager secret vpnconfinement;
+          inherit self nixpkgs home-manager plasma-manager secret
+            vpnconfinement;
         };
 
         qemu-test-x86_64 = import ./host/oracle/mkTest.nix {

@@ -12,16 +12,12 @@
 
   networking.firewall.enable = false; # Disable nixpkgs defined firewall
   networking.nftables.enable = false;
-  
-  
+
   vpnnamespaces.wg = {
     enable = true;
-    accessibleFrom = [
-      "192.168.0.0/24"
-    ];
+    accessibleFrom = [ "192.168.0.0/24" ];
     wireguardConfigFile = "/tmp/wg0.conf";
   };
-
 
   # users = {
   #   users.transmission = {

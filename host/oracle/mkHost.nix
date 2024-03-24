@@ -1,4 +1,4 @@
-{ hostName, self, nixpkgs, home-manager, secret, vpnconfinement}:
+{ hostName, self, nixpkgs, home-manager, secret, vpnconfinement }:
 let
   arch = if (builtins.pathExists ./aarch64/${hostName}.nix) then
     "aarch64"
