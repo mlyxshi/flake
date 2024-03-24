@@ -1,7 +1,9 @@
 {
   inputs = {
     # nixpkgs.url = "github:NixOS/nixpkgs";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11-small";
 
     secret.url = "git+ssh://git@github.com/mlyxshi/secret";
 
