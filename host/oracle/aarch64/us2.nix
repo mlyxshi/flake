@@ -16,7 +16,7 @@ in {
   imports = [ vpnconfinement.nixosModules.default ];
 
   networking.useNetworkd = lib.mkForce false;
-  networking.useDHCP = true;
+  networking.useDHCP = lib.mkForce true;
 
   networking.firewall.enable = lib.mkForce true;
   networking.nftables.enable = lib.mkForce false;
