@@ -15,7 +15,7 @@
     plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
     plasma-manager.inputs.home-manager.follows = "home-manager";
 
-    vpnconfinement.url = "github:Maroka-chan/VPN-Confinement";
+    vpnconfinement.url = "github:mlyxshi/VPN-Confinement";
     vpnconfinement.inputs.nixpkgs.follows = "nixpkgs";
   };
 
