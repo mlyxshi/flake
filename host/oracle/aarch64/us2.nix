@@ -21,6 +21,7 @@ vpnnamespaces.wg = {
     enable = true;
     accessibleFrom = [
       "192.168.0.0/24"
+      "10.0.0.0/8"
     ];
     wireguardConfigFile = "/tmp/wg0.conf";
     portMappings = [
