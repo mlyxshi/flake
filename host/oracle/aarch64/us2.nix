@@ -74,11 +74,11 @@ in {
     wantedBy = [ "multi-user.target" ];
   };
 
-  services.caddy.enable = true;
-  services.caddy.virtualHosts."http://localhost:8010".extraConfig = ''
-    root * /var/lib/transmission/files
-    file_server browse
-  '';
+  systemd.services.caddy-index = {
+    after = [ "transmission.service" ];
+    wantedBy = [ "multi-user.target" ];
+    script = "${pkgs.caddy}/bin/caddy file-server --listen :8010 --root /var/lib/transmission/files";
+  };
 
   services.traefik = {
     dynamicConfigOptions = {
