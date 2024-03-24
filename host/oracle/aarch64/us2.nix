@@ -54,9 +54,19 @@ in {
     '';
     serviceConfig.User = "transmission";
     serviceConfig.Type = "oneshot";
-    serviceConfig.StateDirectory = "transmission";
     serviceConfig.WorkingDirectory = "%S/transmission";
     wantedBy = [ "multi-user.target" ];
+  };
+
+  systemd.tmpfiles.settings."10-transmission" = {
+    "/var/lib/transmission/".d = {
+      user = "transmission";
+      group = "transmission";
+    };
+    "/var/lib/transmission/files".d = {
+      user = "transmission";
+      group = "transmission";
+    };
   };
 
   systemd.services.transmission = {
