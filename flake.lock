@@ -122,11 +122,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1711289997,
-        "narHash": "sha256-BeUcHb7mpZn7M3OFSEtyjBSVsCQhnt7gwdOFKnIELN4=",
+        "lastModified": 1711303689,
+        "narHash": "sha256-XelIFUk1AdOzPuotnhCzj4jYJ9LlrJ3qEptzkYppQMk=",
         "owner": "Maroka-chan",
         "repo": "VPN-Confinement",
-        "rev": "ba61fc42139281ea1aa300e3d3d5ef45f3eb3bf3",
+        "rev": "5964d68b584799ed9b4eb3d41b81b0c0bb1f7720",
         "type": "github"
       },
       "original": {
