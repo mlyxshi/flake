@@ -43,6 +43,8 @@ in {
     vpnnamespace = "wg";
   };
 
+  systemd.services.wg.after = [ "network-online.target" ];
+
   users = {
     users.transmission = {
       group = "transmission";
