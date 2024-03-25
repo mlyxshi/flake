@@ -1,4 +1,4 @@
-{ self, pkgs, lib, config,vpnconfinement, ... }: {
+{ self, pkgs, lib, config, ... }: {
   imports = [ 
     self.nixosModules.services.hydra.x86_64 
   ];

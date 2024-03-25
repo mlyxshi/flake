@@ -26,7 +26,7 @@ in {
     enable = true;
     accessibleFrom = [ "192.168.0.0/24" ];
     wireguardConfigFile = "/tmp/wg0.conf";
-    # allow host networknamespace to access
+    # allow host network namespace to access
     portMappings = [{
       from = 9091;
       to = 9091;
@@ -42,8 +42,6 @@ in {
     enable = true;
     vpnnamespace = "wg";
   };
-
-  systemd.services.wg.after = [ "network-online.target" ];
 
   users = {
     users.transmission = {
