@@ -56,19 +56,6 @@
         "type": "github"
       }
     },
-    "nixpkgs_2": {
-      "locked": {
-        "lastModified": 1710272261,
-        "narHash": "sha256-g0bDwXFmTE7uGDOs9HcJsfLFhH7fOsASbAuOzDC+fhQ=",
-        "path": "/nix/store/k5l01g2zwhysjyl5zjvg5zxnj0lyxpp1-source",
-        "rev": "0ad13a6833440b8e238947e47bea7f11071dc2b2",
-        "type": "path"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "type": "indirect"
-      }
-    },
     "plasma-manager": {
       "inputs": {
         "home-manager": [
@@ -98,8 +85,7 @@
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "plasma-manager": "plasma-manager",
-        "secret": "secret",
-        "vpnconfinement": "vpnconfinement"
+        "secret": "secret"
       }
     },
     "secret": {
@@ -115,24 +101,6 @@
       "original": {
         "type": "git",
         "url": "ssh://git@github.com/mlyxshi/secret"
-      }
-    },
-    "vpnconfinement": {
-      "inputs": {
-        "nixpkgs": "nixpkgs_2"
-      },
-      "locked": {
-        "lastModified": 1711303689,
-        "narHash": "sha256-XelIFUk1AdOzPuotnhCzj4jYJ9LlrJ3qEptzkYppQMk=",
-        "owner": "Maroka-chan",
-        "repo": "VPN-Confinement",
-        "rev": "5964d68b584799ed9b4eb3d41b81b0c0bb1f7720",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Maroka-chan",
-        "repo": "VPN-Confinement",
-        "type": "github"
       }
     }
   },

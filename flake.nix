@@ -3,7 +3,6 @@
     # nixpkgs.url = "github:NixOS/nixpkgs";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     secret.url = "git+ssh://git@github.com/mlyxshi/secret";
-    vpnconfinement.url = "github:Maroka-chan/VPN-Confinement";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -16,7 +15,7 @@
     plasma-manager.inputs.home-manager.follows = "home-manager";
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager, plasma-manager, secret, vpnconfinement }:
+  outputs = { self, nixpkgs, darwin, home-manager, plasma-manager, secret }:
     let
       inherit (nixpkgs) lib;
       utils = import ./utils.nix nixpkgs;
@@ -66,7 +65,7 @@
         };
       } // lib.genAttrs oracle-serverlist (hostName:
         import ./host/oracle/mkHost.nix {
-          inherit hostName self nixpkgs home-manager secret vpnconfinement;
+          inherit hostName self nixpkgs home-manager secret;
         });
 
       homeConfigurations = {
