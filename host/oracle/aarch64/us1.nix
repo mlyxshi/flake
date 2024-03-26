@@ -60,6 +60,7 @@ in {
     serviceConfig.ExecStart =
       "${pkgs.transmission}/bin/transmission-daemon --foreground --username $ADMIN --password $PASSWORD";
     serviceConfig.WorkingDirectory = "%S/transmission";
+    serviceConfig.NetworkNamespacePath ="/run/netns/vpn";
     wantedBy = [ "multi-user.target" ];
   };
 
