@@ -63,7 +63,7 @@ in {
         ip -n vpn -6 route add default dev wg1
       '';
 
-      ExecStopPost = "${pkgs.iproute2}/bin/ip netns del vpn"
+      ExecStopPost = "${pkgs.iproute2}/bin/ip netns del vpn";
     };
 
     wantedBy = [ "multi-user.target" ];
