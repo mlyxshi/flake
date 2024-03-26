@@ -48,7 +48,6 @@ in {
         IFS=',' read -ra PARTS <<< "$ADDRESS"
         for PART in "''${PARTS[@]}"; do
           ip -n vpn a add $PART dev wg1
-          ip -n vpn a add $PART dev wg1
         done
 
         # Add wireguard configuration
