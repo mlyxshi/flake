@@ -1,6 +1,6 @@
 { self, config, pkgs, lib, ... }: 
 let
-  peerPort = 60729; # https://airvpn.org/ports/
+  peerPort = 60729; 
   settings = pkgs.writeText "settings.json" ''
     {
       "download-dir": "/var/lib/transmission/files",
@@ -23,15 +23,17 @@ in {
   networking.nftables.enable = lib.mkForce false;
   networking.firewall.allowedTCPPorts = [ 443 80 ];
 
+  # https://airvpn.org/ports/
+  # use port forwarding to access transmission web ui and transmission peer-port(easiest way)
+  # Better implementation, see https://github.com/Maroka-chan/VPN-Confinement
   systemd.services.vpn = {
     after = [ "network-online.target" ];
-    before = [ "transmission.service" ];
     wants = [ "network-online.target" ];
     environment.WG_CONFIG_FILE = "/tmp/wg1.conf";
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
-      ExecStart = pkgs.writeShellScript "transmission.sh" ''
+      ExecStart = pkgs.writeShellScript "vpn-up" ''
         export PATH=$PATH:${pkgs.wireguard-tools}/bin:${pkgs.iproute2}/bin
 
         # Create a new network namespace
@@ -61,7 +63,6 @@ in {
         ip -n vpn route add default dev wg1
         ip -n vpn -6 route add default dev wg1
       '';
-
       ExecStopPost = "${pkgs.iproute2}/bin/ip netns del vpn";
     };
 
@@ -94,8 +95,8 @@ in {
   };
 
   systemd.services.transmission = {
-    after = [ "network-online.target" ];
-    wants = [ "network-online.target" ];
+    after = [ "vpn.service" ];
+    bindsTo = [ "vpn.service" ];
     environment = {
       TRANSMISSION_HOME = "%S/transmission";
       TRANSMISSION_WEB_HOME = "${pkgs.transmission}/public_html";
