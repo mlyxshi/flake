@@ -24,6 +24,10 @@ let
 
 in {
 
-  environment.systemPackages = with pkgs; [ install-aarch64 gh ];
+  environment.systemPackages = with pkgs; [ install-aarch64 gh solaar];
+
+
+  hardware.logitech.wireless.enable = true;
+  hardware.logitech.wireless.enableGraphical = mkForce false;
 
 }
