@@ -42,6 +42,7 @@
       "yubico-yubikey-manager"
       "android-platform-tools"
       "element"
+      "karabiner-elements"
       "input-source-pro"
       "macfuse" # rclone mount
       "utm"
