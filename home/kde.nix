@@ -70,10 +70,10 @@
     };
 
     configFile = {
-      "konsolerc"."Desktop Entry"."DefaultProfile" = "fish.profile";
+      "konsolerc"."Desktop Entry"."DefaultProfile".value = "fish.profile";
 
-      "katerc"."KTextEditor Document"."Auto Save" = "true";
-      "katerc"."KTextEditor Document"."Auto Save On Focus Out" = "true";
+      "katerc"."KTextEditor Document"."Auto Save".value = true;
+      "katerc"."KTextEditor Document"."Auto Save On Focus Out".value = true;
     };
   };
 }
