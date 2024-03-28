@@ -64,8 +64,8 @@
 
     dataFile = {
       "konsole/fish.profile" = {
-        "General"."Command" = "fish";
-        "General"."Name" = "fish";
+        "General"."Command".value = "fish";
+        "General"."Name".value = "fish";
       };
     };
 
