@@ -79,7 +79,7 @@
         #   nixpkgs = import patchednixpkgs-aarch64 { system = "aarch64-linux";};
         # };
 
-        kexec-aarch64 = import (patchednixpkgs-aarch64 + "/nixos/lib/eval-config.nix") {
+        kexec-aarch64 = import (patchednixpkgs-aarch64 { system = "aarch64-linux";} + "/nixos/lib/eval-config.nix") {
 
           modules = [
             ./kexec/host.nix
