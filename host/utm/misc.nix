@@ -26,8 +26,4 @@ in {
 
   environment.systemPackages = with pkgs; [ install-aarch64 gh ];
 
-
-  hardware.logitech.wireless.enable = true;
-  hardware.logitech.wireless.enableGraphical = true;
-
 }

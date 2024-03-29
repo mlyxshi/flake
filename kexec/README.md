@@ -26,12 +26,16 @@ FS0:
 ifconfig -s eth0 dhcp
 tftp 138.2.16.45 arm.efi
 exit
-
+```
 # Test
 ```
 nix run -L .#
+```
 
-# quit
+# debug-shell
+Alt+Ctrl+F9
+
+# quit qemu
 [ctrl+a] then press [x]
 
 

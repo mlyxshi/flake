@@ -21,6 +21,14 @@
       utils = import ./utils.nix nixpkgs;
       inherit (utils)
         mkFileHierarchyAttrset packagelist getArchPkgs oracle-serverlist;
+      
+      patchednixpkgs = nixpkgs.legacyPackages.x86_64-linux.applyPatches {
+        name = "nixpkgs-patched";
+        src = nixpkgs;
+        patches = [
+          ./patch/299717.patch
+        ];
+      };
     in {
       overlays.default = final: prev:
         prev.lib.genAttrs packagelist
@@ -57,11 +65,13 @@
 
         kexec-x86_64 = import ./kexec/mkKexec.nix {
           arch = "x86_64";
-          inherit nixpkgs;
+          # inherit nixpkgs;
+          nixpkgs = import patchednixpkgs { system = "x86_64-linux"; };
         };
         kexec-aarch64 = import ./kexec/mkKexec.nix {
           arch = "aarch64";
-          inherit nixpkgs;
+          # inherit nixpkgs;
+          nixpkgs = import patchednixpkgs { system = "aarch64-linux"; };
         };
       } // lib.genAttrs oracle-serverlist (hostName:
         import ./host/oracle/mkHost.nix {
