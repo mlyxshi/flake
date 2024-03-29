@@ -1,6 +1,6 @@
 { arch, nixpkgs }:let
 # nixosSystem = nixpkgs.lib.nixosSystem;
-nixosSystem = nixpkgs + "/nixos/lib/eval-config.nix";
+nixosSystem = import (nixpkgs + "/nixos/lib/eval-config.nix");
 in 
 nixosSystem {
 
