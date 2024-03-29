@@ -21,22 +21,19 @@
       utils = import ./utils.nix nixpkgs;
       inherit (utils)
         mkFileHierarchyAttrset packagelist getArchPkgs oracle-serverlist;
-      
+
       patchednixpkgs-x86_64 = nixpkgs.legacyPackages.x86_64-linux.applyPatches {
         name = "nixpkgs-patched";
         src = nixpkgs;
-        patches = [
-          ./patch/299717.patch
-        ];
+        patches = [ ./patch/299717.patch ];
       };
 
-      patchednixpkgs-aarch64 = nixpkgs.legacyPackages.aarch64-linux.applyPatches {
-        name = "nixpkgs-patched";
-        src = nixpkgs;
-        patches = [
-          ./patch/299717.patch
-        ];
-      };
+      patchednixpkgs-aarch64 =
+        nixpkgs.legacyPackages.aarch64-linux.applyPatches {
+          name = "nixpkgs-patched";
+          src = nixpkgs;
+          patches = [ ./patch/299717.patch ];
+        };
     in {
       overlays.default = final: prev:
         prev.lib.genAttrs packagelist
@@ -74,12 +71,22 @@
         kexec-x86_64 = import ./kexec/mkKexec.nix {
           arch = "x86_64";
           # inherit nixpkgs;
-          nixpkgs = import patchednixpkgs-x86_64 { system = "x86_64-linux";};
+          nixpkgs = import patchednixpkgs-x86_64 { system = "x86_64-linux"; };
         };
-        kexec-aarch64 = import ./kexec/mkKexec.nix {
-          arch = "aarch64";
-          # inherit nixpkgs;
-          nixpkgs = import patchednixpkgs-aarch64 { system = "aarch64-linux";};
+        # kexec-aarch64 = import ./kexec/mkKexec.nix {
+        #   arch = "aarch64";
+        #   # inherit nixpkgs;
+        #   nixpkgs = import patchednixpkgs-aarch64 { system = "aarch64-linux";};
+        # };
+
+        kexec-aarch64 = import (patchednixpkgs-aarch64 + "/nixos/lib/eval-config.nix") {
+
+          modules = [
+            ./kexec/host.nix
+            ./kexec/build.nix
+            ./kexec/initrd.nix
+            { nixpkgs.hostPlatform = "aarch64-linux"; }
+          ];
         };
       } // lib.genAttrs oracle-serverlist (hostName:
         import ./host/oracle/mkHost.nix {
