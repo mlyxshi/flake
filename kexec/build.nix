@@ -55,7 +55,7 @@ in {
     exec ${pkgs.qemu_kvm}/bin/qemu-kvm -name ${config.networking.hostName} \
       -m 2048 \
       -kernel ${config.system.build.kernel}/${kernelTarget}  -initrd ${config.system.build.initialRamdisk}/initrd.zst  \
-      -append "console=ttyS0 init=/bin/init ${
+      -append "console=ttyS0  systemd.journald.forward_to_console systemd.debug_shell init=/bin/init ${
         toString config.boot.kernelParams
       }" \
       -no-reboot -nographic \
