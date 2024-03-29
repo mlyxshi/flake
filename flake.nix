@@ -68,15 +68,13 @@
           inherit self nixpkgs secret;
         };
 
-        kexec-x86_64 = import ./kexec/mkKexec.nix {
-          arch = "x86_64";
-          # inherit nixpkgs;
-          nixpkgs = import patchednixpkgs-x86_64 { system = "x86_64-linux"; };
-        };
+        # kexec-x86_64 = import ./kexec/mkKexec.nix {
+        #   arch = "x86_64";
+        #   inherit nixpkgs;
+        # };
         # kexec-aarch64 = import ./kexec/mkKexec.nix {
         #   arch = "aarch64";
-        #   # inherit nixpkgs;
-        #   nixpkgs = import patchednixpkgs-aarch64 { system = "aarch64-linux";};
+        #   inherit nixpkgs;
         # };
 
         kexec-aarch64 = import (patchednixpkgs-aarch64 + "/nixos/lib/eval-config.nix") {

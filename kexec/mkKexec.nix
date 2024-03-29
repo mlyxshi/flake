@@ -1,9 +1,5 @@
 { arch, nixpkgs }:
-let
-  # nixosSystem = nixpkgs.lib.nixosSystem;
-  nixosSystem = import (nixpkgs + "/nixos/lib/eval-config.nix");
-in nixosSystem {
-
+nixpkgs.lib.nixosSystem{
   modules = [
     ./host.nix
     ./build.nix
