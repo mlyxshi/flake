@@ -8,7 +8,10 @@
   systemd.network.wait-online.anyInterface = true;
   systemd.network.networks.ethernet-default-dhcp = {
     matchConfig = { Name = [ "en*" "eth*" ]; };
-    networkConfig = { DHCP = "yes"; };
+    networkConfig = { 
+      DHCP = "yes"; 
+      IPv6AcceptRA = true;
+    };
   };
 
   networking.firewall.enable = false; # Disable nixpkgs defined firewall
