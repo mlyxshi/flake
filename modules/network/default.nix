@@ -4,6 +4,7 @@
   networking.dhcpcd.enable = false;
 
   systemd.network.enable = true;
+  systemd.services.systemd-networkd.environment.SYSTEMD_LOG_LEVEL = "debug";
   systemd.network.wait-online.anyInterface = true;
   systemd.network.networks.ethernet-default-dhcp = {
     matchConfig = { Name = [ "en*" "eth*" ]; };
