@@ -1,6 +1,5 @@
 { config, pkgs, lib, ... }: {
   # Disable nixpkgs defined dhcp
-  networking.useDHCP = false; 
   networking.dhcpcd.enable = false;
 
   systemd.network.enable = true;
