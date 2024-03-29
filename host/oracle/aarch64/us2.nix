@@ -1,19 +1,18 @@
 { self, config, pkgs, lib, ... }:
 let
   peerPort = 60729;
-  settings = pkgs.writeText "settings.json" ''
-    {
-      "download-dir": "/var/lib/transmission/files",
-      "rpc-whitelist-enabled": false,
-      "rpc-authentication-required": true,
-      "peer-port": ${toString peerPort},
-      "port-forwarding-enabled": false,
-      "utp-enabled": false
-    }
-  '';
+  pref = {
+    download-dir = "/var/lib/transmission/files";
+    rpc-whitelist-enabled = false;
+    rpc-authentication-required = true;
+    peer-port = peerPort;
+    port-forwarding-enabled = false;
+    utp-enabled = false;
+  };
+  settings = pkgs.writeText "settings.json" (builtins.toJSON pref);
 in {
 
-  # I don't know why oracle ipv6 is not working under systemd-networkd
+  # I don't know why oracle ipv6 dhcp is not working under systemd-networkd
   # so use default old way to configure network 
   networking.useDHCP = lib.mkForce true;
   networking.dhcpcd.enable = lib.mkForce true;
@@ -29,7 +28,7 @@ in {
   systemd.services.vpn = {
     after = [ "network-online.target" ];
     wants = [ "network-online.target" ];
-    environment.WG_CONFIG_FILE = "/tmp/wg1.conf";
+    environment.WG_CONFIG_FILE = "/etc/secret/wireguard/us.conf";
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
