@@ -7,7 +7,7 @@
 { config, pkgs, lib, ... }:
 let
   hydra-x64-publicKey =
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICEgrMusygNAQDkrGHfLcYJT/ZcJr11mBsfqlJn/EB80";
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILTS04ZHanXeTfW+OAGXVxtO+itOwYzEqvhPqqiCbrBx";
 in {
 
   # services.harmonia = {
