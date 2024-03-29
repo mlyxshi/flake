@@ -10,7 +10,6 @@
     matchConfig = { Name = [ "en*" "eth*" ]; };
     networkConfig = { 
       DHCP = "yes"; 
-      IPv6AcceptRA = true;
     };
   };
 
