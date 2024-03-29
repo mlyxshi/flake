@@ -22,11 +22,11 @@
       inherit (utils)
         mkFileHierarchyAttrset packagelist getArchPkgs oracle-serverlist;
 
-      patchednixpkgs-x86_64 = nixpkgs.legacyPackages.x86_64-linux.applyPatches {
-        name = "nixpkgs-patched";
-        src = nixpkgs;
-        patches = [ ./patch/299717.patch ];
-      };
+      # patchednixpkgs-x86_64 = nixpkgs.legacyPackages.x86_64-linux.applyPatches {
+      #   name = "nixpkgs-patched";
+      #   src = nixpkgs;
+      #   patches = [ ./patch/299717.patch ];
+      # };
 
       patchednixpkgs-aarch64 =
         nixpkgs.legacyPackages.aarch64-linux.applyPatches {
@@ -77,7 +77,7 @@
         #   inherit nixpkgs;
         # };
 
-        kexec-x86_64 = import (patchednixpkgs-x86_64 + "/nixos/lib/eval-config.nix") {
+        kexec-x86_64 = import (patchednixpkgs-aarch64 + "/nixos/lib/eval-config.nix") {
           system = "x86_64-linux";
           modules = [
             ./kexec/host.nix
