@@ -22,18 +22,12 @@
       inherit (utils)
         mkFileHierarchyAttrset packagelist getArchPkgs oracle-serverlist;
 
-      # patchednixpkgs-x86_64 = nixpkgs.legacyPackages.x86_64-linux.applyPatches {
-      #   name = "nixpkgs-patched";
-      #   src = nixpkgs;
-      #   patches = [ ./patch/299717.patch ];
-      # };
-
-      patchednixpkgs-aarch64 =
-        nixpkgs.legacyPackages.aarch64-linux.applyPatches {
-          name = "nixpkgs-patched";
-          src = nixpkgs;
-          patches = [ ./patch/299717.patch ];
-        };
+      # hydra server is aarch64-linux, the applyPatches is only the function
+      patched-nixpkgs = nixpkgs.legacyPackages.aarch64-linux.applyPatches {
+        name = "nixpkgs-patched";
+        src = nixpkgs;
+        patches = [ ./patch/299717.patch ];
+      };
     in {
       overlays.default = final: prev:
         prev.lib.genAttrs packagelist
@@ -77,7 +71,7 @@
         #   inherit nixpkgs;
         # };
 
-        kexec-x86_64 = import (patchednixpkgs-aarch64 + "/nixos/lib/eval-config.nix") {
+        kexec-x86_64 = import (patched-nixpkgs + "/nixos/lib/eval-config.nix") {
           system = "x86_64-linux";
           modules = [
             ./kexec/host.nix
@@ -87,15 +81,16 @@
           ];
         };
 
-        kexec-aarch64 = import (patchednixpkgs-aarch64 + "/nixos/lib/eval-config.nix") {
-          system = "aarch64-linux";
-          modules = [
-            ./kexec/host.nix
-            ./kexec/build.nix
-            ./kexec/initrd.nix
-            { nixpkgs.hostPlatform = "aarch64-linux"; }
-          ];
-        };
+        kexec-aarch64 =
+          import (patched-nixpkgs + "/nixos/lib/eval-config.nix") {
+            system = "aarch64-linux";
+            modules = [
+              ./kexec/host.nix
+              ./kexec/build.nix
+              ./kexec/initrd.nix
+              { nixpkgs.hostPlatform = "aarch64-linux"; }
+            ];
+          };
       } // lib.genAttrs oracle-serverlist (hostName:
         import ./host/oracle/mkHost.nix {
           inherit hostName self nixpkgs home-manager secret;
