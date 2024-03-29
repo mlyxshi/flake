@@ -74,12 +74,12 @@
         kexec-x86_64 = import ./kexec/mkKexec.nix {
           arch = "x86_64";
           # inherit nixpkgs;
-          nixpkgs = import patchednixpkgs-x86_64 { };
+          nixpkgs = import patchednixpkgs-x86_64 { system = "x86_64-linux";};
         };
         kexec-aarch64 = import ./kexec/mkKexec.nix {
           arch = "aarch64";
           # inherit nixpkgs;
-          nixpkgs = import patchednixpkgs-aarch64 { };
+          nixpkgs = import patchednixpkgs-aarch64 { system = "aarch64-linux";};
         };
       } // lib.genAttrs oracle-serverlist (hostName:
         import ./host/oracle/mkHost.nix {
