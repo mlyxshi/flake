@@ -77,6 +77,16 @@
         #   inherit nixpkgs;
         # };
 
+        kexec-x86_64 = import (patchednixpkgs-x86_64 + "/nixos/lib/eval-config.nix") {
+          system = "x86_64-linux";
+          modules = [
+            ./kexec/host.nix
+            ./kexec/build.nix
+            ./kexec/initrd.nix
+            { nixpkgs.hostPlatform = "x86_64-linux"; }
+          ];
+        };
+
         kexec-aarch64 = import (patchednixpkgs-aarch64 + "/nixos/lib/eval-config.nix") {
           system = "aarch64-linux";
           modules = [
