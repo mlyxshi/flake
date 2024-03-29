@@ -8,7 +8,6 @@ nixpkgs.lib.nixosSystem {
       nixpkgs.hostPlatform = "${arch}-linux";
       networking.hostName = "installer";
       networking = {
-        useNetworkd = true;
         useDHCP = true;
         firewall.enable = false;
       };

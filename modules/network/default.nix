@@ -1,7 +1,9 @@
 { config, pkgs, lib, ... }: {
-  networking.useNetworkd = true;
-  networking.useDHCP = false; # Disable nixpkgs defined dhcp
+  # Disable nixpkgs defined dhcp
+  networking.useDHCP = false; 
+  networking.dhcpcd.enable = false;
 
+  systemd.network.enable = true;
   systemd.network.wait-online.anyInterface = true;
   systemd.network.networks.ethernet-default-dhcp = {
     matchConfig = { Name = [ "en*" "eth*" ]; };
