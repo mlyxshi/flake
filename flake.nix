@@ -80,12 +80,12 @@
         # };
 
         kexec-aarch64 = import (patchednixpkgs-aarch64 + "/nixos/lib/eval-config.nix") {
-
+          system = "aarch64-linux";
           modules = [
             ./kexec/host.nix
             ./kexec/build.nix
             ./kexec/initrd.nix
-            { system = "aarch64-linux"; }
+            { nixpkgs.hostPlatform = "aarch64-linux"; }
           ];
         };
       } // lib.genAttrs oracle-serverlist (hostName:
