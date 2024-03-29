@@ -16,6 +16,7 @@ in {
   # I don't know why oracle ipv6 is not working under systemd-networkd
   # so use default old way to configure network 
   networking.useDHCP = lib.mkForce true;
+  networking.dhcpcd.enable = lib.mkForce true;
   systemd.network.enable = lib.mkForce false;
 
   networking.firewall.enable = lib.mkForce true;
