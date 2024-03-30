@@ -23,7 +23,8 @@
         mkFileHierarchyAttrset packagelist getArchPkgs oracle-serverlist;
 
       # hydra server is aarch64-linux, the applyPatches is only the function
-      patched-nixpkgs = nixpkgs.legacyPackages.aarch64-linux.applyPatches {
+      patched-nixpkgs = nixpkgs.legacyPackages.x86_64-linux.applyPatches {
+      # patched-nixpkgs = nixpkgs.legacyPackages.aarch64-linux.applyPatches {
         name = "nixpkgs-patched";
         src = nixpkgs;
         patches = [ ./patch/299717.patch ];
