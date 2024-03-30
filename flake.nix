@@ -23,12 +23,11 @@
         mkFileHierarchyAttrset packagelist getArchPkgs oracle-serverlist;
 
       # hydra server is aarch64-linux, the applyPatches is only the function
-      patched-nixpkgs = nixpkgs.legacyPackages.x86_64-linux.applyPatches {
       # patched-nixpkgs = nixpkgs.legacyPackages.aarch64-linux.applyPatches {
-        name = "nixpkgs-patched";
-        src = nixpkgs;
-        patches = [ ./patch/299717.patch ];
-      };
+      #   name = "nixpkgs-patched";
+      #   src = nixpkgs;
+      #   patches = [ ./patch/299717.patch ];
+      # };
     in {
       overlays.default = final: prev:
         prev.lib.genAttrs packagelist
@@ -61,35 +60,35 @@
           inherit self nixpkgs secret;
         };
 
-        # kexec-x86_64 = import ./kexec/mkKexec.nix {
-        #   arch = "x86_64";
-        #   inherit nixpkgs;
-        # };
-        # kexec-aarch64 = import ./kexec/mkKexec.nix {
-        #   arch = "aarch64";
-        #   inherit nixpkgs;
-        # };
-
-        kexec-x86_64 = import (patched-nixpkgs + "/nixos/lib/eval-config.nix") {
-          system = "x86_64-linux";
-          modules = [
-            ./kexec/host.nix
-            ./kexec/build.nix
-            ./kexec/initrd.nix
-            { nixpkgs.hostPlatform = "x86_64-linux"; }
-          ];
+        kexec-x86_64 = import ./kexec/mkKexec.nix {
+          arch = "x86_64";
+          inherit nixpkgs;
+        };
+        kexec-aarch64 = import ./kexec/mkKexec.nix {
+          arch = "aarch64";
+          inherit nixpkgs;
         };
 
-        kexec-aarch64 =
-          import (patched-nixpkgs + "/nixos/lib/eval-config.nix") {
-            system = "aarch64-linux";
-            modules = [
-              ./kexec/host.nix
-              ./kexec/build.nix
-              ./kexec/initrd.nix
-              { nixpkgs.hostPlatform = "aarch64-linux"; }
-            ];
-          };
+        # kexec-x86_64 = import (patched-nixpkgs + "/nixos/lib/eval-config.nix") {
+        #   system = "x86_64-linux";
+        #   modules = [
+        #     ./kexec/host.nix
+        #     ./kexec/build.nix
+        #     ./kexec/initrd.nix
+        #     { nixpkgs.hostPlatform = "x86_64-linux"; }
+        #   ];
+        # };
+
+        # kexec-aarch64 =
+        #   import (patched-nixpkgs + "/nixos/lib/eval-config.nix") {
+        #     system = "aarch64-linux";
+        #     modules = [
+        #       ./kexec/host.nix
+        #       ./kexec/build.nix
+        #       ./kexec/initrd.nix
+        #       { nixpkgs.hostPlatform = "aarch64-linux"; }
+        #     ];
+        #   };
       } // lib.genAttrs oracle-serverlist (hostName:
         import ./host/oracle/mkHost.nix {
           inherit hostName self nixpkgs home-manager secret;

@@ -124,8 +124,8 @@ in {
     requiredBy = [ "initrd-fs.target" ];
   };
 
-  # boot.initrd.systemd.emergencyAccess = true;
-  # Uncomment for debugging in local qemu
+  boot.initrd.systemd.emergencyAccess = true;
+  # Uncomment for debugging in local qemu even if the there is no error
 
   # https://systemd-by-example.com/
   # https://www.freedesktop.org/software/systemd/man/latest/bootup.html
