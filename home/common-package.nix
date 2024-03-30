@@ -19,6 +19,7 @@
     fastfetch
     starship
     atuin
+    home-manager
     mpv
     yt-dlp
     (pkgs.nerdfonts.override { fonts = [ "RobotoMono" ]; }) # Terminal Font
