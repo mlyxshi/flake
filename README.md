@@ -11,11 +11,6 @@ nix run ~/flake.#homeConfigurations.XXX.activationPackage
 
 ### Asahi Linux
 ```
-diskutil apfs deleteContainer disk0s3
-
-diskutil eraseVolume free free disk0s4
-diskutil eraseVolume free free disk0s5
-
 curl https://alx.sh | sh
 
 curl -sL https://install.determinate.systems/nix | sh -s -- install
