@@ -43,11 +43,17 @@ jobs:
       # This is the normal behaviour as expected, so let github workflow treat error as success 
       continue-on-error: true 
       run: |
+        $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec' 
+        $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/initrd'
+        $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kernel'
+        $SSH ${{ inputs.user }}@${{ inputs.ip }} 'chmod +x ./kexec'
+        $SSH ${{ inputs.user }}@${{ inputs.ip }} './kexec --kexec-syscall-auto --load ./kernel --initrd=./initrd  --append "init=/bin/init"' 
+        
         if [ ${{ inputs.user }} = root ]
         then
-          $SSH -o ServerAliveInterval=5 -o ServerAliveCountMax=2 $HOST 'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | bash -s'
+          $SSH -o ServerAliveInterval=5 -o ServerAliveCountMax=2 ${{ inputs.user }}@${{ inputs.ip }} './kexec -e'
         else
-          $SSH -o ServerAliveInterval=5 -o ServerAliveCountMax=2 ${{ inputs.user }}@${{ inputs.ip }} 'curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | sudo bash -s'
+          $SSH -o ServerAliveInterval=5 -o ServerAliveCountMax=2 ${{ inputs.user }}@${{ inputs.ip }} 'sudo ./kexec -e'
         fi
 
   install:

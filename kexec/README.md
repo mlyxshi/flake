@@ -16,7 +16,13 @@ initrd.target(default)
 # Usage
 ### From running linux distro
 ```
-curl -sL http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec-script | bash -s
+curl -LO http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec 
+curl -LO http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/initrd
+curl -LO http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kernel
+
+chmod +x ./kexec
+./kexec --kexec-syscall-auto --load ./kernel --initrd=./initrd  --append "init=/bin/init"
+./kexec -e
 ```
 ### From netboot.xyz ipxe(Rescue Oracle aarch64)
 
@@ -27,14 +33,14 @@ ifconfig -s eth0 dhcp
 tftp 138.2.16.45 arm.efi
 exit
 ```
-# Test(in macOS qemu)
+# Test(macOS qemu)
 
 ```
 # Because most of my servers are oracle aarch64 and my main machine is mac mini m1 
 # Only test under aarch64-darwin qemu
 
-curl -Lo initrd http://hydra.mlyxshi.com/job/nixos/flake/kexec-aarch64/latest/download-by-type/file/initrd
-curl -Lo kernel http://hydra.mlyxshi.com/job/nixos/flake/kexec-aarch64/latest/download-by-type/file/kernel
+curl -LO initrd http://hydra.mlyxshi.com/job/nixos/flake/kexec-aarch64/latest/download-by-type/file/initrd
+curl -LO kernel http://hydra.mlyxshi.com/job/nixos/flake/kexec-aarch64/latest/download-by-type/file/kernel
 
 
 test -f disk.img || qemu-img create -f qcow2 disk.img 10G
