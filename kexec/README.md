@@ -24,15 +24,7 @@ chmod +x ./kexec
 ./kexec --kexec-syscall-auto --load ./kernel --initrd=./initrd  --append "init=/bin/init"
 ./kexec -e
 ```
-### From netboot.xyz ipxe(Rescue Oracle aarch64)
 
-```sh
-# UEFI Shell
-FS0:
-ifconfig -s eth0 dhcp
-tftp 138.2.16.45 arm.efi
-exit
-```
 # Test(macOS qemu)
 
 ```
