@@ -94,16 +94,6 @@ in {
       mount /dev/sda2 /mnt
       mount --mkdir /dev/sda1 /mnt/boot
     '';
-
-    get-kernel-param = pkgs.writeScript "get-kernel-param" ''
-      for o in $(< /proc/cmdline); do
-          case $o in
-              $1=*)
-                  echo "''${o#"$1="}"
-                  ;;
-          esac
-      done
-    '';
   };
 
   # move everything in / to /sysroot and switch-root into it. 
