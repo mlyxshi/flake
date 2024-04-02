@@ -27,17 +27,21 @@ ifconfig -s eth0 dhcp
 tftp 138.2.16.45 arm.efi
 exit
 ```
-# Test
+# Test(in macOS qemu)
+
 ```
-nix run -L .#
+# Because most of my servers are oracle aarch64 and my main machine is mac mini m1, only test in aarch64-darwin qemu
+test -f disk.img || qemu-img create -f qcow2 disk.img 10G
+qemu-system-aarch64  -machine virt \
+    -cpu cortex-a72 \
+    -m 2048 \
+    -kernel ./Image  -initrd ./initrd \
+    -append "console=ttyS0 systemd.journald.forward_to_console init=/bin/init ssh_authorized_key=c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSU1wYVkzTHlDVzRISHFicDRTQTR0bkErMUJrZ3dydHJvMnMvREVzQmNQRGUKCg==" \
+    -nographic \
+    -netdev user,id=net0,hostfwd=tcp::8022-:22 -device virtio-net-pci,netdev=net0  \
+    -drive file=disk.img,format=qcow2,id=mydrive   -device virtio-blk,drive=mydrive \
+    -bios $(ls /opt/homebrew/Cellar/qemu/*/share/qemu/edk2-aarch64-code.fd | head -n1)
 ```
-
-# debug-shell
-Alt+Ctrl+F9
-
-# quit qemu
-[ctrl+a] then press [x]
-
 
 # cpio
 ```
