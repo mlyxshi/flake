@@ -36,15 +36,12 @@ curl -LO kernel http://hydra.mlyxshi.com/job/nixos/flake/kexec-aarch64/latest/do
 
 
 test -f disk.img || qemu-img create -f qcow2 disk.img 10G
-qemu-system-aarch64  -machine virt \
-    -cpu cortex-a72 \
-    -m 2048 \
+qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 2048 \
     -kernel kernel  -initrd initrd \
     -append "init=/bin/init systemd.journald.forward_to_console" \
-    -nographic \
-    -device virtio-net-pci,netdev=net0 -netdev user,id=net0,hostfwd=tcp::8022-:22 \
-    -drive file=disk.img,format=qcow2,if=virtio  \
-    -bios $(ls /opt/homebrew/Cellar/qemu/*/share/qemu/edk2-aarch64-code.fd | head -n1)
+    -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
+    -drive "file=disk.img,format=qcow2,if=virtio"  \
+    -bios $(ls /opt/homebrew/Cellar/qemu/*/share/qemu/edk2-aarch64-code.fd)
 ```
 
 # cpio
