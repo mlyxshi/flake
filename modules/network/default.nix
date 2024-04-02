@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }: {
   # Disable nixpkgs defined dhcp
-  networking.useDHCP = false; 
+  networking.useDHCP = false;
   networking.dhcpcd.enable = false;
 
   systemd.network.enable = true;
@@ -8,9 +8,7 @@
   systemd.network.wait-online.anyInterface = true;
   systemd.network.networks.ethernet-default-dhcp = {
     matchConfig = { Name = [ "en*" "eth*" ]; };
-    networkConfig = { 
-      DHCP = "yes"; 
-    };
+    networkConfig = { DHCP = "yes"; };
   };
 
   networking.firewall.enable = false; # Disable nixpkgs defined firewall

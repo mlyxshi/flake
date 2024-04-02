@@ -42,7 +42,7 @@ qemu-system-aarch64  -machine virt \
     -cpu cortex-a72 \
     -m 2048 \
     -kernel kernel  -initrd initrd \
-    -append "console=ttyS0 systemd.journald.forward_to_console init=/bin/init" \
+    -append "init=/bin/init console=ttyS0 systemd.journald.forward_to_console" \
     -nographic \
     -device virtio-net-pci,netdev=net0 -netdev user,id=net0,hostfwd=tcp::8022-:22   \
     -drive file=disk.img,format=qcow2,if=virtio  \

@@ -11,7 +11,7 @@ let
     echo "Downloading ${arch} kernel" && curl -LO http://hydra.mlyxshi.com/job/nixos/flake/kexec-${arch}/latest/download-by-type/file/kernel
 
     echo "Wait ssh connection lost..., ssh root@ip and enjoy NixOS"
-    ./kexec --kexec-syscall-auto --load ./kernel --initrd=./initrd  --append "init=/bin/init ${toString config.boot.kernelParams} $*"
+    ./kexec --kexec-syscall-auto --load ./kernel --initrd=./initrd  --append "init=/bin/init"
     ./kexec -e
   '';
 in {
