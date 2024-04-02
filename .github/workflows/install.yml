@@ -38,17 +38,18 @@ jobs:
           echo "Server Not Reachable, Waiting..."
           sleep 5
         done
-    - name: Run Kexec Script
+
+    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec' 
+    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/initrd'
+    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kernel'
+    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'chmod +x ./kexec'
+    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} './kexec --kexec-syscall-auto --load ./kernel --initrd=./initrd  --append "init=/bin/init"' 
+    
+    - name: Run kexec
       # If server doesn't reply, ServerAliveInterval option will kill ssh, and emit error 
       # This is the normal behaviour as expected, so let github workflow treat error as success 
       continue-on-error: true 
       run: |
-        $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec' 
-        $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/initrd'
-        $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kernel'
-        $SSH ${{ inputs.user }}@${{ inputs.ip }} 'chmod +x ./kexec'
-        $SSH ${{ inputs.user }}@${{ inputs.ip }} './kexec --kexec-syscall-auto --load ./kernel --initrd=./initrd  --append "init=/bin/init"' 
-        
         if [ ${{ inputs.user }} = root ]
         then
           $SSH -o ServerAliveInterval=5 -o ServerAliveCountMax=2 ${{ inputs.user }}@${{ inputs.ip }} './kexec -e'

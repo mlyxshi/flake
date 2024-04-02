@@ -48,9 +48,9 @@ qemu-system-aarch64  -machine virt \
     -cpu cortex-a72 \
     -m 2048 \
     -kernel kernel  -initrd initrd \
-    -append "init=/bin/init console=ttyS0 systemd.journald.forward_to_console" \
+    -append "init=/bin/init systemd.journald.forward_to_console" \
     -nographic \
-    -device virtio-net-pci,netdev=net0 -netdev user,id=net0,hostfwd=tcp::8022-:22   \
+    -device virtio-net-pci,netdev=net0 -netdev user,id=net0,hostfwd=tcp::8022-:22 \
     -drive file=disk.img,format=qcow2,if=virtio  \
     -bios $(ls /opt/homebrew/Cellar/qemu/*/share/qemu/edk2-aarch64-code.fd | head -n1)
 ```
