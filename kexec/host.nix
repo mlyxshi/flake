@@ -1,6 +1,5 @@
 { config, pkgs, lib, ... }:
-let 
-  kernelTarget = pkgs.hostPlatform.linux-kernel.target;
+let kernelTarget = pkgs.hostPlatform.linux-kernel.target;
 in {
   time.timeZone = "UTC";
   networking.hostName = "systemd-initrd";
@@ -23,7 +22,7 @@ in {
     man.enable = false;
     nixos.enable = false;
   };
-  
+
   system.build.kexec = pkgs.symlinkJoin {
     name = "kexec";
     paths = [
