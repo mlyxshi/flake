@@ -29,9 +29,7 @@
     before = [ "sshd.service" ];
     serviceConfig.Type = "oneshot";
     script = ''
-      mkdir -p /etc/ssh/
       ssh-keygen -f /etc/ssh/ssh_host_ed25519_key -t ed25519 -N ""
-      echo "Generated ssh host key"
     '';
     requiredBy = [ "sshd.service" ];
   };

@@ -43,7 +43,7 @@ jobs:
     - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/initrd'
     - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kernel'
     - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'chmod +x ./kexec'
-    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} './kexec --kexec-syscall-auto --load ./kernel --initrd=./initrd  --append "init=/bin/init"' 
+    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} './kexec --kexec-syscall-auto --load ./kernel --initrd=./initrd' 
     
     - name: Run kexec
       # If server doesn't reply, ServerAliveInterval option will kill ssh, and emit error 

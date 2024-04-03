@@ -103,7 +103,7 @@
               "test-vm" ''
                 /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 2048 \
                     -kernel ${self.nixosConfigurations.kexec-aarch64.config.system.build.kexec}/Image  -initrd ${self.nixosConfigurations.kexec-aarch64.config.system.build.kexec}/initrd.zst \
-                    -append "init=/bin/init systemd.journald.forward_to_console" \
+                    -append "systemd.journald.forward_to_console" \
                     -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
                     -drive "file=disk.img,format=qcow2,if=virtio"  \
                     -bios $(ls /opt/homebrew/Cellar/qemu/*/share/qemu/edk2-aarch64-code.fd)
