@@ -21,13 +21,6 @@
       utils = import ./utils.nix nixpkgs;
       inherit (utils)
         mkFileHierarchyAttrset packagelist getArchPkgs oracle-serverlist;
-
-      # hydra server is aarch64-linux, the applyPatches is only the function
-      # patched-nixpkgs = nixpkgs.legacyPackages.aarch64-linux.applyPatches {
-      #   name = "nixpkgs-patched";
-      #   src = nixpkgs;
-      #   patches = [ ./patch/299717.patch ];
-      # };
     in {
       overlays.default = final: prev:
         prev.lib.genAttrs packagelist

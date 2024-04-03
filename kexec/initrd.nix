@@ -52,8 +52,6 @@ in {
     '';
   };
 
-  # Real cloud provider(Oracle/Azure): device name is sda
-  # Qemu local test: Paravirtualization, device name is vda (-drive file=disk.img,format=qcow2,if=virtio)
   # This udev rule symlinks vda to sda to unify device name.
   boot.initrd.services.udev.rules = ''
     KERNEL=="vda*", SYMLINK+="sda%n"
@@ -115,21 +113,6 @@ in {
   };
 
   boot.initrd.systemd.emergencyAccess = true;
-  # Uncomment for debugging in local qemu even if the there is no error
-
-  # https://systemd-by-example.com/
-  # https://www.freedesktop.org/software/systemd/man/latest/bootup.html
-  # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/system/boot/systemd/initrd.nix
-  # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/system/boot/initrd-ssh.nix
-  # boot.initrd.systemd.services.force-fail = {
-  #   # Order this after sshd, so that we can also ssh into the kexec environment.
-  #   after = [ "initrd-fs.target" "sshd.service" ];
-  #   # Force initrd.target failed with result 'dependency'. So that we can get emergency shell for debugging
-  #   before = [ "initrd.target" ];
-  #   serviceConfig.Type = "oneshot";
-  #   serviceConfig.ExecStart = "/bin/false";
-  #   requiredBy = [ "initrd.target" ];
-  # };
 
   # Disable default services in Nixpkgs
   boot.initrd.systemd.services.initrd-nixos-activation.enable = false;
