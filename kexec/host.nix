@@ -23,6 +23,7 @@ in {
     nixos.enable = false;
   };
 
+  # hydra build
   system.build.kexec = pkgs.symlinkJoin {
     name = "kexec";
     paths = [

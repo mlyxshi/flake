@@ -13,15 +13,10 @@
   boot.initrd.systemd.additionalUpstreamUnits = [ "systemd-resolved.service" ];
   boot.initrd.systemd.storePaths =
     [ "${config.boot.initrd.systemd.package}/lib/systemd/systemd-resolved" ];
-  boot.initrd.systemd.services.systemd-resolved.wantedBy = [ "initrd.target" ];
-
-  # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/system/boot/resolved.nix
-  # In initrd, create a symlink to the stub-resolv.conf
-  boot.initrd.systemd.services.symlink-etc-resolv-conf = {
-    after = [ "systemd-resolved.service" ];
-    serviceConfig.Type = "oneshot";
-    script = "ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf";
-    requiredBy = [ "systemd-resolved.service" ];
+  boot.initrd.systemd.services.systemd-resolved = {
+    wantedBy = [ "initrd.target" ];
+    serviceConfig.ExecStartPre =
+      "-+/bin/ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf";
   };
 
   # sshd

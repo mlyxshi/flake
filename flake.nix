@@ -1,6 +1,6 @@
 {
   inputs = {
-    # nixpkgs.url = "github:NixOS/nixpkgs";
+    # nixpkgs.url = "github:mlyxshi/nixpkgs/add-systemd-resolved";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     secret.url = "git+ssh://git@github.com/mlyxshi/secret";
 
@@ -67,7 +67,7 @@
             { nixpkgs.hostPlatform = "x86_64-linux"; }
           ];
         };
-        
+
         kexec-aarch64 = nixpkgs.lib.nixosSystem {
           modules = [
             ./kexec/host.nix
@@ -75,25 +75,6 @@
             { nixpkgs.hostPlatform = "aarch64-linux"; }
           ];
         };
-
-        # kexec-x86_64 = import (patched-nixpkgs + "/nixos/lib/eval-config.nix") {
-        #   system = "x86_64-linux";
-        #   modules = [
-        #     ./kexec/host.nix
-        #     ./kexec/initrd.nix
-        #     { nixpkgs.hostPlatform = "x86_64-linux"; }
-        #   ];
-        # };
-
-        # kexec-aarch64 =
-        #   import (patched-nixpkgs + "/nixos/lib/eval-config.nix") {
-        #     system = "aarch64-linux";
-        #     modules = [
-        #       ./kexec/host.nix
-        #       ./kexec/initrd.nix
-        #       { nixpkgs.hostPlatform = "aarch64-linux"; }
-        #     ];
-        #   };
       } // lib.genAttrs oracle-serverlist (hostName:
         import ./host/oracle/mkHost.nix {
           inherit hostName self nixpkgs home-manager secret;
@@ -123,7 +104,18 @@
 
       packages = {
         aarch64-darwin = lib.genAttrs (getArchPkgs "aarch64-darwin") (name:
-          nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/${name} { });
+          nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/${name} { })
+          // {
+            default = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin
+              "test-vm" ''
+                /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 2048 \
+                    -kernel ${self.nixosConfigurations.kexec-aarch64.config.system.build.kexec}/Image  -initrd ${self.nixosConfigurations.kexec-aarch64.config.system.build.kexec}/initrd.zst \
+                    -append "init=/bin/init systemd.journald.forward_to_console" \
+                    -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
+                    -drive "file=disk.img,format=qcow2,if=virtio"  \
+                    -bios $(ls /opt/homebrew/Cellar/qemu/*/share/qemu/edk2-aarch64-code.fd)
+              '';
+          };
         aarch64-linux = lib.genAttrs (getArchPkgs "aarch64-linux") (name:
           nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/${name} { });
         x86_64-linux = lib.genAttrs (getArchPkgs "x86_64-linux") (name:

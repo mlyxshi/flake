@@ -42,6 +42,8 @@
     # envVars = {
     #   "all_proxy" = "socks5://127.0.0.1:1080";
     # };
+
+    linux-builder.enable = true;
   };
 
   services.nix-daemon.enable = true;
