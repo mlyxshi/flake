@@ -24,9 +24,10 @@
   boot.initrd.network.ssh.authorizedKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe"
   ];
+  
   boot.initrd.systemd.services.generate-ssh-host-key = {
-    after = [ "initrd-fs.target" ];
     before = [ "sshd.service" ];
+    unitConfig.ConditionPathExists = "!/etc/ssh/ssh_host_ed25519_key";
     serviceConfig.Type = "oneshot";
     script = ''
       ssh-keygen -f /etc/ssh/ssh_host_ed25519_key -t ed25519 -N ""

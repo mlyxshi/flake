@@ -96,7 +96,7 @@ in {
 
   # move everything in / to /sysroot and switch-root into it. 
   # This runs a few things twice and wastes some memory
-  # but is necessary for [nix --store flag / nixos-enter] as pivot_root does not work on rootfs.
+  # but it is necessary for [nix --store flag / nixos-enter] as pivot_root does not work on rootfs.
   boot.initrd.systemd.services.remount-root = {
     before = [ "initrd-fs.target" ];
     serviceConfig.Type = "oneshot";
@@ -106,7 +106,7 @@ in {
       if [ "$root_fs_type" != "tmpfs" ]; then
         cp -R /init /bin /etc /lib /nix /root /sbin /var /sysroot
         mkdir -p /sysroot/tmp
-        systemctl --no-block switch-root /sysroot /bin/init
+        systemctl --no-block switch-root
       fi
     '';
     requiredBy = [ "initrd-fs.target" ];
@@ -114,10 +114,11 @@ in {
 
   boot.initrd.systemd.emergencyAccess = true;
 
-  # Disable default services in Nixpkgs
+  # Disable default services in Nixpkgs which is useless in this project
   boot.initrd.systemd.services.initrd-nixos-activation.enable = false;
-  boot.initrd.systemd.services.initrd-switch-root.enable = false;
 
-  boot.initrd.systemd.services.initrd-cleanup.enable = false;
+  # https://www.freedesktop.org/software/systemd/man/latest/bootup.html#Bootup%20in%20the%20initrd
+  # Disable: initrd-parse-etc -> initrd-cleanup -> initrd-switch-root
+  # so this initrd will stop at initrd.target
   boot.initrd.systemd.services.initrd-parse-etc.enable = false;
 }
