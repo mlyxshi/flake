@@ -4,7 +4,7 @@
     ./. 
     ./firefox 
     ./mpv.nix 
-    # ./xremap.nix 
+    ./xremap.nix 
     ./kde.nix 
   ];
 

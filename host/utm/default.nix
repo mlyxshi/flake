@@ -15,10 +15,10 @@ nixpkgs.lib.nixosSystem {
       networking.hostName = "utm";
       services.getty.autologinUser = "root";
 
-      # hardware.uinput.enable = true;
-      # users.groups.uinput.members =
-      #   [ "dominic" ]; # uinput group owns the /uinput
-      # users.groups.input.members = [ "dominic" ]; # allow access to /dev/input
+      hardware.uinput.enable = true;
+      users.groups.uinput.members =
+        [ "dominic" ]; # uinput group owns the /uinput
+      users.groups.input.members = [ "dominic" ]; # allow access to /dev/input
 
       home-manager.users.dominic = import ../../home/desktop.nix;
       home-manager.extraSpecialArgs = { inherit plasma-manager; };
