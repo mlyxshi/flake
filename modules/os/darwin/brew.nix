@@ -30,6 +30,7 @@
       "yt-dlp"
       "ffmpeg"
       "mediainfo"
+      "payload-dumper-go"
     ];
 
     casks = [
