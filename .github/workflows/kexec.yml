@@ -6,10 +6,6 @@ on:
         description: 'Ip or Domain'
         type: string
         required: true
-      flakeAttr:
-        description: 'X86-64 OS Config Hostname'
-        type: string
-        required: true
       user:
         description: 'SSH User'
         required: true
