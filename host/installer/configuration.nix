@@ -8,7 +8,7 @@
     })
   ];
 
-  environment.systemPackages = with pkgs; [ iwd ];
+  environment.systemPackages = with pkgs; [ iwd cloudflared ];
 
   system.disableInstallerTools = lib.mkForce false;
   services.getty.autologinUser = lib.mkForce "root";

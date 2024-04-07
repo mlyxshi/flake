@@ -44,6 +44,11 @@
     # };
 
     linux-builder.enable = true;
+    linux-builder.maxJobs = 8;
+    linux-builder.config = {
+      virtualisation.darwin-builder.memorySize = 16 * 1024;
+      virtualisation.cores = 8;
+    };
   };
 
   services.nix-daemon.enable = true;
