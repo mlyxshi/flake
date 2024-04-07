@@ -4,8 +4,8 @@ nixpkgs.lib.nixosSystem {
   modules = [
     secret.nixosModules.default
     self.nixosModules.home-manager
-    self.nixosModules.os.nixos.desktop
-    #self.nixosModules.os.nixos.server
+    # self.nixosModules.os.nixos.desktop
+    self.nixosModules.os.nixos.server
     self.nixosModules.network
     ./hardware.nix
     ./misc.nix
@@ -20,8 +20,8 @@ nixpkgs.lib.nixosSystem {
       #   [ "dominic" ]; # uinput group owns the /uinput
       # users.groups.input.members = [ "dominic" ]; # allow access to /dev/input
 
-      home-manager.users.dominic = import ../../home/desktop.nix;
-      home-manager.extraSpecialArgs = { inherit plasma-manager; };
+      # home-manager.users.dominic = import ../../home/desktop.nix;
+      # home-manager.extraSpecialArgs = { inherit plasma-manager; };
     }
   ];
   specialArgs = { inherit self nixpkgs home-manager; };
