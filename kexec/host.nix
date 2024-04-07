@@ -1,10 +1,9 @@
 { config, pkgs, lib, ... }:
-let kernelTarget = pkgs.hostPlatform.linux-kernel.target;
-in {
-  time.timeZone = "UTC";
+let 
+kernelTarget = pkgs.hostPlatform.linux-kernel.target;
+in 
+{
   networking.hostName = "systemd-initrd";
-
-  system.stateVersion = lib.trivial.release;
 
   fileSystems."/" = {
     fsType = "tmpfs";
