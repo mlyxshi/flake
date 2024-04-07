@@ -16,7 +16,7 @@
   environment.etc."firefox/policies/policies.json".text =
     builtins.toJSON (import ../../../home/firefox/policy.nix);
 
-  time.timeZone = "Asia/Tokyo";
+  # time.timeZone = "Asia/Tokyo";
 
   fonts = {
     packages = [
