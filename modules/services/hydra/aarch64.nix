@@ -22,13 +22,6 @@ in {
         Hostname hydra-x64.mlyxshi.com
         User hydra-builder
         IdentityFile /etc/secret/hydra/hydra-x64
-
-      Host tmp-install
-        HostName tmp-install.mlyxshi.com
-        User root
-        ProxyCommand ${pkgs.cloudflared}bin/cloudflared access ssh --hostname %h
-        StrictHostKeyChecking no
-        IdentityFile /etc/secret/ssh/github
     '';
   };
 
