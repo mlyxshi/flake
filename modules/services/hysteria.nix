@@ -6,7 +6,7 @@
     serviceConfig = {
       Restart = "always";
       ExecStart =
-        "${pkgs.hysteria}/bin/hysteria server -c /etc/secret/hysteria/config.yaml";
+        "${pkgs.hysteria}/bin/hysteria server -c /secret/hysteria/config.yaml";
     };
   };
 }

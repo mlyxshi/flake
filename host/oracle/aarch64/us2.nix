@@ -28,7 +28,7 @@ in {
   systemd.services.vpn = {
     after = [ "network-online.target" ];
     wants = [ "network-online.target" ];
-    environment.WG_CONFIG_FILE = "/etc/secret/wireguard/us.conf";
+    environment.WG_CONFIG_FILE = "/secret/wireguard/us.conf";
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
@@ -100,7 +100,7 @@ in {
       TRANSMISSION_WEB_HOME = "${pkgs.transmission}/public_html";
     };
     serviceConfig.User = "transmission";
-    serviceConfig.EnvironmentFile = [ "/etc/secret/transmission" ];
+    serviceConfig.EnvironmentFile = [ "/secret/transmission" ];
     serviceConfig.ExecStart =
       "${pkgs.transmission}/bin/transmission-daemon --foreground --username $ADMIN --password $PASSWORD";
     serviceConfig.WorkingDirectory = "%S/transmission";

@@ -49,7 +49,7 @@ in {
       TRANSMISSION_WEB_HOME = "${pkgs.transmission}/public_html";
       DENO_DIR = "%S/transmission/.deno";
     };
-    serviceConfig.EnvironmentFile = [ "/etc/secret/transmission" ];
+    serviceConfig.EnvironmentFile = [ "/secret/transmission" ];
     serviceConfig.User = "transmission";
     serviceConfig.ExecStart =
       "${pkgs.transmission}/bin/transmission-daemon --foreground --username $ADMIN --password $PASSWORD";

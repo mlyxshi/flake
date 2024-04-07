@@ -8,7 +8,7 @@
   virtualisation.oci-containers.containers.nodestatus-server = {
     image = "docker.io/cokemine/nodestatus";
     volumes = [ "/var/lib/nodestatus-server:/usr/local/NodeStatus/server" ];
-    environmentFiles = [ "/etc/secret/nodestatus-server" ];
+    environmentFiles = [ "/secret/nodestatus-server" ];
     environment = {
       "VERBOSE" = "false";
       "PING_INTERVAL" = "30";

@@ -10,25 +10,20 @@ let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILTS04ZHanXeTfW+OAGXVxtO+itOwYzEqvhPqqiCbrBx";
 in {
 
-  # services.harmonia = {
-  #   enable = true;
-  #   signKeyPath = "/etc/secret/hydra/nix-store-sign";
-  # };
-
   programs.ssh = {
     knownHosts = { "hydra-x64.mlyxshi.com".publicKey = hydra-x64-publicKey; };
     extraConfig = ''
       Host hydra-x64
         Hostname hydra-x64.mlyxshi.com
         User hydra-builder
-        IdentityFile /etc/secret/hydra/hydra-x64
+        IdentityFile /secret/hydra/hydra-x64
 
       Host tmp-install
         HostName tmp-install.mlyxshi.com
         User root
         ProxyCommand ${pkgs.cloudflared}/bin/cloudflared access ssh --hostname %h
         StrictHostKeyChecking no
-        IdentityFile /etc/secret/ssh/github
+        IdentityFile /secret/ssh/github
     '';
   };
 
@@ -61,7 +56,7 @@ in {
     notificationSender = "hydra@localhost";
     useSubstitutes = true;
     extraConfig = ''
-      include /etc/secret/hydra/github
+      include /secret/hydra/github
       max_output_size = ${builtins.toString (10 * 1024 * 1024 * 1024)}
       <dynamicruncommand>
         enable = 1

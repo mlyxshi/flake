@@ -22,7 +22,7 @@ in {
         before = [ "podman-${service}.service" ];
         unitConfig.ConditionPathExists = "!%S/${service}";
         environment.RESTIC_CACHE_DIR = "%C/restic";
-        serviceConfig.EnvironmentFile = "/etc/secret/restic";
+        serviceConfig.EnvironmentFile = "/secret/restic";
         serviceConfig.ExecSearchPath = "${pkgs.restic}/bin";
         serviceConfig.ExecStart =
           "restic restore latest --path %S/${service}  --target /";
@@ -33,7 +33,7 @@ in {
         environment.RESTIC_CACHE_DIR = "%C/restic";
         serviceConfig = {
           Type = "oneshot";
-          EnvironmentFile = "/etc/secret/restic";
+          EnvironmentFile = "/secret/restic";
           ExecSearchPath = "${pkgs.restic}/bin";
           ExecStart = [
             "restic backup %S/${service}"

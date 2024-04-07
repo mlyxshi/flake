@@ -21,7 +21,7 @@
       DOMAIN =
         "https://password.${config.networking.domain}"; # Yubikey FIDO2 WebAuthn
     };
-    environmentFiles = [ "/etc/secret/vaultwarden" ];
+    environmentFiles = [ "/secret/vaultwarden" ];
     volumes = [ "/var/lib/vaultwarden:/data" ];
     extraOptions = lib.concatMap (x: [ "--label" x ]) [
       "io.containers.autoupdate=registry"
