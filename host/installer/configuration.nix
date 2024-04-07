@@ -13,5 +13,9 @@
   system.disableInstallerTools = lib.mkForce false;
   services.getty.autologinUser = lib.mkForce "root";
 
+  systemd.sysusers.enable = lib.mkForce false;
+  system.etc.overlay.enable = lib.mkForce false;
+
+
   users.users.root.shell = lib.mkForce pkgs.bashInteractive;
 }
