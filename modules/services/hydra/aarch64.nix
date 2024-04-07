@@ -32,6 +32,8 @@ in {
     '';
   };
 
+  environment.systemPackages = with pkgs; [ cloudflared ];
+
   nix.buildMachines = [
     # https://github.com/NixOS/hydra/issues/433#issuecomment-321212080
     {
