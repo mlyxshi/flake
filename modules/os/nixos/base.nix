@@ -7,6 +7,7 @@
   # time.timeZone = "Asia/Tokyo";
   system.etc.overlay.enable = true;
   systemd.sysusers.enable = true;
+  system.etc.overlay.mutable = false;
 
   nix = {
     package = pkgs.nixVersions.unstable;
