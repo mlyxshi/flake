@@ -10,7 +10,7 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.services.telegraf
     ./hardware.nix
     ./keep.nix
-    {
+    ({ pkgs, ... }: {
       nixpkgs.overlays = [ self.overlays.default ];
       nixpkgs.hostPlatform = "aarch64-linux";
       networking.hostName = "jp1";
@@ -18,7 +18,8 @@ nixpkgs.lib.nixosSystem {
 
       home-manager.users.dominic = import ../../home/desktop.nix;
       home-manager.extraSpecialArgs = { inherit plasma-manager; };
-    }
+      environment.systemPackages = with pkgs; [ kdePackages.krdc ];
+    })
   ];
   specialArgs = { inherit self nixpkgs home-manager plasma-manager; };
 }
