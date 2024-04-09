@@ -18,7 +18,7 @@ nixpkgs.lib.nixosSystem {
 
       home-manager.users.dominic = import ../../home/desktop.nix;
       home-manager.extraSpecialArgs = { inherit plasma-manager; };
-      environment.systemPackages = with pkgs; [ kdePackages.krdc ];
+      environment.systemPackages = with pkgs; [ kdePackages.krfb ];
     })
   ];
   specialArgs = { inherit self nixpkgs home-manager plasma-manager; };
