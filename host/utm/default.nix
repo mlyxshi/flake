@@ -18,9 +18,6 @@ nixpkgs.lib.nixosSystem {
       # users.groups.uinput.members =
       #   [ "dominic" ]; # uinput group owns the /uinput
       # users.groups.input.members = [ "dominic" ]; # allow access to /dev/input
-
-      # home-manager.users.dominic = import ../../home/desktop.nix;
-      # home-manager.extraSpecialArgs = { inherit plasma-manager; };
     }
   ];
   specialArgs = { inherit self nixpkgs home-manager; };
