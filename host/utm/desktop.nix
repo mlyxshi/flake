@@ -11,7 +11,7 @@ nixpkgs.lib.nixosSystem {
     {
       nixpkgs.overlays = [ self.overlays.default ];
       nixpkgs.hostPlatform = "aarch64-linux";
-      networking.hostName = "utm";
+      networking.hostName = "utm-desktop";
       services.getty.autologinUser = "root";
 
       hardware.uinput.enable = true;
