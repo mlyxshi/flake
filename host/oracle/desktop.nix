@@ -16,7 +16,7 @@ nixpkgs.lib.nixosSystem {
       networking.hostName = "jp1";
       networking.domain = "mlyxshi.com";
 
-      home-manager.users.dominic = import ../home/desktop.nix;
+      home-manager.users.dominic = import ../../home/desktop.nix;
       home-manager.extraSpecialArgs = { inherit plasma-manager; };
     }
   ];
