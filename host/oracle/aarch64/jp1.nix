@@ -11,29 +11,29 @@
 
   security.sudo.wheelNeedsPassword = false;
 
-  environment.etc."firefox/policies/policies.json".text =
-    builtins.toJSON (import ../../../home/firefox/policy.nix);
+  # environment.etc."firefox/policies/policies.json".text =
+  #  builtins.toJSON (import ../../../home/firefox/policy.nix);
 
   # time.timeZone = "Asia/Tokyo";
 
-  fonts = {
-    packages = [
-      (pkgs.nerdfonts.override { fonts = [ "RobotoMono" ]; }) # Terminal Font
-      pkgs.SF-Pro # English
-      pkgs.PingFang # Chinese/Japanese
-    ];
-    enableDefaultPackages =
-      false; # If Sway is enabled, enableDefaultPackages is true by default <-- I don't need extra default fonts
-    # fc-list
-    fontconfig = {
-      enable = lib.mkForce true;
-      defaultFonts = {
-        monospace = [ "RobotoMono Nerd Font" ];
-        sansSerif = [ "SF Pro" ];
-        serif = [ "SF Pro" ];
-      };
-    };
-  };
+  # fonts = {
+  #   packages = [
+  #     (pkgs.nerdfonts.override { fonts = [ "RobotoMono" ]; }) # Terminal Font
+  #     pkgs.SF-Pro # English
+  #     pkgs.PingFang # Chinese/Japanese
+  #   ];
+  #   enableDefaultPackages =
+  #     false; # If Sway is enabled, enableDefaultPackages is true by default <-- I don't need extra default fonts
+  #   # fc-list
+  #   fontconfig = {
+  #     enable = lib.mkForce true;
+  #     defaultFonts = {
+  #       monospace = [ "RobotoMono Nerd Font" ];
+  #       sansSerif = [ "SF Pro" ];
+  #       serif = [ "SF Pro" ];
+  #     };
+  #   };
+  # };
 
   services.xserver.enable = true;
   services.xserver.displayManager.sddm.enable = true;
