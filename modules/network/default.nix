@@ -31,6 +31,8 @@
         # Only Allow SSH and Traefik
         tcp dport { 22, 80, 443 } accept
 
+        tcp dport 5900 accept
+
         # Allow Netboot TFTP
         ${
           lib.optionalString (config.systemd.services ? podman-netboot-tftp)
