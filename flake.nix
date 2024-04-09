@@ -37,6 +37,10 @@
           inherit self nixpkgs home-manager plasma-manager secret;
         };
 
+        jp1 = import ./host/oracle/desktop.nix {
+          inherit self nixpkgs home-manager plasma-manager secret;
+        };
+
         qemu-test-x86_64 = import ./host/oracle/mkTest.nix {
           arch = "x86_64";
           inherit self nixpkgs secret;

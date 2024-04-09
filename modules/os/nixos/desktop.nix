@@ -18,6 +18,11 @@
 
   # time.timeZone = "Asia/Tokyo";
 
+  environment.systemPackages = with pkgs; [ 
+    kdePackages.krdc 
+    kdePackages.krfb
+  ];
+
   fonts = {
     packages = [
       (pkgs.nerdfonts.override { fonts = [ "RobotoMono" ]; }) # Terminal Font
