@@ -39,5 +39,5 @@
   services.xserver.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
 
-  home-manager.users.dominic = import ../../home/desktop.nix;
+  home-manager.users.dominic = import ../../../home/desktop.nix;
 }
