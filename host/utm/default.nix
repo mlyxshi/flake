@@ -4,7 +4,7 @@ nixpkgs.lib.nixosSystem {
   modules = [
     secret.nixosModules.default
     self.nixosModules.home-manager
-    self.nixosModules.os.nixos.server
+    self.nixosModules.os.nixos.desktop
     self.nixosModules.network
     ./hardware.nix
     ./misc.nix
