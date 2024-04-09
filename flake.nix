@@ -29,7 +29,11 @@
       darwinConfigurations.M1 =
         import ./host/M1 { inherit self nixpkgs darwin; };
       nixosConfigurations = {
-        utm = import ./host/utm {
+        utm-server = import ./host/utm/server.nix {
+          inherit self nixpkgs secret home-manager;
+        };
+
+        utm-desktop = import ./host/utm/desktop.nix {
           inherit self nixpkgs home-manager plasma-manager secret;
         };
 
