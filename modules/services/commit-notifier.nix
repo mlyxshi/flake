@@ -21,7 +21,7 @@
   };
 
   systemd.tmpfiles.settings."10-commit-notifier" = {
-    "/var/lib/commit-notifier/337000294".d = { };
+    "/var/lib/commit-notifier/337000294/nixpkgs".d = { };
   };
 
 }
