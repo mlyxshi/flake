@@ -1,5 +1,7 @@
 { self, pkgs, lib, config, ... }: {
-  imports = [ ];
+  imports = [ 
+   self.nixosModules.services.commit-notifier
+  ];
 
   environment.systemPackages = with pkgs; [
     nix-index
