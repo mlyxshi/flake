@@ -6,8 +6,8 @@
     path = [ pkgs.git ];
     serviceConfig.EnvironmentFile = [ "/secret/commit-notifier" ];
     serviceConfig.ExecStart = ''
-      /root/.nix-profile/bin/commit-notifier --working-dir /var/lib/commit-notifier/  --cron "0 */5 * * * *"'';
-    serviceConfig.StateDirectory = "commit-notifier";
+      /root/.nix-profile/bin/commit-notifier --working-dir /var/lib/commit-notifier/  --cron '0 */5 * * * *'
+    '';
   };
 
   # Too many flake input will add to my config if add linyinfeng/commit-notifier to my config
