@@ -3,11 +3,10 @@
     after = [ "commit-notifier-install.service" ];
     wantedBy = [ "multi-user.target" ];
     environment.RUST_LOG = "info";
+    path = [ pkgs.git ];
     serviceConfig.EnvironmentFile = [ "/secret/commit-notifier" ];
-    script = ''
-      mkdir -p /var/lib/commit-notifier/337000294
-      /root/.nix-profile/bin/commit-notifier --working-dir /var/lib/commit-notifier/  --cron '0 */5 * * * *'
-    '';
+    serviceConfig.ExecStart = ''
+      /root/.nix-profile/bin/commit-notifier --working-dir /var/lib/commit-notifier/  --cron "0 */5 * * * *"'';
     serviceConfig.StateDirectory = "commit-notifier";
   };
 
@@ -22,4 +21,9 @@
     serviceConfig.ExecStart =
       "/run/current-system/sw/bin/nix profile install github:linyinfeng/commit-notifier#commit-notifier";
   };
+
+  systemd.tmpfiles.settings."10-commit-notifier" = {
+    "/var/lib/commit-notifier/337000294/".d = { };
+  };
+
 }
