@@ -4,8 +4,11 @@
     wantedBy = [ "multi-user.target" ];
     environment.RUST_LOG = "info";
     serviceConfig.EnvironmentFile = [ "/secret/commit-notifier" ];
-    serviceConfig.ExecStart = ''
-      /root/.nix-profile/bin/commit-notifier --working-dir /var/lib/commit-notifier/  --cron "0 */5 * * * *"'';
+    script = ''
+      mkdir -p /var/lib/commit-notifier/337000294
+      /root/.nix-profile/bin/commit-notifier --working-dir /var/lib/commit-notifier/  --cron '0 */5 * * * *'
+    '';
+    serviceConfig.StateDirectory = "commit-notifier";
   };
 
   # Too many flake input will add to my config if add linyinfeng/commit-notifier to my config
@@ -19,9 +22,4 @@
     serviceConfig.ExecStart =
       "/run/current-system/sw/bin/nix profile install github:linyinfeng/commit-notifier#commit-notifier";
   };
-
-  systemd.tmpfiles.settings."10-commit-notifier" = {
-    "/var/lib/commit-notifier/337000294/nixpkgs".d = { };
-  };
-
 }
