@@ -31,7 +31,11 @@
         # Only Allow SSH and Traefik
         tcp dport { 22, 80, 443 } accept
 
-        tcp dport 5900 accept
+        # Allow vnc server
+        ${
+          lib.optionalString config.services.desktopManager.plasma6.enable
+          "tcp dport 5900 accept"
+        }
 
         # Allow Netboot TFTP
         ${

@@ -19,8 +19,7 @@
   # time.timeZone = "Asia/Tokyo";
 
   environment.systemPackages = with pkgs; [ 
-    kdePackages.krdc 
-    kdePackages.krfb
+    kdePackages.krfb # kde vnc server
   ];
 
   fonts = {
