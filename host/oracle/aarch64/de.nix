@@ -1,6 +1,6 @@
 { self, pkgs, lib, config, ... }: {
   imports = [ 
-   self.nixosModules.services.commit-notifier
+    self.nixosModules.services.commit-notifier
   ];
 
   environment.systemPackages = with pkgs; [
