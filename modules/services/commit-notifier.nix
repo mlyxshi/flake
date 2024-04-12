@@ -1,3 +1,5 @@
+# /notifier repo-add nixpkgs https://github.com/NixOS/nixpkgs
+# /notifier repo-edit nixpkgs —branch-regex "master|nixos-unstable|nixos-unstable-small"
 { pkgs, lib, config, ... }: {
   systemd.services.commit-notifier = {
     after = [ "commit-notifier-install.service" ];
