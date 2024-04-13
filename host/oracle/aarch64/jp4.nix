@@ -4,7 +4,7 @@
 
     # self.nixosModules.containers.navidrome
 
-    self.nixosModules.services.backup-template
+    self.nixosModules.containers.podman
     self.nixosModules.containers.jellyfin
     #self.nixosModules.containers.change-detection
 

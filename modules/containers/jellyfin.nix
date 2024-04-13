@@ -1,8 +1,6 @@
 # https://jellyfin-plugin-bangumi.pages.dev/repository.json
 { config, pkgs, lib, self, ... }: {
 
-  imports = [ self.nixosModules.containers.podman ];
-
   virtualisation.oci-containers.containers.jellyfin = {
     image = "ghcr.io/linuxserver/jellyfin";
     volumes = [ "/var/lib/jellyfin:/config" "/var/lib/media:/var/lib/media" ];
@@ -30,6 +28,7 @@
 
 
   systemd.services."backup-init@jellyfin".wantedBy = [ "multi-user.target" ];
+  systemd.services."backup-init@jellyfin".startAt = "05:00";
   systemd.services."backup-init@jellyfin".overrideStrategy = "asDropin";
 
   systemd.services."backup@jellyfin".wantedBy = [ "multi-user.target" ];
