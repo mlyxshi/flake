@@ -28,9 +28,9 @@
 
 
   systemd.services."backup-init@jellyfin".wantedBy = [ "multi-user.target" ];
-  systemd.services."backup-init@jellyfin".startAt = "05:00";
   systemd.services."backup-init@jellyfin".overrideStrategy = "asDropin";
 
   systemd.services."backup@jellyfin".wantedBy = [ "multi-user.target" ];
+  systemd.services."backup@jellyfin".startAt = "05:00";
   systemd.services."backup@jellyfin".overrideStrategy = "asDropin";
 }
