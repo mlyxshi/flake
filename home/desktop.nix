@@ -1,11 +1,11 @@
 { pkgs, lib, config, self, ... }: {
 
-  imports = [ 
-    ./. 
-    ./firefox 
-    ./mpv.nix 
+  imports = [
+    ./.
+    ./firefox
+    ./mpv.nix
     #./xremap.nix 
-    ./kde.nix 
+    ./kde.nix
   ];
 
   nixpkgs.overlays = [ self.overlays.default ];

@@ -1,4 +1,4 @@
-# use oracle vnc console to bootstrap 
+# use oracle vnc console to bootstrap
 # add autostart app krfb
 # enegry saving: turn off screen OFF
 # Wait Fix: https://discuss.kde.org/t/krfb-on-wayland-have-to-confirm-remote-control-requested/2650

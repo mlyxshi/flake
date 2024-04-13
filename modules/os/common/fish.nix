@@ -10,17 +10,16 @@
       man = "batman";
       P = "echo $PATH";
       nixpkgs = "hx ${nixpkgs}";
-    } // lib.optionalAttrs pkgs.stdenv.isDarwin {
-      sshr = "ssh-keygen -R";
-    } // lib.optionalAttrs pkgs.stdenv.isLinux {
-      sall = "systemctl list-units";
-      slist = "systemctl list-units --type=service";
-      stimer = "systemctl list-timers";
-      sstat = "systemctl status";
-      scat = "systemctl cat";
-      slog = "journalctl -u";
-      ip = "ip --color=auto";
-    };
+    } // lib.optionalAttrs pkgs.stdenv.isDarwin { sshr = "ssh-keygen -R"; }
+      // lib.optionalAttrs pkgs.stdenv.isLinux {
+        sall = "systemctl list-units";
+        slist = "systemctl list-units --type=service";
+        stimer = "systemctl list-timers";
+        sstat = "systemctl status";
+        scat = "systemctl cat";
+        slog = "journalctl -u";
+        ip = "ip --color=auto";
+      };
 
     shellInit = ''
       set -U fish_greeting

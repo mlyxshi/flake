@@ -1,6 +1,6 @@
 { self, config, pkgs, lib, ... }: {
-  imports = [ 
+  imports = [
     self.nixosModules.containers.podman
-    self.nixosModules.containers.vaultwarden 
+    self.nixosModules.containers.vaultwarden
   ];
 }

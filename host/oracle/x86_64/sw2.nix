@@ -1,6 +1,6 @@
 { self, config, pkgs, lib, ... }: {
-  imports = [ 
+  imports = [
     self.nixosModules.containers.podman
-    self.nixosModules.containers.nodestatus-server 
+    self.nixosModules.containers.nodestatus-server
   ];
 }

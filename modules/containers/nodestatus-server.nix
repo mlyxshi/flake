@@ -24,10 +24,13 @@
     ];
   };
 
-  systemd.services."backup-init@nodestatus-server".wantedBy = [ "multi-user.target" ];
-  systemd.services."backup-init@nodestatus-server".overrideStrategy = "asDropin";
+  systemd.services."backup-init@nodestatus-server".wantedBy =
+    [ "multi-user.target" ];
+  systemd.services."backup-init@nodestatus-server".overrideStrategy =
+    "asDropin";
 
-  systemd.services."backup@nodestatus-server".wantedBy = [ "multi-user.target" ];
+  systemd.services."backup@nodestatus-server".wantedBy =
+    [ "multi-user.target" ];
   systemd.services."backup@nodestatus-server".startAt = "04:00";
   systemd.services."backup@nodestatus-server".overrideStrategy = "asDropin";
 }

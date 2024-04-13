@@ -18,9 +18,10 @@
 
   # time.timeZone = "Asia/Tokyo";
 
-  environment.systemPackages = with pkgs; [ 
-    kdePackages.krfb # kde vnc server
-  ];
+  environment.systemPackages = with pkgs;
+    [
+      kdePackages.krfb # kde vnc server
+    ];
 
   fonts = {
     packages = [
@@ -41,11 +42,9 @@
     };
   };
 
-
   services.displayManager.sddm.enable = true;
   services.displayManager.sddm.wayland.enable = true;
   services.desktopManager.plasma6.enable = true;
-
 
   services.flatpak.enable = true;
 

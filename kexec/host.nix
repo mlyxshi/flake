@@ -1,8 +1,6 @@
 { config, pkgs, lib, ... }:
-let 
-kernelTarget = pkgs.hostPlatform.linux-kernel.target;
-in 
-{
+let kernelTarget = pkgs.hostPlatform.linux-kernel.target;
+in {
   networking.hostName = "systemd-initrd";
 
   fileSystems."/" = {

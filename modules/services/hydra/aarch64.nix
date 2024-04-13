@@ -27,7 +27,6 @@ in {
     '';
   };
 
-
   nix.buildMachines = [
     # https://github.com/NixOS/hydra/issues/433#issuecomment-321212080
     {

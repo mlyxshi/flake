@@ -25,7 +25,7 @@ let
 in {
 
   environment.systemPackages = with pkgs; [ install-aarch64 gh ];
-  
+
   programs.ssh = {
     extraConfig = ''
       Host tmp-install
@@ -36,6 +36,5 @@ in {
         IdentityFile /secret/ssh/github
     '';
   };
-
 
 }
