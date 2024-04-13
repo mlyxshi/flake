@@ -2,5 +2,8 @@
   # portal enabled firewall
   networking.nftables.enable = lib.mkForce false;
 
-  imports = [ self.nixosModules.containers.miniflux ];
+  imports = [ 
+    self.nixosModules.containers.podman
+    self.nixosModules.containers.miniflux 
+  ];
 }

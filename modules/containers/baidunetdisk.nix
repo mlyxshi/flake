@@ -1,6 +1,4 @@
-{ config, pkgs, lib, self, ... }: {
-
-  imports = [ self.nixosModules.containers.podman ];
+{ config, pkgs, lib, ... }: {
 
   virtualisation.oci-containers.containers.baidunetdisk = {
     image = "docker.io/emuqi/baidunetdisk-arm64-vnc";

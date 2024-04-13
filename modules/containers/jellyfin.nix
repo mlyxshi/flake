@@ -1,5 +1,5 @@
 # https://jellyfin-plugin-bangumi.pages.dev/repository.json
-{ config, pkgs, lib, self, ... }: {
+{ config, pkgs, lib, ... }: {
 
   virtualisation.oci-containers.containers.jellyfin = {
     image = "ghcr.io/linuxserver/jellyfin";
@@ -18,7 +18,7 @@
     ];
   };
 
-  #  Transmission will download anime to /var/lib/media
+  #  Transmission will download rss anime to /var/lib/media
   systemd.tmpfiles.settings."10-transmission" = {
     "/var/lib/media/".d = {
       user = "transmission";

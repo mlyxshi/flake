@@ -1,8 +1,4 @@
-{ config, pkgs, lib, self, ... }: {
-
-  imports = [ self.nixosModules.containers.podman ];
-
-  backup.changedetection = true;
+{ config, pkgs, lib, ... }: {
 
   virtualisation.oci-containers.containers.changedetection = {
     image = "ghcr.io/dgtlmoon/changedetection.io";
@@ -18,8 +14,15 @@
   };
 
   virtualisation.oci-containers.containers.chrome-headless = {
-    image = "ghcr.io/browserless/chrome";
+    image = "ghcr.io/browserless/chromium";
     extraOptions = lib.concatMap (x: [ "--label" x ])
       [ "io.containers.autoupdate=registry" ];
   };
+
+  systemd.services."backup-init@changedetection".wantedBy = [ "multi-user.target" ];
+  systemd.services."backup-init@changedetection".overrideStrategy = "asDropin";
+
+  systemd.services."backup@changedetection".wantedBy = [ "multi-user.target" ];
+  systemd.services."backup@changedetection".startAt = "08:00";
+  systemd.services."backup@changedetection".overrideStrategy = "asDropin";
 }

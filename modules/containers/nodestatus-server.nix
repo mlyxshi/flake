@@ -1,6 +1,4 @@
-{ pkgs, lib, config, self, ... }: {
-
-  imports =[ self.nixosModules.containers.podman ];
+{ pkgs, lib, config, ... }: {
 
   virtualisation.oci-containers.containers.nodestatus-server = {
     image = "docker.io/cokemine/nodestatus";
@@ -30,5 +28,6 @@
   systemd.services."backup-init@nodestatus-server".overrideStrategy = "asDropin";
 
   systemd.services."backup@nodestatus-server".wantedBy = [ "multi-user.target" ];
+  systemd.services."backup@nodestatus-server".startAt = "04:00";
   systemd.services."backup@nodestatus-server".overrideStrategy = "asDropin";
 }

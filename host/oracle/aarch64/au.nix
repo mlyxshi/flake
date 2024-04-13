@@ -1,4 +1,6 @@
 { self, config, pkgs, lib, ... }: {
-  imports = [ self.nixosModules.services.prometheus ];
+  imports = [ 
+    self.nixosModules.services.prometheus
+  ];
 
 }

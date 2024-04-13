@@ -1,10 +1,18 @@
-{ config, pkgs, lib, self, ... }: {
+{ config, pkgs, lib, ... }: {
 
-  imports =
-    [ self.nixosModules.containers.podman self.nixosModules.services.backup ];
+  systemd.services."backup-init@miniflux-postgres".wantedBy = [ "multi-user.target" ];
+  systemd.services."backup-init@miniflux-postgres".overrideStrategy = "asDropin";
 
-  backup.miniflux-postgres = true;
-  backup.miniflux-silent-postgres = true;
+  systemd.services."backup@miniflux-postgres".wantedBy = [ "multi-user.target" ];
+  systemd.services."backup@miniflux-postgres".startAt = "09:00";
+  systemd.services."backup@miniflux-postgres".overrideStrategy = "asDropin";
+
+  systemd.services."backup-init@miniflux-silent-postgres".wantedBy = [ "multi-user.target" ];
+  systemd.services."backup-init@miniflux-silent-postgres".overrideStrategy = "asDropin";
+
+  systemd.services."backup@miniflux-silent-postgres".wantedBy = [ "multi-user.target" ];
+  systemd.services."backup@miniflux-silent-postgres".startAt = "10:00";
+  systemd.services."backup@miniflux-silent-postgres".overrideStrategy = "asDropin";
 
   virtualisation.oci-containers.containers.miniflux = {
     image = "ghcr.io/miniflux/miniflux";

@@ -1,18 +1,6 @@
 { config, pkgs, lib, self, ... }: {
 
-  imports =
-    [ self.nixosModules.containers.podman self.nixosModules.services.backup ];
-
-  backup.vaultwarden = true;
-
   # https://github.com/dani-garcia/vaultwarden/pull/3304
-  # sops.secrets."vaultwarden/id" = { };
-  # sops.secrets."vaultwarden/key" = { };
-  # sops.templates.vaultwarden.content = ''
-  #   PUSH_ENABLED=true
-  #   PUSH_INSTALLATION_ID=${config.sops.placeholder."vaultwarden/id"}
-  #   PUSH_INSTALLATION_KEY=${config.sops.placeholder."vaultwarden/key"}
-  # '';
 
   virtualisation.oci-containers.containers.vaultwarden = {
     image = "ghcr.io/dani-garcia/vaultwarden";
@@ -30,4 +18,11 @@
       "traefik.http.routers.vaultwarden.entrypoints=websecure"
     ];
   };
+
+  systemd.services."backup-init@vaultwarden".wantedBy = [ "multi-user.target" ];
+  systemd.services."backup-init@vaultwarden".overrideStrategy = "asDropin";
+
+  systemd.services."backup@vaultwarden".wantedBy = [ "multi-user.target" ];
+  systemd.services."backup@vaultwarden".startAt = "06:00";
+  systemd.services."backup@vaultwarden".overrideStrategy = "asDropin";
 }
