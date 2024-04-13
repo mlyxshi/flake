@@ -1,7 +1,6 @@
 {
   inputs = {
-    # nixpkgs.url = "github:mlyxshi/nixpkgs/add-systemd-resolved";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
     secret.url = "git+ssh://git@github.com/mlyxshi/secret";
 
     home-manager.url = "github:nix-community/home-manager";

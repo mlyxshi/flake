@@ -49,7 +49,5 @@
 
   services.flatpak.enable = true;
 
-  networking.networkmanager.enable = true;
-
-  hardware.bluetooth.enable = true;
+  # networking.networkmanager.enable = true;
 }

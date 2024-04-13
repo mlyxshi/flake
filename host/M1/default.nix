@@ -7,7 +7,7 @@ darwin.lib.darwinSystem {
     {
       nixpkgs.overlays = [ self.overlays.default ];
       networking.hostName = "M1";
-      security.pam.enableSudoTouchIdAuth = true;
+      # security.pam.enableSudoTouchIdAuth = true;
     }
   ];
   specialArgs = { inherit self nixpkgs; };

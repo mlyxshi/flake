@@ -13,6 +13,7 @@
       nix-tree
       nix-init
       nix-update
+      nix-inspect
       nixfmt
       joshuto
       helix

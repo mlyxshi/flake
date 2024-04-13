@@ -3,8 +3,6 @@
 
   imports = [ self.nixosModules.containers.podman ];
 
-  backup.jellyfin = true;
-
   virtualisation.oci-containers.containers.jellyfin = {
     image = "ghcr.io/linuxserver/jellyfin";
     volumes = [ "/var/lib/jellyfin:/config" "/var/lib/media:/var/lib/media" ];
@@ -22,13 +20,18 @@
     ];
   };
 
-  systemd.services.media-init = {
-    before = [ "transmission.service" "podman-jellyfin.service" ];
-    unitConfig.ConditionPathExists = "!%S/media";
-    serviceConfig.User = "transmission";
-    serviceConfig.ExecStart =
-      "echo"; # dummy command to make StateDirectory work
-    serviceConfig.StateDirectory = "media";
-    wantedBy = [ "multi-user.target" ];
+  #  Transmission will download anime to /var/lib/media
+  systemd.tmpfiles.settings."10-transmission" = {
+    "/var/lib/media/".d = {
+      user = "transmission";
+      group = "transmission";
+    };
   };
+
+
+  systemd.services."backup-init@jellyfin".wantedBy = [ "multi-user.target" ];
+  systemd.services."backup-init@jellyfin".overrideStrategy = "asDropin";
+
+  systemd.services."backup@jellyfin".wantedBy = [ "multi-user.target" ];
+  systemd.services."backup@jellyfin".overrideStrategy = "asDropin";
 }

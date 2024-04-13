@@ -2,9 +2,9 @@
   imports = [
     self.nixosModules.services.transmission
 
-    self.nixosModules.containers.navidrome
+    # self.nixosModules.containers.navidrome
 
-    self.nixosModules.services.backup
+    self.nixosModules.services.backup-template
     self.nixosModules.containers.jellyfin
     #self.nixosModules.containers.change-detection
 
