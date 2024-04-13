@@ -14,7 +14,7 @@
       nix-init
       nix-update
       nix-inspect
-      nixfmt
+      nixpkgs-fmt
       joshuto
       helix
       nil

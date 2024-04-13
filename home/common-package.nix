@@ -10,7 +10,7 @@
     git
     zoxide
     nil
-    nixfmt
+    nixpkgs-fmt
     htop
     fd
     ripgrep
