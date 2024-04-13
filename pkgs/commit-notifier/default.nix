@@ -10,7 +10,7 @@ rustPlatform.buildRustPackage {
     sha256 = "sha256-gnYsTbppEiB9Tk9eUdmUWiwxtR6pwJwaLic768ayNx4=";
   });
 
-  cargoSha256 = "sha256-QUlGzDP0RE4BquLDS1kSboAeV/BaHP6OC6hQ1big4/w=";
+  cargoSha256 = "sha256-rGabRsQMC9TwiPbxOXDigMnGWy4SN1z1Vkcv1vPPLmU=";
 
   buildInputs = [ openssl sqlite ];
 
