@@ -5,7 +5,7 @@ darwin.lib.darwinSystem {
   modules = [
     self.nixosModules.os.darwin
     {
-      nixpkgs.overlays = [ self.overlays.default ];
+      # nixpkgs.overlays = [ self.overlays.default ];
       networking.hostName = "M1";
       # security.pam.enableSudoTouchIdAuth = true;
     }

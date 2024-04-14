@@ -13,7 +13,7 @@
     environment.RESTIC_CACHE_DIR = "%C/restic";
     serviceConfig.EnvironmentFile = "/secret/restic";
     serviceConfig.ExecStart =
-      "${pkgs.restic}/bin restore latest --path %S/%i  --target /";
+      "${pkgs.restic}/bin/restic restore latest --path %S/%i  --target /";
   };
 
   systemd.services."backup@" = {

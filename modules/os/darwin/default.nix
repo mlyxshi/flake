@@ -27,7 +27,7 @@
   ];
 
   nix = {
-    # package = pkgs.nixVersions.unstable;
+    package = pkgs.nixVersions.unstable;
     registry.nixpkgs.flake = nixpkgs;
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
@@ -43,12 +43,12 @@
     #   "all_proxy" = "socks5://127.0.0.1:1080";
     # };
 
-    linux-builder.enable = true;
-    linux-builder.maxJobs = 8;
-    linux-builder.config = {
-      virtualisation.darwin-builder.memorySize = 8 * 1024;
-      virtualisation.cores = 8;
-    };
+    # linux-builder.enable = true;
+    # linux-builder.maxJobs = 8;
+    # linux-builder.config = {
+    #   virtualisation.darwin-builder.memorySize = 8 * 1024;
+    #   virtualisation.cores = 8;
+    # };
   };
 
   services.nix-daemon.enable = true;
