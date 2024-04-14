@@ -38,6 +38,8 @@ jobs:
           sudo cloudflared service install ${{ secrets.CLOUDFLARED_TUNNEL }}
         else
           brew install cloudflared
+          sudo mv /etc/nix/nix.conf /etc/nix/nix.conf.before-nix-darwin   
+          nix run --extra-experimental-features "nix-command flakes" nix-darwin -- switch --flake /Users/runner/work/flake/flake#github-action-darwin
         fi
     - run: | 
         if [ ${{ inputs.os }} == "ubuntu-latest" ]; then
