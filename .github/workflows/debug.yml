@@ -58,8 +58,10 @@ jobs:
         fi
 
     # - run: sleep 7200
-    - run: nix build /Users/runner/work/flake/flake#darwinConfigurations.M1.system
+
     - uses: cachix/cachix-action@v14
       with:
         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
         name: mlyxshi
+    
+    - run: nix build /Users/runner/work/flake/flake#darwinConfigurations.M1.system
