@@ -26,13 +26,12 @@
         (name: prev.callPackage ./pkgs/${name} { });
       nixosModules = mkFileHierarchyAttrset ./. "modules";
       darwinConfigurations.M1 =
-        import ./host/M1 { inherit self nixpkgs darwin; };
+        import ./host/darwin/M1.nix { inherit self nixpkgs darwin; };
       darwinConfigurations.github-action-darwin = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
-          ./github-action-darwin.nix
+          ./host/darwin/github-action-darwin.nix
         ];
-        specialArgs = { inherit self nixpkgs; };
       };
       nixosConfigurations = {
         utm-server = import ./host/utm/server.nix {
