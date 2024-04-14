@@ -27,8 +27,13 @@
       nixosModules = mkFileHierarchyAttrset ./. "modules";
       darwinConfigurations.M1 =
         import ./host/M1 { inherit self nixpkgs darwin; };
-      darwinConfigurations.github-action-darwin =
-        import ./github-action-darwin.nix { inherit self nixpkgs darwin; };
+      darwinConfigurations.github-action-darwin = darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        modules = [
+          ./github-action-darwin.nix
+        ];
+        specialArgs = { inherit self nixpkgs; };
+      };
       nixosConfigurations = {
         utm-server = import ./host/utm/server.nix {
           inherit self nixpkgs secret home-manager;
@@ -124,8 +129,10 @@
           nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/${name} { });
       };
 
-      formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixpkgs-fmt;
-      formatter.aarch64-linux = nixpkgs.legacyPackages.aarch64-linux.nixpkgs-fmt;
+      formatter.aarch64-darwin =
+        nixpkgs.legacyPackages.aarch64-darwin.nixpkgs-fmt;
+      formatter.aarch64-linux =
+        nixpkgs.legacyPackages.aarch64-linux.nixpkgs-fmt;
 
       hydraJobs = {
         kexec-x86_64 =
