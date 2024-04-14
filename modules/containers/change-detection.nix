@@ -23,7 +23,6 @@
     [ "multi-user.target" ];
   systemd.services."backup-init@changedetection".overrideStrategy = "asDropin";
 
-  systemd.services."backup@changedetection".wantedBy = [ "multi-user.target" ];
   systemd.services."backup@changedetection".startAt = "08:00";
   systemd.services."backup@changedetection".overrideStrategy = "asDropin";
 }

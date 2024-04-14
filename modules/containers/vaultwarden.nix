@@ -22,7 +22,6 @@
   systemd.services."backup-init@vaultwarden".wantedBy = [ "multi-user.target" ];
   systemd.services."backup-init@vaultwarden".overrideStrategy = "asDropin";
 
-  systemd.services."backup@vaultwarden".wantedBy = [ "multi-user.target" ];
   systemd.services."backup@vaultwarden".startAt = "06:00";
   systemd.services."backup@vaultwarden".overrideStrategy = "asDropin";
 }
