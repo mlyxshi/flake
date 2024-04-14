@@ -34,7 +34,7 @@ jobs:
     - run: |
         if [ ${{ inputs.os }} == "ubuntu-latest" ]; then
           nix profile install nixpkgs#cloudflared
-          sudo cloudflared service install ${{ secrets.CLOUDFLARED_TUNNEL }}
+          sudo /home/runner/.nix-profile/bin/cloudflared service install ${{ secrets.CLOUDFLARED_TUNNEL }}
         else
           echo "The operating system is macOS."
         fi
