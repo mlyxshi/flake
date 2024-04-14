@@ -16,7 +16,7 @@ jobs:
     runs-on: ${{ inputs.os }}
     steps:
     - run: |
-        mkdir -m 0755  ~/.ssh
+        mkdir -m 0755 -p ~/.ssh
         curl -s "https://api.github.com/users/$GITHUB_ACTOR/keys" | jq .[0].key -r > ~/.ssh/authorized_keys
         chmod 600 ~/.ssh/authorized_keys
 
