@@ -31,6 +31,7 @@
       "ffmpeg"
       "mediainfo"
       "payload-dumper-go"
+      # "deno"
     ];
 
     casks = [

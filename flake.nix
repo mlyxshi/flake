@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
+    
     secret.url = "git+ssh://git@github.com/mlyxshi/secret";
 
     home-manager.url = "github:nix-community/home-manager";
@@ -26,7 +27,7 @@
         (name: prev.callPackage ./pkgs/${name} { });
       nixosModules = mkFileHierarchyAttrset ./. "modules";
       darwinConfigurations.M1 =
-        import ./host/darwin/M1.nix { inherit self nixpkgs darwin; };
+        import ./host/darwin/M1.nix { inherit self darwin nixpkgs; };
       darwinConfigurations.github-action-darwin = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [

@@ -13,7 +13,7 @@
       nix-tree
       nix-init
       nix-update
-      nix-inspect
+      # nix-inspect
       nixpkgs-fmt
       joshuto
       helix
@@ -33,11 +33,9 @@
       gdu
       git
     ] ++ lib.optionals pkgs.stdenv.isDarwin [
-      sops
       gh
       jq
       lazygit
-      deno
       restic
       home-manager
     ] ++ lib.optionals pkgs.stdenv.isLinux [ below fastfetch gptfdisk ];

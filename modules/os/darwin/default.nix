@@ -27,7 +27,7 @@
   ];
 
   nix = {
-    package = pkgs.nixVersions.unstable;
+    # package = pkgs.nixVersions.unstable;
     registry.nixpkgs.flake = nixpkgs;
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
@@ -46,7 +46,7 @@
     linux-builder.enable = true;
     linux-builder.maxJobs = 8;
     linux-builder.config = {
-      virtualisation.darwin-builder.memorySize = 16 * 1024;
+      virtualisation.darwin-builder.memorySize = 8 * 1024;
       virtualisation.cores = 8;
     };
   };
