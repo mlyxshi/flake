@@ -51,7 +51,7 @@ jobs:
           nix run .#homeConfigurations.github-action.activationPackage
           mkdir -p  ~/.local/bin/ && ln -s ~/.nix-profile/bin/joshuto  ~/.local/bin/r
         else
-          
+          echo "macOS"
         fi
 
     - run: sleep 7200
