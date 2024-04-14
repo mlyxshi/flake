@@ -24,13 +24,12 @@ jobs:
         chmod 600 ~/.ssh/id_ed25519
         
         # macOS  ~/.ssh/config
-        if [ ${{ inputs.os }} == "ubuntu-latest" ]; then
-          cat > ~/.ssh/ssh_config <<EOF
-          Host github.com
-            User git
-            IdentityFile ~/.ssh/id_ed25519
-          EOF
-        fi
+        cat > ~/.ssh/ssh_config <<EOF
+        Host github.com
+          User git
+          IdentityFile ~/.ssh/id_ed25519
+        EOF
+        
 
     - uses: actions/checkout@master
     - uses: DeterminateSystems/nix-installer-action@main
