@@ -22,7 +22,8 @@ jobs:
 
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
-
+        
+        # macOS  ~/.ssh/config
         if [ ${{ inputs.os }} == "ubuntu-latest" ]; then
           cat > ~/.ssh/ssh_config <<EOF
           Host github.com
