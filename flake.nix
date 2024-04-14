@@ -28,7 +28,7 @@
       darwinConfigurations.M1 =
         import ./host/M1 { inherit self nixpkgs darwin; };
       darwinConfigurations.github-action-darwin =
-        import ./github-action-darwin { inherit self nixpkgs darwin; };
+        import ./github-action-darwin.nix { inherit self nixpkgs darwin; };
       nixosConfigurations = {
         utm-server = import ./host/utm/server.nix {
           inherit self nixpkgs secret home-manager;
