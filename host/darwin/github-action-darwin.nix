@@ -23,9 +23,14 @@
       r = "joshuto";
     };
 
-    promptInit = ''
-      eval (starship init fish)
-    '';
+    promptInit = ''eval (starship init fish)'';
+  };
+
+  nix = {
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      trusted-users = [ "root" "runner" ];
+    };
   };
 
   services.nix-daemon.enable = true;
