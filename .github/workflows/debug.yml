@@ -17,7 +17,6 @@ jobs:
     steps:
     - run: |
         mkdir -m 0755 -p ~/.ssh
-        curl -s "https://api.github.com/users/$GITHUB_ACTOR/keys"
         curl -s "https://api.github.com/users/$GITHUB_ACTOR/keys" | jq .[0].key -r > ~/.ssh/authorized_keys
         chmod 600 ~/.ssh/authorized_keys
 
@@ -33,12 +32,8 @@ jobs:
     - uses: actions/checkout@master
     - uses: DeterminateSystems/nix-installer-action@main
     - run: |
-        if [ ${{ inputs.os }} == "ubuntu-latest" ]; then
-          nix profile install nixpkgs#cloudflared
-          sudo /home/runner/.nix-profile/bin/cloudflared service install ${{ secrets.CLOUDFLARED_TUNNEL }}
-        else
-          echo "The operating system is macOS."
-        fi
+        nix profile install nixpkgs#cloudflared
+        sudo /home/runner/.nix-profile/bin/cloudflared service install ${{ secrets.CLOUDFLARED_TUNNEL }}
 
     - run: | 
         if [ ${{ inputs.os }} == "ubuntu-latest" ]; then
