@@ -28,19 +28,16 @@ jobs:
           User git
           IdentityFile ~/.ssh/id_ed25519
         EOF
-    
+
+    - uses: actions/checkout@master
+    - uses: DeterminateSystems/nix-installer-action@main
     - run: |
         if [ ${{ inputs.os }} == "ubuntu-latest" ]; then
-          curl -L --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb  
-          sudo dpkg -i cloudflared.deb 
+          nix profile install nixpkgs#cloudflared
           sudo cloudflared service install ${{ secrets.CLOUDFLARED_TUNNEL }}
         else
           echo "The operating system is macOS."
         fi
-
-    
-    - uses: actions/checkout@master
-    - uses: DeterminateSystems/nix-installer-action@main
 
     - run: | 
         if [ ${{ inputs.os }} == "ubuntu-latest" ]; then
@@ -54,6 +51,7 @@ jobs:
     # github workflow do not support alias, use symlink instead
     # - run: mkdir -p  ~/.local/bin/ && ln -s ~/.nix-profile/bin/joshuto  ~/.local/bin/r
 
-    - run: |
-        sleep 2h
+    # 2 hours
+    - run: sleep 7200
+
 
