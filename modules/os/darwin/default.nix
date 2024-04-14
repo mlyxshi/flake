@@ -8,6 +8,9 @@
   ];
 
   users.users.dominic.home = "/Users/dominic";
+  users.users.dominic.openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe"
+  ];
 
   environment.systemPackages = [
     (pkgs.writeShellScriptBin "update" ''
@@ -43,7 +46,7 @@
     #   "all_proxy" = "socks5://127.0.0.1:1080";
     # };
 
-    # linux-builder.enable = true;
+    linux-builder.enable = true;
     # linux-builder.maxJobs = 8;
     # linux-builder.config = {
     #   virtualisation.darwin-builder.memorySize = 8 * 1024;

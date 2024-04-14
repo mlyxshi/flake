@@ -38,7 +38,7 @@
       "orbstack"
       "ubiquiti-unifi-controller"
       "betterdisplay"
-      "mpv"
+      "stolendata-mpv"
       "proxyman"
       "sloth"
       "yubico-yubikey-manager"
