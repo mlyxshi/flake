@@ -32,9 +32,13 @@ jobs:
     - uses: actions/checkout@master
     - uses: DeterminateSystems/nix-installer-action@main
     - run: |
-        nix profile install nixpkgs#cloudflared
-        sudo /home/runner/.nix-profile/bin/cloudflared service install ${{ secrets.CLOUDFLARED_TUNNEL }}
-
+        if [ ${{ inputs.os }} == "ubuntu-latest" ]; then
+          curl -L --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb  
+          sudo dpkg -i cloudflared.deb 
+          sudo cloudflared service install ${{ secrets.CLOUDFLARED_TUNNEL }}
+        else
+          brew install cloudflared
+        fi
     - run: | 
         if [ ${{ inputs.os }} == "ubuntu-latest" ]; then
           nix run .#homeConfigurations.github-action.activationPackage
