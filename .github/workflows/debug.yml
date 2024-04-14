@@ -1,10 +1,19 @@
 name: Github Server
-on: 
-  - workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      os:
+        description: 'Operating System'
+        required: true
+        default: 'ubuntu-latest'
+        type: choice
+        options:
+          - ubuntu-latest
+          - macos-latest
 
 jobs:
   CI:
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.os }}
     steps:
     - run: |
         mkdir -m 0755  ~/.ssh
@@ -21,18 +30,29 @@ jobs:
         EOF
     
     - run: |
-        curl -L --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb  
-        sudo dpkg -i cloudflared.deb 
-        sudo cloudflared service install ${{ secrets.CLOUDFLARED_TUNNEL }}
+        if [ ${{ inputs.os }} == "ubuntu-latest" ]; then
+          curl -L --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb  
+          sudo dpkg -i cloudflared.deb 
+          sudo cloudflared service install ${{ secrets.CLOUDFLARED_TUNNEL }}
+        else
+          echo "The operating system is macOS."
+        fi
+
     
     - uses: actions/checkout@master
     - uses: DeterminateSystems/nix-installer-action@main
 
-    - run: nix run .#homeConfigurations.github-action.activationPackage
+    - run: | 
+        if [ ${{ inputs.os }} == "ubuntu-latest" ]; then
+          nix run .#homeConfigurations.github-action.activationPackage
+        else
+          echo "The operating system is macOS."
+        fi
+        
 
 
     # github workflow do not support alias, use symlink instead
-    - run: mkdir -p  ~/.local/bin/ && ln -s ~/.nix-profile/bin/joshuto  ~/.local/bin/r
+    # - run: mkdir -p  ~/.local/bin/ && ln -s ~/.nix-profile/bin/joshuto  ~/.local/bin/r
 
     - run: |
         sleep 2h
