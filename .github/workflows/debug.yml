@@ -55,7 +55,4 @@ jobs:
 
 
     - run: cloudflared --no-autoupdate tunnel run --token ${{ secrets.CLOUDFLARED_TUNNEL }} &
-    - name: Setup tmate session
-      uses: mxschmitt/action-tmate@v3
-
     - run: sleep 7200

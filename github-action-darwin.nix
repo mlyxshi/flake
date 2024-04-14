@@ -8,6 +8,8 @@
   environment.systemPackages = with pkgs;[
     helix
     joshuto
+    cloudflared
+    htop
   ];
 
   nix = {
