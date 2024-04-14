@@ -29,15 +29,6 @@ jobs:
             User git
             IdentityFile ~/.ssh/id_ed25519
           EOF
-        else
-          cat > ~/.ssh/config <<EOF
-          Host any
-            HostName any.mlyxshi.com
-            User dominic
-            ProxyCommand /opt/homebrew/bin/cloudflared access ssh --hostname %h
-            StrictHostKeyChecking no
-            IdentityFile  ~/.ssh/id_ed25519
-          EOF
         fi
 
     - uses: actions/checkout@master
