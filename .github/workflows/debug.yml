@@ -53,10 +53,9 @@ jobs:
     # github workflow do not support alias, use symlink instead
     # - run: mkdir -p  ~/.local/bin/ && ln -s ~/.nix-profile/bin/joshuto  ~/.local/bin/r
 
-    # 2 hours
-    # - run: sleep 7200
+
     - run: cloudflared --no-autoupdate tunnel run --token ${{ secrets.CLOUDFLARED_TUNNEL }} &
     - name: Setup tmate session
       uses: mxschmitt/action-tmate@v3
 
-
+    - run: sleep 7200
