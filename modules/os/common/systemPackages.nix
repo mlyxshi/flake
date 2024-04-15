@@ -13,7 +13,7 @@
       nix-tree
       nix-init
       nix-update
-      # nix-inspect
+      nix-inspect
       nixpkgs-fmt
       joshuto
       helix
@@ -38,5 +38,9 @@
       lazygit
       restic
       home-manager
-    ] ++ lib.optionals pkgs.stdenv.isLinux [ below fastfetch gptfdisk ];
+    ] ++ lib.optionals pkgs.stdenv.isLinux [ 
+      below 
+      fastfetch 
+      gptfdisk 
+    ];
 }

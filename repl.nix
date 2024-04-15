@@ -4,7 +4,8 @@ let
   pkgs = import nixpkgs { system = builtins.currentSystem; };
   lib = pkgs.lib;
   utils = import ./utils.nix nixpkgs;
-in {
+in
+{
   inherit (utils) ls pureName mkFileHierarchyAttrset;
 }
 

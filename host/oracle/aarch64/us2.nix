@@ -10,7 +10,8 @@ let
     utp-enabled = false;
   };
   settings = pkgs.writeText "settings.json" (builtins.toJSON pref);
-in {
+in
+{
 
   # I don't know why oracle ipv6 dhcp is not working under systemd-networkd
   # so use default old way to configure network 

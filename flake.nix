@@ -1,7 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    
+
     secret.url = "git+ssh://git@github.com/mlyxshi/secret";
 
     home-manager.url = "github:nix-community/home-manager";
@@ -19,15 +19,12 @@
     let
       inherit (nixpkgs) lib;
       utils = import ./utils.nix nixpkgs;
-      inherit (utils)
-        mkFileHierarchyAttrset packagelist getArchPkgs oracle-serverlist;
-    in {
-      overlays.default = final: prev:
-        prev.lib.genAttrs packagelist
-        (name: prev.callPackage ./pkgs/${name} { });
+      inherit (utils) mkFileHierarchyAttrset packagelist getArchPkgs oracle-serverlist;
+    in
+    {
+      overlays.default = final: prev: prev.lib.genAttrs packagelist (name: prev.callPackage ./pkgs/${name} { });
       nixosModules = mkFileHierarchyAttrset ./. "modules";
-      darwinConfigurations.M1 =
-        import ./host/darwin/M1.nix { inherit self darwin nixpkgs; };
+      darwinConfigurations.M1 = import ./host/darwin/M1.nix { inherit self darwin nixpkgs; };
       darwinConfigurations.github-action-darwin = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
@@ -35,37 +32,19 @@
         ];
       };
       nixosConfigurations = {
-        utm-server = import ./host/utm/server.nix {
-          inherit self nixpkgs secret home-manager;
-        };
 
-        utm-desktop = import ./host/utm/desktop.nix {
-          inherit self nixpkgs home-manager plasma-manager secret;
-        };
+        utm-server = import ./host/utm/server.nix {inherit self nixpkgs secret home-manager;};
+        utm-desktop = import ./host/utm/desktop.nix {inherit self nixpkgs home-manager plasma-manager secret;};
 
-        jp1 = import ./host/oracle/desktop.nix {
-          inherit self nixpkgs home-manager plasma-manager secret;
-        };
+        jp1 = import ./host/oracle/desktop.nix {inherit self nixpkgs home-manager plasma-manager secret;};
 
-        qemu-test-x86_64 = import ./host/oracle/mkTest.nix {
-          arch = "x86_64";
-          inherit self nixpkgs secret;
-        };
-        qemu-test-aarch64 = import ./host/oracle/mkTest.nix {
-          arch = "aarch64";
-          inherit self nixpkgs secret;
-        };
+        qemu-test-x86_64 = import ./host/oracle/mkTest.nix {arch = "x86_64";inherit self nixpkgs secret;};
+        qemu-test-aarch64 = import ./host/oracle/mkTest.nix {arch = "aarch64";inherit self nixpkgs secret;};
 
         # nix build --no-link --print-out-paths github:mlyxshi/flake#nixosConfigurations.installer-aarch64.config.system.build.isoImage 
         # nix build --no-link --print-out-paths github:mlyxshi/flake#nixosConfigurations.installer-x86_64.config.system.build.isoImage
-        installer-x86_64 = import ./host/installer {
-          arch = "x86_64";
-          inherit self nixpkgs secret;
-        };
-        installer-aarch64 = import ./host/installer {
-          arch = "aarch64";
-          inherit self nixpkgs secret;
-        };
+        installer-x86_64 = import ./host/installer {arch = "x86_64";inherit self nixpkgs secret;};
+        installer-aarch64 = import ./host/installer {arch = "aarch64";inherit self nixpkgs secret;};
 
         kexec-x86_64 = nixpkgs.lib.nixosSystem {
           modules = [
@@ -82,10 +61,7 @@
             { nixpkgs.hostPlatform = "aarch64-linux"; }
           ];
         };
-      } // lib.genAttrs oracle-serverlist (hostName:
-        import ./host/oracle/mkHost.nix {
-          inherit hostName self nixpkgs home-manager secret;
-        });
+      } // lib.genAttrs oracle-serverlist (hostName: import ./host/oracle/mkHost.nix {inherit hostName self nixpkgs home-manager secret;});
 
       homeConfigurations = {
         darwin = home-manager.lib.homeManagerConfiguration {
@@ -110,49 +86,39 @@
       };
 
       packages = {
-        aarch64-darwin = lib.genAttrs (getArchPkgs "aarch64-darwin") (name:
-          nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/${name} { })
-          // {
-            default = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin
-              "test-vm" ''
-                /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 2048 \
-                    -kernel ${self.nixosConfigurations.kexec-aarch64.config.system.build.kexec}/Image  -initrd ${self.nixosConfigurations.kexec-aarch64.config.system.build.kexec}/initrd.zst \
-                    -append "systemd.journald.forward_to_console" \
-                    -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
-                    -drive "file=disk.img,format=qcow2,if=virtio"  \
-                    -bios $(ls /opt/homebrew/Cellar/qemu/*/share/qemu/edk2-aarch64-code.fd)
-              '';
-          };
-        aarch64-linux = lib.genAttrs (getArchPkgs "aarch64-linux") (name:
-          nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/${name} { });
-        x86_64-linux = lib.genAttrs (getArchPkgs "x86_64-linux") (name:
-          nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/${name} { });
+        aarch64-darwin = lib.genAttrs (getArchPkgs "aarch64-darwin") (name: nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/${name} { })
+        // {
+          default = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "test-vm" ''
+            /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 2048 \
+              -kernel ${self.nixosConfigurations.kexec-aarch64.config.system.build.kexec}/Image  -initrd ${self.nixosConfigurations.kexec-aarch64.config.system.build.kexec}/initrd.zst \
+              -append "systemd.journald.forward_to_console" \
+              -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
+              -drive "file=disk.img,format=qcow2,if=virtio"  \
+              -bios $(ls /opt/homebrew/Cellar/qemu/*/share/qemu/edk2-aarch64-code.fd)
+          '';
+        };
+        aarch64-linux = lib.genAttrs (getArchPkgs "aarch64-linux") (name: nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/${name} { });
+        x86_64-linux = lib.genAttrs (getArchPkgs "x86_64-linux") (name: nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/${name} { });
       };
 
-      formatter.aarch64-darwin =
-        nixpkgs.legacyPackages.aarch64-darwin.nixpkgs-fmt;
-      formatter.aarch64-linux =
-        nixpkgs.legacyPackages.aarch64-linux.nixpkgs-fmt;
+      formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixpkgs-fmt;
+      formatter.aarch64-linux = nixpkgs.legacyPackages.aarch64-linux.nixpkgs-fmt;
 
       hydraJobs = {
-        kexec-x86_64 =
-          self.nixosConfigurations.kexec-x86_64.config.system.build.kexec;
-        kexec-aarch64 =
-          self.nixosConfigurations.kexec-aarch64.config.system.build.kexec;
+        kexec-x86_64 = self.nixosConfigurations.kexec-x86_64.config.system.build.kexec;
+        kexec-aarch64 = self.nixosConfigurations.kexec-aarch64.config.system.build.kexec;
         transmission-aarch64 = self.packages.aarch64-linux.transmission;
       };
 
       apps = {
         x86_64-linux.deck-init = {
           type = "app";
-          program = "${nixpkgs.legacyPackages.x86_64-linux.writeScript "init"
-            (builtins.readFile ./run/deck-init.sh)}";
+          program = "${nixpkgs.legacyPackages.x86_64-linux.writeScript "init" (builtins.readFile ./run/deck-init.sh)}";
         };
 
         aarch64-linux.asahi-init = {
           type = "app";
-          program = "${nixpkgs.legacyPackages.aarch64-linux.writeScript "init"
-            (builtins.readFile ./run/asahi-init.sh)}";
+          program = "${nixpkgs.legacyPackages.aarch64-linux.writeScript "init" (builtins.readFile ./run/asahi-init.sh)}";
         };
       };
     };

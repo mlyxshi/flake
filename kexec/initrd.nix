@@ -4,7 +4,8 @@ let
     x64 = "4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709";
     aa64 = "B921B045-1DF0-41C3-AF44-4C6F280D3FAE";
   }.${pkgs.stdenv.hostPlatform.efiArch};
-in {
+in
+{
 
   imports = [ ./initrd-network.nix ];
 

@@ -6,8 +6,7 @@
     image = "ghcr.io/dani-garcia/vaultwarden";
     environment = {
       SIGNUPS_ALLOWED = "false"; # Disable signups
-      DOMAIN =
-        "https://password.${config.networking.domain}"; # Yubikey FIDO2 WebAuthn
+      DOMAIN = "https://password.${config.networking.domain}"; # Yubikey FIDO2 WebAuthn
     };
     environmentFiles = [ "/secret/vaultwarden" ];
     volumes = [ "/var/lib/vaultwarden:/data" ];

@@ -8,7 +8,8 @@
 let
   hydra-x64-publicKey =
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILTS04ZHanXeTfW+OAGXVxtO+itOwYzEqvhPqqiCbrBx";
-in {
+in
+{
 
   programs.ssh = {
     knownHosts = { "hydra-x64.mlyxshi.com".publicKey = hydra-x64-publicKey; };

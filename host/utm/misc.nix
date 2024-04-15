@@ -22,7 +22,8 @@ let
     ssh -o StrictHostKeyChecking=no root@$IP reboot
   '';
 
-in {
+in
+{
 
   environment.systemPackages = with pkgs; [ install-aarch64 gh ];
 

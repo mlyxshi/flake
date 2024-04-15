@@ -6,20 +6,12 @@ let
       ./transmission.ts
     }
   '';
-in {
+in
+{
 
   imports = [
     # ./flexget.nix
   ];
-
-  # sops.secrets.user = { };
-  # sops.secrets.password = { };
-  # sops.templates.transmission-admin-credentials.content = ''
-  #   ADMIN=${config.sops.placeholder.user}
-  #   PASSWORD=${config.sops.placeholder.password}
-  # '';
-
-  # sops.secrets.bark-ios = { };
 
   users = {
     users.transmission = {

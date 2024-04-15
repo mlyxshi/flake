@@ -1,6 +1,6 @@
 {
   imports = [
     ./fish.nix
-    ./systemPackages.nix 
+    ./systemPackages.nix
   ];
 }

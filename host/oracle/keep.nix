@@ -15,16 +15,18 @@ let
     while True:
       pass
   '';
-in {
+in
+{
   systemd.services.KeepCPUMemory = {
     serviceConfig = {
       DynamicUser = true;
       ExecStart = "${pkgs.python3}/bin/python ${waste}";
     };
-    serviceConfig.CPUQuota = if pkgs.hostPlatform.isx86_64 then
-      "40%"
-    else
-      "80%"; # E2.1.Micro 2 Core | A1 4 Core
+    serviceConfig.CPUQuota =
+      if pkgs.hostPlatform.isx86_64 then
+        "40%"
+      else
+        "80%"; # E2.1.Micro 2 Core | A1 4 Core
     serviceConfig.CPUWeight = 1;
     wantedBy = [ "multi-user.target" ];
   };

@@ -1,10 +1,12 @@
 { hostName, self, nixpkgs, home-manager, secret }:
 let
-  arch = if (builtins.pathExists ./aarch64/${hostName}.nix) then
-    "aarch64"
-  else
-    "x86_64";
-in nixpkgs.lib.nixosSystem {
+  arch =
+    if (builtins.pathExists ./aarch64/${hostName}.nix) then
+      "aarch64"
+    else
+      "x86_64";
+in
+nixpkgs.lib.nixosSystem {
   modules = [
     secret.nixosModules.default
     self.nixosModules.home-manager

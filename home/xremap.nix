@@ -40,7 +40,8 @@ let
     name = "xremap-config.yml";
     text = lib.generators.toYAML { } config;
   };
-in {
+in
+{
   systemd.user.services.xremap = {
     Unit = {
       Description = "xremap service";

@@ -2,7 +2,8 @@
 let
   utils = import ../../utils.nix nixpkgs;
   inherit (utils) oracle-serverlist;
-in {
+in
+{
   # https://www.youtube.com/playlist?list=PLLYW3zEOaqlKhRCWqFE7iLRSh3XEFP5gj
 
   services.prometheus = {

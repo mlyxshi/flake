@@ -40,11 +40,11 @@
             General.launchers = [ "applications:systemsettings.desktop" ]
               ++ lib.optionals (config.home.username == "deck")
               [ "applications:org.kde.discover.desktop" ] ++ [
-                "applications:org.kde.dolphin.desktop"
-                "applications:org.kde.konsole.desktop"
-                "applications:org.kde.kate.desktop"
-                "applications:firefox.desktop"
-              ] ++ lib.optionals (config.home.username == "deck")
+              "applications:org.kde.dolphin.desktop"
+              "applications:org.kde.konsole.desktop"
+              "applications:org.kde.kate.desktop"
+              "applications:firefox.desktop"
+            ] ++ lib.optionals (config.home.username == "deck")
               [ "applications:com.google.Chrome.desktop" ];
           };
         }];
