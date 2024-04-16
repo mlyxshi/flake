@@ -47,9 +47,13 @@
 
   virtualisation.oci-containers.containers.rsshub = {
     image = "ghcr.io/diygod/rsshub:chromium-bundled";
-    environment = { "PORT" = "80"; };
     extraOptions = lib.concatMap (x: [ "--label" x ])
-      [ "io.containers.autoupdate=registry" ];
+      [ 
+        "io.containers.autoupdate=registry" 
+        "traefik.enable=true"
+        "traefik.http.routers.miniflux-silent.rule=Host(`rss.${config.networking.domain}`)"
+        "traefik.http.routers.miniflux-silent.entrypoints=websecure"
+      ];
   };
 
   #################################

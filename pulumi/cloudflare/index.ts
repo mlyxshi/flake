@@ -11,7 +11,7 @@ const dns: Record<string, string[]> = {
     "138.2.224.150": ["us2", "transmission-vpn-index"],
     "152.69.224.200": ["kr", "hydra", "cache"],
     "152.67.211.22": ["kr2", "hydra-x64"],
-    "152.67.79.165": ["sw", "miniflux", "miniflux-silent"],
+    "152.67.79.165": ["sw", "miniflux", "miniflux-silent", "rss"],
     "140.238.214.215": ["sw2", "top"],
     "152.67.78.74": ["sw3", "password"],
 }
