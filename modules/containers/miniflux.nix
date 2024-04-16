@@ -51,8 +51,8 @@
       [ 
         "io.containers.autoupdate=registry" 
         "traefik.enable=true"
-        "traefik.http.routers.miniflux-silent.rule=Host(`rss.${config.networking.domain}`)"
-        "traefik.http.routers.miniflux-silent.entrypoints=websecure"
+        "traefik.http.routers.rss.rule=Host(`rss.${config.networking.domain}`)"
+        "traefik.http.routers.rss.entrypoints=websecure"
       ];
   };
 
