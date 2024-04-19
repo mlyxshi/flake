@@ -66,11 +66,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1713460214,
-        "narHash": "sha256-WvX42uScdEN5yDJ13ZWQczYyUpPawgvt4JHvAaK5c44=",
+        "lastModified": 1713527135,
+        "narHash": "sha256-SeBAzxWyzKhR8EuW1OCyZYIWspU84FuTNvH0o4k2ZC0=",
         "owner": "pjones",
         "repo": "plasma-manager",
-        "rev": "ef0c106a2104f841a54fe4b9ec60a79775e2fe1e",
+        "rev": "b2d47eabf3f08eeac25306cc27fa3c18340a7667",
         "type": "github"
       },
       "original": {
@@ -90,11 +90,11 @@
     },
     "secret": {
       "locked": {
-        "lastModified": 1713526069,
-        "narHash": "sha256-bFHJhbp6NlmEidx/14qEy6i2RttXQzRc1O8Z9EFCExg=",
+        "lastModified": 1713527493,
+        "narHash": "sha256-Jic86x5nBJoQHFegZ6wnzOP1QnY2B6i5yHXwaPdPj5c=",
         "ref": "refs/heads/main",
-        "rev": "d2c5984a7fc18568f9d1eaaea10e0877aeccbfdd",
-        "revCount": 47,
+        "rev": "0786496cb5033e00dd599f9e4af5d19987feef47",
+        "revCount": 48,
         "type": "git",
         "url": "ssh://git@github.com/mlyxshi/secret"
       },
