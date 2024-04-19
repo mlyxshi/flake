@@ -56,7 +56,7 @@ in
     notificationSender = "hydra@localhost";
     useSubstitutes = true;
     extraConfig = ''
-      include /tmp/github
+      include /secret/hydra/github
       max_output_size = ${builtins.toString (10 * 1024 * 1024 * 1024)}
       <dynamicruncommand>
         enable = 1
