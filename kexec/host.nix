@@ -20,7 +20,6 @@ in {
     nixos.enable = false;
   };
 
-  # hydra build
   system.build.kexec = pkgs.symlinkJoin {
     name = "kexec";
     paths = [
@@ -28,13 +27,5 @@ in {
       config.system.build.initialRamdisk
       pkgs.pkgsStatic.kexec-tools
     ];
-    postBuild = ''
-      mkdir -p $out/nix-support
-      cat > $out/nix-support/hydra-build-products <<EOF
-      file initrd $out/initrd
-      file kernel $out/${kernelTarget}
-      file kexec $out/bin/kexec
-      EOF
-    '';
   };
 }

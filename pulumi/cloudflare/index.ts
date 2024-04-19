@@ -2,9 +2,9 @@ import * as cloudflare from "@pulumi/cloudflare";
 
 const dns: Record<string, string[]> = {
     "130.61.171.180": ["de", "miniflux", "miniflux-silent", "rss", "alert", "metric"],
-    "138.3.223.82": ["jp1", "hydra", "cache"],
+    "138.3.223.82": ["jp1"],
     "138.2.16.45": ["jp2", "transmission", "transmission-index", "jellyfin", "music", "changeio", "baidunetdisk", "baidunetdisk-index"],
-    "168.138.195.121": ["jp3", "hydra-x64", "top", "password"],
+    "168.138.195.121": ["jp3", "top", "password"],
     "155.248.196.71": ["us1", "transmission-vpn-index"],
 }
 

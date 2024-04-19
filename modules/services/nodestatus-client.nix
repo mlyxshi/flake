@@ -6,8 +6,7 @@ let
 in
 {
   systemd.services.nodestatus-client = {
-    serviceConfig.ExecStart =
-      "${pkgs.nodestatus-client}/bin/client -dsn ws://${USER}:${PASSWORD}@${SERVER}";
+    serviceConfig.ExecStart = "${pkgs.nodestatus-client}/bin/client -dsn ws://${USER}:${PASSWORD}@${SERVER}";
     serviceConfig.DynamicUser = true;
     wantedBy = [ "multi-user.target" ];
   };

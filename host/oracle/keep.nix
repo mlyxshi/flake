@@ -24,7 +24,7 @@ in
     };
     serviceConfig.CPUQuota =
       if pkgs.hostPlatform.isx86_64 then
-        "40%"
+        "0%"
       else
         "80%"; # E2.1.Micro 2 Core | A1 4 Core
     serviceConfig.CPUWeight = 1;
