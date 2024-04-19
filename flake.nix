@@ -36,8 +36,6 @@
         utm-server = import ./host/utm/server.nix {inherit self nixpkgs secret home-manager;};
         utm-desktop = import ./host/utm/desktop.nix {inherit self nixpkgs home-manager plasma-manager secret;};
 
-        jp1 = import ./host/oracle/desktop.nix {inherit self nixpkgs home-manager plasma-manager secret;};
-
         qemu-test-x86_64 = import ./host/oracle/mkTest.nix {arch = "x86_64";inherit self nixpkgs secret;};
         qemu-test-aarch64 = import ./host/oracle/mkTest.nix {arch = "aarch64";inherit self nixpkgs secret;};
 
