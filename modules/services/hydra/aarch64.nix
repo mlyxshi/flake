@@ -17,7 +17,7 @@ in
       Host hydra-x64
         Hostname hydra-x64.mlyxshi.com
         User hydra-builder
-        IdentityFile /secret/hydra/hydra-x64
+        IdentityFile /secret/ssh/hydra-x64
 
       Host tmp-install
         HostName tmp-install.mlyxshi.com
@@ -55,18 +55,6 @@ in
     hydraURL = "http://hydra.${config.networking.domain}";
     notificationSender = "hydra@localhost";
     useSubstitutes = true;
-    extraConfig = ''
-      include /secret/hydra/github
-      max_output_size = ${builtins.toString (10 * 1024 * 1024 * 1024)}
-      <dynamicruncommand>
-        enable = 1
-      </dynamicruncommand>
-      <githubstatus>
-        jobs = nixos:flake:.*
-        excludeBuildFromContext = 1
-        useShortContext = 1
-      </githubstatus>
-    '';
   };
 
   # https://github.com/NixOS/hydra/issues/1186
