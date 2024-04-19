@@ -19,6 +19,5 @@
     };
   };
 
-  boot.kernel.sysctl =
-    lib.optionalAttrs pkgs.hostPlatform.isx86_64 { "vm.swappiness" = 100; };
+  boot.kernel.sysctl = lib.optionalAttrs pkgs.hostPlatform.isx86_64 { "vm.swappiness" = 100; };
 }
