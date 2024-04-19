@@ -1,5 +1,12 @@
 { self, pkgs, lib, config, ... }: {
-  imports = [ self.nixosModules.services.commit-notifier ];
+  imports = [
+    self.nixosModules.services.commit-notifier
+
+    self.nixosModules.containers.podman
+    self.nixosModules.containers.miniflux
+  ];
+
+  networking.nftables.enable = lib.mkForce false;
 
   environment.systemPackages = with pkgs; [
     nix-index
