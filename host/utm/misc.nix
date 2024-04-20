@@ -8,11 +8,11 @@ let
     git pull 
 
     outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.$HOST.config.system.build.toplevel)
-
+    
+    until ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no root@$IP -- exit 0; do sleep 5; done
     ssh -o StrictHostKeyChecking=no root@$IP make-partitions
     ssh -o StrictHostKeyChecking=no root@$IP mount-partitions
 
-    until ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no root@$IP -- exit 0; do sleep 5; done
     NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --substitute-on-destination --to ssh://root@$IP?remote-store=local?root=/mnt $outPath       
 
     ssh -o StrictHostKeyChecking=no root@$IP nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $outPath
