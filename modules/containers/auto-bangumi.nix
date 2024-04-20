@@ -28,6 +28,11 @@
       "/var/lib/auto-bangumi/data:/app/data"
     ];
 
+    environment = {
+      "PUID" = "0";
+      "PGID" = "0";
+    };
+
     extraOptions = lib.concatMap (x: [ "--label" x ]) [
       "io.containers.autoupdate=registry"
       "traefik.enable=true"
