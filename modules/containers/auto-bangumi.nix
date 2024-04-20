@@ -60,6 +60,30 @@
     };
   };
 
+
+  virtualisation.oci-containers.containers.jellyfin = {
+    image = "ghcr.io/linuxserver/jellyfin";
+    volumes = [ "/var/lib/jellyfin:/config" "/var/lib/media:/var/lib/media" ];
+
+    environment = {
+      "PUID" = "0";
+      "PGID" = "0";
+    };
+
+    extraOptions = lib.concatMap (x: [ "--label" x ]) [
+      "io.containers.autoupdate=registry"
+      "traefik.enable=true"
+      "traefik.http.routers.jellyfin.rule=Host(`jellyfin.${config.networking.domain}`)"
+      "traefik.http.routers.jellyfin.entrypoints=web"
+    ];
+  };
+
+  # systemd.services."backup-init@jellyfin".wantedBy = [ "multi-user.target" ];
+  # systemd.services."backup-init@jellyfin".overrideStrategy = "asDropin";
+
+  # systemd.services."backup@jellyfin".startAt = "05:00";
+  # systemd.services."backup@jellyfin".overrideStrategy = "asDropin";
+
   # systemd.services."backup-init@auto-bangumi".wantedBy = [ "multi-user.target" ];
   # systemd.services."backup-init@auto-bangumi".overrideStrategy = "asDropin";
 
