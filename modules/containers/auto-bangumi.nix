@@ -23,9 +23,9 @@
 
   virtualisation.oci-containers.containers.auto-bangumi = {
     image = "ghcr.io/estrellaxd/auto_bangumi";
-    volumes = [ 
-      "/var/lib/auto-bangumi/config:/app/config" 
-      "/var/lib/auto-bangumi/data:/app/data" 
+    volumes = [
+      "/var/lib/auto-bangumi/config:/app/config"
+      "/var/lib/auto-bangumi/data:/app/data"
     ];
 
     extraOptions = lib.concatMap (x: [ "--label" x ]) [
@@ -37,10 +37,12 @@
   };
 
   systemd.tmpfiles.settings."10-auto-bangumi" = {
-    "/var/lib/auto-bangumi/config".d = {
+    "/var/lib/media/".d = {
+      user = "qbittorrent";
+      group = "qbittorrent";
     };
-    "/var/lib/auto-bangumi/data".d = {
-    };
+    "/var/lib/auto-bangumi/config".d = { };
+    "/var/lib/auto-bangumi/data".d = { };
   };
 
 
