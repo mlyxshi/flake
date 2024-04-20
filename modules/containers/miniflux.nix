@@ -46,13 +46,14 @@
   };
 
   virtualisation.oci-containers.containers.rsshub = {
+    # Diygod is rewriting the rsshub and there are some breaking changes and bugs
     image = "ghcr.io/diygod/rsshub:chromium-bundled-2023-03-20";
     extraOptions = lib.concatMap (x: [ "--label" x ])
       [ 
-        "io.containers.autoupdate=registry" 
+        #"io.containers.autoupdate=registry" 
         "traefik.enable=true"
-        "traefik.http.routers.rss.rule=Host(`rss.${config.networking.domain}`)"
-        "traefik.http.routers.rss.entrypoints=websecure"
+        "traefik.http.routers.rsshub.rule=Host(`rsshub.${config.networking.domain}`)"
+        "traefik.http.routers.rsshub.entrypoints=websecure"
       ];
   };
 
