@@ -9,24 +9,20 @@
 { pkgs, lib, config, ... }:
 let
   waste = pkgs.writeText "waste.py" ''
-    import platform
-    if platform.machine()=="aarch64":
-      memory = bytearray(int(4.8*1024*1024*1024)) # 4.8G (20% of 24G)
+    memory = bytearray(int(4.8*1024*1024*1024)) # 4.8G (20% of 24G)
     while True:
       pass
   '';
 in
 {
   systemd.services.KeepCPUMemory = {
+    enable = if pkgs.stdenv.hostPlatform.uname.processor == "aarch64" then true else false;
+
     serviceConfig = {
       DynamicUser = true;
       ExecStart = "${pkgs.python3}/bin/python ${waste}";
     };
-    serviceConfig.CPUQuota =
-      if pkgs.hostPlatform.isx86_64 then
-        "0%"
-      else
-        "80%"; # E2.1.Micro 2 Core | A1 4 Core
+    serviceConfig.CPUQuota = "80%"; # E2.1.Micro 2 Core | A1 4 Core
     serviceConfig.CPUWeight = 1;
     wantedBy = [ "multi-user.target" ];
   };

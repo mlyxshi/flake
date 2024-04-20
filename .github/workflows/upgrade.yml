@@ -32,7 +32,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        host: [jp2,jp4,sw,de,us1,us2,au] # kr: hydra aarch64 
+        host: [jp1,jp2,de,us1]
     steps:
     - run: mkdir -m 0755  ~/.ssh && echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519 
     - run: $SSH root@${{ matrix.host }}.mlyxshi.com '[ -e "/flake" ] && rm -rf /flake; systemctl stop KeepCPUMemory; update; systemctl restart KeepCPUMemory'
