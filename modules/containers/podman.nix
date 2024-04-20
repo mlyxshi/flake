@@ -11,9 +11,11 @@
     before = [ "podman-%i.service" ];
     unitConfig.ConditionPathExists = "!%S/%i";
     environment.RESTIC_CACHE_DIR = "%C/restic";
-    serviceConfig.EnvironmentFile = "/secret/restic";
-    serviceConfig.ExecStart =
-      "${pkgs.restic}/bin/restic restore latest --path %S/%i  --target /";
+    serviceConfig = {
+      Type = "oneshot";
+      EnvironmentFile = "/secret/restic";
+      ExecStart = "${pkgs.restic}/bin/restic restore latest --path %S/%i  --target /";
+    };
   };
 
   systemd.services."backup@" = {
