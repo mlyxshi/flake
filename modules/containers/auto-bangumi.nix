@@ -46,8 +46,6 @@
       user = "qbittorrent";
       group = "qbittorrent";
     };
-    "/var/lib/auto-bangumi/config".d = { };
-    "/var/lib/auto-bangumi/data".d = { };
   };
 
 
@@ -86,8 +84,14 @@
   systemd.services."backup-init@jellyfin".wantedBy = [ "multi-user.target" ];
   systemd.services."backup-init@jellyfin".overrideStrategy = "asDropin";
 
-  systemd.services."backup@jellyfin".startAt = "05:00";
+  systemd.services."backup@jellyfin".startAt = "12:00";
   systemd.services."backup@jellyfin".overrideStrategy = "asDropin";
+
+  systemd.services."backup-init@auto-bangumi".wantedBy = [ "multi-user.target" ];
+  systemd.services."backup-init@auto-bangumi".overrideStrategy = "asDropin";
+
+  systemd.services."backup@auto-bangumi".startAt = "13:00";
+  systemd.services."backup@auto-bangumi".overrideStrategy = "asDropin";
 
   # systemd.services."backup-init@auto-bangumi".wantedBy = [ "multi-user.target" ];
   # systemd.services."backup-init@auto-bangumi".overrideStrategy = "asDropin";
