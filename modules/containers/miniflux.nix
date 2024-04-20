@@ -48,6 +48,7 @@
   virtualisation.oci-containers.containers.rsshub = {
     # Diygod is rewriting the rsshub and there are some breaking changes and bugs
     image = "ghcr.io/diygod/rsshub:chromium-bundled-2023-03-20";
+    environment = { "PORT" = "80"; };
     extraOptions = lib.concatMap (x: [ "--label" x ])
       [ 
         #"io.containers.autoupdate=registry" 
