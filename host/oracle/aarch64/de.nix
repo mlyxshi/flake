@@ -6,6 +6,7 @@
     self.nixosModules.containers.podman
     self.nixosModules.containers.miniflux
     self.nixosModules.containers.vaultwarden
+    self.nixosModules.containers.nodestatus-server
   ];
 
   networking.nftables.enable = lib.mkForce false;
