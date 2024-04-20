@@ -9,7 +9,6 @@
     # self.nixosModules.containers.netboot-tftp
 
     # self.nixosModules.containers.navidrome
-    # self.nixosModules.containers.jellyfin
     # self.nixosModules.containers.change-detection
     # self.nixosModules.containers.baidunetdisk
   ];

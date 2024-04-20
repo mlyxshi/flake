@@ -1,5 +1,6 @@
 { config, pkgs, lib, ... }: {
-
+  # journalctl see password 
+  # seed rato 1
   systemd.services.qbittorrent-nox = {
     after = [ "network-online.target" ];
     requires = [ "network-online.target" ];

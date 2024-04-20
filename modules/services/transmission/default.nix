@@ -8,11 +8,6 @@ let
   '';
 in
 {
-
-  imports = [
-    # ./flexget.nix
-  ];
-
   users = {
     users.transmission = {
       group = "transmission";

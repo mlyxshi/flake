@@ -19,19 +19,19 @@ console.log("TR_TORRENT_DIR:", TR_TORRENT_DIR);
 console.log("FILE_INFO:", FILE_INFO)
 
 
-if (TR_TORRENT_LABELS == "rss") {
-    Deno.run({ cmd: ["transmission-remote", "--auth", `${ADMIN}:${PASSWORD}`, "--torrent", TR_TORRENT_ID, "--remove"], });
-    fetch(`https://api.day.app/push`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", },
-        body: JSON.stringify({
-            device_key: BARK_KEY,
-            title: "Jellyfin",
-            icon: "https://avatars.githubusercontent.com/u/45698031",
-            body: TR_TORRENT_NAME,
-        }),
-    },);
-}
+// if (TR_TORRENT_LABELS == "rss") {
+//     Deno.run({ cmd: ["transmission-remote", "--auth", `${ADMIN}:${PASSWORD}`, "--torrent", TR_TORRENT_ID, "--remove"], });
+//     fetch(`https://api.day.app/push`, {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json", },
+//         body: JSON.stringify({
+//             device_key: BARK_KEY,
+//             title: "Jellyfin",
+//             icon: "https://avatars.githubusercontent.com/u/45698031",
+//             body: TR_TORRENT_NAME,
+//         }),
+//     },);
+// }
 
 // else {
 //     let cmd = "";
