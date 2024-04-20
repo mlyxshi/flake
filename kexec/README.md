@@ -14,7 +14,7 @@ initrd-fs.target
 initrd.target(default)
 ```
 # Usage
-### From running linux distro
+### From running linux distro(aarch64)
 ```
 curl -LO http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec 
 curl -LO http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/initrd
