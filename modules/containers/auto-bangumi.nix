@@ -1,5 +1,5 @@
 { config, pkgs, lib, ... }: {
-  
+
   systemd.services.qbittorrent-nox = {
     after = [ "network-online.target" ];
     requires = [ "network-online.target" ];
@@ -40,6 +40,21 @@
     "/var/lib/auto-bangumi/config".d = {
     };
     "/var/lib/auto-bangumi/data".d = {
+    };
+  };
+
+
+  services.traefik = {
+    dynamicConfigOptions = {
+      http = {
+        routers.qbittorrent = {
+          rule = "Host(`qbittorrent.${config.networking.domain}`)";
+          entryPoints = [ "web" ];
+          service = "qbittorrent";
+        };
+
+        services.qbittorrent.loadBalancer.servers = [{ url = "http://127.0.0.1:8080"; }];
+      };
     };
   };
 
