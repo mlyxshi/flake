@@ -1,6 +1,6 @@
 {
   inputs = {
-    # nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    #nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs.url = "github:NixOS/nixpkgs/pull/305521/head";
 
     secret.url = "git+ssh://git@github.com/mlyxshi/secret";
@@ -36,9 +36,6 @@
 
         utm-server = import ./host/utm/server.nix {inherit self nixpkgs secret home-manager;};
         utm-desktop = import ./host/utm/desktop.nix {inherit self nixpkgs home-manager plasma-manager secret;};
-
-        qemu-test-x86_64 = import ./host/oracle/mkTest.nix {arch = "x86_64";inherit self nixpkgs secret;};
-        qemu-test-aarch64 = import ./host/oracle/mkTest.nix {arch = "aarch64";inherit self nixpkgs secret;};
 
         # nix build --no-link --print-out-paths github:mlyxshi/flake#nixosConfigurations.installer-aarch64.config.system.build.isoImage 
         # nix build --no-link --print-out-paths github:mlyxshi/flake#nixosConfigurations.installer-x86_64.config.system.build.isoImage

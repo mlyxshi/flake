@@ -27,7 +27,5 @@ rec {
       (name: builtins.any (platform: platform == arch) (getPkgPlatforms name))
       packagelist;
 
-  oracle-arm64-serverlist = pureName (ls ./host/oracle/aarch64);
-  oracle-x64-serverlist = pureName (ls ./host/oracle/x86_64);
-  oracle-serverlist = oracle-arm64-serverlist ++ oracle-x64-serverlist;
+  oracle-serverlist = ["jp1" "jp2" "us" "de" ];
 }

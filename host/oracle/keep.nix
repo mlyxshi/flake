@@ -16,8 +16,6 @@ let
 in
 {
   systemd.services.KeepCPUMemory = {
-    enable = if pkgs.stdenv.hostPlatform.uname.processor == "aarch64" then true else false;
-
     serviceConfig = {
       DynamicUser = true;
       ExecStart = "${pkgs.python3}/bin/python ${waste}";
@@ -26,22 +24,4 @@ in
     serviceConfig.CPUWeight = 1;
     wantedBy = [ "multi-user.target" ];
   };
-
-  # https://www.oracle.com/cloud/networking/pricing/
-  # Inbound unlimited
-  # Outbound 10TB free/month
-  # systemd.services.KeepNetwork = {
-  #   serviceConfig.DynamicUser = true;
-  #   serviceConfig.Restart = "always";
-  #   serviceConfig.RestartSec = 180;
-  #   script = ''
-  #     PATH=${pkgs.curl}/bin:$PATH
-  #     while true
-  #     do
-  #       curl -s -o /dev/null --limit-rate 1M  http://cachefly.cachefly.net/100mb.test
-  #     done
-  #   '';
-  #   after = [ "network-online.target" ];
-  #   wantedBy = [ "multi-user.target" ];
-  # };
 }

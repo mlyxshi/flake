@@ -1,11 +1,4 @@
 { hostName, self, nixpkgs, home-manager, secret }:
-let
-  arch =
-    if (builtins.pathExists ./aarch64/${hostName}.nix) then
-      "aarch64"
-    else
-      "x86_64";
-in
 nixpkgs.lib.nixosSystem {
   modules = [
     secret.nixosModules.default
@@ -17,10 +10,10 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.services.telegraf
     ./hardware.nix
     ./keep.nix
-    ./${arch}/${hostName}.nix
+    ./${hostName}.nix
     {
       nixpkgs.overlays = [ self.overlays.default ];
-      nixpkgs.hostPlatform = "${arch}-linux";
+      nixpkgs.hostPlatform = "aarch64-linux";
       networking.hostName = hostName;
       networking.domain = "mlyxshi.com";
     }
