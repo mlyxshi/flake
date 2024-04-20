@@ -9,6 +9,7 @@
     self.nixosModules.containers.nodestatus-server
   ];
 
+  # enable firewall from oracle web console: only open ipv4 tcp ports 22, 80, 443
   networking.nftables.enable = lib.mkForce false;
 
   environment.systemPackages = with pkgs; [
