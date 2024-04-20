@@ -1,4 +1,32 @@
-{ pkgs, lib, config, nixpkgs, self, ... }: {
+{ pkgs, lib, config, nixpkgs, self, ... }:
+let
+  install-aarch64 = pkgs.writeShellScriptBin "install-aarch64" ''
+    HOST=$1
+    IP=$2
+
+    cd ~/flake
+
+    outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.$HOST.config.system.build.toplevel)
+    
+    until ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no root@$IP ls /etc/initrd-release
+    do
+      echo "Kexec Environment Not Reachable, Waiting..."
+      sleep 5
+    done
+    
+    ssh -o StrictHostKeyChecking=no root@$IP make-partitions
+    ssh -o StrictHostKeyChecking=no root@$IP mount-partitions
+
+    NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --substitute-on-destination --to ssh://root@$IP?remote-store=local?root=/mnt $outPath       
+
+    ssh -o StrictHostKeyChecking=no root@$IP nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $outPath
+    ssh -o StrictHostKeyChecking=no root@$IP mkdir /mnt/{etc,tmp}
+    ssh -o StrictHostKeyChecking=no root@$IP touch /mnt/etc/NIXOS
+    ssh -o StrictHostKeyChecking=no root@$IP NIXOS_INSTALL_BOOTLOADER=1 nixos-enter --root /mnt -- /run/current-system/bin/switch-to-configuration boot
+    ssh -o StrictHostKeyChecking=no root@$IP reboot
+  '';
+in
+{
 
   imports = [
     self.nixosModules.os.common
@@ -8,9 +36,10 @@
   ];
 
   users.users.dominic.home = "/Users/dominic";
-  users.users.dominic.openssh.authorizedKeys.keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe"];
+  users.users.dominic.openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe" ];
 
   environment.systemPackages = [
+    install-aarch64
     (pkgs.writeShellScriptBin "update" ''
       cd /Users/dominic/flake
       SYSTEM=$(nom build --no-link --print-out-paths .#darwinConfigurations.${config.networking.hostName}.system)

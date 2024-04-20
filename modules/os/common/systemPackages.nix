@@ -38,9 +38,9 @@
       lazygit
       restic
       home-manager
-    ] ++ lib.optionals pkgs.stdenv.isLinux [ 
-      below 
-      fastfetch 
-      gptfdisk 
+    ] ++ lib.optionals pkgs.stdenv.isLinux [
+      below
+      fastfetch
+      gptfdisk
     ];
 }

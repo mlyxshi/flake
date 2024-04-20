@@ -50,7 +50,7 @@
     image = "ghcr.io/diygod/rsshub:chromium-bundled-2023-03-20";
     environment = { "PORT" = "80"; };
     extraOptions = lib.concatMap (x: [ "--label" x ])
-      [ 
+      [
         #"io.containers.autoupdate=registry" 
         "traefik.enable=true"
         "traefik.http.routers.rsshub.rule=Host(`rsshub.${config.networking.domain}`)"

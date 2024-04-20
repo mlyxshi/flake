@@ -27,5 +27,5 @@ rec {
       (name: builtins.any (platform: platform == arch) (getPkgPlatforms name))
       packagelist;
 
-  oracle-serverlist = ["jp1" "jp2" "us" "de" ];
+  oracle-serverlist = [ "jp1" "jp2" "us" "de" ];
 }

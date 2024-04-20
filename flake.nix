@@ -34,13 +34,13 @@
       };
       nixosConfigurations = {
 
-        utm-server = import ./host/utm/server.nix {inherit self nixpkgs secret home-manager;};
-        utm-desktop = import ./host/utm/desktop.nix {inherit self nixpkgs home-manager plasma-manager secret;};
+        utm-server = import ./host/utm/server.nix { inherit self nixpkgs secret home-manager; };
+        utm-desktop = import ./host/utm/desktop.nix { inherit self nixpkgs home-manager plasma-manager secret; };
 
         # nix build --no-link --print-out-paths github:mlyxshi/flake#nixosConfigurations.installer-aarch64.config.system.build.isoImage 
         # nix build --no-link --print-out-paths github:mlyxshi/flake#nixosConfigurations.installer-x86_64.config.system.build.isoImage
-        installer-x86_64 = import ./host/installer {arch = "x86_64";inherit self nixpkgs secret;};
-        installer-aarch64 = import ./host/installer {arch = "aarch64";inherit self nixpkgs secret;};
+        installer-x86_64 = import ./host/installer { arch = "x86_64";inherit self nixpkgs secret; };
+        installer-aarch64 = import ./host/installer { arch = "aarch64";inherit self nixpkgs secret; };
 
         kexec-x86_64 = nixpkgs.lib.nixosSystem {
           modules = [
@@ -57,7 +57,7 @@
             { nixpkgs.hostPlatform = "aarch64-linux"; }
           ];
         };
-      } // lib.genAttrs oracle-serverlist (hostName: import ./host/oracle/mkHost.nix {inherit hostName self nixpkgs home-manager secret;});
+      } // lib.genAttrs oracle-serverlist (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs home-manager secret; });
 
       homeConfigurations = {
         darwin = home-manager.lib.homeManagerConfiguration {
@@ -83,7 +83,7 @@
 
       packages = {
         aarch64-darwin = lib.genAttrs (getArchPkgs "aarch64-darwin") (name: nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/${name} { })
-        // {
+          // {
           default = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "test-vm" ''
             /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 2048 \
               -kernel ${self.nixosConfigurations.kexec-aarch64.config.system.build.kexec}/Image  -initrd ${self.nixosConfigurations.kexec-aarch64.config.system.build.kexec}/initrd.zst \
