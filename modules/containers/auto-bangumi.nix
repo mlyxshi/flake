@@ -1,4 +1,25 @@
 { config, pkgs, lib, ... }: {
+  
+  systemd.services.qbittorrent-nox = {
+    after = [ "network-online.target" ];
+    requires = [ "network-online.target" ];
+    serviceConfig = {
+      User = "qbittorrent";
+      # https://github.com/qbittorrent/qBittorrent/wiki/How-to-use-portable-mode
+      ExecStart = "${pkgs.qbittorrent-nox}/bin/qbittorrent-nox --profile=/var/lib/qbittorrent-nox --relative-fastresume";
+      StateDirectory = "qbittorrent-nox";
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
+
+  users = {
+    users.qbittorrent = {
+      group = "qbittorrent";
+      isSystemUser = true;
+    };
+    groups.qbittorrent = { };
+  };
+
 
   virtualisation.oci-containers.containers.auto-bangumi = {
     image = "ghcr.io/estrellaxd/auto_bangumi";
