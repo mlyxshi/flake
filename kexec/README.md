@@ -14,14 +14,15 @@ initrd-fs.target
 initrd.target(default)
 ```
 # Usage
-### From running linux distro(aarch64)
+### From running linux distro
 ```
-curl -LO http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kexec 
-curl -LO http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/initrd
-curl -LO http://hydra.mlyxshi.com/job/nixos/flake/kexec-$(uname -m)/latest/download-by-type/file/kernel
+
+curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kexec
+curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/initrd
+curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kernel
 
 chmod +x ./kexec
-./kexec --kexec-syscall-auto --load ./kernel --initrd=./initrd
+./kexec --kexec-syscall-auto  --initrd=./initrd --load ./kernel
 ./kexec -e
 ```
 
