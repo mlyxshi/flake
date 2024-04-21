@@ -36,16 +36,15 @@ in
 
   boot.initrd.systemd.initrdBin = [ pkgs.dosfstools pkgs.e2fsprogs ];
 
-  boot.initrd.systemd.storePaths = [
-    "${pkgs.ncurses}/share/terminfo/"
-  ]; # add terminfo for better ssh experience
-
   boot.initrd.systemd.contents = {
-    "/etc/hostname".text = ''
-      ${config.networking.hostName}
+    "/etc/hostname".text = "${config.networking.hostName}";
+    "/etc/ssl/certs/ca-certificates.crt".source = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+    "/etc/ssh/ssh_known_hosts".text = "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
+    "/etc/ssh/ssh_config".text = ''
+      Host github.com
+        User git
+        IdentityFile /etc/ssh/github
     '';
-    "/etc/ssl/certs/ca-certificates.crt".source =
-      "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
     "/etc/nix/nix.conf".text = ''
       extra-experimental-features = nix-command flakes
       substituters = https://cache.nixos.org
@@ -57,6 +56,14 @@ in
   boot.initrd.services.udev.rules = ''
     KERNEL=="vda*", SYMLINK+="sda%n"
   '';
+
+# https://github.com/NixOS/nixpkgs/commit/7a586794d4378d7a6432192700a4706083d58388
+# nix build --build-users-group "" --store /mnt --profile /mnt/nix/var/nix/profiles/system github:mlyxshi/flake#nixosConfigurations.jp1.config.system.build.toplevel 
+
+  boot.initrd.systemd.storePaths = [
+    "${pkgs.ncurses}/share/terminfo/" # add terminfo for better ssh experience
+    # "${pkgs.git}/share/git-core/templates" # add git templates
+  ];
 
   boot.initrd.systemd.extraBin = {
     # nix & installer
@@ -75,9 +82,22 @@ in
     htop = "${pkgs.htop}/bin/htop";
     ip = "${pkgs.iproute2}/bin/ip";
 
+    git = "${pkgs.git}/bin/git";
+    ssh = "${config.programs.ssh.package}/bin/ssh";
+
     # File explorer and editor for debugging
     r = "${pkgs.joshuto}/bin/joshuto";
     hx = "${pkgs.helix}/bin/hx";
+
+    get-kernel-param = pkgs.writeScript "get-kernel-param" ''
+      for o in $(< /proc/cmdline); do
+        case $o in
+          $1=*)
+            echo "''${o#"$1="}"
+            ;;
+        esac
+      done
+    '';
 
     # https://superuser.com/questions/1572410/what-is-the-purpose-of-the-linux-home-partition-code-8302
     make-partitions = pkgs.writeScript "make-partitions" ''
@@ -111,6 +131,17 @@ in
       fi
     '';
     requiredBy = [ "initrd-fs.target" ];
+  };
+
+  boot.initrd.systemd.services.github-private-key = {
+    after = [ "initrd-fs.target" ];
+    unitConfig.ConditionKernelCommandLine = "github-private-key";
+    serviceConfig.Type = "oneshot";
+    script = ''
+      get-kernel-param github-private-key | base64 -d > /etc/ssh/github
+      chmod 600 /etc/ssh/github
+    '';
+    requiredBy = [ "initrd.target" ];
   };
 
   boot.initrd.systemd.emergencyAccess = true;

@@ -8,8 +8,6 @@ in {
     options = [ "mode=0755" ];
   };
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
   fonts.fontconfig.enable = false;
 
   documentation = {

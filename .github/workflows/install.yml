@@ -38,12 +38,23 @@ jobs:
           echo "Server Not Reachable, Waiting..."
           sleep 5
         done
+    - run: |
+        cat > kexec-script <<EOF
+        curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kexec
+        curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/initrd
+        curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kernel
+        chmod +x ./kexec'
+        ./kexec --kexec-syscall-auto --load ./kernel --initrd=./initrd --append ""
+        EOF
 
+
+      
+    - run: scp -o StrictHostKeyChecking=no kexec-script ${{ inputs.user }}@${{ inputs.ip }}:~ 
     - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kexec' 
     - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/initrd'
     - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kernel'
     - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'chmod +x ./kexec'
-    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} './kexec --kexec-syscall-auto --load ./kernel --initrd=./initrd' 
+    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} './kexec --kexec-syscall-auto --load ./kernel --initrd=./initrd --append ""' 
     
     - name: Run kexec
       # If server doesn't reply, ServerAliveInterval option will kill ssh, and emit error 
