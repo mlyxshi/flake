@@ -1,14 +1,12 @@
 { config, pkgs, lib, ... }: {
-  # journalctl see password 
-  # seed rato 1
   systemd.services.qbittorrent-nox = {
     after = [ "network-online.target" ];
+    before = [ "podman-auto-bangumi.service" ];
     requires = [ "network-online.target" ];
     serviceConfig = {
       User = "qbittorrent";
       # https://github.com/qbittorrent/qBittorrent/wiki/How-to-use-portable-mode
       ExecStart = "${pkgs.qbittorrent-nox}/bin/qbittorrent-nox --profile=/var/lib/qbittorrent-nox --relative-fastresume";
-      StateDirectory = "qbittorrent-nox";
     };
     wantedBy = [ "multi-user.target" ];
   };
