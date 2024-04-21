@@ -57,9 +57,6 @@ in
     KERNEL=="vda*", SYMLINK+="sda%n"
   '';
 
-# https://github.com/NixOS/nixpkgs/commit/7a586794d4378d7a6432192700a4706083d58388
-# nix build --build-users-group "" --store /mnt --profile /mnt/nix/var/nix/profiles/system github:mlyxshi/flake#nixosConfigurations.jp1.config.system.build.toplevel 
-
   boot.initrd.systemd.storePaths = [
     "${pkgs.ncurses}/share/terminfo/" # add terminfo for better ssh experience
     # "${pkgs.git}/share/git-core/templates" # add git templates
