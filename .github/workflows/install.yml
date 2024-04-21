@@ -59,6 +59,7 @@ jobs:
 
   install:
     runs-on: ubuntu-latest
+    needs: kexec
     steps:
     - run: |
         mkdir -m 0755  ~/.ssh
@@ -78,7 +79,6 @@ jobs:
     # https://github.com/NixOS/nixpkgs/commit/7a586794d4378d7a6432192700a4706083d58388
     - run: $SSH $HOST "nix build --build-users-group '' --store /mnt --profile /mnt/nix/var/nix/profiles/system github:mlyxshi/flake#nixosConfigurations.${{ inputs.flakeAttr }}.config.system.build.toplevel"
 
-    - run: $SSH $HOST nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $outPath
     - run: $SSH $HOST mkdir /mnt/{etc,tmp}
     - run: $SSH $HOST touch /mnt/etc/NIXOS
     - run: $SSH $HOST NIXOS_INSTALL_BOOTLOADER=1 nixos-enter --root /mnt -- /run/current-system/bin/switch-to-configuration boot
