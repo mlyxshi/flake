@@ -13,8 +13,8 @@
     registry.nixpkgs.flake = nixpkgs;
     settings = {
       experimental-features = [ "nix-command" "flakes" "cgroups" "auto-allocate-uids" ];
-      # substituters = [ "https://cache.mlyxshi.com" ];
-      # trusted-public-keys = [ "cache:vXjiuWtSTOXj63zr+ZjMvXqvaYIK1atjyyEk+iuIqSg=" ];
+      substituters = [ "https://mlyxshi.cachix.org" ];
+      trusted-public-keys = [ "mlyxshi.cachix.org-1:BVd+/1A5uLMI8pTUdhdh6sdefTRdj+/PVgrUh9L2hWw=" ];
       auto-optimise-store = true;
       fallback = true;
       log-lines = 25;
