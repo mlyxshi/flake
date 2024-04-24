@@ -59,10 +59,9 @@ jobs:
 
     - run: sleep 7200
 
-    # - uses: cachix/cachix-action@v14
-    #   with:
-    #     authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-    #     name: mlyxtest
-    #     # signingKey: ${{ secrets.NIX_STORE_SIGN_PRIVATE }}
+    - uses: cachix/cachix-action@v14
+      with:
+        authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+        name: mlyxdev
     
-    # - run: nix build /Users/runner/work/flake/flake#darwinConfigurations.M1.system
+    - run: nix build nixpkgs#hello

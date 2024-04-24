@@ -38,6 +38,7 @@
       lazygit
       restic
       home-manager
+      cachix
     ] ++ lib.optionals pkgs.stdenv.isLinux [
       below
       fastfetch
