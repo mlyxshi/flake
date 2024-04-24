@@ -57,7 +57,7 @@ jobs:
           echo "macOS"
         fi
 
-    - run: sleep 7200
+    # - run: sleep 7200
 
     - uses: cachix/cachix-action@v14
       with:
