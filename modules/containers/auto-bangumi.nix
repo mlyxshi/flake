@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }: {
   systemd.services.qbittorrent-nox = {
     after = [ "network-online.target" ];
-    before = [ "podman-auto-bangumi.service" ];
+    before = [ config.systemd.services.podman-auto-bangumi.name ];
     requires = [ "network-online.target" ];
     serviceConfig = {
       User = "qbittorrent";
