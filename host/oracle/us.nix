@@ -94,8 +94,8 @@ in
   };
 
   systemd.services.transmission = {
-    after = [ "vpn.service" ];
-    bindsTo = [ "vpn.service" ];
+    after = [ config.systemd.services.vpn.name ];
+    bindsTo = [ config.systemd.services.vpn.name ];
     environment = {
       TRANSMISSION_HOME = "%S/transmission";
       TRANSMISSION_WEB_HOME = "${pkgs.transmission}/public_html";

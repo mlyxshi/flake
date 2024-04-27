@@ -14,7 +14,6 @@
     htop
     fd
     ripgrep
-    fzf
     gdu
     fastfetch
     starship

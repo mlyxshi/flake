@@ -29,7 +29,6 @@
       bandwhich
       bat
       bat-extras.batman
-      fzf
       gdu
       git
     ] ++ lib.optionals pkgs.stdenv.isDarwin [
