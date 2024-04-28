@@ -49,13 +49,23 @@
     # Diygod is rewriting the rsshub and there are some breaking changes and bugs
     image = "ghcr.io/diygod/rsshub:chromium-bundled-2023-03-20";
     environment = { "PORT" = "80"; };
-    extraOptions = lib.concatMap (x: [ "--label" x ])
-      [
-        #"io.containers.autoupdate=registry" 
-        "traefik.enable=true"
-        "traefik.http.routers.rsshub.rule=Host(`rsshub.${config.networking.domain}`)"
-        "traefik.http.routers.rsshub.entrypoints=websecure"
-      ];
+    extraOptions = lib.concatMap (x: [ "--label" x ]) [
+      #"io.containers.autoupdate=registry" 
+      "traefik.enable=true"
+      "traefik.http.routers.rsshub.rule=Host(`rsshub.${config.networking.domain}`)"
+      "traefik.http.routers.rsshub.entrypoints=websecure"
+    ];
+  };
+
+
+  virtualisation.oci-containers.containers.rss-bridge = {
+    image = "ghcr.io/rss-bridge/rss-bridge";
+    extraOptions = lib.concatMap (x: [ "--label" x ]) [
+      "io.containers.autoupdate=registry"
+      "traefik.enable=true"
+      "traefik.http.routers.rss-bridge.rule=Host(`rss-bridge.${config.networking.domain}`)"
+      "traefik.http.routers.rss-bridge.entrypoints=websecure"
+    ];
   };
 
   #################################
