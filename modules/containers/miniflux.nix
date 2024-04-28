@@ -69,6 +69,11 @@
     ];
   };
 
+  systemd.tmpfiles.settings."10-rss-bridge" = {
+    "/var/lib/rss-bridge/".d = {
+    };
+  };
+
   #################################
   # silent miniflux instance for unimportant feeds
 
