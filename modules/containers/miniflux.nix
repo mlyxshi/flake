@@ -57,23 +57,6 @@
     ];
   };
 
-
-  virtualisation.oci-containers.containers.rss-bridge = {
-    image = "ghcr.io/rss-bridge/rss-bridge";
-    volumes = [ "/var/lib/rss-bridge:/config" ];
-    extraOptions = lib.concatMap (x: [ "--label" x ]) [
-      "io.containers.autoupdate=registry"
-      "traefik.enable=true"
-      "traefik.http.routers.rss-bridge.rule=Host(`rss-bridge.${config.networking.domain}`)"
-      "traefik.http.routers.rss-bridge.entrypoints=websecure"
-    ];
-  };
-
-  systemd.tmpfiles.settings."10-rss-bridge" = {
-    "/var/lib/rss-bridge/".d = {
-    };
-  };
-
   #################################
   # silent miniflux instance for unimportant feeds
 
