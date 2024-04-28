@@ -12,12 +12,19 @@ let
   settings = pkgs.writeText "settings.json" (builtins.toJSON pref);
 in
 {
+  imports = [
+    self.nixosModules.containers.podman
+  ];
 
-  # I don't know why oracle ipv6 dhcp is not working under systemd-networkd
-  # so use default old way to configure network 
-  # networking.useDHCP = lib.mkForce true;
-  # networking.dhcpcd.enable = lib.mkForce true;
-  # systemd.network.enable = lib.mkForce false;
+  virtualisation.oci-containers.containers.flood = {
+    image = "docker.io/jesec/flood";
+    extraOptions = lib.concatMap (x: [ "--label" x ]) [
+      "io.containers.autoupdate=registry"
+      "traefik.enable=true"
+      "traefik.http.routers.flood.rule=Host(`flood.${config.networking.domain}`)"
+      "traefik.http.routers.flood.entrypoints=web"
+    ];
+  };
 
   # https://airvpn.org/ports/
   # use port forwarding to access transmission web ui and transmission peer-port(easiest way)
