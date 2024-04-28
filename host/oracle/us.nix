@@ -15,9 +15,9 @@ in
 
   # I don't know why oracle ipv6 dhcp is not working under systemd-networkd
   # so use default old way to configure network 
-  networking.useDHCP = lib.mkForce true;
-  networking.dhcpcd.enable = lib.mkForce true;
-  systemd.network.enable = lib.mkForce false;
+  # networking.useDHCP = lib.mkForce true;
+  # networking.dhcpcd.enable = lib.mkForce true;
+  # systemd.network.enable = lib.mkForce false;
 
   # https://airvpn.org/ports/
   # use port forwarding to access transmission web ui and transmission peer-port(easiest way)
