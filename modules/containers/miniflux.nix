@@ -60,7 +60,7 @@
 
   virtualisation.oci-containers.containers.rss-bridge = {
     image = "ghcr.io/rss-bridge/rss-bridge";
-    volumes = [ "/var/lib/rss-bridge:/config" ];
+    volumes = [ "/var/lib/rss-bridge:/app/config" ];
     extraOptions = lib.concatMap (x: [ "--label" x ]) [
       "io.containers.autoupdate=registry"
       "traefik.enable=true"
