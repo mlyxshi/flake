@@ -57,24 +57,20 @@
     ];
   };
 
-  users = {
-    users.rss-bridge = {
-      group = "rss-bridge";
-      isSystemUser = true;
-    };
-    groups.rss-bridge = { };
+
+  virtualisation.oci-containers.containers.rss-bridge = {
+    image = "ghcr.io/rss-bridge/rss-bridge";
+    volumes = [ "/var/lib/rss-bridge:/config" ];
+    extraOptions = lib.concatMap (x: [ "--label" x ]) [
+      "io.containers.autoupdate=registry"
+      "traefik.enable=true"
+      "traefik.http.routers.rss-bridge.rule=Host(`rss-bridge.${config.networking.domain}`)"
+      "traefik.http.routers.rss-bridge.entrypoints=websecure"
+    ];
   };
 
-  services.rss-bridge = {
-    enable = true;
-    virtualHost = "";
-    user = "rss-bridge";
-    group = "rss-bridge";
-    config = {
-      system.enabled_bridges = [ "*" ];
-      FileCache = {
-        enable_purge = true;
-      };
+  systemd.tmpfiles.settings."10-rss-bridge" = {
+    "/var/lib/rss-bridge/".d = {
     };
   };
 
