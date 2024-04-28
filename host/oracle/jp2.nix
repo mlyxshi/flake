@@ -12,6 +12,4 @@
     # self.nixosModules.containers.change-detection
     # self.nixosModules.containers.baidunetdisk
   ];
-
-  networking.nftables.enable = lib.mkForce false;
 }

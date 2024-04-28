@@ -19,10 +19,6 @@ in
   networking.dhcpcd.enable = lib.mkForce true;
   systemd.network.enable = lib.mkForce false;
 
-  networking.firewall.enable = lib.mkForce true;
-  networking.nftables.enable = lib.mkForce false;
-  networking.firewall.allowedTCPPorts = [ 443 80 ];
-
   # https://airvpn.org/ports/
   # use port forwarding to access transmission web ui and transmission peer-port(easiest way)
   # See Better implementation(bridge/veth/firewall), https://github.com/Maroka-chan/VPN-Confinement
