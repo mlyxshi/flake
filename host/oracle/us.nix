@@ -12,20 +12,6 @@ let
   settings = pkgs.writeText "settings.json" (builtins.toJSON pref);
 in
 {
-  imports = [
-    self.nixosModules.containers.podman
-  ];
-
-  virtualisation.oci-containers.containers.flood = {
-    image = "docker.io/jesec/flood";
-    extraOptions = lib.concatMap (x: [ "--label" x ]) [
-      "io.containers.autoupdate=registry"
-      "traefik.enable=true"
-      "traefik.http.routers.flood.rule=Host(`flood.${config.networking.domain}`)"
-      "traefik.http.routers.flood.entrypoints=web"
-    ];
-  };
-
   # https://airvpn.org/ports/
   # use port forwarding to access transmission web ui and transmission peer-port(easiest way)
   # See Better implementation(bridge/veth/firewall), https://github.com/Maroka-chan/VPN-Confinement
