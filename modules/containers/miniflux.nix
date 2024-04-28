@@ -57,6 +57,13 @@
     ];
   };
 
+  users = {
+    users.rss-bridge = {
+      group = "rss-bridge";
+      isSystemUser = true;
+    };
+    groups.rss-bridge = { };
+  };
 
   services.rss-bridge = {
     enable = true;
