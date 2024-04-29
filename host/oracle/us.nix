@@ -87,7 +87,7 @@ in
     bindsTo = [ config.systemd.services.vpn.name ];
     environment = {
       TRANSMISSION_HOME = "%S/transmission";
-      TRANSMISSION_WEB_HOME = "%S/transmission/flood-for-transmission";
+      TRANSMISSION_WEB_HOME = "${pkgs.transmission}/public_html";
     };
     serviceConfig.User = "transmission";
     serviceConfig.EnvironmentFile = [ "/secret/transmission" ];
