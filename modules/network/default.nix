@@ -12,8 +12,8 @@
   };
   # Disable nixpkgs defined firewall
   # enable firewall by cloud provider web console
-  networking.firewall.enable = false; 
-  
+  networking.firewall.enable = false;
+
   # networking.nftables.enable = true;
   # networking.nftables.ruleset = ''
   #   table inet FIREWALL {
