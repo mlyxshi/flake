@@ -17,35 +17,6 @@ in
 
   environment.systemPackages = with pkgs; [
     iwd
-
-    (pkgs.writeShellScriptBin "make-partitions" ''
-      sgdisk --zap-all /dev/sda
-      sgdisk --new=0:0:+512M --typecode=0:ef00 /dev/sda
-      sgdisk --new=0:0:0 --typecode=0:${rootPartType} /dev/sda
-    '')
-
-    (pkgs.writeShellScriptBin "mount-partitions" ''
-      mkfs.fat -F 32 /dev/sda1
-      mkfs.ext4 -F /dev/sda2
-      mkdir -p /mnt
-      mount /dev/sda2 /mnt
-      mount --mkdir /dev/sda1 /mnt/boot
-    '')
-
-    (pkgs.writeShellScriptBin "install" ''
-      HOST=$1
-
-      make-partitions
-      mount-partitions
-
-      nix build --build-users-group "" --store /mnt --profile /mnt/nix/var/nix/profiles/system github:mlyxshi/flake#nixosConfigurations.$HOST.config.system.build.toplevel
-
-      mkdir /mnt/{etc,tmp}
-      touch /mnt/etc/NIXOS
-      NIXOS_INSTALL_BOOTLOADER=1 nixos-enter --root /mnt -- /run/current-system/bin/switch-to-configuration boot
-      reboot
-    '')
-
   ];
 
   system.disableInstallerTools = lib.mkForce false;
