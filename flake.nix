@@ -11,7 +11,7 @@
     darwin.url = "github:LnL7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
-    plasma-manager.url = "github:pjones/plasma-manager";
+    plasma-manager.url = "github:pjones/plasma-manager/b2d47eabf3f08eeac25306cc27fa3c18340a7667";
     plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
     plasma-manager.inputs.home-manager.follows = "home-manager";
   };
