@@ -15,8 +15,7 @@ nixpkgs.lib.nixosSystem {
       services.getty.autologinUser = "root";
 
       hardware.uinput.enable = true;
-      users.groups.uinput.members =
-        [ "dominic" ]; # uinput group owns the /uinput
+      users.groups.uinput.members = [ "dominic" ]; # uinput group owns the /uinput
       users.groups.input.members = [ "dominic" ]; # allow access to /dev/input
 
       home-manager.users.dominic = import ../../home/desktop.nix;

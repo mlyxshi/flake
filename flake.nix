@@ -37,8 +37,8 @@
         utm-server = import ./host/utm/server.nix { inherit self nixpkgs secret home-manager; };
         utm-desktop = import ./host/utm/desktop.nix { inherit self nixpkgs home-manager plasma-manager secret; };
 
-        # nix build --no-link --print-out-paths github:mlyxshi/flake#nixosConfigurations.installer-aarch64.config.system.build.isoImage 
-        # nix build --no-link --print-out-paths github:mlyxshi/flake#nixosConfigurations.installer-x86_64.config.system.build.isoImage
+        # nix build .#nixosConfigurations.installer-aarch64.config.system.build.isoImage 
+        # nix build .#nixosConfigurations.installer-x86_64.config.system.build.isoImage
         installer-x86_64 = import ./host/installer { arch = "x86_64";inherit self nixpkgs secret; };
         installer-aarch64 = import ./host/installer { arch = "aarch64";inherit self nixpkgs secret; };
 

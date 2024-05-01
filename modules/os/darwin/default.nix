@@ -1,5 +1,6 @@
 { pkgs, lib, config, nixpkgs, self, ... }:
 let
+  # install parallels virtual server 
   install-aarch64 = pkgs.writeShellScriptBin "install-aarch64" ''
     HOST=$1
     IP=$2
@@ -7,12 +8,6 @@ let
     cd ~/flake
 
     outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.$HOST.config.system.build.toplevel)
-    
-    until ssh -o ConnectTimeout=10 -o StrictHostKeyChecking=no root@$IP ls /etc/initrd-release
-    do
-      echo "Kexec Environment Not Reachable, Waiting..."
-      sleep 5
-    done
     
     ssh -o StrictHostKeyChecking=no root@$IP make-partitions
     ssh -o StrictHostKeyChecking=no root@$IP mount-partitions

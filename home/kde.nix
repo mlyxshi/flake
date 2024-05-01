@@ -20,13 +20,12 @@
       kwin = {
         "Walk Through Windows" = [ "Meta+Tab" ];
         "Cycle Overview" = ""; # default: Meta+Tab
-        "Overview" = ""; # default: Meta+W
+        Overview = ""; # default: Meta+W
       };
 
-      "plasmashell"."manage activities" = ""; # default: Meta+Q
+      plasmashell."manage activities" = ""; # default: Meta+Q
 
-      "org.kde.krunner.desktop"."_launch" =
-        [ "Alt+Space" "Meta+Space" "Search" ];
+      "org.kde.krunner.desktop"."_launch" = [ "Alt+Space" "Meta+Space" "Search" ];
     };
 
     panels = [
@@ -65,16 +64,16 @@
 
     dataFile = {
       "konsole/fish.profile" = {
-        "General"."Command".value = "fish";
-        "General"."Name".value = "fish";
+        General.Command = "fish";
+        General.Name = "fish";
       };
     };
 
     configFile = {
-      "konsolerc"."Desktop Entry"."DefaultProfile".value = "fish.profile";
+      konsolerc."Desktop Entry".DefaultProfile = "fish.profile";
 
-      "katerc"."KTextEditor Document"."Auto Save".value = true;
-      "katerc"."KTextEditor Document"."Auto Save On Focus Out".value = true;
+      katerc."KTextEditor Document"."Auto Save" = true;
+      katerc."KTextEditor Document"."Auto Save On Focus Out" = true;
     };
   };
 }
