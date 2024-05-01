@@ -2,17 +2,17 @@
 
   imports = [ plasma-manager.homeManagerModules.plasma-manager ];
 
-  home.file.".config/kate/lspclient/settings.json".text = ''
-    {
-      "servers": {
-        "nix": {
-          "command": ["nil"],
-          "url": "https://github.com/oxalica/nil",
-          "highlightingModeRegex": "^Nix$"
-        }
-      }
-    }
-  '';
+  # home.file.".config/kate/lspclient/settings.json".text = ''
+  #   {
+  #     "servers": {
+  #       "nix": {
+  #         "command": ["nil"],
+  #         "url": "https://github.com/oxalica/nil",
+  #         "highlightingModeRegex": "^Nix$"
+  #       }
+  #     }
+  #   }
+  # '';
 
   programs.plasma = {
     enable = true;
