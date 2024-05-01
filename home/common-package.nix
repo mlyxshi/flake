@@ -15,7 +15,6 @@
     fd
     ripgrep
     gdu
-    fastfetch
     starship
     atuin
     home-manager

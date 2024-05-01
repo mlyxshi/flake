@@ -40,7 +40,6 @@
       cachix
     ] ++ lib.optionals pkgs.stdenv.isLinux [
       below
-      fastfetch
       gptfdisk
     ];
 }

@@ -21,7 +21,6 @@
       "nodejs"
       "aria2"
       "protobuf"
-      "fastfetch"
       "iproute2mac"
       "mas"
       "qemu"
