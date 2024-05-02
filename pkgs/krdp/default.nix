@@ -7,7 +7,7 @@
 , kpipewire
 }:
 
-stdenv.mkDerivation {
+stdenv.mkKdeDerivation {
   pname = "krdp";
   version = "unstable-2024-04-29";
 
@@ -19,8 +19,8 @@ stdenv.mkDerivation {
     hash = "sha256-51q8V7R5vQ6FHFiBDUq+7rIrw7qbLxLTYyT6lqO3ruY=";
   };
 
-  nativeBuildInputs = [ extra-cmake-modules ];
-  buildInputs = [
+  extraNativeBuildInputs = [ extra-cmake-modules ];
+  extraBuildInputs = [
     kconfig 
     kdbusaddons 
     kpipewire
