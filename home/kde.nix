@@ -2,13 +2,6 @@
 
   imports = [ plasma-manager.homeManagerModules.plasma-manager ];
 
-  programs.kate.lsp.customServers = {
-    nix = {
-      command = [ "nil" ];
-      highlightingModeRegex = "^Nix$";
-    };
-  };
-
   programs.plasma = {
     enable = true;
     shortcuts = {

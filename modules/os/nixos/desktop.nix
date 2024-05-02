@@ -16,10 +16,6 @@
 
   # time.timeZone = "Asia/Tokyo";
 
-  environment.systemPackages = with pkgs;[
-    kdePackages.krfb # kde vnc server
-  ];
-
   fonts = {
     packages = [
       (pkgs.nerdfonts.override { fonts = [ "RobotoMono" ]; }) # Terminal Font
