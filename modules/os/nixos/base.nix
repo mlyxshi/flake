@@ -8,7 +8,7 @@
   system.stateVersion = "23.11";
 
   nix = {
-    package = pkgs.nixVersions.unstable;
+    package = pkgs.nixVersions.latest;
     channel.enable = false;
     registry.nixpkgs.flake = nixpkgs;
     settings = {
