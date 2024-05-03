@@ -18,7 +18,6 @@
 
   environment.systemPackages = with pkgs;[
     # kdePackages.krfb # kde vnc server
-    flatpak-builder
   ];
 
   fonts = {
