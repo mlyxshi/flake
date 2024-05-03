@@ -23,8 +23,7 @@
       POLLING_PARSING_ERROR_LIMIT = "0";
       METRICS_COLLECTOR = "1";
       METRICS_ALLOWED_NETWORKS = "0.0.0.0/0";
-      DATABASE_URL =
-        "postgres://postgres:postgres@miniflux-postgres/miniflux?sslmode=disable";
+      DATABASE_URL = "postgres://postgres:postgres@miniflux-postgres/miniflux?sslmode=disable";
       BASE_URL = "https://miniflux.${config.networking.domain}";
     };
     extraOptions = lib.concatMap (x: [ "--label" x ]) [
@@ -46,11 +45,10 @@
   };
 
   virtualisation.oci-containers.containers.rsshub = {
-    # Diygod is rewriting the rsshub and there are some breaking changes and bugs
-    image = "ghcr.io/diygod/rsshub:chromium-bundled-2023-03-20";
+    image = "ghcr.io/diygod/rsshub:chromium-bundled";
     environment = { "PORT" = "80"; };
     extraOptions = lib.concatMap (x: [ "--label" x ]) [
-      #"io.containers.autoupdate=registry" 
+      "io.containers.autoupdate=registry"
       "traefik.enable=true"
       "traefik.http.routers.rsshub.rule=Host(`rsshub.${config.networking.domain}`)"
       "traefik.http.routers.rsshub.entrypoints=websecure"

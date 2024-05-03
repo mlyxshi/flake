@@ -91,10 +91,4 @@
 
   systemd.services."backup@auto-bangumi".startAt = "13:00";
   systemd.services."backup@auto-bangumi".overrideStrategy = "asDropin";
-
-  # systemd.services."backup-init@auto-bangumi".wantedBy = [ "multi-user.target" ];
-  # systemd.services."backup-init@auto-bangumi".overrideStrategy = "asDropin";
-
-  # systemd.services."backup@auto-bangumi".startAt = "05:00";
-  # systemd.services."backup@auto-bangumi".overrideStrategy = "asDropin";
 }
