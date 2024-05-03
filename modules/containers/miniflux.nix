@@ -46,7 +46,6 @@
 
   virtualisation.oci-containers.containers.rsshub = {
     image = "ghcr.io/diygod/rsshub:chromium-bundled";
-    environment = { "PORT" = "80"; };
     extraOptions = lib.concatMap (x: [ "--label" x ]) [
       "io.containers.autoupdate=registry"
       "traefik.enable=true"
