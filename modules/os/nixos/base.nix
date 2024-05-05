@@ -59,8 +59,6 @@
     NIX_REMOTE = "daemon"; # root user do not use nix-daemon by default when build. This force nix-daemon to be used. Nix 2.12 cgroups and auto-allocate-uids
   };
 
-  programs.command-not-found.enable = false;
-
   boot.kernelPackages = pkgs.linuxPackages_latest;
   # https://wiki.archlinux.org/title/sysctl
   # https://www.starduster.me/2020/03/02/linux-network-tuning-kernel-parameter/

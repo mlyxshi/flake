@@ -7,9 +7,9 @@
 
   imports = [ ];
 
-  config = {
-    programs.nano.enable = false;
-    boot.bcache.enable = false;
-    services.lvm.enable = false;
-  };
+  programs.nano.enable = false;
+  programs.command-not-found.enable = false;
+  boot.bcache.enable = false;
+  services.lvm.enable = false;
+  environment.stub-ld.enable = false;
 }

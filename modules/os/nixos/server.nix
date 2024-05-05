@@ -7,7 +7,8 @@
   # systemd.sysusers.enable = true;
   # system.etc.overlay.enable = true;
 
-  fonts.fontconfig.enable = false;
+  # fonts.fontconfig.enable = false;
+  environment.noXlibs = true;
 
   documentation = {
     enable = false;
