@@ -20,5 +20,6 @@
       WorkingDirectory = "/boot";
       ExecStart = "${pkgs.curl}/bin/curl -LO https://boot.netboot.xyz/ipxe/netboot.xyz-arm64.efi";
     };
+    wantedBy = [ "multi-user.target" ];
   };
 }
