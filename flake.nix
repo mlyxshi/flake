@@ -27,12 +27,7 @@
       overlays.default = final: prev: prev.lib.genAttrs packagelist (name: prev.callPackage ./pkgs/${name} { });
       nixosModules = mkFileHierarchyAttrset ./. "modules";
       darwinConfigurations.M1 = import ./host/darwin/M1.nix { inherit self darwin; };
-      darwinConfigurations.github-action-darwin = darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        modules = [
-          ./host/darwin/github-action-darwin.nix
-        ];
-      };
+      darwinConfigurations.github-action-darwin = darwin.lib.darwinSystem { system = "aarch64-darwin"; modules = [ ./host/darwin/github-action-darwin.nix ]; };
       nixosConfigurations = {
 
         utm-server = import ./host/utm/server.nix { inherit self nixpkgs secret home-manager; };
@@ -66,11 +61,6 @@
           modules = [ ./home/darwin.nix ];
           extraSpecialArgs = { inherit self; };
         };
-        asahi = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.aarch64-linux;
-          modules = [ ./home/asahi.nix ];
-          extraSpecialArgs = { inherit plasma-manager self; };
-        };
         deck = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = [ ./home/deck.nix ];
@@ -101,16 +91,9 @@
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixpkgs-fmt;
       formatter.aarch64-linux = nixpkgs.legacyPackages.aarch64-linux.nixpkgs-fmt;
 
-      apps = {
-        x86_64-linux.deck-init = {
-          type = "app";
-          program = "${nixpkgs.legacyPackages.x86_64-linux.writeScript "init" (builtins.readFile ./run/deck-init.sh)}";
-        };
-
-        aarch64-linux.asahi-init = {
-          type = "app";
-          program = "${nixpkgs.legacyPackages.aarch64-linux.writeScript "init" (builtins.readFile ./run/asahi-init.sh)}";
-        };
+      apps.x86_64-linux.deck-init = {
+        type = "app";
+        program = "${nixpkgs.legacyPackages.x86_64-linux.writeScript "init" (builtins.readFile ./run/deck-init.sh)}";
       };
     };
 }
