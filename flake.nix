@@ -93,7 +93,15 @@
 
       apps.x86_64-linux.deck-init = {
         type = "app";
-        program = "${nixpkgs.legacyPackages.x86_64-linux.writeScript "init" (builtins.readFile ./run/deck-init.sh)}";
+        program = "${nixpkgs.legacyPackages.x86_64-linux.writeScript "init" ''
+          nix run ~/flake#homeConfigurations.deck.activationPackage
+          sudo systemctl enable --now sshd
+
+          flatpak install cn.xfangfang.wiliwili
+          flatpak install org.videolan.VLC
+          flatpak install io.github.pwr_solaar.solaar
+          flatpak install com.google.Chrome
+        ''}";
       };
     };
 }
