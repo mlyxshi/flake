@@ -38,21 +38,9 @@
         installer-x86_64 = import ./host/installer { arch = "x86_64";inherit self nixpkgs secret; };
         installer-aarch64 = import ./host/installer { arch = "aarch64";inherit self nixpkgs secret; };
 
-        kexec-x86_64 = nixpkgs.lib.nixosSystem {
-          modules = [
-            ./kexec/host.nix
-            ./kexec/initrd.nix
-            { nixpkgs.hostPlatform = "x86_64-linux"; }
-          ];
-        };
+        kexec-x86_64 = nixpkgs.lib.nixosSystem { modules = [ ./kexec/host.nix ./kexec/initrd.nix { nixpkgs.hostPlatform = "x86_64-linux"; } ]; };
+        kexec-aarch64 = nixpkgs.lib.nixosSystem { modules = [ ./kexec/host.nix ./kexec/initrd.nix { nixpkgs.hostPlatform = "aarch64-linux"; } ]; };
 
-        kexec-aarch64 = nixpkgs.lib.nixosSystem {
-          modules = [
-            ./kexec/host.nix
-            ./kexec/initrd.nix
-            { nixpkgs.hostPlatform = "aarch64-linux"; }
-          ];
-        };
       } // lib.genAttrs oracle-serverlist (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs home-manager secret; });
 
       homeConfigurations = {
