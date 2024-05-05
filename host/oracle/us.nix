@@ -91,8 +91,7 @@ in
     };
     serviceConfig.User = "transmission";
     serviceConfig.EnvironmentFile = [ "/secret/transmission" ];
-    serviceConfig.ExecStart =
-      "${pkgs.transmission}/bin/transmission-daemon --foreground --username $ADMIN --password $PASSWORD";
+    serviceConfig.ExecStart = "${pkgs.transmission}/bin/transmission-daemon --foreground --username $ADMIN --password $PASSWORD";
     serviceConfig.WorkingDirectory = "%S/transmission";
     serviceConfig.NetworkNamespacePath = "/run/netns/vpn";
     wantedBy = [ "multi-user.target" ];
@@ -101,8 +100,7 @@ in
   systemd.services.caddy-index = {
     after = [ "transmission.service" ];
     wantedBy = [ "multi-user.target" ];
-    script =
-      "${pkgs.caddy}/bin/caddy file-server --listen :8010 --root /var/lib/transmission/files --browse";
+    script = "${pkgs.caddy}/bin/caddy file-server --listen :8010 --root /var/lib/transmission/files --browse";
   };
 
   services.traefik = {
