@@ -1,4 +1,4 @@
-{ config, pkgs, lib, nixpkgs, ... }: {
+{ config, pkgs, lib, ... }: {
 
   programs.fish = {
     enable = true;
@@ -9,7 +9,7 @@
       c = "bat";
       man = "batman";
       P = "echo $PATH";
-      nixpkgs = "hx ${nixpkgs}";
+      nixpkgs = "hx ${config.nixpkgs.flake.source}";
     } // lib.optionalAttrs pkgs.stdenv.isDarwin { sshr = "ssh-keygen -R"; }
     // lib.optionalAttrs pkgs.stdenv.isLinux {
       sall = "systemctl list-units";
