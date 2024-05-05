@@ -9,7 +9,6 @@
       c = "bat";
       man = "batman";
       P = "echo $PATH";
-      nixpkgs = "hx ${config.nixpkgs.flake.source}";
     } // lib.optionalAttrs pkgs.stdenv.isDarwin { sshr = "ssh-keygen -R"; }
     // lib.optionalAttrs pkgs.stdenv.isLinux {
       sall = "systemctl list-units";
@@ -19,6 +18,7 @@
       scat = "systemctl cat";
       slog = "journalctl -u";
       ip = "ip --color=auto";
+      nixpkgs = "hx ${config.nixpkgs.flake.source}";
     };
 
     shellInit = ''
