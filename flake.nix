@@ -90,18 +90,5 @@
 
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixpkgs-fmt;
       formatter.aarch64-linux = nixpkgs.legacyPackages.aarch64-linux.nixpkgs-fmt;
-
-      apps.x86_64-linux.deck-init = {
-        type = "app";
-        program = "${nixpkgs.legacyPackages.x86_64-linux.writeScript "init" ''
-          nix run ~/flake#homeConfigurations.deck.activationPackage
-          sudo systemctl enable --now sshd
-
-          flatpak install cn.xfangfang.wiliwili
-          flatpak install org.videolan.VLC
-          flatpak install io.github.pwr_solaar.solaar
-          flatpak install com.google.Chrome
-        ''}";
-      };
     };
 }
