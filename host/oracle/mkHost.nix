@@ -2,7 +2,7 @@
 nixpkgs.lib.nixosSystem {
   modules = [
     secret.nixosModules.default
-    self.nixosModules.home-manager
+    home-manager.nixosModules.default
     self.nixosModules.os.nixos.server
     self.nixosModules.network
     self.nixosModules.services.nodestatus-client
@@ -16,7 +16,12 @@ nixpkgs.lib.nixosSystem {
       nixpkgs.hostPlatform = "aarch64-linux";
       networking.hostName = hostName;
       networking.domain = "mlyxshi.com";
+
+      home-manager.users.root = import ../../home;
+      home-manager.useGlobalPkgs = true;
+      home-manager.useUserPackages = true;
+      home-manager.verbose = true;
     }
   ];
-  specialArgs = { inherit self home-manager; };
+  specialArgs = { inherit self; };
 }
