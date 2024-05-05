@@ -1,5 +1,4 @@
 { self, nixpkgs, secret, home-manager, plasma-manager }:
-
 nixpkgs.lib.nixosSystem {
   modules = [
     secret.nixosModules.default
@@ -22,5 +21,5 @@ nixpkgs.lib.nixosSystem {
       home-manager.extraSpecialArgs = { inherit plasma-manager; };
     }
   ];
-  specialArgs = { inherit self nixpkgs home-manager; };
+  specialArgs = { inherit self home-manager; };
 }

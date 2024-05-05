@@ -1,16 +1,15 @@
-{ config, pkgs, lib, nixpkgs, self, ... }: {
+{ config, pkgs, lib, self, ... }: {
 
   imports = [
     self.nixosModules.os.common
     self.nixosModules.strip
   ];
 
-  system.stateVersion = "23.11";
+  system.stateVersion = "24.05";
 
   nix = {
     package = pkgs.nixVersions.latest;
     channel.enable = false;
-    registry.nixpkgs.flake = nixpkgs;
     settings = {
       experimental-features = [ "nix-command" "flakes" "cgroups" "auto-allocate-uids" ];
       substituters = [ "https://mlyxshi.cachix.org" ];

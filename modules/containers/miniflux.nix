@@ -68,8 +68,7 @@
       POLLING_PARSING_ERROR_LIMIT = "0";
       METRICS_COLLECTOR = "1";
       METRICS_ALLOWED_NETWORKS = "0.0.0.0/0";
-      DATABASE_URL =
-        "postgres://postgres:postgres@miniflux-silent-postgres/miniflux?sslmode=disable";
+      DATABASE_URL = "postgres://postgres:postgres@miniflux-silent-postgres/miniflux?sslmode=disable";
       BASE_URL = "https://miniflux-silent.${config.networking.domain}";
     };
     extraOptions = lib.concatMap (x: [ "--label" x ]) [

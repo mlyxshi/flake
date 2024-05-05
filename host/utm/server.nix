@@ -14,5 +14,5 @@ nixpkgs.lib.nixosSystem {
       services.getty.autologinUser = "root";
     }
   ];
-  specialArgs = { inherit self nixpkgs home-manager; };
+  specialArgs = { inherit self home-manager; };
 }

@@ -1,4 +1,4 @@
-{ pkgs, lib, config, nixpkgs, self, ... }:
+{ pkgs, lib, config, self, ... }:
 let
   # install parallels virtual server 
   install-aarch64 = pkgs.writeShellScriptBin "install-aarch64" ''
@@ -66,7 +66,6 @@ in
 
   nix = {
     package = pkgs.nixVersions.latest;
-    registry.nixpkgs.flake = nixpkgs;
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
       trusted-users = [ "root" "dominic" ];

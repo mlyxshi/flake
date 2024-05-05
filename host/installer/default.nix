@@ -13,5 +13,5 @@ nixpkgs.lib.nixosSystem {
       };
     }
   ];
-  specialArgs = { inherit self nixpkgs; };
+  specialArgs = { inherit self; };
 }

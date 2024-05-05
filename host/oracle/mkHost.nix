@@ -18,5 +18,5 @@ nixpkgs.lib.nixosSystem {
       networking.domain = "mlyxshi.com";
     }
   ];
-  specialArgs = { inherit self nixpkgs home-manager; };
+  specialArgs = { inherit self home-manager; };
 }
