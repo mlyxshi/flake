@@ -1,5 +1,6 @@
 # /notifier repo-add nixpkgs https://github.com/NixOS/nixpkgs
 # /notifier repo-edit nixpkgs —branch-regex "master|nixos-unstable|nixos-unstable-small"
+# /notifier condition-add nixpkgs in-nixos-unstable —type in-branch —expr nixos-unstable
 { pkgs, lib, config, ... }: {
   systemd.services.commit-notifier = {
     after = [ "network-online.target" ];

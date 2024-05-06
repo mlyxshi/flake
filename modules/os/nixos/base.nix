@@ -14,8 +14,6 @@
       experimental-features = [ "nix-command" "flakes" "cgroups" "auto-allocate-uids" ];
       substituters = [ "https://mlyxshi.cachix.org" ];
       trusted-public-keys = [ "mlyxshi.cachix.org-1:BVd+/1A5uLMI8pTUdhdh6sdefTRdj+/PVgrUh9L2hWw=" ];
-      auto-optimise-store = true;
-      fallback = true;
       log-lines = 25;
       # experimental
       use-cgroups = true;
@@ -26,6 +24,7 @@
       dates = "weekly";
       options = "--delete-older-than 7d";
     };
+    optimise.automatic = true;
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -45,11 +44,7 @@
     settings.PasswordAuthentication = false;
   };
 
-  programs.ssh = {
-    knownHosts = {
-      "github.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
-    };
-  };
+  programs.ssh.knownHosts."github.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
 
   i18n.defaultLocale = "en_US.UTF-8";
 
