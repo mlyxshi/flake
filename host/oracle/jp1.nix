@@ -5,6 +5,4 @@
   ];
 
   services.atftpd.enable = true;
-  services.atftpd.root = "/var/lib/tftp";
-  systemd.services.atftpd.serviceConfig.User = "root";
 }
