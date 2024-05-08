@@ -15,8 +15,8 @@
     # "${modulesPath}/profiles/perlless.nix"
   ];
 
-  # system.switch.enable = false;
-  # system.etc.overlay.enable = true;
-  # systemd.sysusers.enable = true;
-  # boot.enableContainers =  false;
+  system.switch.enable = false;
+  system.etc.overlay.enable = true;
+  systemd.sysusers.enable = true;
+  boot.enableContainers =  false;
 }
