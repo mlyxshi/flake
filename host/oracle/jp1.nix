@@ -4,6 +4,6 @@
     self.nixosModules.containers.auto-bangumi
   ];
 
-  services.tftpd.enable = true;
-  services.tftpd.path = "/var/lib/tftp";
+  services.atftpd.enable = true;
+  services.atftpd.root = "/var/lib/tftp";
 }
