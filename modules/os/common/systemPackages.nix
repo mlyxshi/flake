@@ -6,7 +6,7 @@
       file
       iperf
       tree
-      htop
+      # htop
       nali
       libarchive
       nix-output-monitor
