@@ -2,6 +2,8 @@
   imports = [
     self.nixosModules.containers.podman
     self.nixosModules.containers.auto-bangumi
-    self.nixosModules.containers.netboot-tftp
   ];
+
+  services.tftpd.enable = true;
+  services.tftpd.path = "/var/lib/tftp";
 }
