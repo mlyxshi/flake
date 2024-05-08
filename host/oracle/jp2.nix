@@ -25,7 +25,8 @@
     let
       efiArch = pkgs.stdenv.hostPlatform.efiArch;
     in
-    {
+    { 
+      "/boot/EFI".d = { };
       "/boot/EFI/BOOT".d = { };
       "/boot/EFI/BOOT/BOOT${lib.toUpper efiArch}.EFI".C.argument = "${pkgs.systemd}/lib/systemd/boot/efi/systemd-boot${efiArch}.efi";
 
