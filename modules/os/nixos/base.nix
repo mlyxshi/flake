@@ -132,7 +132,7 @@
       if [ -n "$SYSTEM" ]
       then
         ln -sfn $SYSTEM /run/next-system
-        sudo systemctl soft-reboot
+        systemctl soft-reboot
       else
         echo "Build Failed"
         exit 1
