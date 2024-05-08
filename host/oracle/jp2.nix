@@ -3,7 +3,7 @@
     # self.nixosModules.services.hysteria
 
 
-    #self.nixosModules.services.transmission
+    # self.nixosModules.services.transmission
 
     # self.nixosModules.containers.podman
     # self.nixosModules.containers.netboot-tftp
@@ -15,12 +15,8 @@
     # "${modulesPath}/profiles/perlless.nix"
   ];
 
-  system.switch.enable = false;
-
-
-  system.etc.overlay.enable = true;
-  systemd.sysusers.enable = true;
-
-  # Random perl remnants
-  boot.enableContainers =  false;
+  # system.switch.enable = false;
+  # system.etc.overlay.enable = true;
+  # systemd.sysusers.enable = true;
+  # boot.enableContainers =  false;
 }
