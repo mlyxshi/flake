@@ -126,7 +126,8 @@
 
     (pkgs.writeShellScriptBin "soft-reboot" ''
       cd /flake
-
+      git pull   
+      
       SYSTEM=$(nom build --no-link --print-out-paths .#nixosConfigurations.$(hostnamectl hostname).config.system.build.toplevel)
 
       if [ -n "$SYSTEM" ]
