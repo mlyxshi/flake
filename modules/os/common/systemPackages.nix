@@ -30,7 +30,7 @@
       bat
       bat-extras.batman
       gdu
-      git
+      gitMinimal
     ] ++ lib.optionals pkgs.stdenv.isDarwin [
       gh
       jq
