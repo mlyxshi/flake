@@ -12,7 +12,7 @@
       nix-output-monitor
       nix-tree
       nix-init
-      nix-update
+      # nix-update
       nix-inspect
       nixpkgs-fmt
       joshuto
