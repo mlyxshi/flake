@@ -5,8 +5,8 @@
   ];
 
   virtualisation.oci-containers.containers.netboot-tftp = {
-    image = "docker.io/cjs520/tftp-netboot:arm64";
-    ports = [ "69:69/udp" ];
+    image = "docker.io/langren1353/netboot-shell-tftp";
+    ports = [ "69:69" ];
     environment = {
       "PUID" = "1111";
       "PGID" = "1112";
