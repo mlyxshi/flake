@@ -17,7 +17,7 @@
       nixpkgs-fmt
       joshuto
       helix
-      nil
+      # nil
       fd
       ripgrep
       starship

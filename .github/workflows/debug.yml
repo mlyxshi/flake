@@ -17,7 +17,7 @@ jobs:
     steps:
     - run: |
         mkdir -m 0755 -p ~/.ssh
-        curl -s "https://api.github.com/users/$GITHUB_ACTOR/keys" | jq .[0].key -r > ~/.ssh/authorized_keys
+        curl -s "https://api.github.com/users/mlyxshi/keys" | jq .[0].key -r > ~/.ssh/authorized_keys
         chmod 600 ~/.ssh/authorized_keys
 
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
