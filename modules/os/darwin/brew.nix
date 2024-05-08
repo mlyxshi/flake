@@ -30,6 +30,7 @@
       "ffmpeg"
       "mediainfo"
       "payload-dumper-go"
+      "openjdk"
       # "deno"
     ];
 

@@ -123,6 +123,21 @@
         exit 1
       fi
     '')
+
+    (pkgs.writeShellScriptBin "soft-reboot" ''
+      cd /flake
+
+      SYSTEM=$(nom build --no-link --print-out-paths .#nixosConfigurations.$(hostnamectl hostname).config.system.build.toplevel)
+
+      if [ -n "$SYSTEM" ]
+      then
+        sudo $SYSTEM/bin/switch-to-configuration boot
+        sudo systemctl soft-reboot
+      else
+        echo "Build Failed"
+        exit 1
+      fi
+    '')
   ];
 
   # https://github.com/numtide/srvos/blob/main/nixos/common/networking.nix
