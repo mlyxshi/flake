@@ -131,7 +131,7 @@
 
       if [ -n "$SYSTEM" ]
       then
-        sudo $SYSTEM/bin/switch-to-configuration boot
+        ln -sfn $SYSTEM /run/next-system
         sudo systemctl soft-reboot
       else
         echo "Build Failed"
