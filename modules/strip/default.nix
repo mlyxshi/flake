@@ -8,6 +8,7 @@
   imports = [ ];
 
   programs.nano.enable = false;
+  programs.less.enable = false; 
   programs.command-not-found.enable = false;
   boot.bcache.enable = false;
   services.lvm.enable = false;
