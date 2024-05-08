@@ -13,7 +13,7 @@
     # self.nixosModules.containers.baidunetdisk
   ];
 
-  system.switch.enable = false;
+  # system.switch.enable = false;
   system.etc.overlay.enable = true;
   systemd.sysusers.enable = true;
 }
