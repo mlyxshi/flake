@@ -1,7 +1,5 @@
 { config, pkgs, lib, self, ... }: {
 
-  imports = [ self.nixosModules.containers.podman ];
-
   virtualisation.oci-containers.containers.netboot-tftp = {
     image = "docker.io/langren1353/netboot-shell-tftp";
     ports = [ "69:69/udp" ];

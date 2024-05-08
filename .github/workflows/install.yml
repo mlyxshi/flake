@@ -76,6 +76,9 @@ jobs:
     - run: $SSH $HOST make-partitions
     - run: $SSH $HOST mount-partitions
 
+    # for emergency reboot
+    - run: $SSH $HOST curl -Lo /mnt/boot/arm64.efi https://boot.netboot.xyz/ipxe/netboot.xyz-arm64.efi
+
     # https://github.com/NixOS/nixpkgs/commit/7a586794d4378d7a6432192700a4706083d58388
     - run: $SSH $HOST "nix build --build-users-group '' --store /mnt --profile /mnt/nix/var/nix/profiles/system github:mlyxshi/flake#nixosConfigurations.${{ inputs.flakeAttr }}.config.system.build.toplevel"
 
