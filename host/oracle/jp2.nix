@@ -12,8 +12,8 @@
     # self.nixosModules.containers.change-detection
     # self.nixosModules.containers.baidunetdisk
 
-    # "${modulesPath}/profiles/perlless.nix"
+    "${modulesPath}/profiles/perlless.nix"
   ];
 
-  system.switch.enable = false;
+  # system.switch.enable = false;
 }
