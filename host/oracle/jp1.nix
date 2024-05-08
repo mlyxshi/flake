@@ -16,7 +16,8 @@
   services.atftpd.enable = true;
   services.atftpd.root = "/var/lib/tftp";
   services.atftpd.extraOptions = [
-    "--bind-address 0.0.0.0"
+    "--user root"
+    "--group root"
     "--verbose=7"
   ];
   # Since atftpd run as the nobody user, the permission of the directory must be set properly to allow file reading and writing.
