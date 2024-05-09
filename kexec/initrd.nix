@@ -79,7 +79,7 @@ in
     htop = "${pkgs.htop}/bin/htop";
     ip = "${pkgs.iproute2}/bin/ip";
 
-    git = "${pkgs.git}/bin/git";
+    git = "${pkgs.gitMinimal}/bin/git";
     ssh = "${config.programs.ssh.package}/bin/ssh";
 
     # File explorer and editor for debugging
