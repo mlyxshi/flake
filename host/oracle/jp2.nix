@@ -15,4 +15,7 @@
   # system.switch.enable = false;
   # system.etc.overlay.enable = true;
   # systemd.sysusers.enable = true;
+
+  system.switch.enable = false; 
+  system.switch.enableNg = true;
 }
