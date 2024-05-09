@@ -99,7 +99,7 @@
 
       if [ -n "$SYSTEM" ]
       then
-        [[ -e "/run/current-system" ]] && nix store diff-closures /run/current-system $systemConfig
+        [[ -e "/run/current-system" ]] && nix store diff-closures /run/current-system $SYSTEM
         nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
         $SYSTEM/bin/switch-to-configuration switch
       else
