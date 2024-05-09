@@ -67,10 +67,6 @@
     "net.core.wmem_max" = 16777216;
   };
 
-  system.activationScripts."diff-closures".text = ''
-    [[ -e "/run/current-system" ]] && ${pkgs.nix}/bin/nix store  diff-closures /run/current-system $systemConfig
-  '';
-
   environment.systemPackages = [
     (pkgs.writeShellScriptBin "update" ''
       if [[ -e "/flake/flake.nix" ]]
@@ -101,6 +97,7 @@
 
       if [ -n "$SYSTEM" ]
       then
+        [[ -e "/run/current-system" ]] && nix store diff-closures /run/current-system $systemConfig
         sudo nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
         sudo $SYSTEM/bin/switch-to-configuration switch
       else
@@ -118,39 +115,6 @@
       then
         sudo nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
         sudo $SYSTEM/bin/switch-to-configuration switch
-      else
-        echo "Build Failed"
-        exit 1
-      fi
-    '')
-
-    (pkgs.writeShellScriptBin "soft-reboot" ''
-      if [[ -e "/flake/flake.nix" ]]
-      then
-        cd /flake
-        git pull   
-      else
-        if id -u "dominic" >/dev/null 2>&1
-        then
-          # user exists
-          sudo mkdir -p /flake
-          sudo chown dominic /flake
-          git clone --depth=1  git@github.com:mlyxshi/flake /flake
-        else
-          # user does not exist
-          git clone --depth=1  git@github.com:mlyxshi/flake /flake
-        fi
-
-        cd /flake
-      fi  
-      
-      SYSTEM=$(nom build --no-link --print-out-paths .#nixosConfigurations.$(hostnamectl hostname).config.system.build.toplevel)
-      
-      if [ -n "$SYSTEM" ]
-      then
-        nix store  diff-closures /run/current-system $SYSTEM
-        ln -sfn $SYSTEM /run/next-system
-        systemctl soft-reboot
       else
         echo "Build Failed"
         exit 1
