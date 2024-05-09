@@ -67,7 +67,9 @@
     "net.core.wmem_max" = 16777216;
   };
 
+  
   environment.systemPackages = [
+    # wait systemd run0
     (pkgs.writeShellScriptBin "update" ''
       if [[ -e "/flake/flake.nix" ]]
       then
@@ -77,8 +79,8 @@
         if id -u "dominic" >/dev/null 2>&1
         then
           # user exists
-          sudo mkdir -p /flake
-          sudo chown dominic /flake
+          mkdir -p /flake
+          chown dominic /flake
           git clone --depth=1  git@github.com:mlyxshi/flake /flake
         else
           # user does not exist
@@ -98,14 +100,15 @@
       if [ -n "$SYSTEM" ]
       then
         [[ -e "/run/current-system" ]] && nix store diff-closures /run/current-system $systemConfig
-        sudo nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
-        sudo $SYSTEM/bin/switch-to-configuration switch
+        nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
+        $SYSTEM/bin/switch-to-configuration switch
       else
         echo "Build Failed"
         exit 1
       fi
     '')
 
+    # wait systemd run0
     (pkgs.writeShellScriptBin "local-update" ''
       cd /flake
 
@@ -113,8 +116,8 @@
 
       if [ -n "$SYSTEM" ]
       then
-        sudo nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
-        sudo $SYSTEM/bin/switch-to-configuration switch
+        nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
+        $SYSTEM/bin/switch-to-configuration switch
       else
         echo "Build Failed"
         exit 1

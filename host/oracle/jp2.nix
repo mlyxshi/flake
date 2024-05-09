@@ -16,6 +16,8 @@
   # system.etc.overlay.enable = true;
   # systemd.sysusers.enable = true;
 
+  security.sudo.enable = false;
+
   system.switch.enable = false; 
   system.switch.enableNg = true;
 }
