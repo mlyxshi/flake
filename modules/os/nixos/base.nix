@@ -125,9 +125,25 @@
     '')
 
     (pkgs.writeShellScriptBin "soft-reboot" ''
-      cd /flake
-      git pull   
+      if [[ -e "/flake/flake.nix" ]]
+      then
+        cd /flake
+        git pull   
+      else
+        if id -u "dominic" >/dev/null 2>&1
+        then
+          # user exists
+          sudo mkdir -p /flake
+          sudo chown dominic /flake
+          git clone --depth=1  git@github.com:mlyxshi/flake /flake
+        else
+          # user does not exist
+          git clone --depth=1  git@github.com:mlyxshi/flake /flake
+        fi
 
+        cd /flake
+      fi  
+      
       SYSTEM=$(nom build --no-link --print-out-paths .#nixosConfigurations.$(hostnamectl hostname).config.system.build.toplevel)
       
       if [ -n "$SYSTEM" ]
