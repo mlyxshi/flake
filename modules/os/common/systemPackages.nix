@@ -6,7 +6,7 @@
       file
       iperf
       tree
-      # htop
+      htop
       nali
       libarchive
       nix-output-monitor
@@ -17,7 +17,7 @@
       nixpkgs-fmt
       joshuto
       helix
-      # nil
+      nil
       fd
       ripgrep
       starship
