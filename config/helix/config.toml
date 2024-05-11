@@ -1,7 +1,7 @@
 theme = "catppuccin_macchiato"
 
 [editor]
-mouse = false
+mouse = true
 color-modes = true
 
 [editor.cursor-shape]
