@@ -3,11 +3,7 @@
   # https://traefik.io/blog/traefik-2-0-docker-101-fc2893944b9d/
   services.traefik = {
     enable = true;
-    group =
-      if config.virtualisation.podman.enable then
-        "podman"
-      else
-        "traefik"; # podman backend
+    group = if config.virtualisation.podman.enable then "podman" else "traefik"; # podman backend
 
     dynamicConfigOptions = {
 
@@ -43,8 +39,7 @@
       certificatesResolvers.letsencrypt.acme = {
         dnsChallenge.provider = "cloudflare";
         email = "blackhole@${config.networking.domain}";
-        storage =
-          "${config.services.traefik.dataDir}/acme.json"; # "/var/lib/traefik/acme.json"
+        storage = "${config.services.traefik.dataDir}/acme.json"; # "/var/lib/traefik/acme.json"
       };
     } // lib.optionalAttrs config.virtualisation.podman.enable {
 

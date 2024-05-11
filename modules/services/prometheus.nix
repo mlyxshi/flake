@@ -71,8 +71,7 @@ in
       })
     ];
 
-    alertmanagers =
-      [{ static_configs = [{ targets = [ "127.0.0.1:9093" ]; }]; }];
+    alertmanagers = [{ static_configs = [{ targets = [ "127.0.0.1:9093" ]; }]; }];
 
     alertmanager = {
       enable = true;
@@ -113,10 +112,8 @@ in
         };
 
         services = {
-          prometheus.loadBalancer.servers =
-            [{ url = "http://127.0.0.1:9090"; }];
-          alertmanager.loadBalancer.servers =
-            [{ url = "http://127.0.0.1:9093"; }];
+          prometheus.loadBalancer.servers = [{ url = "http://127.0.0.1:9090"; }];
+          alertmanager.loadBalancer.servers = [{ url = "http://127.0.0.1:9093"; }];
         };
       };
     };

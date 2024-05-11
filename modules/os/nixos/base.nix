@@ -67,7 +67,7 @@
     "net.core.wmem_max" = 16777216;
   };
 
-  
+
   environment.systemPackages = [
     # wait systemd run0
     (pkgs.writeShellScriptBin "update" ''

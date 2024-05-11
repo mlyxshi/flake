@@ -18,6 +18,6 @@
 
   security.sudo.enable = false;
 
-  system.switch.enable = false; 
+  system.switch.enable = false;
   system.switch.enableNg = true;
 }

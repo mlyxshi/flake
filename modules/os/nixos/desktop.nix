@@ -10,8 +10,6 @@
     extraGroups = [ "wheel" ];
   };
 
-  security.sudo.wheelNeedsPassword = false;
-
   environment.etc."firefox/policies/policies.json".text = builtins.toJSON (import ../../../home/firefox/policy.nix);
 
   # time.timeZone = "Asia/Tokyo";
