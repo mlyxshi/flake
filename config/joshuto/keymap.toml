@@ -6,9 +6,7 @@ keymap = [
   { keys = ["Q"], command = "quit --output-current-directory" },
 
   { keys = ["R"], command = "reload_dirlist" },
-  { keys = ["z", "h"], command = "toggle_hidden" },
-  { keys = ["ctrl+h"], command = "toggle_hidden" },
-
+  { keys = ["."], command = "toggle_hidden" },
 
   { keys = ["1"], command = "numbered_command 1" },
   { keys = ["2"], command = "numbered_command 2" },

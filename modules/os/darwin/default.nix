@@ -25,7 +25,6 @@ in
 
   imports = [
     self.nixosModules.os.common
-    ./systemDefaults.nix
     ./launchd.nix
     ./brew.nix
   ];

@@ -112,8 +112,7 @@ in
           service = "transmission-vpn-index";
         };
 
-        services.transmission-vpn-index.loadBalancer.servers =
-          [{ url = "http://127.0.0.1:8010"; }];
+        services.transmission-vpn-index.loadBalancer.servers = [{ url = "http://127.0.0.1:8010"; }];
       };
     };
   };

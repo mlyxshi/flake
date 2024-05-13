@@ -9,13 +9,8 @@
     environment.RUST_LOG = "info";
     path = [ pkgs.git ];
     serviceConfig.EnvironmentFile = [ "/secret/commit-notifier" ];
-    serviceConfig.ExecStart = ''
-      ${pkgs.commit-notifier}/bin/commit-notifier --working-dir /var/lib/commit-notifier/  --cron '0 */5 * * * *'
-    '';
+    serviceConfig.ExecStart = "${pkgs.commit-notifier}/bin/commit-notifier --working-dir /var/lib/commit-notifier/  --cron '0 */5 * * * *'";
   };
 
-  systemd.tmpfiles.settings."10-commit-notifier" = {
-    "/var/lib/commit-notifier/337000294/".d = { };
-  };
-
+  systemd.tmpfiles.settings."10-commit-notifier"."/var/lib/commit-notifier/337000294/".d = { };
 }
