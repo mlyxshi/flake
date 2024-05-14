@@ -37,7 +37,7 @@ in
   boot.initrd.systemd.initrdBin = [ pkgs.dosfstools pkgs.e2fsprogs ];
 
   boot.initrd.systemd.contents = {
-    "/etc/hostname".text = "${config.networking.hostName}";
+    "/etc/hostname".text = "systemd-initrd";
     "/etc/ssl/certs/ca-certificates.crt".source = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
     "/etc/ssh/ssh_known_hosts".text = "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
     "/etc/ssh/ssh_config".text = ''

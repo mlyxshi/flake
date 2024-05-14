@@ -1,21 +1,10 @@
 { config, pkgs, lib, ... }:
 let kernelTarget = pkgs.hostPlatform.linux-kernel.target;
 in {
-  networking.hostName = "systemd-initrd";
-
+  # prepare /sysroot for switch-root
   fileSystems."/" = {
     fsType = "tmpfs";
     options = [ "mode=0755" ];
-  };
-
-  fonts.fontconfig.enable = false;
-
-  documentation = {
-    enable = false;
-    doc.enable = false;
-    info.enable = false;
-    man.enable = false;
-    nixos.enable = false;
   };
 
   system.build.kexec = pkgs.symlinkJoin {
