@@ -9,6 +9,7 @@
 { pkgs, lib, config, ... }:
 let
   waste = pkgs.writeText "waste.py" ''
+    memory = bytearray(int(4.8*1024*1024*1024)) # 4.8G (20% of 24G)
     while True:
       pass
   '';
@@ -21,9 +22,6 @@ in
     };
     serviceConfig.CPUQuota = "80%"; # E2.1.Micro 2 Core | A1 4 Core
     serviceConfig.CPUWeight = 1;
-    # serviceConfig.MemoryLow = "20%";
-    serviceConfig.MemoryAccounting = true;
-    serviceConfig.MemoryLow = "2G";
     wantedBy = [ "multi-user.target" ];
   };
 }
