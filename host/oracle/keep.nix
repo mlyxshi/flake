@@ -21,7 +21,8 @@ in
     };
     serviceConfig.CPUQuota = "80%"; # E2.1.Micro 2 Core | A1 4 Core
     serviceConfig.CPUWeight = 1;
-    serviceConfig.MemoryLow="20%";
+    # serviceConfig.MemoryLow = "20%";
+    serviceConfig.MemoryLow = "2G";
     wantedBy = [ "multi-user.target" ];
   };
 }
