@@ -52,11 +52,6 @@ in
     '';
   };
 
-  # This udev rule symlinks vda to sda to unify device name.
-  boot.initrd.services.udev.rules = ''
-    KERNEL=="vda*", SYMLINK+="sda%n"
-  '';
-
   boot.initrd.systemd.storePaths = [
     "${pkgs.ncurses}/share/terminfo/" # add terminfo for better ssh experience
     # "${pkgs.git}/share/git-core/templates" # add git templates
@@ -98,17 +93,19 @@ in
 
     # https://superuser.com/questions/1572410/what-is-the-purpose-of-the-linux-home-partition-code-8302
     make-partitions = pkgs.writeScript "make-partitions" ''
-      sgdisk --zap-all /dev/sda
-      sgdisk --new=0:0:+512M --typecode=0:ef00 /dev/sda
-      sgdisk --new=0:0:0 --typecode=0:${rootPartType} /dev/sda
+      DEVICE=$1 
+      sgdisk --zap-all $DEVICE 
+      sgdisk --new=0:0:+512M --typecode=0:ef00 $DEVICE
+      sgdisk --new=0:0:0 --typecode=0:${rootPartType} $DEVICE
     '';
 
     mount-partitions = pkgs.writeScript "mount-partitions" ''
-      mkfs.fat -F 32 /dev/sda1
-      mkfs.ext4 -F /dev/sda2
+      DEVICE=$1 
+      mkfs.fat -F 32 $DEVICE"1"
+      mkfs.ext4 -F $DEVICE"2"
       mkdir -p /mnt
-      mount /dev/sda2 /mnt
-      mount --mkdir /dev/sda1 /mnt/boot
+      mount $DEVICE"2" /mnt
+      mount --mkdir $DEVICE"1" /mnt/boot
     '';
   };
 
