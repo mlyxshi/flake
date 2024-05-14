@@ -4,13 +4,14 @@ let
   install-aarch64 = pkgs.writeShellScriptBin "install-aarch64" ''
     HOST=$1
     IP=$2
+    DEVICE=$3
 
     cd ~/flake
 
     outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.$HOST.config.system.build.toplevel)
     
-    ssh -o StrictHostKeyChecking=no root@$IP make-partitions
-    ssh -o StrictHostKeyChecking=no root@$IP mount-partitions
+    ssh -o StrictHostKeyChecking=no root@$IP make-partitions $DEVICE
+    ssh -o StrictHostKeyChecking=no root@$IP mount-partitions $DEVICE
 
     NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --substitute-on-destination --to ssh://root@$IP?remote-store=local?root=/mnt $outPath       
 
@@ -56,6 +57,7 @@ in
       if [ -n "$SYSTEM" ]
       then
         gh release upload aarch64 $SYSTEM/initrd --clobber
+        gh release upload aarch64 $SYSTEM/kernel --clobber
       else
         echo "Build Failed"
         exit 1
