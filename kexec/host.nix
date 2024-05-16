@@ -1,6 +1,4 @@
-{ config, pkgs, lib, ... }:
-let kernelTarget = pkgs.hostPlatform.linux-kernel.target;
-in {
+{ config, pkgs, lib, ... }: {
   # prepare /sysroot for switch-root
   fileSystems."/" = {
     fsType = "tmpfs";
