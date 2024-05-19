@@ -5,7 +5,11 @@
     self.nixosModules.strip
   ];
 
+  security.sudo.enable = false;
+
   system.stateVersion = "24.05";
+  system.switch.enable = false;
+  system.switch.enableNg = true;
 
   nix = {
     package = pkgs.nixVersions.latest;
