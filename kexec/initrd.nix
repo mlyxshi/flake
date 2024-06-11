@@ -73,9 +73,7 @@ in
     curl = "${pkgs.curl}/bin/curl";
     htop = "${pkgs.htop}/bin/htop";
     ip = "${pkgs.iproute2}/bin/ip";
-
     git = "${pkgs.gitMinimal}/bin/git";
-    ssh = "${config.programs.ssh.package}/bin/ssh";
 
     # File explorer and editor for debugging
     r = "${pkgs.joshuto}/bin/joshuto";
