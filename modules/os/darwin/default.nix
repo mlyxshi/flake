@@ -71,12 +71,6 @@ in
       experimental-features = [ "nix-command" "flakes" ];
       trusted-users = [ "root" "dominic" ];
     };
-    gc = {
-      automatic = true;
-      # interval is darwin launchd syntax
-      interval = { Hour = 24; };
-      options = "--delete-older-than 7d";
-    };
     # envVars = {
     #   "all_proxy" = "socks5://127.0.0.1:1080";
     # };
