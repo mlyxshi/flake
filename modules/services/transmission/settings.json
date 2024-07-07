@@ -2,5 +2,5 @@
     "download-dir": "/var/lib/transmission/files",
     "rpc-whitelist-enabled": false,
     "rpc-authentication-required": true,
-    "script-torrent-done-enabled": true,
+    "script-torrent-done-enabled": true
 }
