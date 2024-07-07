@@ -40,10 +40,10 @@ in
     serviceConfig.User = "transmission";
     serviceConfig.ExecStart = "${pkgs.transmission}/bin/transmission-daemon --foreground --username $ADMIN --password $PASSWORD";
     serviceConfig.WorkingDirectory = "%S/transmission";
-    preStart = ''
-      cat ${transmissionScript} > transmission.sh
-      chmod +x transmission.sh
-    '';
+    # preStart = ''
+    #   cat ${transmissionScript} > transmission.sh
+    #   chmod +x transmission.sh
+    # '';
     wantedBy = [ "multi-user.target" ];
   };
 
