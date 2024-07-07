@@ -38,7 +38,7 @@
       home-manager
       cachix
     ] ++ lib.optionals pkgs.stdenv.isLinux [
-      below
+      # below
       gptfdisk
     ];
 }
