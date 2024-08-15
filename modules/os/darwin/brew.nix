@@ -36,6 +36,8 @@
 
     casks = [
       "orbstack"
+      "jordanbaird-ice"
+      "vnc-viewer"
       "ubiquiti-unifi-controller"
       "betterdisplay"
       "stolendata-mpv"
@@ -70,7 +72,6 @@
 
       # "google-chrome"
       # "airbuddy"
-      # "bartender"
       # "deepl"
       # "imazing"
       # "uninstallpkg"
