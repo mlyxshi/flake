@@ -6,7 +6,6 @@
       file
       iperf
       tree
-      # htop
       libarchive
       nix-output-monitor
       nix-tree
@@ -26,6 +25,7 @@
       xh
       tealdeer
       bandwhich
+      bottom
       bat
       bat-extras.batman
       gdu
@@ -38,7 +38,6 @@
       home-manager
       cachix
     ] ++ lib.optionals pkgs.stdenv.isLinux [
-      # below
       gptfdisk
     ];
 }
