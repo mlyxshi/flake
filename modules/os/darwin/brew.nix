@@ -17,6 +17,7 @@
     ];
 
     brews = [
+      "ipfs"
       "rclone"
       "nodejs"
       "aria2"
@@ -99,7 +100,6 @@
     #   Xcode = 497799835;
     #   Bitwarden = 1352778147;
     #   Infuse = 1136220934;
-    #   LyricsX = 1254743014;
     #   Apple-Configurator = 1037126344;
     # };
   };

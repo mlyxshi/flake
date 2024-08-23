@@ -9,7 +9,6 @@
 
     # self.nixosModules.containers.navidrome
     # self.nixosModules.containers.change-detection
-    # self.nixosModules.containers.baidunetdisk
   ];
   
   # system.etc.overlay.enable = true;

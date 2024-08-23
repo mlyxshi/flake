@@ -43,7 +43,7 @@
       "browser.newtabpage.activity-stream.logowordmark.alwaysVisible" = false;
       "browser.newtabpage.activity-stream.topSitesRows" = 1;
       "browser.newtabpage.pinned" = ''
-        [{"url":"https://github.com/mlyxshi/flake","label":"flake"},{"url":"http://top.mlyxshi.com/","label":"top"},{"url":"https://www.youtube.com/","label":"youtube"},{"url":"https://music.youtube.com/","label":"music"},{"url":"http://www.bilibili.com/","label":"bilibili"},{"url":"https://twitter.com","label":"twitter"},{"url":"https://old.reddit.com/","label":"reddit"},{"url":"https://bgm.tv/group","label":"bgm"}]'';
+        [{"url":"https://github.com/mlyxshi/flake","label":"flake"},{"url":"https://www.youtube.com/","label":"youtube"},{"url":"https://music.youtube.com/","label":"music"},{"url":"http://www.bilibili.com/","label":"bilibili"},{"url":"https://twitter.com","label":"twitter"},{"url":"https://old.reddit.com/","label":"reddit"},{"url":"https://bgm.tv/group","label":"bgm"},{"url":"https://neodb.social/discover/","label":"neodb"}]'';
 
       "browser.aboutConfig.showWarning" = false;
       "browser.aboutwelcome.enabled" = false;
