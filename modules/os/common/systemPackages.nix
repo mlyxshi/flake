@@ -9,7 +9,6 @@
       libarchive
       nix-output-monitor
       nix-tree
-      nix-init
       # nix-update
       nix-inspect
       nixpkgs-fmt
@@ -37,6 +36,7 @@
       restic
       home-manager
       cachix
+      nix-init
     ] ++ lib.optionals pkgs.stdenv.isLinux [
       gptfdisk
     ];
