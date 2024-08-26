@@ -11,7 +11,7 @@ in
   users = {
     users.transmission = {
       group = "transmission";
-      isNormalUser = true;
+      isSystemUser = true;
     };
     groups.transmission = { };
   };
