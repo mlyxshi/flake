@@ -13,7 +13,6 @@
       "homebrew/cask-fonts"
       "homebrew/cask-drivers" # yubikey
       "homebrew/cask-versions" # beta
-      "majd/repo"
     ];
 
     brews = [
@@ -53,7 +52,6 @@
       "utm"
       "font-roboto-mono-nerd-font"
       "calibre"
-      "ipatool"
       "maczip"
       "openineditor-lite"
       "openinterminal-lite"
