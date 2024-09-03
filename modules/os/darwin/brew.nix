@@ -85,18 +85,15 @@
 
     #   WeChat = 836500024;
 
-    #   Things = 904280696;
     #   GoodNotes = 1444383602;
     #   Cleaner-for-Xcode = 1296084683;
     #   Amphetamine = 937984704;
 
-    #   Screens = 1224268771;
     #   Microsoft-Remote-Desktop = 1295203466;
 
     #   Pasty = 1544620654;
     #   Bob = 1630034110;
     #   Xcode = 497799835;
-    #   Bitwarden = 1352778147;
     #   Infuse = 1136220934;
     #   Apple-Configurator = 1037126344;
     # };
