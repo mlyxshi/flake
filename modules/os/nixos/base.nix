@@ -7,7 +7,7 @@
 
   security.sudo.enable = false;
 
-  system.stateVersion = "24.05";
+  system.stateVersion = "24.11";
   system.switch.enable = false;
   system.switch.enableNg = true;
 
@@ -72,24 +72,13 @@
 
 
   environment.systemPackages = [
-    # wait systemd run0
     (pkgs.writeShellScriptBin "update" ''
       if [[ -e "/flake/flake.nix" ]]
       then
         cd /flake
         git pull   
       else
-        if id -u "dominic" >/dev/null 2>&1
-        then
-          # user exists
-          mkdir -p /flake
-          chown dominic /flake
-          git clone --depth=1  git@github.com:mlyxshi/flake /flake
-        else
-          # user does not exist
-          git clone --depth=1  git@github.com:mlyxshi/flake /flake
-        fi
-
+        git clone --depth=1  git@github.com:mlyxshi/flake /flake
         cd /flake
       fi  
 
@@ -111,7 +100,6 @@
       fi
     '')
 
-    # wait systemd run0
     (pkgs.writeShellScriptBin "local-update" ''
       cd /flake
 

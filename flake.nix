@@ -12,13 +12,9 @@
 
     darwin.url = "github:LnL7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
-
-    plasma-manager.url = "github:pjones/plasma-manager";
-    plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
-    plasma-manager.inputs.home-manager.follows = "home-manager";
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager, plasma-manager, secret }:
+  outputs = { self, nixpkgs, darwin, home-manager, secret }:
     let
       inherit (nixpkgs) lib;
       utils = import ./utils.nix nixpkgs;
@@ -32,7 +28,6 @@
       nixosConfigurations = {
 
         utm-server = import ./host/utm/server.nix { inherit self nixpkgs secret home-manager; };
-        utm-desktop = import ./host/utm/desktop.nix { inherit self nixpkgs home-manager plasma-manager secret; };
 
         # nix build .#nixosConfigurations.installer-aarch64.config.system.build.isoImage 
         # nix build .#nixosConfigurations.installer-x86_64.config.system.build.isoImage
@@ -49,11 +44,6 @@
           pkgs = nixpkgs.legacyPackages.aarch64-darwin;
           modules = [ ./home/darwin.nix ];
           extraSpecialArgs = { inherit self; };
-        };
-        deck = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [ ./home/deck.nix ];
-          extraSpecialArgs = { inherit plasma-manager self; };
         };
         github-action = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
