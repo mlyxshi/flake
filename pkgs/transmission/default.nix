@@ -1,3 +1,4 @@
+# gh workflow run pkgs.yml
 { stdenv, fetchFromGitHub, cmake, openssl, curl, python3, systemd, }:
 stdenv.mkDerivation rec {
   pname = "transmission";

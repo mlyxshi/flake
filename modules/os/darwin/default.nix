@@ -35,6 +35,7 @@ in
 
   environment.systemPackages = [
     install-aarch64
+    pkgs.sidecar-launcher
     (pkgs.writeShellScriptBin "update" ''
       cd /Users/dominic/flake
       SYSTEM=$(nom build --no-link --print-out-paths .#darwinConfigurations.${config.networking.hostName}.system)

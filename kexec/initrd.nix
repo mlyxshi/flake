@@ -47,8 +47,8 @@ in
     '';
     "/etc/nix/nix.conf".text = ''
       extra-experimental-features = nix-command flakes
-      substituters = https://cache.nixos.org https://mlyxshi.cachix.org
-      trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= mlyxshi.cachix.org-1:BVd+/1A5uLMI8pTUdhdh6sdefTRdj+/PVgrUh9L2hWw=
+      substituters = https://cache.nixos.org
+      trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
     '';
   };
 

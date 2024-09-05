@@ -1,6 +1,5 @@
 { self, pkgs, lib, config, ... }: {
   imports = [
-    self.nixosModules.services.commit-notifier
     self.nixosModules.services.prometheus
 
     self.nixosModules.containers.podman
