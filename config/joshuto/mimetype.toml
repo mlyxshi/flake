@@ -1,6 +1,6 @@
 [class]
 audio_default = [
-  { command = "mpv", fork = true, silent = true },
+  { command = "iina", fork = true, silent = true },
 ]
 
 image_default = [
@@ -17,7 +17,7 @@ image_default = [
 ]
 
 video_default = [
-  { command = "mpv", fork = true, silent = true },
+  { command = "iina", fork = true, silent = true },
 ]
 
 text_default = [
@@ -168,7 +168,6 @@ aup.app_list = [{ command = "audacity", fork = true, silent = true }]
 
 m3u.app_list = [
   { command = "micro" },
-  { command = "mpv" },
   { command = "gedit", fork = true, silent = true },
   { command = "bat", confirm_exit = true },
 ]
