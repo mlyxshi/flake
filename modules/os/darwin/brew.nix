@@ -40,7 +40,7 @@
       "vnc-viewer"
       "ubiquiti-unifi-controller"
       "betterdisplay"
-      "stolendata-mpv"
+      "iina"
       "proxyman"
       "sloth"
       "yubico-yubikey-manager"

@@ -1,5 +1,8 @@
 { self, lib, ... }: {
-  imports = [ ./. ./firefox ./mpv.nix ];
+  imports = [ 
+    ./. 
+    ./firefox
+  ];
 
   home = {
     username = "dominic";
@@ -7,6 +10,4 @@
   };
 
   programs.firefox.package = null;
-
-  nixpkgs.overlays = [ self.overlays.default ];
 }

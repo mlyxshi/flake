@@ -1,6 +1,8 @@
 { pkgs, lib, config, ... }: {
 
-  imports = [ ./. ];
+  imports = [
+    ./.
+  ];
 
   home = {
     username = "runner";

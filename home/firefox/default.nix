@@ -1,8 +1,6 @@
 { pkgs, lib, config, ... }: {
   programs.firefox.enable = true;
 
-  programs.firefox.nativeMessagingHosts = [ pkgs.ff2mpv ];
-
   programs.firefox.profiles."default" = {
     userChrome = ''
       #import-button, #fxa-toolbar-menu-button, #appMenu-passwords-button {
