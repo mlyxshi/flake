@@ -1,7 +1,7 @@
 { rustPlatform, fetchFromGitHub, pkg-config, openssl, sqlite }:
 rustPlatform.buildRustPackage {
   pname = "commit-notifier";
-  version = "unstable-2024-04-13";
+  version = "unstable-2024-09-05";
   src = fetchFromGitHub {
     owner = "linyinfeng";
     repo = "commit-notifier";
@@ -9,7 +9,7 @@ rustPlatform.buildRustPackage {
     sha256 = "sha256-gnYsTbppEiB9Tk9eUdmUWiwxtR6pwJwaLic768ayNx4=";
   };
 
-  cargoSha256 = "sha256-rGabRsQMC9TwiPbxOXDigMnGWy4SN1z1Vkcv1vPPLmU=";
+  cargoHash = "sha256-NOLpBns6gL8evD6zRfYTvExoZMWEiLbifmAXhhmiA5I=";
 
   buildInputs = [ openssl sqlite ];
 
