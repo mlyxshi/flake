@@ -17,7 +17,6 @@
 
     brews = [
       "ipfs"
-      "rclone"
       "nodejs"
       "aria2"
       "protobuf"
@@ -29,8 +28,9 @@
       "yt-dlp"
       "ffmpeg"
       "mediainfo"
-      "payload-dumper-go"
       "openjdk"
+      ##############################################
+      # "payload-dumper-go"
       # "deno"
     ];
 
@@ -46,17 +46,14 @@
       "yubico-yubikey-manager"
       "android-platform-tools"
       "element"
-      # "karabiner-elements"
       "input-source-pro"
-      "macfuse" # rclone mount
       "utm"
+      "crystalfetch"
       "font-roboto-mono-nerd-font"
       "calibre"
       "maczip"
       "openineditor-lite"
       "openinterminal-lite"
-      "provisionql"
-      "wireshark"
       "raycast"
       "visual-studio-code"
       "transmission"
@@ -69,25 +66,29 @@
       # "surge"
       # "firefox"
 
-      # "google-chrome"
-      # "airbuddy"
-      # "deepl"
-      # "imazing"
-      # "uninstallpkg"
+      "uninstallpkg"
       # "suspicious-package"
 
       # "snipaste"
+
+      ##############################################
+      # "karabiner-elements"
+      # "wireshark"
     ];
 
     # Only for fresh installation
     # masApps = {
+
+    #   Immersive-Translate = 6447957425;
+    #   uBlacklist = 1547912640; 
+    #   SponsorBlock = 1573461917;
+    #   Userscripts = 1463298887;
     #   AdGuard = 1440147259;
 
     #   WeChat = 836500024;
 
-    #   GoodNotes = 1444383602;
-    #   Cleaner-for-Xcode = 1296084683;
-    #   Amphetamine = 937984704;
+    #   AmorphousDiskMark = 1168254295;
+    #   WiFi-Explorer = 494803304;
 
     #   Microsoft-Remote-Desktop = 1295203466;
 
@@ -99,6 +100,3 @@
     # };
   };
 }
-# Other Application not in Homebrew/Nixpkgs/Appstore
-# Install Manually
-# Hopper-Disassembler https://www.hopperapp.com/

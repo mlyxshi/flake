@@ -9,7 +9,7 @@
       libarchive
       nix-output-monitor
       nix-tree
-      # nix-update
+      nix-update
       nix-inspect
       nixpkgs-fmt
       joshuto
