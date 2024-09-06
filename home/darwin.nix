@@ -1,6 +1,6 @@
 { self, lib, ... }: {
-  imports = [ 
-    ./. 
+  imports = [
+    ./.
     ./firefox
   ];
 

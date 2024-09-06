@@ -2,6 +2,5 @@
     "download-dir": "/var/lib/transmission/files",
     "rpc-whitelist-enabled": false,
     "rpc-authentication-required": true,
-    "script-torrent-done-enabled": true,
-    "default-trackers": "udp://tracker.torrent.eu.org:451/announce\n\nudp://open.stealth.si:80/announce\n\nudp://tracker.opentrackr.org:1337/announce"
+    "script-torrent-done-enabled": true
 }

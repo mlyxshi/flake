@@ -1,3 +1,5 @@
+# open firewall in web console
+# ::/0 and 0.0.0.0/0  port 51413 tcp udp
 { config, pkgs, lib, ... }:
 let
   transmissionScript = pkgs.writeShellScript "transmission.sh" ''
