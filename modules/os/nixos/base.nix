@@ -8,8 +8,6 @@
   security.sudo.enable = false;
 
   system.stateVersion = "24.11";
-  system.switch.enable = false;
-  system.switch.enableNg = true;
 
   nix = {
     package = pkgs.nixVersions.latest;

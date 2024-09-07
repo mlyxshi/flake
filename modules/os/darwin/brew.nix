@@ -79,10 +79,9 @@
     # Only for fresh installation
     # masApps = {
 
-    #   Immersive-Translate = 6447957425;
+    #   Stay = 1591620171;
     #   uBlacklist = 1547912640; 
     #   SponsorBlock = 1573461917;
-    #   Userscripts = 1463298887;
     #   AdGuard = 1440147259;
 
     #   WeChat = 836500024;
