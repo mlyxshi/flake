@@ -4,8 +4,6 @@
     self.nixosModules.services.hysteria
   ];
 
-  networking.firewall.enable = lib.mkForce true;
-
   networking.nftables.enable = true;
   networking.nftables.ruleset = ''
     table inet HYSTERIA {
