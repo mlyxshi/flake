@@ -113,8 +113,4 @@
       fi
     '')
   ];
-
-  # https://github.com/numtide/srvos/blob/main/nixos/common/networking.nix
-  systemd.services.systemd-networkd.stopIfChanged = false;
-  systemd.services.systemd-resolved.stopIfChanged = false;
 }

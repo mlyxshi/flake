@@ -82,7 +82,7 @@
     #   Stay = 1591620171;
     #   uBlacklist = 1547912640; 
     #   SponsorBlock = 1573461917;
-    #   AdGuard = 1440147259;
+    #   RSSHub-Radar = 1610744717;
 
     #   WeChat = 836500024;
 

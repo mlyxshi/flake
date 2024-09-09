@@ -46,15 +46,6 @@
           definedAliases = [ "@bili" ];
         };
 
-        "GPT" = {
-          urls = [{
-            template =
-              "https://www.bing.com/search?showconv=1&sendquery=1&q={searchTerms}";
-          }];
-          iconURL = "https://www.bing.com/favicon.ico";
-          definedAliases = [ "@gpt" ];
-        };
-
         # disable default search engines
         "Amazon.com".metaData.hidden = true;
         # "Bing".metaData.hidden = true;
