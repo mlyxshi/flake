@@ -12,6 +12,11 @@ let
   settings = pkgs.writeText "settings.json" (builtins.toJSON pref);
 in
 {
+
+  imports = [
+    self.nixosModules.services.hysteria
+  ];
+  
   # https://airvpn.org/ports/
   # use port forwarding to access transmission web ui and transmission peer-port(easiest way)
   # See Better implementation(bridge/veth/firewall), https://github.com/Maroka-chan/VPN-Confinement
