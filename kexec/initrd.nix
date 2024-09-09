@@ -32,10 +32,6 @@ in
     "vfat"
     "nls_cp437"
     "nls_iso8859-1"
-    # mount overlay etc
-    # nixos-enter --root /mnt -- /run/current-system/bin/switch-to-configuration boot
-    "overlay"
-    "erofs"
   ];
 
   boot.initrd.systemd.initrdBin = [ pkgs.dosfstools pkgs.e2fsprogs ];

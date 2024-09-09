@@ -4,8 +4,8 @@
     self.nixosModules.os.nixos.base
   ];
 
-  systemd.sysusers.enable = true;
-  system.etc.overlay.enable = true;
+  # systemd.sysusers.enable = true;
+  # system.etc.overlay.enable = true;
 
   fonts.fontconfig.enable = false;
 
