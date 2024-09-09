@@ -33,9 +33,6 @@
   #       # Only Allow SSH and Traefik
   #       tcp dport { 22, 80, 443 } accept
 
-  #       # Allow vnc server
-  #       ${lib.optionalString config.services.desktopManager.plasma6.enable "tcp dport 5900 accept"}
-
   #       # Allow hysteria
   #       ${lib.optionalString (config.systemd.services ? hysteria) "udp dport 8888 accept"}
   #     }
