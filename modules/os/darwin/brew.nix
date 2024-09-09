@@ -19,7 +19,6 @@
       "ipfs"
       "nodejs"
       "aria2"
-      "protobuf"
       "iproute2mac"
       "mas"
       "qemu"
