@@ -4,6 +4,7 @@
       wget
       dig
       file
+      htop
       iperf
       tree
       libarchive
@@ -23,7 +24,6 @@
       xh
       tealdeer
       bandwhich
-      bottom
       bat
       bat-extras.batman
       gdu

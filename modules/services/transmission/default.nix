@@ -59,7 +59,7 @@ in
     dynamicConfigOptions = {
       http = {
         routers.transmission = {
-          rule = "Host(`transmission.${config.networking.domain}`)";
+          rule = "Host(`transmission-${config.networking.hostName}.${config.networking.domain}`)";
           entryPoints = [ "websecure" ];
           service = "transmission";
         };
@@ -67,7 +67,7 @@ in
         services.transmission.loadBalancer.servers = [{ url = "http://127.0.0.1:9091"; }];
 
         routers.transmission-index = {
-          rule = "Host(`transmission-index.${config.networking.domain}`)";
+          rule = "Host(`transmission-${config.networking.hostName}-index.${config.networking.domain}`)";
           entryPoints = [ "web" ];
           service = "transmission-index";
         };
