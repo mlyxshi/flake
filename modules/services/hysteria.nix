@@ -11,7 +11,7 @@
       }
     }
   '';
-  
+
   systemd.services.hysteria = {
     after = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
