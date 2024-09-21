@@ -76,7 +76,7 @@ in
     #   "all_proxy" = "socks5://127.0.0.1:1080";
     # };
 
-    linux-builder.enable = true;
+    # linux-builder.enable = true;
     # linux-builder.maxJobs = 8;
     # linux-builder.config = {
     #   virtualisation.darwin-builder.memorySize = 8 * 1024;
@@ -92,6 +92,10 @@ in
   # change default shell to fish
   # sudo bash -c 'echo "/run/current-system/sw/bin/fish" >> /etc/shells' 
   # chsh -s /run/current-system/sw/bin/fish dominic
+
+  system.stateVersion = 5;
+  # reinstall macOS
+  ids.uids.nixbld = 450;
 
   programs.ssh = {
     knownHosts = {
