@@ -2,7 +2,7 @@
 { pkgs, lib, config, ... }: {
   # https://nixos.org/manual/nixos/unstable/#sec-replace-modules
   disabledModules = [
-    "services/network-filesystems/samba.nix"
+    "system/boot/systemd/tpm2.nix"
   ];
 
   imports = [ ];
