@@ -5,8 +5,6 @@
     "system/boot/systemd/tpm2.nix"
   ];
 
-  imports = [ ];
-
   programs.nano.enable = false;
   programs.less.enable = lib.mkForce false;
   programs.command-not-found.enable = false;
