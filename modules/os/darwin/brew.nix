@@ -38,7 +38,6 @@
       "jordanbaird-ice"
       "vnc-viewer"
       "ubiquiti-unifi-controller"
-      "betterdisplay"
       "iina"
       "proxyman"
       "sloth"
@@ -46,7 +45,6 @@
       "android-platform-tools"
       "element"
       "input-source-pro"
-      "utm"
       "crystalfetch"
       "font-roboto-mono-nerd-font"
       "calibre"
@@ -69,10 +67,13 @@
       # "suspicious-package"
 
       # "snipaste"
+      
 
       ##############################################
       # "karabiner-elements"
       # "wireshark"
+      # "betterdisplay"
+      # "utm"
     ];
 
     # Only for fresh installation
