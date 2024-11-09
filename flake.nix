@@ -24,6 +24,7 @@
       overlays.default = final: prev: prev.lib.genAttrs packagelist (name: prev.callPackage ./pkgs/${name} { });
       nixosModules = mkFileHierarchyAttrset ./. "modules";
       darwinConfigurations.M1 = import ./host/darwin/M1.nix { inherit self darwin; };
+      darwinConfigurations.M4 = darwin.lib.darwinSystem { system = "aarch64-darwin"; modules = [ ./host/darwin/M4.nix ]; };
       darwinConfigurations.github-action-darwin = darwin.lib.darwinSystem { system = "aarch64-darwin"; modules = [ ./host/darwin/github-action-darwin.nix ]; };
       nixosConfigurations = {
 

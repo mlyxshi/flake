@@ -94,8 +94,6 @@ in
   # chsh -s /run/current-system/sw/bin/fish dominic
 
   system.stateVersion = 5;
-  # reinstall macOS
-  ids.uids.nixbld = 450;
 
   programs.ssh = {
     knownHosts = {
