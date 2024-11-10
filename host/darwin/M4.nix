@@ -67,7 +67,6 @@
 
     taps = [
       "homebrew/services"
-      "homebrew/cask-fonts"
     ];
 
     brews = [
@@ -111,7 +110,7 @@
       # "utm"
     ];
   };
-  
+
   nix = {
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
