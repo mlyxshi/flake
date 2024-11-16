@@ -37,7 +37,6 @@
     lazygit
     restic
     home-manager
-    cachix
     nix-init
     nix-update
     (pkgs.writeShellScriptBin "update" ''
@@ -94,13 +93,14 @@
       "raycast"
       "visual-studio-code"
       "transmission"
-      "google-drive"
       "istat-menus"
       "neteasemusic"
       "telegram-desktop"
       "uninstallpkg"
       "suspicious-package"
       "snipaste"
+      "google-chrome"
+      "android-platform-tools"
 
 
       ##############################################
@@ -128,9 +128,6 @@
       };
     };
   };
-
-
-  services.nix-daemon.enable = true;
 
   system.activationScripts.postActivation.text = ''
     [[ -e "/run/current-system" ]] && ${pkgs.nix}/bin/nix store  diff-closures /run/current-system "$systemConfig"

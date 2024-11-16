@@ -32,6 +32,4 @@
       trusted-users = [ "root" "runner" ];
     };
   };
-
-  services.nix-daemon.enable = true;
 }
