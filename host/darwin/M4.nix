@@ -66,6 +66,20 @@
         exit 1
       fi
     '')
+
+    (pkgs.writeShellScriptBin "upload-kexec" ''
+      cd /Users/dominic/flake
+      SYSTEM=$(nom build --no-link --print-out-paths .#nixosConfigurations.kexec-aarch64.config.system.build.kexec)
+
+      if [ -n "$SYSTEM" ]
+      then
+        gh release upload aarch64 $SYSTEM/initrd --clobber
+        gh release upload aarch64 $SYSTEM/kernel --clobber
+      else
+        echo "Build Failed"
+        exit 1
+      fi
+    '')
   ];
 
   homebrew = {
