@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }: {
 
-  networking.hostName = "M4";
+  networking.hostName = "Macbook";
 
   users.users.dominic.home = "/Users/dominic";
   users.users.dominic.openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe" ];
@@ -71,8 +71,6 @@
     brews = [
       "iproute2mac"
       "qemu"
-      "smartmontools"
-      "cloudflared"
       "yt-dlp"
       "ffmpeg"
       "mediainfo"
@@ -82,7 +80,6 @@
     casks = [
       "jordanbaird-ice"
       "vnc-viewer"
-      "iina"
       "input-source-pro"
       "crystalfetch"
       "font-roboto-mono-nerd-font"
@@ -97,10 +94,12 @@
       "suspicious-package"
       "snipaste"
       "google-chrome"
-      "android-platform-tools"
-      
-      "drivedx"
-      "utm"
+
+
+      "neteasemusic"
+      "iina"
+      "element"
+      "telegram-desktop"
     ];
   };
 
