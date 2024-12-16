@@ -5,6 +5,18 @@
   users.users.dominic.home = "/Users/dominic";
   users.users.dominic.openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe" ];
 
+
+  nix = {
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      trusted-users = [ "root" "dominic" ];
+    };
+
+    linux-builder = {
+      enable = true;
+    };
+  };
+
   environment.systemPackages = with pkgs; [
     wget
     dig
@@ -96,7 +108,7 @@
       "suspicious-package"
       "snipaste"
       "google-chrome"
-      
+
       "android-platform-tools"
       "imazing"
 
@@ -104,13 +116,6 @@
       "crystalfetch"
       "utm"
     ];
-  };
-
-  nix = {
-    settings = {
-      experimental-features = [ "nix-command" "flakes" ];
-      trusted-users = [ "root" "dominic" ];
-    };
   };
 
   system.stateVersion = 5;
