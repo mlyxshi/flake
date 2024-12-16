@@ -81,7 +81,6 @@
       "jordanbaird-ice"
       "vnc-viewer"
       "input-source-pro"
-      "crystalfetch"
       "font-roboto-mono-nerd-font"
       "maczip"
       "openineditor-lite"
@@ -95,6 +94,8 @@
       "snipaste"
       "google-chrome"
 
+
+      "altserver"
 
       "neteasemusic"
       "iina"

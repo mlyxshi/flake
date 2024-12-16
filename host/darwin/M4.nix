@@ -84,7 +84,6 @@
       "vnc-viewer"
       "iina"
       "input-source-pro"
-      "crystalfetch"
       "font-roboto-mono-nerd-font"
       "maczip"
       "openineditor-lite"
@@ -97,9 +96,12 @@
       "suspicious-package"
       "snipaste"
       "google-chrome"
-      "android-platform-tools"
       
+      "android-platform-tools"
+      "imazing"
+
       "drivedx"
+      "crystalfetch"
       "utm"
     ];
   };
