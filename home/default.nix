@@ -1,5 +1,5 @@
 { pkgs, lib, ... }: {
-  home.stateVersion = "24.05";
+  home.stateVersion = "24.11";
 
   home.file.".config/helix".source = ../config/helix;
   home.file.".config/git".source = ../config/git;

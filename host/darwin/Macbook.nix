@@ -70,7 +70,6 @@
 
     brews = [
       "iproute2mac"
-      "qemu"
       "yt-dlp"
       "ffmpeg"
       "mediainfo"
