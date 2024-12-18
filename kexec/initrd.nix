@@ -138,9 +138,11 @@ in
   };
 
   boot.initrd.systemd.emergencyAccess = true;
+  
+  boot.initrd.systemd.services.initrd-find-nixos-closure.enable = false;
 
   # https://www.freedesktop.org/software/systemd/man/latest/bootup.html#Bootup%20in%20the%20initrd
-  # Disable: initrd-parse-etc -> initrd-cleanup -> initrd-switch-root
+  # Disable: initrd-parse-etc.service -> initrd-cleanup.service -> initrd-switch-root.target
   # so this initrd will stop at initrd.target
   boot.initrd.systemd.services.initrd-parse-etc.enable = false;
 }
