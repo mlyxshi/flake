@@ -139,9 +139,6 @@ in
 
   boot.initrd.systemd.emergencyAccess = true;
 
-  # Disable default services in Nixpkgs which is useless in this project
-  boot.initrd.systemd.services.initrd-nixos-activation.enable = false;
-
   # https://www.freedesktop.org/software/systemd/man/latest/bootup.html#Bootup%20in%20the%20initrd
   # Disable: initrd-parse-etc -> initrd-cleanup -> initrd-switch-root
   # so this initrd will stop at initrd.target
