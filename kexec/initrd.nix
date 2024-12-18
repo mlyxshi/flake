@@ -109,10 +109,10 @@ in
   };
 
   # move everything in / to /sysroot and switch-root into it. 
-  # This runs a few things twice and wastes some memory
+  # This runs systemd initrd twice
   # but it is necessary for [nix --store flag / nixos-enter] as pivot_root does not work on rootfs.
   boot.initrd.systemd.services.remount-root = {
-    before = [ "initrd-fs.target" ];
+    after = [ "sysroot.mount" ];
     serviceConfig.Type = "oneshot";
     script = ''
       ls -l /
@@ -123,12 +123,12 @@ in
         systemctl --no-block switch-root
       fi
     '';
-    requiredBy = [ "initrd-fs.target" ];
+    requiredBy = [ "sysroot.mount" ];
   };
 
   boot.initrd.systemd.services.github-private-key = {
-    after = [ "initrd-fs.target" ];
     unitConfig.ConditionKernelCommandLine = "github-private-key";
+    unitConfig.ConditionPathExists = "!/etc/ssh/github";
     serviceConfig.Type = "oneshot";
     script = ''
       get-kernel-param github-private-key | base64 -d > /etc/ssh/github
