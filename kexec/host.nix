@@ -13,4 +13,25 @@
     ln -s ${config.system.build.kernel}/${pkgs.hostPlatform.linux-kernel.target} $out/kernel
     ln -s ${pkgs.pkgsStatic.kexec-tools}/bin/kexec $out/kexec
   '';
+
+
+  boot.kernelPatches = [
+    {
+      name = "config-zboot-zstd";
+      patch = null;
+      extraStructuredConfig = {
+        EFI_ZBOOT = lib.kernel.yes;
+        KERNEL_ZSTD = lib.kernel.yes;
+      };
+    }
+
+    # https://nixos.wiki/wiki/Linux_kernel#Too_high_ram_usage
+    {
+      name = "disable-bpf";
+      patch = null;
+      extraStructuredConfig = {
+        DEBUG_INFO_BTF = lib.kernel.no;
+      };
+    }
+  ];
 }
