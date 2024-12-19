@@ -30,7 +30,7 @@
       name = "disable-bpf";
       patch = null;
       extraStructuredConfig = {
-        DEBUG_INFO_BTF = lib.kernel.no;
+        DEBUG_INFO_BTF = lib.mkForce lib.kernel.no;
       };
     }
   ];
