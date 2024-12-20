@@ -13,4 +13,14 @@
     ln -s ${config.system.build.kernel}/${pkgs.hostPlatform.linux-kernel.target} $out/kernel
     ln -s ${pkgs.pkgsStatic.kexec-tools}/bin/kexec $out/kexec
   '';
+
+  boot.kernelPatches = [
+    {
+      name = "qemu-only";
+      patch = null;
+      extraStructuredConfig = with lib.kernel;{
+        MODULES = lib.mkForce no;
+      };
+    }
+  ];
 }
