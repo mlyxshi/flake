@@ -10,12 +10,9 @@ in
   imports = [ ./initrd-network.nix ];
 
   boot.initrd.systemd.enable = true;
-
-  # hyperv = [ "hv_balloon" "hv_netvsc" "hv_storvsc" "hv_utils" "hv_vmbus" ];
-  # add extra kernel modules: https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/all-hardware.nix
-
-  # NixOS also include default kernel modules: https://github.com/NixOS/nixpkgs/blob/660e7737851506374da39c0fa550c202c824a17c/nixos/modules/system/boot/kernel.nix#L214
-  # boot.initrd.includeDefaultModules = false;
+  # NixOS also include default kernel modules which are unnecessary under qemu: https://github.com/NixOS/nixpkgs/blob/660e7737851506374da39c0fa550c202c824a17c/nixos/modules/system/boot/kernel.nix#L214
+  boot.initrd.includeDefaultModules = false;
+  
   boot.initrd.kernelModules = [
     #qemu 
     "virtio_net"
