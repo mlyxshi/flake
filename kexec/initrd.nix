@@ -17,8 +17,19 @@ in
   # Include only qemu required by kermel
   boot.initrd.kernelModules = lib.mkForce [
     # vfat native language support are not build-in
-    "nls_cp437"
-    "nls_iso8859-1"
+    # "nls_cp437"
+    # "nls_iso8859-1"
+  ];
+
+  boot.kernelPatches = [
+    {
+      name = "vfat-nls";
+      patch = null;
+      extraStructuredConfig = {
+        NLS_CODEPAGE_437 = lib.kernel.yes; # United States, Canada
+        NLS_ISO8859_1 = lib.kernel.yes; # Latin 1; Western European Languages
+      };
+    }
   ];
 
   boot.initrd.systemd.initrdBin = [ pkgs.dosfstools pkgs.e2fsprogs ];
