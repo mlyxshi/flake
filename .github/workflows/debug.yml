@@ -52,7 +52,7 @@ jobs:
     - run: | 
         if [ ${{ inputs.os }} == "ubuntu-latest" ]; then
           nix run .#homeConfigurations.github-action.activationPackage
-          mkdir -p  ~/.local/bin/ && ln -s ~/.nix-profile/bin/joshuto  ~/.local/bin/r
+          mkdir -p  ~/.local/bin/ && ln -s ~/.nix-profile/bin/yazi  ~/.local/bin/r
         else
           echo "macOS"
         fi

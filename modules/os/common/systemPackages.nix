@@ -12,7 +12,7 @@
       nix-tree
       nix-inspect
       nixpkgs-fmt
-      joshuto
+      yazi
       helix
       nil
       fd

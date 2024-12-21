@@ -4,7 +4,7 @@
     enable = true;
     shellAliases = {
       l = "eza -algh";
-      r = "joshuto";
+      r = "yazi";
       g = "lazygit";
       c = "bat";
       man = "batman";

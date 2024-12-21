@@ -39,7 +39,7 @@ in
     # https://github.com/NixOS/nixpkgs/blob/3c6867e2f20b8584b03deb6d2b13d0ee0b4ad650/nixos/modules/config/users-groups.nix#L814
     "/etc/profile".text = ''
       PS1="\e[0;32m\]\u@\h \w >\e[0m\] "
-      alias r='joshuto'
+      alias r='yazi'
       HOME="/root"
       cd /
     '';
@@ -69,7 +69,7 @@ in
     ssh = "${config.programs.ssh.package}/bin/ssh";
 
     # File explorer and editor for debugging
-    joshuto = "${pkgs.joshuto}/bin/joshuto";
+    yazi = "${pkgs.yazi}/bin/yazi";
     hx = "${pkgs.helix}/bin/hx";
 
     get-kernel-param = pkgs.writeScript "get-kernel-param" ''

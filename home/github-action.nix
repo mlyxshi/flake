@@ -9,5 +9,5 @@
     homeDirectory = "/home/runner";
   };
 
-  home.packages = with pkgs; [ helix joshuto ];
+  home.packages = with pkgs; [ helix yazi ];
 }

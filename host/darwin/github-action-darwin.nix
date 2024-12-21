@@ -9,7 +9,7 @@
 
   environment.systemPackages = with pkgs; [
     helix
-    joshuto
+    yazi
     htop
     fish
     starship
@@ -20,7 +20,7 @@
     enable = true;
     shellAliases = {
       l = "eza -algh";
-      r = "joshuto";
+      r = "yazi";
     };
 
     promptInit = ''eval (starship init fish)'';

@@ -17,7 +17,7 @@
     nix-tree
     nix-inspect
     nixpkgs-fmt
-    joshuto
+    yazi
     helix
     nil
     fd
@@ -129,7 +129,7 @@
     enable = true;
     shellAliases = {
       l = "eza -algh";
-      r = "joshuto";
+      r = "yazi";
       g = "lazygit";
       c = "bat";
       man = "batman";
