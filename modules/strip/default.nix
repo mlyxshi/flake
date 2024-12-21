@@ -2,7 +2,6 @@
 { pkgs, lib, config, ... }: {
   # https://nixos.org/manual/nixos/unstable/#sec-replace-modules
   disabledModules = [
-    "system/boot/systemd/tpm2.nix"
   ];
 
   programs.nano.enable = false;

@@ -57,13 +57,8 @@
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
   # https://wiki.archlinux.org/title/sysctl
-  # https://www.starduster.me/2020/03/02/linux-network-tuning-kernel-parameter/
   boot.kernel.sysctl = {
-    "net.core.default_qdisc" = "fq";
-    "net.ipv4.tcp_congestion_control" = "bbr";
-    "net.ipv4.tcp_fastopen" = 3; # tcp fastopen
-
-    # 1000mbps bandwidth: socket receive/send buffer size 16 MB
+    # 1000mbps bandwidth: socket receive/send buffer size 16 MB for hysteria2
     "net.core.rmem_max" = 16777216;
     "net.core.wmem_max" = 16777216;
   };

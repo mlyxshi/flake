@@ -1,2 +1,0 @@
-# Enable loadable module support 
-CONFIG_MODULES=n
