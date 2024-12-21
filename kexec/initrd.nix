@@ -21,8 +21,6 @@ in
     "nls_iso8859-1"
   ];
 
-  boot.initrd.systemd.initrdBin = [ pkgs.dosfstools pkgs.e2fsprogs ];
-
   boot.initrd.systemd.contents = {
     "/etc/ssl/certs/ca-certificates.crt".source = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
     "/etc/ssh/ssh_known_hosts".text = "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
@@ -46,11 +44,11 @@ in
   };
 
   boot.initrd.systemd.storePaths = [
-    "${pkgs.ncurses}/share/terminfo/" # add terminfo for better ssh experience
+    "${pkgs.ncurses}/share/terminfo/" # add terminfo for better ssh experience (htop)
   ];
 
   boot.initrd.systemd.extraBin = {
-    # nix & installer
+    # nix
     nix = "${pkgs.nix}/bin/nix";
     nix-store = "${pkgs.nix}/bin/nix-store";
     nix-env = "${pkgs.nix}/bin/nix-env";
@@ -58,18 +56,22 @@ in
     nixos-enter = "${pkgs.nixos-install-tools}/bin/nixos-enter";
     unshare = "${pkgs.util-linux}/bin/unshare";
 
-    ssh-keygen = "${config.programs.ssh.package}/bin/ssh-keygen";
-    awk = "${pkgs.gawk}/bin/awk";
-    sgdisk = "${pkgs.gptfdisk}/bin/sgdisk";
-    lsblk = "${pkgs.util-linux}/bin/lsblk";
-    curl = "${pkgs.curl}/bin/curl";
-    htop = "${pkgs.htop}/bin/htop";
-    ip = "${pkgs.iproute2}/bin/ip";
+    # ssh
     git = "${pkgs.gitMinimal}/bin/git";
+    ssh-keygen = "${config.programs.ssh.package}/bin/ssh-keygen";
     ssh = "${config.programs.ssh.package}/bin/ssh";
 
-    # File explorer and editor for debugging
-    yazi = "${pkgs.yazi}/bin/yazi";
+    # fs
+    "mkfs.fat" = "${pkgs.dosfstools}/bin/mkfs.fat";
+    "mkfs.ext4" = "${pkgs.e2fsprogs}/sbin/mkfs.ext4";
+    sgdisk = "${pkgs.gptfdisk}/bin/sgdisk";
+    lsblk = "${pkgs.util-linux}/bin/lsblk";
+
+    # debug
+    ip = "${pkgs.iproute2}/bin/ip";
+    curl = "${pkgs.curl}/bin/curl";
+    htop = "${pkgs.htop}/bin/htop";
+    yazi = "${pkgs.yazi-unwrapped}/bin/yazi";
     hx = "${pkgs.helix}/bin/hx";
 
     get-kernel-param = pkgs.writeScript "get-kernel-param" ''
@@ -104,11 +106,12 @@ in
   # This runs systemd initrd twice
   # but it is necessary for [nix --store flag / nixos-enter] as pivot_root does not work on rootfs.
   boot.initrd.systemd.services.remount-root = {
+    unitConfig.ConditionKernelCommandLine = "!remount-root-disable";
     after = [ "sysroot.mount" ];
     serviceConfig.Type = "oneshot";
     script = ''
-      ls -l /
-      root_fs_type="$(mount|awk '$3 == "/" { print $1 }')"
+      ls -l /     
+      root_fs_type="$(cat /proc/mounts | head -n 1 | cut -d ' ' -f 1)"
       if [ "$root_fs_type" != "tmpfs" ]; then
         cp -R /init /bin /etc /lib /nix /root /sbin /var /sysroot
         mkdir -p /sysroot/tmp
