@@ -59,7 +59,7 @@
           default = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "test-vm" ''
             /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 8096 \
               -kernel ${self.nixosConfigurations.kexec-aarch64.config.system.build.kexec}/kernel  -initrd ${self.nixosConfigurations.kexec-aarch64.config.system.build.kexec}/initrd \
-              -append "systemd.journald.forward_to_console github-private-key=''$(cat /Users/dominic/.ssh/test-base64)" \
+              -append "systemd.journald.forward_to_console github-private-key=''$(cat /Users/dominic/.ssh/test-base64)  systemd.hostname=systemd-initrd" \
               -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
               -drive "file=disk.img,format=qcow2,if=virtio"  \
               -bios $(ls /opt/homebrew/Cellar/qemu/*/share/qemu/edk2-aarch64-code.fd)

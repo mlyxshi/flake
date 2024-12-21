@@ -39,7 +39,7 @@ jobs:
     - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/initrd'
     - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kernel'
     - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'chmod +x ./kexec'
-    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} "./kexec --kexec-syscall-auto --load ./kernel --initrd=./initrd --append=\"github-private-key=${{ secrets.SSH_PRIVATE_KEY_BASE64 }}\""
+    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} "./kexec --kexec-syscall-auto --load ./kernel --initrd=./initrd --append=\"github-private-key=${{ secrets.SSH_PRIVATE_KEY_BASE64 }} systemd.hostname=systemd-initrd\""
     - name: Run kexec
       # If server doesn't reply, ServerAliveInterval option will kill ssh, and emit error 
       # This is the normal behaviour as expected, so let github workflow treat error as success 

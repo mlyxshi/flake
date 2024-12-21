@@ -10,23 +10,13 @@ in
   imports = [ ./initrd-network.nix ];
 
   boot.initrd.systemd.enable = true;
-  # NixOS also include default kernel modules which are unnecessary under qemu: https://github.com/NixOS/nixpkgs/blob/660e7737851506374da39c0fa550c202c824a17c/nixos/modules/system/boot/kernel.nix#L214
+
+  # NixOS include default kernel modules which are unnecessary under qemu: https://github.com/NixOS/nixpkgs/blob/660e7737851506374da39c0fa550c202c824a17c/nixos/modules/system/boot/kernel.nix#L214
   boot.initrd.includeDefaultModules = false;
 
-  boot.initrd.kernelModules = [
-    #qemu 
-    "virtio_net"
-    "virtio_pci"
-    "virtio_mmio"
-    "virtio_blk"
-    "virtio_scsi"
-    "virtio_balloon"
-    "virtio_console"
-    "virtio_rng"
-    # ext4
-    "ext4"
-    # vfat
-    "vfat"
+  # Include only qemu required by kermel
+  boot.initrd.kernelModules = lib.mkForce [
+    # vfat native language support are not build-in
     "nls_cp437"
     "nls_iso8859-1"
   ];
@@ -50,7 +40,6 @@ in
 
   boot.initrd.systemd.storePaths = [
     "${pkgs.ncurses}/share/terminfo/" # add terminfo for better ssh experience
-    # "${pkgs.git}/share/git-core/templates" # add git templates
   ];
 
   boot.initrd.systemd.extraBin = {
@@ -139,6 +128,6 @@ in
 
   # https://www.freedesktop.org/software/systemd/man/latest/bootup.html#Bootup%20in%20the%20initrd
   # Disable: initrd-parse-etc.service -> initrd-cleanup.service -> initrd-switch-root.target
-  # so this initrd will stop at initrd.target
+  # so systemd will stop at initrd.target
   boot.initrd.systemd.services.initrd-parse-etc.enable = false;
 }
