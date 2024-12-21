@@ -14,22 +14,11 @@ in
   # NixOS include default kernel modules which are unnecessary under qemu: https://github.com/NixOS/nixpkgs/blob/660e7737851506374da39c0fa550c202c824a17c/nixos/modules/system/boot/kernel.nix#L214
   boot.initrd.includeDefaultModules = false;
 
-  # Include only qemu required by kermel
+  # Only include required kernel modules
   boot.initrd.kernelModules = lib.mkForce [
     # vfat native language support are not build-in
-    # "nls_cp437"
-    # "nls_iso8859-1"
-  ];
-
-  boot.kernelPatches = [
-    {
-      name = "vfat-nls";
-      patch = null;
-      extraStructuredConfig = {
-        NLS_CODEPAGE_437 = lib.kernel.yes; # United States, Canada
-        NLS_ISO8859_1 = lib.kernel.yes; # Latin 1; Western European Languages
-      };
-    }
+    "nls_cp437"
+    "nls_iso8859-1"
   ];
 
   boot.initrd.systemd.initrdBin = [ pkgs.dosfstools pkgs.e2fsprogs ];
@@ -46,6 +35,13 @@ in
       extra-experimental-features = nix-command flakes
       substituters = https://cache.nixos.org
       trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+    '';
+    # https://github.com/NixOS/nixpkgs/blob/3c6867e2f20b8584b03deb6d2b13d0ee0b4ad650/nixos/modules/config/users-groups.nix#L814
+    "/etc/profile".text = ''
+      PS1="\e[0;32m\]\u@\h \w >\e[0m\] "
+      alias r='joshuto'
+      HOME="/root"
+      cd /
     '';
   };
 
@@ -73,7 +69,7 @@ in
     ssh = "${config.programs.ssh.package}/bin/ssh";
 
     # File explorer and editor for debugging
-    r = "${pkgs.joshuto}/bin/joshuto";
+    joshuto = "${pkgs.joshuto}/bin/joshuto";
     hx = "${pkgs.helix}/bin/hx";
 
     get-kernel-param = pkgs.writeScript "get-kernel-param" ''
