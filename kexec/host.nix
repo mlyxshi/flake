@@ -1,4 +1,7 @@
 { config, pkgs, lib, ... }: {
+  # Initrd: "/etc/hostname".text = "systemd-initrd"
+  networking.hostName = "systemd-initrd";
+
   # prepare /sysroot for switch-root
   fileSystems."/" = {
     fsType = "tmpfs";

@@ -12,7 +12,7 @@ in
   boot.initrd.systemd.enable = true;
   # NixOS also include default kernel modules which are unnecessary under qemu: https://github.com/NixOS/nixpkgs/blob/660e7737851506374da39c0fa550c202c824a17c/nixos/modules/system/boot/kernel.nix#L214
   boot.initrd.includeDefaultModules = false;
-  
+
   boot.initrd.kernelModules = [
     #qemu 
     "virtio_net"
@@ -34,7 +34,6 @@ in
   boot.initrd.systemd.initrdBin = [ pkgs.dosfstools pkgs.e2fsprogs ];
 
   boot.initrd.systemd.contents = {
-    "/etc/hostname".text = "systemd-initrd";
     "/etc/ssl/certs/ca-certificates.crt".source = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
     "/etc/ssh/ssh_known_hosts".text = "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
     "/etc/ssh/ssh_config".text = ''
@@ -135,7 +134,7 @@ in
   };
 
   boot.initrd.systemd.emergencyAccess = true;
-  
+
   boot.initrd.systemd.services.initrd-find-nixos-closure.enable = false;
 
   # https://www.freedesktop.org/software/systemd/man/latest/bootup.html#Bootup%20in%20the%20initrd
