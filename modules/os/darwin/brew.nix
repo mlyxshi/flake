@@ -67,7 +67,7 @@
       # "suspicious-package"
 
       # "snipaste"
-      
+
 
       ##############################################
       # "karabiner-elements"
