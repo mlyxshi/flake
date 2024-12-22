@@ -13,11 +13,6 @@ systemd.journald.forward_to_console
 systemd.set_credential_binary=github-private-key:BASE64
 # inirtd hostname
 systemd.hostname=systemd-initrd
-# DEV： tmpfs  
-# LOC：    /sysroot
-# FSTYPE： tmpfs
-# OPTIONS： mode=0755
-systemd.mount-extra=tmpfs:/:tmpfs:mode=0755"
 ```
 
 # Usage

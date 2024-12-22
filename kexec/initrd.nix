@@ -97,7 +97,7 @@ in
   # but it is necessary for [nix --store flag / nixos-enter] as pivot_root does not work on rootfs.
   boot.initrd.systemd.services.remount-root = {
     unitConfig.ConditionKernelCommandLine = "!remount-root-disable";
-    before = [ "initrd.target" ];
+    after = [ "sysroot.mount" ];
     serviceConfig.Type = "oneshot";
     script = ''
       root_fs_type="$(cat /proc/mounts | head -n 1 | cut -d ' ' -f 1)"
@@ -107,7 +107,7 @@ in
         systemctl --no-block switch-root
       fi
     '';
-    requiredBy = [ "initrd.target" ];
+    requiredBy = [ "sysroot.mount" ];
   };
 
   boot.initrd.systemd.emergencyAccess = true;
