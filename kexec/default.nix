@@ -60,7 +60,7 @@ in
     "/etc/ssh/ssh_config".text = ''
       Host github.com
         User git
-        IdentityFile /run/credentials/@system/github-private-key
+        IdentityFile /run/credentials/github-private-key
     '';
 
     "/etc/nix/nix.conf".text = ''
@@ -130,17 +130,18 @@ in
   # but it is necessary for [nix --store flag / nixos-enter] as pivot_root does not work on rootfs.
   boot.initrd.systemd.services.remount-root = {
     unitConfig.ConditionKernelCommandLine = "systemd.mount-extra";
-    after = [ "sysroot.mount" ];
+    after = [ "sysroot-run.mount" ]; # bind /run to /sysroot/run
     serviceConfig.Type = "oneshot";
     script = ''
       root_fs_type="$(cat /proc/mounts | head -n 1 | cut -d ' ' -f 1)"
       if [ "$root_fs_type" != "tmpfs" ]; then
         cp -R /init /bin /etc /lib /nix /root /sbin /var /sysroot
+        cp /run/credentials/@system/github-private-key  /sysroot/run/credentials/
         mkdir -p /sysroot/tmp
         systemctl --no-block switch-root
       fi
     '';
-    requiredBy = [ "sysroot.mount" ];
+    requiredBy = [ "initrd.target" ];
   };
 
   boot.initrd.systemd.emergencyAccess = true;
