@@ -127,7 +127,7 @@ in
   # This runs systemd initrd twice
   # but it is necessary for [nix --store flag / nixos-enter] as pivot_root does not work on rootfs.
   boot.initrd.systemd.services.remount-root = {
-    unitConfig.ConditionKernelCommandLine = "!remount-root-disable";
+    unitConfig.ConditionKernelCommandLine = "systemd.mount-extra";
     after = [ "sysroot.mount" ];
     serviceConfig.Type = "oneshot";
     script = ''
