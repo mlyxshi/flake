@@ -75,6 +75,7 @@
       then
         gh release upload aarch64 $SYSTEM/initrd --clobber
         gh release upload aarch64 $SYSTEM/kernel --clobber
+        gh release upload aarch64 $SYSTEM/kexec --clobber
       else
         echo "Build Failed"
         exit 1
