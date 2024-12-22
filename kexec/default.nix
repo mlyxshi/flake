@@ -1,4 +1,4 @@
-{ config, pkgs, lib, modulesPath, ... }:
+{ config, pkgs, lib, ... }:
 let
   rootPartType = {
     x64 = "4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709";
@@ -7,9 +7,26 @@ let
 in
 {
 
-  imports = [ ./initrd-network.nix ];
+  system.stateVersion = lib.trivial.release;
+
+  system.build.kexec = pkgs.runCommand "" { } ''
+    mkdir -p $out
+    ln -s ${config.system.build.initialRamdisk}/initrd $out/initrd
+    ln -s ${config.system.build.kernel}/${pkgs.hostPlatform.linux-kernel.target} $out/kernel
+    ln -s ${pkgs.pkgsStatic.kexec-tools}/bin/kexec $out/kexec
+  '';
 
   boot.initrd.systemd.enable = true;
+
+  boot.initrd.systemd.network.enable = true;
+
+  boot.initrd.systemd.network.networks.ethernet-default-dhcp = {
+    matchConfig = { Name = [ "en*" "eth*" ]; };
+    networkConfig = { DHCP = "yes"; };
+  };
+
+  boot.initrd.network.ssh.enable = true;
+  boot.initrd.systemd.services.sshd.preStart = lib.mkForce "/bin/chmod 0600 /etc/ssh/ssh_host_ed25519_key";
 
   # NixOS include default kernel modules which are unnecessary under qemu: https://github.com/NixOS/nixpkgs/blob/660e7737851506374da39c0fa550c202c824a17c/nixos/modules/system/boot/kernel.nix#L214
   boot.initrd.includeDefaultModules = false;
@@ -23,12 +40,27 @@ in
 
   boot.initrd.systemd.contents = {
     "/etc/ssl/certs/ca-certificates.crt".source = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+
+    "/etc/ssh/authorized_keys.d/root".text = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe";
+    # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/keys
+    "/etc/ssh/ssh_host_ed25519_key.pub".text = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJBWcxb/Blaqt1auOtE+F8QUWrUotiC5qBJ+UuEWdVCb";
+    "/etc/ssh/ssh_host_ed25519_key".text = ''
+      -----BEGIN OPENSSH PRIVATE KEY-----
+      b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+      QyNTUxOQAAACCQVnMW/wZWqrdWrjrRPhfEFFq1KLYguagSflLhFnVQmwAAAJASuMMnErjD
+      JwAAAAtzc2gtZWQyNTUxOQAAACCQVnMW/wZWqrdWrjrRPhfEFFq1KLYguagSflLhFnVQmw
+      AAAEDIN2VWFyggtoSPXcAFy8dtG1uAig8sCuyE21eMDt2GgJBWcxb/Blaqt1auOtE+F8QU
+      WrUotiC5qBJ+UuEWdVCbAAAACnJvb3RAbml4b3MBAgM=
+      -----END OPENSSH PRIVATE KEY-----
+    '';
+
     "/etc/ssh/ssh_known_hosts".text = "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
     "/etc/ssh/ssh_config".text = ''
       Host github.com
         User git
         IdentityFile /run/credentials/@system/github-private-key
     '';
+
     "/etc/nix/nix.conf".text = ''
       extra-experimental-features = nix-command flakes
       substituters = https://cache.nixos.org
@@ -56,9 +88,10 @@ in
     nixos-enter = "${pkgs.nixos-install-tools}/bin/nixos-enter";
     unshare = "${pkgs.util-linux}/bin/unshare";
 
-    # ssh
+    # net
+    ip = "${pkgs.iproute2}/bin/ip";
+    curl = "${pkgs.curl}/bin/curl";
     git = "${pkgs.gitMinimal}/bin/git";
-    ssh-keygen = "${config.programs.ssh.package}/bin/ssh-keygen";
     ssh = "${config.programs.ssh.package}/bin/ssh";
 
     # fs
@@ -68,8 +101,6 @@ in
     lsblk = "${pkgs.util-linux}/bin/lsblk";
 
     # debug
-    ip = "${pkgs.iproute2}/bin/ip";
-    curl = "${pkgs.curl}/bin/curl";
     htop = "${pkgs.htop}/bin/htop";
     yazi = "${pkgs.yazi-unwrapped}/bin/yazi";
     hx = "${pkgs.helix}/bin/hx";

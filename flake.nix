@@ -36,8 +36,8 @@
         installer-x86_64 = import ./host/installer { arch = "x86_64";inherit self nixpkgs secret; };
         installer-aarch64 = import ./host/installer { arch = "aarch64";inherit self nixpkgs secret; };
 
-        kexec-x86_64 = nixpkgs.lib.nixosSystem { modules = [ ./kexec/host.nix ./kexec/initrd.nix { nixpkgs.hostPlatform = "x86_64-linux"; } ]; };
-        kexec-aarch64 = nixpkgs.lib.nixosSystem { modules = [ ./kexec/host.nix ./kexec/initrd.nix { nixpkgs.hostPlatform = "aarch64-linux"; } ]; };
+        kexec-x86_64 = nixpkgs.lib.nixosSystem { modules = [ ./kexec { nixpkgs.hostPlatform = "x86_64-linux"; } ]; };
+        kexec-aarch64 = nixpkgs.lib.nixosSystem { modules = [ ./kexec { nixpkgs.hostPlatform = "aarch64-linux"; } ]; };
 
       } // lib.genAttrs oracle-serverlist (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs home-manager secret; });
 
@@ -59,7 +59,7 @@
           default = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "test-vm" ''
             /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 8096 \
               -kernel ${self.nixosConfigurations.kexec-aarch64.config.system.build.kexec}/kernel  -initrd ${self.nixosConfigurations.kexec-aarch64.config.system.build.kexec}/initrd \
-              -append "systemd.journald.forward_to_console systemd.set_credential_binary=github-private-key:''$(cat /Users/dominic/.ssh/test-base64) systemd.hostname=systemd-initrd" \
+              -append "systemd.journald.forward_to_console systemd.set_credential_binary=github-private-key:''$(cat /Users/dominic/.ssh/test-base64) systemd.hostname=systemd-initrd systemd.mount-extra=tmpfs:/:tmpfs:mode=0755" \
               -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
               -drive "file=disk.img,format=qcow2,if=virtio"  \
               -bios $(ls /opt/homebrew/Cellar/qemu/*/share/qemu/edk2-aarch64-code.fd)
