@@ -36,6 +36,8 @@ in
     # vfat native language support are not build-in
     "nls_cp437"
     "nls_iso8859-1"
+    # scsi
+    "virtio_scsi"
   ];
 
   boot.initrd.systemd.contents = {
