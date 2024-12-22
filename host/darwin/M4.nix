@@ -14,7 +14,7 @@
 
     linux-builder = {
       enable = true;
-      config.virtualisation.cores = 4;
+      # config.virtualisation.cores = 8;
     };
   };
 
