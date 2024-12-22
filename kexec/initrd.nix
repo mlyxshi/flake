@@ -74,16 +74,6 @@ in
     yazi = "${pkgs.yazi-unwrapped}/bin/yazi";
     hx = "${pkgs.helix}/bin/hx";
 
-    get-kernel-param = pkgs.writeScript "get-kernel-param" ''
-      for o in $(< /proc/cmdline); do
-        case $o in
-          $1=*)
-            echo "''${o#"$1="}"
-            ;;
-        esac
-      done
-    '';
-
     # https://superuser.com/questions/1572410/what-is-the-purpose-of-the-linux-home-partition-code-8302
     make-partitions = pkgs.writeScript "make-partitions" ''
       DEVICE=$1 
