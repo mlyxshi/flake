@@ -1,9 +1,4 @@
 { config, pkgs, lib, ... }: {
-  # prepare /sysroot for switch-root
-  fileSystems."/" = {
-    fsType = "tmpfs";
-    options = [ "mode=0755" ];
-  };
 
   system.stateVersion = lib.trivial.release;
 

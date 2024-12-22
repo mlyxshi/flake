@@ -27,7 +27,7 @@ in
     "/etc/ssh/ssh_config".text = ''
       Host github.com
         User git
-        IdentityFile /etc/ssh/github
+        IdentityFile /run/credentials/@system/github-private-key
     '';
     "/etc/nix/nix.conf".text = ''
       extra-experimental-features = nix-command flakes
@@ -107,27 +107,15 @@ in
   # but it is necessary for [nix --store flag / nixos-enter] as pivot_root does not work on rootfs.
   boot.initrd.systemd.services.remount-root = {
     unitConfig.ConditionKernelCommandLine = "!remount-root-disable";
-    after = [ "sysroot.mount" ];
+    before = [ "initrd.target" ];
     serviceConfig.Type = "oneshot";
     script = ''
-      ls -l /     
       root_fs_type="$(cat /proc/mounts | head -n 1 | cut -d ' ' -f 1)"
       if [ "$root_fs_type" != "tmpfs" ]; then
         cp -R /init /bin /etc /lib /nix /root /sbin /var /sysroot
         mkdir -p /sysroot/tmp
         systemctl --no-block switch-root
       fi
-    '';
-    requiredBy = [ "sysroot.mount" ];
-  };
-
-  boot.initrd.systemd.services.github-private-key = {
-    unitConfig.ConditionKernelCommandLine = "github-private-key";
-    unitConfig.ConditionPathExists = "!/etc/ssh/github";
-    serviceConfig.Type = "oneshot";
-    script = ''
-      get-kernel-param github-private-key | base64 -d > /etc/ssh/github
-      chmod 600 /etc/ssh/github
     '';
     requiredBy = [ "initrd.target" ];
   };
