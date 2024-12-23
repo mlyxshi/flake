@@ -68,17 +68,26 @@ in
       substituters = https://cache.nixos.org
       trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
     '';
+
+    "/etc/yazi/yazi.toml".text = ''
+      [manager]
+      show_hidden = true
+      linemode = "size"
+    '';
     # https://github.com/NixOS/nixpkgs/blob/3c6867e2f20b8584b03deb6d2b13d0ee0b4ad650/nixos/modules/config/users-groups.nix#L814
     "/etc/profile".text = ''
       PS1="\e[0;32m\]\u@\h \w >\e[0m\] "
       alias r='yazi'
-      HOME="/root"
+      export HOME=/root
+      export EDITOR=hx
+      export YAZI_CONFIG_HOME=/etc/yazi
       cd /
     '';
   };
 
   boot.initrd.systemd.storePaths = [
     "${pkgs.ncurses}/share/terminfo/" # add terminfo for better ssh experience (htop)
+    "${pkgs.file}" # yazi dependency 
   ];
 
   boot.initrd.systemd.extraBin = {
@@ -100,6 +109,7 @@ in
     "mkfs.fat" = "${pkgs.dosfstools}/bin/mkfs.fat";
     "mkfs.ext4" = "${pkgs.e2fsprogs}/sbin/mkfs.ext4";
     sgdisk = "${pkgs.gptfdisk}/bin/sgdisk";
+    file = "${pkgs.file}/bin/file";
     lsblk = "${pkgs.util-linux}/bin/lsblk";
 
     # debug
