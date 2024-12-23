@@ -1,12 +1,4 @@
-{ config, pkgs, lib, ... }:
-let
-  rootPartType = {
-    x64 = "4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709";
-    aa64 = "B921B045-1DF0-41C3-AF44-4C6F280D3FAE";
-  }.${pkgs.stdenv.hostPlatform.efiArch};
-in
-{
-
+{ config, pkgs, lib, ... }: {
   system.stateVersion = lib.trivial.release;
 
   system.build.kexec = pkgs.runCommand "" { } ''
@@ -36,8 +28,8 @@ in
     # vfat native language support
     "nls_cp437"
     "nls_iso8859-1"
-    # scsi 
-    "virtio_scsi"
+    # Oracle cloud
+    "virtio_scsi" # https://www.qemu.org/2021/01/19/virtio-blk-scsi-configuration/
   ];
 
   boot.initrd.systemd.contents = {
@@ -118,12 +110,19 @@ in
     hx = "${pkgs.helix}/bin/hx";
 
     # https://superuser.com/questions/1572410/what-is-the-purpose-of-the-linux-home-partition-code-8302
-    make-partitions = pkgs.writeScript "make-partitions" ''
-      DEVICE=$1 
-      sgdisk --zap-all $DEVICE 
-      sgdisk --new=0:0:+512M --typecode=0:ef00 $DEVICE
-      sgdisk --new=0:0:0 --typecode=0:${rootPartType} $DEVICE
-    '';
+    make-partitions =
+      let
+        rootPartType = {
+          x64 = "4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709";
+          aa64 = "B921B045-1DF0-41C3-AF44-4C6F280D3FAE";
+        }.${pkgs.stdenv.hostPlatform.efiArch};
+      in
+      pkgs.writeScript "make-partitions" ''
+        DEVICE=$1 
+        sgdisk --zap-all $DEVICE 
+        sgdisk --new=0:0:+512M --typecode=0:ef00 $DEVICE
+        sgdisk --new=0:0:0 --typecode=0:${rootPartType} $DEVICE
+      '';
 
     mount-partitions = pkgs.writeScript "mount-partitions" ''
       DEVICE=$1 
@@ -143,8 +142,8 @@ in
     after = [ "sysroot-run.mount" ]; # bind /run to /sysroot/run
     serviceConfig.Type = "oneshot";
     script = ''
-      root_fs_type="$(cat /proc/mounts | head -n 1 | cut -d ' ' -f 1)"
-      if [ "$root_fs_type" != "tmpfs" ]; then
+      root_device_type="$(cat /proc/mounts | head -n 1 | cut -d ' ' -f 1)"
+      if [ "$root_device_type" != "tmpfs" ]; then
         cp -R /init /bin /etc /lib /nix /root /sbin /var /sysroot
         cp /run/credentials/@system/github-private-key  /sysroot/run/credentials/
         mkdir -p /sysroot/tmp
