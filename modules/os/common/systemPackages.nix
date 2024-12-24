@@ -39,5 +39,6 @@
       nix-update
     ] ++ lib.optionals pkgs.stdenv.isLinux [
       gptfdisk
+      strace
     ];
 }

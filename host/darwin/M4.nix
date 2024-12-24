@@ -12,10 +12,7 @@
       trusted-users = [ "root" "dominic" ];
     };
 
-    linux-builder = {
-      enable = true;
-      # config.virtualisation.cores = 8;
-    };
+    linux-builder.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
