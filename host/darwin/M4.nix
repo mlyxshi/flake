@@ -10,11 +10,9 @@
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
       trusted-users = [ "root" "dominic" ];
-    };
-
-    linux-builder = {
-      enable = true;
-      # config.virtualisation.cores = 8;
+      # remote builder 
+      builders = lib.mkForce "ssh-ng://m1 aarch64-linux /Users/dominic/.ssh/id_ed25519 8 1 big-parallel,kvm,nixos-test - c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUVJKzd0Y3RDZTJOR3BYdWZNem9MWG5GeThpOGpFVkgzdEdWRmpMY2NOU0YK";
+      builders-use-substitutes = true;
     };
   };
 
@@ -100,7 +98,6 @@
       "iproute2mac"
       "qemu"
       "smartmontools"
-      "cloudflared"
       "yt-dlp"
       "ffmpeg"
       "mediainfo"

@@ -2,7 +2,7 @@
 nixpkgs.lib.nixosSystem {
   modules = [
     secret.nixosModules.default
-    self.nixosModules.os.nixos.server
+    self.nixosModules.nixos.server
     ./configuration.nix
     {
       nixpkgs.hostPlatform = "${arch}-linux";

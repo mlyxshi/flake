@@ -3,7 +3,7 @@ nixpkgs.lib.nixosSystem {
   modules = [
     secret.nixosModules.default
     home-manager.nixosModules.default
-    self.nixosModules.os.nixos.server
+    self.nixosModules.nixos.server
     self.nixosModules.network
     self.nixosModules.services.nodestatus-client
     self.nixosModules.services.traefik

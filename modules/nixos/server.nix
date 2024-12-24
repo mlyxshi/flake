@@ -1,7 +1,7 @@
 { pkgs, lib, config, self, ... }: {
 
   imports = [
-    self.nixosModules.os.nixos.base
+    self.nixosModules.nixos.base
   ];
 
   # systemd.sysusers.enable = true;

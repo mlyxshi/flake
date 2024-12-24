@@ -1,7 +1,6 @@
 { config, pkgs, lib, self, ... }: {
 
   imports = [
-    self.nixosModules.os.common
     self.nixosModules.strip
   ];
 
@@ -65,6 +64,35 @@
 
 
   environment.systemPackages = [
+    wget
+    dig
+    file
+    htop
+    iperf
+    tree
+    libarchive
+    nix-output-monitor
+    nix-tree
+    nix-inspect
+    nixpkgs-fmt
+    yazi
+    helix
+    nil
+    fd
+    ripgrep
+    starship
+    zoxide
+    atuin
+    eza
+    xh
+    tealdeer
+    bandwhich
+    bat
+    bat-extras.batman
+    gdu
+    gitMinimal
+    gptfdisk
+
     (pkgs.writeShellScriptBin "update" ''
       if [[ -e "/flake/flake.nix" ]]
       then
@@ -108,4 +136,65 @@
       fi
     '')
   ];
+
+
+  programs.fish = {
+    enable = true;
+    shellAliases = {
+      l = "eza -algh";
+      r = "yazi";
+      g = "lazygit";
+      c = "bat";
+      man = "batman";
+      P = "echo $PATH";
+
+      sall = "systemctl list-units";
+      slist = "systemctl list-units --type=service";
+      stimer = "systemctl list-timers";
+      sstat = "systemctl status";
+      scat = "systemctl cat";
+      slog = "journalctl -u";
+      nixpkgs = "hx ${config.nixpkgs.flake.source}";
+    };
+
+    shellInit = ''
+      set -U fish_greeting
+      zoxide init fish | source
+      atuin init fish --disable-up-arrow | source
+
+      function loc
+        readlink -f $(which $argv) 
+      end
+
+      function cnar
+        curl https://cache.mlyxshi.com/$argv.narinfo  
+      end
+
+      function drv
+        nix show-derivation $(nix-store -q --deriver $argv)
+      end
+
+      # immediate reference(1 level)
+      function ref
+        nix-store -q --references $(readlink -f $(which $argv))
+      end
+
+      # recursive reference (All level)
+      function closure 
+        nix-store -q --requisites $(readlink -f $(which $argv))
+      end
+
+      function ref-re
+        nix-store -q --referrers $(readlink -f $(which $argv))
+      end
+
+      function closure-re
+        nix-store -q --referrers-closure $(readlink -f $(which $argv))
+      end
+    '';
+
+    promptInit = ''
+      eval (starship init fish)
+    '';
+  };
 }
