@@ -63,7 +63,7 @@
   };
 
 
-  environment.systemPackages = [
+  environment.systemPackages = with pkgs;[
     wget
     dig
     file
@@ -93,7 +93,7 @@
     gitMinimal
     gptfdisk
 
-    (pkgs.writeShellScriptBin "update" ''
+    (writeShellScriptBin "update" ''
       if [[ -e "/flake/flake.nix" ]]
       then
         cd /flake
@@ -121,7 +121,7 @@
       fi
     '')
 
-    (pkgs.writeShellScriptBin "local-update" ''
+    (writeShellScriptBin "local-update" ''
       cd /flake
 
       SYSTEM=$(nom build --no-link --print-out-paths .#nixosConfigurations.$(hostnamectl hostname).config.system.build.toplevel)
