@@ -66,6 +66,7 @@
 
     taps = [
       "homebrew/services"
+      "lihaoyun6/tap"
     ];
 
     brews = [
@@ -100,6 +101,9 @@
       "iina"
       "element"
       "telegram-desktop"
+
+      "topit"
+      "kitty"
     ];
   };
 
