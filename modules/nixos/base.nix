@@ -75,7 +75,7 @@
     nix-tree
     nix-inspect
     nixpkgs-fmt
-    yazi
+    yazi-unwrapped
     helix
     nil
     fd

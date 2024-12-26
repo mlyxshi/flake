@@ -69,7 +69,7 @@
     # https://github.com/NixOS/nixpkgs/blob/3c6867e2f20b8584b03deb6d2b13d0ee0b4ad650/nixos/modules/config/users-groups.nix#L814
     "/etc/profile".text = ''
       PS1="\e[0;32m\]\u@\h \w >\e[0m\] "
-      alias r='yazi'
+      alias r=yazi
       export HOME=/root
       export EDITOR=hx
       export YAZI_CONFIG_HOME=/etc/yazi
