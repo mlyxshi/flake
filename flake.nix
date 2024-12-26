@@ -56,11 +56,16 @@
           // {
           default = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "test-vm" ''
             /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 8096 \
-              -kernel ${self.nixosConfigurations.kexec-aarch64.config.system.build.kexec}/kernel  -initrd ${self.nixosConfigurations.kexec-aarch64.config.system.build.kexec}/initrd \
+              -kernel ${self.nixosConfigurations.kexec-aarch64.config.system.build.kernel}/Image  -initrd ${self.nixosConfigurations.kexec-aarch64.config.system.build.initialRamdisk}/initrd \
               -append "systemd.journald.forward_to_console systemd.set_credential_binary=github-private-key:''$(cat /Users/dominic/.ssh/test-base64) systemd.hostname=systemd-initrd systemd.mount-extra=tmpfs:/:tmpfs:mode=0755" \
               -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
               -drive "file=disk.img,format=qcow2,if=virtio"  \
               -bios $(ls /opt/homebrew/Cellar/qemu/*/share/qemu/edk2-aarch64-code.fd)
+          '';
+          upload-kexec = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "upload-kexec" ''
+            ln -s ${self.nixosConfigurations.kexec-aarch64.config.system.build.kernel}/Image /tmp/kernel
+            gh release upload aarch64 /tmp/kernel --clobber
+            gh release upload aarch64 ${self.nixosConfigurations.kexec-aarch64.config.system.build.initialRamdisk}/initrd --clobber
           '';
         };
         aarch64-linux = lib.genAttrs (getArchPkgs "aarch64-linux") (name: nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/${name} { });
