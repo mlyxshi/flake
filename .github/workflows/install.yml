@@ -73,8 +73,8 @@ jobs:
           sleep 5
         done
     
-    - run: $SSH $HOST make-partitions /dev/sda
-    - run: $SSH $HOST mount-partitions /dev/sda
+    - run: $SSH $HOST make-partitions
+    - run: $SSH $HOST mount-partitions
 
     # for emergency reboot
     - run: $SSH $HOST curl -Lo /mnt/boot/arm.efi https://boot.netboot.xyz/ipxe/netboot.xyz-arm64.efi

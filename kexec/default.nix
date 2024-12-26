@@ -109,19 +109,17 @@
         }.${pkgs.stdenv.hostPlatform.efiArch};
       in
       pkgs.writeScript "make-partitions" ''
-        DEVICE=$1 
-        sgdisk --zap-all $DEVICE 
-        sgdisk --new=0:0:+512M --typecode=0:ef00 $DEVICE
-        sgdisk --new=0:0:0 --typecode=0:${rootPartType} $DEVICE
+        sgdisk --zap-all /dev/sda
+        sgdisk --new=0:0:+512M --typecode=0:ef00 /dev/sda
+        sgdisk --new=0:0:0 --typecode=0:${rootPartType} /dev/sda
       '';
 
     mount-partitions = pkgs.writeScript "mount-partitions" ''
-      DEVICE=$1 
-      mkfs.fat -F 32 $DEVICE"1"
-      mkfs.ext4 -F $DEVICE"2"
+      mkfs.fat -F 32 /dev/sda1
+      mkfs.ext4 -F /dev/sda2
       mkdir -p /mnt
-      mount $DEVICE"2" /mnt
-      mount --mkdir $DEVICE"1" /mnt/boot
+      mount /dev/sda2 /mnt
+      mount --mkdir /dev/sda1 /mnt/boot
     '';
   };
 

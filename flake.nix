@@ -54,12 +54,14 @@
       packages = {
         aarch64-darwin = lib.genAttrs (getArchPkgs "aarch64-darwin") (name: nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/${name} { })
           // {
+          # https://wiki.gentoo.org/wiki/QEMU/Options
           default = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "test-vm" ''
-            /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 8096 \
-              -kernel ${self.nixosConfigurations.kexec-aarch64.config.system.build.kernel}/Image  -initrd ${self.nixosConfigurations.kexec-aarch64.config.system.build.initialRamdisk}/initrd \
+            /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu cortex-a57 -accel hvf -nographic -m 8G \
+              -kernel ${self.nixosConfigurations.kexec-aarch64.config.system.build.kernel}/Image \
+              -initrd ${self.nixosConfigurations.kexec-aarch64.config.system.build.initialRamdisk}/initrd \
               -append "systemd.journald.forward_to_console systemd.set_credential_binary=github-private-key:''$(cat /Users/dominic/.ssh/test-base64) systemd.hostname=systemd-initrd systemd.mount-extra=tmpfs:/:tmpfs:mode=0755" \
               -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
-              -drive "file=disk.img,format=qcow2,if=virtio"  \
+              -device "virtio-scsi-pci,id=scsi0" -drive "file=disk.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
               -bios $(ls /opt/homebrew/Cellar/qemu/*/share/qemu/edk2-aarch64-code.fd)
           '';
           upload-kexec = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "upload-kexec" ''
