@@ -18,6 +18,8 @@ systemd.hostname=systemd-initrd
 # FSTYPE： tmpfs
 # OPTIONS： mode=0755
 systemd.mount-extra=tmpfs:/:tmpfs:mode=0755"
+# https://github.com/poettering/systemd/blob/9b436342705ece5304b3f6cbefd739f6da0ae742/test/test-network-generator-conversion.sh#L113
+ip=dhcp
 ```
 
 # Usage

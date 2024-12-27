@@ -3,10 +3,6 @@
 
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.network.enable = true;
-  boot.initrd.systemd.network.networks.ethernet-default-dhcp = {
-    matchConfig = { Name = [ "en*" "eth*" ]; };
-    networkConfig = { DHCP = "yes"; };
-  };
 
   boot.initrd.network.ssh.enable = true;
   boot.initrd.systemd.services.sshd.preStart = lib.mkForce "/bin/chmod 0600 /etc/ssh/ssh_host_ed25519_key";
