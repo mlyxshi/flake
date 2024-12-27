@@ -64,13 +64,14 @@
       export HOME=/root
       export EDITOR=hx
       export YAZI_CONFIG_HOME=/etc/yazi
+      export TERMINFO_DIRS=${pkgs.kitty.terminfo}/share/terminfo
       cd /
     '';
   };
 
   boot.initrd.systemd.storePaths = [
-    "${pkgs.ncurses}/share/terminfo/" # add terminfo for better ssh experience (htop)
     "${pkgs.file}" # yazi dependency 
+    "${pkgs.kitty.terminfo}/share/terminfo" # kitty terminfo
   ];
 
   boot.initrd.systemd.extraBin = {
