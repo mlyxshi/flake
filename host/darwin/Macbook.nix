@@ -26,7 +26,6 @@
       "telegram-desktop"
 
       "topit"
-      "kitty"
     ];
   };
 

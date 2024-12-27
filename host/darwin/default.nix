@@ -6,6 +6,7 @@
   users.users.dominic.openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe" ];
 
   nix = {
+    channel.enable = false;
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
       trusted-users = [ "root" "dominic" ];
@@ -77,9 +78,10 @@
 
     brews = [
       "iproute2mac"
-    ] ;
+    ];
 
     casks = [
+      "kitty"
       "jordanbaird-ice"
       "input-source-pro"
       "font-roboto-mono-nerd-font"
