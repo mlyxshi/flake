@@ -98,43 +98,28 @@
     ];
   };
 
-  programs.ssh = {
-    knownHosts = {
-      github = {
-        hostNames = [ "github.com" ];
-        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
-      };
-    };
-    extraConfig = ''
-      Host github.com
-        User git
+  programs.ssh.knownHosts."github.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
+  programs.ssh.extraConfig = ''
+    Host us
+    	HostName  us.mlyxshi.com
+      HostKeyAlias us
+    	User root
 
-      Host us
-      	HostName  us.mlyxshi.com
-        HostKeyAlias us
-      	User root
+    Host jp1
+    	HostName  jp1.mlyxshi.com
+      HostKeyAlias jp1
+    	User root
 
-      Host jp1
-      	HostName  jp1.mlyxshi.com
-        HostKeyAlias jp1
-      	User root
+    Host jp2
+    	HostName  jp2.mlyxshi.com
+      HostKeyAlias jp2
+    	User root
 
-      Host jp2
-      	HostName  jp2.mlyxshi.com
-        HostKeyAlias jp2
-      	User root
-
-      Host de
-      	HostName  de.mlyxshi.com
-        HostKeyAlias de
-      	User root
-
-      Host m1
-        HostName 192.168.1.190
-        HostKeyAlias m1
-        User root
-    '';
-  };
+    Host de
+    	HostName  de.mlyxshi.com
+      HostKeyAlias de
+    	User root
+  '';
 
   system.activationScripts.postActivation.text = ''
     [[ -e "/run/current-system" ]] && ${pkgs.nix}/bin/nix store  diff-closures /run/current-system "$systemConfig"
