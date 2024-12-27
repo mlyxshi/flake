@@ -111,27 +111,27 @@
 
       Host us
       	HostName  us.mlyxshi.com
+        HostKeyAlias us
       	User root
 
       Host jp1
       	HostName  jp1.mlyxshi.com
+        HostKeyAlias jp1
       	User root
 
       Host jp2
       	HostName  jp2.mlyxshi.com
+        HostKeyAlias jp2
       	User root
 
       Host de
       	HostName  de.mlyxshi.com
+        HostKeyAlias de
       	User root
-
-      Host kexec
-        HostName localhost
-        Port 8022
-        User root
 
       Host m1
         HostName 192.168.1.190
+        HostKeyAlias m1
         User root
     '';
   };
