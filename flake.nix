@@ -65,7 +65,7 @@
               -bios $(ls /opt/homebrew/Cellar/qemu/*/share/qemu/edk2-aarch64-code.fd)
           '';
           upload-kexec = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "upload-kexec" ''
-            ln -s ${self.nixosConfigurations.kexec-aarch64.config.system.build.kernel}/Image /tmp/kernel
+            ln -sf ${self.nixosConfigurations.kexec-aarch64.config.system.build.kernel}/Image /tmp/kernel
             gh release upload aarch64 /tmp/kernel --clobber
             gh release upload aarch64 ${self.nixosConfigurations.kexec-aarch64.config.system.build.initialRamdisk}/initrd --clobber
           '';
