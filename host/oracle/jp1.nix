@@ -2,4 +2,6 @@
   imports = [
     self.nixosModules.services.hysteria
   ];
+
+  programs.nix-ld.enable = true;
 }
