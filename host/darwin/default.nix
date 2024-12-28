@@ -81,15 +81,14 @@
     ];
 
     casks = [
-      "kitty"
+      "ghostty"
+      "visual-studio-code"
       "jordanbaird-ice"
       "input-source-pro"
-      "font-roboto-mono-nerd-font"
       "maczip"
       "openineditor-lite"
       "openinterminal-lite"
       "raycast"
-      "visual-studio-code"
       "transmission"
       "istat-menus"
       "uninstallpkg"

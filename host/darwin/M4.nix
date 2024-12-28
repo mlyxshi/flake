@@ -11,8 +11,8 @@
     protocol = "ssh-ng";
     hostName = "m1";
     system = "aarch64-linux";
-    sshKey = "/Users/dominic/.ssh/id_ed25519";
-    maxJobs = 8;
+    sshKey = "/Users/dominic/.ssh/id_ed25519";  # default nix builder is _nixbld{} so default sshkey is NOT ~/.ssh/id_ed25519
+    maxJobs = 8; 
     supportedFeatures = [
       "big-parallel"
       "kvm"

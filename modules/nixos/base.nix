@@ -92,7 +92,7 @@
     gdu
     gitMinimal
     gptfdisk
-    kitty.terminfo
+    ghostty.terminfo
 
     (writeShellScriptBin "update" ''
       if [[ -e "/flake/flake.nix" ]]
