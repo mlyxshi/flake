@@ -13,6 +13,7 @@
     ];
 
     brews = [
+      "cloudflared"
     ];
 
     casks = [

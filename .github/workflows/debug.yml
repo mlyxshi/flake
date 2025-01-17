@@ -9,7 +9,8 @@ on:
         type: choice
         options:
           - ubuntu-latest
-          - macos-14
+          - macos-latest
+          - ubuntu-24.04-arm
 
 jobs:
   CI:
