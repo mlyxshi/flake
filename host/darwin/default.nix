@@ -118,9 +118,10 @@
     	HostName  de.mlyxshi.com
       HostKeyAlias de
     	User root
-      
+
     Host gh
       User runner
+      StrictHostKeyChecking no
       ProxyCommand /opt/homebrew/bin/cloudflared access ssh --hostname github-action-ssh.mlyxshi.com
   '';
 
