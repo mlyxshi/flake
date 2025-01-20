@@ -39,7 +39,7 @@
     "/etc/ssh/ssh_config".text = ''
       Host github.com
         User git
-        IdentityFile /run/credentials/github-private-key
+        IdentityFile /run/credentials/@system/github-private-key
     '';
 
     "/etc/nix/nix.conf".text = ''
@@ -120,18 +120,23 @@
     '';
   };
 
+  # Disable nixpkgs defined sysroot-run.mount (Not recursively mount /run)
+  # https://github.com/NixOS/nixpkgs/blob/5df43628fdf08d642be8ba5b3625a6c70731c19c/nixos/modules/system/boot/systemd/initrd.nix#L640
+  # https://matrix.to/#/!DBFhtjpqmJNENpLDOv:nixos.org/$DGOEtt-IPUHQSdKvpQQipiVE1NGthQBVn2oCGbTZ2hw
+  boot.initrd.systemd.mounts = lib.mkForce [];
+
   # move everything in / to /sysroot and switch-root into it. 
   # This runs systemd initrd twice
   # but it is necessary for [nix --store flag / nixos-enter] as pivot_root does not work on rootfs.
   boot.initrd.systemd.services.remount-root = {
     unitConfig.ConditionKernelCommandLine = "systemd.mount-extra";
-    after = [ "sysroot-run.mount" ]; # bind /run to /sysroot/run
+    after = [ "initrd-fs.target" ];
     serviceConfig.Type = "oneshot";
     script = ''
       root_device_type="$(cat /proc/mounts | head -n 1 | cut -d ' ' -f 1)"
-      if [ "$root_device_type" != "tmpfs" ]; then
+      if [ "$root_device_type" != "tmpfs" ]
+      then
         cp -R /init /bin /etc /lib /nix /root /sbin /var /sysroot
-        cp /run/credentials/@system/github-private-key  /sysroot/run/credentials/
         mkdir -p /sysroot/tmp
         systemctl --no-block switch-root
       fi
