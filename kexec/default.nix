@@ -132,12 +132,14 @@
     unitConfig.ConditionKernelCommandLine = "systemd.mount-extra";
     after = [ "initrd-fs.target" ];
     serviceConfig.Type = "oneshot";
+    # https://github.com/NixOS/nixpkgs/issues/375376#issuecomment-2622948795
     script = ''
       root_device_type="$(cat /proc/mounts | head -n 1 | cut -d ' ' -f 1)"
       if [ "$root_device_type" != "tmpfs" ]
       then
         cp -R /init /bin /etc /lib /nix /root /sbin /var /sysroot
         mkdir -p /sysroot/tmp
+        mkdir -p /sysroot/usr/placeholder
         systemctl --no-block switch-root
       fi
     '';

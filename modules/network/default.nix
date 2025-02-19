@@ -38,4 +38,10 @@
   #     }
   #   }
   # '';
+
+  # Enable multicast DNS
+  # services.resolved.extraConfig = ''
+  #   MulticastDNS=yes
+  # '';
+  # systemd.network.networks.<name>.networkConfig.MulticastDNS = true;
 }
