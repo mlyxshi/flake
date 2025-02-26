@@ -1,8 +1,13 @@
 { config, pkgs, lib, ... }: {
   system.stateVersion = lib.trivial.release;
+  networking.hostName = "systemd-initrd";
 
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.network.enable = true;
+  boot.initrd.systemd.network.networks.ethernet-default-dhcp = {
+    matchConfig = { Name = [ "en*" "eth*" ]; };
+    networkConfig = { DHCP = "yes"; };
+  };
 
   boot.initrd.network.ssh.enable = true;
   boot.initrd.systemd.services.sshd.preStart = lib.mkForce "/bin/chmod 0600 /etc/ssh/ssh_host_ed25519_key";
@@ -33,13 +38,6 @@
       AAAEDIN2VWFyggtoSPXcAFy8dtG1uAig8sCuyE21eMDt2GgJBWcxb/Blaqt1auOtE+F8QU
       WrUotiC5qBJ+UuEWdVCbAAAACnJvb3RAbml4b3MBAgM=
       -----END OPENSSH PRIVATE KEY-----
-    '';
-
-    "/etc/ssh/ssh_known_hosts".text = "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
-    "/etc/ssh/ssh_config".text = ''
-      Host github.com
-        User git
-        IdentityFile /run/credentials/@system/github-private-key
     '';
 
     "/etc/nix/nix.conf".text = ''
@@ -82,8 +80,6 @@
     # net
     ip = "${pkgs.iproute2}/bin/ip";
     curl = "${pkgs.curl}/bin/curl";
-    git = "${pkgs.gitMinimal}/bin/git";
-    ssh = "${config.programs.ssh.package}/bin/ssh";
 
     # fs
     "mkfs.fat" = "${pkgs.dosfstools}/bin/mkfs.fat";
@@ -118,32 +114,6 @@
       mount /dev/sda2 /mnt
       mount --mkdir /dev/sda1 /mnt/boot
     '';
-  };
-
-  # Disable nixpkgs defined sysroot-run.mount (Not recursively mount /run)
-  # https://github.com/NixOS/nixpkgs/blob/5df43628fdf08d642be8ba5b3625a6c70731c19c/nixos/modules/system/boot/systemd/initrd.nix#L640
-  # https://matrix.to/#/!DBFhtjpqmJNENpLDOv:nixos.org/$DGOEtt-IPUHQSdKvpQQipiVE1NGthQBVn2oCGbTZ2hw
-  boot.initrd.systemd.mounts = lib.mkForce [];
-
-  # move everything in / to /sysroot and switch-root into it. 
-  # This runs systemd initrd twice
-  # but it is necessary for [nix --store flag / nixos-enter] as pivot_root does not work on rootfs.
-  boot.initrd.systemd.services.remount-root = {
-    unitConfig.ConditionKernelCommandLine = "systemd.mount-extra";
-    after = [ "initrd-fs.target" ];
-    serviceConfig.Type = "oneshot";
-    # https://github.com/NixOS/nixpkgs/issues/375376#issuecomment-2622948795
-    script = ''
-      root_device_type="$(cat /proc/mounts | head -n 1 | cut -d ' ' -f 1)"
-      if [ "$root_device_type" != "tmpfs" ]
-      then
-        cp -R /init /bin /etc /lib /nix /root /sbin /var /sysroot
-        mkdir -p /sysroot/tmp
-        mkdir -p /sysroot/usr/placeholder
-        systemctl --no-block switch-root
-      fi
-    '';
-    requiredBy = [ "initrd.target" ];
   };
 
   boot.initrd.systemd.emergencyAccess = true;
