@@ -34,6 +34,8 @@ jobs:
         kernelOutPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.kexec-x86_64.config.system.build.kernel)
         initrdOutPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.kexec-x86_64.config.system.build.initialRamdisk)
         kexecOutPath=$(nix build --no-link --print-out-paths nixpkgs#kexec-tools)
+
+        ln -sf $kernelOutPath/bzImage /tmp/kernel
         
         gh release upload aarch64 $kernelOutPath/kernel --clobber
         gh release upload aarch64 $initrdOutPath/initrd --clobber
