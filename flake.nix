@@ -62,11 +62,6 @@
               -device "virtio-scsi-pci,id=scsi0" -drive "file=disk.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
               -bios $(ls /opt/homebrew/Cellar/qemu/*/share/qemu/edk2-aarch64-code.fd)
           '';
-          upload-kexec = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "upload-kexec" ''
-            ln -sf ${self.nixosConfigurations.kexec-aarch64.config.system.build.kernel}/Image /tmp/kernel
-            gh release upload aarch64 /tmp/kernel --clobber
-            gh release upload aarch64 ${self.nixosConfigurations.kexec-aarch64.config.system.build.initialRamdisk}/initrd --clobber
-          '';
         };
         aarch64-linux = lib.genAttrs (getArchPkgs "aarch64-linux") (name: nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/${name} { });
         x86_64-linux = lib.genAttrs (getArchPkgs "x86_64-linux") (name: nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/${name} { });
