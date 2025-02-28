@@ -37,6 +37,6 @@ jobs:
 
         ln -sf $kernelOutPath/bzImage /tmp/kernel
         
-        gh release upload aarch64 $kernelOutPath/kernel --clobber
+        gh release upload aarch64 /tmp/kernel --clobber
         gh release upload aarch64 $initrdOutPath/initrd --clobber
         gh release upload aarch64 $kexecOutPath/bin/kexec --clobber
