@@ -1,0 +1,22 @@
+name: "Kexec Release"
+on:
+  workflow_dispatch:
+
+env:
+  GH_TOKEN: ${{ github.token }}
+
+jobs:
+  arm64:
+    runs-on: ubuntu-24.04-arm
+    steps:
+    - uses: actions/checkout@master
+    - uses: DeterminateSystems/nix-installer-action@main
+    
+    - run: |
+        kernelOutPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.kexec-aarch64.config.system.build.kernel)
+        initrdOutPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.kexec-aarch64.config.system.build.initialRamdisk)
+        
+        ln -sf $kernelOutPath/Image /tmp/kernel
+
+        gh release upload aarch64 /tmp/kernel --clobber
+        gh release upload aarch64 $initrdOutPath/initrd --clobber
