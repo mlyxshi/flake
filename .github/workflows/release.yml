@@ -15,7 +15,7 @@ jobs:
     - run: |
         kernelOutPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.kexec-aarch64.config.system.build.kernel)
         initrdOutPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.kexec-aarch64.config.system.build.initialRamdisk)
-        kexecOutPath=$(nix build --no-link --print-out-paths nixpkgs#kexec-tools)
+        kexecOutPath=$(nix build --no-link --print-out-paths nixpkgs#pkgsStatic.kexec-tools)
         
         ln -sf $kernelOutPath/Image /tmp/kernel
 
@@ -33,7 +33,7 @@ jobs:
     - run: |
         kernelOutPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.kexec-x86_64.config.system.build.kernel)
         initrdOutPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.kexec-x86_64.config.system.build.initialRamdisk)
-        kexecOutPath=$(nix build --no-link --print-out-paths nixpkgs#kexec-tools)
+        kexecOutPath=$(nix build --no-link --print-out-paths nixpkgs#pkgsStatic.kexec-tools)
 
         ln -sf $kernelOutPath/bzImage /tmp/kernel
         

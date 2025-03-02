@@ -1,8 +1,4 @@
 # Intro
-Based on [dep-sys/nix-dabei](https://github.com/dep-sys/nix-dabei/)
-
-Modified for personal usage
-
 Only support ext4 and vfat
 
 Kernel command line
