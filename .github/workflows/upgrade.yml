@@ -1,8 +1,8 @@
 name: "System Upgrade"
 on:
-  push:
-    paths: 
-      - 'flake.lock'
+  # push:
+  #   paths: 
+  #     - 'flake.lock'
   workflow_dispatch:
 
 env:
