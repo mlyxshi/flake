@@ -88,9 +88,6 @@ jobs:
     - run: $SSH $HOST make-partitions
     - run: $SSH $HOST mount-partitions
 
-    # for emergency reboot
-    - run: $SSH $HOST curl -Lo /mnt/boot/arm.efi https://boot.netboot.xyz/ipxe/netboot.xyz-arm64.efi
-
     - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --substitute-on-destination --to ssh://$HOST?remote-store=local?root=/mnt $outPath
  
     - run: $SSH $HOST nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $outPath
