@@ -1,4 +1,4 @@
-name: "Install aarch64"
+name: "Install aarch64 UEFI"
 on:
   workflow_dispatch:
     inputs:

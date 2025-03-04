@@ -1,4 +1,4 @@
-name: "Install x86_64"
+name: "Install x86_64 UEFI"
 on:
   workflow_dispatch:
     inputs:
