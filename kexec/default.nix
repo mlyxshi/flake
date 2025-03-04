@@ -86,8 +86,9 @@ curl = "${pkgs.curl}/bin/curl";
 # fs
 "mkfs.fat" = "${pkgs.dosfstools}/bin/mkfs.fat";
 "mkfs.ext4" = "${pkgs.e2fsprogs}/sbin/mkfs.ext4";
-sgdisk = "${pkgs.gptfdisk}/bin/sgdisk";
-file = "${pkgs.file}/bin/file";
+sgdisk = "${pkgs.gptfdisk}/bin/sgdisk"; # GPT
+parted = "${pkgs.parted}/bin/parted"; # MBR
+file = "${pkgs.file}/bin/file";   
 lsblk = "${pkgs.util-linux}/bin/lsblk";
 
 # debug
