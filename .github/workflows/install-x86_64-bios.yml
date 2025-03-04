@@ -85,7 +85,7 @@ jobs:
           sleep 5
         done
 
-    - run: $SSH $HOST parted -s /dev/vda -- mklabel msdos
+    - run: $SSH $HOST parted /dev/vda -- mklabel msdos
     - run: $SSH $HOST parted /dev/vda -- mkpart primary 1MB 100%
     - run: $SSH $HOST parted /dev/vda -- set 1 boot on
 
