@@ -2,8 +2,7 @@
 ```
 curl -sL https://install.determinate.systems/nix | sh -s -- install
 nix profile install nixpkgs#nixos-install-tools 
-nixos-generate-config --show-hardware-config
-
+nixos-generate-config 
 ```
 
 ### Darwin
