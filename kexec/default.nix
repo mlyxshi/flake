@@ -1,13 +1,4 @@
-{ config, pkgs, lib, ... }:
-let
-  qemu = [ "virtio_net" "virtio_pci" "virtio_mmio" "virtio_blk" "virtio_scsi" "virtio_balloon" "virtio_console" ];
-  # hyperv = [ "hv_balloon" "hv_netvsc" "hv_storvsc" "hv_utils" "hv_vmbus" ];
-  # ext4,vfat,efivarfs
-  fileSystem = [ "ext4" ] ++ [ "vfat" "nls_cp437" "nls_iso8859-1" ] ++ [ "efivarfs" ];
-  # add extra kernel modules: https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/all-hardware.nix
-  modules = qemu ++ fileSystem;
-in
-{
+{ config, pkgs, lib, ... }: {
   system.stateVersion = lib.trivial.release;
   networking.hostName = "systemd-initrd";
 
@@ -24,7 +15,9 @@ in
   # NixOS include default kernel modules which are unnecessary under qemu: https://github.com/NixOS/nixpkgs/blob/660e7737851506374da39c0fa550c202c824a17c/nixos/modules/system/boot/kernel.nix#L214
   boot.initrd.includeDefaultModules = false;
 
-  boot.initrd.kernelModules = modules;
+  # qemu + ext4 + vfat + efivarfs
+  # add extra kernel modules: https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/all-hardware.nix
+  boot.initrd.kernelModules = [ "virtio_net" "virtio_pci" "virtio_mmio" "virtio_blk" "virtio_scsi" "virtio_balloon" "virtio_console" ] ++ [ "ext4" ] ++ [ "vfat" "nls_cp437" "nls_iso8859-1" ] ++ [ "efivarfs" ];
 
   boot.initrd.systemd.contents = {
     "/etc/ssl/certs/ca-certificates.crt".source = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
