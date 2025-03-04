@@ -103,7 +103,7 @@ jobs:
     - run: $SSH $HOST mount ${{ inputs.disk }}2 /mnt
     - run: $SSH $HOST mount --mkdir ${{ inputs.disk }}1 /mnt/boot
 
-    - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --substitute-on-destination --to ssh://$HOST?remote-store=local?root=/mnt $outPath
+    - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --to ssh://$HOST?remote-store=local?root=/mnt $outPath
  
     - run: $SSH $HOST nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $outPath
     - run: $SSH $HOST mkdir /mnt/{etc,tmp}
