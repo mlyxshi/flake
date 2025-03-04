@@ -7,7 +7,7 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.network
     ./hardware.nix
 
-    # self.nixosModules.services.nodestatus-client
+    self.nixosModules.services.snell
     {
       nixpkgs.overlays = [ self.overlays.default ];
       nixpkgs.hostPlatform = "x86_64-linux";
@@ -19,20 +19,6 @@ nixpkgs.lib.nixosSystem {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.verbose = true;
-
-
-      programs.nix-ld.enable = true; # snell
-      systemd.services.snell = {
-        after = [ "network.target" ];
-        wantedBy = [ "multi-user.target" ];
-        preStart = ''
-          ${pkgs.wget}/bin/wget https://dl.nssurge.com/snell/snell-server-v4.1.1-linux-amd64.zip
-          ${pkgs.unzip}/bin/unzip snell-server-v4.1.1-linux-amd64.zip
-        '';
-        serviceConfig.ExecStart = "snell-server -c /secret/snell";
-        serviceConfig.StateDirectory = "snell";
-        serviceConfig.WorkingDirectory = "%S/snell";
-      };
     }
   ];
   specialArgs = { inherit self home-manager; };
