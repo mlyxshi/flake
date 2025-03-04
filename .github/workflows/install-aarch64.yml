@@ -1,4 +1,4 @@
-name: "Install OS"
+name: "Install aarch64"
 on:
   workflow_dispatch:
     inputs:
@@ -39,9 +39,9 @@ jobs:
           sleep 5
         done
 
-    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kexec' 
-    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/initrd'
-    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kernel'
+    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO https://github.com/mlyxshi/flake/releases/download/aarch64/kexec' 
+    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO https://github.com/mlyxshi/flake/releases/download/aarch64/initrd'
+    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO https://github.com/mlyxshi/flake/releases/download/aarch64/kernel'
     - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'chmod +x ./kexec'
     - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} "./kexec --kexec-syscall-auto --load ./kernel --initrd=./initrd"
 

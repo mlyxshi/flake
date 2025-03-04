@@ -1,11 +1,13 @@
-{ self, nixpkgs, home-manager }:
+{ self, nixpkgs, secret, home-manager }:
 nixpkgs.lib.nixosSystem {
   modules = [
+    secret.nixosModules.default
     home-manager.nixosModules.default
     self.nixosModules.nixos.server
     self.nixosModules.network
     ./hardware.nix
-    ./misc.nix
+
+    self.nixosModules.services.hysteria
     {
       nixpkgs.overlays = [ self.overlays.default ];
       nixpkgs.hostPlatform = "x86_64-linux";
