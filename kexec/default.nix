@@ -12,9 +12,6 @@
   boot.initrd.network.ssh.enable = true;
   boot.initrd.systemd.services.sshd.preStart = lib.mkForce "/bin/chmod 0600 /etc/ssh/ssh_host_ed25519_key";
 
-  # NixOS include default kernel modules which are unnecessary under qemu: https://github.com/NixOS/nixpkgs/blob/660e7737851506374da39c0fa550c202c824a17c/nixos/modules/system/boot/kernel.nix#L214
-  boot.initrd.includeDefaultModules = false;
-
   # Only include required kernel modules [NOT BUILD-IN]
   boot.initrd.kernelModules = lib.mkForce [
     # vfat native language support
