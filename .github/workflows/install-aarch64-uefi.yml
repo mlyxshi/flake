@@ -1,4 +1,4 @@
-name: "Install x86_64"
+name: "Install aarch64"
 on:
   workflow_dispatch:
     inputs:
@@ -39,9 +39,9 @@ jobs:
           sleep 5
         done
 
-    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/kexec' 
-    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/initrd'
-    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/kernel'
+    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO https://github.com/mlyxshi/flake/releases/download/aarch64/kexec' 
+    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO https://github.com/mlyxshi/flake/releases/download/aarch64/initrd'
+    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO https://github.com/mlyxshi/flake/releases/download/aarch64/kernel'
     - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'chmod +x ./kexec'
     - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} "./kexec --kexec-syscall-auto --load ./kernel --initrd=./initrd"
 
@@ -58,7 +58,7 @@ jobs:
         fi
 
   install:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     steps:
     - run: |
         mkdir -m 0755  ~/.ssh
@@ -84,9 +84,19 @@ jobs:
           echo "Kexec Environment Not Reachable, Waiting..."
           sleep 5
         done
-    
-    - run: $SSH $HOST make-partitions
-    - run: $SSH $HOST mount-partitions
+    # https://superuser.com/questions/1572410/what-is-the-purpose-of-the-linux-home-partition-code-8302
+    - run: $SSH $HOST sgdisk --zap-all /dev/sda
+    - run: $SSH $HOST sgdisk --new=0:0:+512M --typecode=0:ef00 /dev/sda
+    - run: $SSH $HOST sgdisk --new=0:0:0 --typecode=0:B921B045-1DF0-41C3-AF44-4C6F280D3FAE /dev/sda
+
+    - run: $SSH $HOST mkfs.fat -F 32 /dev/sda1
+    - run: $SSH $HOST mkfs.ext4 -F /dev/sda2
+    - run: $SSH $HOST mkdir -p /mnt
+    - run: $SSH $HOST mount /dev/sda2 /mnt
+    - run: $SSH $HOST mount --mkdir /dev/sda1 /mnt/boot
+
+    # for emergency reboot
+    - run: $SSH $HOST curl -Lo /mnt/boot/arm.efi https://boot.netboot.xyz/ipxe/netboot.xyz-arm64.efi
 
     - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --substitute-on-destination --to ssh://$HOST?remote-store=local?root=/mnt $outPath
  

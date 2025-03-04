@@ -6,11 +6,6 @@ let
   fileSystem = [ "ext4" ] ++ [ "vfat" "nls_cp437" "nls_iso8859-1" ] ++ [ "efivarfs" ];
   # add extra kernel modules: https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/all-hardware.nix
   modules = qemu ++ fileSystem;
-
-  rootPartType = {
-    x64 = "4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709";
-    aa64 = "B921B045-1DF0-41C3-AF44-4C6F280D3FAE";
-  }.${pkgs.stdenv.hostPlatform.efiArch};
 in
 {
   system.stateVersion = lib.trivial.release;
@@ -100,33 +95,6 @@ in
     htop = "${pkgs.htop}/bin/htop";
     yazi = "${pkgs.yazi-unwrapped}/bin/yazi";
     hx = "${pkgs.helix}/bin/hx";
-
-    # https://superuser.com/questions/1572410/what-is-the-purpose-of-the-linux-home-partition-code-8302
-    make-partitions = pkgs.writeScript "make-partitions" ''
-      if [ -d /sys/firmware/efi ]; then
-        sgdisk --zap-all /dev/sda
-        sgdisk --new=0:0:+512M --typecode=0:ef00 /dev/sda
-        sgdisk --new=0:0:0 --typecode=0:${rootPartType} /dev/sda
-      else
-        parted /dev/vda -- mklabel msdos
-        parted /dev/vda -- mkpart primary 1MB 100%
-        parted /dev/vda -- set 1 boot on
-      fi
-    '';
-
-    mount-partitions = pkgs.writeScript "mount-partitions" ''
-      if [ -d /sys/firmware/efi ]; then
-        mkfs.fat -F 32 /dev/sda1
-        mkfs.ext4 -F /dev/sda2
-        mkdir -p /mnt
-        mount /dev/sda2 /mnt
-        mount --mkdir /dev/sda1 /mnt/boot
-      else
-        mkfs.ext4 -F /dev/vda1
-        mkdir -p /mnt
-        mount /dev/vda1 /mnt
-      fi
-    '';
   };
 
   boot.initrd.systemd.emergencyAccess = true;
