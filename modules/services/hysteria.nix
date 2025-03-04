@@ -7,7 +7,7 @@
         type nat hook prerouting priority dstnat; policy accept;
 
         # https://hysteria.network/docs/port-hopping/
-        udp dport 50000-60000 redirect to :8888
+        udp dport 50000-60000 redirect to :443
       }
     }
   '';
@@ -18,7 +18,7 @@
 
     serviceConfig = {
       Restart = "always";
-      ExecStart = "${pkgs.hysteria}/bin/hysteria server -c /secret/hysteria/config.yaml";
+      ExecStart = "${pkgs.hysteria}/bin/hysteria server -c /secret/hysteria/${config.networking.hostName}.yaml";
     };
   };
 }
