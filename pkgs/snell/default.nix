@@ -1,5 +1,5 @@
 { stdenvNoCC, fetchzip }:
-stdenvNoCC.mkDerivation {
+stdenvNoCC.mkDerivation rec {
   pname = "snell";
   version = "4.1.1";
 
