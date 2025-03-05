@@ -8,7 +8,6 @@ nixpkgs.lib.nixosSystem {
     ./hardware.nix
 
     self.nixosModules.services.snell
-    self.nixosModules.services.nodestatus-client
     {
       nixpkgs.overlays = [ self.overlays.default ];
       nixpkgs.hostPlatform = "x86_64-linux";
