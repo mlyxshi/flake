@@ -4,7 +4,7 @@ stdenvNoCC.mkDerivation rec {
   version = "4.1.1";
 
   src = fetchzip {
-    url = "https://dl.nssurge.com/snell/snell-server-${version}-linux-amd64.zip";
+    url = "https://dl.nssurge.com/snell/snell-server-v${version}-linux-amd64.zip";
     hash = "1qjpj8w6rzla96gdvlky3zjk5n6b6rzdcn6b61p6p19v5m1b33ys";
   };
 
