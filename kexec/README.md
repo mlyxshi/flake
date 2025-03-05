@@ -21,7 +21,6 @@ ip=dhcp
 # Usage
 ### From running linux distro
 ```
-
 curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kexec
 curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/initrd
 curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kernel
