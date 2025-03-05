@@ -70,6 +70,7 @@
     htop
     iperf
     tree
+    mtr
     libarchive
     nix-output-monitor
     nix-tree
