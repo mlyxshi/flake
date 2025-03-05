@@ -5,15 +5,16 @@ stdenvNoCC.mkDerivation rec {
 
   src = fetchzip {
     url = "https://dl.nssurge.com/snell/snell-server-v${version}-linux-amd64.zip";
-    hash = "1qjpj8w6rzla96gdvlky3zjk5n6b6rzdcn6b61p6p19v5m1b33ys";
+    hash = "sha256-IcW13oq2SC+XeCwUVU2ZVkjYe0V29gczYFz+YXhZgWU=";
   };
 
   installPhase = ''
-
+    mkdir -p $out/bin
+    cp snell-server $out/bin/snell-server
   '';
 
   meta = {
     description = "https://manual.nssurge.com/others/snell.html";
-    platforms = [ "x86_64-linux" "aarch64-linux" ];
+    platforms = [ "x86_64-linux" ];
   };
 }
