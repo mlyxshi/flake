@@ -5,7 +5,6 @@ const dns: Record<string, string[]> = {
     "138.3.223.82": ["jp1"],
     "138.2.16.45": ["jp2", "transmission-jp2", "transmission-jp2-index", "changeio"],
     "155.248.196.71": ["us", "transmission-us", "transmission-us-index"],
-    "154.17.29.132": ["dmit"],
     "154.26.180.69": ["dmit1"],
     "144.34.224.74": ["bwg"],
 }
