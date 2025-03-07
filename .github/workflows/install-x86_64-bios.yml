@@ -94,13 +94,13 @@ jobs:
           sleep 5
         done
 
-    - run: $SSH $HOST parted -s /dev/{{ inputs.disk }} -- mklabel msdos
-    - run: $SSH $HOST parted /dev/{{ inputs.disk }} -- mkpart primary 1MB 100%
-    - run: $SSH $HOST parted /dev/{{ inputs.disk }} -- set 1 boot on
+    - run: $SSH $HOST parted -s /dev/${{ inputs.disk }} -- mklabel msdos
+    - run: $SSH $HOST parted /dev/${{ inputs.disk }} -- mkpart primary 1MB 100%
+    - run: $SSH $HOST parted /dev/${{ inputs.disk }} -- set 1 boot on
 
-    - run: $SSH $HOST mkfs.ext4 -F /dev/{{ inputs.disk }}1
+    - run: $SSH $HOST mkfs.ext4 -F /dev/${{ inputs.disk }}1
     - run: $SSH $HOST mkdir -p /mnt
-    - run: $SSH $HOST mount /dev/{{ inputs.disk }}1 /mnt
+    - run: $SSH $HOST mount /dev/${{ inputs.disk }}1 /mnt
     
     # --substitute-on-destination will consume more memory
     - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --to ssh://$HOST?remote-store=local?root=/mnt $outPath
