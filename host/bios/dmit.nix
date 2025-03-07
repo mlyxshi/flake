@@ -5,7 +5,7 @@ nixpkgs.lib.nixosSystem {
     home-manager.nixosModules.default
     self.nixosModules.nixos.server
     self.nixosModules.network
-    ./hardware.nix
+    ./hardware-vda.nix
 
     self.nixosModules.services.snell
     self.nixosModules.services.nodestatus-client
