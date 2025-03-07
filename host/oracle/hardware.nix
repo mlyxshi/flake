@@ -10,4 +10,10 @@
   boot.loader.systemd-boot.configurationLimit = 3;
   boot.loader.timeout = 3;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  boot.kernel.sysctl = {
+    # 1000mbps bandwidth: socket receive/send buffer size 16 MB for hysteria2
+    "net.core.rmem_max" = 16777216;
+    "net.core.wmem_max" = 16777216;
+  };
 }

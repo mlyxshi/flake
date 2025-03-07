@@ -55,13 +55,6 @@
   };
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  # https://wiki.archlinux.org/title/sysctl
-  boot.kernel.sysctl = {
-    # 1000mbps bandwidth: socket receive/send buffer size 16 MB for hysteria2
-    "net.core.rmem_max" = 16777216;
-    "net.core.wmem_max" = 16777216;
-  };
-
 
   environment.systemPackages = with pkgs;[
     wget
