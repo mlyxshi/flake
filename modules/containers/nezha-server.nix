@@ -13,4 +13,10 @@
       "traefik.http.routers.nezha.entrypoints=web"
     ];
   };
+
+  systemd.services."backup-init@nezha-server".wantedBy = [ "multi-user.target" ];
+  systemd.services."backup-init@nezha-server".overrideStrategy = "asDropin";
+
+  systemd.services."backup@nezha-server".startAt = "04:00";
+  systemd.services."backup@nezha-server".overrideStrategy = "asDropin";
 }
