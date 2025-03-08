@@ -4,8 +4,14 @@ stdenvNoCC.mkDerivation rec {
   version = "4.1.1";
 
   src = fetchzip {
-    url = "https://dl.nssurge.com/snell/snell-server-v${version}-linux-amd64.zip";
-    hash = "sha256-IcW13oq2SC+XeCwUVU2ZVkjYe0V29gczYFz+YXhZgWU=";
+    url =
+      if stdenvNoCC.hostPlatform == "x86_64-linux"
+      then "https://dl.nssurge.com/snell/snell-server-v${version}-linux-amd64.zip"
+      else "https://dl.nssurge.com/snell/snell-server-v${version}-linux-aarch64.zip";
+    hash =
+      if stdenvNoCC.hostPlatform == "x86_64-linux"
+      then "sha256-IcW13oq2SC+XeCwUVU2ZVkjYe0V29gczYFz+YXhZgWU="
+      else "";
   };
 
   installPhase = ''
@@ -15,6 +21,6 @@ stdenvNoCC.mkDerivation rec {
 
   meta = {
     description = "https://manual.nssurge.com/others/snell.html";
-    platforms = [ "x86_64-linux" ];
+    platforms = [ "x86_64-linux" "aarch64-linux" ];
   };
 }
