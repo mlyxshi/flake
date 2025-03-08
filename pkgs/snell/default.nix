@@ -11,7 +11,7 @@ stdenvNoCC.mkDerivation rec {
     hash =
       if stdenvNoCC.hostPlatform == "x86_64-linux"
       then "sha256-IcW13oq2SC+XeCwUVU2ZVkjYe0V29gczYFz+YXhZgWU="
-      else "";
+      else "sha256-ogZBC/Bjo7sdZlKQz+5T/JCPAUS4Ce4n99G3oMdbUe4=";
   };
 
   installPhase = ''
