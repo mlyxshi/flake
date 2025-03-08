@@ -2,7 +2,7 @@
 
   virtualisation.oci-containers.containers.nezha-server = {
     image = "ghcr.io/nezhahq/nezha";
-    volumes = [ "/var/lib/nezha-server:/opt/nezha" ];
+    volumes = [ "/var/lib/nezha-server:/dashboard/data" ];
     ports = [ "8008:8008" ];
     environment = {
     };
