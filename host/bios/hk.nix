@@ -8,7 +8,7 @@ nixpkgs.lib.nixosSystem {
     ./hardware-vda.nix
 
     self.nixosModules.services.snell
-    self.nixosModules.services.nezha
+    self.nixosModules.services.beszel-agent
     {
       nixpkgs.overlays = [ self.overlays.default ];
       nixpkgs.hostPlatform = "x86_64-linux";
