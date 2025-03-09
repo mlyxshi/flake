@@ -7,7 +7,7 @@ buildGoModule rec {
     owner = "henrygd";
     repo = "beszel";
     tag = "v${version}";
-    hash = "";
+    hash = "sha256-4RuYZcBR7X9Ug6l91N/FtyfT38HlW2guputzo4kF8YU=";
   };
 
   installPhase = ''
