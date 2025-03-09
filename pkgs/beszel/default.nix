@@ -14,6 +14,9 @@ buildGoModule rec {
     mkdir -p $out/bin
   '';
 
+  #sourceRoot = "${src.name}/beszel";
+
+  vendorHash = "";
 
   meta = {
     homepage = "https://github.com/henrygd/beszel";
