@@ -14,8 +14,7 @@ buildGoModule rec {
     mkdir -p $out/bin
   '';
 
-  #sourceRoot = "${src.name}/beszel";
-
+  modRoot = "./beszel";
   vendorHash = "";
 
   meta = {
