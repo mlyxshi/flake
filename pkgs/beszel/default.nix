@@ -14,8 +14,8 @@ buildGo124Module rec {
     mkdir -p $out/bin
   '';
 
-  sourceRoot = "${src.name}/beszel";
-  vendorHash = "";
+  sourceRoot = "./beszel";
+  vendorHash = "sha256-VX9mil0Hdmb85Zd9jfvm5Zz2pPQx+oAGHY+BI04bYQY=";
 
   meta = {
     homepage = "https://github.com/henrygd/beszel";
