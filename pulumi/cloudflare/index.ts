@@ -1,8 +1,8 @@
 import * as cloudflare from "@pulumi/cloudflare";
 
 const dns: Record<string, string[]> = {
-    "130.61.171.180": ["de", "miniflux", "rsshub", "alert", "metric", "top"],
-    "138.3.223.82": ["jp1"],
+    "130.61.171.180": ["de", "miniflux", "rsshub", "alert", "metric"],
+    "138.3.223.82": ["jp1", "top"],
     "138.2.16.45": ["jp2", "transmission-jp2", "transmission-jp2-index", "changeio"],
     "155.248.196.71": ["us", "transmission-us", "transmission-us-index"],
     "144.34.224.74": ["bwg"],
