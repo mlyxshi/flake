@@ -5,11 +5,11 @@ stdenvNoCC.mkDerivation rec {
 
   src = fetchzip {
     url =
-      if stdenvNoCC.hostPlatform == "x86_64"
+      if stdenvNoCC.hostPlatform.isx86_64 
       then "https://dl.nssurge.com/snell/snell-server-v${version}-linux-amd64.zip"
       else "https://dl.nssurge.com/snell/snell-server-v${version}-linux-aarch64.zip";
     hash =
-      if stdenvNoCC.hostPlatform == "x86_64"
+      if stdenvNoCC.hostPlatform.isx86_64
       then "sha256-IcW13oq2SC+XeCwUVU2ZVkjYe0V29gczYFz+YXhZgWU="
       else "sha256-ogZBC/Bjo7sdZlKQz+5T/JCPAUS4Ce4n99G3oMdbUe4=";
   };
