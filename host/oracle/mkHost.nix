@@ -5,7 +5,7 @@ nixpkgs.lib.nixosSystem {
     home-manager.nixosModules.default
     self.nixosModules.nixos.server
     self.nixosModules.network
-    #self.nixosModules.services.nezha
+    self.nixosModules.services.beszel-agent
     self.nixosModules.services.traefik
     self.nixosModules.services.telegraf
     ./hardware.nix
