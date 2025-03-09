@@ -8,6 +8,7 @@
     };
     environment = {
       LISTEN = "45876";
+      SENSORS= "";
       KEY = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAcPWEp29epKWvw6igPcTVZH5yJZ5dfJFKBSn04b1k9P";
     };
     wantedBy = [ "multi-user.target" ];
