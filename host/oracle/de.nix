@@ -4,8 +4,6 @@
 
     self.nixosModules.containers.podman
     self.nixosModules.containers.miniflux
-    #self.nixosModules.containers.nodestatus-server
-    self.nixosModules.containers.nezha-server
   ];
 
   environment.systemPackages = with pkgs; [
