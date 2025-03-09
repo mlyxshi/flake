@@ -21,7 +21,7 @@
     ++ [ "ext4" ]
     ++ [ "vfat" "nls_cp437" "nls_iso8859-1" ]
     ++ [ "efivarfs" ]
-    ++ [ "ata_piix" "sd_mod" ];
+    ++ [ "ata_piix" "sd_mod" "sr_mod" ];
 
   boot.initrd.systemd.contents = {
     "/etc/ssl/certs/ca-certificates.crt".source = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
