@@ -10,12 +10,12 @@ buildGo124Module rec {
     hash = "sha256-4RuYZcBR7X9Ug6l91N/FtyfT38HlW2guputzo4kF8YU=";
   };
 
+  sourceRoot = "${src.name}/beszel";
+  vendorHash = "sha256-VX9mil0Hdmb85Zd9jfvm5Zz2pPQx+oAGHY+BI04bYQY=";
+
   installPhase = ''
     mkdir -p $out/bin
   '';
-
-  sourceRoot = "./beszel";
-  vendorHash = "sha256-VX9mil0Hdmb85Zd9jfvm5Zz2pPQx+oAGHY+BI04bYQY=";
 
   meta = {
     homepage = "https://github.com/henrygd/beszel";
