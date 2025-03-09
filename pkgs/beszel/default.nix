@@ -1,5 +1,5 @@
-{ buildGoModule, fetchFromGitHub }:
-buildGoModule rec {
+{ buildGo124Module, fetchFromGitHub }:
+buildGo124Module rec {
   pname = "beszel";
   version = "0.10.1";
 
