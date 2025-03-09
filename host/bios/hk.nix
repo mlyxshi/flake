@@ -12,7 +12,7 @@ nixpkgs.lib.nixosSystem {
     {
       nixpkgs.overlays = [ self.overlays.default ];
       nixpkgs.hostPlatform = "x86_64-linux";
-      networking.hostName = "dmit";
+      networking.hostName = "hk";
       networking.domain = "mlyxshi.com";
       services.getty.autologinUser = "root";
 
