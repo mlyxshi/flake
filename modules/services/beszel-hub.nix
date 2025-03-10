@@ -14,7 +14,7 @@
       http = {
         routers.beszel-hub = {
           rule = "Host(`top.mlyxshi.com`)";
-          entryPoints = [ "websecure" ];
+          entryPoints = [ "websecure" "web" ];
           service = "beszel-hub";
         };
         services.beszel-hub.loadBalancer.servers = [{ url = "http://127.0.0.1:8000"; }];
