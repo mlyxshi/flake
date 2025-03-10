@@ -6,6 +6,9 @@
       WorkingDirectory = "%S/beszel";
       ExecStart = "${pkgs.beszel}/bin/beszel-hub serve --http '0.0.0.0:8000'";
     };
+    environment = {
+      "APP_URL" = "http://top.mlyxshi.com";
+    };
     wantedBy = [ "multi-user.target" ];
   };
 
