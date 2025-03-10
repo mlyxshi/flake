@@ -5,7 +5,7 @@ stdenvNoCC.mkDerivation rec {
 
   src = fetchzip {
     url =
-      if stdenvNoCC.hostPlatform.isx86_64 
+      if stdenvNoCC.hostPlatform.isx86_64
       then "https://dl.nssurge.com/snell/snell-server-v${version}-linux-amd64.zip"
       else "https://dl.nssurge.com/snell/snell-server-v${version}-linux-aarch64.zip";
     hash =
@@ -14,6 +14,9 @@ stdenvNoCC.mkDerivation rec {
       else "sha256-ogZBC/Bjo7sdZlKQz+5T/JCPAUS4Ce4n99G3oMdbUe4=";
   };
 
+  nativeBuildInputs = [ autoPatchelfHook ];
+  buildInputs = [ stdenv.cc.cc ];
+  
   installPhase = ''
     mkdir -p $out/bin
     cp snell-server $out/bin/snell-server
