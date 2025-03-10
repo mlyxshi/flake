@@ -1,4 +1,4 @@
-{ stdenv, fetchzip }:
+{ stdenv, fetchzip, autoPatchelfHook }:
 stdenv.mkDerivation rec {
   pname = "snell";
   version = "4.1.1";
