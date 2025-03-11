@@ -5,7 +5,7 @@ stdenvNoCC.mkDerivation rec {
 
   src = fetchzip {
     url =
-      if stdenvNoCC.hostPlatform.isx86_64 
+      if stdenvNoCC.hostPlatform.isx86_64
       then "https://dl.nssurge.com/snell/snell-server-v${version}-linux-amd64.zip"
       else "https://dl.nssurge.com/snell/snell-server-v${version}-linux-aarch64.zip";
     hash =
