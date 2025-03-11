@@ -63,6 +63,11 @@
     '')
   ];
 
+  system.defaults.dock.autohide = true;
+  system.defaults.finder.ShowPathbar = true;
+  system.defaults.finder.FXPreferredViewStyle = "Nlsv";
+  system.defaults.finder.FXDefaultSearchScope = "SCcf";
+
   homebrew = {
     enable = true;
 
