@@ -9,32 +9,32 @@ env:
   SSH: ssh -o StrictHostKeyChecking=no
 
 jobs:
-  # x86-64:
-  #   runs-on: ubuntu-latest  
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       host: [bwg] 
-  #   steps:
-  #   - uses: actions/checkout@master
-  #   - uses: DeterminateSystems/nix-installer-action@main
-  #   - run: |
-  #       mkdir -m 0755  ~/.ssh
-  #       echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-  #       chmod 600 ~/.ssh/id_ed25519
+  x86-64:
+    runs-on: ubuntu-latest  
+    strategy:
+      fail-fast: false
+      matrix:
+        host: [bwg] 
+    steps:
+    - uses: actions/checkout@master
+    - uses: DeterminateSystems/nix-installer-action@main
+    - run: |
+        mkdir -m 0755  ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+        chmod 600 ~/.ssh/id_ed25519
 
-  #       cat > ~/.ssh/ssh_config <<EOF
-  #       Host github.com
-  #         User git
-  #         IdentityFile ~/.ssh/id_ed25519
-  #       EOF
-  #   - run: |
-  #       outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel)
-  #       echo "outPath=$outPath" >> "$GITHUB_ENV"
+        cat > ~/.ssh/ssh_config <<EOF
+        Host github.com
+          User git
+          IdentityFile ~/.ssh/id_ed25519
+        EOF
+    - run: |
+        outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel)
+        echo "outPath=$outPath" >> "$GITHUB_ENV"
 
-  #   - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --substitute-on-destination --to ssh://root@${{ matrix.host }}.mlyxshi.com $outPath
-  #   - run: $SSH root@${{ matrix.host }}.mlyxshi.com nix-env -p /nix/var/nix/profiles/system --set $outPath
-  #   - run: $SSH root@${{ matrix.host }}.mlyxshi.com $outPath/bin/switch-to-configuration switch
+    - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --substitute-on-destination --to ssh://root@${{ matrix.host }}.mlyxshi.com $outPath
+    - run: $SSH root@${{ matrix.host }}.mlyxshi.com nix-env -p /nix/var/nix/profiles/system --set $outPath
+    - run: $SSH root@${{ matrix.host }}.mlyxshi.com $outPath/bin/switch-to-configuration switch
 
   aarch64:
     runs-on: ubuntu-latest   
