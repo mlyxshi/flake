@@ -4,6 +4,13 @@
     self.nixosModules.nixos.base
   ];
 
+
+  environment.systemPackages = with pkgs;[
+    iperf
+    mtr
+    ookla-speedtest
+  ];
+
   # systemd.sysusers.enable = true;
   # system.etc.overlay.enable = true;
 

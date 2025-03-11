@@ -61,9 +61,7 @@
     dig
     file
     htop
-    iperf
     tree
-    mtr
     libarchive
     nix-output-monitor
     nix-tree
@@ -80,7 +78,6 @@
     eza
     xh
     tealdeer
-    bandwhich
     bat
     bat-extras.batman
     gdu
