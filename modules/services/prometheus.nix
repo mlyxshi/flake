@@ -86,7 +86,7 @@ in
           name = "telegram";
           telegram_configs = [{
             bot_token = "$TOKEN";
-            chat_id = 337000294;
+            chat_id = 696869490;
           }];
         }];
         route = { receiver = "telegram"; };
