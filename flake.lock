@@ -27,11 +27,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1741890527,
-        "narHash": "sha256-Y7rY9WSak941Fzfzu7k/nj86wmNymKv2xPEb2bmwfD4=",
+        "lastModified": 1741894454,
+        "narHash": "sha256-Mu2YXrGr/8Cid6W44AXci/YYnASoXjGrMV9Sjs66oyc=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "5d5116286269c4e11976f6450afde1b30c3834c0",
+        "rev": "0b0baed7b2bf6a5e365d4cba042b580a2bc32e34",
         "type": "github"
       },
       "original": {
@@ -66,11 +66,11 @@
     },
     "secret": {
       "locked": {
-        "lastModified": 1741771936,
-        "narHash": "sha256-DGBq710k8+1MOAvTr4HBNInLn+iTLqaz0c+XUsG7Jp8=",
+        "lastModified": 1741895148,
+        "narHash": "sha256-Uzl8tcogVrXcn1jCYbNwsY6GhD07aC9Fkm277+Jyuok=",
         "ref": "refs/heads/main",
-        "rev": "d0cc2dfb87c8ad8d98220eac13ff76c8257fe9f9",
-        "revCount": 69,
+        "rev": "eb7147d226242634ccbc7743ac7cde1d3ef10070",
+        "revCount": 70,
         "type": "git",
         "url": "ssh://git@github.com/mlyxshi/secret"
       },

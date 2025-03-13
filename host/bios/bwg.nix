@@ -7,7 +7,8 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.network
     ./hardware-sda.nix
 
-    self.nixosModules.services.snell
+    # self.nixosModules.services.snell
+    self.nixosModules.services.hysteria
     self.nixosModules.services.beszel-agent
     {
       nixpkgs.overlays = [ self.overlays.default ];
