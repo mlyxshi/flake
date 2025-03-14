@@ -7,7 +7,7 @@
 
   environment.systemPackages = with pkgs;[
     iperf
-    mtr
+    nexttrace
     ookla-speedtest
   ];
 
