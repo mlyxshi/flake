@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        host: [bwg] 
+        host: [lax] 
     steps:
     - uses: actions/checkout@master
     - uses: DeterminateSystems/nix-installer-action@main

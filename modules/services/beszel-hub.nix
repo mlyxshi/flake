@@ -24,3 +24,5 @@
 }
 
 
+# Oracle ARM 4C24G 4Gbits
+# BWG MEGABOX 2C2G 10Gbits 2T(IN+OUT)

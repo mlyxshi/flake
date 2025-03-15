@@ -13,12 +13,15 @@
     };
   };
 
+  nixpkgs.config.allowUnfree = true;
+
   environment.systemPackages = with pkgs; [
     wget
     dig
     file
     htop
     iperf
+    nexttrace
     tree
     libarchive
     nix-output-monitor
@@ -119,9 +122,9 @@
       HostKeyAlias jp2
     	User root
 
-    Host de
-    	HostName  de.mlyxshi.com
-      HostKeyAlias de
+    Host lax
+    	HostName  lax.mlyxshi.com
+      HostKeyAlias lax
     	User root
 
     Host gh
