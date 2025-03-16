@@ -56,7 +56,7 @@
           // {
           # https://wiki.gentoo.org/wiki/QEMU/Options
           default = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "test-vm" ''
-            /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu cortex-a57 -accel hvf -nographic -m 8G \
+            /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 8G \
               -kernel ${self.nixosConfigurations.kexec-aarch64.config.system.build.kernel}/Image \
               -initrd ${self.nixosConfigurations.kexec-aarch64.config.system.build.initialRamdisk}/initrd \
               -append "systemd.journald.forward_to_console" \
