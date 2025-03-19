@@ -1,4 +1,11 @@
 { config, pkgs, lib, ... }: {
+
+  boot.kernel.sysctl = {
+    "net.ipv4.tcp_congestion_control" = "bbr";
+    "net.core.default_qdisc" = "fq";
+    "net.ipv4.tcp_fastopen" = 3;
+  };
+
   # Disable nixpkgs defined dhcp
   networking.useDHCP = false;
   networking.dhcpcd.enable = false;
