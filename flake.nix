@@ -35,7 +35,7 @@
         kexec-x86_64 = nixpkgs.lib.nixosSystem { modules = [ ./kexec { nixpkgs.hostPlatform = "x86_64-linux"; } ]; };
         kexec-aarch64 = nixpkgs.lib.nixosSystem { modules = [ ./kexec { nixpkgs.hostPlatform = "aarch64-linux"; } ]; };
 
-        # lax = import ./host/bios/lax.nix { inherit self nixpkgs secret home-manager; };
+        hk = import ./host/bios/hk.nix { inherit self nixpkgs secret home-manager; };
 
       } // lib.genAttrs oracle-serverlist (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs home-manager secret; });
 

@@ -122,9 +122,9 @@
       HostKeyAlias jp2
     	User root
 
-    Host lax
-    	HostName  lax.mlyxshi.com
-      HostKeyAlias lax
+    Host hk
+    	HostName  hk.mlyxshi.com
+      HostKeyAlias hk
     	User root
 
     Host gh
