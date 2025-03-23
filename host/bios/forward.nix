@@ -14,7 +14,7 @@
 
       chain POSTROUTING {
         type nat hook postrouting priority 100; policy accept;
-        ip daddr 47.242.243.176 tcp dport 8888 snat to 47.117.187.54
+        ip daddr 47.242.243.176 tcp dport 8888 snat to 172.24.39.35
       }
     }
   '';
