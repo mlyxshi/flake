@@ -6,6 +6,7 @@ const dns: Record<string, string[]> = {
     "155.248.196.71": ["us","transmission-us", "transmission-us-index"],
     "47.242.243.176": ["hk"],
     "47.245.33.67": ["hnd"],
+    "47.117.187.54": ["pvg"],
 }
 
 Object.keys(dns).forEach(ip => {
