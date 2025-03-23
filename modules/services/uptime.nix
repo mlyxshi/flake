@@ -3,9 +3,9 @@
 
   services.caddy.enable = true;
   services.caddy.extraConfig = ''
-    ${config.networking.hostName}-up.mlyxshi.com {
-        reverse_proxy 127.0.0.1:3001
-    }
+    :3001
+    
+    reverse_proxy :3001
   '';
 
 }
