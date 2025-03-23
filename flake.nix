@@ -37,6 +37,7 @@
 
         hk = import ./host/bios/hk.nix { inherit self nixpkgs secret home-manager; };
         hnd = import ./host/bios/hnd.nix { inherit self nixpkgs secret home-manager; };
+        pvg = import ./host/bios/pvg.nix { inherit self nixpkgs secret home-manager; };
 
       } // lib.genAttrs oracle-serverlist (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs home-manager secret; });
 

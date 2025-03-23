@@ -9,8 +9,6 @@ nixpkgs.lib.nixosSystem {
 
     self.nixosModules.services.snell
     self.nixosModules.services.beszel-agent
-    self.nixosModules.services.traefik
-    self.nixosModules.services.uptime
     {
       nixpkgs.overlays = [ self.overlays.default ];
       nixpkgs.hostPlatform = "x86_64-linux";
