@@ -13,8 +13,9 @@ jobs:
     runs-on: ubuntu-latest  
     strategy:
       fail-fast: false
+      # cache.noxos.org 
       matrix:
-        host: [hk,pvg] 
+        host: [hk] 
     steps:
     - uses: actions/checkout@master
     - uses: DeterminateSystems/nix-installer-action@main
@@ -32,7 +33,7 @@ jobs:
         outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel)
         echo "outPath=$outPath" >> "$GITHUB_ENV"
 
-    - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --to ssh://root@${{ matrix.host }}.mlyxshi.com $outPath
+    - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --substitute-on-destination --to ssh://root@${{ matrix.host }}.mlyxshi.com $outPath
     - run: $SSH root@${{ matrix.host }}.mlyxshi.com nix-env -p /nix/var/nix/profiles/system --set $outPath
     - run: $SSH root@${{ matrix.host }}.mlyxshi.com $outPath/bin/switch-to-configuration switch
 

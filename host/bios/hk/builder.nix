@@ -29,6 +29,7 @@
 
   programs.ssh.extraConfig = ''
     Host pvg
+      HostName pvg.mlyxshi.com
       User root
       IdentityFile /secret/ssh/github
   '';
