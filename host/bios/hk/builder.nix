@@ -27,6 +27,9 @@
     '')
   ];
 
-
-
+  programs.ssh.extraConfig = ''
+    Host pvg
+      User root
+      IdentityFile /secret/ssh/github
+  '';
 }
