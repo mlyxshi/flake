@@ -17,9 +17,9 @@
 
       if [ -n "$SYSTEM" ]
       then
-        nix copy --to ssh://$HOST $outPath
-        ssh $HOST nix-env -p /nix/var/nix/profiles/system --set $outPath
-        ssh $HOST $outPath/bin/switch-to-configuration switch
+        nix copy --to ssh://$HOST $SYSTEM
+        ssh $HOST nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
+        ssh $HOST $SYSTEM/bin/switch-to-configuration switch
       else
         echo "Build Failed"
         exit 1
