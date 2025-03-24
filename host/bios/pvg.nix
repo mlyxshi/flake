@@ -8,6 +8,7 @@ nixpkgs.lib.nixosSystem {
     ./hardware-vda.nix
     
     ./forward.nix
+    self.nixosModules.services.hysteria # Surge Ponte
     self.nixosModules.services.beszel-agent
     {
       nixpkgs.overlays = [ self.overlays.default ];
