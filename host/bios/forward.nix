@@ -17,10 +17,10 @@
 
       chain POSTROUTING {
         type nat hook postrouting priority 100; policy accept;
-        ip daddr 47.242.243.176 tcp dport 8888 snat to 172.24.39.35
-        ip daddr 47.242.243.176 tcp dport 5201 snat to 172.24.39.35
+        ip daddr 47.242.243.176 tcp dport 8888 masquerade
+        ip daddr 47.242.243.176 tcp dport 5201 masquerade
 
-        ip daddr 47.245.33.67 tcp dport 8888 snat to 172.24.39.35
+        ip daddr 47.245.33.67 tcp dport 8888 masquerade
       }
     }
   '';
