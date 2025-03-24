@@ -10,15 +10,11 @@
       chain PREROUTING {
         type nat hook prerouting priority -100; policy accept;
         tcp dport 5555 dnat to 47.242.243.176:8888 
-
-        tcp dport 1111 dnat to 47.242.243.176:1112
       }
 
       chain POSTROUTING {
         type nat hook postrouting priority 100; policy accept;
         ip daddr 47.242.243.176 tcp dport 8888 masquerade
-
-        ip daddr 47.242.243.176 tcp dport 1112 masquerade
       }
     }
   '';

@@ -33,23 +33,4 @@
       User root
       IdentityFile /secret/ssh/github
   '';
-
-  boot.kernel.sysctl = {
-    "net.ipv4.ip_forward" = 1;
-  };
-
-  networking.nftables.enable = true;
-  networking.nftables.ruleset = ''
-    table ip REDIRECT {
-      chain PREROUTING {
-        type nat hook prerouting priority -100; policy accept;
-        tcp dport 1112 dnat to 45.149.92.126:8888 
-      }
-
-      chain POSTROUTING {
-        type nat hook postrouting priority 100; policy accept;
-        ip daddr 45.149.92.126 tcp dport 8888 masquerade
-      }
-    }
-  '';
 }
