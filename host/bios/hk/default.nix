@@ -6,7 +6,7 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.nixos.server
     self.nixosModules.network
     ../hardware-vda.nix
-    # ./builder.nix
+    ./builder.nix
 
     self.nixosModules.services.snell
     self.nixosModules.services.beszel-agent
