@@ -126,6 +126,11 @@
     	HostName  hk.mlyxshi.com
       HostKeyAlias hk
     	User root
+    
+    Host pvg
+    	HostName  pvg.mlyxshi.com
+      HostKeyAlias pvg
+    	User root
 
     Host gh
       User runner
