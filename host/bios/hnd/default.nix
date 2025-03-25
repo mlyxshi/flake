@@ -5,7 +5,8 @@ nixpkgs.lib.nixosSystem {
     home-manager.nixosModules.default
     self.nixosModules.nixos.server
     self.nixosModules.network
-    ./hardware-vda.nix
+    ../hardware-vda.nix
+    ./forward.nix
 
     self.nixosModules.services.snell
     self.nixosModules.services.beszel-agent
