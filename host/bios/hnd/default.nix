@@ -16,7 +16,7 @@ nixpkgs.lib.nixosSystem {
       networking.domain = "mlyxshi.com";
       services.getty.autologinUser = "root";
 
-      home-manager.users.root = import ../../home;
+      home-manager.users.root = import ../../../home;
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.verbose = true;
