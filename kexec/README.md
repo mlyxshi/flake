@@ -45,3 +45,16 @@ ifconfig -s eth0 dhcp
 tftp 138.3.223.82 arm.efi
 exit
 ```
+
+
+
+# Server located in CN
+```
+curl -LO https://cdn.mlyxshi.com/x86_64/kexec
+curl -LO https://cdn.mlyxshi.com/x86_64/initrd
+curl -LO https://cdn.mlyxshi.com/x86_64/kernel
+
+chmod +x ./kexec
+./kexec --kexec-syscall-auto  --initrd=./initrd --load ./kernel
+./kexec -e
+```
