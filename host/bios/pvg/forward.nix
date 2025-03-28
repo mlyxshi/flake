@@ -1,4 +1,5 @@
 { config, pkgs, lib, ... }: {
+  nix.settings.substituters = lib.mkBefore [ "https://mirror.sjtu.edu.cn/nix-channels/store" ];
 
   boot.kernel.sysctl = {
     "net.ipv4.ip_forward" = 1;
