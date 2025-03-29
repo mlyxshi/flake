@@ -2,3 +2,5 @@
 /test
 /tmp
 /nixos.qcow2
+.DS_Store
+.vscode
