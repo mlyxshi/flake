@@ -1,8 +1,7 @@
-{ hostName, self, nixpkgs, home-manager, secret }:
+{ hostName, self, nixpkgs, secret }:
 nixpkgs.lib.nixosSystem {
   modules = [
     secret.nixosModules.default
-    home-manager.nixosModules.default
     self.nixosModules.nixos.server
     self.nixosModules.network
     self.nixosModules.services.beszel-agent
@@ -16,11 +15,6 @@ nixpkgs.lib.nixosSystem {
       nixpkgs.hostPlatform = "aarch64-linux";
       networking.hostName = hostName;
       networking.domain = "mlyxshi.com";
-
-      home-manager.users.root = import ../../home;
-      home-manager.useGlobalPkgs = true;
-      home-manager.useUserPackages = true;
-      home-manager.verbose = true;
     }
   ];
   specialArgs = { inherit self; };

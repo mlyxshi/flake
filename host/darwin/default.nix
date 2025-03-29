@@ -47,7 +47,6 @@
     jq
     lazygit
     restic
-    home-manager
     nix-init
     nix-update
     (pkgs.writeShellScriptBin "update" ''

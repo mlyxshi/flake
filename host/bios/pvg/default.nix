@@ -1,8 +1,7 @@
-{ self, nixpkgs, secret, home-manager }:
+{ self, nixpkgs, secret }:
 nixpkgs.lib.nixosSystem {
   modules = [
     secret.nixosModules.default
-    home-manager.nixosModules.default
     self.nixosModules.nixos.server
     self.nixosModules.network
     ../hardware-vda.nix
@@ -16,12 +15,7 @@ nixpkgs.lib.nixosSystem {
       networking.hostName = "pvg";
       networking.domain = "mlyxshi.com";
       services.getty.autologinUser = "root";
-
-      home-manager.users.root = import ../../../home;
-      home-manager.useGlobalPkgs = true;
-      home-manager.useUserPackages = true;
-      home-manager.verbose = true;
     }
   ];
-  specialArgs = { inherit self home-manager; };
+  specialArgs = { inherit self; };
 }

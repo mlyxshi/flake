@@ -5,14 +5,11 @@
 
     secret.url = "git+ssh://git@github.com/mlyxshi/secret";
 
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
     darwin.url = "github:LnL7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager, secret }:
+  outputs = { self, nixpkgs, darwin, secret }:
     let
       inherit (nixpkgs) lib;
       utils = import ./utils.nix nixpkgs;
@@ -25,7 +22,7 @@
       darwinConfigurations.Macbook = darwin.lib.darwinSystem { system = "aarch64-darwin"; modules = [ ./host/darwin/Macbook.nix ]; };
       nixosConfigurations = {
 
-        utm-server = import ./host/utm/server.nix { inherit self nixpkgs secret home-manager; };
+        utm-server = import ./host/utm/server.nix { inherit self nixpkgs secret; };
 
         # nix build .#nixosConfigurations.installer-aarch64.config.system.build.isoImage 
         # nix build .#nixosConfigurations.installer-x86_64.config.system.build.isoImage
@@ -35,19 +32,7 @@
         kexec-x86_64 = nixpkgs.lib.nixosSystem { modules = [ ./kexec { nixpkgs.hostPlatform = "x86_64-linux"; } ]; };
         kexec-aarch64 = nixpkgs.lib.nixosSystem { modules = [ ./kexec { nixpkgs.hostPlatform = "aarch64-linux"; } ]; };
         
-      } // lib.genAttrs oracle-serverlist (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs home-manager secret; });
-
-      homeConfigurations = {
-        darwin = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.aarch64-darwin;
-          modules = [ ./home/darwin.nix ];
-          extraSpecialArgs = { inherit self; };
-        };
-        github-action = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [ ./home/github-action.nix ];
-        };
-      };
+      } // lib.genAttrs oracle-serverlist (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs secret; });
 
       packages = {
         aarch64-darwin = lib.genAttrs (getArchPkgs "aarch64-darwin") (name: nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/${name} { })
