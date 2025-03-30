@@ -2,5 +2,7 @@
   imports = [
     self.nixosModules.services.hysteria
     self.nixosModules.services.transmission
+
+    self.nixosModules.containers.podman
   ];
 }
