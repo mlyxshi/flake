@@ -3,10 +3,10 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     # nixpkgs.url = "github:NixOS/nixpkgs/pull/388231/head";
 
-    secret.url = "git+ssh://git@github.com/mlyxshi/secret";
-
     darwin.url = "github:LnL7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
+
+    secret.url = "git+ssh://git@github.com/mlyxshi/secret";
   };
 
   outputs = { self, nixpkgs, darwin, secret }:
