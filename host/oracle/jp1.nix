@@ -6,23 +6,23 @@
     self.nixosModules.services.snell
   ];
 
-  boot.kernel.sysctl = {
-    "net.ipv4.ip_forward" = 1;
-  };
+  # boot.kernel.sysctl = {
+  #   "net.ipv4.ip_forward" = 1;
+  # };
 
-  # Oracle JP to US
-  networking.nftables.enable = true;
-  networking.nftables.ruleset = ''
-    table ip REDIRECT {
-      chain PREROUTING {
-        type nat hook prerouting priority -100; policy accept;
-        tcp dport 5555 dnat to 155.248.196.71:8888 
-      }
+  # # Oracle JP to US
+  # networking.nftables.enable = true;
+  # networking.nftables.ruleset = ''
+  #   table ip REDIRECT {
+  #     chain PREROUTING {
+  #       type nat hook prerouting priority -100; policy accept;
+  #       tcp dport 5555 dnat to 155.248.196.71:8888 
+  #     }
 
-      chain POSTROUTING {
-        type nat hook postrouting priority 100; policy accept;
-        ip daddr 155.248.196.71 tcp dport 8888 masquerade
-      }
-    }
-  '';
+  #     chain POSTROUTING {
+  #       type nat hook postrouting priority 100; policy accept;
+  #       ip daddr 155.248.196.71 tcp dport 8888 masquerade
+  #     }
+  #   }
+  # '';
 }
