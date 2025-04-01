@@ -126,9 +126,9 @@
       HostKeyAlias hk
     	User root
     
-    Host pvg
-    	HostName  pvg.mlyxshi.com
-      HostKeyAlias pvg
+    Host ntt
+    	HostName  ntt.mlyxshi.com
+      HostKeyAlias ntt
     	User root
 
     Host gh
