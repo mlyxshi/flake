@@ -10,7 +10,7 @@
     "net.ipv4.ip_forward" = 1;
   };
 
-  # Oracle JP to US
+  # Oracle JP to Webarena(IP Unlock)
   networking.nftables.enable = true;
   networking.nftables.ruleset = ''
     table ip REDIRECT {
