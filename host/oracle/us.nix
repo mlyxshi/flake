@@ -14,12 +14,12 @@
     table ip REDIRECT {
       chain PREROUTING {
         type nat hook prerouting priority -100; policy accept;
-        tcp dport 5555 dnat to 138.3.223.82:8888
+        tcp dport 5555 dnat to 138.3.223.82:5555
       }
 
       chain POSTROUTING {
         type nat hook postrouting priority 100; policy accept;
-        ip daddr 138.3.223.82 tcp dport 8888 masquerade
+        ip daddr 138.3.223.82 tcp dport 5555 masquerade
       }
     }
   '';
