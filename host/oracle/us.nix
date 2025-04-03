@@ -14,7 +14,7 @@
     table ip REDIRECT {
       chain PREROUTING {
         type nat hook prerouting priority -100; policy accept;
-        tcp dport 5555 dnat to 138.3.223.82:5555
+        tcp dport 1111 dnat to 138.3.223.82:5555
       }
 
       chain POSTROUTING {
