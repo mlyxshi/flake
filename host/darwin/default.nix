@@ -126,9 +126,9 @@
       HostKeyAlias hk
     	User root
     
-    Host ntt
-    	HostName  ntt.mlyxshi.com
-      HostKeyAlias ntt
+    Host kr
+    	HostName  kr.mlyxshi.com
+      HostKeyAlias kr
     	User root
 
     Host gh
