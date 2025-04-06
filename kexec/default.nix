@@ -12,16 +12,13 @@
   boot.initrd.network.ssh.enable = true;
   boot.initrd.systemd.services.sshd.preStart = lib.mkForce "/bin/chmod 0600 /etc/ssh/ssh_host_ed25519_key";
 
-  # NixOS include default kernel modules which are unnecessary under qemu: https://github.com/NixOS/nixpkgs/blob/660e7737851506374da39c0fa550c202c824a17c/nixos/modules/system/boot/kernel.nix#L214
-  boot.initrd.includeDefaultModules = false;
-
   # qemu + ext4 + vfat + efivarfs
   # add extra kernel modules: https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/all-hardware.nix
   boot.initrd.kernelModules = [ "virtio_net" "virtio_pci" "virtio_mmio" "virtio_blk" "virtio_scsi" "virtio_balloon" "virtio_console" ]
     ++ [ "ext4" ]
     ++ [ "vfat" "nls_cp437" "nls_iso8859-1" ]
     ++ [ "efivarfs" ]
-    ++ [ "ata_piix" "sd_mod" ];
+    ++ lib.optional (pkgs.stdenv.hostPlatform.system == "x86_64-linux") "kvm-amd";
 
   boot.initrd.systemd.contents = {
     "/etc/ssl/certs/ca-certificates.crt".source = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
