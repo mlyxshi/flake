@@ -31,15 +31,15 @@
 
         kexec-x86_64 = nixpkgs.lib.nixosSystem { modules = [ ./kexec { nixpkgs.hostPlatform = "x86_64-linux"; } ]; };
         kexec-aarch64 = nixpkgs.lib.nixosSystem { modules = [ ./kexec { nixpkgs.hostPlatform = "aarch64-linux"; } ]; };
-        
+
       } // lib.genAttrs oracle-serverlist (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs secret; });
 
       packages = {
         aarch64-darwin = lib.genAttrs (getArchPkgs "aarch64-darwin") (name: nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/${name} { })
           // {
-          # https://wiki.gentoo.org/wiki/QEMU/Options
+          # Test in Darwin
           default = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "test-vm" ''
-            /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 8G \
+            /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 4G \
               -kernel ${self.nixosConfigurations.kexec-aarch64.config.system.build.kernel}/Image \
               -initrd ${self.nixosConfigurations.kexec-aarch64.config.system.build.initialRamdisk}/initrd \
               -append "systemd.journald.forward_to_console" \
@@ -49,7 +49,18 @@
           '';
         };
         aarch64-linux = lib.genAttrs (getArchPkgs "aarch64-linux") (name: nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/${name} { });
-        x86_64-linux = lib.genAttrs (getArchPkgs "x86_64-linux") (name: nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/${name} { });
+        x86_64-linux = lib.genAttrs (getArchPkgs "x86_64-linux") (name: nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/${name} { }) // {
+          # Test in Debian
+          default = nixpkgs.legacyPackages.x86_64-linux.writeShellScriptBin "test-vm" ''
+            qemu-system-x86_64 -accel kvm -cpu host -nographic -m 1G \
+              -kernel ${self.nixosConfigurations.kexec-x86_64.config.system.build.kernel}/kernel \
+              -initrd ${self.nixosConfigurations.kexec-x86_64.config.system.build.initialRamdisk}/initrd \
+              -append "systemd.journald.forward_to_console" \
+              -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
+              -device "virtio-scsi-pci,id=scsi0" -drive "file=disk.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
+              -bios /usr/share/qemu/OVMF.fd
+          '';
+        };
       };
 
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixpkgs-fmt;
