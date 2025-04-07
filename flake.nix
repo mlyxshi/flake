@@ -53,7 +53,7 @@
           # Test in Debian
           default = nixpkgs.legacyPackages.x86_64-linux.writeShellScriptBin "test-vm" ''
             qemu-system-x86_64 -accel kvm -cpu host -nographic -m 1G \
-              -kernel ${self.nixosConfigurations.kexec-x86_64.config.system.build.kernel}/kernel \
+              -kernel ${self.nixosConfigurations.kexec-x86_64.config.system.build.kernel}/bzImage \
               -initrd ${self.nixosConfigurations.kexec-x86_64.config.system.build.initialRamdisk}/initrd \
               -append "systemd.journald.forward_to_console" \
               -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
