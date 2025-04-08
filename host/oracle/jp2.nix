@@ -5,6 +5,7 @@
     
     self.nixosModules.containers.podman
     self.nixosModules.containers.miniflux
+    self.nixosModules.containers.change-detection
   ];
 
   environment.systemPackages = with pkgs; [
