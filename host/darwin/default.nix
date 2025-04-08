@@ -140,6 +140,12 @@
       User runner
       StrictHostKeyChecking no
       ProxyCommand /opt/homebrew/bin/cloudflared access ssh --hostname github-action-ssh.mlyxshi.com
+    
+    Host alice
+      HostName mlyxshi.evo.host.aliceinit.dev 
+      User root
+      HostKeyAlias alice
+      StrictHostKeyChecking no
   '';
 
   system.activationScripts.postActivation.text = ''
