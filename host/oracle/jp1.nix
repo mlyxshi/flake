@@ -25,4 +25,10 @@
       }
     }
   '';
+
+  # Alice DNS Media Unlock
+  networking.nameservers = [
+    "154.12.177.22"
+  ];
+
 }
