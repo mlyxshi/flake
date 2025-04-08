@@ -4,6 +4,9 @@
     # self.nixosModules.services.hysteria
     self.nixosModules.services.beszel-hub
     self.nixosModules.services.snell
+
+
+    self.nixosModules.containers.podman
   ];
 
   boot.kernel.sysctl = {
