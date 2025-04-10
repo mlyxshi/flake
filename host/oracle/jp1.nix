@@ -4,9 +4,6 @@
     # self.nixosModules.services.hysteria
     self.nixosModules.services.beszel-hub
     self.nixosModules.services.snell
-
-
-    self.nixosModules.containers.podman
   ];
 
   boot.kernel.sysctl = {
@@ -28,10 +25,4 @@
       }
     }
   '';
-
-  # Alice DNS Media Unlock
-  networking.nameservers = [
-    "154.12.177.22"
-  ];
-
 }

@@ -125,15 +125,10 @@
     	HostName  hk.mlyxshi.com
       HostKeyAlias hk
     	User root
-    
-    Host kr1
-    	HostName  kr1.mlyxshi.com
-      HostKeyAlias kr1
-    	User root
 
-    Host kr2
-    	HostName  kr2.mlyxshi.com
-      HostKeyAlias kr2
+    Host kr
+    	HostName  kr.mlyxshi.com
+      HostKeyAlias kr
     	User root
 
     Host gh
