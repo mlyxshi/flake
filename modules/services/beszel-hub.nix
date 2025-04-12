@@ -14,7 +14,7 @@
       http = {
         routers.beszel-hub = {
           rule = "Host(`top.mlyxshi.com`)";
-          entryPoints = [ "web" ];
+          entryPoints = [ "web" "websecure" ];
           service = "beszel-hub";
         };
         services.beszel-hub.loadBalancer.servers = [{ url = "http://127.0.0.1:8000"; }];
@@ -22,7 +22,3 @@
     };
   };
 }
-
-
-# Oracle ARM 4C24G 4Gbits
-# BWG MEGABOX 2C2G 10Gbits 2T(IN+OUT)
