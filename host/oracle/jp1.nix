@@ -21,7 +21,7 @@
 
       chain POSTROUTING {
         type nat hook postrouting priority 100; policy accept;
-        ip daddr 155.248.196.71 tcp dport 8888 masquerade
+        tcp dport 8888 masquerade
       }
     }
   '';
