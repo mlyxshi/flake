@@ -11,18 +11,18 @@
   };
 
   # Oracle JP to US
-  networking.nftables.enable = true;
-  networking.nftables.ruleset = ''
-    table ip REDIRECT {
-      chain PREROUTING {
-        type nat hook prerouting priority -100; policy accept;
-        tcp dport 5555 dnat to 155.248.196.71:8888 
-      }
+  # networking.nftables.enable = true;
+  # networking.nftables.ruleset = ''
+  #   table ip REDIRECT {
+  #     chain PREROUTING {
+  #       type nat hook prerouting priority -100; policy accept;
+  #       tcp dport 5555 dnat to 155.248.196.71:8888 
+  #     }
 
-      chain POSTROUTING {
-        type nat hook postrouting priority 100; policy accept;
-        tcp dport 8888 masquerade
-      }
-    }
-  '';
+  #     chain POSTROUTING {
+  #       type nat hook postrouting priority 100; policy accept;
+  #       tcp dport 8888 masquerade
+  #     }
+  #   }
+  # '';
 }
