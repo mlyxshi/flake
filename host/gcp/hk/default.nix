@@ -4,7 +4,7 @@ nixpkgs.lib.nixosSystem {
     secret.nixosModules.default
     self.nixosModules.nixos.server
     self.nixosModules.network
-    ./hardware.nix
+    ../hardware.nix
     
     self.nixosModules.services.snell  
     self.nixosModules.services.beszel-agent
