@@ -21,7 +21,6 @@
     file
     htop
     iperf
-    nexttrace
     tree
     libarchive
     nix-output-monitor
@@ -121,9 +120,14 @@
       HostKeyAlias jp2
     	User root
 
-    Host hk
-    	HostName  hk.mlyxshi.com
-      HostKeyAlias hk
+    Host alice-hk
+    	HostName  alice-hk.mlyxshi.com
+      HostKeyAlias alice-hk
+    	User root
+    
+    Host gcp-hk
+    	HostName  gcp-hk.mlyxshi.com
+      HostKeyAlias gcp-hk
     	User root
 
     Host kr

@@ -17,7 +17,6 @@
     ];
 
     casks = [
-      "altserver"
       "vnc-viewer"
       "snipaste"
 
