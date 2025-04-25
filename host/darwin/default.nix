@@ -120,6 +120,11 @@
       HostKeyAlias jp2
     	User root
 
+    Host sjc
+    	HostName  sjc.mlyxshi.com
+      HostKeyAlias sjc
+    	User root
+
     Host alice-hk
     	HostName  alice-hk.mlyxshi.com
       HostKeyAlias alice-hk
