@@ -2,6 +2,7 @@
   systemd.services.beszel-agent = {
     after = [ "network.target" ];
     serviceConfig.ExecStart = "${pkgs.beszel}/bin/beszel-agent";
+    serviceConfig.DynamicUser = true;
     environment = {
       LISTEN = "45876";
       SENSORS = "";
