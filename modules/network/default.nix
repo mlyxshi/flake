@@ -2,8 +2,7 @@
 
   boot.kernel.sysctl = {
     "net.ipv4.tcp_congestion_control" = "bbr";
-    "net.core.default_qdisc" = "fq";
-    "net.ipv4.tcp_fastopen" = 3;
+    "net.core.default_qdisc" = "cake";
     "net.ipv4.tcp_slow_start_after_idle" = 0; #https://www.kawabangga.com/posts/5217
   };
 

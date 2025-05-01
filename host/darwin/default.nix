@@ -135,11 +135,6 @@
       HostKeyAlias gcp-hk
     	User root
 
-    Host kr
-    	HostName  kr.mlyxshi.com
-      HostKeyAlias kr
-    	User root
-
     Host gh
       User runner
       StrictHostKeyChecking no
