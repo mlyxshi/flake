@@ -22,11 +22,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1745930157,
-        "narHash": "sha256-y3h3NLnzRSiUkYpnfvnS669zWZLoqqI6NprtLQ+5dck=",
+        "lastModified": 1746141548,
+        "narHash": "sha256-IgBWhX7A2oJmZFIrpRuMnw5RAufVnfvOgHWgIdds+hc=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "46e634be05ce9dc6d4db8e664515ba10b78151ae",
+        "rev": "f02fddb8acef29a8b32f10a335d44828d7825b78",
         "type": "github"
       },
       "original": {
@@ -45,11 +45,11 @@
     },
     "secret": {
       "locked": {
-        "lastModified": 1745553995,
-        "narHash": "sha256-TzhTR28zJ8y/wiyJ+4yMlqbY1HP+vH0zAFA7bS3IZpQ=",
+        "lastModified": 1746200646,
+        "narHash": "sha256-PRJhFWL1H4XlVqU7XNiuSTIS+YgZL1LPFh9u4QqjZmU=",
         "ref": "refs/heads/main",
-        "rev": "469f736a6dca6a00591d33a908f7b531e6296e94",
-        "revCount": 74,
+        "rev": "29e59da58605b85957444df10b7b7606931fe170",
+        "revCount": 75,
         "type": "git",
         "url": "ssh://git@github.com/mlyxshi/secret"
       },
