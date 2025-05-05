@@ -43,7 +43,6 @@
     ];
 
     casks = [
-      "android-platform-tools"
       "imazing"
       "drivedx"
       "crystalfetch"

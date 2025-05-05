@@ -88,6 +88,7 @@
     ];
 
     casks = [
+      "android-platform-tools"
       "ghostty"
       "visual-studio-code"
       "jordanbaird-ice"
