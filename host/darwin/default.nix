@@ -127,6 +127,11 @@
       HostKeyAlias sjc
     	User root
 
+    Host nrt
+    	HostName  nrt.mlyxshi.com
+      HostKeyAlias nrt
+    	User root
+
     Host alice-hk
     	HostName  alice-hk.mlyxshi.com
       HostKeyAlias alice-hk
