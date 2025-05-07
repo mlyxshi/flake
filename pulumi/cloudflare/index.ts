@@ -26,16 +26,26 @@ Object.keys(dns).forEach(ip => {
 })
 
 
-Object.keys(dns_proxy).forEach(ip => {
-    const records = dns_proxy[ip];
-    records.forEach(record => {
-        new cloudflare.Record(record, {
-            name: record,
-            zoneId: "9635f891a392db45a76bca59db689db0",
-            type: "A",
-            content: ip,
-            ttl: 1,
-            proxied: true,
-        });
-    });
-})
+new cloudflare.Record("top", {
+    name: "top",
+    zoneId: "9635f891a392db45a76bca59db689db0",
+    type: "A",
+    content: "138.3.223.82",
+    ttl: 1,
+    proxied: true,
+});
+
+
+// Object.keys(dns_proxy).forEach(ip => {
+//     const records = dns_proxy[ip];
+//     records.forEach(record => {
+//         new cloudflare.Record(record, {
+//             name: record,
+//             zoneId: "9635f891a392db45a76bca59db689db0",
+//             type: "A",
+//             content: ip,
+//             ttl: 1,
+//             proxied: true,
+//         });
+//     });
+// })
