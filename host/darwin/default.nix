@@ -132,9 +132,9 @@
       HostKeyAlias nrt
     	User root
 
-    Host alice-hk
-    	HostName  alice-hk.mlyxshi.com
-      HostKeyAlias alice-hk
+    Host alice
+    	HostName  alice.mlyxshi.com
+      HostKeyAlias alice
     	User root
     
     Host gcp-hk
@@ -147,11 +147,6 @@
       StrictHostKeyChecking no
       ProxyCommand /opt/homebrew/bin/cloudflared access ssh --hostname github-action-ssh.mlyxshi.com
     
-    Host alice
-      HostName mlyxshi.evo.host.aliceinit.dev 
-      User root
-      HostKeyAlias alice
-      StrictHostKeyChecking no
   '';
 
   system.activationScripts.postActivation.text = ''
