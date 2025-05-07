@@ -6,11 +6,6 @@ const dns: Record<string, string[]> = {
     "155.248.196.71": ["us","transmission-us", "transmission-us-index"],
 }
 
-
-const dns_proxy: Record<string, string[]> = {
-    "138.3.223.82": ["top"],
-}
-
 Object.keys(dns).forEach(ip => {
     const records = dns[ip];
     records.forEach(record => {
@@ -24,28 +19,3 @@ Object.keys(dns).forEach(ip => {
         });
     });
 })
-
-
-new cloudflare.Record("top", {
-    name: "top",
-    zoneId: "9635f891a392db45a76bca59db689db0",
-    type: "A",
-    content: "138.3.223.82",
-    ttl: 1,
-    proxied: true,
-});
-
-
-// Object.keys(dns_proxy).forEach(ip => {
-//     const records = dns_proxy[ip];
-//     records.forEach(record => {
-//         new cloudflare.Record(record, {
-//             name: record,
-//             zoneId: "9635f891a392db45a76bca59db689db0",
-//             type: "A",
-//             content: ip,
-//             ttl: 1,
-//             proxied: true,
-//         });
-//     });
-// })
