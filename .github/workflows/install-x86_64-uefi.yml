@@ -52,9 +52,9 @@ jobs:
       run: |
         if [ ${{ inputs.user }} = root ]
         then
-          $SSH -o ServerAliveInterval=5 -o ServerAliveCountMax=2 ${{ inputs.user }}@${{ inputs.ip }} './kexec -e'
+          $SSH -o ServerAliveInterval=5 -o ServerAliveCountMax=4 ${{ inputs.user }}@${{ inputs.ip }} './kexec -e'
         else
-          $SSH -o ServerAliveInterval=5 -o ServerAliveCountMax=2 ${{ inputs.user }}@${{ inputs.ip }} 'sudo ./kexec -e'
+          $SSH -o ServerAliveInterval=5 -o ServerAliveCountMax=4 ${{ inputs.user }}@${{ inputs.ip }} 'sudo ./kexec -e'
         fi
 
   install:
