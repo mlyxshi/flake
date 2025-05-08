@@ -142,6 +142,16 @@
       HostKeyAlias gcp-hk
     	User root
 
+    Host gcp-tw
+    	HostName  gcp-tw.mlyxshi.com
+      HostKeyAlias gcp-tw
+    	User root
+
+    Host gcp-jp
+    	HostName  gcp-jp.mlyxshi.com
+      HostKeyAlias gcp-jp
+    	User root
+
     Host gh
       User runner
       StrictHostKeyChecking no
