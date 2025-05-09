@@ -3,7 +3,7 @@
   ];
 
   boot.kernel.sysctl = {
-    "net.ipv6.conf.all.forwarding" = 1;
+    # "net.ipv6.conf.all.forwarding" = 1;
   };
 
   networking.nftables.enable = true;
