@@ -5,14 +5,14 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.nixos.server
     self.nixosModules.network
     ../hardware-vda.nix
+    ./shinagawa.nix
     
-    ./forward.nix
     self.nixosModules.services.snell  
     self.nixosModules.services.beszel-agent
     {
       nixpkgs.overlays = [ self.overlays.default ];
       nixpkgs.hostPlatform = "x86_64-linux";
-      networking.hostName = "pvg";
+      networking.hostName = "nrt";
       networking.domain = "mlyxshi.com";
       services.getty.autologinUser = "root";
     }
