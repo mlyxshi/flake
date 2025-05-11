@@ -3,7 +3,6 @@ nixpkgs.lib.nixosSystem {
   modules = [
     secret.nixosModules.default
     self.nixosModules.nixos.server
-    self.nixosModules.network
     ../hardware-vda.nix
     ./shinagawa.nix
     
