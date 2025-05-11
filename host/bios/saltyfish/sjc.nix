@@ -1,6 +1,8 @@
 { config, pkgs, lib, modulesPath, ... }: {
 
-  imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
+  imports = [
+    (modulesPath + "/profiles/qemu-guest.nix")
+  ];
   boot.loader.grub.device = "/dev/vda";
   boot.initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "xen_blkfront" "vmw_pvscsi" ];
   boot.initrd.kernelModules = [ "nvme" ];
@@ -13,8 +15,8 @@
     "net.ipv4.tcp_slow_start_after_idle" = 0; #https://www.kawabangga.com/posts/5217
 
     # Optimize long-distance TCP connections.  https://tcp-cal.mereith.com
-    "net.ipv4.tcp_rmem" = "4096 87380 17500000";
-    "net.ipv4.tcp_wmem" = "4096 16384 17500000";
+    "net.ipv4.tcp_rmem" = lib.mkForce "4096 87380 17500000";
+    "net.ipv4.tcp_wmem" = lib.mkForce "4096 16384 17500000";
   };
 
   boot.kernelParams = [ "net.ifnames=0" ];
