@@ -11,11 +11,15 @@
     "net.ipv4.tcp_congestion_control" = "bbr";
     "net.core.default_qdisc" = "cake";
     "net.ipv4.tcp_slow_start_after_idle" = 0; #https://www.kawabangga.com/posts/5217
+
+    # Optimize long-distance TCP connections.  https://tcp-cal.mereith.com
+    "net.ipv4.tcp_rmem" = "4096 87380 17500000";
+    "net.ipv4.tcp_wmem" = "4096 16384 17500000";
   };
 
   boot.kernelParams = [ "net.ifnames=0" ];
 
-  # Disable nixpkgs defined dhcp
+
   networking.useDHCP = false;
   networking.dhcpcd.enable = false;
 
@@ -33,7 +37,5 @@
     };
   };
 
-  # Disable nixpkgs defined firewall
-  # enable firewall by cloud provider web console
   networking.firewall.enable = false;
 }
