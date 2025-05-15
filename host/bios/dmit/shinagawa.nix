@@ -28,7 +28,6 @@
   networking.firewall.enable = false;
 
   # Traffic Reset Date
-  environment.etc."vnstat.conf".mode = "0444";
   environment.etc."vnstat.conf".text = ''
     Interface "lo"
     MonthRotate 24
