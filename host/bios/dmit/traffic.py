@@ -1,5 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import subprocess
+import os
 
 interface = "eth0"
 cmd = f"vnstat --oneline -i {interface} | awk -F ';' '{{print $11}}'"
