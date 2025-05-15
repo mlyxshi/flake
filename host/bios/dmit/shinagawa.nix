@@ -8,7 +8,6 @@
   # Always eth0
   boot.kernelParams = [ "net.ifnames=0" ];
 
-  # Disable nixpkgs defined dhcp
   networking.useDHCP = false;
   networking.dhcpcd.enable = false;
 
@@ -26,7 +25,11 @@
     };
   };
 
-  # Disable nixpkgs defined firewall
-  # enable firewall by cloud provider web console
   networking.firewall.enable = false;
+
+  # Traffic Reset Date
+  environment.etc."vnstat.conf".text = ''
+    MonthRotate 24
+  ''
+
 }
