@@ -34,4 +34,13 @@
     Interface "eth0"
   '';
 
+  systemd.services.traffic-api = {
+    after = [ "network.target" ];
+    serviceConfig = {
+      DynamicUser = true;
+      ExecStart = "${pkgs.python3}/bin/python ${./traffic.py}";
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
+
 }
