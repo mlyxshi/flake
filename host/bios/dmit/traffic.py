@@ -3,7 +3,7 @@ import subprocess
 import os
 
 interface = "eth0"
-cmd = f"vnstat --oneline -i {interface} | awk -F ';' '{{print $11}}'"
+cmd = f"/run/current-system/sw/bin/vnstat --oneline -i {interface} | /run/current-system/sw/bin/awk -F ';' '{{print $11}}'"
 
 class SimpleHandler(BaseHTTPRequestHandler):
     def do_GET(self):
