@@ -28,6 +28,8 @@
   networking.firewall.enable = false;
 
   # Traffic Reset Date
+  environment.etc."vnstat.conf".user = "vnstatd";
+  environment.etc."vnstat.conf".group = "vnstatd";
   environment.etc."vnstat.conf".text = ''
     MonthRotate 24
   '';
