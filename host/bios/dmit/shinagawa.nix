@@ -31,6 +31,7 @@
   environment.etc."vnstat.conf".user = "vnstatd";
   environment.etc."vnstat.conf".group = "vnstatd";
   environment.etc."vnstat.conf".text = ''
+    Interface "lo"
     MonthRotate 24
   '';
 
