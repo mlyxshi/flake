@@ -30,6 +30,6 @@
   # Traffic Reset Date
   environment.etc."vnstat.conf".text = ''
     MonthRotate 24
-  ''
+  '';
 
 }
