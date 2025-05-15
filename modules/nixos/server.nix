@@ -11,6 +11,8 @@
     ookla-speedtest
   ];
 
+  services.vnstat.enable = true;
+
   # systemd.sysusers.enable = true;
   # system.etc.overlay.enable = true;
 

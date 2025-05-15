@@ -122,11 +122,6 @@
       HostKeyAlias jp2
     	User root
 
-    Host sjc
-    	HostName  sjc.mlyxshi.com
-      HostKeyAlias sjc
-    	User root
-
     Host nrt
     	HostName  nrt.mlyxshi.com
       HostKeyAlias nrt
@@ -140,16 +135,6 @@
     Host gcp-hk
     	HostName  gcp-hk.mlyxshi.com
       HostKeyAlias gcp-hk
-    	User root
-
-    Host gcp-tw
-    	HostName  gcp-tw.mlyxshi.com
-      HostKeyAlias gcp-tw
-    	User root
-
-    Host gcp-jp
-    	HostName  gcp-jp.mlyxshi.com
-      HostKeyAlias gcp-jp
     	User root
 
     Host gh
@@ -179,6 +164,10 @@
       set -U fish_greeting
       zoxide init fish | source
       atuin init fish --disable-up-arrow | source
+
+      function terminfo
+        infocmp -x ghostty | ssh $argv -- tic -x -
+      end
 
       function loc
         readlink -f $(which $argv) 
