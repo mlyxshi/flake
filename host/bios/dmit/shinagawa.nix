@@ -27,6 +27,11 @@
 
   networking.firewall.enable = false;
 
+  # OpenDNS
+  networking.nameservers = [
+    "208.67.222.222"
+  ];
+
   # Traffic Reset Date
   environment.etc."vnstat.conf".text = ''
     MonthRotate 24

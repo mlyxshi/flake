@@ -2,7 +2,7 @@
   imports = [
   ];
 
-  # Alice DNS UnlocK Service
+  # Alice DNS Unlock Service
   networking.nameservers = [
     "181.215.6.75"
   ];
