@@ -12,7 +12,6 @@
   networking.dhcpcd.enable = false;
 
   systemd.network.enable = true;
-  systemd.services.systemd-networkd.environment.SYSTEMD_LOG_LEVEL = "debug";
   systemd.network.wait-online.anyInterface = true;
   systemd.network.networks.ethernet-static = {
     matchConfig = { 
@@ -21,7 +20,7 @@
     networkConfig = { 
       Address = "103.117.103.126/24"; 
       Gateway = "103.117.103.1";
-      DNS = "208.67.222.222";   # OpenDNS
+      DNS = "1.1.1.1";
     };
   };
 
