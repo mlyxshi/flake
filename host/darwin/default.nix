@@ -2,6 +2,8 @@
 
   system.stateVersion = 5;
 
+  system.primaryUser = "dominic";
+
   users.users.dominic.home = "/Users/dominic";
   users.users.dominic.openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe" ];
 
@@ -9,7 +11,7 @@
     channel.enable = false;
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
-      trusted-users = [ "root" "dominic" ];
+      trusted-users = [ "dominic" ];
     };
   };
 
@@ -55,7 +57,6 @@
       if [ -n "$SYSTEM" ]
       then
         sudo -H --preserve-env=PATH env nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
-        $SYSTEM/activate-user
         sudo -H --preserve-env=PATH $SYSTEM/activate
       else
         echo "Build Failed"
