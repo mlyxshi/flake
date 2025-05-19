@@ -33,10 +33,9 @@
         kexec-aarch64 = nixpkgs.lib.nixosSystem { modules = [ ./kexec { nixpkgs.hostPlatform = "aarch64-linux"; } ]; };
 
         nrt = import ./host/bios/dmit { inherit self nixpkgs secret; };
-        alice = import ./host/bios/alice { inherit self nixpkgs secret; };
+        gcp-hk = import ./host/gcp/mkHost.nix { inherit self nixpkgs secret; hostName = "gcp-hk"; };
       } 
-      // lib.genAttrs oracle-serverlist (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs secret; })
-      // lib.genAttrs ["gcp-hk" "gcp-tw" "gcp-jp"] (hostName: import ./host/gcp/mkHost.nix { inherit hostName self nixpkgs secret; });
+      // lib.genAttrs oracle-serverlist (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs secret; });
 
       packages = {
         aarch64-darwin = lib.genAttrs (getArchPkgs "aarch64-darwin") (name: nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/${name} { })
