@@ -1,6 +1,6 @@
 { pkgs, modulesPath, ... }: {
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
-  
+
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/vda";
   fileSystems."/" = { device = "/dev/vda1"; fsType = "xfs"; };
@@ -38,4 +38,7 @@
     };
     wantedBy = [ "multi-user.target" ];
   };
+
+  # Port 22 for FCC
+  services.openssh.ports = [ 2222 ];
 }
