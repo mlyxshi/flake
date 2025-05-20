@@ -4,9 +4,20 @@
 
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.network.enable = true;
-  boot.initrd.systemd.network.networks.ethernet-default-dhcp = {
-    matchConfig = { Name = [ "en*" "eth*" ]; };
-    networkConfig = { DHCP = "yes"; };
+  # boot.initrd.systemd.network.networks.ethernet-default-dhcp = {
+  #   matchConfig = { Name = [ "en*" "eth*" ]; };
+  #   networkConfig = { DHCP = "yes"; };
+  # };
+
+  boot.initrd.systemd.network.networks.ethernet-static = {
+    matchConfig = {
+      Name = [ "en*" "eth*" ];
+    };
+    networkConfig = {
+      Address = "91.103.121.190/27";
+      Gateway = "91.103.121.161";
+      DNS = "181.215.6.75";
+    };
   };
 
   boot.initrd.network.ssh.enable = true;

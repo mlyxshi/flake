@@ -1,6 +1,6 @@
 { modulesPath, ... }: {
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
-  # boot.initrd.kernelModules = [ "nvme" ];
+
   boot.loader.grub.device = "/dev/vda";
   fileSystems."/" = { device = "/dev/vda3"; fsType = "xfs"; };
 
