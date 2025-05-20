@@ -23,4 +23,14 @@
   };
 
   networking.firewall.enable = false;
+
+  # Only Test DNS  https://t.me/haitunspeed
+  systemd.services.ss = {
+    after = [ "network.target" ];
+    serviceConfig = {
+      DynamicUser = true;
+      ExecStart = "${pkgs.shadowsocks-rust}/bin/ssserver -c /secret/shadowsocks";
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
 }
