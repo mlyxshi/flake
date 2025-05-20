@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       # cache.noxos.org 
       matrix:
-        host: [alice] 
+        host: [alice,rfc-hk] 
     steps:
     - uses: actions/checkout@master
     - uses: DeterminateSystems/nix-installer-action@main

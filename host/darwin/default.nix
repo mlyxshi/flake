@@ -132,6 +132,12 @@
     	HostName  alice.mlyxshi.com
       HostKeyAlias alice
     	User root
+
+    Host rfc-hk
+    	HostName  rfc-hk.mlyxshi.com
+      HostKeyAlias rfc-hk
+    	User root
+      Port 2222
     
     Host gcp-hk
     	HostName  gcp-hk.mlyxshi.com
