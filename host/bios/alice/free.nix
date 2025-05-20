@@ -1,6 +1,7 @@
 { pkgs, modulesPath, ... }: {
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
-
+  
+  boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/vda";
   fileSystems."/" = { device = "/dev/vda3"; fsType = "xfs"; };
 
@@ -34,7 +35,6 @@
   systemd.services.ss = {
     after = [ "network.target" ];
     serviceConfig = {
-      DynamicUser = true;
       ExecStart = "${pkgs.shadowsocks-rust}/bin/ssserver -c /secret/shadowsocks";
     };
     wantedBy = [ "multi-user.target" ];
