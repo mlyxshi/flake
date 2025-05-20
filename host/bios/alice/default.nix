@@ -5,7 +5,6 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.nixos.server
     ./free.nix
     
-    self.nixosModules.services.snell  
     self.nixosModules.services.beszel-agent
     {
       nixpkgs.overlays = [ self.overlays.default ];

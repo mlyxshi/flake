@@ -31,7 +31,6 @@
 
   networking.firewall.enable = false;
 
-  # Only Test DNS  https://t.me/haitunspeed
   systemd.services.ss = {
     after = [ "network.target" ];
     serviceConfig = {
