@@ -1,14 +1,11 @@
-
-{ modulesPath, ... }:
-{
+{ modulesPath, ... }: {
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
   boot.loader.grub.device = "/dev/vda";
-
-  boot.initrd.availableKernelModules = [ "vmw_pvscsi" ];
+  
   boot.initrd.kernelModules = [ "nvme" ];
 
   fileSystems."/" = { device = "/dev/vda3"; fsType = "xfs"; };
-  
+
   boot.kernelParams = [ "net.ifnames=0" ];
 
   networking.useDHCP = false;
