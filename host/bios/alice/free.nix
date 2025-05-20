@@ -4,6 +4,12 @@
   boot.loader.grub.device = "/dev/vda";
   fileSystems."/" = { device = "/dev/vda3"; fsType = "xfs"; };
 
+  boot.kernel.sysctl = {
+    "net.ipv4.tcp_congestion_control" = "bbr";
+    "net.core.default_qdisc" = "cake";
+    "net.ipv4.tcp_slow_start_after_idle" = 0; #https://www.kawabangga.com/posts/5217
+  };
+
   boot.kernelParams = [ "net.ifnames=0" ];
 
   networking.useDHCP = false;
