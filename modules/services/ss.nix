@@ -1,10 +1,8 @@
 { pkgs, lib, ... }: {
-  programs.nix-ld.enable = true;
-
-  systemd.services.snell = {
+  systemd.services.ss = {
     after = [ "network.target" ];
     serviceConfig = {
-      ExecStart = "${pkgs.snell}/bin/snell-server -c /secret/snell";
+      ExecStart = "${pkgs.shadowsocks-rust}/bin/ssserver -c /secret/shadowsocks";
     };
     wantedBy = [ "multi-user.target" ];
   };

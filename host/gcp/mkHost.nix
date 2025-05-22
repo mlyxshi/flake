@@ -3,7 +3,7 @@ nixpkgs.lib.nixosSystem {
   modules = [
     secret.nixosModules.default
     self.nixosModules.nixos.server
-    self.nixosModules.network
+    self.nixosModules.network.dhcp
     ./hardware.nix
     ./${hostName}.nix
 

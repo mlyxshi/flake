@@ -3,7 +3,7 @@ nixpkgs.lib.nixosSystem {
   modules = [
     secret.nixosModules.default
     self.nixosModules.nixos.server
-    self.nixosModules.network
+    self.nixosModules.network.dhcp
     self.nixosModules.services.beszel-agent
     self.nixosModules.services.traefik
     self.nixosModules.services.telegraf

@@ -5,19 +5,6 @@
   boot.loader.grub.device = "/dev/vda";
   fileSystems."/" = { device = "/dev/vda3"; fsType = "xfs"; };
 
-  boot.kernel.sysctl = {
-    "net.ipv4.tcp_congestion_control" = "bbr";
-    "net.core.default_qdisc" = "cake";
-    "net.ipv4.tcp_slow_start_after_idle" = 0; #https://www.kawabangga.com/posts/5217
-  };
-
-  boot.kernelParams = [ "net.ifnames=0" ];
-
-  networking.useDHCP = false;
-  networking.dhcpcd.enable = false;
-
-  systemd.network.enable = true;
-  systemd.network.wait-online.anyInterface = true;
   systemd.network.networks.ethernet-static = {
     matchConfig = {
       Name = "eth0";
@@ -27,15 +14,5 @@
       Gateway = "91.103.121.161";
       DNS = "181.215.6.75";
     };
-  };
-
-  networking.firewall.enable = false;
-
-  systemd.services.ss = {
-    after = [ "network.target" ];
-    serviceConfig = {
-      ExecStart = "${pkgs.shadowsocks-rust}/bin/ssserver -c /secret/shadowsocks";
-    };
-    wantedBy = [ "multi-user.target" ];
   };
 }
