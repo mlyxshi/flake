@@ -4,6 +4,7 @@ nixpkgs.lib.nixosSystem {
     secret.nixosModules.default
     self.nixosModules.nixos.server
     self.nixosModules.network.static
+    self.nixosModules.services.ss
     ../hardware-vda.nix
     ./shinagawa.nix
     
