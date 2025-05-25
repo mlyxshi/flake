@@ -15,7 +15,8 @@
 
   virtualisation.oci-containers.containers.aurora-worker = {
     image = "docker.io/leishi1313/aurora-admin-backend:latest";
-    entrypoint = "bash worker.sh";
+    entrypoint = "bash";
+    cmd = [ "worker.sh" ];
     environment = {
       TZ = "Asia/Shanghai";
       ENABLE_SENTRY = "yes";
@@ -33,9 +34,11 @@
 
   virtualisation.oci-containers.containers.aurora-backend = {
     image = "docker.io/leishi1313/aurora-admin-backend:latest";
-    entrypoint = ''
-      bash -c "while !</dev/tcp/postgres/5432; do sleep 1; done; alembic upgrade heads && python app/main.py"
-    '';
+    entrypoint = "bash";
+    cmd = [
+      "-c"
+      "while !</dev/tcp/postgres/5432; do sleep 1; done; alembic upgrade heads && python app/main.py"
+    ];
     environment = {
       TZ = "Asia/Shanghai";
       PYTHONPATH = ".";
