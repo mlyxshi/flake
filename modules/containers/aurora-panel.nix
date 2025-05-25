@@ -13,6 +13,53 @@
   #   ];
   # };
 
+  virtualisation.oci-containers.containers.aurora-worker = {
+    image = "docker.io/leishi1313/aurora-admin-backend:latest";
+    entrypoint = "bash worker.sh";
+    environment = {
+      TZ = "Asia/Shanghai";
+      ENABLE_SENTRY = "yes";
+      DATABASE_URL = "postgresql://aurora:AuroraAdminPanel321@postgres:5432/aurora";
+      ASYNC_DATABASE_URL = "postgresql+asyncpg://aurora:AuroraAdminPanel321@postgres:5432/aurora";
+      TRAFFIC_INTERVAL_SECONDS = 600;
+      DDNS_INTERVAL_SECONDS = 120;
+    };
+    volumes = [ "/var/lib/aurora/app:/app/ansible/priv_data_dirs" ];
+    dependsOn = [
+      "postgres"
+      "redis"
+    ];
+  };
+
+  virtualisation.oci-containers.containers.aurora-backend = {
+    image = "docker.io/leishi1313/aurora-admin-backend:latest";
+    entrypoint = ''
+      bash -c "while !</dev/tcp/postgres/5432; do sleep 1; done; alembic upgrade heads && python app/main.py"
+    '';
+    environment = {
+      TZ = "Asia/Shanghai";
+      PYTHONPATH = ".";
+      DATABASE_URL = "postgresql://aurora:AuroraAdminPanel321@postgres:5432/aurora";
+      ASYNC_DATABASE_URL = "postgresql+asyncpg://aurora:AuroraAdminPanel321@postgres:5432/aurora";
+      SECREY_KEY = "AuroraAdminPanel321";
+    };
+    volumes = [ "/var/lib/aurora/app:/app/ansible/priv_data_dirs" ];
+    dependsOn = [
+      "postgres"
+      "redis"
+    ];
+  };
+
+
+
+  virtualisation.oci-containers.containers.aurora-front = {
+    image = "docker.io/leishi1313/aurora-admin-frontend:latest";
+    ports = [ "8000:80" ];
+    dependsOn = [
+      "aurora-backend"
+    ];
+  };
+
   virtualisation.oci-containers.containers.postgres = {
     image = "docker.io/library/postgres:13-alpine";
     environment = {
