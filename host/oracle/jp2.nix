@@ -6,7 +6,6 @@
     self.nixosModules.containers.podman
     self.nixosModules.containers.miniflux
     self.nixosModules.containers.change-detection
-    self.nixosModules.containers.aurora-panel
   ];
 
   environment.systemPackages = with pkgs; [
