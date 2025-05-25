@@ -3,7 +3,7 @@
   # podman container exec -it backend /bin/bash
   # python app/initial_data.py
 
-  
+
   virtualisation.oci-containers.containers.worker = {
     image = "docker.io/leishi1313/aurora-admin-backend:latest";
     entrypoint = "bash";
@@ -16,9 +16,9 @@
       TRAFFIC_INTERVAL_SECONDS = "600";
       DDNS_INTERVAL_SECONDS = "120";
     };
-    volumes = [ 
+    volumes = [
       "/secret/ssh/github:/app/ansible/env/ssh_key"
-      "/var/lib/aurora/app:/app/ansible/priv_data_dirs" 
+      "/var/lib/aurora/app:/app/ansible/priv_data_dirs"
     ];
     dependsOn = [
       "postgres"
@@ -40,7 +40,10 @@
       ASYNC_DATABASE_URL = "postgresql+asyncpg://aurora:AuroraAdminPanel321@postgres:5432/aurora";
       SECREY_KEY = "AuroraAdminPanel321";
     };
-    volumes = [ "/var/lib/aurora/app:/app/ansible/priv_data_dirs" ];
+    volumes = [
+      "/secret/ssh/github:/app/ansible/env/ssh_key"
+      "/var/lib/aurora/app:/app/ansible/priv_data_dirs"
+    ];
     dependsOn = [
       "postgres"
       "redis"
