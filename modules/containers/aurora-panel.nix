@@ -21,7 +21,7 @@
     };
     volumes = [ 
       "/var/lib/aurora/app:/app/ansible/priv_data_dirs" 
-      "/var/lib/aurora/ssh:/app/ansible/env"
+      "/var/lib/aurora/ssh_key:/app/ansible/env/ssh_key"
     ];
     dependsOn = [
       "postgres"
