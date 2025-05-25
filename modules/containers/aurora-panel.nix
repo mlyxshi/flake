@@ -1,19 +1,6 @@
 { config, pkgs, lib, ... }: {
 
-  # virtualisation.oci-containers.containers.changedetection = {
-  #   image = "ghcr.io/dgtlmoon/changedetection.io";
-  #   volumes = [ "/var/lib/changedetection:/datastore" ];
-  #   environment = { PLAYWRIGHT_DRIVER_URL = "ws://chrome-headless:3000"; };
-  #   dependsOn = [ "chrome-headless" ];
-  #   extraOptions = lib.concatMap (x: [ "--label" x ]) [
-  #     "io.containers.autoupdate=registry"
-  #     "traefik.enable=true"
-  #     "traefik.http.routers.changedetection.rule=Host(`changeio.${config.networking.domain}`)"
-  #     "traefik.http.routers.changedetection.entrypoints=websecure"
-  #   ];
-  # };
-
-  virtualisation.oci-containers.containers.aurora-worker = {
+  virtualisation.oci-containers.containers.worker = {
     image = "docker.io/leishi1313/aurora-admin-backend:latest";
     entrypoint = "bash";
     cmd = [ "worker.sh" ];
@@ -32,7 +19,7 @@
     ];
   };
 
-  virtualisation.oci-containers.containers.aurora-backend = {
+  virtualisation.oci-containers.containers.backend = {
     image = "docker.io/leishi1313/aurora-admin-backend:latest";
     entrypoint = "bash";
     cmd = [
@@ -55,11 +42,11 @@
 
 
 
-  virtualisation.oci-containers.containers.aurora-front = {
+  virtualisation.oci-containers.containers.nginx= {
     image = "docker.io/leishi1313/aurora-admin-frontend:latest";
     ports = [ "8000:80" ];
     dependsOn = [
-      "aurora-backend"
+      "backend"
     ];
   };
 
