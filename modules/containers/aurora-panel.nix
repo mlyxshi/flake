@@ -14,7 +14,7 @@
   # };
 
   virtualisation.oci-containers.containers.postgres = {
-    image = "quay.io/postgres:13-alpine";
+    image = "docker.io/library/postgres:13-alpine";
     environment = {
       POSTGRES_USER = "aurora";
       POSTGRES_PASSWORD = "AuroraAdminPanel321";
@@ -24,7 +24,7 @@
   };
 
   virtualisation.oci-containers.containers.redis = {
-    image = "quay.io/redis:8-alpine";
+    image = "docker.io/library/redis:8-alpine";
   };
 
 }
