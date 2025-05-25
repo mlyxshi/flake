@@ -20,6 +20,7 @@
       DDNS_INTERVAL_SECONDS = "120";
     };
     volumes = [ 
+      "/var/lib/aurora/ssh:/app/ansible/env/ssh_key"
       "/var/lib/aurora/app:/app/ansible/priv_data_dirs" 
     ];
     dependsOn = [
