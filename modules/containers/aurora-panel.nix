@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }: {
   # 创建管理员用户（密码必须设置8位以上，否则无法登陆）
-  # podman container exec -it backend /bin/sh
+  # podman container exec -it backend /bin/bash
   # python app/initial_data.py
 
 
@@ -20,7 +20,7 @@
       DDNS_INTERVAL_SECONDS = "120";
     };
     volumes = [ 
-      "/var/lib/aurora/ssh:/app/ansible/env/ssh_key"
+      "/var/lib/aurora/ssh:/app/ansible/env/"
       "/var/lib/aurora/app:/app/ansible/priv_data_dirs" 
     ];
     dependsOn = [
