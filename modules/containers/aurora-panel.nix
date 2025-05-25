@@ -1,5 +1,12 @@
 { config, pkgs, lib, ... }: {
+  # 创建管理员用户（密码必须设置8位以上，否则无法登陆）
+  # podman container exec -it backend /bin/sh
+  # python app/initial_data.py
 
+
+  # copy id_ed25519 to /app/ansible/env/ssh_key
+
+  
   virtualisation.oci-containers.containers.worker = {
     image = "docker.io/leishi1313/aurora-admin-backend:latest";
     entrypoint = "bash";
@@ -12,7 +19,10 @@
       TRAFFIC_INTERVAL_SECONDS = "600";
       DDNS_INTERVAL_SECONDS = "120";
     };
-    volumes = [ "/var/lib/aurora/app:/app/ansible/priv_data_dirs" ];
+    volumes = [ 
+      "/var/lib/aurora/app:/app/ansible/priv_data_dirs" 
+      "/var/lib/aurora/ssh:/app/ansible/env"
+    ];
     dependsOn = [
       "postgres"
       "redis"
@@ -42,7 +52,7 @@
 
 
 
-  virtualisation.oci-containers.containers.nginx= {
+  virtualisation.oci-containers.containers.nginx = {
     image = "docker.io/leishi1313/aurora-admin-frontend:latest";
     ports = [ "8000:80" ];
     dependsOn = [
