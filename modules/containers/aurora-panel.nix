@@ -41,7 +41,6 @@
       SECREY_KEY = "AuroraAdminPanel321";
     };
     volumes = [
-      #"/secret/ssh/github:/app/ansible/env/ssh_key"
       "/var/lib/aurora/app:/app/ansible/priv_data_dirs"
     ];
     dependsOn = [
@@ -54,9 +53,13 @@
 
   virtualisation.oci-containers.containers.nginx = {
     image = "docker.io/leishi1313/aurora-admin-frontend:latest";
-    ports = [ "8000:80" ];
     dependsOn = [
       "backend"
+    ];
+    extraOptions = lib.concatMap (x: [ "--label" x ]) [
+      "traefik.enable=true"
+      "traefik.http.routers.aurora.rule=Host(`aurora.${config.networking.domain}`)"
+      "traefik.http.routers.aurora.entrypoints=websecure"
     ];
   };
 
