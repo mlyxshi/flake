@@ -21,8 +21,8 @@
       ENABLE_SENTRY = "yes";
       DATABASE_URL = "postgresql://aurora:AuroraAdminPanel321@postgres:5432/aurora";
       ASYNC_DATABASE_URL = "postgresql+asyncpg://aurora:AuroraAdminPanel321@postgres:5432/aurora";
-      TRAFFIC_INTERVAL_SECONDS = 600;
-      DDNS_INTERVAL_SECONDS = 120;
+      TRAFFIC_INTERVAL_SECONDS = "600";
+      DDNS_INTERVAL_SECONDS = "120";
     };
     volumes = [ "/var/lib/aurora/app:/app/ansible/priv_data_dirs" ];
     dependsOn = [
