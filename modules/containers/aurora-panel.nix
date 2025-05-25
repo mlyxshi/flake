@@ -3,9 +3,6 @@
   # podman container exec -it backend /bin/bash
   # python app/initial_data.py
 
-
-  # copy id_ed25519 to /app/ansible/env/ssh_key
-
   
   virtualisation.oci-containers.containers.worker = {
     image = "docker.io/leishi1313/aurora-admin-backend:latest";
@@ -20,7 +17,7 @@
       DDNS_INTERVAL_SECONDS = "120";
     };
     volumes = [ 
-      "/var/lib/aurora/ssh:/app/ansible/env/"
+      "/secret/ssh/github:/app/ansible/env/ssh_key"
       "/var/lib/aurora/app:/app/ansible/priv_data_dirs" 
     ];
     dependsOn = [
