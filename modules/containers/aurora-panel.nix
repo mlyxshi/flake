@@ -41,7 +41,7 @@
       SECREY_KEY = "AuroraAdminPanel321";
     };
     volumes = [
-      "/secret/ssh/github:/app/ansible/env/ssh_key"
+      #"/secret/ssh/github:/app/ansible/env/ssh_key"
       "/var/lib/aurora/app:/app/ansible/priv_data_dirs"
     ];
     dependsOn = [
