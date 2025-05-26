@@ -1,7 +1,7 @@
 { config, pkgs, lib, self, ... }: {
 
   imports = [
-    self.nixosModules.strip
+    self.nixosModules.strip.default
   ];
 
   security.sudo.enable = false;

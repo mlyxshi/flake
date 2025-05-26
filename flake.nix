@@ -13,10 +13,10 @@
     let
       inherit (nixpkgs) lib;
       utils = import ./utils.nix nixpkgs;
-      inherit (utils) mkFileHierarchyAttrset oracle-serverlist;
+      inherit (utils) oracle-serverlist modulesFromDirectoryRecursive;
     in
     {
-      nixosModules = mkFileHierarchyAttrset ./. "modules";
+      nixosModules = modulesFromDirectoryRecursive ./modules;
       darwinConfigurations.M4 = darwin.lib.darwinSystem { system = "aarch64-darwin"; modules = [ ./host/darwin/M4.nix ]; };
       darwinConfigurations.Macbook = darwin.lib.darwinSystem { system = "aarch64-darwin"; modules = [ ./host/darwin/Macbook.nix ]; };
       nixosConfigurations = {

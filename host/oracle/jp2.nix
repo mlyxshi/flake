@@ -1,7 +1,7 @@
 { self, pkgs, lib, config, ... }: {
   imports = [
     self.nixosModules.services.prometheus
-    self.nixosModules.services.transmission
+    self.nixosModules.services.transmission.default
     
     self.nixosModules.containers.podman
     self.nixosModules.containers.miniflux

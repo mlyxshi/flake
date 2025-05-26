@@ -6,7 +6,7 @@ let
   utils = import ./utils.nix nixpkgs;
 in
 {
-  inherit (utils) ls pureName mkFileHierarchyAttrset;
+  inherit (utils) modulesFromDirectoryRecursive;
 }
 
 // builtins // pkgs // lib // flake
