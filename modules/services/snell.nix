@@ -1,5 +1,7 @@
 { pkgs, lib, self, config, ... }: 
-let package = self.packages.${config.nixpkgs.hostPlatform}.snell
+let 
+  package = self.packages.${config.nixpkgs.hostPlatform}.snell;
+in
 {
   programs.nix-ld.enable = true;
 
