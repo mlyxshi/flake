@@ -1,6 +1,6 @@
 # open firewall in web console
 # ::/0 and 0.0.0.0/0  port 51413 tcp udp
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, self, ... }:
 let
   package = self.packages.${config.nixpkgs.hostPlatform.system}.transmission;
   transmissionScript = pkgs.writeShellScript "transmission.sh" ''
@@ -36,7 +36,7 @@ in
     wants = [ "network-online.target" ];
     environment = {
       TRANSMISSION_HOME = "%S/transmission";
-      TRANSMISSION_WEB_HOME = "${pkgs.transmission}/public_html";
+      TRANSMISSION_WEB_HOME = "${package}/public_html";
       DENO_DIR = "%S/transmission/.deno";
     };
     serviceConfig.EnvironmentFile = [ "/secret/transmission" ];
