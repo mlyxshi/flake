@@ -2,6 +2,7 @@
 # ::/0 and 0.0.0.0/0  port 51413 tcp udp
 { config, pkgs, lib, ... }:
 let
+  package = self.packages.${config.nixpkgs.hostPlatform.system}.transmission;
   transmissionScript = pkgs.writeShellScript "transmission.sh" ''
     export PATH=$PATH:${pkgs.rclone}/bin:${pkgs.transmission}/bin
     ${pkgs.deno}/bin/deno run --allow-net --allow-env --allow-read --allow-run ${
@@ -40,7 +41,7 @@ in
     };
     serviceConfig.EnvironmentFile = [ "/secret/transmission" ];
     serviceConfig.User = "transmission";
-    serviceConfig.ExecStart = "${pkgs.transmission}/bin/transmission-daemon --foreground --username $ADMIN --password $PASSWORD";
+    serviceConfig.ExecStart = "${package}/bin/transmission-daemon --foreground --username $ADMIN --password $PASSWORD";
     serviceConfig.WorkingDirectory = "%S/transmission";
     # preStart = ''
     #   cat ${transmissionScript} > transmission.sh
