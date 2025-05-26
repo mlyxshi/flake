@@ -11,7 +11,6 @@ nixpkgs.lib.nixosSystem {
     ./keep.nix
     ./${hostName}.nix
     {
-      nixpkgs.overlays = [ self.overlays.default ];
       nixpkgs.hostPlatform = "aarch64-linux";
       networking.hostName = hostName;
       networking.domain = "mlyxshi.com";

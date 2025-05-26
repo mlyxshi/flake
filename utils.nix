@@ -20,12 +20,5 @@ rec {
       else
         mkFileHierarchyAttrset /.${basedir}/${dirName} path);
 
-  packagelist = pureName (ls ./pkgs);
-  getPkgPlatforms = name: (callPackage ./pkgs/${name} { }).meta.platforms;
-  getArchPkgs = arch:
-    builtins.filter
-      (name: builtins.any (platform: platform == arch) (getPkgPlatforms name))
-      packagelist;
-
   oracle-serverlist = [ "jp1" "jp2" "us" ];
 }

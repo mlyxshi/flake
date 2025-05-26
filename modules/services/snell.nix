@@ -1,10 +1,12 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, self, config, ... }: 
+let package = self.packages.${config.nixpkgs.hostPlatform}.snell
+{
   programs.nix-ld.enable = true;
 
   systemd.services.snell = {
     after = [ "network.target" ];
     serviceConfig = {
-      ExecStart = "${pkgs.snell}/bin/snell-server -c /secret/snell";
+      ExecStart = "${package}/bin/snell-server -c /secret/snell";
     };
     wantedBy = [ "multi-user.target" ];
   };

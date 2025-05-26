@@ -9,7 +9,6 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.services.beszel-agent
     self.nixosModules.services.ss
     {
-      nixpkgs.overlays = [ self.overlays.default ];
       nixpkgs.hostPlatform = "x86_64-linux";
       networking.hostName = "alice";
       networking.domain = "mlyxshi.com";
