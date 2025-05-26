@@ -1,6 +1,6 @@
 { pkgs, lib, self, config, ... }: 
 let 
-  package = "self.packages.${config.nixpkgs.hostPlatform}.snell";
+  package = self.packages.${config.nixpkgs.hostPlatform.system}.snell;
 in
 {
   programs.nix-ld.enable = true;
