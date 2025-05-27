@@ -11,6 +11,8 @@
     ookla-speedtest
   ];
 
+  networking.domain = "mlyxshi.com";
+
   # systemd.sysusers.enable = true;
   # system.etc.overlay.enable = true;
 

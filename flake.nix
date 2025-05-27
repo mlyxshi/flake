@@ -12,8 +12,8 @@
   outputs = { self, nixpkgs, darwin, secret }:
     let
       inherit (nixpkgs) lib;
-      utils = import ./utils.nix nixpkgs;
-      inherit (utils) modulesFromDirectoryRecursive;
+      utils = import ./utils.nix { inherit self nixpkgs secret; };
+      inherit (utils) modulesFromDirectoryRecursive oracleNixosConfigurations;
     in
     {
       nixosModules = modulesFromDirectoryRecursive ./modules;
@@ -35,8 +35,8 @@
         alice = import ./host/alice { inherit self nixpkgs secret; };
         rfc-hk = import ./host/rfc { inherit self nixpkgs secret; };
         gcp-hk = import ./host/gcp/mkHost.nix { inherit self nixpkgs secret; hostName = "gcp-hk"; };
-      }
-      // lib.genAttrs [ "jp1" "jp2" "us" ] (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs secret; });
+
+      } // oracleNixosConfigurations;
 
       packages.x86_64-linux = lib.filesystem.packagesFromDirectoryRecursive
         {

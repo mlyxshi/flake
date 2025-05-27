@@ -11,7 +11,6 @@ nixpkgs.lib.nixosSystem {
     {
       nixpkgs.hostPlatform = "x86_64-linux";
       networking.hostName = "rfc-hk";
-      networking.domain = "mlyxshi.com";
     }
   ];
   specialArgs = { inherit self; };

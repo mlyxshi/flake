@@ -13,7 +13,6 @@ nixpkgs.lib.nixosSystem {
     {
       nixpkgs.hostPlatform = "x86_64-linux";
       networking.hostName = hostName;
-      networking.domain = "mlyxshi.com";
       services.getty.autologinUser = "root";
     }
   ];
