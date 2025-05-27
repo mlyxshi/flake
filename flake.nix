@@ -13,7 +13,7 @@
     let
       inherit (nixpkgs) lib;
       utils = import ./utils.nix { inherit self nixpkgs secret; };
-      inherit (utils) modulesFromDirectoryRecursive oracleNixosConfigurations;
+      inherit (utils) modulesFromDirectoryRecursive packagesSet oracleNixosConfigurations kexec-test darwin-kexec-test;
     in
     {
       nixosModules = modulesFromDirectoryRecursive ./modules;
@@ -38,38 +38,8 @@
 
       } // oracleNixosConfigurations;
 
-      packages.x86_64-linux = lib.filesystem.packagesFromDirectoryRecursive
-        {
-          callPackage = nixpkgs.legacyPackages.x86_64-linux.callPackage;
-          directory = ./pkgs;
-        } // {
-        default = nixpkgs.legacyPackages.x86_64-linux.writeShellScriptBin "test-vm" ''
-          qemu-system-x86_64 -accel kvm -cpu host -nographic -m 1G \
-            -kernel ${self.nixosConfigurations.kexec-x86_64.config.system.build.kernel}/bzImage \
-            -initrd ${self.nixosConfigurations.kexec-x86_64.config.system.build.initialRamdisk}/initrd \
-            -append "systemd.journald.forward_to_console" \
-            -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
-            -device "virtio-scsi-pci,id=scsi0" -drive "file=disk.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
-            -bios /usr/share/qemu/OVMF.fd
-        '';
-      };
-
-      packages.aarch64-linux = lib.filesystem.packagesFromDirectoryRecursive {
-        callPackage = nixpkgs.legacyPackages.aarch64-linux.callPackage;
-        directory = ./pkgs;
-      };
-
-      packages.aarch64-darwin = {
-        # Test in Darwin
-        default = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "test-vm" ''
-          /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 4G \
-            -kernel ${self.nixosConfigurations.kexec-aarch64.config.system.build.kernel}/Image \
-            -initrd ${self.nixosConfigurations.kexec-aarch64.config.system.build.initialRamdisk}/initrd \
-            -append "systemd.journald.forward_to_console" \
-            -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
-            -device "virtio-scsi-pci,id=scsi0" -drive "file=disk.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
-            -bios $(ls /opt/homebrew/Cellar/qemu/*/share/qemu/edk2-aarch64-code.fd)
-        '';
-      };
+      packages.x86_64-linux = { default = kexec-test; } // packagesSet;
+      packages.aarch64-linux = packagesSet;
+      packages.aarch64-darwin.default = darwin-kexec-test;
     };
 }
