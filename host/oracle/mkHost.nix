@@ -3,12 +3,12 @@ nixpkgs.lib.nixosSystem {
   modules = [
     secret.nixosModules.default
     self.nixosModules.nixos.server
+    self.nixosModules.hardware.uefi.gpt-auto
     self.nixosModules.network.dhcp
     self.nixosModules.services.beszel-agent
     self.nixosModules.services.traefik
     self.nixosModules.services.telegraf
-    ./hardware.nix
-    ./keep.nix
+    self.nixosModules.services.waste
     ./${hostName}.nix
     {
       nixpkgs.hostPlatform = "aarch64-linux";

@@ -4,11 +4,11 @@ nixpkgs.lib.nixosSystem {
     secret.nixosModules.default
     self.nixosModules.nixos.server
     self.nixosModules.network.dhcp
-    ./hardware.nix
+    self.nixosModules.hardware.uefi.gpt-auto
     ./misc.nix
     {
       nixpkgs.hostPlatform = "aarch64-linux";
-      networking.hostName = "utm-server";
+      networking.hostName = "utm";
       services.getty.autologinUser = "root";
     }
   ];

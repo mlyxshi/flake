@@ -21,7 +21,7 @@
       darwinConfigurations.Macbook = darwin.lib.darwinSystem { system = "aarch64-darwin"; modules = [ ./host/darwin/Macbook.nix ]; };
       nixosConfigurations = {
 
-        utm-server = import ./host/utm/server.nix { inherit self nixpkgs secret; };
+        utm = import ./host/utm/server.nix { inherit self nixpkgs secret; };
 
         # nix build .#nixosConfigurations.installer-aarch64.config.system.build.isoImage 
         # nix build .#nixosConfigurations.installer-x86_64.config.system.build.isoImage
@@ -31,9 +31,9 @@
         kexec-x86_64 = nixpkgs.lib.nixosSystem { modules = [ ./kexec { nixpkgs.hostPlatform = "x86_64-linux"; } ]; };
         kexec-aarch64 = nixpkgs.lib.nixosSystem { modules = [ ./kexec { nixpkgs.hostPlatform = "aarch64-linux"; } ]; };
 
-        nrt = import ./host/bios/dmit { inherit self nixpkgs secret; };
-        alice = import ./host/bios/alice { inherit self nixpkgs secret; };
-        rfc-hk = import ./host/bios/rfc { inherit self nixpkgs secret; };
+        nrt = import ./host/dmit { inherit self nixpkgs secret; };
+        alice = import ./host/alice { inherit self nixpkgs secret; };
+        rfc-hk = import ./host/rfc { inherit self nixpkgs secret; };
         gcp-hk = import ./host/gcp/mkHost.nix { inherit self nixpkgs secret; hostName = "gcp-hk"; };
       }
       // lib.genAttrs [ "jp1" "jp2" "us" ] (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs secret; });

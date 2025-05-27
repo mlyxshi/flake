@@ -5,7 +5,8 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.nixos.server
     self.nixosModules.network.static
     self.nixosModules.services.ss
-    ../hardware-vda.nix
+    self.nixosModules.hardware.bios.sda1
+    
     ./shinagawa.nix
     
     self.nixosModules.services.snell  
