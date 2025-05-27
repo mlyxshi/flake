@@ -1,7 +1,6 @@
 { config, pkgs, lib, nixpkgs, ... }:
 let
-  utils = import ../../utils.nix nixpkgs;
-  inherit (utils) oracle-serverlist;
+  oracle-serverlist = [ "jp1" "jp2" "us" ];
 in
 {
   # https://www.youtube.com/playlist?list=PLLYW3zEOaqlKhRCWqFE7iLRSh3XEFP5gj

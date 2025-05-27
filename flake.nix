@@ -13,7 +13,7 @@
     let
       inherit (nixpkgs) lib;
       utils = import ./utils.nix nixpkgs;
-      inherit (utils) oracle-serverlist modulesFromDirectoryRecursive;
+      inherit (utils) modulesFromDirectoryRecursive;
     in
     {
       nixosModules = modulesFromDirectoryRecursive ./modules;
@@ -36,7 +36,7 @@
         rfc-hk = import ./host/bios/rfc { inherit self nixpkgs secret; };
         gcp-hk = import ./host/gcp/mkHost.nix { inherit self nixpkgs secret; hostName = "gcp-hk"; };
       }
-      // lib.genAttrs oracle-serverlist (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs secret; });
+      // lib.genAttrs [ "jp1" "jp2" "us" ] (hostName: import ./host/oracle/mkHost.nix { inherit hostName self nixpkgs secret; });
 
       packages.x86_64-linux = lib.filesystem.packagesFromDirectoryRecursive
         {
