@@ -43,7 +43,6 @@ jobs:
     runs-on: ubuntu-latest  
     strategy:
       fail-fast: false
-      # cache.noxos.org 
       matrix:
         host: [rfc-hk] 
     steps:
