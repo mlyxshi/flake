@@ -7,7 +7,6 @@
       Address = "103.117.103.126/24";
       Gateway = "103.117.103.1";
     };
-    dns = [ "8.8.8.8" "1.1.1.1" ];
   };
 
   services.vnstat.enable = true;
