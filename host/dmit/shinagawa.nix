@@ -9,8 +9,6 @@
     };
   };
 
-  networking.extraHosts = "2606:4700:4700::1001 api.twitter.com";
-
   services.vnstat.enable = true;
   # Traffic Reset Date
   environment.etc."vnstat.conf".text = ''
