@@ -11,7 +11,6 @@
 
   outputs = { self, nixpkgs, darwin, secret }:
     let
-      inherit (nixpkgs) lib;
       utils = import ./utils.nix { inherit self nixpkgs secret; };
       inherit (utils) modulesFromDirectoryRecursive packagesSet oracleNixosConfigurations kexec-test darwin-kexec-test;
     in
