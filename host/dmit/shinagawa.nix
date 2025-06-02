@@ -7,7 +7,7 @@
       Address = "103.117.103.126/24";
       Gateway = "103.117.103.1";
       IPv6AcceptRA = true;
-      IPv6PrivacyExtensions = false;
+      IPv6PrivacyExtensions = "no";
     };
   };
 
