@@ -6,9 +6,11 @@
     networkConfig = {
       Address = "103.117.103.126/24";
       Gateway = "103.117.103.1";
-      IPv6AcceptRA = true;
-      IPv6PrivacyExtensions = "no";
     };
+  };
+  
+  boot.kernel.sysctl = {
+    "net.ipv6.conf.eth0.use_tempaddr" = 0;
   };
 
   services.vnstat.enable = true;
