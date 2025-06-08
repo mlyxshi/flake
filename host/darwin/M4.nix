@@ -47,7 +47,6 @@
       "drivedx"
       "crystalfetch"
       "utm"
-      "orbstack"
     ];
   };
 }

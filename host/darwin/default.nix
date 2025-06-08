@@ -103,6 +103,7 @@
       "uninstallpkg"
       "suspicious-package"
       "google-chrome"
+      "orbstack"
     ];
   };
 
@@ -129,7 +130,7 @@
     	User root
 
     Host alice
-    	HostName  alice.mlyxshi.com
+    	HostName  91.103.121.190
       HostKeyAlias alice
     	User root
 

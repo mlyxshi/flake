@@ -47,4 +47,15 @@
       "traefik.http.routers.rsshub.entrypoints=websecure"
     ];
   };
+
+  virtualisation.oci-containers.containers.apprise = {
+    image = "ghcr.io/caronc/apprise";
+    extraOptions = lib.concatMap (x: [ "--label" x ]) [
+      "io.containers.autoupdate=registry"
+      "traefik.enable=true"
+      "traefik.http.routers.apprise.rule=Host(`apprise.${config.networking.domain}`)"
+      "traefik.http.routers.apprise.entrypoints=websecure"
+    ];
+    volumes = [ "/var/lib/apprise:/config" ];
+  };
 }
