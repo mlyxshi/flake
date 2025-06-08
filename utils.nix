@@ -9,7 +9,7 @@ in
   };
 
   packagesSet = lib.packagesFromDirectoryRecursive {
-    callPackage = nixpkgs.legacyPackages.x86_64-linux.callPackage;
+    callPackage = nixpkgs.legacyPackages.aarch64-linux.callPackage;
     directory = ./pkgs;
   };
 
