@@ -128,6 +128,7 @@
     	HostName  nrt.mlyxshi.com
       HostKeyAlias nrt
     	User root
+      Port 2222
 
     Host alice
     	HostName  91.103.121.190

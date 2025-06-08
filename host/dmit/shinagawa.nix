@@ -19,20 +19,11 @@
   networking.nftables.ruleset = ''
     table inet FIREWALL {
       chain INPUT {
-        # Drop all incoming traffic by default
         type filter hook input priority 0; policy drop;
-
-        # Allow loopback traffic
         iifname lo accept
-
-        # Allow ICMP
-        # ip protocol icmp accept
-
-        # Accept traffic originated from us
         ct state {established, related} accept
-
-        # Only Allow
-        tcp dport { 2222, 8000, 8888, 9999 } accept
+        tcp dport { 2222, 5201, 8000, 8888, 9999 } accept
+        udp dport { 8888 } accept
       }
     }
   '';
