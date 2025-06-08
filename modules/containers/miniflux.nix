@@ -56,6 +56,6 @@
       "traefik.http.routers.apprise.rule=Host(`apprise.${config.networking.domain}`)"
       "traefik.http.routers.apprise.entrypoints=websecure"
     ];
-    volumes = [ "/var/lib/apprise:/config" ];
+    # volumes = [ "/var/lib/apprise:/config" ];
   };
 }

@@ -8,8 +8,13 @@ in
     directory = _dirPath;
   };
 
-  packagesSet = lib.packagesFromDirectoryRecursive {
+  packagesSet-aarch64-linux = lib.packagesFromDirectoryRecursive {
     callPackage = nixpkgs.legacyPackages.aarch64-linux.callPackage;
+    directory = ./pkgs;
+  };
+
+  packagesSet-x86_64-linux = lib.packagesFromDirectoryRecursive {
+    callPackage = nixpkgs.legacyPackages.x86_64-linux.callPackage;
     directory = ./pkgs;
   };
 

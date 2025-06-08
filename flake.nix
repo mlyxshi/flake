@@ -12,7 +12,7 @@
   outputs = { self, nixpkgs, darwin, secret }:
     let
       utils = import ./utils.nix { inherit self nixpkgs secret; };
-      inherit (utils) modulesFromDirectoryRecursive packagesSet oracleNixosConfigurations kexec-test darwin-kexec-test;
+      inherit (utils) modulesFromDirectoryRecursive packagesSet-x86_64-linux packagesSet-aarch64-linux oracleNixosConfigurations kexec-test darwin-kexec-test;
     in
     {
       nixosModules = modulesFromDirectoryRecursive ./modules;
@@ -36,8 +36,8 @@
 
       } // oracleNixosConfigurations;
 
-      packages.x86_64-linux = { default = kexec-test; } // packagesSet;
-      packages.aarch64-linux = packagesSet;
+      packages.x86_64-linux = { default = kexec-test; } // packagesSet-x86_64-linux;
+      packages.aarch64-linux = packagesSet-aarch64-linux;
       packages.aarch64-darwin.default = darwin-kexec-test;
     };
 }
