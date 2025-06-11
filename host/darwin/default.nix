@@ -97,13 +97,13 @@
       "maczip"
       "openineditor-lite"
       "openinterminal-lite"
-      "raycast"
       "transmission"
       "istat-menus"
       "uninstallpkg"
       "suspicious-package"
       "google-chrome"
       "orbstack"
+      "container"
     ];
   };
 
