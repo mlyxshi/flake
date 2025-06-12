@@ -3,21 +3,9 @@
     matchConfig = {
       Name = "eth0";
     };
-    # networkConfig = {
-    #   Address = "103.117.103.126/24";
-    #   Gateway = "103.117.103.1";
-    #   IPv6AcceptRA = true;
-    # };
-
     networkConfig = {
-      Address = [
-        "103.117.103.126/24"
-        "2403:18c0:1001:179:787a:20ff:fe99:43a5/64"
-      ];
-      Gateway = [ 
-        "103.117.103.1"
-        "fe80::1"
-      ];
+      Address = "103.117.103.126/24";
+      Gateway = "103.117.103.1";
     };
   };
 
@@ -25,7 +13,7 @@
   # networking.getaddrinfo.precedence."::ffff:0:0/96" = 100;
   # Disble IPv6 temporary addresses
   boot.kernel.sysctl."net.ipv6.conf.eth0.use_tempaddr" = 0;
-  # boot.kernel.sysctl."net.ipv6.conf.eth0.accept_ra" = 1;
+
 
   services.openssh.ports = [ 2222 ];
 
