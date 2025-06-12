@@ -12,7 +12,7 @@
   # Prefer IPv4 for DNS resolution
   # networking.getaddrinfo.precedence."::ffff:0:0/96" = 100;
   # Disble IPv6 temporary addresses
-  # boot.kernel.sysctl."net.ipv6.conf.eth0.use_tempaddr" = 0;
+  boot.kernel.sysctl."net.ipv6.conf.eth0.use_tempaddr" = 0;
 
 
   services.openssh.ports = [ 2222 ];
