@@ -3,22 +3,22 @@
     matchConfig = {
       Name = "eth0";
     };
-    networkConfig = {
-      Address = "103.117.103.126/24";
-      Gateway = "103.117.103.1";
-      IPv6AcceptRA = true;
-    };
-
     # networkConfig = {
-    #   Address = [
-    #     "103.117.103.126/24"
-    #     "2403:18c0:1001:179:787a:20ff:fe99:43a5/64"
-    #   ];
-    #   Gateway = [ 
-    #     "103.117.103.1"
-    #     "2403:18c0:1001:179::1"
-    #   ];
+    #   Address = "103.117.103.126/24";
+    #   Gateway = "103.117.103.1";
+    #   IPv6AcceptRA = true;
     # };
+
+    networkConfig = {
+      Address = [
+        "103.117.103.126/24"
+        "2403:18c0:1001:179:787a:20ff:fe99:43a5/64"
+      ];
+      Gateway = [ 
+        "103.117.103.1"
+        "fe80::74de:b5ff:fe74:8d1d"
+      ];
+    };
   };
 
   # Prefer IPv4 for DNS resolution
