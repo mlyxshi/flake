@@ -23,6 +23,7 @@
       chain INPUT {
         type filter hook input priority 0; policy drop;
         iifname lo accept
+        ip protocol icmp accept
         ct state {established, related} accept
         tcp dport { 2222, 5201, 8000, 8888, 9999, 45876 } accept
         udp dport { 8888 } accept
