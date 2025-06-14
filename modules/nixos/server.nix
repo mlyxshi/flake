@@ -13,9 +13,6 @@
 
   networking.domain = "mlyxshi.com";
 
-  systemd.sysusers.enable = true;
-  system.etc.overlay.enable = true;
-
   fonts.fontconfig.enable = false;
 
   documentation = {
@@ -26,7 +23,10 @@
     nixos.enable = false;
   };
 
-  # https://github.com/NixOS/nixpkgs/pull/104828
+  # perlless
+  systemd.sysusers.enable = true;
+  system.etc.overlay.enable = true;
+
   system.disableInstallerTools = true;
   boot.enableContainers = false;
   environment.defaultPackages = [ ];
