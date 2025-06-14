@@ -17,7 +17,8 @@
   boot.initrd.kernelModules = [ "virtio_net" "virtio_pci" "virtio_mmio" "virtio_blk" "virtio_scsi" "virtio_balloon" "virtio_console" ]
     ++ [ "ext4" ]
     ++ [ "vfat" "nls_cp437" "nls_iso8859-1" ]
-    ++ [ "efivarfs" "erofs" "overlay" ];
+    ++ [ "efivarfs" ]
+    ++ [ "erofs" "overlay" ];
 
   boot.initrd.systemd.contents = {
     "/etc/ssl/certs/ca-certificates.crt".source = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
