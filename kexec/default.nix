@@ -17,7 +17,7 @@
   boot.initrd.kernelModules = [ "virtio_net" "virtio_pci" "virtio_mmio" "virtio_blk" "virtio_scsi" "virtio_balloon" "virtio_console" ]
     ++ [ "ext4" ]
     ++ [ "vfat" "nls_cp437" "nls_iso8859-1" ]
-    ++ [ "efivarfs" ];
+    ++ [ "efivarfs" "erofs" "overlay" ];
 
   boot.initrd.systemd.contents = {
     "/etc/ssl/certs/ca-certificates.crt".source = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
@@ -96,17 +96,6 @@
   # Disable: initrd-parse-etc.service -> initrd-cleanup.service -> initrd-switch-root.target
   # so systemd will stop at initrd.target
   boot.initrd.systemd.services.initrd-parse-etc.enable = false;
-
-
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelPatches = [{
-    name = "etc-overlayfs";
-    patch = null;
-    extraConfig = ''
-      EROFS_FS y
-      OVERLAY_FS y
-    '';
-  }];
 }
 
 
