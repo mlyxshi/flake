@@ -79,18 +79,14 @@
       cleanup = "uninstall";
     };
 
-    taps = [
-      "homebrew/services"
-    ];
-
     brews = [
       "iproute2mac"
       "nexttrace"
     ];
 
     casks = [
+      "font-sf-mono-nerd-font-ligaturized"
       "android-platform-tools"
-      "ghostty"
       "visual-studio-code"
       "jordanbaird-ice"
       "input-source-pro"
@@ -173,10 +169,6 @@
       set -U fish_greeting
       zoxide init fish | source
       atuin init fish --disable-up-arrow | source
-
-      function terminfo
-        infocmp -x ghostty | ssh $argv -- tic -x -
-      end
 
       function loc
         readlink -f $(which $argv) 

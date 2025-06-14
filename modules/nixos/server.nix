@@ -13,7 +13,7 @@
 
   networking.domain = "mlyxshi.com";
 
-  # systemd.sysusers.enable = true;
+  systemd.sysusers.enable = true;
   # system.etc.overlay.enable = true;
 
   fonts.fontconfig.enable = false;
