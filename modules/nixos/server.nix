@@ -25,7 +25,7 @@
 
   # perlless
   systemd.sysusers.enable = true;
-  system.etc.overlay.enable = config.boot.initrd.systemd.enable;
+  system.etc.overlay.enable = true;
 
   system.disableInstallerTools = true;
   boot.enableContainers = false;
