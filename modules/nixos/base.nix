@@ -138,6 +138,7 @@
       c = "bat";
       man = "batman";
       P = "echo $PATH";
+      nt = "nexttrace";
 
       sall = "systemctl list-units";
       slist = "systemctl list-units --type=service";

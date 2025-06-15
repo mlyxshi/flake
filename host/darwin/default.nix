@@ -163,6 +163,7 @@
       man = "batman";
       P = "echo $PATH";
       sshr = "ssh-keygen -R";
+      nt = "nexttrace";
     };
 
     shellInit = ''

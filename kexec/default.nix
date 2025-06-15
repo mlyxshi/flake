@@ -99,6 +99,3 @@
   # so systemd will stop at initrd.target
   boot.initrd.systemd.services.initrd-parse-etc.enable = false;
 }
-
-
-# rd.systemd.break=pre-switch-root 
