@@ -6,7 +6,6 @@
 
   programs.nano.enable = false;
   programs.less.enable = lib.mkForce false;
-  programs.command-not-found.enable = false;
   boot.bcache.enable = false;
   services.lvm.enable = false;
   environment.stub-ld.enable = false;
