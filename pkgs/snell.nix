@@ -10,7 +10,7 @@ stdenvNoCC.mkDerivation rec {
       else "https://dl.nssurge.com/snell/snell-server-v${version}-linux-aarch64.zip";
     hash =
       if stdenvNoCC.hostPlatform.isx86_64
-      then ""
+      then "sha256-oIoXhxX8OWNdJYu6hzyPPBMSitbrzX5892rHr++qv94="
       else "";
   };
 
