@@ -19,5 +19,5 @@ stdenvNoCC.mkDerivation rec {
     cp snell-server $out/bin/snell-server
   '';
 
-  meta.description = "https://manual.nssurge.com/others/snell.html";
+  meta.description = "https://kb.nssurge.com/surge-knowledge-base/zh/release-notes/snell";
 }
