@@ -9,6 +9,7 @@
   };
 
   systemd.services."komari-agent@abc".overrideStrategy = "asDropin";
+  systemd.services."komari-agent@abc".wantedBy = [ "multi-user.target" ];
 
   # Oracle US to JP(China Telecom to Oracle SJC via AS4134)
   networking.nftables.enable = true;

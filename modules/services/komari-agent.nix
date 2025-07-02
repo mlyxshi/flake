@@ -8,6 +8,5 @@ in
     serviceConfig = {
       ExecStart = "${package}/bin/komari-agent -e https://komari.mlyxshi.com --disable-web-ssh --disable-auto-update -t %i";
     };
-    wantedBy = [ "multi-user.target" ];
   };
 }
