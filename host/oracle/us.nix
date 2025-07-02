@@ -8,7 +8,7 @@
     "net.ipv4.ip_forward" = 1;
   };
 
-  systemd.services."komari-agent@JdkkZwkSx4r_k5GA".overrideStrategy = "asDropin";
+  systemd.services."komari-agent@abc".overrideStrategy = "asDropin";
 
   # Oracle US to JP(China Telecom to Oracle SJC via AS4134)
   networking.nftables.enable = true;
