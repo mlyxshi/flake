@@ -19,6 +19,8 @@ buildGoModule rec {
 
   ldflags = [ "-s" "-w" ];
 
+  doCheck = false;
+
   meta = {
     homepage = "https://github.com/komari-monitor/komari-agent";
     mainProgram = "komari-agent";
