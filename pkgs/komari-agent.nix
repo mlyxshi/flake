@@ -1,8 +1,4 @@
-{
-  lib,
-  buildGoModule,
-  fetchFromGitHub,
-}:
+{ buildGoModule, fetchFromGitHub }:
 
 buildGoModule rec {
   pname = "komari-agent";
@@ -23,6 +19,5 @@ buildGoModule rec {
 
   meta = {
     homepage = "https://github.com/komari-monitor/komari-agent";
-    mainProgram = "komari-agent";
   };
 }
