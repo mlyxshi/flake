@@ -25,7 +25,6 @@ in
         self.nixosModules.nixos.server
         self.nixosModules.hardware.uefi.gpt-auto
         self.nixosModules.network.dhcp
-        self.nixosModules.services.beszel-agent
         self.nixosModules.services.komari-agent
         self.nixosModules.services.traefik
         self.nixosModules.services.telegraf
