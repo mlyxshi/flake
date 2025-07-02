@@ -9,7 +9,6 @@ nixpkgs.lib.nixosSystem {
     ./${hostName}.nix
 
     self.nixosModules.services.snell
-    self.nixosModules.services.beszel-agent
     {
       nixpkgs.hostPlatform = "x86_64-linux";
       networking.hostName = hostName;

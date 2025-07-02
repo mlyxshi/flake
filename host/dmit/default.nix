@@ -7,7 +7,7 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.hardware.bios.vda
     self.nixosModules.services.ss
     self.nixosModules.services.snell
-    self.nixosModules.services.beszel-agent
+    self.nixosModules.services.komari-agent
     ./shinagawa.nix
     {
       nixpkgs.hostPlatform = "x86_64-linux";
