@@ -9,6 +9,9 @@
     self.nixosModules.containers.komari-monitor
   ];
 
+  systemd.services."komari-agent@op1fIdu_z9Q5RP28".overrideStrategy = "asDropin";
+  systemd.services."komari-agent@op1fIdu_z9Q5RP28".wantedBy = [ "multi-user.target" ];
+
   environment.systemPackages = with pkgs; [
     nix-index
 
