@@ -14,6 +14,7 @@
 
     brews = [
       "cloudflared"
+      "ipatool"
     ];
 
     casks = [

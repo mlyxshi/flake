@@ -12,7 +12,7 @@
   boot.initrd.network.ssh.enable = true;
   boot.initrd.systemd.services.sshd.preStart = lib.mkForce "/bin/chmod 0600 /etc/ssh/ssh_host_ed25519_key";
 
-  # qemu + ext4 + vfat + efivarfs + overlayfs
+  # qemu + ext4 + vfat + efivarfs + overlay
   # add extra kernel modules: https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/all-hardware.nix
   boot.initrd.kernelModules = [ "virtio_net" "virtio_pci" "virtio_mmio" "virtio_blk" "virtio_scsi" "virtio_balloon" "virtio_console" ]
     ++ [ "ext4" ]
