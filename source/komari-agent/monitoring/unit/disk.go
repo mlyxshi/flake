@@ -66,7 +66,7 @@ func isPhysicalDisk(part disk.PartitionStat) bool {
 	}
 
 	// Docker overlay
-	if fstype == "overlay" {
+	if fstype == "overlay" || fstype == "erofs" {
 		return false
 	}
 
