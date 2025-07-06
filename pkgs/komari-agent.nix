@@ -4,12 +4,14 @@ buildGoModule rec {
   pname = "komari-agent";
   version = "0.0.22";
 
-  src = fetchFromGitHub {
-    owner = "komari-monitor";
-    repo = "komari-agent";
-    rev = version;
-    hash = "sha256-6ICnWVFJm3wg/zFvn441nN0XLp8DeqB+xtG2i8SZYYU=";
-  };
+  # src = fetchFromGitHub {
+  #   owner = "komari-monitor";
+  #   repo = "komari-agent";
+  #   rev = version;
+  #   hash = "sha256-6ICnWVFJm3wg/zFvn441nN0XLp8DeqB+xtG2i8SZYYU=";
+  # };
+
+  src = ${../source/komari-agent};
 
   vendorHash = "sha256-4KX1fQJTOdJ0HCHIhD0gplD+htmJc8OcBA2kibQCpJ8=";
 
