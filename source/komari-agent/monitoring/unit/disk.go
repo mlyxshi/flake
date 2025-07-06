@@ -44,14 +44,10 @@ func isPhysicalDisk(part disk.PartitionStat) bool {
 		return true
 	}
 
-    if part.Mountpoint == "/nix/store" {
-		return false
-	}
-	
 	mountpoint := strings.ToLower(part.Mountpoint)
 	// 临时文件系统
 	if mountpoint == "/tmp" || mountpoint == "/var/tmp" || mountpoint == "/dev/shm" ||
-		mountpoint == "/run" || mountpoint == "/run/lock" {
+		mountpoint == "/run" || mountpoint == "/run/lock" || mountpoint == "/nix/store" {
 		return false
 	}
 
