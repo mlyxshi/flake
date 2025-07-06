@@ -33,7 +33,6 @@ func Disk() DiskInfo {
 		}
 		diskinfo.Total += u.Total
 		diskinfo.Used += u.Used
-		fmt.Printf("Disk Usage for %s: Total: %d, Used: %d\n", part.Mountpoint, u.Total, u.Used)
 	}
 
 	return diskinfo
