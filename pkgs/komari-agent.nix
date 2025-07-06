@@ -11,7 +11,7 @@ buildGoModule rec {
   #   hash = "sha256-6ICnWVFJm3wg/zFvn441nN0XLp8DeqB+xtG2i8SZYYU=";
   # };
 
-  src = ${../source/komari-agent};
+  src = ../source/komari-agent;
 
   vendorHash = "sha256-4KX1fQJTOdJ0HCHIhD0gplD+htmJc8OcBA2kibQCpJ8=";
 
