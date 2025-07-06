@@ -13,7 +13,7 @@ buildGoModule rec {
 
   vendorHash = "sha256-4KX1fQJTOdJ0HCHIhD0gplD+htmJc8OcBA2kibQCpJ8=";
 
-  ldflags = [ "-s" "-w" ];
+  ldflags = [ "-s" "-w" "github.com/komari-monitor/komari-agent/update.CurrentVersion=${version}" ];
 
   doCheck = false;
 
