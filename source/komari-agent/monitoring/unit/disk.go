@@ -2,7 +2,6 @@ package monitoring
 
 import (
 	"github.com/shirou/gopsutil/disk"
-	"fmt"
 )
 
 type DiskInfo struct {
