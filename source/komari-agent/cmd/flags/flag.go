@@ -5,7 +5,6 @@ var (
 	Token               string
 	Endpoint            string
 	Interval            float64
-	IgnoreUnsafeCert    bool
 	MaxRetries          int
 	ReconnectInterval   int
 	InfoReportInterval  int
