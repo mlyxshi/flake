@@ -11,7 +11,6 @@ import (
 
 	"github.com/komari-monitor/komari-agent/cmd/flags"
 	monitoring "github.com/komari-monitor/komari-agent/monitoring/unit"
-	"github.com/komari-monitor/komari-agent/update"
 )
 
 func DoUploadBasicInfoWorks() {
@@ -49,7 +48,7 @@ func uploadBasicInfo() error {
 		"disk_total":     monitoring.Disk().Total,
 		"gpu_name":       monitoring.GpuName(),
 		"virtualization": monitoring.Virtualized(),
-		"version":        update.CurrentVersion,
+		"version":        "mlyxdev",
 	}
 
 	endpoint := strings.TrimSuffix(flags.Endpoint, "/") + "/api/clients/uploadBasicInfo?token=" + flags.Token
