@@ -13,7 +13,7 @@ buildGoModule rec {
 
   src = ../source/komari-agent;
 
-  vendorHash = "sha256-4KX1fQJTOdJ0HCHIhD0gplD+htmJc8OcBA2kibQCpJ8=";
+  vendorHash = "sha256-rQ5MYPGxgXlCwAuEPSB+CSNnLJ6L7mvZYTtc8N9GWC0=";
 
   ldflags = [ "-s" "-w" ];
 
