@@ -10,7 +10,6 @@ import (
 	"github.com/gorilla/websocket"
 	"github.com/komari-monitor/komari-agent/cmd/flags"
 	"github.com/komari-monitor/komari-agent/monitoring"
-	"github.com/komari-monitor/komari-agent/terminal"
 	"github.com/komari-monitor/komari-agent/ws"
 )
 
@@ -99,8 +98,6 @@ func handleWebSocketMessages(conn *ws.SafeConn, done chan<- struct{}) {
 		}
 		var message struct {
 			Message string `json:"message"`
-			// Terminal
-			TerminalId string `json:"request_id,omitempty"`
 			// Remote Exec
 			ExecCommand string `json:"command,omitempty"`
 			ExecTaskID  string `json:"task_id,omitempty"`
@@ -115,10 +112,6 @@ func handleWebSocketMessages(conn *ws.SafeConn, done chan<- struct{}) {
 			continue
 		}
 
-		if message.Message == "terminal" || message.TerminalId != "" {
-			go establishTerminalConnection(flags.Token, message.TerminalId, flags.Endpoint)
-			continue
-		}
 		if message.Message == "exec" {
 			go NewTask(message.ExecTaskID, message.ExecCommand)
 			continue
@@ -131,23 +124,3 @@ func handleWebSocketMessages(conn *ws.SafeConn, done chan<- struct{}) {
 }
 
 // connectWebSocket attempts to establish a WebSocket connection and upload basic info
-
-// establishTerminalConnection 建立终端连接并使用terminal包处理终端操作
-func establishTerminalConnection(token, id, endpoint string) {
-	endpoint = strings.TrimSuffix(endpoint, "/") + "/api/clients/terminal?token=" + token + "&id=" + id
-	endpoint = "ws" + strings.TrimPrefix(endpoint, "http")
-	dialer := &websocket.Dialer{
-		HandshakeTimeout: 5 * time.Second,
-	}
-	conn, _, err := dialer.Dial(endpoint, nil)
-	if err != nil {
-		log.Println("Failed to establish terminal connection:", err)
-		return
-	}
-
-	// 启动终端
-	terminal.StartTerminal(conn)
-	if conn != nil {
-		conn.Close()
-	}
-}

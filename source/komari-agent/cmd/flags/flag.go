@@ -1,8 +1,6 @@
 package flags
 
 var (
-	DisableAutoUpdate   bool
-	DisableWebSsh       bool
 	MemoryModeAvailable bool
 	Token               string
 	Endpoint            string
