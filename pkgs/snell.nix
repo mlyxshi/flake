@@ -1,7 +1,7 @@
 { stdenvNoCC, fetchzip }:
 stdenvNoCC.mkDerivation rec {
   pname = "snell";
-  version = "5.0.0b2";
+  version = "5.0.0b3";
 
   src = fetchzip {
     url =
@@ -10,8 +10,8 @@ stdenvNoCC.mkDerivation rec {
       else "https://dl.nssurge.com/snell/snell-server-v${version}-linux-aarch64.zip";
     hash =
       if stdenvNoCC.hostPlatform.isx86_64
-      then "sha256-an5RIuxEdI9N0NfNsGuHmndBpavIBl2lSfq1ssaG5PY="
-      else "sha256-OKnVDkIigsidnEFAey3enCpjRHyJXuepZiPFH8G+P4k=";
+      then ""
+      else "";
   };
 
   installPhase = ''

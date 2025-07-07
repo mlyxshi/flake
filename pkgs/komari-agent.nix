@@ -19,7 +19,6 @@ buildGoModule rec {
 
   doCheck = false;
 
-  meta = {
-    homepage = "https://github.com/komari-monitor/komari-agent";
-  };
+  meta.homepage = "https://github.com/komari-monitor/komari-agent";
+
 }
