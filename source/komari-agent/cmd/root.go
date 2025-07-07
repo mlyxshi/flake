@@ -1,10 +1,7 @@
 package cmd
 
 import (
-	"crypto/tls"
 	"log"
-	"net/http"
-	"os"
 
 	"github.com/komari-monitor/komari-agent/cmd/flags"
 	"github.com/komari-monitor/komari-agent/server"
