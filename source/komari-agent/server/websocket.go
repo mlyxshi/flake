@@ -32,43 +32,57 @@ func EstablishWebSocketConnection() {
 		interval = flags.Interval - 1
 	}
 
-	ticker := time.NewTicker(time.Duration(interval * float64(time.Second)))
-	defer ticker.Stop()
+	dataTicker := time.NewTicker(time.Duration(interval * float64(time.Second)))
+	defer dataTicker.Stop()
 
-	for range ticker.C {
-		// If no connection, attempt to connect
-		if conn == nil {
-			log.Println("Attempting to connect to WebSocket...")
-			retry := 0
-			for retry <= flags.MaxRetries {
-				if retry > 0 {
-					log.Println("Retrying websocket connection, attempt:", retry)
+	heartbeatTicker := time.NewTicker(30 * time.Second)
+	defer heartbeatTicker.Stop()
+
+	for {
+		select {
+		case <-dataTicker.C:
+			if conn == nil {
+				log.Println("Attempting to connect to WebSocket...")
+				retry := 0
+				for retry <= flags.MaxRetries {
+					if retry > 0 {
+						log.Println("Retrying websocket connection, attempt:", retry)
+					}
+					conn, err = connectWebSocket(websocketEndpoint)
+					if err == nil {
+						log.Println("WebSocket connected")
+						go handleWebSocketMessages(conn, make(chan struct{}))
+						break
+					} else {
+						log.Println("Failed to connect to WebSocket:", err)
+					}
+					retry++
+					time.Sleep(time.Duration(flags.ReconnectInterval) * time.Second)
 				}
-				conn, err = connectWebSocket(websocketEndpoint)
-				if err == nil {
-					log.Println("WebSocket connected")
-					go handleWebSocketMessages(conn, make(chan struct{}))
-					break
-				} else {
-					log.Println("Failed to connect to WebSocket:", err)
+
+				if retry > flags.MaxRetries {
+					log.Println("Max retries reached.")
+					return
 				}
-				retry++
-				time.Sleep(time.Duration(flags.ReconnectInterval) * time.Second)
 			}
 
-			if retry > flags.MaxRetries {
-				log.Println("Max retries reached.")
-				return
+			data := monitoring.GenerateReport()
+			err = conn.WriteMessage(websocket.TextMessage, data)
+			if err != nil {
+				log.Println("Failed to send WebSocket message:", err)
+				conn.Close()
+				conn = nil // Mark connection as dead
+				continue
 			}
-		}
-
-		data := monitoring.GenerateReport()
-		err = conn.WriteMessage(websocket.TextMessage, data)
-		if err != nil {
-			log.Println("Failed to send WebSocket message:", err)
-			conn.Close()
-			conn = nil // Mark connection as dead
-			continue
+		case <-heartbeatTicker.C:
+			if conn != nil {
+				err := conn.WriteMessage(websocket.PingMessage, nil)
+				if err != nil {
+					log.Println("Failed to send heartbeat:", err)
+					conn.Close()
+					conn = nil // Mark connection as dead
+				}
+			}
 		}
 	}
 }
@@ -111,7 +125,6 @@ func handleWebSocketMessages(conn *ws.SafeConn, done chan<- struct{}) {
 			log.Println("Bad ws message:", err)
 			continue
 		}
-
 		if message.Message == "exec" {
 			go NewTask(message.ExecTaskID, message.ExecCommand)
 			continue
@@ -122,5 +135,3 @@ func handleWebSocketMessages(conn *ws.SafeConn, done chan<- struct{}) {
 		}
 	}
 }
-
-// connectWebSocket attempts to establish a WebSocket connection and upload basic info
