@@ -1,7 +1,7 @@
 { stdenvNoCC, fetchzip }:
 stdenvNoCC.mkDerivation rec {
   pname = "snell";
-  version = "5.0.0b3";
+  version = "5.0.0";
 
   src = fetchzip {
     url =
