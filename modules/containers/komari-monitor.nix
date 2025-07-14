@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }: {
 
   virtualisation.oci-containers.containers.komari-monitor = {
-    image = "ghcr.io/komari-monitor/komari";
+    image = "ghcr.io/komari-monitor/komari:main";
     volumes = [ "/var/lib/komari:/app/data" ];
     extraOptions = lib.concatMap (x: [ "--label" x ]) [
       "io.containers.autoupdate=registry"
