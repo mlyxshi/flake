@@ -2,6 +2,7 @@
   imports = [
     self.nixosModules.services.transmission.default
     self.nixosModules.services.snell
+    self.nixosModules.services.snell-warp
   ];
 
   boot.kernel.sysctl = {
