@@ -7,6 +7,7 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.hardware.bios.vda
     self.nixosModules.services.ss
     self.nixosModules.services.snell
+    self.nixosModules.services.snell-warp
     self.nixosModules.services.komari-agent
     ./shinagawa.nix
     {
