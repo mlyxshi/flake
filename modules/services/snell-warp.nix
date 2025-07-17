@@ -12,11 +12,11 @@ in
       ExecStartPre = pkgs.writeShellScript "wireguard-up" ''
         export PATH=$PATH:${pkgs.wireguard-tools}/bin:${pkgs.iproute2}/bin
         ip link add wg1 type wireguard
-        wg setconf wg1 /etc/wireguard/warp-strip.conf
+        wg setconf wg1 /secret/wireguard/warp-strip.conf
         ip addr add 172.16.0.2/32 dev wg1
         ip link set mtu 1280 dev wg1
         ip link set wg1 up
-        wg setconf wg1 /etc/wireguard/warp-strip.conf
+        wg setconf wg1 /secret/wireguard/warp-strip.conf
         resolvectl dns wg1 1.1.1.1
       '';
       ExecStopPost = "${pkgs.iproute2}/bin/ip link del wg1";
