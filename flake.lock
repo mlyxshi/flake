@@ -45,11 +45,11 @@
     },
     "secret": {
       "locked": {
-        "lastModified": 1752805271,
-        "narHash": "sha256-clSAmkkqfPxNNwLafGMJ3q1Z1gD5AQmsVlOD5w3QaSU=",
+        "lastModified": 1752807806,
+        "narHash": "sha256-odqi9y9jAc3OiLfRakkM1uGlQfzdJ4NuE5hUAPwiQfw=",
         "ref": "refs/heads/main",
-        "rev": "0dd69d59a1ca0cf04ef23d9a7f44971b28831ecf",
-        "revCount": 86,
+        "rev": "ab8a7b8bb91798030a59d9041a831cff20e4506d",
+        "revCount": 87,
         "type": "git",
         "url": "ssh://git@github.com/mlyxshi/secret"
       },

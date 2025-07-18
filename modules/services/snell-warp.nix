@@ -12,7 +12,7 @@ in
       ExecStartPre = pkgs.writeShellScript "wireguard-up" ''
         export PATH=$PATH:${pkgs.wireguard-tools}/bin:${pkgs.iproute2}/bin
         ip link add wg1 type wireguard
-        wg set wg1 listen-port 10000 private-key /secret/warp-allowed peer bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo= allowed-ips 0.0.0.0/0 endpoint engage.cloudflareclient.com:2408 persistent-keepalive 45
+        wg set wg1 listen-port 10000 private-key /secret/warp-allowed peer bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo= allowed-ips 0.0.0.0/0 endpoint engage.cloudflareclient.com:2408
         ip addr add 172.16.0.2/32 dev wg1
         ip link set mtu 1280 dev wg1
         ip link set wg1 up

@@ -24,7 +24,7 @@
         ip6 nexthdr icmpv6 accept
         ct state {established, related} accept
         tcp dport { 2222, 8000, 5201, 8888, 8889, 9999 } accept
-        udp dport { 5201, 8888, 8889, 9999 } accept
+        udp dport { 5201, 8888, 8889, 9999, 10000 } accept
       }
     }
   '';
