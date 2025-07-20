@@ -1,4 +1,6 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, ... }: let
+  package = self.packages.${config.nixpkgs.hostPlatform.system}.komari-agent;
+in {
   systemd.network.networks.ethernet-static = {
     matchConfig = {
       Name = "eth0";
