@@ -8,7 +8,6 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.services.ss
     self.nixosModules.services.snell
     self.nixosModules.services.warp
-    self.nixosModules.services.komari-agent
     ./shinagawa.nix
     {
       nixpkgs.hostPlatform = "x86_64-linux";
