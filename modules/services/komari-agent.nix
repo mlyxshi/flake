@@ -7,7 +7,7 @@ in
     after = [ "network.target" ];
     serviceConfig = {
       DynamicUser = true;
-      ExecStart = "${package}/bin/komari-agent -e https://top.mlyxshi.com -t %i --include-nics eth0 --disable-web-ssh --disable-auto-update";
+      ExecStart = "${package}/bin/komari-agent -e https://top.mlyxshi.com -t %i  --disable-web-ssh --disable-auto-update --include-nics eth0 include-mountpoint '/boot;/';
     };
   };
 }
