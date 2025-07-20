@@ -21,4 +21,10 @@ in
     wantedBy = [ "multi-user.target" ];
   };
 
+  systemd.services.ss-warp = {
+    after = [ "snell-warp.service" ];
+    serviceConfig.ExecStart = "${pkgs.shadowsocks-rust}/bin/ssserver -c /secret/shadowsocks-warp";
+    wantedBy = [ "multi-user.target" ];
+  };
+
 }

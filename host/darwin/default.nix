@@ -82,6 +82,7 @@
     brews = [
       "iproute2mac"
       "nexttrace"
+      "payload-dumper-go"
     ];
 
     casks = [
