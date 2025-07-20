@@ -8,7 +8,7 @@ buildGoModule rec {
     owner = "komari-monitor";
     repo = "komari-agent";
     rev = version;
-    hash = "";
+    hash = "sha256-RhHyvaJTby4t1QP8U0g58lJSX+dUOjgyjdX8LdYsr64=";
   };
 
   vendorHash = "";
@@ -18,5 +18,4 @@ buildGoModule rec {
   doCheck = false;
 
   meta.homepage = "https://github.com/komari-monitor/komari-agent";
-
 }
