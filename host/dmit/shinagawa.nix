@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }: let
+{ config, pkgs, lib, self, ... }: let
   package = self.packages.${config.nixpkgs.hostPlatform.system}.komari-agent;
 in {
   systemd.network.networks.ethernet-static = {
