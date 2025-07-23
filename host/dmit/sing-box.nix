@@ -2,6 +2,7 @@
 
   services.sing-box.enable = true;
   services.sing-box.settings = {
+    log.level = "info";
     dns = { };
     endpoints = [
       {
