@@ -14,8 +14,6 @@
 
   services.sing-box.enable = true;
   services.sing-box.settings = {
-    log.level = "info";
-    dns = { };
     inbounds = [
       {
         type = "shadowsocks";
@@ -26,14 +24,5 @@
         password = { _secret = "/secret/ss-password"; };
       }
     ];
-  #   outbounds = [
-  #     {
-  #       type = "direct";
-  #       tag = "direct-out";
-  #     }
-  #   ];
-
-  #   route = {
-  #   };
   };
 }
