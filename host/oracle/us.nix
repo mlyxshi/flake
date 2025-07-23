@@ -24,6 +24,19 @@
     ];
   };
 
+  programs.nix-ld.enable = true;
+
+  # systemd.services."s-ui" = {
+  #   after = [ "network.target" ];
+  #   serviceConfig = {
+  #     ExecStart = "";
+  #   };
+  # };
+
+
+
+
+
   # Oracle US to JP(China Telecom to Oracle SJC via AS4134)
   # networking.nftables.enable = true;
   # networking.nftables.ruleset = ''
