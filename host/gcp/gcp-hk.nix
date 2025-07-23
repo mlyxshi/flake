@@ -30,6 +30,7 @@
             port = 2408;
             public_key = "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=";
             allowed_ips = [ "0.0.0.0/0" ];
+            reserved = [ 129 120 123 ];
           }
         ];
       }
