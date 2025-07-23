@@ -7,6 +7,8 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.hardware.bios.vda
     self.nixosModules.services.warp
     ./shinagawa.nix
+    ./singbox.nix
+    ./traffic-api.nix
     {
       nixpkgs.hostPlatform = "x86_64-linux";
       networking.hostName = "nrt";

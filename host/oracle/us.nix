@@ -15,7 +15,7 @@
     inbounds = [
       {
         type = "shadowsocks";
-        tag = "ss-in";
+        # tag = "ss-in";
         listen = "0.0.0.0";
         listen_port = 8888;
         method = "aes-128-gcm";

@@ -1,6 +1,8 @@
-{ config, pkgs, lib, self, ... }: let
+{ config, pkgs, lib, self, ... }:
+let
   package = self.packages.${config.nixpkgs.hostPlatform.system}.komari-agent;
-in {
+in
+{
   systemd.network.networks.ethernet-static = {
     matchConfig = {
       Name = "eth0";
@@ -13,7 +15,7 @@ in {
 
   # Prefer IPv4 for DNS resolution
   networking.getaddrinfo.precedence."::ffff:0:0/96" = 100;
-  
+
   services.openssh.ports = [ 2222 ];
 
   networking.nftables.enable = true;
@@ -25,8 +27,8 @@ in {
         ip protocol icmp accept
         ip6 nexthdr icmpv6 accept
         ct state {established, related} accept
-        tcp dport { 2222, 8000, 5201, 6666, 8888, 8889, 9999 } accept
-        udp dport { 5201, 7777, 6666, 8889, 9999, 10000 } accept
+        tcp dport { 2222, 5201, 8000, 8888, 8889 } accept
+        udp dport { 5201, 8888, 8889, 10000 } accept
       }
     }
   '';
@@ -40,22 +42,4 @@ in {
     };
     wantedBy = [ "multi-user.target" ];
   };
-
-  services.vnstat.enable = true;
-  # Traffic Reset Date
-  environment.etc."vnstat.conf".text = ''
-    MonthRotate 24
-    UnitMode 1
-    Interface "eth0"
-  '';
-
-  systemd.services.traffic-api = {
-    after = [ "network.target" ];
-    serviceConfig = {
-      DynamicUser = true;
-      ExecStart = "${pkgs.python3}/bin/python ${./traffic.py}";
-    };
-    wantedBy = [ "multi-user.target" ];
-  };
-
 }
