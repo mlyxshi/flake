@@ -10,6 +10,20 @@
   systemd.services."komari-agent@JdkkZwkSx4r_k5GA".overrideStrategy = "asDropin";
   systemd.services."komari-agent@JdkkZwkSx4r_k5GA".wantedBy = [ "multi-user.target" ];
 
+  services.sing-box.enable = true;
+  services.sing-box.settings = {
+    inbounds = [
+      {
+        type = "shadowsocks";
+        tag = "ss-in-9999";
+        listen = "0.0.0.0";
+        listen_port = 9999;
+        method = "aes-128-gcm";
+        password = { _secret = "/secret/ss-password"; };
+      }
+    ];
+  };
+
   # Oracle US to JP(China Telecom to Oracle SJC via AS4134)
   # networking.nftables.enable = true;
   # networking.nftables.ruleset = ''

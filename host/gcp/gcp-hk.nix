@@ -8,9 +8,6 @@
   # networking.nftables.ruleset = ''
   # '';  
 
-  environment.systemPackages = with pkgs; [
-    sing-box
-  ];
 
   services.sing-box.enable = true;
   services.sing-box.settings = {
