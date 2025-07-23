@@ -7,8 +7,6 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.hardware.uefi.gpt-auto
     
     ./${hostName}.nix
-
-    self.nixosModules.services.snell
     {
       nixpkgs.hostPlatform = "x86_64-linux";
       networking.hostName = hostName;

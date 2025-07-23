@@ -1,7 +1,6 @@
 { self, config, pkgs, lib, ... }: {
   imports = [
     self.nixosModules.services.transmission.default
-    self.nixosModules.services.snell
   ];
 
   boot.kernel.sysctl = {
