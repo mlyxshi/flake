@@ -12,4 +12,33 @@
     sing-box
   ];
 
+  services.sing-box.enable = true;
+  services.sing-box.settings = {
+    log.level = "info";
+    dns = { };
+    endpoints = [ ];
+    inbounds = [
+      {
+        type = "shadowsocks";
+        tag = "ss-in";
+        listen = "0.0.0.0";
+        listen_port = 9999;
+        method = "aes-128-gcm";
+        password = {
+          _secret = "/secret/ss-password";
+        };
+      }
+    ];
+
+    outbounds = [
+      {
+        type = "direct";
+        tag = "direct-out";
+      }
+    ];
+
+    route = { };
+  };
+
+
 }
