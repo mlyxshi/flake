@@ -63,6 +63,17 @@
       hash = "sha256-2R89tGf2HzPzcytIg7/HxbEP/aDMZ6MxZOk6Z8C1hZA=";
     };
     vendorHash = "sha256-tyGCkVWfCp7F6NDw/AlJTglzNC/jTMgrL8q9Au6Jqec=";
+
+    tags = [
+      "with_quic"
+      "with_dhcp"
+      "with_wireguard"
+      "with_ech"
+      "with_utls"
+      "with_acme"
+      "with_gvisor"
+    ];
+
   });
 
 
