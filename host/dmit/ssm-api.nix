@@ -8,7 +8,8 @@ in
 
   services.caddy.enable = true;
   services.caddy.virtualHosts.":7777".extraConfig = ''
-    reverse_proxy  http://localhost:6666/server/v1/stats
+    rewrite * /server/v1/stats
+    reverse_proxy localhost:6666
   '';
 
   systemd.services.ssm = {
@@ -32,6 +33,7 @@ in
     serviceConfig = {
       ExecStart = "${pythonEnv}/bin/python ${./ssm-tg.py}";
     };
+    wantedBy = [ "multi-user.target" ];
   };
 
 }
