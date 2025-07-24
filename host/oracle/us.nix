@@ -65,14 +65,14 @@
     vendorHash = "sha256-tyGCkVWfCp7F6NDw/AlJTglzNC/jTMgrL8q9Au6Jqec=";
 
     tags = [
-      with_gvisor
-      with_quic
-      with_dhcp
-      with_wireguard
-      with_utls
-      with_acme
-      with_clash_api
-      with_tailscale
+      "with_gvisor"
+      "with_quic"
+      "with_dhcp"
+      "with_wireguard"
+      "with_utls"
+      "with_acme"
+      "with_clash_api"
+      "with_tailscale"
     ];
 
   });
