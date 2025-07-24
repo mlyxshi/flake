@@ -56,7 +56,7 @@
   services.sing-box.package = pkgs.sing-box.overrideAttrs (previousAttrs: {
     pname = previousAttrs.pname + "-beta";
     version = "2.12";
-    src = fetchFromGitHub {
+    src = pkgs.fetchFromGitHub {
       owner = "SagerNet";
       repo = "sing-box";
       rev = "66a767d083fd37b3cd071466636e645bfc96bc96";
