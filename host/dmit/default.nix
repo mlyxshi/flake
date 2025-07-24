@@ -8,6 +8,7 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.services.snell
     ./shinagawa.nix
     ./sing-box.nix
+    ./ssm-api.nix
     ./traffic-api.nix
     {
       nixpkgs.hostPlatform = "x86_64-linux";

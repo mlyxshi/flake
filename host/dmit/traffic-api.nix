@@ -16,11 +16,4 @@
     };
     wantedBy = [ "multi-user.target" ];
   };
-
-
-  environment.systemPackages = [
-    (pkgs.python3.withPackages (ps: with ps; [
-      python-telegram-bot
-    ]))
-  ];
 }
