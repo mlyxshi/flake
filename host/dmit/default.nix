@@ -7,7 +7,7 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.hardware.bios.vda
     self.nixosModules.services.snell
     ./shinagawa.nix
-    ./singbox.nix
+    ./sing-box.nix
     ./traffic-api.nix
     {
       nixpkgs.hostPlatform = "x86_64-linux";
