@@ -1,6 +1,6 @@
 { self, config, pkgs, lib, ... }: {
   imports = [
-    self.nixosModules.services.transmission.default
+    self.nixosModules.services.sing-box.default
   ];
 
   boot.kernel.sysctl = {
@@ -76,6 +76,14 @@
     ];
 
   });
+
+  users = {
+    users.sing-box = {
+      group = "sing-box";
+      isSystemUser = true;
+    };
+    groups.sing-box = { };
+  };
 
 
 
