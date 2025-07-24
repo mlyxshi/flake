@@ -21,7 +21,7 @@
         };
         cache_path = "cache.json";
         listen = "0.0.0.0";
-        listen_port = 7777;
+        listen_port = 6666;
       }
     ];
   };
@@ -73,4 +73,9 @@
     };
     wantedBy = [ "timers.target" ];
   };
+
+  services.caddy.enable = true;
+  services.caddy.virtualHosts.":7777".extraConfig = ''
+    reverse_proxy  http://localhost:6666/server/v1/stats
+  '';
 }

@@ -2,7 +2,7 @@ import http.client
 import json
 
 HOST = "127.0.0.1"
-PORT = 7777
+PORT = 6666
 STATS_PATH = "/server/v1/stats"
 THRESHOLD_BYTES = 125 * 1024 ** 3  # 单向125GB，双向250GB
 
