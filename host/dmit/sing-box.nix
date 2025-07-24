@@ -28,14 +28,36 @@
 
   services.sing-box.package = pkgs.sing-box.overrideAttrs (previousAttrs: {
     pname = previousAttrs.pname + "-beta";
-    version = "66a767d083fd37b3cd071466636e645bfc96bc96";
-
-    src = previousAttrs.src.override {
-      hash = "";
+    version = "2.12";
+    src = pkgs.fetchFromGitHub {
+      owner = "SagerNet";
+      repo = "sing-box";
+      rev = "66a767d083fd37b3cd071466636e645bfc96bc96";
+      hash = "sha256-2R89tGf2HzPzcytIg7/HxbEP/aDMZ6MxZOk6Z8C1hZA=";
     };
+    vendorHash = "sha256-tyGCkVWfCp7F6NDw/AlJTglzNC/jTMgrL8q9Au6Jqec=";
 
-    vendorHash = "";
+    tags = [
+      "with_gvisor"
+      "with_quic"
+      "with_dhcp"
+      "with_wireguard"
+      "with_utls"
+      "with_acme"
+      "with_clash_api"
+      "with_tailscale"
+    ];
+
   });
+
+  users = {
+    users.sing-box = {
+      group = "sing-box";
+      isSystemUser = true;
+    };
+    groups.sing-box = { };
+  };
+
 
 
 }
