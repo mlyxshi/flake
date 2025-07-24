@@ -1,6 +1,5 @@
 { self, config, pkgs, lib, ... }: {
   imports = [
-    self.nixosModules.services.sing-box.default
   ];
 
   boot.kernel.sysctl = {
