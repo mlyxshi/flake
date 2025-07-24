@@ -60,7 +60,7 @@
       owner = "SagerNet";
       repo = "sing-box";
       rev = "66a767d083fd37b3cd071466636e645bfc96bc96";
-      hash = "";
+      hash = "sha256-2R89tGf2HzPzcytIg7/HxbEP/aDMZ6MxZOk6Z8C1hZA=";
     };
     vendorHash = "";
   });
