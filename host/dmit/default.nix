@@ -5,7 +5,7 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.nixos.server
     self.nixosModules.network.static
     self.nixosModules.hardware.bios.vda
-    self.nixosModules.services.warp
+    self.nixosModules.services.snell
     ./shinagawa.nix
     ./singbox.nix
     ./traffic-api.nix

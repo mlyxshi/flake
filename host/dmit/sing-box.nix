@@ -1,61 +1,41 @@
 { config, pkgs, lib, ... }: {
-
   services.sing-box.enable = true;
   services.sing-box.settings = {
     log.level = "info";
-    dns = { };
-    endpoints = [
-      {
-        type = "wireguard";
-        tag = "wg-endpoint";
-        address = [ "172.16.0.2/32" ];
-        private_key = { _secret = "/secret/warp-allowed"; };
-        listen_port = 10000;
-        peers = [
-          {
-            address = "engage.cloudflareclient.com";
-            port = 2408;
-            public_key = "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=";
-            allowed_ips = [ "0.0.0.0/0" ];
-            reserved = [ 129 120 123 ];
-          }
-        ];
-      }
-    ];
     inbounds = [
       {
         type = "shadowsocks";
-        tag = "ss-in-8888";
+        tag = "ss-in";
         listen = "0.0.0.0";
-        listen_port = 8888;
-        method = "aes-128-gcm";
-        password = { _secret = "/secret/ss-password"; };
-      }
-      {
-        type = "shadowsocks";
-        tag = "ss-in-8889";
-        listen = "0.0.0.0";
-        listen_port = 8889;
-        method = "aes-128-gcm";
-        password = { _secret = "/secret/ss-password"; };
+        listen_port = 9999;
+        managed = true;
+        method = "2022-blake3-aes-128-gcm";
+        password = { _secret = "/secret/ss-password-2022"; };
       }
     ];
-
-    outbounds = [
+    services = [
       {
-        type = "direct";
-        tag = "direct-out";
+        type = "ssm-api";
+        servers = {
+          "/" = "ss-in";
+        };
+        cache_path = "cache.json";
+        listen = "0.0.0.0";
+        listen_port = 7777;
       }
     ];
-
-    route = {
-      rules = [
-        {
-          inbound = "ss-in-8889";
-          outbound = "wg-endpoint";
-        }
-      ];
-    };
   };
+
+  services.sing-box.package = pkgs.sing-box.overrideAttrs (previousAttrs: {
+    pname = previousAttrs.pname + "-beta";
+    version = "66a767d083fd37b3cd071466636e645bfc96bc96";
+
+    src = previousAttrs.src.override {
+      hash = "";
+    };
+
+    vendorHash = "";
+  });
+
 
 }
