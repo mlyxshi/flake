@@ -62,7 +62,7 @@
       rev = "66a767d083fd37b3cd071466636e645bfc96bc96";
       hash = "sha256-2R89tGf2HzPzcytIg7/HxbEP/aDMZ6MxZOk6Z8C1hZA=";
     };
-    vendorHash = "";
+    vendorHash = "sha256-tyGCkVWfCp7F6NDw/AlJTglzNC/jTMgrL8q9Au6Jqec=";
   });
 
 
