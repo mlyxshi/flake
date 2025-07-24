@@ -38,7 +38,7 @@ def check_and_patch_users():
             username = user["username"]
             total_bytes = user["downlinkBytes"] + user["uplinkBytes"]
             gb = total_bytes / (1024 ** 3)
-            print(f"[INFO] User: {username}, Total Bytes: {total_bytes} ({gb:.2f} GB)")
+            print(f"User: {username}, Total Bytes: {total_bytes} ({gb:.2f} GB)")
 
             if total_bytes > THRESHOLD_BYTES:
                 patch_user(username)
