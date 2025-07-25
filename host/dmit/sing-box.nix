@@ -29,7 +29,7 @@
         ];
         domain_resolver = {
           server = "cloudflare-dns";
-          strategy = "prefer_ipv4";
+          strategy = "ipv6_only";
         };
       }
     ];
