@@ -27,10 +27,10 @@
             reserved = [ 129 120 123 ];
           }
         ];
-        domain_resolver = {
-          server = "cloudflare-dns";
-          strategy = "ipv6_only";
-        };
+        # domain_resolver = {
+        #   server = "cloudflare-dns";
+        #   strategy = "ipv6_only";
+        # };
       }
     ];
     inbounds = [
