@@ -30,6 +30,7 @@
         domain_resolver = {
           server = "cloudflare-dns";
           strategy = "ipv6_only";
+          disable_cache = true;
         };
       }
     ];
