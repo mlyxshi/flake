@@ -34,9 +34,17 @@ async def run_script(update: Update, context: ContextTypes.DEFAULT_TYPE):
         output_lines = []
         for user in users:
             username = user.get("username", "<unknown>")
-            total_bytes = user.get("downlinkBytes", 0) + user.get("uplinkBytes", 0)
-            gb = total_bytes / (1024 ** 3)
-            output_lines.append(f"User: {username}, Total Bytes: {total_bytes} ({gb:.2f} GB)")
+            up = user.get("uplinkBytes", 0)
+            down = user.get("downlinkBytes", 0)
+            total = up + down
+            gb = total / (1024 ** 3)
+            output_lines.append(
+                f"{username}:\n"
+                f"  up: {up} Bytes\n"
+                f"  down: {down} Bytes\n"
+                f"  total: {total} Bytes | {gb:.2f} GB\n"
+            )
+
 
         output = "\n".join(output_lines)
         if len(output) > 4000:
