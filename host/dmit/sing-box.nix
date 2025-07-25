@@ -10,15 +10,6 @@
           tag = "cloudflare-dns";
         }
       ];
-      rules = [
-        {
-          inbound = "ss-in-me";
-          action = "route";
-          server = "cloudflare-dns";
-        }
-
-      ];
-      strategy = "prefer_ipv4";
     };
     endpoints = [
       {
@@ -36,6 +27,10 @@
             reserved = [ 129 120 123 ];
           }
         ];
+        domain_resolver = {
+          server = "cloudflare-dns";
+          strategy = "prefer_ipv4";
+        };
       }
     ];
     inbounds = [
