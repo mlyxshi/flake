@@ -28,6 +28,9 @@ async def run_script(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await update.message.reply_text("No user stats found.")
             return
 
+        # Sort users by total traffic in descending order
+        users.sort(key=lambda u: u.get("downlinkBytes", 0) + u.get("uplinkBytes", 0), reverse=True)
+
         output_lines = []
         for user in users:
             username = user.get("username", "<unknown>")
