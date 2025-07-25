@@ -5,13 +5,6 @@ let
   ]);
 in
 {
-
-  services.caddy.enable = true;
-  services.caddy.virtualHosts.":7777".extraConfig = ''
-    rewrite * /server/v1/stats
-    reverse_proxy localhost:6666
-  '';
-
   systemd.services.ssm = {
     after = [ "sing-box.service" ];
     serviceConfig = {
