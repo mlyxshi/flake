@@ -42,9 +42,9 @@
           "dmm-extension.com"
           "abema-tv.com"
         ];
-        # domain_keyword = [
-        #   "abema"
-        # ];
+        domain_keyword = [
+          "abematv"
+        ];
         outbound = "wg-endpoint";
       }
     ];
