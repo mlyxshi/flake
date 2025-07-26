@@ -33,6 +33,7 @@
     rules = [
       {
         inbound = "ss-in";
+        # Cloudflare Warp for Unlock Japan Residential Service
         rule_set = [
           "abematv"
           "dmm"
@@ -44,17 +45,17 @@
     rule_set = [
       {
         tag = "abematv";
-        rules = {
+        rules = [{
           domain = [ "abema.tv" ];
           domain_suffix = [ "abema-tv.com" ];
           domain_keyword = [ "abematv" ];
-        };
+        }];
       }
       {
         tag = "dmm";
-        rules = {
+        rules = [{
           domain_suffix = [ "dmm.com" "dmm.co.jp" "dmm-extension.com" ];
-        };
+        }];
       }
     ];
 
