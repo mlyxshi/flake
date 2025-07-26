@@ -78,7 +78,7 @@ let
 in
 {
   systemd.services.sing-box-share = {
-    after = [ "network-online.target" ];
+    after = [ "network.target" ];
     preStart = utils.genJqSecretsReplacementSnippet config-share "/run/sing-box/config.json";
     serviceConfig = {
       StateDirectory = "sing-box";
@@ -89,8 +89,8 @@ in
   };
 
   systemd.services.sing-box-my = {
-    after = [ "network-online.target" ];
-    preStart = utils.genJqSecretsReplacementSnippet config-my "/run/sing-box/config-my.json";
+    after = [ "network.target" ];
+    preStart = utils.genJqSecretsReplacementSnippet config-my "/run/sing-box-my/config.json";
     serviceConfig = {
       StateDirectory = "sing-box-my";
       RuntimeDirectory = "sing-box-my";
