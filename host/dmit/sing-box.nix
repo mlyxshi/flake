@@ -22,6 +22,10 @@ let
     ];
   });
 
+  pythonEnv = pkgs.python3.withPackages (ps: with ps; [
+    python-telegram-bot
+  ]);
+
   config-share = {
     log.level = "info";
     inbounds = [
@@ -57,6 +61,30 @@ in
       StateDirectory = "sing-box";
       RuntimeDirectory = "sing-box";
       ExecStart = "${lib.getExe sing-box-beta} -D \${STATE_DIRECTORY} -C \${RUNTIME_DIRECTORY} run";
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
+
+  systemd.services.ssm = {
+    after = [ "sing-box-share.service" ];
+    serviceConfig = {
+      DynamicUser = true;
+      ExecStart = "${pkgs.python3}/bin/python ${./ssm.py}";
+    };
+  };
+
+  systemd.timers.ssm = {
+    timerConfig = {
+      OnCalendar = "*:0/1"; # every minute
+      AccuracySec = "1s";
+    };
+    wantedBy = [ "timers.target" ];
+  };
+
+  systemd.services.ssm-tg = {
+    after = [ "sing-box-share.service" ];
+    serviceConfig = {
+      ExecStart = "${pythonEnv}/bin/python ${./ssm-tg.py}";
     };
     wantedBy = [ "multi-user.target" ];
   };
