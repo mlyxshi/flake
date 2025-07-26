@@ -10,21 +10,10 @@ let
       hash = "sha256-2R89tGf2HzPzcytIg7/HxbEP/aDMZ6MxZOk6Z8C1hZA=";
     };
     vendorHash = "sha256-tyGCkVWfCp7F6NDw/AlJTglzNC/jTMgrL8q9Au6Jqec=";
-    tags = [
-      "with_gvisor"
-      "with_quic"
-      "with_dhcp"
-      "with_wireguard"
-      "with_utls"
-      "with_acme"
-      "with_clash_api"
-      "with_tailscale"
-    ];
+    tags = [ "with_gvisor" "with_quic" "with_dhcp" "with_wireguard" "with_utls" "with_acme" "with_clash_api" "with_tailscale" ];
   });
 
-  pythonEnv = pkgs.python3.withPackages (ps: with ps; [
-    python-telegram-bot
-  ]);
+  pythonEnv = pkgs.python3.withPackages (ps: with ps; [ python-telegram-bot ]);
 
   config-share = {
     log.level = "info";
@@ -42,9 +31,7 @@ let
     services = [
       {
         type = "ssm-api";
-        servers = {
-          "/" = "ss-in";
-        };
+        servers = { "/" = "ss-in"; };
         cache_path = "cache.json";
         listen = "0.0.0.0";
         listen_port = 6666;

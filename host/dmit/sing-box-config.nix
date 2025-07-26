@@ -49,9 +49,7 @@
       }
       {
         tag = "dmm";
-        rules = [{
-          domain_suffix = [ "dmm.com" "dmm.co.jp" "dmm-extension.com" ];
-        }];
+        rules = [{ domain_suffix = [ "dmm.com" "dmm.co.jp" "dmm-extension.com" ]; }];
       }
     ];
 
@@ -59,9 +57,7 @@
   services = [
     {
       type = "ssm-api";
-      servers = {
-        "/" = "ss-in";
-      };
+      servers = { "/" = "ss-in"; };
       cache_path = "cache.json";
       listen = "0.0.0.0";
       listen_port = 6665;
