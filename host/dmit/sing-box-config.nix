@@ -36,14 +36,12 @@
         domain = [
         ];
         domain_suffix = [
-          "dmm.com"
-          "dmm.co.jp"
-          "dmm-extension.com"
         ];
         domain_keyword = [
         ];
         rule_set = [
           "abematv"
+          "dmm"
         ];
         outbound = "wg-endpoint";
       }
@@ -53,13 +51,24 @@
 
     rule_set = [
       {
-        type = "inline";
         tag = "abematv";
         rules = [
           {
             domain = [ "abema.tv" ];
             domain_suffix = [ "abema-tv.com" ];
             domain_keyword = [ "abematv" ];
+          }
+        ];
+      }
+      {
+        tag = "dmm";
+        rules = [
+          {
+            domain_suffix = [
+              "dmm.com"
+              "dmm.co.jp"
+              "dmm-extension.com"
+            ];
           }
         ];
       }
