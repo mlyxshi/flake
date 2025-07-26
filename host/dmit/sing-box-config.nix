@@ -33,44 +33,28 @@
     rules = [
       {
         inbound = "ss-in";
-        domain = [
-        ];
-        domain_suffix = [
-        ];
-        domain_keyword = [
-        ];
         rule_set = [
           "abematv"
           "dmm"
         ];
         outbound = "wg-endpoint";
       }
-
-
     ];
 
     rule_set = [
       {
         tag = "abematv";
-        rules = [
-          {
-            domain = [ "abema.tv" ];
-            domain_suffix = [ "abema-tv.com" ];
-            domain_keyword = [ "abematv" ];
-          }
-        ];
+        rules = {
+          domain = [ "abema.tv" ];
+          domain_suffix = [ "abema-tv.com" ];
+          domain_keyword = [ "abematv" ];
+        };
       }
       {
         tag = "dmm";
-        rules = [
-          {
-            domain_suffix = [
-              "dmm.com"
-              "dmm.co.jp"
-              "dmm-extension.com"
-            ];
-          }
-        ];
+        rules = {
+          domain_suffix = [ "dmm.com" "dmm.co.jp" "dmm-extension.com" ];
+        };
       }
     ];
 
