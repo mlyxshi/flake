@@ -48,6 +48,32 @@ let
     ];
   };
 
+  config-my = {
+    log.level = "trace";
+    inbounds = [
+      {
+        type = "shadowsocks";
+        tag = "ss-in";
+        listen = "0.0.0.0";
+        listen_port = 9998;
+        managed = true;
+        method = "2022-blake3-aes-128-gcm";
+        password = { _secret = "/secret/ss-password-2022"; };
+      }
+    ];
+    services = [
+      {
+        type = "ssm-api";
+        servers = {
+          "/" = "ss-in";
+        };
+        cache_path = "cache.json";
+        listen = "0.0.0.0";
+        listen_port = 6665;
+      }
+    ];
+  };
+
 
 in
 {
@@ -64,6 +90,19 @@ in
     serviceConfig = {
       StateDirectory = "sing-box";
       RuntimeDirectory = "sing-box";
+      ExecStart = [
+        ""
+        "${lib.getExe sing-box-beta} -D \${STATE_DIRECTORY} -C \${RUNTIME_DIRECTORY} run"
+      ];
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
+
+  systemd.services.sing-box-my = {
+    preStart = utils.genJqSecretsReplacementSnippet config-my "/run/sing-box/config-my.json";
+    serviceConfig = {
+      StateDirectory = "sing-box-my";
+      RuntimeDirectory = "sing-box-my";
       ExecStart = [
         ""
         "${lib.getExe sing-box-beta} -D \${STATE_DIRECTORY} -C \${RUNTIME_DIRECTORY} run"
