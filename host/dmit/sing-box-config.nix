@@ -11,6 +11,43 @@
       password = { _secret = "/secret/ss-password-2022"; };
     }
   ];
+  endpoints = [
+    {
+      type = "wireguard";
+      tag = "wg-endpoint";
+      address = [ "172.16.0.2/32" "2606:4700:cf1:1000::1/128" ];
+      private_key = { _secret = "/secret/warp-allowed"; };
+      listen_port = 10000;
+      peers = [
+        {
+          address = "engage.cloudflareclient.com";
+          port = 2408;
+          public_key = "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=";
+          allowed_ips = [ "0.0.0.0/0" "::/0" ];
+          reserved = [ 129 120 123 ];
+        }
+      ];
+    }
+  ];
+  route = {
+    rules = [
+      {
+        inbound = "ss-in";
+        # domain = [
+        #   "test.com"
+        # ];
+        domain_suffix = [
+          "dmm.com"
+          "dmm.co.jp"
+          "dmm-extension.com"
+        ];
+        domain_keyword = [
+          "abema"
+        ];
+        outbound = "wg-endpoint";
+      }
+    ];
+  };
   services = [
     {
       type = "ssm-api";
@@ -23,3 +60,5 @@
     }
   ];
 }
+
+
