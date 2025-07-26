@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, utils, ... }:
 let
   sing-box-beta = pkgs.sing-box.overrideAttrs (previousAttrs: {
     pname = previousAttrs.pname + "-beta";
