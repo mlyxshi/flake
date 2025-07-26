@@ -34,20 +34,37 @@
       {
         inbound = "ss-in";
         domain = [
-          # "abema.tv"
         ];
         domain_suffix = [
           "dmm.com"
           "dmm.co.jp"
           "dmm-extension.com"
-          "abema-tv.com"
         ];
         domain_keyword = [
+        ];
+        rule_set = [
           "abematv"
         ];
         outbound = "wg-endpoint";
       }
+
+
     ];
+
+    rule_set = [
+      {
+        type = "inline";
+        tag = "abematv";
+        rules = [
+          {
+            domain = [ "abema.tv" ];
+            domain_suffix = [ "abema-tv.com" ];
+            domain_keyword = [ "abematv" ];
+          }
+        ];
+      }
+    ];
+
   };
   services = [
     {
