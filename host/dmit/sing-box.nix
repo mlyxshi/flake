@@ -1,66 +1,6 @@
-{ config, pkgs, lib, ... }: {
-  services.sing-box.enable = true;
-  services.sing-box.settings = {
-    log.level = "info";
-    endpoints = [
-      {
-        type = "wireguard";
-        tag = "wg-endpoint";
-        address = [ "172.16.0.2/32" "2606:4700:cf1:1000::1/128" ];
-        private_key = { _secret = "/secret/warp-allowed"; };
-        listen_port = 10000;
-        peers = [
-          {
-            address = "engage.cloudflareclient.com";
-            port = 2408;
-            public_key = "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=";
-            allowed_ips = [ "0.0.0.0/0" "::/0" ];
-            reserved = [ 129 120 123 ];
-          }
-        ];
-      }
-    ];
-    inbounds = [
-      {
-        type = "shadowsocks";
-        tag = "ss-in-share";
-        listen = "0.0.0.0";
-        listen_port = 9999;
-        managed = true;
-        method = "2022-blake3-aes-128-gcm";
-        password = { _secret = "/secret/ss-password-2022"; };
-      }
-      {
-        type = "shadowsocks";
-        tag = "ss-in-9998";
-        listen = "0.0.0.0";
-        listen_port = 9998;
-        method = "2022-blake3-aes-128-gcm";
-        password = { _secret = "/secret/ss-password-2022"; };
-      }
-    ];
-    route = {
-      rules = [
-        {
-          inbound = "ss-in-9998";
-          outbound = "wg-endpoint";
-        }
-      ];
-    };
-    services = [
-      {
-        type = "ssm-api";
-        servers = {
-          "/" = "ss-in-share";
-        };
-        cache_path = "cache.json";
-        listen = "0.0.0.0";
-        listen_port = 6666;
-      }
-    ];
-  };
-
-  services.sing-box.package = pkgs.sing-box.overrideAttrs (previousAttrs: {
+{ config, pkgs, lib, ... }:
+let
+  sing-box-beta = pkgs.sing-box.overrideAttrs (previousAttrs: {
     pname = previousAttrs.pname + "-beta";
     version = "2.12";
     src = pkgs.fetchFromGitHub {
@@ -70,7 +10,6 @@
       hash = "sha256-2R89tGf2HzPzcytIg7/HxbEP/aDMZ6MxZOk6Z8C1hZA=";
     };
     vendorHash = "sha256-tyGCkVWfCp7F6NDw/AlJTglzNC/jTMgrL8q9Au6Jqec=";
-
     tags = [
       "with_gvisor"
       "with_quic"
@@ -81,9 +20,37 @@
       "with_clash_api"
       "with_tailscale"
     ];
-
   });
 
+  config-share = {
+    log.level = "info";
+    inbounds = [
+      {
+        type = "shadowsocks";
+        tag = "ss-in";
+        listen = "0.0.0.0";
+        listen_port = 9999;
+        managed = true;
+        method = "2022-blake3-aes-128-gcm";
+        password = { _secret = "/secret/ss-password-2022"; };
+      }
+    ];
+    services = [
+      {
+        type = "ssm-api";
+        servers = {
+          "/" = "ss-in";
+        };
+        cache_path = "cache.json";
+        listen = "0.0.0.0";
+        listen_port = 6666;
+      }
+    ];
+  };
+
+
+in
+{
   users = {
     users.sing-box = {
       group = "sing-box";
@@ -91,4 +58,18 @@
     };
     groups.sing-box = { };
   };
+
+  systemd.services.sing-box-share = {
+    preStart = utils.genJqSecretsReplacementSnippet config-share "/run/sing-box/config.json";
+    serviceConfig = {
+      StateDirectory = "sing-box";
+      RuntimeDirectory = "sing-box";
+      ExecStart = [
+        ""
+        "${lib.getExe sing-box-beta} -D \${STATE_DIRECTORY} -C \${RUNTIME_DIRECTORY} run"
+      ];
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
+
 }
