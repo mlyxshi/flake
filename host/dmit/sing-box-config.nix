@@ -34,7 +34,7 @@
       {
         inbound = "ss-in";
         domain = [
-          "abema.tv"
+          # "abema.tv"
         ];
         domain_suffix = [
           "dmm.com"
