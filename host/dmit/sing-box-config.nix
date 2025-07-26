@@ -14,7 +14,7 @@
   endpoints = [
     {
       type = "wireguard";
-      tag = "wg-endpoint";
+      tag = "warp";
       address = [ "172.16.0.2/32" "2606:4700:cf1:1000::1/128" ];
       private_key = { _secret = "/secret/warp-allowed"; };
       listen_port = 10000;
@@ -33,12 +33,8 @@
     rules = [
       {
         inbound = "ss-in";
-        # Cloudflare Warp for Unlock Japan Residential Service
-        rule_set = [
-          "abematv"
-          "dmm"
-        ];
-        outbound = "wg-endpoint";
+        rule_set = [ "abematv" "dmm" ]; # Cloudflare Warp for Unlock Japan Residential Service
+        outbound = "warp";
       }
     ];
 
