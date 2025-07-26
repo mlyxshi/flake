@@ -40,6 +40,7 @@
           "dmm.com"
           "dmm.co.jp"
           "dmm-extension.com"
+          "abema-tv.com"
         ];
         # domain_keyword = [
         #   "abema"
