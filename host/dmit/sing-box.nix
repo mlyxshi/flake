@@ -2,15 +2,6 @@
   services.sing-box.enable = true;
   services.sing-box.settings = {
     log.level = "info";
-    dns = {
-      servers = [
-        {
-          type = "udp";
-          server = "1.1.1.1";
-          tag = "cloudflare-dns";
-        }
-      ];
-    };
     endpoints = [
       {
         type = "wireguard";
@@ -27,10 +18,6 @@
             reserved = [ 129 120 123 ];
           }
         ];
-        # domain_resolver = {
-        #   server = "cloudflare-dns";
-        #   strategy = "ipv6_only";
-        # };
       }
     ];
     inbounds = [
