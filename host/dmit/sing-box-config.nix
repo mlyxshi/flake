@@ -33,17 +33,17 @@
     rules = [
       {
         inbound = "ss-in";
-        # domain = [
-        #   "test.com"
-        # ];
+        domain = [
+          "abema.tv"
+        ];
         domain_suffix = [
           "dmm.com"
           "dmm.co.jp"
           "dmm-extension.com"
         ];
-        domain_keyword = [
-          "abema"
-        ];
+        # domain_keyword = [
+        #   "abema"
+        # ];
         outbound = "wg-endpoint";
       }
     ];
