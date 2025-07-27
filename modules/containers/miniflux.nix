@@ -9,10 +9,11 @@
   virtualisation.oci-containers.containers.miniflux = {
     image = "ghcr.io/miniflux/miniflux";
     dependsOn = [ "miniflux-postgres" ];
+    environmentFiles = [
+      /secret/miniflux-oidc
+    ];
     environment = {
       OAUTH2_PROVIDER = "oidc";
-      OAUTH2_CLIENT_ID = "9ff8b375-6b62-4ec1-a509-aedf7215f200";
-      OAUTH2_CLIENT_SECRET_FILE = "/secret/miniflux-oidc";
       OAUTH2_REDIRECT_URL = "https://miniflux.${config.networking.domain}/oauth2/oidc/callback";
       OAUTH2_OIDC_DISCOVERY_ENDPOINT = "https://sso.${config.networking.domain}";
       # OAUTH2_USER_CREATION=1 # optional, if you want nes users to be created automatically
