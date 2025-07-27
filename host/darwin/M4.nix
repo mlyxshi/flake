@@ -45,8 +45,6 @@
     casks = [
       "imazing"
       "drivedx"
-      "crystalfetch"
-      "utm"
     ];
   };
 }

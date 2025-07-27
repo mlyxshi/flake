@@ -92,8 +92,6 @@
       "jordanbaird-ice"
       "input-source-pro"
       "maczip"
-      "openineditor-lite"
-      "openinterminal-lite"
       "transmission"
       "istat-menus"
       "uninstallpkg"
@@ -101,6 +99,9 @@
       "google-chrome"
       "orbstack"
       "container"
+      "dockdoor"
+      "utm"
+      "crystalfetch"
     ];
   };
 

@@ -1,11 +1,8 @@
 { self, pkgs, lib, config, ... }: {
   imports = [
-    self.nixosModules.services.tftp
+    self.nixosModules.containers.podman
+    self.nixosModules.containers.pocket-id
   ];
-
-  boot.kernel.sysctl = {
-    "net.ipv4.ip_forward" = 1;
-  };
 
   services.sing-box.enable = true;
   services.sing-box.settings = {
