@@ -14,4 +14,10 @@
       "traefik.http.routers.pocket-id.entrypoints=websecure"
     ];
   };
+
+  systemd.services."backup-init@pocket-id".wantedBy = [ "multi-user.target" ];
+  systemd.services."backup-init@pocket-id".overrideStrategy = "asDropin";
+
+  systemd.services."backup@pocket-id".startAt = "05:00";
+  systemd.services."backup@pocket-id".overrideStrategy = "asDropin";
 }
