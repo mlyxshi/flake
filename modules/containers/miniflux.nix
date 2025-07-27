@@ -16,7 +16,7 @@
       OAUTH2_PROVIDER = "oidc";
       OAUTH2_REDIRECT_URL = "https://miniflux.${config.networking.domain}/oauth2/oidc/callback";
       OAUTH2_OIDC_DISCOVERY_ENDPOINT = "https://sso.${config.networking.domain}";
-      OAUTH2_USER_CREATION= 1; # optional, if you want nes users to be created automatically
+      OAUTH2_USER_CREATION = "1"; # optional, if you want nes users to be created automatically
       # DISABLE_LOCAL_AUTH=1 # optional, if you want to disable local authentication
       # CREATE_ADMIN = "1";
       RUN_MIGRATIONS = "1";
