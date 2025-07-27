@@ -10,8 +10,8 @@
     };
     extraOptions = lib.concatMap (x: [ "--label" x ]) [
       "traefik.enable=true"
-      "traefik.http.routers.komari.rule=Host(`sso.${config.networking.domain}`)"
-      "traefik.http.routers.komari.entrypoints=websecure"
+      "traefik.http.routers.pocket-id.rule=Host(`sso.${config.networking.domain}`)"
+      "traefik.http.routers.pocket-id.entrypoints=websecure"
     ];
   };
 }
