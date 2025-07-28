@@ -6,9 +6,11 @@
       tag = "ss-in";
       listen = "0.0.0.0";
       listen_port = 9998;
-      managed = true;
+      network = "tcp";
       method = "2022-blake3-aes-128-gcm";
       password = { _secret = "/secret/ss-password-2022"; };
+      multiplex = { enabled = true; };
+      managed = true;
     }
   ];
   endpoints = [
