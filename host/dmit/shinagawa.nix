@@ -42,4 +42,12 @@ in
     };
     wantedBy = [ "multi-user.target" ];
   };
+
+  services.vnstat.enable = true;
+  # Traffic Reset Date
+  environment.etc."vnstat.conf".text = ''
+    MonthRotate 24
+    UnitMode 1
+    Interface "eth0"
+  '';
 }
