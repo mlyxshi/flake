@@ -1,5 +1,5 @@
 {
-  log.level = info";
+  log.level = "info";
   inbounds = [
     {
       type = "shadowsocks";
