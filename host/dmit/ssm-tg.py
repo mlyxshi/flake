@@ -63,8 +63,6 @@ async def ssm_traffic(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
 
         output = "\n".join(output_lines)
-        if len(output) > 4000:
-            output = output[:4000] + "\n... (truncated)"
 
         await update.message.reply_text(f"```\n{output}\n```", parse_mode="Markdown")
     except Exception as e:
