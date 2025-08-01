@@ -21,6 +21,7 @@
       type = "wireguard";
       tag = "warp";
       system = true;
+      mtu = 1280;
       address = [ "172.16.0.2/32" "2606:4700:cf1:1000::1/128" ];
       private_key = { _secret = "/secret/warp-allowed"; };
       peers = [
