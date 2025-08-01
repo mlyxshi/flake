@@ -30,16 +30,15 @@
   environment.systemPackages = with pkgs;[
     cloudflare-warp
   ];
-
-  systemd.sysusers.enable = lib.mkForce false;
   
-  users = {
-    users.mlyxshi = {
-      group = "mlyxshi";
-      isNormalUser = true;
-    };
-    groups.mlyxshi = { };
+
+  systemd.services.cloudflare-warp-daemon = {
+    after = [ "network.target" ];
+    serviceConfig.ExecStart = "${pkgs.cloudflare-warp}/bin/warp-svc";
+    serviceConfig.StateDirectory = "cloudflare-warp";
+    wantedBy = [ "multi-user.target" ];
   };
+
 
 
   # Oracle US to JP(China Telecom to Oracle SJC via AS4134)
