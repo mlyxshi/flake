@@ -99,7 +99,6 @@
       "google-chrome"
       "orbstack"
       "container"
-      "dockdoor"
       "utm"
       "crystalfetch"
     ];
