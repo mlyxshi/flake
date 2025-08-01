@@ -31,6 +31,15 @@
     cloudflare-warp
   ];
 
+  users = {
+    users.mlyxshi = {
+      group = "mlyxshi";
+      isNormalUser = true;
+    };
+    groups.mlyxshi = { };
+  };
+
+
   # Oracle US to JP(China Telecom to Oracle SJC via AS4134)
   # networking.nftables.enable = true;
   # networking.nftables.ruleset = ''
