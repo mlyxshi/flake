@@ -3,6 +3,7 @@
     level = "info";
     timestamp = true;
   };
+
   inbounds = [
     {
       type = "shadowsocks";
@@ -16,25 +17,21 @@
       managed = true;
     }
   ];
-  endpoints = [
+
+  outbounds = [
     {
-      type = "wireguard";
+      type = "direct";
+      tag = "direct-out";
+    }
+    {
+      type = "socks";
       tag = "warp";
-      system = true;
-      mtu = 1280;
-      address = [ "172.16.0.2/32" "2606:4700:cf1:1000::1/128" ];
-      private_key = { _secret = "/secret/warp-allowed"; };
-      peers = [
-        {
-          address = "engage.cloudflareclient.com";
-          port = 2408;
-          public_key = "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=";
-          allowed_ips = [ "0.0.0.0/0" "::/0" ];
-          reserved = [ 129 120 123 ];
-        }
-      ];
+      server = "127.0.0.1";
+      server_port = 40000;
+      version = 5;
     }
   ];
+
   route = {
     rules = [
       {
@@ -43,6 +40,8 @@
         outbound = "warp";
       }
     ];
+
+    final = "direct-out";
 
     rule_set = [
       {

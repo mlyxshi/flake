@@ -1,4 +1,4 @@
-{ config, pkgs, lib, utils, ... }:
+{ config, pkgs, lib, utils, self, ... }:
 let
   sing-box-beta = pkgs.sing-box.overrideAttrs (previousAttrs: {
     pname = previousAttrs.pname + "-beta";
@@ -43,6 +43,11 @@ let
   config-my = import ./sing-box-config.nix;
 in
 {
+
+  imports = [
+    self.nixosModules.services.cloudflare-warp
+  ];
+
   systemd.services.sing-box-share = {
     after = [ "network.target" ];
     preStart = utils.genJqSecretsReplacementSnippet config-share "/run/sing-box/config.json";
