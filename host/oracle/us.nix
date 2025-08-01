@@ -34,7 +34,7 @@
   users = {
     users.mlyxshi = {
       group = "mlyxshi";
-      isNormalUser = true;
+      isSystemUser = true;
     };
     groups.mlyxshi = { };
   };
