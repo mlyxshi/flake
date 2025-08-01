@@ -27,6 +27,10 @@
     ];
   };
 
+  environment.systemPackages = with pkgs;[
+    cloudflare-warp
+  ];
+
   # Oracle US to JP(China Telecom to Oracle SJC via AS4134)
   # networking.nftables.enable = true;
   # networking.nftables.ruleset = ''
