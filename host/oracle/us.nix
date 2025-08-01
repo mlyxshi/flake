@@ -31,10 +31,12 @@
     cloudflare-warp
   ];
 
+  systemd.sysusers.enable = lib.mkForce false;
+  
   users = {
     users.mlyxshi = {
       group = "mlyxshi";
-      isSystemUser = true;
+      isNormalUser = true;
     };
     groups.mlyxshi = { };
   };
