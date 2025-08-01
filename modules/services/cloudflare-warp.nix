@@ -4,7 +4,6 @@
     cloudflare-warp
   ];
 
-
   systemd.services.cloudflare-warp-daemon = {
     after = [ "network.target" ];
     serviceConfig.ExecStart = "${pkgs.cloudflare-warp}/bin/warp-svc";
