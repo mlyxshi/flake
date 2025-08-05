@@ -33,6 +33,7 @@ in
         {
           nixpkgs.hostPlatform = "aarch64-linux";
           networking.hostName = lib.removeSuffix ".nix" (builtins.baseNameOf path);
+          services.getty.autologinUser = "root";
         }
       ];
       specialArgs = { inherit self; };
