@@ -7,7 +7,7 @@
   };
 
   # Always eth0
-  boot.kernelParams = [ "net.ifnames=0" ];
+  # boot.kernelParams = [ "net.ifnames=0" ];
 
   # Disable nixpkgs defined dhcp
   networking.useDHCP = false;
