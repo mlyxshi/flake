@@ -6,11 +6,12 @@
 
   networking.hostName = "Macbook";
 
-  homebrew = {
 
-    taps = [
-      "lihaoyun6/tap"
-    ];
+  environment.systemPackages = with pkgs; [
+    sing-box
+  ];
+
+  homebrew = {
 
     brews = [
       "cloudflared"
@@ -26,7 +27,7 @@
       "element"
       "telegram-desktop"
 
-      "topit"
+      "monitorcontrol"
     ];
   };
 

@@ -176,6 +176,11 @@
         readlink -f $(which $argv) 
       end
 
+      function sign
+        xattr -cr  $argv
+        codesign -fs - --deep  $argv
+      end
+
       function cnar
         curl https://cache.mlyxshi.com/$argv.narinfo  
       end

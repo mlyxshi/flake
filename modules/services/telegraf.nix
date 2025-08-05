@@ -36,8 +36,7 @@
         };
 
         services.telegraf.loadBalancer.servers = [{
-          url =
-            "http://${config.services.telegraf.extraConfig.outputs.prometheus_client.listen}";
+          url = "http://${config.services.telegraf.extraConfig.outputs.prometheus_client.listen}";
         }];
       };
     };

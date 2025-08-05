@@ -1,17 +1,18 @@
 { config, pkgs, lib, utils, self, ... }:
 let
-  sing-box-beta = pkgs.sing-box.overrideAttrs (previousAttrs: {
-    pname = previousAttrs.pname + "-beta";
-    version = "2.12";
-    src = pkgs.fetchFromGitHub {
-      owner = "SagerNet";
-      repo = "sing-box";
-      rev = "66a767d083fd37b3cd071466636e645bfc96bc96";
-      hash = "sha256-2R89tGf2HzPzcytIg7/HxbEP/aDMZ6MxZOk6Z8C1hZA=";
-    };
-    vendorHash = "sha256-tyGCkVWfCp7F6NDw/AlJTglzNC/jTMgrL8q9Au6Jqec=";
-    tags = [ "with_gvisor" "with_quic" "with_dhcp" "with_wireguard" "with_utls" "with_acme" "with_clash_api" "with_tailscale" ];
-  });
+  # sing-box-beta = pkgs.sing-box.overrideAttrs (previousAttrs: {
+  #   pname = previousAttrs.pname + "-beta";
+  #   version = "2.12";
+  #   src = pkgs.fetchFromGitHub {
+  #     owner = "SagerNet";
+  #     repo = "sing-box";
+  #     rev = "66a767d083fd37b3cd071466636e645bfc96bc96";
+  #     hash = "sha256-2R89tGf2HzPzcytIg7/HxbEP/aDMZ6MxZOk6Z8C1hZA=";
+  #   };
+  #   vendorHash = "sha256-tyGCkVWfCp7F6NDw/AlJTglzNC/jTMgrL8q9Au6Jqec=";
+  #   tags = [ "with_gvisor" "with_quic" "with_dhcp" "with_wireguard" "with_utls" "with_acme" "with_clash_api" "with_tailscale" ];
+  # });
+  sing-box-package = pkgs.sing-box;
 
   pythonEnv = pkgs.python3.withPackages (ps: with ps; [ python-telegram-bot ]);
 
@@ -54,7 +55,7 @@ in
     serviceConfig = {
       StateDirectory = "sing-box";
       RuntimeDirectory = "sing-box";
-      ExecStart = "${lib.getExe sing-box-beta} -D \${STATE_DIRECTORY} -C \${RUNTIME_DIRECTORY} run";
+      ExecStart = "${lib.getExe sing-box-package} -D \${STATE_DIRECTORY} -C \${RUNTIME_DIRECTORY} run";
     };
     wantedBy = [ "multi-user.target" ];
   };
@@ -89,7 +90,7 @@ in
     serviceConfig = {
       StateDirectory = "sing-box-my";
       RuntimeDirectory = "sing-box-my";
-      ExecStart = "${lib.getExe sing-box-beta} -D \${STATE_DIRECTORY} -C \${RUNTIME_DIRECTORY} run";
+      ExecStart = "${lib.getExe sing-box-package} -D \${STATE_DIRECTORY} -C \${RUNTIME_DIRECTORY} run";
     };
     wantedBy = [ "multi-user.target" ];
   };
