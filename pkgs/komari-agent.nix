@@ -8,7 +8,7 @@ buildGoModule rec {
     owner = "mlyxshi";
     repo = "komari-agent";
     rev = "662fae7173d359ba73a18bb4e62dd6b419c921e5";
-    hash = "";
+    hash = "sha256-lCzdmVWso5jT5IsYVGQg0ppTGOYjkCz8A526x3JRpuM=";
   };
 
   vendorHash = "sha256-Wt2A3rGnY8vpdbWRz9tWBz+PcVxATCjjCwm/YXQz1RY=";
