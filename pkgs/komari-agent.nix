@@ -8,7 +8,7 @@ buildGoModule rec {
     owner = "komari-monitor";
     repo = "komari-agent";
     rev = "5092c2db0980f05e87529db39c429072cfca8d0e";
-    hash = "";
+    hash = "sha256-lCzdmVWso5jT5IsYVGQg0ppTGOYjkCz8A526x3JRpuM=";
   };
 
   vendorHash = "sha256-Wt2A3rGnY8vpdbWRz9tWBz+PcVxATCjjCwm/YXQz1RY=";
