@@ -5,10 +5,10 @@ buildGoModule rec {
   version = "1.0.31";
 
   src = fetchFromGitHub {
-    owner = "komari-monitor";
+    owner = "mlyxshi";
     repo = "komari-agent";
-    rev = "e24eb93c53bb7ad270a37f6e08619014156d0b43";
-    hash = "sha256-mDaRhEJdtwSAlBe3AQBJ6+Oto6CF2VHB0vq8JsRGY48=";
+    rev = "662fae7173d359ba73a18bb4e62dd6b419c921e5";
+    hash = "";
   };
 
   vendorHash = "sha256-Wt2A3rGnY8vpdbWRz9tWBz+PcVxATCjjCwm/YXQz1RY=";
