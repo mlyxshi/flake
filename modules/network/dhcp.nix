@@ -6,9 +6,6 @@
     "net.ipv4.tcp_slow_start_after_idle" = 0; #https://www.kawabangga.com/posts/5217
   };
 
-  # Always eth0
-  # boot.kernelParams = [ "net.ifnames=0" ];
-
   # Disable nixpkgs defined dhcp
   networking.useDHCP = false;
   networking.dhcpcd.enable = false;
@@ -17,7 +14,7 @@
   # systemd.services.systemd-networkd.environment.SYSTEMD_LOG_LEVEL = "debug";
   systemd.network.wait-online.anyInterface = true;
   systemd.network.networks.ethernet-default-dhcp = {
-    matchConfig = { Name = "eth0"; };
+    matchConfig = { Name = [ "en*" "eth*" ]; };
     networkConfig = { DHCP = "yes"; };
   };
   # Disable nixpkgs defined firewall
