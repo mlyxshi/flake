@@ -45,7 +45,7 @@
   };
 
   virtualisation.oci-containers.containers.rsshub = {
-    image = "ghcr.io/diygod/rsshub:chromium-bundled";
+    image = "ghcr.io/diygod/rsshub";
     environmentFiles = [ /secret/rsshub ];
     extraOptions = lib.concatMap (x: [ "--label" x ]) [
       "io.containers.autoupdate=registry"
