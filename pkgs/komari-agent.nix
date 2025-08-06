@@ -11,7 +11,7 @@ buildGoModule rec {
     hash = "sha256-Zh1YYDMZXw2KILhMemGWO/BcOxNaeJ1gCoDCkRQ/kAw=";
   };
 
-  vendorHash = "";
+  vendorHash = "sha256-Wt2A3rGnY8vpdbWRz9tWBz+PcVxATCjjCwm/YXQz1RY=";
 
   ldflags = [ "-s" "-w" "-X github.com/komari-monitor/komari-agent/update.CurrentVersion=${version}" ];
 
