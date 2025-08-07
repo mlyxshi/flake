@@ -65,10 +65,20 @@
     '')
   ];
 
-  system.defaults.dock.autohide = true;
-  system.defaults.finder.ShowPathbar = true;
-  system.defaults.finder.FXPreferredViewStyle = "Nlsv";
-  system.defaults.finder.FXDefaultSearchScope = "SCcf";
+  system.defaults = {
+    dock.autohide = true;
+    LaunchServices.LSQuarantine = false;
+    finder = {
+      ShowPathbar = true;
+      FXPreferredViewStyle = "Nlsv";
+      FXDefaultSearchScope = "SCcf";
+      _FXSortFoldersFirst = true;
+      _FXShowPosixPathInTitle = true;
+      FXEnableExtensionChangeWarning = false;
+    };
+  };
+
+
 
   homebrew = {
     enable = true;
@@ -89,7 +99,6 @@
       "font-sf-mono-nerd-font-ligaturized"
       "android-platform-tools"
       "visual-studio-code"
-      "jordanbaird-ice"
       "input-source-pro"
       "maczip"
       "transmission"
@@ -128,7 +137,7 @@
       Port 2222
 
     Host alice
-    	HostName  91.103.121.190
+    	HostName  alice.mlyxshi.com
       HostKeyAlias alice
     	User root
 
@@ -218,30 +227,26 @@
     '';
   };
 
-  security.pki.certificates = [
-    ''
-      -----BEGIN CERTIFICATE-----
-      MIICtjCCAZ4CCQDpyQH31X0PGDANBgkqhkiG9w0BAQsFADAcMQswCQYDVQQGEwJV
-      UzENMAsGA1UEAwwETUlUTTAgFw0yMjAzMjAxMTQwMTlaGA8yMTIyMDIyNDExNDAx
-      OVowHDELMAkGA1UEBhMCVVMxDTALBgNVBAMMBE1JVE0wggEiMA0GCSqGSIb3DQEB
-      AQUAA4IBDwAwggEKAoIBAQDdeBgprOvAMyHW4qDzQY6vaoYHK8xImXWV+fepNk8j
-      NLOb8c38f8pmvMHl/HpR2KYlAbCYpvuKDSEUcu51apIlWS1+jxwN6hlPRxFT0BzZ
-      6/A2Gxd6wDko+0FGcILkOWgNnFlrEX5sp2nyXZoPk7Oc53JSoo8SKuRkdSKHqi1Z
-      nWhlsqo0lN3sYQldziAXHv/GAZ60HoYH2b1XG5nWF88p/jRMnsdYAtp3/lsKNIFd
-      pSWFZDzMQGQQLIVyvSDJmMl/Z9/7pnVE0iB4A55ATeZv9MXtVsjPZlgtu0Hj0QxC
-      +gnDlwjPFm3zVGmLUEf57LV5BWd+Hv3TBh3Da3qLsi9hAgMBAAEwDQYJKoZIhvcN
-      AQELBQADggEBAKZRgSLvmUXkLJJibD5m8kdDy4g0TJZNu3O4BXZINbaDbQQpDJ0u
-      F9Me6s8i+BcQrkNpV+kjeeiJNSOutyB66Ma05js6KaREi+dIIt7/RO1iH5wzLjHS
-      po2gvupEeZxi17pF9d/Ui11mv5XC4VOp71/ASuUc/MmyEf29uG9AD9bNWibS/Zq0
-      QMWycsQAr4qbXgb7xvJJGMNqcyuvUakfnoYP0TS11FT/BKSPxZ/C555VV2qtW/xy
-      BjFGG20IILxSlOC1cBbxRkKt5fTCoO4PUTjLE8/YuLWwG1cRYOmhAVqi4/lZ4vw1
-      fvwPUdrh/5WRrBD7Eif4i02yZJjxzbxiW4U=
-      -----END CERTIFICATE-----
-    ''
-  ];
+  # security.pki.certificates = [
+  #   ''
+  #     -----BEGIN CERTIFICATE-----
+  #     MIICtjCCAZ4CCQDpyQH31X0PGDANBgkqhkiG9w0BAQsFADAcMQswCQYDVQQGEwJV
+  #     UzENMAsGA1UEAwwETUlUTTAgFw0yMjAzMjAxMTQwMTlaGA8yMTIyMDIyNDExNDAx
+  #     OVowHDELMAkGA1UEBhMCVVMxDTALBgNVBAMMBE1JVE0wggEiMA0GCSqGSIb3DQEB
+  #     AQUAA4IBDwAwggEKAoIBAQDdeBgprOvAMyHW4qDzQY6vaoYHK8xImXWV+fepNk8j
+  #     NLOb8c38f8pmvMHl/HpR2KYlAbCYpvuKDSEUcu51apIlWS1+jxwN6hlPRxFT0BzZ
+  #     6/A2Gxd6wDko+0FGcILkOWgNnFlrEX5sp2nyXZoPk7Oc53JSoo8SKuRkdSKHqi1Z
+  #     nWhlsqo0lN3sYQldziAXHv/GAZ60HoYH2b1XG5nWF88p/jRMnsdYAtp3/lsKNIFd
+  #     pSWFZDzMQGQQLIVyvSDJmMl/Z9/7pnVE0iB4A55ATeZv9MXtVsjPZlgtu0Hj0QxC
+  #     +gnDlwjPFm3zVGmLUEf57LV5BWd+Hv3TBh3Da3qLsi9hAgMBAAEwDQYJKoZIhvcN
+  #     AQELBQADggEBAKZRgSLvmUXkLJJibD5m8kdDy4g0TJZNu3O4BXZINbaDbQQpDJ0u
+  #     F9Me6s8i+BcQrkNpV+kjeeiJNSOutyB66Ma05js6KaREi+dIIt7/RO1iH5wzLjHS
+  #     po2gvupEeZxi17pF9d/Ui11mv5XC4VOp71/ASuUc/MmyEf29uG9AD9bNWibS/Zq0
+  #     QMWycsQAr4qbXgb7xvJJGMNqcyuvUakfnoYP0TS11FT/BKSPxZ/C555VV2qtW/xy
+  #     BjFGG20IILxSlOC1cBbxRkKt5fTCoO4PUTjLE8/YuLWwG1cRYOmhAVqi4/lZ4vw1
+  #     fvwPUdrh/5WRrBD7Eif4i02yZJjxzbxiW4U=
+  #     -----END CERTIFICATE-----
+  #   ''
+  # ];
 }
 
-
-# change default shell to fish
-# sudo bash -c 'echo "/run/current-system/sw/bin/fish" >> /etc/shells' 
-# chsh -s /run/current-system/sw/bin/fish dominic

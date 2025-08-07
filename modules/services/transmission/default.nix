@@ -2,7 +2,8 @@
 # ::/0 and 0.0.0.0/0  port 51413 tcp udp
 { config, pkgs, lib, self, ... }:
 let
-  package = self.packages.${config.nixpkgs.hostPlatform.system}.transmission;
+  # package = self.packages.${config.nixpkgs.hostPlatform.system}.transmission;
+  package = pkgs.transmission;
   transmissionScript = pkgs.writeShellScript "transmission.sh" ''
     export PATH=$PATH:${pkgs.rclone}/bin:${pkgs.transmission}/bin
     ${pkgs.deno}/bin/deno run --allow-net --allow-env --allow-read --allow-run ${
