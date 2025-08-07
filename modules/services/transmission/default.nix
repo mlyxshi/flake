@@ -2,14 +2,7 @@
 # ::/0 and 0.0.0.0/0  port 51413 tcp udp
 { config, pkgs, lib, self, ... }:
 let
-  # package = self.packages.${config.nixpkgs.hostPlatform.system}.transmission;
   package = pkgs.transmission_4;
-  transmissionScript = pkgs.writeShellScript "transmission.sh" ''
-    export PATH=$PATH:${pkgs.rclone}/bin:${pkgs.transmission}/bin
-    ${pkgs.deno}/bin/deno run --allow-net --allow-env --allow-read --allow-run ${
-      ./transmission.ts
-    }
-  '';
 in
 {
   users = {
@@ -38,16 +31,11 @@ in
     environment = {
       TRANSMISSION_HOME = "%S/transmission";
       TRANSMISSION_WEB_HOME = "${package}/share/transmission/public_html";
-      DENO_DIR = "%S/transmission/.deno";
     };
     serviceConfig.EnvironmentFile = [ "/secret/transmission" ];
     serviceConfig.User = "transmission";
     serviceConfig.ExecStart = "${package}/bin/transmission-daemon --foreground --username $ADMIN --password $PASSWORD";
     serviceConfig.WorkingDirectory = "%S/transmission";
-    # preStart = ''
-    #   cat ${transmissionScript} > transmission.sh
-    #   chmod +x transmission.sh
-    # '';
     wantedBy = [ "multi-user.target" ];
   };
 
