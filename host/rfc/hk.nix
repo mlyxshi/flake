@@ -1,6 +1,8 @@
-{ config, pkgs, lib, self, modulesPath, ... }: let
+{ config, pkgs, lib, self, modulesPath, ... }:
+let
   package = self.packages.${config.nixpkgs.hostPlatform.system}.komari-agent;
-in {
+in
+{
   systemd.network.networks.ethernet-static = {
     matchConfig = {
       Name = "eth0";
@@ -13,6 +15,23 @@ in {
 
   # Port 22 for FCC
   services.openssh.ports = [ 2222 ];
+
+  services.sing-box.enable = true;
+  services.sing-box.settings = {
+    log.level = "info";
+    inbounds = [
+      {
+        type = "shadowsocks";
+        tag = "ss-in";
+        listen = "0.0.0.0";
+        listen_port = 22;
+        network = "tcp";
+        method = "2022-blake3-aes-128-gcm";
+        password = { _secret = "/secret/ss-password-2022"; };
+        multiplex = { enabled = true; };
+      }
+    ];
+  };
 
   networking.nftables.enable = true;
   networking.nftables.ruleset = ''
