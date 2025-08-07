@@ -3,7 +3,7 @@
 { config, pkgs, lib, self, ... }:
 let
   # package = self.packages.${config.nixpkgs.hostPlatform.system}.transmission;
-  package = pkgs.transmission;
+  package = pkgs.transmission_4;
   transmissionScript = pkgs.writeShellScript "transmission.sh" ''
     export PATH=$PATH:${pkgs.rclone}/bin:${pkgs.transmission}/bin
     ${pkgs.deno}/bin/deno run --allow-net --allow-env --allow-read --allow-run ${
@@ -37,7 +37,7 @@ in
     wants = [ "network-online.target" ];
     environment = {
       TRANSMISSION_HOME = "%S/transmission";
-      TRANSMISSION_WEB_HOME = "${package}/public_html";
+      # TRANSMISSION_WEB_HOME = "${package}/public_html";
       DENO_DIR = "%S/transmission/.deno";
     };
     serviceConfig.EnvironmentFile = [ "/secret/transmission" ];
