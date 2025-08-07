@@ -37,7 +37,7 @@ in
     wants = [ "network-online.target" ];
     environment = {
       TRANSMISSION_HOME = "%S/transmission";
-      # TRANSMISSION_WEB_HOME = "${package}/public_html";
+      TRANSMISSION_WEB_HOME = "${package}/share/transmission/public_html";
       DENO_DIR = "%S/transmission/.deno";
     };
     serviceConfig.EnvironmentFile = [ "/secret/transmission" ];
