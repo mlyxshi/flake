@@ -1,4 +1,4 @@
-{ buildGoModule, fetchFromGitHub }:
+{ lib, buildGoModule, fetchFromGitHub }:
 
 buildGoModule rec {
   pname = "komari-agent";
@@ -17,5 +17,9 @@ buildGoModule rec {
 
   doCheck = false;
 
-  meta.homepage = "https://github.com/komari-monitor/komari-agent";
+  meta = with lib; {
+    homepage = "https://github.com/komari-monitor/komari-agent";
+    description = "A lightweight server probe for simple, efficient monitoring";
+    license = licenses.mit;
+  };
 }
