@@ -16,11 +16,4 @@ buildGoModule rec {
   ldflags = [ "-s" "-w" "-X github.com/komari-monitor/komari-agent/update.CurrentVersion=${version}" ];
 
   doCheck = false;
-
-  meta = with lib; {
-    homepage = "https://github.com/komari-monitor/komari-agent";
-    description = "A lightweight server probe for simple, efficient monitoring";
-    license = licenses.mit;
-    mainProgram = "komari-agent";
-  };
 }

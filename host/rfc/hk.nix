@@ -52,7 +52,7 @@ in
     path = [ pkgs.vnstat ];
     serviceConfig = {
       DynamicUser = true;
-      ExecStart = "${package}/bin/komari-agent -e https://top.mlyxshi.com -t xuDvEGZHYrkMITBA  --disable-web-ssh --disable-auto-update  --month-rotate 20 --include-nics eth0 --include-mountpoint /";
+      ExecStart = "${package}/bin/komari-agent -e https://top.mlyxshi.com -t xuDvEGZHYrkMITBA  --disable-web-ssh --disable-auto-update  --month-rotate 20  --include-mountpoint /";
     };
     wantedBy = [ "multi-user.target" ];
   };
