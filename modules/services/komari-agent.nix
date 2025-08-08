@@ -32,7 +32,7 @@ in
         + " -t ${cfg.token}"
         + (lib.optionalString (cfg.include-nics != null) " --include-nics ${cfg.include-nics}")
         + (lib.optionalString (cfg.include-mountpoint != null) " --include-mountpoint ${cfg.include-mountpoint}")
-        + (lib.optionalString (cfg.month-rotate != null) " --month-rotate ${cfg.month-rotate}");
+        + (lib.optionalString (cfg.month-rotate != null) " --month-rotate ${toString cfg.month-rotate}");
       serviceConfig.DynamicUser = true;
       path = lib.optionals (cfg.month-rotate != null) [ pkgs.vnstat ];
       wants = [ "network-online.target" ];
