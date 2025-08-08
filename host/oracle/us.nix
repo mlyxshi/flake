@@ -9,7 +9,7 @@
 
   services.komari-agent.enable= true;
   services.komari-agent.token = "JdkkZwkSx4r_k5GA";
-  services.komari-agent.include-mountpoint = "/boot:/";
+  services.komari-agent.include-mountpoint = "/boot;/";
 
   services.sing-box.enable = true;
   services.sing-box.settings = {
