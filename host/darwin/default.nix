@@ -76,9 +76,27 @@
       _FXShowPosixPathInTitle = true;
       FXEnableExtensionChangeWarning = false;
     };
+    # make sure Terminal/VSCode have Full Disk Access. https://lapcatsoftware.com/articles/containers.html
+    CustomUserPreferences = {
+      "com.apple.Safari" = {
+        ShowFullURLInSmartSearchField = true; # Show Full URL
+        IncludeDevelopMenu = true;
+      };
+    };
+
+    CustomSystemPreferences = {
+      NSGlobalDomain = {
+        NSStatusItemSpacing = 6; # List More Items in Menubar
+        AppleICUDateFormatStrings = {
+          # Finder Date Format
+          "1" = "yyyy-MM-dd HH:mm";
+          "2" = "yyyy-MM-dd HH:mm:ss";
+          "3" = "yyyy-MM-dd HH:mm:ss";
+          "4" = "yyyy-MM-dd HH:mm:ss";
+        };
+      };
+    };
   };
-
-
 
   homebrew = {
     enable = true;
