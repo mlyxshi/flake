@@ -1,13 +1,46 @@
-{ pkgs, lib, self, config, ... }: 
-let 
+{ pkgs, lib, self, config, ... }:
+let
   package = self.packages.${config.nixpkgs.hostPlatform.system}.komari-agent;
+  cfg = config.services.komari-agent;
 in
 {
-  systemd.services."komari-agent@" = {
-    after = [ "network.target" ];
-    serviceConfig = {
-      DynamicUser = true;
-      ExecStart = "${package}/bin/komari-agent -e https://top.mlyxshi.com -t %i  --disable-web-ssh --disable-auto-update --include-mountpoint /boot;/";
+  options.services.komari-agent = {
+    enable = lib.mkEnableOption "Komari Agent";
+    token = lib.mkOption {
+      type = lib.types.str;
+    };
+    month-rotate = lib.mkOption {
+      type = lib.types.nullOr lib.types.int;
+      default = null;
+      description = "Month reset for network statistics";
+    };
+    include-mountpoint = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
+      default = null;
+      description = "List of mount points to include for disk statistics";
+    };
+    include-nics = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
+      default = null;
+      description = "List of network interfaces to include";
     };
   };
+
+  config = lib.mkIf cfg.enable {
+    systemd.services.komari-agent = {
+      serviceConfig = {
+        DynamicUser = true;
+        ExecStart = "${package}/bin/komari-agent -e https://top.mlyxshi.com -t ${cfg.token}  --disable-web-ssh --disable-auto-update"
+          + (lib.optionalString (cfg.include-nics != null) " --include-nics ${cfg.include-nics}")
+          + (lib.optionalString (cfg.include-mountpoint != null) " --include-mountpoint ${cfg.include-mountpoint}")
+          + (lib.optionalString (cfg.month-rotate != null) " --month-rotate ${cfg.month-rotate}")
+        ;
+      };
+      path = lib.optionals (cfg.month-rotate != null) [ pkgs.vnstat ];
+      wants = [ "network-online.target" ];
+      after = [ "network-online.target" ];
+      wantedBy = [ "multi-user.target" ];
+    };
+  };
+
 }

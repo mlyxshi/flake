@@ -7,8 +7,9 @@
     "net.ipv4.ip_forward" = 1;
   };
 
-  systemd.services."komari-agent@JdkkZwkSx4r_k5GA".overrideStrategy = "asDropin";
-  systemd.services."komari-agent@JdkkZwkSx4r_k5GA".wantedBy = [ "multi-user.target" ];
+  services.komari-agent.enable= true;
+  services.komari-agent.token = "JdkkZwkSx4r_k5GA";
+  services.komari-agent.include-mountpoint = "/boot:/";
 
   services.sing-box.enable = true;
   services.sing-box.settings = {
