@@ -21,6 +21,8 @@
     ];
   };
 
-  systemd.services."komari-agent@llIhN2egiHfMivbc".overrideStrategy = "asDropin";
-  systemd.services."komari-agent@llIhN2egiHfMivbc".wantedBy = [ "multi-user.target" ];
+  services.komari-agent.enable = true;
+  services.komari-agent.token = "llIhN2egiHfMivbc";
+  services.komari-agent.include-mountpoint = "/boot;/";
+
 }

@@ -33,15 +33,11 @@ in
     }
   '';
 
-  systemd.services."komari-agent" = {
-    after = [ "network.target" ];
-    path = [ pkgs.vnstat ];
-    serviceConfig = {
-      DynamicUser = true;
-      ExecStart = "${package}/bin/komari-agent -e https://top.mlyxshi.com -t dPC3l2GatkHUQBZP  --disable-web-ssh --disable-auto-update  --month-rotate 24 --include-nics eth0 --include-mountpoint /";
-    };
-    wantedBy = [ "multi-user.target" ];
-  };
+  services.komari-agent.enable = true;
+  services.komari-agent.token = "dPC3l2GatkHUQBZP";
+  services.komari-agent.include-mountpoint = "/";
+  services.komari-agent.include-nics = "eth0";
+  services.komari-agent.month-rotate = 24;
 
   services.vnstat.enable = true;
   # Traffic Reset Date

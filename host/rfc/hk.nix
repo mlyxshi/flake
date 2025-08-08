@@ -45,16 +45,12 @@ in
       }
     }
   '';
-
-  systemd.services."komari-agent" = {
-    after = [ "network.target" ];
-    path = [ pkgs.vnstat ];
-    serviceConfig = {
-      DynamicUser = true;
-      ExecStart = "${package}/bin/komari-agent -e https://top.mlyxshi.com -t xuDvEGZHYrkMITBA  --disable-web-ssh --disable-auto-update  --month-rotate 20  --include-mountpoint /";
-    };
-    wantedBy = [ "multi-user.target" ];
-  };
+  
+  services.komari-agent.enable = true;
+  services.komari-agent.token = "xuDvEGZHYrkMITBA";
+  services.komari-agent.include-mountpoint = "/";
+  services.komari-agent.include-nics = "eth0";
+  services.komari-agent.month-rotate = 20;
 
   services.vnstat.enable = true;
 }

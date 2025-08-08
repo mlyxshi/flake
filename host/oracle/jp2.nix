@@ -2,15 +2,16 @@
   imports = [
     self.nixosModules.services.prometheus
     self.nixosModules.services.transmission.default
-    
+
     self.nixosModules.containers.podman
     self.nixosModules.containers.miniflux
     self.nixosModules.containers.change-detection
     self.nixosModules.containers.komari-monitor
   ];
 
-  systemd.services."komari-agent@op1fIdu_z9Q5RP28".overrideStrategy = "asDropin";
-  systemd.services."komari-agent@op1fIdu_z9Q5RP28".wantedBy = [ "multi-user.target" ];
+  services.komari-agent.enable = true;
+  services.komari-agent.token = "op1fIdu_z9Q5RP28";
+  services.komari-agent.include-mountpoint = "/boot;/";
 
   environment.systemPackages = with pkgs; [
     nix-index
