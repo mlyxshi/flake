@@ -30,7 +30,8 @@ in
     systemd.services.komari-agent = {
       serviceConfig = {
         DynamicUser = true;
-        ExecStart = "${package}/bin/komari-agent -e https://top.mlyxshi.com -t ${cfg.token}  --disable-web-ssh --disable-auto-update"
+        ExecStart = "${package}/bin/komari-agent -e https://top.mlyxshi.com --disable-web-ssh --disable-auto-update"
+          + "-t ${cfg.token}"
           + (lib.optionalString (cfg.include-nics != null) " --include-nics ${cfg.include-nics}")
           + (lib.optionalString (cfg.include-mountpoint != null) " --include-mountpoint ${cfg.include-mountpoint}")
           + (lib.optionalString (cfg.month-rotate != null) " --month-rotate ${cfg.month-rotate}")
