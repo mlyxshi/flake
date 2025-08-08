@@ -1,8 +1,4 @@
-{ config, pkgs, lib, self, modulesPath, ... }:
-let
-  package = self.packages.${config.nixpkgs.hostPlatform.system}.komari-agent;
-in
-{
+{ config, pkgs, lib, self, modulesPath, ... }: {
   systemd.network.networks.ethernet-static = {
     matchConfig = {
       Name = "eth0";
@@ -45,7 +41,7 @@ in
       }
     }
   '';
-  
+
   services.komari-agent.enable = true;
   services.komari-agent.token = "xuDvEGZHYrkMITBA";
   services.komari-agent.include-mountpoint = "/";
