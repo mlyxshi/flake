@@ -8,16 +8,14 @@ buildGoModule rec {
     owner = "SagerNet";
     repo = "sing-box";
     rev = "v${version}";
-    hash = "";
+    hash = "sha256-fo5xO081IX+rPA5yZ0P2dxSZsVHsBTJeCJmI0dSgGyE=";
   };
 
   vendorHash = "";
 
   tags = [
     "with_quic"
-    "with_dhcp"
     "with_wireguard"
-    "with_utls"
   ];
 
   subPackages = [
