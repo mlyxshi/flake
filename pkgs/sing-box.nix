@@ -7,7 +7,7 @@ buildGoModule rec {
   src = fetchFromGitHub {
     owner = "SagerNet";
     repo = "sing-box";
-    rev = version;
+    rev = "v${version}";
     hash = "";
   };
 
