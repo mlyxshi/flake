@@ -1,4 +1,8 @@
-{ self, config, pkgs, lib, ... }: {
+{ self, config, pkgs, lib, ... }: 
+let
+  package = self.packages.${config.nixpkgs.hostPlatform.system}.sing-box;
+in
+{
   imports = [
     self.nixosModules.services.transmission.default
   ];
@@ -28,9 +32,9 @@
     ];
   };
 
-  # environment.systemPackages = with pkgs;[
-  #   cloudflare-warp
-  # ];
+  environment.systemPackages = with pkgs;[
+    package
+  ];
   
 
   # systemd.services.cloudflare-warp-daemon = {
