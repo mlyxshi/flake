@@ -34,7 +34,7 @@ in
         + (lib.optionalString (cfg.include-mountpoint != null) " --include-mountpoint ${cfg.include-mountpoint}")
         + (lib.optionalString (cfg.month-rotate != null) " --month-rotate ${toString cfg.month-rotate}");
       serviceConfig.DynamicUser = true;
-      path = lib.optionals (cfg.month-rotate != null) [ pkgs.vnstat ];
+      path = [ pkgs.vnstat ];
       wants = [ "network-online.target" ];
       after = [ "network-online.target" ];
       wantedBy = [ "multi-user.target" ];

@@ -1,4 +1,4 @@
-{ self, config, pkgs, lib, ... }: 
+{ self, config, pkgs, lib, ... }:
 let
   package = self.packages.${config.nixpkgs.hostPlatform.system}.sing-box;
 in
@@ -11,9 +11,10 @@ in
     "net.ipv4.ip_forward" = 1;
   };
 
-  services.komari-agent.enable= true;
+  services.komari-agent.enable = true;
   services.komari-agent.token = "JdkkZwkSx4r_k5GA";
   services.komari-agent.include-mountpoint = "/boot;/";
+  services.komari-agent.month-rotate = 1;
 
   services.sing-box.enable = true;
   services.sing-box.settings = {
@@ -35,7 +36,7 @@ in
   environment.systemPackages = with pkgs;[
     package
   ];
-  
+
 
   # systemd.services.cloudflare-warp-daemon = {
   #   after = [ "network.target" ];
