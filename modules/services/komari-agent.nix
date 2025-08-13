@@ -39,6 +39,8 @@ in
       after = [ "network-online.target" ];
       wantedBy = [ "multi-user.target" ];
     };
+
+    services.vnstat.enable = true;
   };
 
 }

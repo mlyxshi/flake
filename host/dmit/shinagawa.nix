@@ -35,7 +35,6 @@
   services.komari-agent.include-nics = "eth0";
   services.komari-agent.month-rotate = 24;
 
-  services.vnstat.enable = true;
   # Traffic Reset Date
   environment.etc."vnstat.conf".text = ''
     MonthRotate 24
