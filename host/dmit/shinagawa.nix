@@ -30,7 +30,7 @@
   '';
 
   services.komari-agent.enable = true;
-  services.komari-agent.token = "dPC3l2GatkHUQBZP";
+  services.komari-agent.token = "GX0qa10SyKdenw2o";
   services.komari-agent.include-mountpoint = "/";
   services.komari-agent.include-nics = "eth0";
   services.komari-agent.month-rotate = 24;
