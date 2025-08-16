@@ -9,9 +9,13 @@
   boot.loader.limine.biosDevice = "/dev/sda1";
   boot.loader.limine.maxGenerations = 3;
 
-  fileSystems."/" = {
+  fileSystems."/boot" = {
     device = "/dev/sda1";
-    fsType = "ext4";
+    fsType = "vfat";
   };
 
+  fileSystems."/" = {
+    device = "/dev/sda2";
+    fsType = "ext4";
+  };
 }
