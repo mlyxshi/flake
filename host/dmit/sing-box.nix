@@ -39,10 +39,10 @@ in
 
   systemd.services.sing-box-share = {
     after = [ "network.target" ];
-    preStart = utils.genJqSecretsReplacementSnippet config-share "/run/sing-box/config.json";
+    preStart = utils.genJqSecretsReplacementSnippet config-share "/run/sing-box-share/config.json";
     serviceConfig = {
-      StateDirectory = "sing-box";
-      RuntimeDirectory = "sing-box";
+      StateDirectory = "sing-box-share";
+      RuntimeDirectory = "sing-box-share";
       ExecStart = "${lib.getExe sing-box-latest} -D \${STATE_DIRECTORY} -C \${RUNTIME_DIRECTORY} run";
     };
     wantedBy = [ "multi-user.target" ];
