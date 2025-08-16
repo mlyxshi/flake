@@ -44,8 +44,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        host: [ rfc-hk ] 
-        # host: [ rfc-hk , nrt ] 
+        host: [ nrt ] 
     steps:
     - uses: actions/checkout@master
     - uses: DeterminateSystems/nix-installer-action@main

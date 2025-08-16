@@ -18,15 +18,6 @@ on:
         options:
           - root
           - ubuntu
-      disk:
-        description: 'Disk Name'
-        required: true
-        default: 'vda'
-        type: choice
-        options:
-          - vda
-          - sda
-          - nvme0n1
 
 env:
   SSH: ssh -o StrictHostKeyChecking=no
@@ -94,16 +85,16 @@ jobs:
           sleep 5
         done
 
-    - run: $SSH $HOST parted -s /dev/${{ inputs.disk }} -- mklabel msdos
-    - run: $SSH $HOST parted /dev/${{ inputs.disk }} -- mkpart primary fat32 1MB 513MB
-    - run: $SSH $HOST parted /dev/${{ inputs.disk }} -- set 1 boot on
-    - run: $SSH $HOST parted /dev/${{ inputs.disk }} -- mkpart primary ext4 513MB 100%
+    - run: $SSH $HOST parted -s /dev/vda -- mklabel msdos
+    - run: $SSH $HOST parted /dev/vda -- mkpart primary fat32 1MB 513MB
+    - run: $SSH $HOST parted /dev/vda -- set 1 boot on
+    - run: $SSH $HOST parted /dev/vda -- mkpart primary ext4 513MB 100%
 
-    - run: $SSH $HOST mkfs.fat -F 32 /dev/${{ inputs.disk }}1
-    - run: $SSH $HOST mkfs.ext4 -F /dev/${{ inputs.disk }}2
+    - run: $SSH $HOST mkfs.fat -F 32 /dev/vda1
+    - run: $SSH $HOST mkfs.ext4 -F /dev/vda2
     - run: $SSH $HOST mkdir -p /mnt
-    - run: $SSH $HOST mount /dev/${{ inputs.disk }}2 /mnt
-    - run: $SSH $HOST mount --mkdir /dev/${{ inputs.disk }}1 /mnt/boot
+    - run: $SSH $HOST mount /dev/vda2 /mnt
+    - run: $SSH $HOST mount --mkdir /dev/vda1 /mnt/boot
     
     # --substitute-on-destination will consume more memory
     - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --to ssh://$HOST?remote-store=local?root=/mnt $outPath
