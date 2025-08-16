@@ -86,9 +86,9 @@ jobs:
         done
 
     - run: $SSH $HOST parted -s /dev/vda -- mklabel msdos
-    - run: $SSH $HOST parted /dev/vda -- mkpart primary fat32 1MB 513MB
+    - run: $SSH $HOST parted /dev/vda -- mkpart primary fat32 1MiB 513MiB
     - run: $SSH $HOST parted /dev/vda -- set 1 boot on
-    - run: $SSH $HOST parted /dev/vda -- mkpart primary ext4 513MB 100%
+    - run: $SSH $HOST parted /dev/vda -- mkpart primary ext4 513MiB 100%
 
     - run: $SSH $HOST mkfs.fat -F 32 /dev/vda1
     - run: $SSH $HOST mkfs.ext4 -F /dev/vda2
@@ -103,7 +103,7 @@ jobs:
     - run: $SSH $HOST mkdir /mnt/{etc,tmp}
     - run: $SSH $HOST touch /mnt/etc/NIXOS
     - run: $SSH $HOST NIXOS_INSTALL_BOOTLOADER=1 nixos-enter --root /mnt -- /run/current-system/bin/switch-to-configuration boot
-    - run: $SSH $HOST reboot
+    # - run: $SSH $HOST reboot
 
     - run: curl "https://api.day.app/${{ secrets.BARK_KEY }}/NixOS%20Install%20Done/${{ inputs.flakeAttr }}?group=NixOS&icon=https://hydra.nixos.org/logo"
 
