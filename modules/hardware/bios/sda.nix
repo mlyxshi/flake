@@ -3,8 +3,11 @@
 
   boot.initrd.systemd.enable = true;
 
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
+  boot.loader.limine.enable = true;
+  boot.loader.limine.biosSupport = true;
+  boot.loader.limine.efiSupport = false;
+  boot.loader.limine.biosDevice = "/dev/sda";
+  boot.loader.limine.maxGenerations = 3;
 
   fileSystems."/" = {
     device = "/dev/sda1";
