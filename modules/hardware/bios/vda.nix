@@ -6,9 +6,8 @@
   boot.loader.limine.enable = true;
   boot.loader.limine.biosSupport = true;
   boot.loader.limine.efiSupport = false;
-  boot.loader.limine.biosDevice = "/dev/vda1";
+  boot.loader.limine.biosDevice = "/dev/vda";
   boot.loader.limine.maxGenerations = 3;
-  boot.loader.limine.forceMbr = true;
 
   fileSystems."/boot" = {
     device = "/dev/vda1";
