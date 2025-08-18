@@ -11,11 +11,17 @@
     ookla-speedtest
   ];
 
-  environment.variables.BROWSER = "echo";     # Print the URL instead on servers
+  environment.variables.BROWSER = "echo"; # Print the URL instead on servers
 
   networking.domain = "mlyxshi.com";
 
   fonts.fontconfig.enable = false;
+
+  xdg.autostart.enable = false;
+  xdg.icons.enable = false;
+  xdg.menus.enable = false;
+  xdg.mime.enable = false;
+  xdg.sounds.enable = false;
 
   documentation = {
     enable = false;
