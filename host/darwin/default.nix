@@ -36,7 +36,6 @@
     ripgrep
     starship
     zoxide
-    atuin
     eza
     xh
     tealdeer
@@ -197,7 +196,6 @@
     shellInit = ''
       set -U fish_greeting
       zoxide init fish | source
-      atuin init fish --disable-up-arrow | source
 
       function loc
         readlink -f $(which $argv) 

@@ -74,15 +74,12 @@
     ripgrep
     starship
     zoxide
-    atuin
     eza
     xh
-    tealdeer
     bat
     bat-extras.batman
     gdu
     gitMinimal
-    gptfdisk
 
     (writeShellScriptBin "update" ''
       if [[ -e "/flake/flake.nix" ]]
@@ -126,6 +123,8 @@
         exit 1
       fi
     '')
+  ] ++ lib.optionals config.boot.loader.systemd-boot.enable [
+    pkgs.gptfdisk
   ];
 
 
@@ -152,7 +151,6 @@
     shellInit = ''
       set -U fish_greeting
       zoxide init fish | source
-      atuin init fish --disable-up-arrow | source
 
       function loc
         readlink -f $(which $argv) 
