@@ -4,7 +4,15 @@ import json
 HOST = "127.0.0.1"
 PORT = 6666
 STATS_PATH = "/server/v1/stats"
-THRESHOLD_BYTES = 125 * 1024 ** 3  # 单向125GB，双向250GB
+THRESHOLD_BYTES_100 = 50 * 1024 ** 3  # 单向50GB，双向100GB
+THRESHOLD_BYTES_250 = 125 * 1024 ** 3  # 单向125GB，双向250GB
+
+
+USER_THRESHOLDS = {
+    "SirNewtonX": THRESHOLD_BYTES_100,
+    "Bill": THRESHOLD_BYTES_100,
+    "BrunuhVille": THRESHOLD_BYTES_250,
+}
 
 def get_stats():
     conn = http.client.HTTPConnection(HOST, PORT)
@@ -32,9 +40,13 @@ def check_and_delete_users():
             username = user["username"]
             total_bytes = user["downlinkBytes"] + user["uplinkBytes"]
             gb = total_bytes / (1024 ** 3)
-            print(f"User: {username}, Total Bytes: {total_bytes} ({gb:.2f} GB)")
 
-            if total_bytes > THRESHOLD_BYTES:
+            # 获取该用户的阈值，默认用 100GB
+            threshold = USER_THRESHOLDS.get(username, THRESHOLD_BYTES_100)
+
+            print(f"User: {username}, Total Bytes: {total_bytes} ({gb:.2f} GB), Threshold: {threshold / (1024 ** 3)} GB")
+
+            if total_bytes > threshold:
                 delete_user(username)
     except Exception as e:
         print(f"[EXCEPTION] {e}")
