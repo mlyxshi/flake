@@ -20,9 +20,9 @@
       RUN_MIGRATIONS = "1";
       SCHEDULER_ROUND_ROBIN_MIN_INTERVAL = "10";
       POLLING_FREQUENCY = "10";
-      POLLING_PARSING_ERROR_LIMIT = "0";
+      POLLING_PARSING_ERROR_LIMIT = "3";
       METRICS_COLLECTOR = "1";
-      METRICS_ALLOWED_NETWORKS = "0.0.0.0/0";
+      # METRICS_ALLOWED_NETWORKS = "0.0.0.0/0";
       DATABASE_URL = "postgres://postgres:postgres@miniflux-postgres/miniflux?sslmode=disable";
       BASE_URL = "https://miniflux.${config.networking.domain}";
     };
