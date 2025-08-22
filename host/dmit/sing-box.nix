@@ -48,6 +48,7 @@ in
     wantedBy = [ "multi-user.target" ];
   };
 
+  # Every 1 minute check  
   systemd.services.ssm = {
     after = [ "sing-box-share.service" ];
     serviceConfig = {
@@ -58,12 +59,31 @@ in
 
   systemd.timers.ssm = {
     timerConfig = {
-      OnCalendar = "*:0/1"; # every minute
+      OnCalendar = "*:0/1";
       AccuracySec = "1s";
     };
     wantedBy = [ "timers.target" ];
   };
 
+  # Every month reset user stats
+  systemd.services.ssm-month = {
+    after = [ "sing-box-share.service" ];
+    path = [ pkgs.curl ];
+    serviceConfig = {
+      ExecStart = "/secret/ssm-reset.sh";
+    };
+  };
+
+
+  systemd.timers.ssm-month = {
+    timerConfig = {
+      OnCalendar = "*-*-24 00:00:00";
+      AccuracySec = "1s";
+    };
+    wantedBy = [ "timers.target" ];
+  };
+
+  # TG bot
   systemd.services.ssm-tg = {
     after = [ "sing-box-share.service" ];
     serviceConfig = {

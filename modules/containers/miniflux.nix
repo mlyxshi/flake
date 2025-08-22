@@ -7,7 +7,7 @@
   systemd.services."backup@miniflux-postgres".overrideStrategy = "asDropin";
 
   virtualisation.oci-containers.containers.miniflux = {
-    image = "ghcr.io/miniflux/miniflux";
+    image = "ghcr.io/miniflux/miniflux:nightly-distroless";
     dependsOn = [ "miniflux-postgres" ];
     environmentFiles = [ /secret/miniflux-oidc ];
     environment = {
