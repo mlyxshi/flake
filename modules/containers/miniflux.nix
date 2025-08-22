@@ -7,7 +7,7 @@
   systemd.services."backup@miniflux-postgres".overrideStrategy = "asDropin";
 
   virtualisation.oci-containers.containers.miniflux = {
-    image = "ghcr.io/miniflux/miniflux:nightly-distroless";
+    image = "ghcr.io/miniflux/miniflux";
     dependsOn = [ "miniflux-postgres" ];
     environmentFiles = [ /secret/miniflux-oidc ];
     environment = {
@@ -22,7 +22,7 @@
       POLLING_FREQUENCY = "10";
       POLLING_PARSING_ERROR_LIMIT = "3";
       METRICS_COLLECTOR = "1";
-      # METRICS_ALLOWED_NETWORKS = "0.0.0.0/0";
+      METRICS_ALLOWED_NETWORKS = "0.0.0.0/0";
       DATABASE_URL = "postgres://postgres:postgres@miniflux-postgres/miniflux?sslmode=disable";
       BASE_URL = "https://miniflux.${config.networking.domain}";
     };
