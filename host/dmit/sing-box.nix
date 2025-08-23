@@ -97,7 +97,7 @@ in
     preStart = utils.genJqSecretsReplacementSnippet config-my "/var/lib/sing-box-my/config.json";
     serviceConfig = {
       StateDirectory = "sing-box-my";
-      ExecStart = "${lib.getExe sing-box-latest} -D /var/lib/sing-box-my/ -C /var/lib/sing-box-my/ run";
+      ExecStart = "${lib.getExe pkgs.sing-box} -D /var/lib/sing-box-my/ -C /var/lib/sing-box-my/ run";
     };
     wantedBy = [ "multi-user.target" ];
   };
