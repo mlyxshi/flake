@@ -43,7 +43,7 @@ in
     serviceConfig = {
       StateDirectory = "sing-box-share";
       RuntimeDirectory = "sing-box-share";
-      ExecStart = "${lib.getExe sing-box-latest} -D \${STATE_DIRECTORY} -C \${RUNTIME_DIRECTORY} run";
+      ExecStart = "${lib.getExe pkgs.sing-box} -D \${STATE_DIRECTORY} -C \${RUNTIME_DIRECTORY} run";
     };
     wantedBy = [ "multi-user.target" ];
   };
@@ -94,11 +94,10 @@ in
 
   systemd.services.sing-box-my = {
     after = [ "network.target" ];
-    preStart = utils.genJqSecretsReplacementSnippet config-my "/run/sing-box-my/config.json";
+    preStart = utils.genJqSecretsReplacementSnippet config-my "/var/lib/sing-box-my/config.json";
     serviceConfig = {
       StateDirectory = "sing-box-my";
-      RuntimeDirectory = "sing-box-my";
-      ExecStart = "${lib.getExe sing-box-latest} -D \${STATE_DIRECTORY} -C \${RUNTIME_DIRECTORY} run";
+      ExecStart = "${lib.getExe sing-box-latest} -D /var/lib/sing-box-my/ -C /var/lib/sing-box-my/ run";
     };
     wantedBy = [ "multi-user.target" ];
   };
