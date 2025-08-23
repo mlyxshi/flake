@@ -94,7 +94,7 @@ in
 
   systemd.services.sing-box-my = {
     after = [ "network.target" ];
-    preStart = utils.genJqSecretsReplacementSnippet config-my "/var/lib/sing-box-my/config.json";
+    preStart = utils.genJqSecretsReplacementSnippet config-my "/run/sing-box-my/config.json";
     serviceConfig = {
       StateDirectory = "sing-box-my";
       RuntimeDirectory = "sing-box-my";
