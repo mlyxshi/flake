@@ -9,7 +9,7 @@ THRESHOLD_BYTES_100 = 100 * 1024 ** 3  # 实际200GB
 
 
 USER_THRESHOLDS = {
-    "BrunuhVille": THRESHOLD_BYTES_200,
+    "BrunuhVille": THRESHOLD_BYTES_100,
 }
 
 def get_stats():
