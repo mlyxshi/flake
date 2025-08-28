@@ -110,6 +110,7 @@
       "iproute2mac"
       "nexttrace"
       "payload-dumper-go"
+      "qemu"
     ];
 
     casks = [
@@ -132,6 +133,12 @@
 
   programs.ssh.knownHosts."github.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
   programs.ssh.extraConfig = ''
+    Host kexec
+      HostName localhost
+      HostKeyAlias kexec
+      Port 8022
+      User root
+      
     Host us
     	HostName  us.mlyxshi.com
       HostKeyAlias us

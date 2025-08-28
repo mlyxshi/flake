@@ -27,18 +27,11 @@
       HostName 192.168.1.190
       HostKeyAlias m1
       User root
-
-    Host kexec
-      HostName localhost
-      HostKeyAlias kexec
-      Port 8022
-      User root
   '';
 
   homebrew = {
 
     brews = [
-      "qemu"
       "smartmontools"
     ];
 
