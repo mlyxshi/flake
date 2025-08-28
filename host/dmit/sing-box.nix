@@ -48,7 +48,20 @@ in
     wantedBy = [ "multi-user.target" ];
   };
 
-  # Every 1 minute check  
+  # Every UTC+8 4:00 am restart sing-box-share to backup traffic stats
+  systemd.services.sing-box-share-restart = {
+    serviceConfig.ExecStart = "${pkgs.systemd}/bin/systemctl restart sing-box-share.service";
+  };
+
+  systemd.timers.sing-box-share-restart = {
+    timerConfig = {
+      OnCalendar = "*-*-* 20:00:00";
+      AccuracySec = "1s";
+    };
+    wantedBy = [ "timers.target" ];
+  };
+
+  # Every 1 minute check and delete users who exceed data limit
   systemd.services.ssm = {
     after = [ "sing-box-share.service" ];
     serviceConfig = {
