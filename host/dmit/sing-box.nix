@@ -47,12 +47,12 @@ in
     wantedBy = [ "multi-user.target" ];
   };
 
-  # Every UTC+8 4:00 am restart sing-box-share to backup traffic stats
-  systemd.services.sing-box-share-restart = {
-    serviceConfig.ExecStart = "${pkgs.systemd}/bin/systemctl restart sing-box-share.service";
+  # Every UTC+8 4:00 am restart sing-box to backup traffic stats
+  systemd.services.sing-box-restart = {
+    serviceConfig.ExecStart = "systemctl restart sing-box-share.service sing-box-my.service";
   };
 
-  systemd.timers.sing-box-share-restart = {
+  systemd.timers.sing-box-restart = {
     timerConfig = {
       OnCalendar = "*-*-* 20:00:00";
       AccuracySec = "1s";
