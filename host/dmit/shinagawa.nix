@@ -4,8 +4,8 @@
       Name = "eth0";
     };
     networkConfig = {
-      Address = "103.117.103.126/24";
-      Gateway = "103.117.103.1";
+      Address = "154.12.190.105/24";
+      Gateway = "154.12.190.105";
     };
   };
 
@@ -23,8 +23,8 @@
         ip protocol icmp accept
         ip6 nexthdr icmpv6 accept
         ct state {established, related} accept
-        tcp dport { 2222, 5201, 9997, 9998, 9999 } accept
-        udp dport { 5201, 9997, 9998, 9999 } accept
+        tcp dport { 2222, 443, 80 } accept
+        udp dport { 5201 } accept
       }
     }
   '';
