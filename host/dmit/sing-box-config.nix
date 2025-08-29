@@ -8,7 +8,7 @@
     {
       type = "shadowsocks";
       tag = "ss-in";
-      listen = "0.0.0.0";
+      listen = "::";
       listen_port = 9998;
       network = "tcp";
       method = "2022-blake3-aes-128-gcm";
@@ -19,7 +19,7 @@
     {
       type = "shadowsocks";
       tag = "ss-in-warp";
-      listen = "0.0.0.0";
+      listen = "::";
       listen_port = 9997;
       network = "tcp";
       method = "2022-blake3-aes-128-gcm";
