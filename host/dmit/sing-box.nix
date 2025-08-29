@@ -11,7 +11,7 @@ let
         type = "shadowsocks";
         tag = "ss-in";
         listen = "::";
-        listen_port = 9999;
+        listen_port = 80;
         network = "tcp";
         method = "2022-blake3-aes-128-gcm";
         password = { _secret = "/secret/ss-password-2022"; };

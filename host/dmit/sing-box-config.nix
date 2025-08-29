@@ -9,7 +9,7 @@
       type = "shadowsocks";
       tag = "ss-in";
       listen = "::";
-      listen_port = 9998;
+      listen_port = 443;
       network = "tcp";
       method = "2022-blake3-aes-128-gcm";
       password = { _secret = "/secret/ss-password-2022"; };
