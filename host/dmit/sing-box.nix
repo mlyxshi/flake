@@ -15,7 +15,6 @@ let
         network = "tcp";
         method = "2022-blake3-aes-128-gcm";
         password = { _secret = "/secret/ss-password-2022"; };
-        multiplex = { enabled = true; };
         managed = true;
       }
     ];
