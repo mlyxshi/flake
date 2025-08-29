@@ -20,7 +20,7 @@
       type = "shadowsocks";
       tag = "ss-in-warp";
       listen = "::";
-      listen_port = 9997;
+      listen_port = 444;
       network = "tcp";
       method = "2022-blake3-aes-128-gcm";
       password = { _secret = "/secret/ss-password-2022"; };
