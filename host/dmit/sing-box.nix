@@ -10,7 +10,7 @@ let
       {
         type = "shadowsocks";
         tag = "ss-in";
-        listen = "0.0.0.0";
+        listen = "::";
         listen_port = 9999;
         network = "tcp";
         method = "2022-blake3-aes-128-gcm";
