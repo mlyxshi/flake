@@ -56,16 +56,17 @@
       export YAZI_CONFIG_HOME=/etc/yazi
       cd /
     '';
+
+    "/root/.terminfo/x/xterm-256color".source = "${pkgs.ncurses}/share/terminfo/x~nix~case~hack~1/xterm-256color"; # htop
   };
 
   boot.initrd.systemd.storePaths = [
     "${pkgs.file}" # yazi dependency 
-    "${pkgs.ncurses}/share/terminfo/" # add terminfo for better ssh experience
   ];
 
   boot.initrd.systemd.extraBin = {
     # nix
-    nix = "${pkgs.nix}/bin/nix";
+    nix = "${pkgs.nix}/bin/nix"; 
     nix-store = "${pkgs.nix}/bin/nix-store";
     nix-env = "${pkgs.nix}/bin/nix-env";
     busybox = "${pkgs.busybox-sandbox-shell}/bin/busybox";
@@ -88,6 +89,7 @@
     htop = "${pkgs.htop}/bin/htop";
     yazi = "${pkgs.yazi-unwrapped}/bin/yazi";
     hx = "${pkgs.helix}/bin/hx";
+    # strace = "${pkgs.strace}/bin/strace";
   };
 
   boot.initrd.systemd.emergencyAccess = true;
