@@ -45,7 +45,7 @@ def check_and_delete_users():
                 # 获取该用户的阈值，默认用 实际100GB
                 threshold = USER_THRESHOLDS.get(username, THRESHOLD_BYTES_50)
 
-                print(f"[PORT {port}] User: {username}, Total Bytes: {total_bytes} ({gb:.2f} GB), Threshold: {threshold / (1024 ** 3)} GB")
+                print(f"[PORT {port}] User: {username}, Total Bytes: {total_bytes}, Threshold: {gb:.2f} GB / {int(threshold / (1024 ** 3))} GB")
 
                 if total_bytes > threshold:
                     delete_user(username, port)
