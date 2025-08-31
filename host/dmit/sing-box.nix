@@ -1,6 +1,6 @@
 { config, pkgs, lib, utils, self, ... }:
 let
-  sing-box-latest = self.packages.${config.nixpkgs.hostPlatform.system}.sing-box;
+  # sing-box-latest = self.packages.${config.nixpkgs.hostPlatform.system}.sing-box;
 
   pythonEnv = pkgs.python3.withPackages (ps: with ps; [ python-telegram-bot ]);
   
