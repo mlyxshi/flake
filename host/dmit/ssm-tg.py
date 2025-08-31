@@ -4,7 +4,8 @@ import subprocess
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
-HOSTS = [("127.0.0.1", 6666), ("127.0.0.1", 6665)]
+HOST = "127.0.0.1"
+PORTS = [6665, 6666]
 STATS_PATH = "/server/v1/stats"
 
 with open("/secret/ssm-bot") as f:
@@ -23,9 +24,9 @@ async def ssm_traffic(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         all_users = {}
 
-        # Gather stats from all hosts
-        for host, port in HOSTS:
-            data = get_stats(host, port)
+        # Gather stats from all ports on the same host
+        for port in PORTS:
+            data = get_stats(HOST, port)
             users = data.get("users", [])
             for user in users:
                 username = user.get("username", "<unknown>")
