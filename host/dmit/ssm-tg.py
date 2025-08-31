@@ -5,18 +5,23 @@ from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
 HOST = "127.0.0.1"
-PORTS = [6665, 6666]
-STATS_PATH = "/server/v1/stats"
+PORT = 6666
+ENDPOINT = [
+    "/server/v1",
+    "/mux/server/v1",
+    "/warp/server/v1",
+]
 
 with open("/secret/ssm-bot") as f:
     BOT_TOKEN = f.read().strip()
 
-def get_stats(host: str, port: int):
-    conn = http.client.HTTPConnection(host, port)
-    conn.request("GET", STATS_PATH)
+def get_stats(endpoint: str):
+    stats_path = endpoint + "/stats"
+    conn = http.client.HTTPConnection(HOST, PORT)
+    conn.request("GET", stats_path)
     response = conn.getresponse()
     if response.status != 200:
-        raise Exception(f"GET {STATS_PATH} on {host}:{port} failed with status {response.status}")
+        raise Exception(f"GET {stats_path} failed with status {response.status}")
     data = response.read()
     return json.loads(data)
 
@@ -24,9 +29,9 @@ async def ssm_traffic(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         all_users = {}
 
-        # Gather stats from all ports on the same host
-        for port in PORTS:
-            data = get_stats(HOST, port)
+        # Gather stats from all endpoints
+        for endpoint in ENDPOINT:
+            data = get_stats(endpoint)
             users = data.get("users", [])
             for user in users:
                 username = user.get("username", "<unknown>")
@@ -38,7 +43,7 @@ async def ssm_traffic(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 all_users[username]["uplinkBytes"] += user.get("uplinkBytes", 0)
                 all_users[username]["downlinkBytes"] += user.get("downlinkBytes", 0)
 
-        # Convert dict to list and sort
+        # Convert dict to list and sort by total traffic
         merged_users = [
             {
                 "username": username,
@@ -64,7 +69,6 @@ async def ssm_traffic(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
 
         output = "\n".join(output_lines)
-
         await update.message.reply_text(f"```\n{output}\n```", parse_mode="Markdown")
     except Exception as e:
         await update.message.reply_text(f"[EXCEPTION] {e}")
