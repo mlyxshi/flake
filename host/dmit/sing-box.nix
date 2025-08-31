@@ -3,32 +3,8 @@ let
   sing-box-latest = self.packages.${config.nixpkgs.hostPlatform.system}.sing-box;
 
   pythonEnv = pkgs.python3.withPackages (ps: with ps; [ python-telegram-bot ]);
-
-  config-share = {
-    log.level = "info";
-    inbounds = [
-      {
-        type = "shadowsocks";
-        tag = "ss-in";
-        listen = "::";
-        listen_port = 80;
-        network = "tcp";
-        method = "2022-blake3-aes-128-gcm";
-        password = { _secret = "/secret/ss-password-2022"; };
-        managed = true;
-      }
-    ];
-    services = [
-      {
-        type = "ssm-api";
-        servers = { "/" = "ss-in"; };
-        cache_path = "cache.json";
-        listen = "0.0.0.0";
-        listen_port = 6666;
-      }
-    ];
-  };
-  config-my = import ./sing-box-config.nix;
+  
+  config-share = import ./sing-box-config.nix;
 in
 {
 
@@ -49,7 +25,7 @@ in
 
   # Every UTC+8 4:00 am restart sing-box to backup traffic stats
   systemd.services.sing-box-restart = {
-    serviceConfig.ExecStart = "systemctl restart sing-box-share.service sing-box-my.service";
+    serviceConfig.ExecStart = "systemctl restart sing-box-share.service";
   };
 
   systemd.timers.sing-box-restart = {
@@ -103,16 +79,4 @@ in
     };
     wantedBy = [ "multi-user.target" ];
   };
-
-  systemd.services.sing-box-my = {
-    after = [ "network.target" ];
-    preStart = utils.genJqSecretsReplacementSnippet config-my "/run/sing-box-my/config.json";
-    serviceConfig = {
-      StateDirectory = "sing-box-my";
-      RuntimeDirectory = "sing-box-my";
-      ExecStart = "${lib.getExe pkgs.sing-box} -D \${STATE_DIRECTORY} -C \${RUNTIME_DIRECTORY} run";
-    };
-    wantedBy = [ "multi-user.target" ];
-  };
-
 }

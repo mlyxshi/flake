@@ -1,14 +1,20 @@
 {
-  log = {
-    level = "info";
-    timestamp = true;
-  };
-
+  log.level = "info";
   inbounds = [
     {
       type = "shadowsocks";
-      tag = "ss-in";
-      listen = "::";
+      tag = "ss-in-basic";
+      listen = "0.0.0.0";
+      listen_port = 80;
+      network = "tcp";
+      method = "2022-blake3-aes-128-gcm";
+      password = { _secret = "/secret/ss-password-2022"; };
+      managed = true;
+    }
+    {
+      type = "shadowsocks";
+      tag = "ss-in-mux";
+      listen = "0.0.0.0";
       listen_port = 443;
       network = "tcp";
       method = "2022-blake3-aes-128-gcm";
@@ -19,12 +25,12 @@
     {
       type = "shadowsocks";
       tag = "ss-in-warp";
-      listen = "::";
+      listen = "0.0.0.0";
       listen_port = 444;
       network = "tcp";
       method = "2022-blake3-aes-128-gcm";
       password = { _secret = "/secret/ss-password-2022"; };
-      multiplex = { enabled = true; };
+      managed = true;
     }
   ];
 
@@ -45,7 +51,10 @@
   route = {
     rules = [
       {
-        inbound = "ss-in";
+        inbound = [
+          "ss-in-basic"
+          "ss-in-mux"
+        ];
         outbound = "DIRECT";
       }
       {
@@ -54,15 +63,21 @@
       }
     ];
   };
+  
   services = [
     {
       type = "ssm-api";
-      servers = { "/" = "ss-in"; };
+      servers = {
+        "/" = "ss-in-basic";
+        "/mux" = "ss-in-mux";
+        "/warp" = "ss-in-warp";
+      };
       cache_path = "cache.json";
       listen = "0.0.0.0";
-      listen_port = 6665;
+      listen_port = 6666;
     }
   ];
 }
+
 
 
