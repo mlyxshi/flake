@@ -2,13 +2,13 @@
 
 buildGoModule rec {
   pname = "komari-agent";
-  version = "1.0.71";
+  version = "1.0.72";
 
   src = fetchFromGitHub {
     owner = "komari-monitor";
     repo = "komari-agent";
     rev = version;
-    hash = "sha256-orbtNsU90rQ/tVxx3tyC1tCaF6t0VfQ7SO3+n1dEFus=";
+    hash = "sha256-J7uzyBSibFzW7al8JA3kGA8BpQyoC6eeyEz26UvAINg=";
   };
 
   vendorHash = "sha256-775c+PxFYnitqVbP5dbLpWzHoDCFKDuoVAV/hcvQFqE=";
