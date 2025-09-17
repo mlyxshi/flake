@@ -75,6 +75,8 @@
       _FXShowPosixPathInTitle = true;
       FXEnableExtensionChangeWarning = false;
     };
+    NSGlobalDomain.NSStatusItemSpacing = 6; # List More Items in Menubar
+    
     # make sure Terminal/VSCode have Full Disk Access. https://lapcatsoftware.com/articles/containers.html
     CustomUserPreferences = {
       "com.apple.Safari" = {
@@ -85,7 +87,6 @@
 
     CustomSystemPreferences = {
       NSGlobalDomain = {
-        NSStatusItemSpacing = 6; # List More Items in Menubar
         AppleICUDateFormatStrings = {
           # Finder Date Format
           "1" = "yyyy-MM-dd HH:mm";
