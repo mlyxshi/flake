@@ -6,8 +6,6 @@
 
   networking.hostName = "Macbook";
 
-  nix.enable = false; # DeterminateSystems  Nix
-
   environment.systemPackages = with pkgs; [
     sing-box
   ];

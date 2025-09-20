@@ -7,13 +7,7 @@
   users.users.dominic.home = "/Users/dominic";
   users.users.dominic.openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe" ];
 
-  nix = {
-    channel.enable = false;
-    settings = {
-      experimental-features = [ "nix-command" "flakes" ];
-      trusted-users = [ "dominic" ];
-    };
-  };
+  nix.enable = false; # DeterminateSystems  Nix
 
   nixpkgs.config.allowUnfree = true;
 
@@ -185,7 +179,7 @@
   '';
 
   system.activationScripts.postActivation.text = ''
-    [[ -e "/run/current-system" ]] && ${pkgs.nix}/bin/nix store  diff-closures /run/current-system "$systemConfig"
+    [[ -e "/run/current-system" ]] && nix store  diff-closures /run/current-system "$systemConfig"
   '';
 
   programs.fish = {
