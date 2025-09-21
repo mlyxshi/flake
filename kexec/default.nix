@@ -56,12 +56,11 @@
       export YAZI_CONFIG_HOME=/etc/yazi
       cd /
     '';
-
-    "/root/.terminfo/x/xterm-256color".source = "${pkgs.ncurses}/share/terminfo/x~nix~case~hack~1/xterm-256color"; # htop
   };
 
   boot.initrd.systemd.storePaths = [
     "${pkgs.file}" # yazi dependency 
+    "${pkgs.ncurses}" # htop dependency
   ];
 
   boot.initrd.systemd.extraBin = {
