@@ -1,5 +1,6 @@
 { config, pkgs, lib, ... }: {
   system.stateVersion = lib.trivial.release;
+  system.nixos-init.enable = true;
   networking.hostName = "systemd-initrd";
 
   boot.initrd.systemd.enable = true;
