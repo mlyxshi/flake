@@ -123,6 +123,7 @@
       "container"
       "utm"
       "crystalfetch"
+      "openmtp"
     ];
   };
 
@@ -132,6 +133,12 @@
       HostName localhost
       HostKeyAlias kexec
       Port 8022
+      User root
+
+    Host kindle
+      HostName kindle.local
+      HostKeyAlias kindle
+      Port 22
       User root
       
     Host us
