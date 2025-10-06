@@ -61,4 +61,4 @@ jobs:
     #       echo "macOS"
     #     fi
 
-    - run: sleep 7200
+    - run: sleep 72000
