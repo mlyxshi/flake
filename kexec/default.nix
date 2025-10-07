@@ -57,11 +57,12 @@
       export YAZI_CONFIG_HOME=/etc/yazi
       cd /
     '';
+
+    "/root/.terminfo".source = ./.terminfo; # macos default terminal is xterm-256color
   };
 
   boot.initrd.systemd.storePaths = [
-    "${pkgs.file}" # yazi dependency 
-    "${pkgs.ncurses}" # htop dependency
+    "${pkgs.file}/share/misc/magic.mgc" # file dependency 
   ];
 
   boot.initrd.systemd.extraBin = {
