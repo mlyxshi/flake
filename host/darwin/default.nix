@@ -101,11 +101,16 @@
       cleanup = "uninstall";
     };
 
+    taps = [
+      "tw93/tap"
+    ];
+
     brews = [
       "iproute2mac"
       "nexttrace"
       "payload-dumper-go"
       "qemu"
+      "mole"
     ];
 
     casks = [
