@@ -59,7 +59,10 @@
   ];
 
   system.defaults = {
-    dock.autohide = true;
+    dock = {
+      autohide = true;
+      mineffect = "scale";
+    };
     LaunchServices.LSQuarantine = false;
     finder = {
       ShowPathbar = true;
@@ -70,7 +73,7 @@
       FXEnableExtensionChangeWarning = false;
     };
     NSGlobalDomain.NSStatusItemSpacing = 6; # List More Items in Menubar
-    
+
     # make sure Terminal/VSCode have Full Disk Access. https://lapcatsoftware.com/articles/containers.html
     CustomUserPreferences = {
       "com.apple.Safari" = {
