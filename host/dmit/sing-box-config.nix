@@ -9,7 +9,6 @@
       network = "tcp";
       method = "2022-blake3-aes-128-gcm";
       password = { _secret = "/secret/ss-password-2022"; };
-      managed = true;
     }
     {
       type = "shadowsocks";
@@ -20,7 +19,6 @@
       method = "2022-blake3-aes-128-gcm";
       password = { _secret = "/secret/ss-password-2022"; };
       multiplex = { enabled = true; };
-      managed = true;
     }
     {
       type = "shadowsocks";
@@ -31,7 +29,6 @@
       method = "2022-blake3-aes-128-gcm";
       password = { _secret = "/secret/ss-password-2022"; };
       multiplex = { enabled = true; };
-      managed = true;
     }
   ];
 
@@ -64,20 +61,6 @@
       }
     ];
   };
-  
-  services = [
-    {
-      type = "ssm-api";
-      servers = {
-        "/" = "ss-in-basic";
-        "/mux" = "ss-in-mux";
-        "/warp" = "ss-in-warp";
-      };
-      cache_path = "cache.json";
-      listen = "0.0.0.0";
-      listen_port = 6666;
-    }
-  ];
 }
 
 
