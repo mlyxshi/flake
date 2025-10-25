@@ -1,4 +1,9 @@
 { config, pkgs, lib, self, ... }: {
+
+  imports = [
+    self.nixosModules.services.cloudflare-warp
+  ];
+
   systemd.network.networks.ethernet-static = {
     matchConfig = {
       Name = "eth0";
@@ -41,5 +46,8 @@
     UnitMode 1
     Interface "eth0"
   '';
+
+  services.sing-box.enable = true;
+  services.sing-box.settings = import ./sing-box-config.nix;
 
 }
