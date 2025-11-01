@@ -34,13 +34,10 @@ in
         + (lib.optionalString (cfg.include-mountpoint != null) " --include-mountpoint ${cfg.include-mountpoint}")
         + (lib.optionalString (cfg.month-rotate != null) " --month-rotate ${toString cfg.month-rotate}");
       serviceConfig.DynamicUser = true;
-      path = [ pkgs.vnstat ];
       wants = [ "network-online.target" ];
       after = [ "network-online.target" ];
       wantedBy = [ "multi-user.target" ];
     };
-
-    services.vnstat.enable = true;
   };
 
 }
