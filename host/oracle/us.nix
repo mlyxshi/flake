@@ -11,10 +11,10 @@ in
     "net.ipv4.ip_forward" = 1;
   };
 
-  services.komari-agent.enable = true;
-  services.komari-agent.token = "JdkkZwkSx4r_k5GA";
-  services.komari-agent.include-mountpoint = "/boot;/";
-  services.komari-agent.month-rotate = 1;
+  systemd.services.komari-agent.environment = {
+    AGENT_MONTH_ROTATE = "1";
+    AGENT_INCLUDE_MOUNTPOINTS = "/boot;/";
+  };
 
   services.sing-box.enable = true;
   services.sing-box.package = package;

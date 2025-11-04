@@ -21,9 +21,9 @@
     ];
   };
 
-  services.komari-agent.enable = true;
-  services.komari-agent.token = "llIhN2egiHfMivbc";
-  services.komari-agent.include-mountpoint = "/boot;/";
-  services.komari-agent.month-rotate = 1;
+  systemd.services.komari-agent.environment = {
+    AGENT_MONTH_ROTATE = "1";
+    AGENT_INCLUDE_MOUNTPOINTS = "/boot;/";
+  };
 
 }
