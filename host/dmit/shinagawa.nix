@@ -34,11 +34,10 @@
     }
   '';
 
-  services.komari-agent.enable = true;
-  services.komari-agent.token = "GX0qa10SyKdenw2o";
-  services.komari-agent.include-mountpoint = "/";
-  services.komari-agent.include-nics = "eth0";
-  services.komari-agent.month-rotate = 24;
+  systemd.services.komari-agent.environment = {
+    AGENT_MONTH_ROTATE = "24";
+    AGENT_INCLUDE_MOUNTPOINTS = "/";
+  };
 
   services.sing-box.enable = true;
   services.sing-box.settings = import ./sing-box-config.nix;
