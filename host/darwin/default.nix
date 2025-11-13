@@ -114,6 +114,7 @@
       "payload-dumper-go"
       "qemu"
       "mole"
+      "container"
     ];
 
     casks = [
@@ -128,7 +129,6 @@
       "suspicious-package"
       "google-chrome"
       "orbstack"
-      "container"
       "utm"
       "crystalfetch"
       "openmtp"
