@@ -19,6 +19,8 @@
   };
   networking.firewall.enable = false;
 
+  boot.kernelParams = [ "net.ifnames=0" ];
+
 
   boot.initrd.systemd.enable = true;
 
