@@ -53,7 +53,7 @@
     settings.PasswordAuthentication = false;
   };
 
-  system.build.raw = import "${toString modulesPath}/../lib/make-disk-image.nix" {
+  system.build.raw = import "${pkgs.path}/nixos/lib/make-disk-image.nix" {
     inherit config lib pkgs;
     format = "raw";
     copyChannel = false;
