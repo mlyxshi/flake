@@ -58,5 +58,6 @@
     format = "raw";
     copyChannel = false;
     partitionTableType = "legacy+boot"; # limine bootloader
+    baseName = "bios-init";
   };
 }

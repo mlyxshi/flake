@@ -1,0 +1,35 @@
+name: "Kexec Release"
+on:
+  workflow_dispatch:
+
+env:
+  CLOUDFLARE_R2_ACCESS_KEY_ID: ${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}
+  CLOUDFLARE_R2_SECRET_ACCESS_KEY: ${{ secrets.CLOUDFLARE_R2_SECRET_ACCESS_KEY }}
+  CLOUDFLARE_R2_ENDPOINT: ${{ secrets.CLOUDFLARE_R2_ENDPOINT }}
+
+
+jobs:
+
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: DeterminateSystems/nix-installer-action@main
+
+    - name: Install rclone
+      run: sudo apt install -y rclone
+
+    - name: Configure rclone for R2
+      run: |
+        cat <<EOF > ~/.config/rclone/rclone.conf
+        [r2]
+        type = s3
+        provider = Cloudflare
+        access_key_id = ${CLOUDFLARE_R2_ACCESS_KEY_ID}
+        secret_access_key = ${CLOUDFLARE_R2_SECRET_ACCESS_KEY}
+        endpoint = ${CLOUDFLARE_R2_ENDPOINT}
+        EOF
+    
+    - run: |
+        ddImageOutPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.bios-init.config.system.build.raw)
+        rclone copy  $ddImageOutPath/bios-init.img  r2:ddraw
