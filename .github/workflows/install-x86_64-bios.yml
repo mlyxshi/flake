@@ -92,9 +92,9 @@ jobs:
 
     - run: $SSH $HOST mkfs.fat -F 32 /dev/vda1
     - run: $SSH $HOST mkfs.ext4 -F /dev/vda2
-    - run: $SSH $HOST mkdir -p /mnt
+    - run: $SSH $HOST mkdir -p /mnt /mnt/boot
     - run: $SSH $HOST mount /dev/vda2 /mnt
-    - run: $SSH $HOST mount --mkdir /dev/vda1 /mnt/boot
+    - run: $SSH $HOST mount /dev/vda1 /mnt/boot
     
     # --substitute-on-destination will consume more memory
     - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --to ssh://$HOST?remote-store=local?root=/mnt $outPath

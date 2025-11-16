@@ -23,7 +23,7 @@
       darwinConfigurations.Macbook = darwin.lib.darwinSystem { system = "aarch64-darwin"; modules = [ ./host/darwin/Macbook.nix ]; };
       nixosConfigurations = {
 
-        utm = import ./host/utm/server.nix { inherit self nixpkgs secret; };
+        bios-init = nixpkgs.lib.nixosSystem { modules = [ ./host/bios-init ]; };
 
         # nix build .#nixosConfigurations.installer-aarch64.config.system.build.isoImage 
         # nix build .#nixosConfigurations.installer-x86_64.config.system.build.isoImage
