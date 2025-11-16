@@ -7,20 +7,16 @@ env:
   CLOUDFLARE_R2_SECRET_ACCESS_KEY: ${{ secrets.CLOUDFLARE_R2_SECRET_ACCESS_KEY }}
   CLOUDFLARE_R2_ENDPOINT: ${{ secrets.CLOUDFLARE_R2_ENDPOINT }}
 
-
 jobs:
-
   upload:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
     - uses: DeterminateSystems/nix-installer-action@main
 
-    - name: Install rclone
-      run: sudo apt install -y rclone
-
-    - name: Configure rclone for R2
+    - name: Configure
       run: |
+        sudo apt install -y rclone
         mkdir -p ~/.config/rclone
         cat <<EOF > ~/.config/rclone/rclone.conf
         [r2]
@@ -31,6 +27,11 @@ jobs:
         endpoint = ${CLOUDFLARE_R2_ENDPOINT}
         EOF
     
-    - run: |
-        ddImageOutPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.bios-init.config.system.build.raw)
-        rclone copy  $ddImageOutPath/bios-init.img  r2:ddraw
+      - name: Build
+        run: |
+          outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.bios-init.config.system.build.raw)
+          echo "outPath=$outPath" >> "$GITHUB_ENV"
+
+      - name: Upload
+        run: |
+          rclone copy $outPath/bios-init.img r2:ddraw
