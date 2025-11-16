@@ -1,4 +1,4 @@
-name: "Kexec Release"
+name: "Upload dd image"
 on:
   workflow_dispatch:
 
