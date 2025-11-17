@@ -1,4 +1,4 @@
-name: "Upload dd image"
+name: "Upload dd image to R2"
 on:
   workflow_dispatch:
 
