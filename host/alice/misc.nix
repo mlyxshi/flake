@@ -7,11 +7,10 @@
     networkConfig = {
       Address = [
         "91.103.121.190/27"
-        "2a14:67c0:306:7d::a/64"
+        "2a14:67c0:306:7d::a/64" # IPv6: routed prefix, no gateway
       ];
       Gateway = [
         "91.103.121.161"
-        "2a14:67c0:306::1"
       ];
     };
   };
