@@ -13,8 +13,13 @@
         "91.103.121.161"
         "2a14:67c0:306::1"
       ];
-      GatewayOnLink = true; #Special config since gateway isn't in subnet
     };
+
+    routes = [
+      {
+        GatewayOnLink = true; #Special config since gateway isn't in subnet
+      }
+    ];
   };
 
   # Prefer IPv4 for DNS resolution
