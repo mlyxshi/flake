@@ -27,11 +27,11 @@ jobs:
         endpoint = ${CLOUDFLARE_R2_ENDPOINT}
         EOF
     
-      - name: Build
-        run: |
-          outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.bios-init.config.system.build.raw)
-          echo "outPath=$outPath" >> "$GITHUB_ENV"
+    - name: Build
+      run: |
+        outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.bios-init.config.system.build.raw)
+        echo "outPath=$outPath" >> "$GITHUB_ENV"
 
-      - name: Upload
-        run: |
-          rclone copy $outPath/bios-init.img r2:ddraw
+    - name: Upload
+      run: |
+        rclone copy $outPath/bios-init.img r2:ddraw
