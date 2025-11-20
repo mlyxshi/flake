@@ -53,12 +53,12 @@ in
                   "unit {{ $labels.name }} on {{ $labels.host }} failed";
               };
             }
-            # {
-            #   alert = "Miniflux Broken Feed";
-            #   expr = ''miniflux_broken_feeds{job="Miniflux"} > 0'';
-            #   for = "600m";
-            #   annotations = { summary = "Miniflux Broken Feed"; };
-            # }
+            {
+              alert = "Miniflux Broken Feed";
+              expr = ''miniflux_broken_feeds{job="Miniflux"} > 1'';
+              for = "600m";
+              annotations = { summary = "Miniflux Broken Feed"; };
+            }
             {
               alert = "Storage Full";
               expr = ''disk_used_percent{job="Node",path="/var"} > 90'';
