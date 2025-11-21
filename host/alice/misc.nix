@@ -24,7 +24,7 @@
   networking.getaddrinfo.precedence."::ffff:0:0/96" = 100;
 
   systemd.services.komari-agent.environment = {
-    AGENT_MONTH_ROTATE = "24";
+    AGENT_MONTH_ROTATE = "1";
     AGENT_INCLUDE_MOUNTPOINTS = "/";
   };
 
