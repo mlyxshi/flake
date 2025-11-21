@@ -56,4 +56,8 @@
       }
     ];
   };
+
+  environment.systemPackages = with pkgs; [
+    hath
+  ];
 }
