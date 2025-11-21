@@ -58,6 +58,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    hath
+    hath-rust
   ];
 }
