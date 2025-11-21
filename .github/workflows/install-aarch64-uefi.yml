@@ -107,6 +107,3 @@ jobs:
     - run: $SSH $HOST reboot
 
     - run: curl "https://api.day.app/${{ secrets.BARK_KEY }}/NixOS%20Install%20Done/${{ inputs.flakeAttr }}?group=NixOS&icon=https://hydra.nixos.org/logo"
-
-
-    
