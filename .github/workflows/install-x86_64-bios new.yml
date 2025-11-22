@@ -25,7 +25,7 @@ env:
 
 jobs:
 
-  bios-init:
+  takeover:
     runs-on: ubuntu-latest
     steps:
     - run: |
@@ -41,8 +41,8 @@ jobs:
 
     - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'wget https://raw.githubusercontent.com/mlyxshi/takeover/refs/heads/main/prepare.sh' 
     - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'sh prepare.sh'
-    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'cd /takeover && sh takeover.sh'
-
+    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'cd /takeover && wget https://raw.githubusercontent.com/mlyxshi/takeover/refs/heads/main/takeover-non-interactive.sh'
+    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'sh /takeover/takeover-non-interactive.sh'
 
   install:
     runs-on: ubuntu-latest
