@@ -1,4 +1,4 @@
-name: "Install x86_64 BIOS"
+name: "Install x86_64 BIOS Takeover"
 on:
   workflow_dispatch:
     inputs:
@@ -39,9 +39,10 @@ jobs:
           sleep 5
         done
 
-    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -O https://raw.githubusercontent.com/bin456789/reinstall/main/reinstall.sh' 
-    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'bash reinstall.sh dd --ssh-key github:mlyxshi --img "https://dd.mlyxshi.com/bios-init.img"'
-    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'reboot'
+    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'wget https://raw.githubusercontent.com/mlyxshi/takeover/refs/heads/main/prepare.sh' 
+    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'sh prepare.sh'
+    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'cd /takeover && sh takeover.sh'
+
 
   install:
     runs-on: ubuntu-latest
@@ -61,18 +62,15 @@ jobs:
     - uses: DeterminateSystems/nix-installer-action@main
 
     - run: |
-        outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ inputs.flakeAttr }}.config.system.build.toplevel)
+        outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ inputs.flakeAttr }}.config.system.build.raw)
         echo "outPath=$outPath" >> "$GITHUB_ENV"
 
     - run: |
-        until $SSH -o ConnectTimeout=10 $HOST ls /etc/NIXOS
+        until ssh -p 80  -o StrictHostKeyChecking=no ConnectTimeout=10 $HOST
         do
-          echo "Bios-init Environment Not Reachable, Waiting..."
+          echo "TakeOver Environment Not Reachable, Waiting..."
           sleep 5
         done
 
-    - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --to ssh://$HOST $outPath
-    - run: $SSH $HOST nix-env -p /nix/var/nix/profiles/system --set $outPath
-    - run: $SSH $HOST $outPath/bin/switch-to-configuration switch
+    - run: cat $outPath/nixos.img | ssh -p 80  -o StrictHostKeyChecking=no $HOST "dd of=/dev/vda"
     - run: curl "https://api.day.app/${{ secrets.BARK_KEY }}/NixOS%20Install%20Done/${{ inputs.flakeAttr }}?group=NixOS&icon=https://hydra.nixos.org/logo"
-    - run: $SSH $HOST reboot
