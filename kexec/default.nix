@@ -15,7 +15,7 @@
 
   # qemu + ext4 + vfat + efivarfs + overlay
   # add extra kernel modules: https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/all-hardware.nix
-  boot.initrd.kernelModules = [ "virtio_net" "virtio_pci" "virtio_mmio" "virtio_blk" "virtio_scsi" "virtio_balloon" "virtio_console" ]
+  boot.initrd.kernelModules = [ "virtio_net" "virtio_pci" "virtio_mmio" "virtio_blk" "virtio_scsi" "virtio_balloon" "virtio_console" "9p" "9pnet_virtio" ]
     ++ [ "ext4" ]
     ++ [ "vfat" "nls_cp437" "nls_iso8859-1" ]
     ++ [ "efivarfs" ]
@@ -67,7 +67,7 @@
 
   boot.initrd.systemd.extraBin = {
     # nix
-    nix = "${pkgs.nix}/bin/nix"; 
+    nix = "${pkgs.nix}/bin/nix";
     nix-store = "${pkgs.nix}/bin/nix-store";
     nix-env = "${pkgs.nix}/bin/nix-env";
     busybox = "${pkgs.busybox-sandbox-shell}/bin/busybox";
