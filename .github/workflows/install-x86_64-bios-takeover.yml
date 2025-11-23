@@ -75,4 +75,7 @@ jobs:
 
     - run: cat $outPath/nixos.img | ssh -p 80  -o StrictHostKeyChecking=no $HOST "dd of=/dev/vda"
     - run: curl "https://api.day.app/${{ secrets.BARK_KEY }}/NixOS%20Install%20Done/${{ inputs.flakeAttr }}?group=NixOS&icon=https://hydra.nixos.org/logo"
-    - run: ssh -p 80  -o StrictHostKeyChecking=no $HOST "reboot -f"
+
+    - name: Force reboot
+      continue-on-error: true 
+      run: ssh -p 80  -o StrictHostKeyChecking=no $HOST "reboot -f"
