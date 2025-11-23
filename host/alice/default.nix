@@ -10,6 +10,7 @@ nixpkgs.lib.nixosSystem {
     {
       nixpkgs.hostPlatform = "x86_64-linux";
       networking.hostName = "alice";
+      services.getty.autologinUser = "root";
     }
   ];
   specialArgs = { inherit self; };
