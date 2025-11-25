@@ -17,7 +17,7 @@ in
   };
 
   services.sing-box.enable = true;
-  services.sing-box.package = package;
+  # services.sing-box.package = package;
   services.sing-box.settings = {
     log.level = "info";
     inbounds = [
