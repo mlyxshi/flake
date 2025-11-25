@@ -4,7 +4,7 @@ nixpkgs.lib.nixosSystem {
     secret.nixosModules.default
     self.nixosModules.nixos.server
     self.nixosModules.network.dhcp
-    self.nixosModules.hardware.uefi.gpt-auto
+    self.nixosModules.hardware.uefi.sda
     
     ./${hostName}.nix
     {

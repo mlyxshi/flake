@@ -23,7 +23,7 @@ in
       modules = [
         secret.nixosModules.default
         self.nixosModules.nixos.server
-        self.nixosModules.hardware.uefi.gpt-auto
+        self.nixosModules.hardware.uefi.sda
         self.nixosModules.network.dhcp
         self.nixosModules.services.komari-agent
         self.nixosModules.services.traefik
