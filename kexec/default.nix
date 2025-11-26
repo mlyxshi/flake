@@ -13,6 +13,8 @@
   boot.initrd.network.ssh.enable = true;
   boot.initrd.systemd.services.sshd.preStart = lib.mkForce "/bin/chmod 0600 /etc/ssh/ssh_host_ed25519_key";
 
+  boot.initrd.services.lvm.enable = false; # remove unused lvm2 from initrd
+
   # qemu + ext4 + vfat + efivarfs
   # add extra kernel modules: https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/all-hardware.nix
   boot.initrd.kernelModules = [ "virtio_net" "virtio_pci" "virtio_mmio" "virtio_blk" "virtio_scsi" "virtio_balloon" "virtio_console" "9p" "9pnet_virtio" ]
@@ -55,10 +57,15 @@
     "/root/.terminfo".source = ./.terminfo; # macos default terminal is xterm-256color
   };
 
+  boot.initrd.systemd.storePaths = [
+    "${pkgs.file}/share/misc/magic.mgc" # file dependency 
+  ];
+
   boot.initrd.systemd.extraBin = {
     ip = "${pkgs.iproute2}/bin/ip";
     curl = "${pkgs.curl}/bin/curl";
     lsblk = "${pkgs.util-linux}/bin/lsblk";
+    file = "${pkgs.file}/bin/file";
     # debug
     htop = "${pkgs.htop}/bin/htop";
     yazi = "${pkgs.yazi-unwrapped}/bin/yazi";
