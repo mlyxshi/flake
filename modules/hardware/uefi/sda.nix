@@ -7,6 +7,7 @@
   boot.loader.systemd-boot.configurationLimit = 3;
   boot.loader.timeout = 1;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot.netbootxyz.enable = true; # emergency rescue on oracle arm
 
   fileSystems."/boot" = {
     device = "/dev/sda1";
@@ -28,7 +29,6 @@
     partitionTableType = "efi";
     bootSize = "256M";
     additionalSpace = "128M";
-    # contents
   };
 
 
