@@ -1,4 +1,4 @@
-name: "Install x86_64 BIOS Takeover"
+name: "Install x86_64 BIOS Takeover sda"
 on:
   workflow_dispatch:
     inputs:
@@ -10,14 +10,6 @@ on:
         description: 'OS Config Hostname'
         type: string
         required: true
-      user:
-        description: 'SSH User'
-        required: true
-        default: 'root'
-        type: choice
-        options:
-          - root
-          - ubuntu
 
 env:
   SSH: ssh -o StrictHostKeyChecking=no
@@ -33,17 +25,17 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
     - run: |
-        until $SSH -o ConnectTimeout=10 ${{ inputs.user }}@${{ inputs.ip }}
+        until $SSH -o ConnectTimeout=10 $HOST
         do
           echo "Server Not Reachable, Waiting..."
           sleep 5
         done
 
-    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'mkdir -p /takeover' 
-    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'mount -t tmpfs tmpfs /takeover' 
-    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'wget https://github.com/mlyxshi/takeover/releases/download/x86_64/alpine-takeover-rootfs.tar.gz' 
-    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'tar -xvf alpine-takeover-rootfs.tar.gz -C /takeover'
-    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'sh /takeover/takeover-non-interactive.sh'
+    - run: $SSH $HOST 'mkdir -p /takeover' 
+    - run: $SSH $HOST 'mount -t tmpfs tmpfs /takeover' 
+    - run: $SSH $HOST 'wget https://github.com/mlyxshi/takeover/releases/download/x86_64/alpine-takeover-rootfs.tar.gz' 
+    - run: $SSH $HOST 'tar -xvf alpine-takeover-rootfs.tar.gz -C /takeover'
+    - run: $SSH $HOST 'sh /takeover/takeover-non-interactive.sh'
 
   install:
     runs-on: ubuntu-latest
@@ -67,15 +59,15 @@ jobs:
         echo "outPath=$outPath" >> "$GITHUB_ENV"
 
     - run: |
-        until ssh -p 80  -o StrictHostKeyChecking=no -o ConnectTimeout=10 $HOST
+        until $SSH -p 80 -o ConnectTimeout=10 $HOST
         do
           echo "TakeOver Environment Not Reachable, Waiting..."
           sleep 5
         done
 
-    - run: cat $outPath/nixos.img | ssh -p 80  -o StrictHostKeyChecking=no $HOST "dd of=/dev/vda"
+    - run: cat $outPath/nixos.img | $SSH -p 80  $HOST "dd of=/dev/vda"
     - run: curl "https://api.day.app/${{ secrets.BARK_KEY }}/NixOS%20Install%20Done/${{ inputs.flakeAttr }}?group=NixOS&icon=https://hydra.nixos.org/logo"
 
     - name: Force reboot
       continue-on-error: true 
-      run: ssh -p 80  -o StrictHostKeyChecking=no $HOST "reboot -f"
+      run: $SSH -p 80  $HOST "reboot -f"

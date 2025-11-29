@@ -1,4 +1,4 @@
-name: "Install aarch64 UEFI DD"
+name: "Install aarch64 UEFI DD vda"
 on:
   workflow_dispatch:
     inputs:
@@ -10,14 +10,6 @@ on:
         description: 'OS Config Hostname'
         type: string
         required: true
-      user:
-        description: 'SSH User'
-        required: true
-        default: 'root'
-        type: choice
-        options:
-          - root
-          - ubuntu
 
 env:
   SSH: ssh -o StrictHostKeyChecking=no
@@ -33,29 +25,23 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
     - run: |
-        until $SSH -o ConnectTimeout=10 ${{ inputs.user }}@${{ inputs.ip }}
+        until $SSH -o ConnectTimeout=10 $HOST
         do
           echo "Server Not Reachable, Waiting..."
           sleep 5
         done
 
-    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO https://github.com/mlyxshi/flake/releases/download/aarch64/kexec' 
-    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO https://github.com/mlyxshi/flake/releases/download/aarch64/initrd'
-    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'curl -LO https://github.com/mlyxshi/flake/releases/download/aarch64/kernel'
-    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} 'chmod +x ./kexec'
-    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} "./kexec --kexec-syscall-auto --load ./kernel --initrd=./initrd"
+    - run: $SSH $HOST 'curl -LO https://github.com/mlyxshi/flake/releases/download/aarch64/kexec' 
+    - run: $SSH $HOST 'curl -LO https://github.com/mlyxshi/flake/releases/download/aarch64/initrd'
+    - run: $SSH $HOST 'curl -LO https://github.com/mlyxshi/flake/releases/download/aarch64/kernel'
+    - run: $SSH $HOST 'chmod +x ./kexec'
+    - run: $SSH $HOST "./kexec --kexec-syscall-auto --load ./kernel --initrd=./initrd"
 
     - name: Run kexec
       # If server doesn't reply, ServerAliveInterval option will kill ssh, and emit error 
       # This is the normal behaviour as expected, so let github workflow treat error as success 
       continue-on-error: true 
-      run: |
-        if [ ${{ inputs.user }} = root ]
-        then
-          $SSH -o ServerAliveInterval=5 -o ServerAliveCountMax=2 ${{ inputs.user }}@${{ inputs.ip }} './kexec -e'
-        else
-          $SSH -o ServerAliveInterval=5 -o ServerAliveCountMax=2 ${{ inputs.user }}@${{ inputs.ip }} 'sudo ./kexec -e'
-        fi
+      run: $SSH -o ServerAliveInterval=5 -o ServerAliveCountMax=2 $HOST './kexec -e'
 
   install:
     runs-on: ubuntu-24.04-arm
