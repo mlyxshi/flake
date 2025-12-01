@@ -36,6 +36,5 @@
   system.etc.overlay.enable = true;
 
   system.disableInstallerTools = true;
-  boot.enableContainers = false;
   environment.defaultPackages = [ ];
 }

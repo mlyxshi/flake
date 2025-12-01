@@ -6,7 +6,7 @@
 
   security.sudo.enable = false;
 
-  system.stateVersion = "25.11";
+  system.stateVersion = "26.05";
   system.nixos-init.enable = true;
 
   nix = {
