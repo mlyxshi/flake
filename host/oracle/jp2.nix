@@ -9,8 +9,6 @@
     self.nixosModules.containers.komari-monitor
   ];
 
-  systemd.services.komari-agent.environment.AGENT_MONTH_ROTATE = "1";
-
 
   environment.systemPackages = with pkgs; [
     nix-index

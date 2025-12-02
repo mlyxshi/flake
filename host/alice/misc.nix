@@ -23,8 +23,6 @@
   # Prefer IPv4 for DNS resolution
   networking.getaddrinfo.precedence."::ffff:0:0/96" = 100;
 
-  systemd.services.komari-agent.environment.AGENT_MONTH_ROTATE = "1";
-
   services.sing-box.enable = true;
   services.sing-box.settings = {
     log.level = "info";

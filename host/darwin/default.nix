@@ -43,6 +43,7 @@
     restic
     nix-init
     nix-update
+    nixfmt-rfc-style
     (pkgs.writeShellScriptBin "update" ''
       cd /Users/dominic/flake
       SYSTEM=$(nix build --no-link --print-out-paths .#darwinConfigurations.${config.networking.hostName}.system)

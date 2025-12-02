@@ -8,6 +8,7 @@ in
       AGENT_ENDPOINT = "https://top.mlyxshi.com";
       AGENT_DISABLE_AUTO_UPDATE = "true";
       AGENT_DISABLE_WEB_SSH = "true";
+      AGENT_MONTH_ROTATE = lib.mkDefault "1";
       AGENT_CONFIG_FILE = "/secret/komari/${config.networking.hostName}"; #token
     };
     serviceConfig.ExecStart = "${package}/bin/komari-agent";
