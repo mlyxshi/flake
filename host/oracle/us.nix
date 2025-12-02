@@ -11,10 +11,7 @@ in
     "net.ipv4.ip_forward" = 1;
   };
 
-  systemd.services.komari-agent.environment = {
-    AGENT_MONTH_ROTATE = "1";
-    AGENT_INCLUDE_MOUNTPOINTS = "/boot;/";
-  };
+  systemd.services.komari-agent.environment.AGENT_MONTH_ROTATE = "1";
 
   services.sing-box.enable = true;
   # services.sing-box.package = package;

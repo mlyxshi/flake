@@ -21,8 +21,6 @@
     ];
   };
 
-  systemd.services.komari-agent.environment = {
-    AGENT_MONTH_ROTATE = "1";
-  };
-
+  systemd.services.komari-agent.environment.AGENT_MONTH_ROTATE = "1";
+  
 }

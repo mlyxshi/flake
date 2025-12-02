@@ -34,10 +34,7 @@
     }
   '';
 
-  systemd.services.komari-agent.environment = {
-    AGENT_MONTH_ROTATE = "24";
-    AGENT_INCLUDE_MOUNTPOINTS = "/";
-  };
+  systemd.services.komari-agent.environment.AGENT_MONTH_ROTATE = "24";
 
   services.sing-box.enable = true;
   services.sing-box.settings = import ./sing-box-config.nix;
