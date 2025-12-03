@@ -25,4 +25,4 @@ jobs:
     - name: Set up WARP
       uses: fscarmen/warp-on-actions@v1.4
 
-    - run: $SSH $HOST 'ls' 
+    - run: $SSH $HOST 'ls -al /' 
