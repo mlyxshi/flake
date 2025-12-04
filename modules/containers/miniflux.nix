@@ -1,4 +1,10 @@
-{ config, pkgs, lib, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+{
 
   systemd.services."backup-init@miniflux-postgres".wantedBy = [ "multi-user.target" ];
   systemd.services."backup-init@miniflux-postgres".overrideStrategy = "asDropin";
@@ -26,12 +32,18 @@
       DATABASE_URL = "postgres://postgres:postgres@miniflux-postgres/miniflux?sslmode=disable";
       BASE_URL = "https://miniflux.${config.networking.domain}";
     };
-    extraOptions = lib.concatMap (x: [ "--label" x ]) [
-      "io.containers.autoupdate=registry"
-      "traefik.enable=true"
-      "traefik.http.routers.miniflux.rule=Host(`miniflux.${config.networking.domain}`)"
-      "traefik.http.routers.miniflux.entrypoints=websecure"
-    ];
+    extraOptions =
+      lib.concatMap
+        (x: [
+          "--label"
+          x
+        ])
+        [
+          "io.containers.autoupdate=registry"
+          "traefik.enable=true"
+          "traefik.http.routers.miniflux.rule=Host(`miniflux.${config.networking.domain}`)"
+          "traefik.http.routers.miniflux.entrypoints=websecure"
+        ];
   };
 
   virtualisation.oci-containers.containers.miniflux-postgres = {
@@ -47,21 +59,33 @@
   virtualisation.oci-containers.containers.rsshub = {
     image = "ghcr.io/diygod/rsshub";
     environmentFiles = [ /secret/rsshub ];
-    extraOptions = lib.concatMap (x: [ "--label" x ]) [
-      "io.containers.autoupdate=registry"
-      "traefik.enable=true"
-      "traefik.http.routers.rsshub.rule=Host(`rsshub.${config.networking.domain}`)"
-      "traefik.http.routers.rsshub.entrypoints=websecure"
-    ];
+    extraOptions =
+      lib.concatMap
+        (x: [
+          "--label"
+          x
+        ])
+        [
+          "io.containers.autoupdate=registry"
+          "traefik.enable=true"
+          "traefik.http.routers.rsshub.rule=Host(`rsshub.${config.networking.domain}`)"
+          "traefik.http.routers.rsshub.entrypoints=websecure"
+        ];
   };
 
   virtualisation.oci-containers.containers.apprise = {
     image = "ghcr.io/caronc/apprise";
-    extraOptions = lib.concatMap (x: [ "--label" x ]) [
-      "io.containers.autoupdate=registry"
-      "traefik.enable=true"
-      "traefik.http.routers.apprise.rule=Host(`apprise.${config.networking.domain}`)"
-      "traefik.http.routers.apprise.entrypoints=websecure"
-    ];
+    extraOptions =
+      lib.concatMap
+        (x: [
+          "--label"
+          x
+        ])
+        [
+          "io.containers.autoupdate=registry"
+          "traefik.enable=true"
+          "traefik.http.routers.apprise.rule=Host(`apprise.${config.networking.domain}`)"
+          "traefik.http.routers.apprise.entrypoints=websecure"
+        ];
   };
 }

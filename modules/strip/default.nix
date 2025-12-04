@@ -1,5 +1,11 @@
 # Remove and disable unnecessary modules
-{ pkgs, lib, config, ... }: {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+{
   # https://nixos.org/manual/nixos/unstable/#sec-replace-modules
   disabledModules = [
   ];

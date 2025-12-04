@@ -1,11 +1,17 @@
-{ pkgs, lib, config, self, ... }: {
+{
+  pkgs,
+  lib,
+  config,
+  self,
+  ...
+}:
+{
 
   imports = [
     self.nixosModules.nixos.base
   ];
 
-
-  environment.systemPackages = with pkgs;[
+  environment.systemPackages = with pkgs; [
     iperf
     nexttrace
     ookla-speedtest

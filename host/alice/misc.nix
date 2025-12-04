@@ -1,4 +1,11 @@
-{ config, pkgs, lib, self, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  self,
+  ...
+}:
+{
 
   systemd.network.networks.ethernet-static = {
     matchConfig = {
@@ -15,7 +22,7 @@
     routes = [
       {
         Gateway = "2a14:67c0:306::1";
-        GatewayOnLink = true; #Special config since gateway isn't in subnet
+        GatewayOnLink = true; # Special config since gateway isn't in subnet
       }
     ];
   };
@@ -35,7 +42,9 @@
         listen_port = 80;
         network = "tcp";
         method = "2022-blake3-aes-128-gcm";
-        password = { _secret = "/secret/ss-password-2022"; };
+        password = {
+          _secret = "/secret/ss-password-2022";
+        };
       }
     ];
 

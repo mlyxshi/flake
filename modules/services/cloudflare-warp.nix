@@ -1,6 +1,13 @@
-{ self, config, pkgs, lib, ... }: {
+{
+  self,
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+{
 
-  environment.systemPackages = with pkgs;[
+  environment.systemPackages = with pkgs; [
     cloudflare-warp
   ];
 

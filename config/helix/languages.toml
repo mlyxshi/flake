@@ -6,5 +6,5 @@ name = "nix"
 file-types = ["nix"]
 comment-token = "#"
 indent = { tab-width = 2, unit = "  " }
-formatter = { command = "nixpkgs-fmt" }
+formatter = { command = "nixfmt" }
 language-servers = [ "nil" ]

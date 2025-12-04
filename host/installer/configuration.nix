@@ -1,4 +1,10 @@
-{ modulesPath, lib, pkgs, ... }:{
+{
+  modulesPath,
+  lib,
+  pkgs,
+  ...
+}:
+{
   imports = [ (modulesPath + "/installer/cd-dvd/installation-cd-minimal.nix") ];
 
   boot.supportedFilesystems.zfs = lib.mkForce false;

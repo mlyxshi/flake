@@ -1,4 +1,10 @@
-{ config, pkgs, lib, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+{
 
   services.telegraf = {
     enable = true;
@@ -6,8 +12,15 @@
       inputs = {
         cpu = { };
         disk = {
-          ignore_fs =
-            [ "tmpfs" "devtmpfs" "devfs" "overlay" "aufs" "squashfs" "vfat" ];
+          ignore_fs = [
+            "tmpfs"
+            "devtmpfs"
+            "devfs"
+            "overlay"
+            "aufs"
+            "squashfs"
+            "vfat"
+          ];
         };
         diskio = { };
         mem = { };
@@ -35,9 +48,11 @@
           service = "telegraf";
         };
 
-        services.telegraf.loadBalancer.servers = [{
-          url = "http://${config.services.telegraf.extraConfig.outputs.prometheus_client.listen}";
-        }];
+        services.telegraf.loadBalancer.servers = [
+          {
+            url = "http://${config.services.telegraf.extraConfig.outputs.prometheus_client.listen}";
+          }
+        ];
       };
     };
   };

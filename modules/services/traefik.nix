@@ -1,4 +1,10 @@
-{ pkgs, lib, config, ... }: {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+{
 
   # https://traefik.io/blog/traefik-2-0-docker-101-fc2893944b9d/
   services.traefik = {
@@ -28,7 +34,9 @@
       api = { };
 
       entryPoints = {
-        web = { address = ":80"; };
+        web = {
+          address = ":80";
+        };
 
         websecure = {
           address = ":443";
@@ -41,7 +49,8 @@
         email = "blackhole@${config.networking.domain}";
         storage = "${config.services.traefik.dataDir}/acme.json"; # "/var/lib/traefik/acme.json"
       };
-    } // lib.optionalAttrs config.virtualisation.podman.enable {
+    }
+    // lib.optionalAttrs config.virtualisation.podman.enable {
 
       providers.docker = {
         endpoint = "unix:///run/podman/podman.sock";

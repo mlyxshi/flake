@@ -1,4 +1,10 @@
-{ pkgs, lib, self, config, ... }:
+{
+  pkgs,
+  lib,
+  self,
+  config,
+  ...
+}:
 let
   package = self.packages.${config.nixpkgs.hostPlatform.system}.komari-agent;
 in
@@ -9,7 +15,7 @@ in
       AGENT_DISABLE_AUTO_UPDATE = "true";
       AGENT_DISABLE_WEB_SSH = "true";
       AGENT_MONTH_ROTATE = lib.mkDefault "1";
-      AGENT_CONFIG_FILE = "/secret/komari/${config.networking.hostName}"; #token
+      AGENT_CONFIG_FILE = "/secret/komari/${config.networking.hostName}"; # token
     };
     serviceConfig.ExecStart = "${package}/bin/komari-agent";
     serviceConfig.DynamicUser = true;

@@ -1,4 +1,11 @@
-{ self, pkgs, lib, config, ... }: {
+{
+  self,
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+{
   imports = [
     self.nixosModules.services.prometheus
     self.nixosModules.services.transmission.default
@@ -8,7 +15,6 @@
     self.nixosModules.containers.change-detection
     self.nixosModules.containers.komari-monitor
   ];
-
 
   environment.systemPackages = with pkgs; [
     nix-index
@@ -28,7 +34,10 @@
     serviceConfig.StateDirectory = "hath";
     serviceConfig.WorkingDirectory = "%S/hath";
     wants = [ "network-online.target" ];
-    after = [ "network-online.target" "hath-init.service" ];
+    after = [
+      "network-online.target"
+      "hath-init.service"
+    ];
     wantedBy = [ "multi-user.target" ];
   };
 

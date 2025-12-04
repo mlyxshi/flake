@@ -1,4 +1,11 @@
-{ modulesPath, pkgs, lib, config, ... }: {
+{
+  modulesPath,
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+{
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
 
   boot.initrd.systemd.enable = true;
@@ -30,6 +37,5 @@
     bootSize = "256M";
     additionalSpace = "128M";
   };
-
 
 }

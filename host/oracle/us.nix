@@ -1,4 +1,10 @@
-{ self, config, pkgs, lib, ... }:
+{
+  self,
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   package = self.packages.${config.nixpkgs.hostPlatform.system}.sing-box;
 in
@@ -23,12 +29,15 @@ in
         listen_port = 8888;
         network = "tcp";
         method = "2022-blake3-aes-128-gcm";
-        password = { _secret = "/secret/ss-password-2022"; };
-        multiplex = { enabled = true; };
+        password = {
+          _secret = "/secret/ss-password-2022";
+        };
+        multiplex = {
+          enabled = true;
+        };
       }
     ];
   };
-
 
   # systemd.services.cloudflare-warp-daemon = {
   #   after = [ "network.target" ];
@@ -36,8 +45,6 @@ in
   #   serviceConfig.StateDirectory = "cloudflare-warp";
   #   wantedBy = [ "multi-user.target" ];
   # };
-
-
 
   # Oracle US to JP(China Telecom to Oracle SJC via AS4134)
   # networking.nftables.enable = true;

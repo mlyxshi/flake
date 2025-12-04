@@ -1,6 +1,12 @@
 # open firewall in web console
 # ::/0 and 0.0.0.0/0  port 51413 tcp udp
-{ config, pkgs, lib, self, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  self,
+  ...
+}:
 let
   package = pkgs.transmission_4;
 in
@@ -26,7 +32,10 @@ in
   };
 
   systemd.services.transmission = {
-    after = [ "transmission-init.service" "network-online.target" ];
+    after = [
+      "transmission-init.service"
+      "network-online.target"
+    ];
     wants = [ "network-online.target" ];
     environment = {
       TRANSMISSION_HOME = "%S/transmission";
@@ -54,7 +63,7 @@ in
           service = "transmission";
         };
 
-        services.transmission.loadBalancer.servers = [{ url = "http://127.0.0.1:9091"; }];
+        services.transmission.loadBalancer.servers = [ { url = "http://127.0.0.1:9091"; } ];
 
         routers.transmission-index = {
           rule = "Host(`transmission-${config.networking.hostName}-index.${config.networking.domain}`)";
@@ -62,7 +71,7 @@ in
           service = "transmission-index";
         };
 
-        services.transmission-index.loadBalancer.servers = [{ url = "http://127.0.0.1:8010"; }];
+        services.transmission-index.loadBalancer.servers = [ { url = "http://127.0.0.1:8010"; } ];
       };
     };
   };

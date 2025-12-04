@@ -1,4 +1,8 @@
-{ self, nixpkgs, secret }:
+{
+  self,
+  nixpkgs,
+  secret,
+}:
 nixpkgs.lib.nixosSystem {
   modules = [
     secret.nixosModules.default

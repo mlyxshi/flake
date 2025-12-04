@@ -1,4 +1,11 @@
-{ config, pkgs, lib, self, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  self,
+  ...
+}:
+{
 
   imports = [
     self.nixosModules.services.cloudflare-warp

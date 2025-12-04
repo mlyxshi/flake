@@ -1,4 +1,11 @@
-{ config, pkgs, lib, modulesPath, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  modulesPath,
+  ...
+}:
+{
 
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
 
@@ -14,13 +21,19 @@
   systemd.network.enable = true;
   systemd.network.wait-online.anyInterface = true;
   systemd.network.networks.ethernet-default-dhcp = {
-    matchConfig = { Name = [ "en*" "eth*" ]; };
-    networkConfig = { DHCP = "yes"; };
+    matchConfig = {
+      Name = [
+        "en*"
+        "eth*"
+      ];
+    };
+    networkConfig = {
+      DHCP = "yes";
+    };
   };
   networking.firewall.enable = false;
 
   boot.kernelParams = [ "net.ifnames=0" ];
-
 
   boot.initrd.systemd.enable = true;
 
@@ -44,14 +57,18 @@
 
   boot.growPartition = true; # resizes partition to occupy whole disk
 
-  users.users.root.openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe" ];
+  users.users.root.openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe"
+  ];
 
   services.openssh = {
     enable = true;
-    hostKeys = [{
-      path = "/etc/ssh/ssh_host_ed25519_key";
-      type = "ed25519";
-    }];
+    hostKeys = [
+      {
+        path = "/etc/ssh/ssh_host_ed25519_key";
+        type = "ed25519";
+      }
+    ];
     settings.PasswordAuthentication = false;
   };
 

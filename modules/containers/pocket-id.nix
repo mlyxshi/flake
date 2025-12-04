@@ -1,4 +1,10 @@
-{ config, pkgs, lib, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+{
 
   virtualisation.oci-containers.containers.pocket-id = {
     image = "ghcr.io/pocket-id/pocket-id";
@@ -8,12 +14,18 @@
       TRUST_PROXY = "true";
       ANALYTICS_DISABLED = "true";
     };
-    extraOptions = lib.concatMap (x: [ "--label" x ]) [
-      "io.containers.autoupdate=registry"
-      "traefik.enable=true"
-      "traefik.http.routers.pocket-id.rule=Host(`sso.${config.networking.domain}`)"
-      "traefik.http.routers.pocket-id.entrypoints=websecure"
-    ];
+    extraOptions =
+      lib.concatMap
+        (x: [
+          "--label"
+          x
+        ])
+        [
+          "io.containers.autoupdate=registry"
+          "traefik.enable=true"
+          "traefik.http.routers.pocket-id.rule=Host(`sso.${config.networking.domain}`)"
+          "traefik.http.routers.pocket-id.entrypoints=websecure"
+        ];
   };
 
   systemd.services."backup-init@pocket-id".wantedBy = [ "multi-user.target" ];

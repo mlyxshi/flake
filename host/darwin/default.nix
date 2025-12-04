@@ -1,11 +1,19 @@
-{ pkgs, lib, config, ... }: {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+{
 
   system.stateVersion = 6;
 
   system.primaryUser = "dominic";
 
   users.users.dominic.home = "/Users/dominic";
-  users.users.dominic.openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe" ];
+  users.users.dominic.openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe"
+  ];
 
   nix.enable = false; # DeterminateSystems  Nix
 
@@ -22,7 +30,6 @@
     nix-output-monitor
     nix-tree
     nix-inspect
-    nixpkgs-fmt
     yazi
     helix
     nil
@@ -43,7 +50,7 @@
     restic
     nix-init
     nix-update
-    nixfmt-rfc-style
+    nixfmt
     (pkgs.writeShellScriptBin "update" ''
       cd /Users/dominic/flake
       SYSTEM=$(nix build --no-link --print-out-paths .#darwinConfigurations.${config.networking.hostName}.system)
@@ -136,7 +143,8 @@
     ];
   };
 
-  programs.ssh.knownHosts."github.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
+  programs.ssh.knownHosts."github.com".publicKey =
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
   programs.ssh.extraConfig = ''
     Host kexec
       HostName localhost
@@ -181,7 +189,7 @@
       HostKeyAlias rfc-hk
     	User root
       Port 2222
-    
+
     Host gcp-hk
     	HostName  gcp-hk.mlyxshi.com
       HostKeyAlias gcp-hk
@@ -191,7 +199,7 @@
       User runner
       StrictHostKeyChecking no
       ProxyCommand /opt/homebrew/bin/cloudflared access ssh --hostname github-action-ssh.mlyxshi.com
-    
+
   '';
 
   system.activationScripts.postActivation.text = ''
@@ -290,4 +298,3 @@
   #   ''
   # ];
 }
-

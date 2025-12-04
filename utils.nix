@@ -1,12 +1,18 @@
-{ nixpkgs, self, secret }:
+{
+  nixpkgs,
+  self,
+  secret,
+}:
 let
   inherit (nixpkgs) lib;
 in
 {
-  modulesFromDirectoryRecursive = _dirPath:lib.packagesFromDirectoryRecursive {
-    callPackage = path: _: import path;
-    directory = _dirPath;
-  };
+  modulesFromDirectoryRecursive =
+    _dirPath:
+    lib.packagesFromDirectoryRecursive {
+      callPackage = path: _: import path;
+      directory = _dirPath;
+    };
 
   packagesSet-aarch64-linux = lib.packagesFromDirectoryRecursive {
     callPackage = nixpkgs.legacyPackages.aarch64-linux.callPackage;
@@ -19,28 +25,29 @@ in
   };
 
   oracleNixosConfigurations = lib.packagesFromDirectoryRecursive {
-    callPackage = path: _:nixpkgs.lib.nixosSystem {
-      modules = [
-        secret.nixosModules.default
-        self.nixosModules.nixos.server
-        self.nixosModules.hardware.uefi.sda
-        self.nixosModules.network.dhcp
-        self.nixosModules.services.komari-agent
-        self.nixosModules.services.traefik
-        self.nixosModules.services.telegraf
-        self.nixosModules.services.waste
-        path
-        {
-          nixpkgs.hostPlatform = "aarch64-linux";
-          networking.hostName = lib.removeSuffix ".nix" (builtins.baseNameOf path);
-          services.getty.autologinUser = "root";
-        }
-      ];
-      specialArgs = { inherit self; };
-    };
+    callPackage =
+      path: _:
+      nixpkgs.lib.nixosSystem {
+        modules = [
+          secret.nixosModules.default
+          self.nixosModules.nixos.server
+          self.nixosModules.hardware.uefi.sda
+          self.nixosModules.network.dhcp
+          self.nixosModules.services.komari-agent
+          self.nixosModules.services.traefik
+          self.nixosModules.services.telegraf
+          self.nixosModules.services.waste
+          path
+          {
+            nixpkgs.hostPlatform = "aarch64-linux";
+            networking.hostName = lib.removeSuffix ".nix" (builtins.baseNameOf path);
+            services.getty.autologinUser = "root";
+          }
+        ];
+        specialArgs = { inherit self; };
+      };
     directory = ./host/oracle;
   };
-
 
   kexec-test = nixpkgs.legacyPackages.x86_64-linux.writeShellScriptBin "kexec-test" ''
     qemu-system-x86_64 -accel kvm -cpu host -nographic -m 1G \
@@ -51,7 +58,6 @@ in
       -device "virtio-scsi-pci,id=scsi0" -drive "file=disk.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
       -bios /usr/share/qemu/OVMF.fd
   '';
-
 
   darwin-kexec-test = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "darwin-kexec-test" ''
     /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 4G \

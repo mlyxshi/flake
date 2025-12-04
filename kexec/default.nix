@@ -1,4 +1,10 @@
-{ config, pkgs, lib, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+{
   system.stateVersion = lib.trivial.release;
   system.nixos-init.enable = true;
   networking.hostName = "systemd-initrd";
@@ -6,29 +12,52 @@
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.network.enable = true;
   boot.initrd.systemd.network.networks.ethernet-default-dhcp = {
-    matchConfig = { Name = [ "en*" "eth*" ]; };
-    networkConfig = { DHCP = "yes"; };
+    matchConfig = {
+      Name = [
+        "en*"
+        "eth*"
+      ];
+    };
+    networkConfig = {
+      DHCP = "yes";
+    };
   };
 
   boot.initrd.network.ssh.enable = true;
-  boot.initrd.systemd.services.sshd.preStart = lib.mkForce "/bin/chmod 0600 /etc/ssh/ssh_host_ed25519_key";
+  boot.initrd.systemd.services.sshd.preStart =
+    lib.mkForce "/bin/chmod 0600 /etc/ssh/ssh_host_ed25519_key";
 
   boot.initrd.services.lvm.enable = false; # remove unused lvm2 from initrd
 
   # qemu + ext4 + vfat + efivarfs
   # add extra kernel modules: https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/all-hardware.nix
-  boot.initrd.kernelModules = [ "virtio_net" "virtio_pci" "virtio_mmio" "virtio_blk" "virtio_scsi" "virtio_balloon" "virtio_console" "9p" "9pnet_virtio" ]
-    ++ [ "ext4" ]
-    ++ [ "vfat" "nls_cp437" "nls_iso8859-1" ]
-    ++ [ "efivarfs" ];
-
+  boot.initrd.kernelModules = [
+    "virtio_net"
+    "virtio_pci"
+    "virtio_mmio"
+    "virtio_blk"
+    "virtio_scsi"
+    "virtio_balloon"
+    "virtio_console"
+    "9p"
+    "9pnet_virtio"
+  ]
+  ++ [ "ext4" ]
+  ++ [
+    "vfat"
+    "nls_cp437"
+    "nls_iso8859-1"
+  ]
+  ++ [ "efivarfs" ];
 
   boot.initrd.systemd.contents = {
     "/etc/ssl/certs/ca-certificates.crt".source = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
 
-    "/etc/ssh/authorized_keys.d/root".text = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe";
+    "/etc/ssh/authorized_keys.d/root".text =
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe";
     # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/keys
-    "/etc/ssh/ssh_host_ed25519_key.pub".text = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJBWcxb/Blaqt1auOtE+F8QUWrUotiC5qBJ+UuEWdVCb";
+    "/etc/ssh/ssh_host_ed25519_key.pub".text =
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJBWcxb/Blaqt1auOtE+F8QUWrUotiC5qBJ+UuEWdVCb";
     "/etc/ssh/ssh_host_ed25519_key".text = ''
       -----BEGIN OPENSSH PRIVATE KEY-----
       b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
@@ -58,7 +87,7 @@
   };
 
   boot.initrd.systemd.storePaths = [
-    "${pkgs.file}/share/misc/magic.mgc" # file dependency 
+    "${pkgs.file}/share/misc/magic.mgc" # file dependency
   ];
 
   boot.initrd.systemd.extraBin = {

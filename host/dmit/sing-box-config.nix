@@ -8,7 +8,9 @@
       listen_port = 80;
       network = "tcp";
       method = "2022-blake3-aes-128-gcm";
-      password = { _secret = "/secret/ss-password-2022"; };
+      password = {
+        _secret = "/secret/ss-password-2022";
+      };
     }
     {
       type = "shadowsocks";
@@ -17,8 +19,12 @@
       listen_port = 443;
       network = "tcp";
       method = "2022-blake3-aes-128-gcm";
-      password = { _secret = "/secret/ss-password-2022"; };
-      multiplex = { enabled = true; };
+      password = {
+        _secret = "/secret/ss-password-2022";
+      };
+      multiplex = {
+        enabled = true;
+      };
     }
     {
       type = "shadowsocks";
@@ -27,8 +33,12 @@
       listen_port = 444;
       network = "tcp";
       method = "2022-blake3-aes-128-gcm";
-      password = { _secret = "/secret/ss-password-2022"; };
-      multiplex = { enabled = true; };
+      password = {
+        _secret = "/secret/ss-password-2022";
+      };
+      multiplex = {
+        enabled = true;
+      };
     }
   ];
 
@@ -62,6 +72,3 @@
     ];
   };
 }
-
-
-
