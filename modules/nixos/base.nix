@@ -86,6 +86,7 @@
       nix-output-monitor
       nix-tree
       nix-inspect
+      nixfmt
       yazi-unwrapped
       helix
       nil
