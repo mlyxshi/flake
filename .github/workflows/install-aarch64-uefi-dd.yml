@@ -57,13 +57,6 @@ jobs:
           IdentityFile ~/.ssh/id_ed25519
         EOF
 
-    - uses: actions/checkout@master
-    - uses: DeterminateSystems/nix-installer-action@main
-
-    - run: |
-        outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ inputs.flakeAttr }}.config.system.build.raw)
-        echo "outPath=$outPath" >> "$GITHUB_ENV"
-
     - run: |
         until $SSH -o ConnectTimeout=10 $HOST ls /etc/initrd-release
         do
@@ -72,7 +65,7 @@ jobs:
         done
 
 
-    - run: cat $outPath/nixos.img | $SSH $HOST "dd of=/dev/sda"
+    - run: $SSH $HOST "curl https://dd.mlyxshi.com/arm-init.img | dd of=/dev/sda"
     - run: $SSH $HOST reboot -f
 
     - run: curl "https://api.day.app/${{ secrets.BARK_KEY }}/NixOS%20Install%20Done/${{ inputs.flakeAttr }}?group=NixOS&icon=https://hydra.nixos.org/logo"

@@ -95,7 +95,7 @@
   environment.systemPackages = with pkgs; [
     git
     wget
-    curl
+    rclone
   ];
 
 }

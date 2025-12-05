@@ -44,6 +44,8 @@
 
         bios-init = nixpkgs.lib.nixosSystem { modules = [ ./host/init/bios.nix ]; };
         arm-init = nixpkgs.lib.nixosSystem { modules = [ ./host/init/arm.nix ]; };
+        
+        # Apple Silicon (M3 and later) supports nested virtualization via Apple's Hypervisor Framework for build nixos image(make-disk-image.nix)
         utm = nixpkgs.lib.nixosSystem { modules = [ ./host/init/utm.nix ]; };
 
         # nix build .#nixosConfigurations.installer-aarch64.config.system.build.isoImage
