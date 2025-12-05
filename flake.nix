@@ -42,7 +42,9 @@
       };
       nixosConfigurations = {
 
-        bios-init = nixpkgs.lib.nixosSystem { modules = [ ./host/bios-init ]; };
+        bios-init = nixpkgs.lib.nixosSystem { modules = [ ./host/init/bios.nix ]; };
+        arm-init = nixpkgs.lib.nixosSystem { modules = [ ./host/init/arm.nix ]; };
+        utm = nixpkgs.lib.nixosSystem { modules = [ ./host/init/utm.nix ]; };
 
         # nix build .#nixosConfigurations.installer-aarch64.config.system.build.isoImage
         # nix build .#nixosConfigurations.installer-x86_64.config.system.build.isoImage
