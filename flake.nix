@@ -69,12 +69,11 @@
         };
 
         nrt = import ./host/dmit { inherit self nixpkgs secret; };
-        alice = import ./host/alice { inherit self nixpkgs secret; };
-        gcp-hk = import ./host/gcp/mkHost.nix {
-          inherit self nixpkgs secret;
-          hostName = "gcp-hk";
+        hk = import ./host/alice/mkHost.nix { 
+          inherit self nixpkgs secret; 
+          hostName = "hk";
         };
-
+        
       }
       // oracleNixosConfigurations;
 

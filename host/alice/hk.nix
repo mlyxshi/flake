@@ -13,10 +13,8 @@
     };
     networkConfig = {
       Address = [
-        "91.103.121.190/27"
-        "2a14:67c0:306:7d::a/64"
+        "2a14:67c0:306:360::a/128"
       ];
-      Gateway = "91.103.121.161";
     };
 
     routes = [
@@ -27,9 +25,6 @@
     ];
   };
 
-  # Prefer IPv4 for DNS resolution
-  networking.getaddrinfo.precedence."::ffff:0:0/96" = 100;
-
   services.sing-box.enable = true;
   services.sing-box.settings = {
     log.level = "info";
@@ -38,7 +33,7 @@
       {
         type = "shadowsocks";
         tag = "ss-in-basic";
-        listen = "0.0.0.0";
+        listen = "::";
         listen_port = 80;
         network = "tcp";
         method = "2022-blake3-aes-128-gcm";

@@ -8,9 +8,9 @@ nixpkgs.lib.nixosSystem {
   modules = [
     secret.nixosModules.default
     self.nixosModules.nixos.server
-    self.nixosModules.network.dhcp
-    self.nixosModules.hardware.uefi.sda
-
+    self.nixosModules.network.static
+    self.nixosModules.hardware.bios.vda
+    self.nixosModules.services.komari-agent
     ./${hostName}.nix
     {
       nixpkgs.hostPlatform = "x86_64-linux";

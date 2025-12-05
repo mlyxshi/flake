@@ -179,9 +179,9 @@
     	User root
       Port 2222
 
-    Host alice
-    	HostName  alice.mlyxshi.com
-      HostKeyAlias alice
+    Host hk
+    	HostName  hk.mlyxshi.com
+      HostKeyAlias hk
     	User root
 
     Host rfc-hk

@@ -1,4 +1,4 @@
-name: "System Upgrade"
+name: "System Upgrade Oracle"
 on:
   push:
     paths: 
