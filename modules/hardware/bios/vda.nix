@@ -25,10 +25,10 @@
   fileSystems."/" = {
     device = "/dev/vda2";
     fsType = "ext4";
-    # autoResize = true; # resizes filesystem to occupy whole partition
+    autoResize = true; # resizes filesystem to occupy whole partition
   };
 
-  # boot.growPartition = true; # resizes partition to occupy whole disk
+  boot.growPartition = true; # resizes partition to occupy whole disk
 
   system.build.raw = import "${pkgs.path}/nixos/lib/make-disk-image.nix" {
     inherit config lib pkgs;
