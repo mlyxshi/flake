@@ -7,7 +7,6 @@ on:
 
 env:
   SSH: ssh -o StrictHostKeyChecking=no
-  SSH2222: ssh -o StrictHostKeyChecking=no -p 2222
 
 jobs:
   x86-64-Port-22:
