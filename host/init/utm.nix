@@ -67,7 +67,7 @@
     settings.PasswordAuthentication = false;
   };
 
-    nix = {
+  nix = {
     package = pkgs.nixVersions.latest;
     channel.enable = false;
     settings = {
@@ -91,5 +91,11 @@
     };
     optimise.automatic = true;
   };
+
+  environment.systemPackages = with pkgs; [
+    git
+    wget
+    curl
+  ];
 
 }
