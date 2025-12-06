@@ -6,7 +6,7 @@
 }:
 {
 
-  virtualization.oci-containers.containers.pocket-id = {
+  virtualisation.oci-containers.containers.pocket-id = {
     image = "ghcr.io/pocket-id/pocket-id";
     volumes = [ "/var/lib/pocket-id:/app/data" ];
     environment = {
