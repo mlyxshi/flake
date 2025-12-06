@@ -10,6 +10,13 @@ on:
         description: 'OS Config Hostname'
         type: string
         required: true
+      ipv6:
+        description: "IPv6 only server"
+        type: boolean
+        default: false
+        required: false
+
+
 
 env:
   SSH: ssh -o StrictHostKeyChecking=no
@@ -24,6 +31,14 @@ jobs:
         mkdir -m 0755  ~/.ssh
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
+
+    - name: Set up WARP (IPv6 only)
+      if: ${{ inputs.ipv6 }}
+      uses: fscarmen/warp-on-actions@v1.4
+      with:
+        stack: dual
+        mode: client    
+
     - run: |
         until $SSH -o ConnectTimeout=10 $HOST
         do
@@ -57,6 +72,13 @@ jobs:
     - run: |
         outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ inputs.flakeAttr }}.config.system.build.raw)
         echo "outPath=$outPath" >> "$GITHUB_ENV"
+
+    - name: Set up WARP (IPv6 only)
+      if: ${{ inputs.ipv6 }}
+      uses: fscarmen/warp-on-actions@v1.4
+      with:
+        stack: dual
+        mode: client    
 
     - run: |
         until $SSH -p 80 -o ConnectTimeout=10 $HOST
