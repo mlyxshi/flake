@@ -73,9 +73,9 @@
         };
 
         nrt = import ./host/dmit { inherit self nixpkgs secret; };
-        hk = import ./host/alice/mkHost.nix { 
+        jp3 = import ./host/alice/mkHost.nix { 
           inherit self nixpkgs secret; 
-          hostName = "hk";
+          hostName = "jp3";
         };
         
       }
