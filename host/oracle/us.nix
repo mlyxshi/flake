@@ -20,7 +20,7 @@
   services.sing-box.enable = true;
   # services.sing-box.package = package;
   services.sing-box.settings = {
-    log.level = "debug";
+    log.level = "info";
     inbounds = [
       {
         type = "shadowsocks";
@@ -43,7 +43,7 @@
         listen_port = 9999;
         users = [
           {
-            password = "test123";
+            password = "8JCsPssfgS8tiRwiMlhARg==";
           }
         ];
       }
