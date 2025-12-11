@@ -43,6 +43,7 @@
         listen_port = 9999;
         users = [
           {
+            name = "mlyxshi";
             password = {
               _secret = "/secret/ss-password-2022";
             };
