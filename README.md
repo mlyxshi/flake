@@ -1,8 +1,8 @@
 ### Nix
 ```
 curl -sL https://install.determinate.systems/nix | sh -s -- install 
-nix profile add nixpkgs#nixos-install-tools 
-nixos-generate-config 
+nix run nixpkgs#nixos-facter -- -o facter.json
+
 ```
 
 ### Darwin

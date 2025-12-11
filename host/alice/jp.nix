@@ -25,6 +25,20 @@
     ];
   };
 
+  networking.nftables.enable = true;
+  networking.nftables.ruleset = ''
+    table inet FIREWALL {
+      chain INPUT {
+        type filter hook input priority 0; policy drop;
+        iifname lo accept
+        ip protocol icmp accept
+        ip6 nexthdr icmpv6 accept
+        ct state {established, related} accept
+        tcp dport { 22, 8080 } accept
+      }
+    }
+  '';
+
   services.sing-box.enable = true;
   services.sing-box.settings = {
     log.level = "info";
@@ -34,7 +48,7 @@
         type = "shadowsocks";
         tag = "ss-in-basic";
         listen = "::";
-        listen_port = 80;
+        listen_port = 8080;
         network = "tcp";
         method = "2022-blake3-aes-128-gcm";
         password = {

@@ -5,9 +5,6 @@
   config,
   ...
 }:
-let
-  package = self.packages.${config.nixpkgs.hostPlatform.system}.komari-agent;
-in
 {
   systemd.services.komari-agent = {
     environment = {
@@ -17,7 +14,7 @@ in
       AGENT_MONTH_ROTATE = lib.mkDefault "1";
       AGENT_CONFIG_FILE = "/secret/komari/${config.networking.hostName}"; # token
     };
-    serviceConfig.ExecStart = "${package}/bin/komari-agent";
+    serviceConfig.ExecStart = lib.mkDefault "${pkgs.komari-agent}/bin/komari-agent";
     serviceConfig.DynamicUser = true;
     wants = [ "network-online.target" ];
     after = [ "network-online.target" ];

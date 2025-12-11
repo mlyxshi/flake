@@ -36,6 +36,19 @@ in
           enabled = true;
         };
       }
+      {
+        type = "anytls";
+        tag = "anytls-in";
+        listen = "0.0.0.0";
+        listen_port = 9999;
+        users = [
+          {
+            password = {
+              _secret = "/secret/ss-password-2022";
+            };
+          }
+        ];
+      }
     ];
   };
 
