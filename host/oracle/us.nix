@@ -5,9 +5,9 @@
   lib,
   ...
 }:
-let
-  package = self.packages.${config.nixpkgs.hostPlatform.system}.sing-box;
-in
+# let
+#   package = self.packages.${config.nixpkgs.hostPlatform.system}.sing-box;
+# in
 {
   imports = [
     self.nixosModules.services.transmission.default
