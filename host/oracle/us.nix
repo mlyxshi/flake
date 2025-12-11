@@ -43,6 +43,7 @@
         listen_port = 9999;
         users = [
           {
+            name = "test";
             password = "test123";
           }
         ];
