@@ -36,19 +36,6 @@ in
 
   imports = [ "${modulesPath}/image/repart.nix" ];
 
-  fileSystems = {
-    "/boot" = {
-      device = "/dev/disk/by-partlabel/boot";
-      fsType = "vfat";
-    };
-    "/" = {
-      device = "/dev/disk/by-partlabel/nixos";
-      fsType = "ext4";
-    };
-  };
-  boot.loader.systemd-boot.enable = true;
-  nixpkgs.hostPlatform = "aarch64-linux";
-
   system.image = {
     id = config.system.name;
     version = config.system.nixos.version;

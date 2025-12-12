@@ -47,7 +47,7 @@
         # Apple Silicon (M3 and later) supports nested virtualization via Apple's Hypervisor Framework for build nixos image(make-disk-image.nix)
         utm = nixpkgs.lib.nixosSystem { modules = [ ./host/init/utm.nix ]; };
 
-        repart-init = nixpkgs.lib.nixosSystem { modules = [ ./host/init/repart.nix ]; };
+        repart-init = nixpkgs.lib.nixosSystem { modules = [ ./host/init/test.nix ]; };
 
         # nix build .#nixosConfigurations.installer-aarch64.config.system.build.isoImage
         # nix build .#nixosConfigurations.installer-x86_64.config.system.build.isoImage
