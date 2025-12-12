@@ -9,6 +9,7 @@
 
   imports = [
     self.nixosModules.services.cloudflare-warp
+    self.nixosModules.services.snell
   ];
 
   systemd.network.networks.ethernet-static = {
@@ -35,15 +36,12 @@
         ip protocol icmp accept
         ip6 nexthdr icmpv6 accept
         ct state {established, related} accept
-        tcp dport { 2222, 80, 443, 444 } accept
-        udp dport { 5201 } accept
+        tcp dport { 2222, 8888 } accept
+        udp dport { 8888 } accept
       }
     }
   '';
 
   systemd.services.komari-agent.environment.AGENT_MONTH_ROTATE = "24";
-
-  services.sing-box.enable = true;
-  services.sing-box.settings = import ./sing-box-config.nix;
 
 }
