@@ -11,44 +11,47 @@
 {
   imports = [
     self.nixosModules.services.transmission.default
+    self.nixosModules.services.snell
   ];
 
   boot.kernel.sysctl = {
     "net.ipv4.ip_forward" = 1;
   };
 
-  services.sing-box.enable = true;
-  # services.sing-box.package = package;
-  services.sing-box.settings = {
-    log.level = "info";
-    inbounds = [
-      {
-        type = "shadowsocks";
-        tag = "ss-in";
-        listen = "0.0.0.0";
-        listen_port = 8888;
-        network = "tcp";
-        method = "2022-blake3-aes-128-gcm";
-        password = {
-          _secret = "/secret/ss-password-2022";
-        };
-        multiplex = {
-          enabled = true;
-        };
-      }
-      {
-        type = "anytls";
-        tag = "anytls-in";
-        listen = "0.0.0.0";
-        listen_port = 9999;
-        users = [
-          {
-            password = "8JCsPssfgS8tiRwiMlhARg==";
-          }
-        ];
-      }
-    ];
-  };
+  # services.sing-box.enable = true;
+  # # services.sing-box.package = package;
+  # services.sing-box.settings = {
+  #   log.level = "info";
+  #   inbounds = [
+  #     {
+  #       type = "shadowsocks";
+  #       tag = "ss-in";
+  #       listen = "0.0.0.0";
+  #       listen_port = 8888;
+  #       network = "tcp";
+  #       method = "2022-blake3-aes-128-gcm";
+  #       password = {
+  #         _secret = "/secret/ss-password-2022";
+  #       };
+  #       multiplex = {
+  #         enabled = true;
+  #       };
+  #     }
+  #     {
+  #       type = "anytls";
+  #       tag = "anytls-in";
+  #       listen = "0.0.0.0";
+  #       listen_port = 9999;
+  #       users = [
+  #         {
+  #           password = {
+  #             _secret = "/secret/ss-password-2022";
+  #           };
+  #         }
+  #       ];
+  #     }
+  #   ];
+  # };
 
   # systemd.services.cloudflare-warp-daemon = {
   #   after = [ "network.target" ];
