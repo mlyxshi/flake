@@ -34,6 +34,7 @@
     helix
     nil
     fd
+    rclone
     ripgrep
     starship
     zoxide
