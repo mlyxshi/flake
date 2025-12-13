@@ -51,29 +51,15 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
 
-        cat > ~/.ssh/ssh_config <<EOF
-        Host github.com
-          User git
-          IdentityFile ~/.ssh/id_ed25519
-        EOF
-
-    - uses: actions/checkout@master
-    - uses: DeterminateSystems/nix-installer-action@main
-
     - run: |
-        outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ inputs.flakeAttr }}.config.system.build.image)
-        echo "outPath=$outPath" >> "$GITHUB_ENV" 
-
-    - run: |
-        until $SSH -o ConnectTimeout=10 $HOST
+        until $SSH -o ConnectTimeout=10 $HOST ls /etc/initrd-release
         do
           echo "Kexec Environment Not Reachable, Waiting..."
           sleep 5
         done
 
-    - run: cat $outPath/${{ inputs.flakeAttr }}.raw | $SSH $HOST "dd of=/dev/sda"
-    - run: curl "https://api.day.app/${{ secrets.BARK_KEY }}/NixOS%20Install%20Done/${{ inputs.flakeAttr }}?group=NixOS&icon=https://hydra.nixos.org/logo"
 
-    - name: Force reboot
-      continue-on-error: true 
-      run: $SSH $HOST "reboot -f"
+    - run: $SSH $HOST "curl https://dd.mlyxshi.com/arm-init.raw | dd of=/dev/sda"
+    - run: $SSH $HOST reboot -f
+
+    - run: curl "https://api.day.app/${{ secrets.BARK_KEY }}/NixOS%20Install%20Done/${{ inputs.flakeAttr }}?group=NixOS&icon=https://hydra.nixos.org/logo"

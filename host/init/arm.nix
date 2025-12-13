@@ -7,7 +7,10 @@
 }:
 {
 
-  imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
+  imports = [
+    (modulesPath + "/profiles/qemu-guest.nix")
+    ./repart.nix
+  ];
 
   networking.hostName = "arm-init";
   nixpkgs.hostPlatform = "aarch64-linux";
@@ -40,20 +43,26 @@
   boot.loader.systemd-boot.configurationLimit = 3;
   boot.loader.timeout = 1;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.systemd-boot.netbootxyz.enable = true; # emergency rescue on oracle arm
 
-  fileSystems."/boot" = {
-    device = "/dev/sda1";
-    fsType = "vfat";
+  fileSystems = {
+    "/boot" = {
+      device = "/dev/disk/by-partlabel/boot";
+      fsType = "vfat";
+    };
+    "/" = {
+      device = "/dev/disk/by-partlabel/nixos";
+      fsType = "ext4";
+    };
   };
 
-  fileSystems."/" = {
-    device = "/dev/sda2";
-    fsType = "ext4";
-    autoResize = true; # resizes filesystem to occupy whole partition
+  # resize root partition and filesystem
+  systemd.repart.enable = true;
+  systemd.repart.partitions = {
+    root = {
+      Type = "root";
+      GrowFileSystem = "yes";
+    };
   };
-
-  boot.growPartition = true; # resizes partition to occupy whole disk
 
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe"
@@ -99,13 +108,4 @@
     git
     wget
   ];
-
-  system.build.raw = import "${pkgs.path}/nixos/lib/make-disk-image.nix" {
-    inherit config lib pkgs;
-    format = "raw";
-    copyChannel = false;
-    partitionTableType = "efi";
-    bootSize = "256M";
-    additionalSpace = "128M";
-  };
 }
