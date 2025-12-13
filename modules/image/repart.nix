@@ -60,9 +60,9 @@ in
       };
       "root" = {
         storePaths = [ config.system.build.toplevel ];
-        contents = {
-          "/nix/var/nix".source = nixState;
-        };
+        # contents = {
+        #   "/nix/var/nix".source = nixState;
+        # };
         repartConfig = {
           Type = "root";
           Format = "ext4";
