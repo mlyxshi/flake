@@ -40,8 +40,10 @@
         modules = [ ./host/darwin/Macbook.nix ];
       };
       nixosConfigurations = {
-
+        # make-disk-image
         bios-init = nixpkgs.lib.nixosSystem { modules = [ ./host/init/bios.nix ]; };
+
+        # systemd-repart
         arm-init = nixpkgs.lib.nixosSystem { modules = [ ./host/init/arm.nix ]; };
         
         # Apple Silicon (M3 and later) supports nested virtualization via Apple's Hypervisor Framework for build nixos image(make-disk-image.nix)
