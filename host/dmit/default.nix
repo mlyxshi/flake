@@ -7,7 +7,7 @@ nixpkgs.lib.nixosSystem {
   modules = [
     secret.nixosModules.default
     self.nixosModules.nixos.server
-    self.nixosModules.network.static
+    self.nixosModules.network.dhcp
     self.nixosModules.hardware.bios.vda
     self.nixosModules.services.komari-agent
     ./shinagawa.nix

@@ -12,18 +12,8 @@
     self.nixosModules.services.snell
   ];
 
-  systemd.network.networks.ethernet-static = {
-    matchConfig = {
-      Name = "eth0";
-    };
-    networkConfig = {
-      Address = "154.12.190.105/24";
-      Gateway = "154.12.190.105";
-    };
-  };
-
   # Prefer IPv4 for DNS resolution
-  networking.getaddrinfo.precedence."::ffff:0:0/96" = 100;
+  # networking.getaddrinfo.precedence."::ffff:0:0/96" = 100;
 
   services.openssh.ports = [ 2222 ];
 

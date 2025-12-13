@@ -13,13 +13,15 @@
     };
     networkConfig = {
       Address = [
-        "2a14:67c0:306:360::a/128"
+        "161.248.63.8/24"
+        "2a14:67c0:1001:9::a/128"
       ];
+      Gateway = "161.248.63.1";
     };
 
     routes = [
       {
-        Gateway = "2a14:67c0:306::1";
+        Gateway = "2a14:67c0:1001::1";
         GatewayOnLink = true; # Special config since gateway isn't in subnet
       }
     ];
