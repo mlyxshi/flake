@@ -1,9 +1,9 @@
 {
   inputs = {
     # nixpkgs.url = "github:NixOS/nixpkgs/pull/388231/head";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
+    # nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
     # nixpkgs.url = "git+https://github.com/NixOS/nixpkgs.git?ref=master&shallow=1";
-    # nixpkgs.url = "git+https://github.com/NixOS/nixpkgs.git?ref=nixos-unstable&shallow=1";
+    nixpkgs.url = "git+https://github.com/NixOS/nixpkgs.git?ref=nixos-unstable&shallow=1";
 
     darwin.url = "git+https://github.com/nix-darwin/nix-darwin.git?shallow=1";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -48,17 +48,6 @@
         
         # Apple Silicon (M3 and later) supports nested virtualization via Apple's Hypervisor Framework for build nixos image(make-disk-image.nix)
         utm = nixpkgs.lib.nixosSystem { modules = [ ./host/init/utm.nix ]; };
-
-        # nix build .#nixosConfigurations.installer-aarch64.config.system.build.isoImage
-        # nix build .#nixosConfigurations.installer-x86_64.config.system.build.isoImage
-        installer-x86_64 = import ./host/installer {
-          arch = "x86_64";
-          inherit self nixpkgs secret;
-        };
-        installer-aarch64 = import ./host/installer {
-          arch = "aarch64";
-          inherit self nixpkgs secret;
-        };
 
         kexec-x86_64 = nixpkgs.lib.nixosSystem {
           modules = [
