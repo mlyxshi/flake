@@ -56,8 +56,7 @@
     };
   };
 
-  boot.initrd.systemd.repart.enable = true;
-  boot.initrd.systemd.repart.device = "/dev/vda";
+  systemd.repart.enable = true;
   systemd.repart.partitions = {
     root = {
       Type = "root"; # resize root partition and filesystem
