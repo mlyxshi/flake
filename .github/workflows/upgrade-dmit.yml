@@ -7,10 +7,9 @@ on:
 
 env:
   SSH: ssh -o StrictHostKeyChecking=no
-  SSH2222: ssh -o StrictHostKeyChecking=no -p 2222
 
 jobs:
-  x86-64-Port-2222:
+  x86-64:
     runs-on: ubuntu-latest  
     strategy:
       fail-fast: false
@@ -33,6 +32,6 @@ jobs:
         outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel)
         echo "outPath=$outPath" >> "$GITHUB_ENV"
 
-    - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no -p 2222' nix copy --substitute-on-destination --to ssh://root@${{ matrix.host }}.mlyxshi.com $outPath
-    - run: $SSH2222 root@${{ matrix.host }}.mlyxshi.com nix-env -p /nix/var/nix/profiles/system --set $outPath
-    - run: $SSH2222 root@${{ matrix.host }}.mlyxshi.com $outPath/bin/switch-to-configuration switch
+    - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --substitute-on-destination --to ssh://root@${{ matrix.host }}.mlyxshi.com $outPath
+    - run: $SSH root@${{ matrix.host }}.mlyxshi.com nix-env -p /nix/var/nix/profiles/system --set $outPath
+    - run: $SSH root@${{ matrix.host }}.mlyxshi.com $outPath/bin/switch-to-configuration switch

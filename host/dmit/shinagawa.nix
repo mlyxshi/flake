@@ -15,7 +15,7 @@
   # Prefer IPv4 for DNS resolution
   # networking.getaddrinfo.precedence."::ffff:0:0/96" = 100;
 
-  services.openssh.ports = [ 2222 ];
+  # services.openssh.ports = [ 2222 ];
 
   networking.nftables.enable = true;
   networking.nftables.ruleset = ''
@@ -26,7 +26,7 @@
         ip protocol icmp accept
         ip6 nexthdr icmpv6 accept
         ct state {established, related} accept
-        tcp dport { 2222, 8888 } accept
+        tcp dport { 22, 8888 } accept
         udp dport { 8888 } accept
       }
     }
