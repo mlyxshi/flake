@@ -36,11 +36,6 @@ in
 
   imports = [ "${modulesPath}/image/repart.nix" ];
 
-  system.image = {
-    id = config.system.name;
-    version = config.system.nixos.version;
-  };
-
   image.repart = {
     name = config.system.name;
     partitions = {
@@ -60,7 +55,7 @@ in
           Type = "esp";
           Format = "vfat";
           Label = "boot";
-          SizeMinBytes = "200M";
+          SizeMinBytes = "300M";
         };
       };
       "root" = {
