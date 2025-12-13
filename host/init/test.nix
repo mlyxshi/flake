@@ -7,8 +7,8 @@
 }:
 {
 
-  imports = [ 
-    (modulesPath + "/profiles/qemu-guest.nix") 
+  imports = [
+    (modulesPath + "/profiles/qemu-guest.nix")
     ../../modules/image/repart.nix
   ];
 
@@ -56,7 +56,14 @@
     };
   };
 
-  # boot.growPartition = true; # resizes partition to occupy whole disk
+  boot.initrd.systemd.repart.enable = true;
+  boot.initrd.systemd.repart.device = "/dev/vda";
+  systemd.repart.partitions = {
+    root = {
+      Type = "root"; # resize root partition and filesystem
+      GrowFileSystem = "yes";
+    };
+  };
 
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe"
