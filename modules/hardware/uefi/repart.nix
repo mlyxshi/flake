@@ -50,6 +50,8 @@ in
 
             "/EFI/Linux/${config.system.boot.loader.ukiFile}".source =
               "${config.system.build.uki}/${config.system.boot.loader.ukiFile}";
+
+            "netbootxyz.efi".source = "${pkgs.netbootxyz-efi}"; # emergency rescue on oracle arm
           };
         repartConfig = {
           Type = "esp";
@@ -60,9 +62,9 @@ in
       };
       "root" = {
         storePaths = [ config.system.build.toplevel ];
-        # contents = {
-        #   "/nix/var/nix".source = nixState;
-        # };
+        contents = {
+          "/nix/var/nix".source = nixState;
+        };
         repartConfig = {
           Type = "root";
           Format = "ext4";
