@@ -217,6 +217,7 @@
       man = "batman";
       P = "echo $PATH";
       sshr = "ssh-keygen -R";
+      ssh-rsa = "ssh -o HostkeyAlgorithms='+ssh-rsa'  -o PubkeyAcceptedAlgorithms='+ssh-rsa'";
       nt = "nexttrace";
     };
 

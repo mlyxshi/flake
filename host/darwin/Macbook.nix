@@ -20,6 +20,7 @@
 
     brews = [
       "cloudflared"
+      "oci-cli"
       "ipatool"
     ];
 
