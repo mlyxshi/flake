@@ -1,10 +1,15 @@
-name: "Init x86_64 BIOS Takeover"
+name: "Init x86_64"
 on:
   workflow_dispatch:
     inputs:
       ip:
         description: 'Ip or Domain'
         type: string
+        required: true
+      flakeAttr:
+        description: 'OS Config Hostname'
+        type: string
+        default: 'bios-init-tmp'
         required: true
       disk:
         description: "Disk"
@@ -58,6 +63,19 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
 
+        cat > ~/.ssh/ssh_config <<EOF
+        Host github.com
+          User git
+          IdentityFile ~/.ssh/id_ed25519
+        EOF
+
+    - uses: actions/checkout@master
+    - uses: DeterminateSystems/nix-installer-action@main
+
+    - run: |
+        outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ inputs.flakeAttr }}.config.system.build.raw)
+        echo "outPath=$outPath" >> "$GITHUB_ENV"
+
     - name: Set up WARP (IPv6 only)
       if: contains(inputs.ip, ':')
       uses: fscarmen/warp-on-actions@v1.4
@@ -72,8 +90,8 @@ jobs:
           sleep 5
         done
 
-    - run: $SSH -p 80 $HOST "curl https://dd.mlyxshi.com/bios-init-${{ inputs.disk }}-static.img | dd of=/dev/${{ inputs.disk }}"
-    - run: curl "https://api.day.app/${{ secrets.BARK_KEY }}/NixOS%20Install%20Done?group=NixOS&icon=https://hydra.nixos.org/logo"
+    - run: cat $outPath/${{ inputs.flakeAttr }}.img | $SSH -p 80  $HOST "dd of=/dev/${{ inputs.disk }}"
+    - run: curl "https://api.day.app/${{ secrets.BARK_KEY }}/NixOS%20Install%20Done/${{ inputs.flakeAttr }}?group=NixOS&icon=https://hydra.nixos.org/logo"
 
     - name: Force reboot
       continue-on-error: true 

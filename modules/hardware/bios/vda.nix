@@ -27,14 +27,4 @@
     device = "/dev/vda2";
     fsType = "ext4";
   };
-
-  system.build.raw = import "${pkgs.path}/nixos/lib/make-disk-image.nix" {
-    inherit config lib pkgs;
-    format = "raw";
-    copyChannel = false;
-    partitionTableType = "legacy+boot"; # limine bootloader
-    bootSize = "128M";
-    additionalSpace = "128M";
-    baseName = config.networking.hostName;
-  };
 }
