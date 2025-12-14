@@ -107,7 +107,7 @@
     format = "raw";
     copyChannel = false;
     partitionTableType = "legacy+boot"; # limine bootloader
-    baseName = "bios-init";
+    baseName = "bios-init-sda";
     bootSize = "128M";
     additionalSpace = "128M";
   };
