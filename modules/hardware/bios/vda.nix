@@ -35,5 +35,6 @@
     partitionTableType = "legacy+boot"; # limine bootloader
     bootSize = "128M";
     additionalSpace = "128M";
+    baseName = config.networking.hostName;
   };
 }

@@ -98,8 +98,8 @@
     format = "raw";
     copyChannel = false;
     partitionTableType = "legacy+boot"; # limine bootloader
-    baseName = "bios-init-vda-static";
     bootSize = "128M";
     additionalSpace = "128M";
+    baseName = config.networking.hostName;
   };
 }

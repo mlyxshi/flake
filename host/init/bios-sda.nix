@@ -98,7 +98,7 @@
     format = "raw";
     copyChannel = false;
     partitionTableType = "legacy+boot"; # limine bootloader
-    baseName = "bios-init-sda-static";
+    baseName = config.networking.hostName;
     bootSize = "128M";
     additionalSpace = "128M";
   };
