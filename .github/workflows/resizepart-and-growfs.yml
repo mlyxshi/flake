@@ -6,15 +6,6 @@ on:
         description: 'Ip or Domain'
         type: string
         required: true
-      disk:
-        description: "Disk"
-        type: choice
-        required: true
-        options:
-          - vda
-          - sda
-
-
 
 env:
   SSH: ssh -o StrictHostKeyChecking=no
