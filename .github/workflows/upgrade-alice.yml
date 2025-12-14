@@ -1,0 +1,43 @@
+name: "System Upgrade Alice"
+on:
+  # push:
+  #   paths: 
+  #     - 'flake.lock'
+  workflow_dispatch:
+
+env:
+  SSH: ssh -o StrictHostKeyChecking=no
+
+jobs:
+  Update:
+    runs-on: ubuntu-latest  
+    strategy:
+      fail-fast: false
+      matrix:
+        host: [jp3] 
+    steps:
+    - uses: actions/checkout@master
+    - uses: DeterminateSystems/nix-installer-action@main
+    - run: |
+        mkdir -m 0755  ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+        chmod 600 ~/.ssh/id_ed25519
+
+        cat > ~/.ssh/ssh_config <<EOF
+        Host github.com
+          User git
+          IdentityFile ~/.ssh/id_ed25519
+        EOF
+    - run: |
+        outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel)
+        echo "outPath=$outPath" >> "$GITHUB_ENV"
+
+    # - name: Set up WARP
+    #   uses: fscarmen/warp-on-actions@v1.4
+    #   with:
+    #     stack: dual
+    #     mode: client
+
+    - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --to ssh://root@${{ matrix.host }}.mlyxshi.com $outPath
+    - run: $SSH root@${{ matrix.host }}.mlyxshi.com nix-env -p /nix/var/nix/profiles/system --set $outPath
+    - run: $SSH root@${{ matrix.host }}.mlyxshi.com $outPath/bin/switch-to-configuration switch
