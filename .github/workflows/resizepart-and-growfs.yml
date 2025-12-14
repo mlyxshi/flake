@@ -1,0 +1,79 @@
+name: "resizepart-and-growfs"
+on:
+  workflow_dispatch:
+    inputs:
+      ip:
+        description: 'Ip or Domain'
+        type: string
+        required: true
+      disk:
+        description: "Disk"
+        type: choice
+        required: true
+        options:
+          - vda
+          - sda
+
+
+
+env:
+  SSH: ssh -o StrictHostKeyChecking=no
+  HOST: root@${{ inputs.ip }}
+
+jobs:
+
+  takeover:
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+        mkdir -m 0755  ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+        chmod 600 ~/.ssh/id_ed25519
+
+    - name: Set up WARP (IPv6 only)
+      if: contains(inputs.ip, ':')
+      uses: fscarmen/warp-on-actions@v1.4
+      with:
+        stack: dual
+        mode: client    
+
+    - run: |
+        until $SSH -o ConnectTimeout=10 $HOST
+        do
+          echo "Server Not Reachable, Waiting..."
+          sleep 5
+        done
+
+    - run: $SSH $HOST 'mkdir -p /takeover' 
+    - run: $SSH $HOST 'mount -t tmpfs tmpfs /takeover' 
+    - run: $SSH $HOST 'wget https://dd.mlyxshi.com/takeover-rootfs.tar.gz' 
+    - run: $SSH $HOST 'tar -xvf takeover-rootfs.tar.gz -C /takeover'
+    - run: $SSH $HOST 'sh /takeover/takeover-non-interactive.sh'
+
+  install:
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+        mkdir -m 0755  ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+        chmod 600 ~/.ssh/id_ed25519
+
+    - name: Set up WARP (IPv6 only)
+      if: contains(inputs.ip, ':')
+      uses: fscarmen/warp-on-actions@v1.4
+      with:
+        stack: dual
+        mode: client    
+
+    - run: |
+        until $SSH -p 80 -o ConnectTimeout=10 $HOST
+        do
+          echo "TakeOver Environment Not Reachable, Waiting..."
+          sleep 5
+        done
+
+    - run: $SSH -p 80 $HOST "echo hello"
+
+    - name: Force reboot
+      continue-on-error: true 
+      run: $SSH -p 80  $HOST "reboot -f"
