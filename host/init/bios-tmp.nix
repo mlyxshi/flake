@@ -9,7 +9,7 @@
 
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
 
-  networking.hostName = "bios-init-vda-tmp";
+  networking.hostName = "bios-init-tmp";
   nixpkgs.hostPlatform = "x86_64-linux";
 
   services.getty.autologinUser = "root";
@@ -20,6 +20,20 @@
 
   systemd.network.enable = true;
   systemd.network.wait-online.anyInterface = true;
+
+
+  # systemd.network.networks.ethernet-default-dhcp = {
+  #   matchConfig = {
+  #     Name = [
+  #       "en*"
+  #       "eth*"
+  #     ];
+  #   };
+  #   networkConfig = {
+  #     DHCP = "yes";
+  #   };
+  # };
+
   systemd.network.networks.ethernet-default-dhcp = {
     matchConfig = {
       Name = [ "eth0"];
