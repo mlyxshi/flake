@@ -178,18 +178,12 @@
     	HostName  nrt.mlyxshi.com
       HostKeyAlias nrt
     	User root
-      Port 2222
+      Port 22
 
     Host jp3
     	HostName  jp3.mlyxshi.com
       HostKeyAlias jp3
     	User root
-
-    Host rfc-hk
-    	HostName  rfc-hk.mlyxshi.com
-      HostKeyAlias rfc-hk
-    	User root
-      Port 2222
 
     Host gcp-hk
     	HostName  gcp-hk.mlyxshi.com
