@@ -99,6 +99,7 @@
       bat
       bat-extras.batman
       gdu
+      parted
       gitMinimal
 
       (writeShellScriptBin "update" ''
