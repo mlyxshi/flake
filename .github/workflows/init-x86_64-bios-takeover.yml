@@ -1,4 +1,4 @@
-name: "Init x86_64 BIOS Takeover vda"
+name: "Init x86_64 BIOS Takeover"
 on:
   workflow_dispatch:
     inputs:
@@ -72,7 +72,7 @@ jobs:
           sleep 5
         done
 
-    - run: $SSH -p 80 $HOST "curl https://dd.mlyxshi.com/bios-init-${{ inputs.disk }}.img | dd of=/dev/${{ inputs.disk }}"
+    - run: $SSH -p 80 $HOST "curl https://dd.mlyxshi.com/bios-init-${{ inputs.disk }}-static.img | dd of=/dev/${{ inputs.disk }}"
     - run: curl "https://api.day.app/${{ secrets.BARK_KEY }}/NixOS%20Install%20Done?group=NixOS&icon=https://hydra.nixos.org/logo"
 
     - name: Force reboot

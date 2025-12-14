@@ -45,7 +45,7 @@
         bios-init-sda-static = nixpkgs.lib.nixosSystem { modules = [ ./host/init/bios-sda.nix ]; };
 
         # systemd-repart
-        arm-init = nixpkgs.lib.nixosSystem { modules = [ ./host/init/arm.nix ]; };
+        arm-init-sda-grow = nixpkgs.lib.nixosSystem { modules = [ ./host/init/arm.nix ]; };
         
         # Apple Silicon (M3 and later) supports nested virtualization via Apple's Hypervisor Framework for build nixos image(make-disk-image.nix)
         utm = nixpkgs.lib.nixosSystem { modules = [ ./host/init/utm.nix ]; };

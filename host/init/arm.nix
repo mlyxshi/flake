@@ -12,7 +12,7 @@
     ./repart.nix
   ];
 
-  networking.hostName = "arm-init";
+  networking.hostName = "arm-init-sda-grow";
   nixpkgs.hostPlatform = "aarch64-linux";
 
   services.getty.autologinUser = "root";
