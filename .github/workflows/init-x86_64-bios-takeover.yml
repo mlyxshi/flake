@@ -13,11 +13,6 @@ on:
         options:
           - vda
           - sda
-      ipv6:
-        description: "IPv6 only server"
-        type: boolean
-        default: false
-        required: false
 
 
 
@@ -36,7 +31,7 @@ jobs:
         chmod 600 ~/.ssh/id_ed25519
 
     - name: Set up WARP (IPv6 only)
-      if: ${{ inputs.ipv6 }}
+      if: contains(inputs.ip, ':')
       uses: fscarmen/warp-on-actions@v1.4
       with:
         stack: dual
@@ -51,7 +46,7 @@ jobs:
 
     - run: $SSH $HOST 'mkdir -p /takeover' 
     - run: $SSH $HOST 'mount -t tmpfs tmpfs /takeover' 
-    - run: $SSH $HOST 'wget https://github.com/mlyxshi/takeover/releases/download/x86_64/alpine-takeover-rootfs.tar.gz' 
+    - run: $SSH $HOST 'wget https://dd.mlyxshi.com/alpine-takeover-rootfs.tar.gz' 
     - run: $SSH $HOST 'tar -xvf alpine-takeover-rootfs.tar.gz -C /takeover'
     - run: $SSH $HOST 'sh /takeover/takeover-non-interactive.sh'
 
@@ -64,7 +59,7 @@ jobs:
         chmod 600 ~/.ssh/id_ed25519
 
     - name: Set up WARP (IPv6 only)
-      if: ${{ inputs.ipv6 }}
+      if: contains(inputs.ip, ':')
       uses: fscarmen/warp-on-actions@v1.4
       with:
         stack: dual
