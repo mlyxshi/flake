@@ -25,14 +25,9 @@
       Name = [ "eth0"];
     };
     networkConfig = {
-      Address = "154.17.19.228/32";
+      Address = "161.248.63.8/24";
+      Gateway = "161.248.63.1";
     };
-    routes = [
-      {
-        Gateway = "193.41.250.250";
-        GatewayOnLink = true; # Special config since gateway isn't in subnet
-      }
-    ];
   };
   networking.firewall.enable = false;
 
@@ -102,7 +97,8 @@
     copyChannel = false;
     partitionTableType = "legacy+boot"; # limine bootloader
     bootSize = "128M";
-    additionalSpace = "128M";
+    # additionalSpace = "128M";
+    diskSize = 10240; # 10G
     baseName = config.networking.hostName;
   };
 }
