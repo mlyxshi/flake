@@ -41,7 +41,8 @@
       };
       nixosConfigurations = {
         # make-disk-image
-        bios-init = nixpkgs.lib.nixosSystem { modules = [ ./host/init/bios.nix ]; };
+        bios-init-vda = nixpkgs.lib.nixosSystem { modules = [ ./host/init/bios-vda.nix ]; };
+        bios-init-sda = nixpkgs.lib.nixosSystem { modules = [ ./host/init/bios-sda.nix ]; };
 
         # systemd-repart
         arm-init = nixpkgs.lib.nixosSystem { modules = [ ./host/init/arm.nix ]; };
