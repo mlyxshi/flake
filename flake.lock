@@ -7,10 +7,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1765065051,
-        "narHash": "sha256-b7W9WsvyMOkUScNxbzS45KEJp0iiqRPyJ1I3JBE+oEE=",
+        "lastModified": 1765684049,
+        "narHash": "sha256-svCS2r984qEowMT0y3kCrsD/m0J6zaF5I/UusS7QaH0=",
         "ref": "refs/heads/master",
-        "rev": "7e22bf538aa3e0937effcb1cee73d5f1bcc26f79",
+        "rev": "9b628e171bfaea1a3d1edf31eee46251e0fe4a33",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/nix-darwin/nix-darwin.git"
@@ -47,11 +47,11 @@
     },
     "secret": {
       "locked": {
-        "lastModified": 1763778759,
-        "narHash": "sha256-EjxkDXQZFdCvIVvrsjO4RQHHLD8ejP4WCJ9jbaKGf0M=",
+        "lastModified": 1765693287,
+        "narHash": "sha256-s5WzGmu9z3JadhkQZYovvstH0wvUNIpnZqqmTLu04UU=",
         "ref": "refs/heads/main",
-        "rev": "1a264cbb40944df136cafd67dd16a75834239961",
-        "revCount": 109,
+        "rev": "29e20a1f9b41c9798135e0f6a3dc5f7973d76ffd",
+        "revCount": 110,
         "type": "git",
         "url": "ssh://git@github.com/mlyxshi/secret"
       },
