@@ -56,7 +56,6 @@ in
         repartConfig = {
           Type = "esp";
           Format = "vfat";
-          Label = "boot";
           SizeMinBytes = "300M";
         };
       };
@@ -68,7 +67,6 @@ in
         repartConfig = {
           Type = "root";
           Format = "ext4";
-          Label = "nixos";
           Minimize = "guess";
         };
       };

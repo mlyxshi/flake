@@ -38,22 +38,15 @@
   boot.kernelParams = [ "net.ifnames=0" ];
 
   boot.initrd.systemd.enable = true;
+  boot.initrd.systemd.emergencyAccess = true;
+
+  boot.initrd.systemd.root = "gpt-auto";
+  boot.initrd.supportedFilesystems = [ "ext4" ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 3;
   boot.loader.timeout = 1;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  fileSystems = {
-    "/boot" = {
-      device = "/dev/disk/by-partlabel/boot";
-      fsType = "vfat";
-    };
-    "/" = {
-      device = "/dev/disk/by-partlabel/nixos";
-      fsType = "ext4";
-    };
-  };
 
   # resize root partition and filesystem
   systemd.repart.enable = true;
