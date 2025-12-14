@@ -9,7 +9,7 @@
 
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
 
-  networking.hostName = "bios-init-vda";
+  networking.hostName = "bios-init-vda-tmp";
   nixpkgs.hostPlatform = "x86_64-linux";
 
   services.getty.autologinUser = "root";
@@ -22,14 +22,17 @@
   systemd.network.wait-online.anyInterface = true;
   systemd.network.networks.ethernet-default-dhcp = {
     matchConfig = {
-      Name = [
-        "en*"
-        "eth*"
-      ];
+      Name = [ "eth0"];
     };
     networkConfig = {
-      DHCP = "yes";
+      Address = "154.17.19.228/32";
     };
+    routes = [
+      {
+        Gateway = "193.41.250.250";
+        GatewayOnLink = true; # Special config since gateway isn't in subnet
+      }
+    ];
   };
   networking.firewall.enable = false;
 
@@ -98,7 +101,7 @@
     format = "raw";
     copyChannel = false;
     partitionTableType = "legacy+boot"; # limine bootloader
-    baseName = "bios-init-vda-static";
+    baseName = "bios-init-vda-tmp";
     bootSize = "128M";
     additionalSpace = "128M";
   };

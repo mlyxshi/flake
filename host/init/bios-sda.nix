@@ -86,12 +86,6 @@
       use-cgroups = true;
       auto-allocate-uids = true;
     };
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
-    };
-    optimise.automatic = true;
   };
 
   environment.systemPackages = with pkgs; [
