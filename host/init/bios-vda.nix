@@ -52,10 +52,7 @@
   fileSystems."/" = {
     device = "/dev/vda2";
     fsType = "ext4";
-    autoResize = true; # resizes filesystem to occupy whole partition
   };
-
-  boot.growPartition = true; # resizes partition to occupy whole disk
 
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe"
@@ -107,7 +104,7 @@
     format = "raw";
     copyChannel = false;
     partitionTableType = "legacy+boot"; # limine bootloader
-    baseName = "bios-init-vda";
+    baseName = "bios-init-vda-static";
     bootSize = "128M";
     additionalSpace = "128M";
   };

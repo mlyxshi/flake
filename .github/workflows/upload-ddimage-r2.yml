@@ -13,8 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # host: [bios-init-vda,bios-init-sda]
-        host: [bios-init-test]
+        host: [bios-init-vda-static,bios-init-sda-static]
     steps:
     - uses: actions/checkout@master
     - uses: DeterminateSystems/nix-installer-action@main
