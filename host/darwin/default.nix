@@ -180,9 +180,9 @@
     	User root
       Port 2222
 
-    Host hk
-    	HostName  hk.mlyxshi.com
-      HostKeyAlias hk
+    Host jp3
+    	HostName  jp3.mlyxshi.com
+      HostKeyAlias jp3
     	User root
 
     Host rfc-hk
