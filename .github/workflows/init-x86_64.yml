@@ -51,8 +51,8 @@ jobs:
 
     - run: $SSH $HOST 'mkdir -p /takeover' 
     - run: $SSH $HOST 'mount -t tmpfs tmpfs /takeover' 
-    - run: $SSH $HOST 'wget https://dd.mlyxshi.com/takeover-rootfs.tar.gz' 
-    - run: $SSH $HOST 'tar -xvf takeover-rootfs.tar.gz -C /takeover'
+    - run: $SSH $HOST 'wget https://dd.mlyxshi.com/alpine-takeover-rootfs.tar.gz' 
+    - run: $SSH $HOST 'tar -xvf alpine-takeover-rootfs.tar.gz -C /takeover'
     - run: $SSH $HOST 'sh /takeover/takeover-non-interactive.sh'
 
   install:

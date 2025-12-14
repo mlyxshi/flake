@@ -70,3 +70,10 @@ in
   '';
 
 }
+
+# Test Arm init image
+# nix build --no-link --print-out-paths .#nixosConfigurations.arm-init-sda-grow.config.system.build.image
+# qemu-img resize -f raw  arm-init-sda-grow.raw   "+10G"
+# qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 4G \
+#   -bios $(ls /opt/homebrew/Cellar/qemu/*/share/qemu/edk2-aarch64-code.fd) \
+#   -hda ~/arm-init-sda-grow.raw
