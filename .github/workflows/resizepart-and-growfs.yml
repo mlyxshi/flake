@@ -35,6 +35,8 @@ jobs:
           sleep 5
         done
 
-    - run: |
-        $SSH $HOST 'resizepart-and-growfs' 
-        $SSH $HOST 'reboot' 
+    - run: $SSH $HOST 'resizepart-and-growfs' 
+
+    - name: Reboot
+      continue-on-error: true 
+      run: $SSH $HOST 'reboot' 
