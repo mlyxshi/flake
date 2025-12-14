@@ -89,7 +89,7 @@ jobs:
           sleep 5
         done
 
-    - run: cat $outPath/nixos.img | $SSH -p 80  $HOST "dd of=/dev/${{ inputs.disk }}"
+    - run: cat $outPath/${{ inputs.flakeAttr }}.img | $SSH -p 80  $HOST "dd of=/dev/${{ inputs.disk }}"
     - run: curl "https://api.day.app/${{ secrets.BARK_KEY }}/NixOS%20Install%20Done/${{ inputs.flakeAttr }}?group=NixOS&icon=https://hydra.nixos.org/logo"
 
     - name: Force reboot
