@@ -10,6 +10,10 @@ env:
 jobs:
   upload:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        host: [bios-init-vda,bios-init-sda]
     steps:
     - uses: actions/checkout@master
     - uses: DeterminateSystems/nix-installer-action@main
@@ -27,20 +31,11 @@ jobs:
         endpoint = ${CLOUDFLARE_R2_ENDPOINT}
         EOF
     
-    - name: Build vda
+    - name: Build
       run: |
-        outPath1=$(nix build --no-link --print-out-paths .#nixosConfigurations.bios-init-vda.config.system.build.raw)
-        echo "outPath1=$outPath1" >> "$GITHUB_ENV"
-  
-    - name: Build sda
-      run: |
-        outPath2=$(nix build --no-link --print-out-paths .#nixosConfigurations.bios-init-sda.config.system.build.raw)
-        echo "outPath2=$outPath2" >> "$GITHUB_ENV"
+        outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ matrix.host }}.config.system.build.raw)
+        echo "outPath=$outPath" >> "$GITHUB_ENV"
 
-    - name: Upload vda
+    - name: Upload
       run: |
-        rclone copy $outPath1/bios-init-vda.img r2:ddraw
-
-    - name: Upload sda
-      run: |
-        rclone copy $outPath2/bios-init-sda.img r2:ddraw
+        rclone copy $outPath/${{ matrix.host }}.img r2:ddraw

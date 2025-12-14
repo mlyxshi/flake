@@ -9,7 +9,7 @@
 
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
 
-  networking.hostName = "bios-init";
+  networking.hostName = "bios-init-vda";
   nixpkgs.hostPlatform = "x86_64-linux";
 
   services.getty.autologinUser = "root";
