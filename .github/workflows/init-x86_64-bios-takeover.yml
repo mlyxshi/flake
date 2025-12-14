@@ -6,10 +6,6 @@ on:
         description: 'Ip or Domain'
         type: string
         required: true
-      flakeAttr:
-        description: 'OS Config Hostname'
-        type: string
-        required: true
       disk:
         description: "Disk"
         type: choice
@@ -81,10 +77,8 @@ jobs:
           sleep 5
         done
 
-    - run: |
-        DD="curl https://dd.mlyxshi.com/bios-init-${{ inputs.disk }}.img | dd of=/dev/${{ inputs.disk }}"
-        $SSH -p 80 $HOST "$DD"
-    - run: curl "https://api.day.app/${{ secrets.BARK_KEY }}/NixOS%20Install%20Done/${{ inputs.flakeAttr }}?group=NixOS&icon=https://hydra.nixos.org/logo"
+    - run: $SSH -p 80 $HOST "curl https://dd.mlyxshi.com/bios-init-${{ inputs.disk }}.img | dd of=/dev/${{ inputs.disk }}"
+    - run: curl "https://api.day.app/${{ secrets.BARK_KEY }}/NixOS%20Install%20Done?group=NixOS&icon=https://hydra.nixos.org/logo"
 
     - name: Force reboot
       continue-on-error: true 
