@@ -6,13 +6,6 @@ on:
         description: 'Ip or Domain'
         type: string
         required: true
-      disk:
-        description: "Disk"
-        type: choice
-        required: true
-        options:
-          - vda
-          - sda
 
 
 
@@ -72,7 +65,7 @@ jobs:
           sleep 5
         done
 
-    - run: $SSH -p 80 $HOST "curl https://dd.mlyxshi.com/bios-init-${{ inputs.disk }}.img | dd of=/dev/${{ inputs.disk }}"
+    - run: $SSH -p 80 $HOST "curl https://dd.mlyxshi.com/bios-init-test.img | dd of=/dev/vda"
     - run: curl "https://api.day.app/${{ secrets.BARK_KEY }}/NixOS%20Install%20Done?group=NixOS&icon=https://hydra.nixos.org/logo"
 
     - name: Force reboot
