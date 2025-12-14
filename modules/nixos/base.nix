@@ -147,6 +147,20 @@
     ]
     ++ lib.optionals config.boot.loader.systemd-boot.enable [
       pkgs.gptfdisk
+    ]
+    ++ lib.optionals config.boot.loader.limine.enable [
+      (writeShellScriptBin "resizepart-and-growfs" ''
+        device=${config.boot.loader.limine.biosDevice}
+
+        fdisk $device <<EOF
+        e
+        2
+
+        w
+        EOF
+
+        resize2fs ''${device}2
+      '')
     ];
 
   programs.fish = {
