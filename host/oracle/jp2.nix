@@ -9,6 +9,7 @@
   imports = [
     self.nixosModules.services.prometheus
     self.nixosModules.services.transmission.default
+    self.nixosModules.services.hath
 
     self.nixosModules.containers.podman
     self.nixosModules.containers.miniflux
@@ -28,27 +29,5 @@
       ln -f $filename files
     '')
   ];
-
-  systemd.services.hath = {
-    serviceConfig.ExecStart = "${pkgs.hath-rust}/bin/hath-rust";
-    serviceConfig.StateDirectory = "hath";
-    serviceConfig.WorkingDirectory = "%S/hath";
-    wants = [ "network-online.target" ];
-    after = [
-      "network-online.target"
-      "hath-init.service"
-    ];
-    wantedBy = [ "multi-user.target" ];
-  };
-
-  systemd.services.hath-init = {
-    unitConfig.ConditionPathExists = "!/var/lib/hath/data/client_login";
-    script = ''
-      mkdir -p /var/lib/hath/data/
-      cat /secret/hath > /var/lib/hath/data/client_login 
-    '';
-    serviceConfig.Type = "oneshot";
-    wantedBy = [ "multi-user.target" ];
-  };
 
 }
