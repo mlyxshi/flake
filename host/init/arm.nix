@@ -8,8 +8,8 @@
 {
 
   imports = [
-    (modulesPath + "/profiles/qemu-guest.nix")
-    ./repart.nix
+    "${modulesPath}/profiles/qemu-guest.nix"
+    "${modulesPath}/image/repart.nix"
   ];
 
   networking.hostName = "arm-init-sda-grow";
@@ -48,7 +48,7 @@
   boot.loader.timeout = 1;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # resize root partition and filesystem
+  # resize root partition and filesystem after switch-root
   systemd.repart.enable = true;
   systemd.repart.partitions = {
     root = {
@@ -82,23 +82,63 @@
         "cgroups"
         "auto-allocate-uids"
       ];
-      # substituters = [ "https://mlyxshi.cachix.org" ];
-      # trusted-public-keys = [ "mlyxshi.cachix.org-1:BVd+/1A5uLMI8pTUdhdh6sdefTRdj+/PVgrUh9L2hWw=" ];
       log-lines = 25;
       # experimental
       use-cgroups = true;
       auto-allocate-uids = true;
     };
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
-    };
-    optimise.automatic = true;
   };
 
   environment.systemPackages = with pkgs; [
     git
     wget
   ];
+
+  image.repart = {
+    name = config.networking.hostName;
+    partitions = {
+      "esp" = {
+        contents =
+          let
+            efiArch = config.nixpkgs.hostPlatform.efiArch;
+          in
+          {
+            "/EFI/BOOT/BOOT${lib.toUpper efiArch}.EFI".source =
+              "${config.systemd.package}/lib/systemd/boot/efi/systemd-boot${efiArch}.efi";
+
+            "/EFI/systemd/systemd-boot${efiArch}.efi".source =
+              "${config.systemd.package}/lib/systemd/boot/efi/systemd-boot${efiArch}.efi";
+
+            "/EFI/nixos/${config.system.boot.loader.kernelFile}".source =
+              "${config.boot.kernelPackages.kernel}/${config.system.boot.loader.kernelFile}";
+
+            "/EFI/nixos/${config.system.boot.loader.initrdFile}".source =
+              "${config.system.build.initialRamdisk}/${config.system.boot.loader.initrdFile}";
+
+            "/loader/entries/nixos-generation-1.conf".source = pkgs.writeText "nixos-generation-1.conf" ''
+              title NixOS Init
+              linux /EFI/nixos/${config.system.boot.loader.kernelFile}
+              initrd /EFI/nixos/${config.system.boot.loader.initrdFile}
+              options init=${config.system.build.toplevel}/init ${builtins.toString config.boot.kernelParams}
+            '';
+
+            "/EFI/netbootxyz.efi".source = "${pkgs.netbootxyz-efi}"; # emergency rescue on oracle arm
+          };
+        repartConfig = {
+          Type = "esp";
+          Format = "vfat";
+          SizeMinBytes = "300M";
+        };
+      };
+      "root" = {
+        storePaths = [ config.system.build.toplevel ];
+        repartConfig = {
+          Type = "root";
+          Format = "ext4";
+          Minimize = "guess";
+        };
+      };
+    };
+  };
+
 }
