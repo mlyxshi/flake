@@ -34,7 +34,6 @@
         type filter hook input priority 0; policy drop;
         iifname lo accept
         ip protocol icmp accept
-        ip6 nexthdr icmpv6 accept
         ct state {established, related} accept
         tcp dport { 22, 8888 } accept
       }
