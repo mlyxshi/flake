@@ -8,7 +8,7 @@
     darwin.url = "git+https://github.com/nix-darwin/nix-darwin.git?shallow=1";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
-    secret.url = "git+ssh://git@github.com/mlyxshi/secret";
+    secret.url = "git+ssh://git@github.com/mlyxshi/secret.git?shallow=1";
   };
 
   outputs =

@@ -51,13 +51,14 @@
         "narHash": "sha256-AuxldfGIoQzt/N9t8Imyb7L8NkE6WyciezNe9I9UrCA=",
         "ref": "refs/heads/main",
         "rev": "a5affdf38fd66e9d3ecd15ded9224f44ed8e5037",
-        "revCount": 117,
+        "shallow": true,
         "type": "git",
-        "url": "ssh://git@github.com/mlyxshi/secret"
+        "url": "ssh://git@github.com/mlyxshi/secret.git"
       },
       "original": {
+        "shallow": true,
         "type": "git",
-        "url": "ssh://git@github.com/mlyxshi/secret"
+        "url": "ssh://git@github.com/mlyxshi/secret.git"
       }
     }
   },
