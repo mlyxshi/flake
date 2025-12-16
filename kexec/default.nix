@@ -11,9 +11,25 @@
 
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.network.enable = true;
-  systemd.network.networks.ethernet-default-dhcp = {
+  # systemd.network.networks.ethernet-default-dhcp = {
+  #   matchConfig.Name = "en*";
+  #   networkConfig.DHCP = "yes";
+  # };
+
+  systemd.network.networks.ethernet-static = {
     matchConfig.Name = "en*";
-    networkConfig.DHCP = "yes";
+    networkConfig = {
+      Address = [
+        "154.17.19.228/32"
+      ];
+    };
+
+    routes = [
+      {
+        Gateway = "193.41.250.250";
+        GatewayOnLink = true; # Special config since gateway isn't in subnet
+      }
+    ];
   };
 
   boot.initrd.network.ssh.enable = true;
@@ -91,7 +107,7 @@
 
   boot.initrd.systemd.extraBin = {
     # nix
-    nix = "${pkgs.nix}/bin/nix"; 
+    nix = "${pkgs.nix}/bin/nix";
     nix-store = "${pkgs.nix}/bin/nix-store";
     nix-env = "${pkgs.nix}/bin/nix-env";
     busybox = "${pkgs.busybox-sandbox-shell}/bin/busybox";
