@@ -8,9 +8,7 @@
 {
 
   systemd.network.networks.ethernet-static = {
-    matchConfig = {
-      Name = "eth0";
-    };
+    matchConfig.Name = "en*";
     networkConfig = {
       Address = [
         "161.248.63.8/24"
