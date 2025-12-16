@@ -95,9 +95,9 @@
     copyChannel = false;
     partitionTableType = "legacy+boot"; # limine bootloader
     bootSize = "128M";
-    additionalSpace = "128M";
+    # additionalSpace = "128M";
     # diskSize = 10240; # 10G
-    # diskSize = 20480; # 20G
+    diskSize = 20480; # 20G
     baseName = config.networking.hostName;
   };
 }
