@@ -22,21 +22,12 @@
   systemd.network.wait-online.anyInterface = true;
 
   # systemd.network.networks.ethernet-default-dhcp = {
-  #   matchConfig = {
-  #     Name = [
-  #       "en*"
-  #       "eth*"
-  #     ];
-  #   };
-  #   networkConfig = {
-  #     DHCP = "yes";
-  #   };
+  #   matchConfig.Name = "en*";
+  #   networkConfig.DHCP = "yes";
   # };
 
-  systemd.network.networks.ethernet-default-dhcp = {
-    matchConfig = {
-      Name = [ "eth0" ];
-    };
+  systemd.network.networks.ethernet-static = {
+    matchConfig.Name = "en*";
     networkConfig = {
       Address = "154.17.19.228/32";
     };
@@ -47,9 +38,8 @@
       }
     ];
   };
+  
   networking.firewall.enable = false;
-
-  boot.kernelParams = [ "net.ifnames=0" ];
 
   boot.initrd.systemd.enable = true;
 
@@ -86,21 +76,12 @@
   };
 
   nix = {
-    package = pkgs.nixVersions.latest;
     channel.enable = false;
     settings = {
       experimental-features = [
         "nix-command"
         "flakes"
-        "cgroups"
-        "auto-allocate-uids"
       ];
-      # substituters = [ "https://mlyxshi.cachix.org" ];
-      # trusted-public-keys = [ "mlyxshi.cachix.org-1:BVd+/1A5uLMI8pTUdhdh6sdefTRdj+/PVgrUh9L2hWw=" ];
-      log-lines = 25;
-      # experimental
-      use-cgroups = true;
-      auto-allocate-uids = true;
     };
   };
 

@@ -66,6 +66,8 @@
           inherit self nixpkgs secret;
           hostName = "jp3";
         };
+
+        lax = import ./host/dmit { inherit self nixpkgs secret; };
       }
       // oracleNixosConfigurations;
 

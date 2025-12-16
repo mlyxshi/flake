@@ -9,7 +9,7 @@ nixpkgs.lib.nixosSystem {
     secret.nixosModules.default
     self.nixosModules.nixos.server
     self.nixosModules.network.static
-    self.nixosModules.hardware.bios.vda
+    self.nixosModules.hardware.bios.limine
     self.nixosModules.services.komari-agent
     ./${hostName}.nix
     {

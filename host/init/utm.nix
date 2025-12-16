@@ -20,19 +20,10 @@
   systemd.network.enable = true;
   systemd.network.wait-online.anyInterface = true;
   systemd.network.networks.ethernet-default-dhcp = {
-    matchConfig = {
-      Name = [
-        "en*"
-        "eth*"
-      ];
-    };
-    networkConfig = {
-      DHCP = "yes";
-    };
+    matchConfig.Name = "en*";
+    networkConfig.DHCP = "yes";
   };
   networking.firewall.enable = false;
-
-  boot.kernelParams = [ "net.ifnames=0" ];
 
   boot.initrd.systemd.enable = true;
 

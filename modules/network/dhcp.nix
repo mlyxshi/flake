@@ -21,9 +21,7 @@
   systemd.network.wait-online.anyInterface = true;
   systemd.network.networks.ethernet-default-dhcp = {
     matchConfig.Name = "en*";
-    networkConfig = {
-      DHCP = "yes";
-    };
+    networkConfig.DHCP = "yes";
   };
   # Disable nixpkgs defined firewall
   # enable firewall by cloud provider web console
