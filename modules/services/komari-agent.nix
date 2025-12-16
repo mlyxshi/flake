@@ -12,7 +12,7 @@
       AGENT_DISABLE_AUTO_UPDATE = "true";
       AGENT_DISABLE_WEB_SSH = "true";
       AGENT_MONTH_ROTATE = lib.mkDefault "1";
-      AGENT_CONFIG_FILE = "/secret/komari"; # auto_discovery_key
+      AGENT_CONFIG_FILE = "/secret/komari"; # token
     };
     serviceConfig.ExecStart = lib.mkDefault "${pkgs.komari-agent}/bin/komari-agent";
     serviceConfig.DynamicUser = true;
