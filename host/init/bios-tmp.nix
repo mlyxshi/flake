@@ -21,7 +21,6 @@
   systemd.network.enable = true;
   systemd.network.wait-online.anyInterface = true;
 
-
   # systemd.network.networks.ethernet-default-dhcp = {
   #   matchConfig = {
   #     Name = [
@@ -36,7 +35,7 @@
 
   systemd.network.networks.ethernet-default-dhcp = {
     matchConfig = {
-      Name = [ "eth0"];
+      Name = [ "eth0" ];
     };
     networkConfig = {
       Address = "161.248.63.8/24";
@@ -112,7 +111,8 @@
     partitionTableType = "legacy+boot"; # limine bootloader
     bootSize = "128M";
     # additionalSpace = "128M";
-    diskSize = 10240; # 10G
+    # diskSize = 10240; # 10G
+    diskSize = 20480; # 20G
     baseName = config.networking.hostName;
   };
 }
