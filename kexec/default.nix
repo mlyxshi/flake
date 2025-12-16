@@ -17,7 +17,10 @@
   # };
 
   systemd.network.networks.ethernet-static = {
-    matchConfig.Name = "en*";
+    matchConfig.Name = [
+      "en*"
+      "eth*"
+    ];
     networkConfig = {
       Address = [
         "154.17.19.228/32"
