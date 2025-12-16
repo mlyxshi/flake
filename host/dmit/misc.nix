@@ -32,16 +32,16 @@
     options = [ "X-mount.subdir=nix" ];
   };
 
-  # systemd.network.networks.ethernet-static = {
-  #   matchConfig.Name = "en*";
-  #   networkConfig.Address="154.17.19.228/32";
-  #   routes = [
-  #     {
-  #       Gateway = "193.41.250.250";
-  #       GatewayOnLink = true; # Special config since gateway isn't in subnet
-  #     }
-  #   ];
-  # };
+  systemd.network.networks.ethernet-static = {
+    matchConfig.Name = "en*";
+    networkConfig.Address="154.17.19.228/32";
+    routes = [
+      {
+        Gateway = "193.41.250.250";
+        GatewayOnLink = true; # Special config since gateway isn't in subnet
+      }
+    ];
+  };
 
   # networking.nftables.enable = true;
   # networking.nftables.ruleset = ''

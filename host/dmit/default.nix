@@ -7,7 +7,7 @@ nixpkgs.lib.nixosSystem {
   modules = [
     secret.nixosModules.default
     self.nixosModules.nixos.server
-    self.nixosModules.network.dhcp
+    self.nixosModules.network.static
     # self.nixosModules.services.komari-agent
     # self.nixosModules.services.cloudflare-warp
     # self.nixosModules.services.snell
