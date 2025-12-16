@@ -103,7 +103,7 @@
     copyChannel = false;
     # partitionTableType = "legacy+boot"; # limine bootloader
     partitionTableType = "legacy"; # grub bootloader
-    bootSize = "128M";
+    bootSize = "300M";
     # additionalSpace = "128M";
     # diskSize = 10240; # 10G
     # diskSize = 20480; # 20G
