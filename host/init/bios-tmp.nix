@@ -56,13 +56,8 @@
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/vda";
 
-  fileSystems."/boot" = {
-    device = "/dev/vda1";
-    fsType = "vfat";
-  };
-
   fileSystems."/" = {
-    device = "/dev/vda2";
+    device = "/dev/vda1";
     fsType = "ext4";
   };
 
