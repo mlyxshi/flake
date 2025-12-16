@@ -31,7 +31,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    (writeShellScriptBin "update" ''
+    (writeShellScriptBin "update-dmit" ''
       if [[ -e "/flake/flake.nix" ]]
       then
         cd /flake
