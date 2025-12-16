@@ -63,16 +63,16 @@ jobs:
     
     - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --to ssh://$HOST $outPath
 
-    # - run: |
-    #     $SSH $HOST "cat > /boot/grub/custom.cfg" <<EOF
-    #   menuentry "NixOS" --id NixOS {
-    #     insmod ext2
-    #     search -f /etc/hostname --set root
-    #     linux $outPath/kernel $(cat $outPath/kernel-params) init=$outPath/init
-    #     initrd $outPath/initrd
-    #   }
-    #   set default="NixOS"
-    #   EOF
+    - run: |
+        $SSH $HOST "cat > /boot/grub/custom.cfg" <<EOF
+        menuentry "NixOS" --id NixOS {
+          insmod ext2
+          search -f /etc/hostname --set root
+          linux $outPath/kernel $(cat $outPath/kernel-params) init=$outPath/init
+          initrd $outPath/initrd
+        }
+        set default="NixOS"
+        EOF
 
     - run: curl "https://api.day.app/${{ secrets.BARK_KEY }}/NixOS%20Install%20Done/${{ inputs.flakeAttr }}?group=NixOS&icon=https://hydra.nixos.org/logo"
 
