@@ -38,9 +38,14 @@
       Name = [ "eth0" ];
     };
     networkConfig = {
-      Address = "161.248.63.8/24";
-      Gateway = "161.248.63.1";
+      Address = "154.17.19.228/32";
     };
+    routes = [
+      {
+        Gateway = "193.41.250.250";
+        GatewayOnLink = true;
+      }
+    ];
   };
   networking.firewall.enable = false;
 
@@ -111,8 +116,8 @@
     partitionTableType = "legacy+boot"; # limine bootloader
     bootSize = "128M";
     # additionalSpace = "128M";
-    # diskSize = 10240; # 10G
-    diskSize = 20480; # 20G
+    diskSize = 10240; # 10G
+    # diskSize = 20480; # 20G
     baseName = config.networking.hostName;
   };
 }
