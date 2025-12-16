@@ -11,7 +11,10 @@
 
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.emergencyAccess = true;
+  
+  boot.loader.grub.devices="nodev"; # dmit original grub -> nixos systemd-initrd
 
+  # https://gist.github.com/dramforever/bf339cb721d25892034e052765f931c6
   fileSystems."/old-root" = {
     device = "/dev/vda1";
     fsType = "ext4";
@@ -44,7 +47,9 @@
       if [ -n "$SYSTEM" ]
       then
         [[ -e "/run/current-system" ]] && nix store diff-closures /run/current-system $SYSTEM
-        cat <<END > /boot/grub/custom.cfg
+        nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
+        
+        cat <<END > /old-root/boot/grub/custom.cfg
         menuentry "NixOS" --id NixOS {
           insmod ext2
           search -f /etc/hostname --set root
@@ -53,6 +58,7 @@
         }
         set default="NixOS"
         END
+        
       else
         echo "Build Failed"
         exit 1
