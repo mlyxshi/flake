@@ -41,7 +41,7 @@
         cd /flake
       fi  
 
-
+      HOST=''${1:-$(hostnamectl hostname)} 
       SYSTEM=$(nix build --no-link --print-out-paths .#nixosConfigurations.$HOST.config.system.build.toplevel)
 
       if [ -n "$SYSTEM" ]; then
