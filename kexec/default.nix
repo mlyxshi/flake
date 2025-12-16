@@ -11,29 +11,29 @@
 
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.network.enable = true;
-  # systemd.network.networks.ethernet-default-dhcp = {
-  #   matchConfig.Name = "en*";
-  #   networkConfig.DHCP = "yes";
-  # };
-
-  systemd.network.networks.ethernet-static = {
-    matchConfig.Name = [
-      "en*"
-      "eth*"
-    ];
-    networkConfig = {
-      Address = [
-        "154.17.19.228/32"
-      ];
-    };
-
-    routes = [
-      {
-        Gateway = "193.41.250.250";
-        GatewayOnLink = true; # Special config since gateway isn't in subnet
-      }
-    ];
+  systemd.network.networks.ethernet-default-dhcp = {
+    matchConfig.Name = "en*";
+    networkConfig.DHCP = "yes";
   };
+
+  # systemd.network.networks.ethernet-static = {
+  #   matchConfig.Name = [
+  #     "en*"
+  #     "eth*"
+  #   ];
+  #   networkConfig = {
+  #     Address = [
+  #       "154.17.19.228/32"
+  #     ];
+  #   };
+
+  #   routes = [
+  #     {
+  #       Gateway = "193.41.250.250";
+  #       GatewayOnLink = true; # Special config since gateway isn't in subnet
+  #     }
+  #   ];
+  # };
 
   boot.initrd.network.ssh.enable = true;
   boot.initrd.systemd.services.sshd.preStart =
