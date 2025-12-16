@@ -12,6 +12,8 @@
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.emergencyAccess = true;
 
+  services.getty.autologinUser = "root";
+
   boot.loader.grub.device = "nodev"; # dmit original grub -> nixos systemd-initrd
 
   # https://gist.github.com/dramforever/bf339cb721d25892034e052765f931c6
