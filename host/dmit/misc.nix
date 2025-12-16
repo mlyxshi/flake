@@ -27,7 +27,7 @@
     options = [ "X-mount.subdir=nix" ];
   };
 
-  environment.systemPackages = [
+  environment.systemPackages = with pkgs; [
     (writeShellScriptBin "update" ''
       if [[ -e "/flake/flake.nix" ]]
       then
