@@ -61,6 +61,12 @@
       -----END OPENSSH PRIVATE KEY-----
     '';
 
+    "/etc/nix/nix.conf".text = ''
+      extra-experimental-features = nix-command flakes
+      substituters = https://cache.nixos.org
+      trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+    '';
+
     "/etc/yazi/yazi.toml".text = ''
       [manager]
       show_hidden = true
@@ -84,14 +90,31 @@
   ];
 
   boot.initrd.systemd.extraBin = {
+    # nix
+    nix = "${pkgs.nix}/bin/nix"; 
+    nix-store = "${pkgs.nix}/bin/nix-store";
+    nix-env = "${pkgs.nix}/bin/nix-env";
+    busybox = "${pkgs.busybox-sandbox-shell}/bin/busybox";
+    nixos-enter = "${pkgs.nixos-install-tools}/bin/nixos-enter";
+    unshare = "${pkgs.util-linux}/bin/unshare";
+
+    # net
     ip = "${pkgs.iproute2}/bin/ip";
     curl = "${pkgs.curl}/bin/curl";
-    lsblk = "${pkgs.util-linux}/bin/lsblk";
+
+    # fs
+    "mkfs.fat" = "${pkgs.dosfstools}/bin/mkfs.fat";
+    "mkfs.ext4" = "${pkgs.e2fsprogs}/sbin/mkfs.ext4";
+    sgdisk = "${pkgs.gptfdisk}/bin/sgdisk"; # GPT
+    parted = "${pkgs.parted}/bin/parted"; # MBR
     file = "${pkgs.file}/bin/file";
+    lsblk = "${pkgs.util-linux}/bin/lsblk";
+
     # debug
     htop = "${pkgs.htop}/bin/htop";
     yazi = "${pkgs.yazi-unwrapped}/bin/yazi";
     hx = "${pkgs.helix}/bin/hx";
+    # strace = "${pkgs.strace}/bin/strace";
   };
 
   boot.initrd.systemd.emergencyAccess = true;
