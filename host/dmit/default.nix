@@ -1,7 +1,6 @@
 { self, nixpkgs }:
 nixpkgs.lib.nixosSystem {
   modules = [
-    secret.nixosModules.default
     self.nixosModules.nixos.server
     self.nixosModules.network.dhcp
     ./lax.nix
