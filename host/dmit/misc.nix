@@ -14,7 +14,7 @@
 
   services.getty.autologinUser = "root";
 
-  boot.loader.grub.device = "nodev"; # dmit original grub -> nixos systemd-initrd
+  boot.loader.grub.device = "/dev/vda"; # dmit original grub -> nixos systemd-initrd
 
   # https://gist.github.com/dramforever/bf339cb721d25892034e052765f931c6
   fileSystems."/old-root" = {
@@ -32,8 +32,17 @@
     options = [ "X-mount.subdir=nix" ];
   };
 
-  
-  
+  # systemd.network.networks.ethernet-static = {
+  #   matchConfig.Name = "en*";
+  #   networkConfig.Address="154.17.19.228/32";
+  #   routes = [
+  #     {
+  #       Gateway = "193.41.250.250";
+  #       GatewayOnLink = true; # Special config since gateway isn't in subnet
+  #     }
+  #   ];
+  # };
+
   # networking.nftables.enable = true;
   # networking.nftables.ruleset = ''
   #   table inet FIREWALL {
