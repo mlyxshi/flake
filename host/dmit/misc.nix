@@ -11,8 +11,8 @@
 
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.emergencyAccess = true;
-  
-  boot.loader.grub.devices="nodev"; # dmit original grub -> nixos systemd-initrd
+
+  boot.loader.grub.device = "nodev"; # dmit original grub -> nixos systemd-initrd
 
   # https://gist.github.com/dramforever/bf339cb721d25892034e052765f931c6
   fileSystems."/old-root" = {
@@ -58,7 +58,7 @@
         }
         set default="NixOS"
         END
-        
+
       else
         echo "Build Failed"
         exit 1
