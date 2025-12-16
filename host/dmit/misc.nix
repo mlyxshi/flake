@@ -31,6 +31,8 @@
   };
 
   environment.systemPackages = with pkgs; [
+
+    komari-agent
     (writeShellScriptBin "update-dmit" ''
       if [[ -e "/flake/flake.nix" ]]
       then
