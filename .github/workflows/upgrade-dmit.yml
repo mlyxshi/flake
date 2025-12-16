@@ -1,4 +1,4 @@
-name: "System Upgrade any"
+name: "System Upgrade DMIT"
 on:
   workflow_dispatch:
     inputs:
