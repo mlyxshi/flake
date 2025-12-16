@@ -1,4 +1,4 @@
-name: "substrate x86_64"
+name: "Substrate x86_64"
 on:
   workflow_dispatch:
     inputs:
