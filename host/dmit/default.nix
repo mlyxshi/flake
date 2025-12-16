@@ -1,12 +1,20 @@
-{ self, nixpkgs }:
+{
+  self,
+  nixpkgs,
+  secret,
+}:
 nixpkgs.lib.nixosSystem {
   modules = [
+    secret.nixosModules.default
     self.nixosModules.nixos.server
     self.nixosModules.network.dhcp
+    self.nixosModules.services.komari-agent
+    self.nixosModules.services.cloudflare-warp
+    self.nixosModules.services.snell
     ./misc.nix
     {
       nixpkgs.hostPlatform = "x86_64-linux";
-      networking.hostName = "lax-test";
+      networking.hostName = "nrt";
     }
   ];
   specialArgs = { inherit self; };
