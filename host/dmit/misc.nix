@@ -44,20 +44,19 @@
 
       SYSTEM=$(nix build --no-link --print-out-paths .#nixosConfigurations.$HOST.config.system.build.toplevel)
 
-      if [ -n "$SYSTEM" ]
-      then
+      if [ -n "$SYSTEM" ]; then
         [[ -e "/run/current-system" ]] && nix store diff-closures /run/current-system $SYSTEM
         nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
         
         cat <<END > /old-root/boot/grub/custom.cfg
-        menuentry "NixOS" --id NixOS {
-          insmod ext2
-          search -f /etc/hostname --set root
-          linux $SYSTEM/kernel root=fstab $(cat $SYSTEM/kernel-params) init=$SYSTEM/init
-          initrd $SYSTEM/initrd
-        }
-        set default="NixOS"
-        END
+      menuentry "NixOS" --id NixOS {
+        insmod ext2
+        search -f /etc/hostname --set root
+        linux $SYSTEM/kernel root=fstab $(cat $SYSTEM/kernel-params) init=$SYSTEM/init
+        initrd $SYSTEM/initrd
+      }
+      set default="NixOS"
+      END
 
       else
         echo "Build Failed"
