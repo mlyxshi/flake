@@ -39,7 +39,7 @@ jobs:
       continue-on-error: true 
       run: $SSH -o ServerAliveInterval=5 -o ServerAliveCountMax=2 $HOST './kexec -e'
 
-  install:
+  dd:
     runs-on: ubuntu-24.04-arm
     steps:
     - run: |
