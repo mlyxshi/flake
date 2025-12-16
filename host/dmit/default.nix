@@ -6,7 +6,7 @@ nixpkgs.lib.nixosSystem {
     ./misc.nix
     {
       nixpkgs.hostPlatform = "x86_64-linux";
-      networking.hostName = "lax";
+      networking.hostName = "lax-test";
     }
   ];
   specialArgs = { inherit self; };

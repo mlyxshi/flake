@@ -32,40 +32,6 @@
     options = [ "X-mount.subdir=nix" ];
   };
 
-  environment.systemPackages = with pkgs; [
-    (writeShellScriptBin "update-dmit" ''
-      if [[ -e "/flake/flake.nix" ]]
-      then
-        cd /flake
-        git pull   
-      else
-        git clone --depth=1  git@github.com:mlyxshi/flake /flake
-        cd /flake
-      fi  
-
-      HOST=''${1:-$(hostnamectl hostname)} 
-      SYSTEM=$(nix build --no-link --print-out-paths .#nixosConfigurations.$HOST.config.system.build.toplevel)
-
-      if [ -n "$SYSTEM" ]; then
-        [[ -e "/run/current-system" ]] && nix store diff-closures /run/current-system $SYSTEM
-        nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
-        
-        cat <<END > /old-root/boot/grub/custom.cfg
-      menuentry "NixOS" --id NixOS {
-        insmod ext2
-        search -f /etc/hostname --set root
-        linux $SYSTEM/kernel root=fstab $(cat $SYSTEM/kernel-params) init=$SYSTEM/init
-        initrd $SYSTEM/initrd
-      }
-      set default="NixOS"
-      END
-
-      else
-        echo "Build Failed"
-        exit 1
-      fi
-    '')
-
-  ];
+  
 
 }

@@ -76,6 +76,6 @@ jobs:
 
     - run: curl "https://api.day.app/${{ secrets.BARK_KEY }}/NixOS%20Install%20Done/${{ inputs.flakeAttr }}?group=NixOS&icon=https://hydra.nixos.org/logo"
 
-    # - name: Reboot
-    #   continue-on-error: true 
-    #   run: $SSH $HOST reboot
+    - name: Reboot
+      continue-on-error: true 
+      run: $SSH $HOST reboot
