@@ -34,20 +34,20 @@
 
   
   
-  networking.nftables.enable = true;
-  networking.nftables.ruleset = ''
-    table inet FIREWALL {
-      chain INPUT {
-        type filter hook input priority 0; policy drop;
-        iifname lo accept
-        ip protocol icmp accept
-        ip6 nexthdr icmpv6 accept
-        ct state {established, related} accept
-        tcp dport { 22, 8888 } accept
-        udp dport { 8888 } accept
-      }
-    }
-  '';
+  # networking.nftables.enable = true;
+  # networking.nftables.ruleset = ''
+  #   table inet FIREWALL {
+  #     chain INPUT {
+  #       type filter hook input priority 0; policy drop;
+  #       iifname lo accept
+  #       ip protocol icmp accept
+  #       ip6 nexthdr icmpv6 accept
+  #       ct state {established, related} accept
+  #       tcp dport { 22, 8888 } accept
+  #       udp dport { 8888 } accept
+  #     }
+  #   }
+  # '';
 
-  systemd.services.komari-agent.environment.AGENT_MONTH_ROTATE = "24";
+  # systemd.services.komari-agent.environment.AGENT_MONTH_ROTATE = "24";
 }
