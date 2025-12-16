@@ -54,7 +54,7 @@
   boot.initrd.systemd.enable = true;
 
   boot.loader.grub.enable = true;
-  boot.loader.grub.device = "dev/vda";
+  boot.loader.grub.device = "/dev/vda";
 
   fileSystems."/boot" = {
     device = "/dev/vda1";
