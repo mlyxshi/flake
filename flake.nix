@@ -46,18 +46,19 @@
         # systemd-repart
         arm-init-sda-grow = nixpkgs.lib.nixosSystem { modules = [ ./host/init/arm.nix ]; };
 
-        # Apple Silicon (M3 and later) supports nested virtualization via Apple's Hypervisor Framework for build nixos image require kvm 
+        # Apple Silicon (M3 and later) supports nested virtualization via Apple's Hypervisor Framework for build nixos image require kvm
         utm = nixpkgs.lib.nixosSystem { modules = [ ./host/init/utm.nix ]; };
 
-        kexec-x86_64 = nixpkgs.lib.nixosSystem {
+        kexec-x86_64-static = nixpkgs.lib.nixosSystem {
           modules = [
-            ./kexec
+            ./kexec/static.nix
             { nixpkgs.hostPlatform = "x86_64-linux"; }
           ];
         };
-        kexec-aarch64 = nixpkgs.lib.nixosSystem {
+
+        kexec-aarch64-dhcp = nixpkgs.lib.nixosSystem {
           modules = [
-            ./kexec
+            ./kexec/dhcp.nix
             { nixpkgs.hostPlatform = "aarch64-linux"; }
           ];
         };

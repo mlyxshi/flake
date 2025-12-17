@@ -12,22 +12,6 @@
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.network.enable = true;
 
-  # boot.initrd.systemd.network.networks.ethernet-default-dhcp = {
-  #   matchConfig.Name = "en*";
-  #   networkConfig.DHCP = "yes";
-  # };
-
-  boot.initrd.systemd.network.networks.ethernet-static = {
-    matchConfig.Name = "en*";
-    networkConfig.Address = "154.12.190.105/32";
-    routes = [
-      {
-        Gateway = "193.41.250.250";
-        GatewayOnLink = true; # Special config since gateway isn't in subnet
-      }
-    ];
-  };
-
   boot.initrd.network.ssh.enable = true;
   boot.initrd.systemd.services.sshd.preStart =
     lib.mkForce "/bin/chmod 0600 /etc/ssh/ssh_host_ed25519_key";
