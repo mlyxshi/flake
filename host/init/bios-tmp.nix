@@ -62,10 +62,9 @@
   boot.loader.grub.device = "/dev/vda";
 
   fileSystems."/" = {
-    device = "/dev/vda1";
+    device = "/dev/vda2";
     fsType = "ext4";
   };
-
 
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe"
@@ -102,7 +101,8 @@
     format = "raw";
     copyChannel = false;
     # partitionTableType = "legacy+boot"; # limine bootloader
-    partitionTableType = "legacy"; # grub bootloader
+    # partitionTableType = "legacy"; # grub bootloader
+    partitionTableType = "legacy+gpt"; # grub bootloader + gpt
     bootSize = "300M";
     # additionalSpace = "128M";
     # diskSize = 10240; # 10G
