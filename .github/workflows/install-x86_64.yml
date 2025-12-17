@@ -1,4 +1,4 @@
-name: "Install x86_64 BIOS"
+name: "Install x86_64 Kexec"
 on:
   workflow_dispatch:
     inputs:
