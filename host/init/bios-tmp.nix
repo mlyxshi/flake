@@ -62,7 +62,7 @@
   boot.loader.grub.device = "/dev/vda";
 
   fileSystems."/" = {
-    device = "/dev/vda2";
+    device = "/dev/vda1";
     fsType = "ext4";
   };
 
@@ -101,8 +101,8 @@
     format = "raw";
     copyChannel = false;
     # partitionTableType = "legacy+boot"; # limine bootloader
-    # partitionTableType = "legacy"; # grub bootloader
-    partitionTableType = "legacy+gpt"; # grub bootloader + gpt
+    partitionTableType = "legacy"; # grub bootloader
+    # partitionTableType = "legacy+gpt"; # grub bootloader + gpt
     bootSize = "300M";
     # additionalSpace = "128M";
     # diskSize = 10240; # 10G
