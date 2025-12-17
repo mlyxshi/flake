@@ -152,12 +152,6 @@
       HostKeyAlias kexec
       Port 8022
       User root
-
-    Host kindle
-      HostName kindle.local
-      HostKeyAlias kindle
-      Port 22
-      User root
       
     Host us
     	HostName  us.mlyxshi.com
@@ -185,9 +179,9 @@
       HostKeyAlias jp3
     	User root
 
-    Host gcp-hk
-    	HostName  gcp-hk.mlyxshi.com
-      HostKeyAlias gcp-hk
+    Host utm
+    	HostName  utm.local
+      HostKeyAlias utm
     	User root
 
     Host gh

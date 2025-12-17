@@ -12,7 +12,10 @@
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.network.enable = true;
   systemd.network.networks.ethernet-default-dhcp = {
-    matchConfig.Name = "en*";
+    matchConfig.Name = [
+      "en*"
+      "eth*"
+    ];
     networkConfig.DHCP = "yes";
   };
 
