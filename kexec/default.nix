@@ -16,7 +16,7 @@
   #   matchConfig.Name = "en*";
   #   networkConfig.DHCP = "yes";
   # };
-  
+
   boot.initrd.systemd.network.networks.ethernet-static = {
     matchConfig.Name = "en*";
     networkConfig.Address = "154.12.190.105/32";
@@ -34,7 +34,7 @@
 
   boot.initrd.services.lvm.enable = false; # remove unused lvm2 from initrd
 
-  # qemu + ext4 + vfat + efivarfs
+  # qemu + ext4 + vfat + efivarfs + overlay
   # add extra kernel modules: https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/all-hardware.nix
   boot.initrd.kernelModules = [
     "virtio_net"
@@ -53,7 +53,11 @@
     "nls_cp437"
     "nls_iso8859-1"
   ]
-  ++ [ "efivarfs" ];
+  ++ [ "efivarfs" ]
+  ++ [
+    "erofs"
+    "overlay"
+  ];
 
   boot.initrd.systemd.contents = {
     "/etc/ssl/certs/ca-certificates.crt".source = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
