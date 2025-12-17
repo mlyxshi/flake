@@ -21,13 +21,12 @@ ip=dhcp
 # Usage
 ### From running linux distro
 ```
-curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kexec
 curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/initrd
 curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kernel
-
-chmod +x ./kexec
-./kexec --kexec-syscall-auto  --initrd=./initrd --load ./kernel
-./kexec -e
+curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kexec
+chmod +x kexec
+./kexec --debug --initrd=./initrd --load ./kernel
+systemctl kexec -i
 ```
 
 # cpio
@@ -44,17 +43,4 @@ FS0:
 ifconfig -s eth0 dhcp
 tftp 138.3.223.82 arm.efi
 exit
-```
-
-
-
-# Server located in CN
-```
-curl -LO https://cdn.mlyxshi.com/x86_64/kexec
-curl -LO https://cdn.mlyxshi.com/x86_64/initrd
-curl -LO https://cdn.mlyxshi.com/x86_64/kernel
-
-chmod +x ./kexec
-./kexec --kexec-syscall-auto  --initrd=./initrd --load ./kernel
-./kexec -e
 ```

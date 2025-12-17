@@ -35,7 +35,7 @@ jobs:
     - run: $SSH $HOST 'curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/initrd'
     - run: $SSH $HOST 'curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/kernel'
     - run: $SSH $HOST 'chmod +x ./kexec'
-    - run: $SSH $HOST "./kexec --kexec-syscall-auto --load ./kernel --initrd=./initrd"
+    - run: $SSH $HOST "./kexec --load ./kernel --initrd=./initrd"
 
     - name: Run kexec
       # If server doesn't reply, ServerAliveInterval option will kill ssh, and emit error 

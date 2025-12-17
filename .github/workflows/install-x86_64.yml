@@ -32,17 +32,12 @@ jobs:
           sleep 5
         done
 
-    - run: $SSH $HOST 'curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/kexec' 
-    - run: $SSH $HOST 'curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/initrd'
-    - run: $SSH $HOST 'curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/kernel'
-    - run: $SSH $HOST 'chmod +x ./kexec'
-    - run: $SSH $HOST "./kexec --kexec-syscall-auto --load ./kernel --initrd=./initrd"
-
-    - name: Run kexec
-      # If server doesn't reply, ServerAliveInterval option will kill ssh, and emit error 
-      # This is the normal behaviour as expected, so let github workflow treat error as success 
-      continue-on-error: true 
-      run: $SSH -o ServerAliveInterval=5 -o ServerAliveCountMax=2 $HOST './kexec -e'
+    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kexec
+    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/initrd
+    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kernel
+    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} chmod +x ./kexec
+    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} ./kexec --debug --initrd=./initrd --load ./kernel
+    - run: $SSH ${{ inputs.user }}@${{ inputs.ip }} systemctl kexec -i
 
   install:
     runs-on: ubuntu-latest
