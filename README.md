@@ -16,10 +16,3 @@ git clone --depth=1  https://github.com/mlyxshi/flake.git ~/flake
 sudo bash -c 'echo "/run/current-system/sw/bin/fish" >> /etc/shells' 
 chsh -s /run/current-system/sw/bin/fish dominic
 ```
-
-
-###
-```
-wget https://gist.github.com/mlyxshi/73a655a4eb4212b9319ce96e4e8b63ca/raw/5d992611dd9aba3228f3c973126b7faee2a5e5de/nixos-substrate.sh
-bash nixos-substrate.sh
-```

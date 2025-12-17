@@ -1,5 +1,4 @@
 {
-  hostName,
   self,
   nixpkgs,
   secret,
@@ -11,10 +10,10 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.network.static
     self.nixosModules.hardware.bios.limine
     self.nixosModules.services.komari-agent
-    ./${hostName}.nix
+    ./jp3.nix
     {
       nixpkgs.hostPlatform = "x86_64-linux";
-      networking.hostName = hostName;
+      networking.hostName = "jp3";
       # services.getty.autologinUser = "root";
     }
   ];
