@@ -42,29 +42,29 @@
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.emergencyAccess = true;
 
-  # boot.loader.limine.enable = true;
-  # boot.loader.limine.biosSupport = true;
-  # boot.loader.limine.efiSupport = false;
-  # boot.loader.limine.biosDevice = "/dev/vda";
-  # boot.loader.limine.maxGenerations = 2;
-  # boot.loader.timeout = 3; # inmediate boot
+  boot.loader.limine.enable = true;
+  boot.loader.limine.biosSupport = true;
+  boot.loader.limine.efiSupport = false;
+  boot.loader.limine.biosDevice = "/dev/vda";
+  boot.loader.limine.maxGenerations = 2;
+  boot.loader.timeout = 2; # inmediate boot
 
-  # fileSystems."/boot" = {
-  #   device = "/dev/vda1";
-  #   fsType = "vfat";
-  # };
-
-  # fileSystems."/" = {
-  #   device = "/dev/vda2";
-  #   fsType = "ext4";
-  # };
-
-  boot.loader.grub.device = "/dev/vda";
+  fileSystems."/boot" = {
+    device = "/dev/vda1";
+    fsType = "vfat";
+  };
 
   fileSystems."/" = {
-    device = "/dev/vda1";
+    device = "/dev/vda2";
     fsType = "ext4";
   };
+
+  # boot.loader.grub.device = "/dev/vda";
+
+  # fileSystems."/" = {
+  #   device = "/dev/vda1";
+  #   fsType = "ext4";
+  # };
 
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe"
