@@ -22,6 +22,7 @@
   systemd.network.networks.ethernet-default-dhcp = {
     matchConfig.Name = "en*";
     networkConfig.DHCP = "yes";
+    networkConfig.MulticastDNS = "yes"; # mDNS advertise + resolve
   };
   networking.firewall.enable = false;
 
@@ -59,21 +60,12 @@
   };
 
   nix = {
-    package = pkgs.nixVersions.latest;
     channel.enable = false;
     settings = {
       experimental-features = [
         "nix-command"
         "flakes"
-        "cgroups"
-        "auto-allocate-uids"
       ];
-      # substituters = [ "https://mlyxshi.cachix.org" ];
-      # trusted-public-keys = [ "mlyxshi.cachix.org-1:BVd+/1A5uLMI8pTUdhdh6sdefTRdj+/PVgrUh9L2hWw=" ];
-      log-lines = 25;
-      # experimental
-      use-cgroups = true;
-      auto-allocate-uids = true;
     };
     gc = {
       automatic = true;
