@@ -14,7 +14,7 @@
 
   services.getty.autologinUser = "root";
 
-  boot.loader.grub.device = "/dev/vda"; # dmit original grub -> nixos systemd-initrd
+  boot.loader.grub.device = "nodev"; # dmit original grub -> nixos systemd-initrd
 
   # https://gist.github.com/dramforever/bf339cb721d25892034e052765f931c6
   fileSystems."/old-root" = {
