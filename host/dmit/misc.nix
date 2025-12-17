@@ -7,7 +7,7 @@
   ...
 }:
 {
-  imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
+  imports = [ "${modulesPath}/profiles/qemu-guest.nix" ];
 
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.emergencyAccess = true;
@@ -34,7 +34,7 @@
 
   systemd.network.networks.ethernet-static = {
     matchConfig.Name = "en*";
-    networkConfig.Address="154.12.190.105/32";
+    networkConfig.Address = "154.12.190.105/32";
     routes = [
       {
         Gateway = "193.41.250.250";

@@ -7,7 +7,7 @@
 }:
 {
 
-  imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
+  imports = [ "${modulesPath}/profiles/qemu-guest.nix" ];
 
   networking.hostName = "bios-init-tmp";
   nixpkgs.hostPlatform = "x86_64-linux";
