@@ -78,7 +78,6 @@ jobs:
     - run: $SSH $HOST mount /dev/vda2 /mnt
     - run: $SSH $HOST mount --mkdir /dev/vda1 /mnt/boot
     
-    # --substitute-on-destination will consume more memory
     - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --substitute-on-destination --to ssh://$HOST?remote-store=local?root=/mnt $outPath
  
     - run: $SSH $HOST nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $outPath

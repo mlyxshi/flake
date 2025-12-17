@@ -7,7 +7,7 @@
   ...
 }:
 {
-  services.getty.autologinUser = "root";
+  # services.getty.autologinUser = "root";
 
   systemd.network.networks.ethernet-static = {
     matchConfig.Name = "en*";
