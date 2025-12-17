@@ -11,7 +11,7 @@
 
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.network.enable = true;
-  systemd.network.networks.ethernet-default-dhcp = {
+  boot.initrd.systemd.network.networks.ethernet-default-dhcp = {
     matchConfig.Name = [
       "en*"
       "eth*"
@@ -19,7 +19,7 @@
     networkConfig.DHCP = "yes";
   };
 
-  # systemd.network.networks.ethernet-static = {
+  # boot.initrd.systemd.network.networks.ethernet-static = {
   #   matchConfig.Name = [
   #     "en*"
   #     "eth*"
