@@ -53,11 +53,11 @@ jobs:
           sleep 5
         done
 
-    - run: $SSH $HOST 'mkdir -p /new-root' 
-    - run: $SSH $HOST 'mkdir -m 0755 /nix' 
-    - run: $SSH $HOST 'wget https://releases.nixos.org/nix/nix-2.33.0/nix-2.33.0-x86_64-linux.tar.xz' 
-    - run: $SSH $HOST 'tar -xf nix-2.33.0-x86_64-linux.tar.xz'
-    - run: $SSH $HOST 'cp -r nix-2.33.0-x86_64-linux/store /nix'
+    - run: $SSH $HOST mkdir -p /new-root
+    - run: $SSH $HOST mkdir -m 0755 /nix
+    - run: $SSH $HOST wget https://releases.nixos.org/nix/nix-2.33.0/nix-2.33.0-x86_64-linux.tar.xz
+    - run: $SSH $HOST tar -xf nix-2.33.0-x86_64-linux.tar.xz
+    - run: $SSH $HOST cp -r nix-2.33.0-x86_64-linux/store /nix
     - run: $SSH $HOST '/nix/store/yg8v8aap26967f28xmqgvl29ksp6mgn1-nix-2.33.0/bin/nix-store --load-db < nix-2.33.0-x86_64-linux/.reginfo'
     - run: $SSH $HOST 'cp /nix/store/yg8v8aap26967f28xmqgvl29ksp6mgn1-nix-2.33.0/bin/* /usr/bin/'
     
