@@ -56,6 +56,13 @@
           ];
         };
 
+        kexec-x86_64-dhcp = nixpkgs.lib.nixosSystem {
+          modules = [
+            ./kexec/dhcp.nix
+            { nixpkgs.hostPlatform = "x86_64-linux"; }
+          ];
+        };
+
         kexec-aarch64-dhcp = nixpkgs.lib.nixosSystem {
           modules = [
             ./kexec/dhcp.nix
