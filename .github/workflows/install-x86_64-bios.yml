@@ -73,9 +73,9 @@ jobs:
         done
 
     - run: $SSH $HOST parted -s /dev/vda -- mklabel msdos
-    - run: $SSH $HOST parted /dev/vda -- mkpart primary fat32 1MiB 513MiB
+    - run: $SSH $HOST parted /dev/vda -- mkpart primary fat32 1MiB 257MiB
     - run: $SSH $HOST parted /dev/vda -- set 1 boot on
-    - run: $SSH $HOST parted /dev/vda -- mkpart primary ext4 513MiB 100%
+    - run: $SSH $HOST parted /dev/vda -- mkpart primary ext4 257MiB 100%
 
     - run: $SSH $HOST mkfs.fat -F 32 /dev/vda1
     - run: $SSH $HOST mkfs.ext4 -F /dev/vda2

@@ -17,12 +17,19 @@
   #   networkConfig.DHCP = "yes";
   # };
 
-  boot.initrd.systemd.network.networks.ethernet-static = {
+  systemd.network.networks.ethernet-static = {
     matchConfig.Name = "en*";
-    networkConfig.Address = "154.17.19.228/32";
+    networkConfig = {
+      Address = [
+        "161.248.63.8/24"
+        "2401:e4e0:100:8::a/128"
+      ];
+      Gateway = "161.248.63.1";
+    };
+
     routes = [
       {
-        Gateway = "193.41.250.250";
+        Gateway = "2401:e4e0:100::1";
         GatewayOnLink = true; # Special config since gateway isn't in subnet
       }
     ];
