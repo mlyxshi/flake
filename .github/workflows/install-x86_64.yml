@@ -10,11 +10,13 @@ on:
         description: 'OS Config Hostname'
         type: string
         required: true
-      systemd-network-generator-cmdline:
-        description: 'kexec network config'
-        type: string
-        default: ip=dhcp
+      dhcp:
+        description: 'dhcp or static config ip'
+        type: choice
         required: true
+        options:
+          - static
+          - dhcp
 
 
 env:
@@ -36,12 +38,23 @@ jobs:
           echo "Server Not Reachable, Waiting..."
           sleep 5
         done
-
-    - run: $SSH $HOST curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kexec
-    - run: $SSH $HOST curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/initrd
-    - run: $SSH $HOST curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kernel
+    
+    - run: $SSH $HOST curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/kexec
+    - run: $SSH $HOST curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/kernel
     - run: $SSH $HOST chmod +x kexec
-    - run: $SSH $HOST ./kexec --debug --initrd=./initrd --load ./kernel --append=${{ inputs.systemd-network-generator-cmdline }}
+
+    - name: Static IP initrd
+      if: ${{ inputs.dhcp == 'static' }}
+      run: |
+        $SSH $HOST curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/initrd-tmp
+        $SSH $HOST ./kexec --debug --initrd=./initrd --load ./kernel
+    
+    - name: DHCP initrd
+      if: ${{ inputs.dhcp == 'dhcp' }}
+      run: |
+        $SSH $HOST curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/initrd
+        $SSH $HOST ./kexec --debug --initrd=./initrd --load ./kernel --append=ip=dhcp
+
     - run: $SSH $HOST systemctl kexec -i
 
   install:
