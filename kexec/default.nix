@@ -37,7 +37,7 @@
     "virtio_scsi"
   ];
   # https://github.com/NixOS/nixpkgs/blob/1306659b587dc277866c7b69eb97e5f07864d8c4/nixos/modules/system/boot/kernel.nix#L326C61-L326C94
-  boot.initrd.includeDefaultModules = false;
+  # boot.initrd.includeDefaultModules = false;
 
   boot.initrd.systemd.contents = {
     "/etc/ssl/certs/ca-certificates.crt".source = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";

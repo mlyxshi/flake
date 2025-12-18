@@ -53,17 +53,17 @@
   boot.loader.limine.enable = true;
   boot.loader.limine.biosSupport = true;
   boot.loader.limine.efiSupport = false;
-  boot.loader.limine.biosDevice = "/dev/vda";
+  boot.loader.limine.biosDevice = "/dev/sda";
   boot.loader.limine.maxGenerations = 2;
   boot.loader.timeout = 2; # inmediate boot
 
   fileSystems."/boot" = {
-    device = "/dev/vda1";
+    device = "/dev/sda1";
     fsType = "vfat";
   };
 
   fileSystems."/" = {
-    device = "/dev/vda2";
+    device = "/dev/sda2";
     fsType = "ext4";
   };
 
