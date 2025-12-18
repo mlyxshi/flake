@@ -17,12 +17,19 @@ on:
         options:
           - dhcp
           - static
-
+      disk:
+        description: 'device'
+        type: choice
+        required: true
+        options:
+          - $DEVICE
+          - sda
 
 
 env:
   SSH: ssh -o StrictHostKeyChecking=no
   HOST: root@${{ inputs.ip }}
+  DISK: ${{ inputs.disk }}
 
 jobs:
 
@@ -86,16 +93,16 @@ jobs:
           sleep 5
         done
 
-    - run: $SSH $HOST parted -s /dev/vda -- mklabel msdos
-    - run: $SSH $HOST parted /dev/vda -- mkpart primary fat32 1MiB 257MiB
-    - run: $SSH $HOST parted /dev/vda -- set 1 boot on
-    - run: $SSH $HOST parted /dev/vda -- mkpart primary ext4 257MiB 100%
+    - run: $SSH $HOST parted -s /dev/$DEVICE -- mklabel msdos
+    - run: $SSH $HOST parted /dev/$DEVICE -- mkpart primary fat32 1MiB 257MiB
+    - run: $SSH $HOST parted /dev/$DEVICE -- set 1 boot on
+    - run: $SSH $HOST parted /dev/$DEVICE -- mkpart primary ext4 257MiB 100%
 
-    - run: $SSH $HOST mkfs.fat -F 32 /dev/vda1
-    - run: $SSH $HOST mkfs.ext4 -F /dev/vda2
+    - run: $SSH $HOST mkfs.fat -F 32 /dev/$DEVICE1
+    - run: $SSH $HOST mkfs.ext4 -F /dev/$DEVICE2
     - run: $SSH $HOST mkdir -p /mnt
-    - run: $SSH $HOST mount /dev/vda2 /mnt
-    - run: $SSH $HOST mount --mkdir /dev/vda1 /mnt/boot
+    - run: $SSH $HOST mount /dev/$DEVICE2 /mnt
+    - run: $SSH $HOST mount --mkdir /dev/$DEVICE1 /mnt/boot
     
     - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --substitute-on-destination --to ssh://$HOST?remote-store=local?root=/mnt $outPath
  
