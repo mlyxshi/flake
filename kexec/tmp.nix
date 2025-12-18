@@ -10,6 +10,7 @@
     ./default.nix
   ];
 
+  # alice jp
   boot.initrd.systemd.network.networks.ethernet-static = {
     matchConfig.Name = "en*";
     networkConfig = {

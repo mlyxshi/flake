@@ -29,16 +29,30 @@
   # Etc-overlay      erofs/overlay
   # Qemu             virtio_scsi                       virtio_net/virtio_pci/virtio_mmio/virtio_blk/virtio_balloon/virtio_console/9p/9pnet_virtio
   
-  boot.initrd.availableKernelModules = [
+  # qemu + ext4 + vfat + efivarfs + overlay
+  # add extra kernel modules: https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/all-hardware.nix
+  boot.initrd.kernelModules = [
+    "virtio_net"
+    "virtio_pci"
+    "virtio_mmio"
+    "virtio_blk"
+    "virtio_scsi"
+    "virtio_balloon"
+    "virtio_console"
+    "9p"
+    "9pnet_virtio"
+  ]
+  ++ [ "ext4" ]
+  ++ [
+    "vfat"
     "nls_cp437"
     "nls_iso8859-1"
+  ]
+  ++ [ "efivarfs" ]
+  ++ [
     "erofs"
     "overlay"
-    "virtio_scsi"
   ];
-  # boot.initrd.includeDefaultModules
-  # https://github.com/NixOS/nixpkgs/blob/1306659b587dc277866c7b69eb97e5f07864d8c4/nixos/modules/system/boot/kernel.nix#L326C61-L326C94
-
 
   boot.initrd.systemd.contents = {
     "/etc/ssl/certs/ca-certificates.crt".source = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
