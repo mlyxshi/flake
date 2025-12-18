@@ -56,6 +56,13 @@
           ];
         };
 
+        kexec-x86_64-tmp = nixpkgs.lib.nixosSystem {
+          modules = [
+            ./kexec/tmp.nix
+            { nixpkgs.hostPlatform = "x86_64-linux"; }
+          ];
+        };
+
         kexec-aarch64 = nixpkgs.lib.nixosSystem {
           modules = [
             ./kexec

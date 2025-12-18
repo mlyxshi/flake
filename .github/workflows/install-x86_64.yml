@@ -10,6 +10,11 @@ on:
         description: 'OS Config Hostname'
         type: string
         required: true
+      systemd-network-generator-cmdline:
+        description: 'kexec network config'
+        type: string
+        default: ip=dhcp
+        required: true
 
 
 env:
@@ -36,7 +41,7 @@ jobs:
     - run: $SSH $HOST curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/initrd
     - run: $SSH $HOST curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kernel
     - run: $SSH $HOST chmod +x kexec
-    - run: $SSH $HOST ./kexec --debug --initrd=./initrd --load ./kernel
+    - run: $SSH $HOST ./kexec --debug --initrd=./initrd --load ./kernel --append=${{ inputs.systemd-network-generator-cmdline }}
     - run: $SSH $HOST systemctl kexec -i
 
   install:
