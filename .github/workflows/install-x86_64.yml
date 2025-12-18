@@ -98,11 +98,11 @@ jobs:
     - run: $SSH $HOST parted /dev/$DISK -- set 1 boot on
     - run: $SSH $HOST parted /dev/$DISK -- mkpart primary ext4 257MiB 100%
 
-    - run: $SSH $HOST mkfs.fat -F 32 /dev/$DISK1
-    - run: $SSH $HOST mkfs.ext4 -F /dev/$DISK2
-    - run: $SSH $HOST mkdir -p /mnt
-    - run: $SSH $HOST mount /dev/$DISK2 /mnt
-    - run: $SSH $HOST mount --mkdir /dev/$DISK1 /mnt/boot
+    - run: $SSH $HOST mkfs.fat -F 32 /dev/${DISK}1
+    - run: $SSH $HOST mkfs.ext4 -F /dev/${DISK}2
+    - run: $SSH $HOST mkdir -p /mnt/boot
+    - run: $SSH $HOST mount /dev/${DISK}2 /mnt
+    - run: $SSH $HOST mount /dev/${DISK}1 /mnt/boot
     
     - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --substitute-on-destination --to ssh://$HOST?remote-store=local?root=/mnt $outPath
  
