@@ -18,7 +18,7 @@ on:
           - dhcp
           - static
       disk:
-        description: 'device'
+        description: 'DISK'
         type: choice
         required: true
         options:
@@ -93,16 +93,16 @@ jobs:
           sleep 5
         done
 
-    - run: $SSH $HOST parted -s /dev/$DEVICE -- mklabel msdos
-    - run: $SSH $HOST parted /dev/$DEVICE -- mkpart primary fat32 1MiB 257MiB
-    - run: $SSH $HOST parted /dev/$DEVICE -- set 1 boot on
-    - run: $SSH $HOST parted /dev/$DEVICE -- mkpart primary ext4 257MiB 100%
+    - run: $SSH $HOST parted -s /dev/$DISK -- mklabel msdos
+    - run: $SSH $HOST parted /dev/$DISK -- mkpart primary fat32 1MiB 257MiB
+    - run: $SSH $HOST parted /dev/$DISK -- set 1 boot on
+    - run: $SSH $HOST parted /dev/$DISK -- mkpart primary ext4 257MiB 100%
 
-    - run: $SSH $HOST mkfs.fat -F 32 /dev/$DEVICE1
-    - run: $SSH $HOST mkfs.ext4 -F /dev/$DEVICE2
+    - run: $SSH $HOST mkfs.fat -F 32 /dev/$DISK1
+    - run: $SSH $HOST mkfs.ext4 -F /dev/$DISK2
     - run: $SSH $HOST mkdir -p /mnt
-    - run: $SSH $HOST mount /dev/$DEVICE2 /mnt
-    - run: $SSH $HOST mount --mkdir /dev/$DEVICE1 /mnt/boot
+    - run: $SSH $HOST mount /dev/$DISK2 /mnt
+    - run: $SSH $HOST mount --mkdir /dev/$DISK1 /mnt/boot
     
     - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --substitute-on-destination --to ssh://$HOST?remote-store=local?root=/mnt $outPath
  
