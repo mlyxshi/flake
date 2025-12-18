@@ -49,7 +49,7 @@
     "erofs"
     "overlay"
   ];
-  boot.initrd.includeDefaultModules = false;
+  # boot.initrd.includeDefaultModules also adds some necessary modules
 
   boot.initrd.systemd.contents = {
     "/etc/ssl/certs/ca-certificates.crt".source = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
