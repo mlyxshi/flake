@@ -49,8 +49,9 @@ in
     directory = ./host/oracle;
   };
 
+  # Github Action Ubuntu, apt install -y qemu-kvm
   kexec-test = nixpkgs.legacyPackages.x86_64-linux.writeShellScriptBin "kexec-test" ''
-    qemu-system-x86_64 -accel kvm -cpu host -nographic -m 1G \
+    qemu-system-x86_64 -cpu host -nographic -m 1G \
       -kernel ${self.nixosConfigurations.kexec-x86_64.config.system.build.kernel}/bzImage \
       -initrd ${self.nixosConfigurations.kexec-x86_64.config.system.build.initialRamdisk}/initrd \
       -append "systemd.journald.forward_to_console ip=dhcp" \
