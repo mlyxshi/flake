@@ -96,8 +96,7 @@
     nix-store = "${pkgs.nix}/bin/nix-store";
     nix-env = "${pkgs.nix}/bin/nix-env";
     nixos-enter = "${pkgs.nixos-install-tools}/bin/nixos-enter";
-    busybox = "${pkgs.busybox-sandbox-shell}/bin/busybox";
-    unshare = "${pkgs.util-linux}/bin/unshare";
+    unshare = "${pkgs.util-linux}/bin/unshare"; # nixos-enter dependencies
 
     # net
     ip = "${pkgs.iproute2}/bin/ip";
@@ -120,10 +119,10 @@
 
   boot.initrd.systemd.emergencyAccess = true;
 
+  boot.initrd.systemd.services.initrd-parse-etc.enable = false;
   # https://www.freedesktop.org/software/systemd/man/latest/bootup.html#Bootup%20in%20the%20initrd
   # https://github.com/systemd/systemd/blob/main/units/initrd-parse-etc.service.in
   # https://github.com/systemd/systemd/blob/main/units/initrd-cleanup.service
   # Disable: initrd-parse-etc.service -> initrd-cleanup.service -> initrd-switch-root.target
   # so systemd will stop at stage initrd-parse-etc.service, unit will not be cleanup
-  boot.initrd.systemd.services.initrd-parse-etc.enable = false;
 }
