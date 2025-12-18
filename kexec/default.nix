@@ -16,8 +16,10 @@
   boot.initrd.network.ssh.enable = true;
   boot.initrd.systemd.services.sshd.preStart =
     lib.mkForce "/bin/chmod 0600 /etc/ssh/ssh_host_ed25519_key";
-
-  boot.initrd.services.lvm.enable = false; # remove unused lvm2 from initrd
+ 
+  # remove unused lvm/bache from initrd
+  boot.initrd.services.lvm.enable = false; 
+  boot.bcache.enable = false;
 
   ## Kernel modules:
   ##                 module                            buildin
