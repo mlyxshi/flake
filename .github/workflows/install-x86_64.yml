@@ -48,7 +48,7 @@ jobs:
       if: ${{ inputs.networkType == 'static' }}
       run: |
         $SSH $HOST curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/initrd-tmp
-        $SSH $HOST ./kexec --debug --initrd=./initrd --load ./kernel
+        $SSH $HOST ./kexec --debug --initrd=./initrd-tmp --load ./kernel
     
     - name: DHCP initrd
       if: ${{ inputs.networkType == 'dhcp' }}
