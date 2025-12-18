@@ -25,7 +25,7 @@ curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/initrd
 curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kernel
 curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kexec
 chmod +x kexec
-./kexec --debug --initrd=./initrd --load ./kernel
+./kexec --debug --initrd=./initrd --load ./kernel --append=ip=dhcp
 systemctl kexec -i
 ```
 

@@ -53,7 +53,7 @@ in
     qemu-system-x86_64 -accel kvm -cpu host -nographic -m 1G \
       -kernel ${self.nixosConfigurations.kexec-x86_64-dhcp.config.system.build.kernel}/bzImage \
       -initrd ${self.nixosConfigurations.kexec-x86_64-dhcp.config.system.build.initialRamdisk}/initrd \
-      -append "systemd.journald.forward_to_console" \
+      -append "systemd.journald.forward_to_console ip=dhcp" \
       -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
       -device "virtio-scsi-pci,id=scsi0" -drive "file=disk.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
       -bios /usr/share/qemu/OVMF.fd
@@ -61,9 +61,9 @@ in
 
   darwin-kexec-test = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "darwin-kexec-test" ''
     /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 4G \
-      -kernel ${self.nixosConfigurations.kexec-aarch64-dhcp.config.system.build.kernel}/Image \
-      -initrd ${self.nixosConfigurations.kexec-aarch64-dhcp.config.system.build.initialRamdisk}/initrd \
-      -append "systemd.journald.forward_to_console" \
+      -kernel ${self.nixosConfigurations.kexec-aarch64.config.system.build.kernel}/Image \
+      -initrd ${self.nixosConfigurations.kexec-aarch64.config.system.build.initialRamdisk}/initrd \
+      -append "systemd.journald.forward_to_console ip=dhcp" \
       -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
       -device "virtio-scsi-pci,id=scsi0" -drive "file=disk.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
       -bios $(ls /opt/homebrew/Cellar/qemu/*/share/qemu/edk2-aarch64-code.fd)
