@@ -10,13 +10,14 @@ on:
         description: 'OS Config Hostname'
         type: string
         required: true
-      dhcp:
+      networkType:
         description: 'dhcp or static config ip'
         type: choice
         required: true
         options:
-          - static
           - dhcp
+          - static
+
 
 
 env:
@@ -44,13 +45,13 @@ jobs:
     - run: $SSH $HOST chmod +x kexec
 
     - name: Static IP initrd
-      if: ${{ inputs.dhcp == 'static' }}
+      if: ${{ inputs.networkType == 'static' }}
       run: |
         $SSH $HOST curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/initrd-tmp
         $SSH $HOST ./kexec --debug --initrd=./initrd --load ./kernel
     
     - name: DHCP initrd
-      if: ${{ inputs.dhcp == 'dhcp' }}
+      if: ${{ inputs.networkType == 'dhcp' }}
       run: |
         $SSH $HOST curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/initrd
         $SSH $HOST ./kexec --debug --initrd=./initrd --load ./kernel --append=ip=dhcp
