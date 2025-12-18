@@ -54,7 +54,7 @@ in
     /opt/homebrew/bin/qemu-system-x86_64 -cpu qemu64 -nographic -m 1G \
       -kernel ${self.nixosConfigurations.kexec-x86_64.config.system.build.kernel}/bzImage \
       -initrd ${self.nixosConfigurations.kexec-x86_64.config.system.build.initialRamdisk}/initrd \
-      -append "console=ttyS0 ip=dhcp" \
+      -append "console=ttyS0 systemd.journald.forward_to_console ip=dhcp" \
       -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
       -device "virtio-scsi-pci,id=scsi0" -drive "file=disk.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
   '';

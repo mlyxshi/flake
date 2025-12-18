@@ -17,20 +17,16 @@
   boot.initrd.systemd.services.sshd.preStart =
     lib.mkForce "/bin/chmod 0600 /etc/ssh/ssh_host_ed25519_key";
  
-  # remove unused lvm/bache from initrd
+  # remove unused lvm/bcache from initrd
   boot.initrd.services.lvm.enable = false; 
   boot.bcache.enable = false;
 
-  ## Kernel modules:
-  ##                 module                            buildin
-  # Ext4:                                              ext4
-  # Vfat             nls_cp437/nls_iso8859-1           vfat
-  # Efivarfs                                           efivarfs
-  # Etc-overlay      erofs/overlay
-  # Qemu             virtio_scsi                       virtio_net/virtio_pci/virtio_mmio/virtio_blk/virtio_balloon/virtio_console/9p/9pnet_virtio
-  
+  # https://github.com/NixOS/nixpkgs/blob/master/lib/systems/platforms.nix
+  # aarch64-multiplatform { autoModules = true;  preferBuiltin = true;}
+  # x86-64 { autoModules = true; }
+  # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/kernel/modules-closure.nix
+
   # qemu + ext4 + vfat + efivarfs + overlay
-  # add extra kernel modules: https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/all-hardware.nix
   boot.initrd.kernelModules = [
     "virtio_net"
     "virtio_pci"
@@ -53,6 +49,7 @@
     "erofs"
     "overlay"
   ];
+  boot.initrd.includeDefaultModules = false;
 
   boot.initrd.systemd.contents = {
     "/etc/ssl/certs/ca-certificates.crt".source = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
