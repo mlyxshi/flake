@@ -22,7 +22,7 @@ on:
         type: choice
         required: true
         options:
-          - $DEVICE
+          - vda
           - sda
 
 
