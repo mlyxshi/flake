@@ -25,8 +25,8 @@
         packagesSet-x86_64-linux
         packagesSet-aarch64-linux
         oracleNixosConfigurations
-        kexec-test
-        darwin-kexec-test
+        x86_64-kexec-test
+        arm-kexec-test
         ;
     in
     {
@@ -75,12 +75,11 @@
       }
       // oracleNixosConfigurations;
 
-      packages.x86_64-linux = {
-        default = kexec-test;
-      }
-      // packagesSet-x86_64-linux;
+      packages.x86_64-linux =  packagesSet-x86_64-linux;
       packages.aarch64-linux = packagesSet-aarch64-linux;
-      packages.aarch64-darwin.default = darwin-kexec-test;
+      
+      packages.aarch64-darwin.default = x86_64-kexec-test;
+      packages.aarch64-darwin.arm-kexec-test = arm-kexec-test;
 
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt-tree;
     };
