@@ -31,16 +31,7 @@ systemctl kexec -i
 
 # cpio
 ```
-mkdir /test && cd test
+mkdir /test 
+cd test
 zstdcat /run/current-system/initrd | cpio -idv 
-```
-
-# tftp server all udp port 
-# tftp client all port 
-# UEFI Shell
-```
-FS0:
-ifconfig -s eth0 dhcp
-tftp 138.3.223.82 arm.efi
-exit
 ```

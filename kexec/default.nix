@@ -131,5 +131,5 @@
   # https://github.com/systemd/systemd/blob/main/units/initrd-parse-etc.service.in
   # https://github.com/systemd/systemd/blob/main/units/initrd-cleanup.service
   # Disable: initrd-parse-etc.service -> initrd-cleanup.service -> initrd-switch-root.target
-  # so systemd will stop at initrd-parse-etc.service. Unit will not be cleanup and act like a mini live nixos system.
+  # so systemd will reach initrd.target. Unit will not be cleanup and act like a mini live nixos system.
 }
