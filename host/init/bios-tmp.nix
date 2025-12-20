@@ -44,7 +44,6 @@
   #   ];
   # };
 
-
   networking.firewall.enable = false;
 
   boot.initrd.systemd.enable = true;

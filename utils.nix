@@ -49,7 +49,6 @@ in
     directory = ./host/oracle;
   };
 
-
   x86_64-kexec-test = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "x86_64-kexec-test" ''
     /opt/homebrew/bin/qemu-system-x86_64 -cpu qemu64 -nographic -m 1G \
       -kernel ${self.nixosConfigurations.kexec-x86_64.config.system.build.kernel}/bzImage \

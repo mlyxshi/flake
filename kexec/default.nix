@@ -16,9 +16,9 @@
   boot.initrd.network.ssh.enable = true;
   boot.initrd.systemd.services.sshd.preStart =
     lib.mkForce "/bin/chmod 0600 /etc/ssh/ssh_host_ed25519_key";
- 
+
   # remove unused lvm/bcache from initrd
-  boot.initrd.services.lvm.enable = false; 
+  boot.initrd.services.lvm.enable = false;
   boot.bcache.enable = false;
 
   # https://github.com/NixOS/nixpkgs/blob/master/lib/systems/platforms.nix

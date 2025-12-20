@@ -1,5 +1,11 @@
-{ pkgs, lib, self, config, ... }: 
-let 
+{
+  pkgs,
+  lib,
+  self,
+  config,
+  ...
+}:
+let
   package = self.packages.${config.nixpkgs.hostPlatform.system}.snell;
 in
 {
