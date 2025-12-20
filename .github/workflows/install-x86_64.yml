@@ -47,7 +47,8 @@ jobs:
     - if: ${{ inputs.networkType == 'static' }}
       uses: DeterminateSystems/nix-installer-action@main
 
-    - if: ${{ inputs.networkType == 'static' }}
+    - name: Build Static IP initrd
+      if: ${{ inputs.networkType == 'static' }}
       run: |
         sed -i "s/PLACEHOLDER/${{ inputs.flakeAttr }}/g" kexec/template.nix
         initrdOutPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.kexec-x86_64-static-ip.config.system.build.initialRamdisk)
@@ -64,10 +65,10 @@ jobs:
     - run: $SSH $HOST curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/kernel
     - run: $SSH $HOST chmod +x kexec
 
-    - name: Static IP initrd
+    - name: SCP Static IP initrd and Load 
       if: ${{ inputs.networkType == 'static' }}
       run: |
-        scp -o StrictHostKeyChecking=no $initrdOutPath/initrd  $HOST
+        scp -v -o StrictHostKeyChecking=no $initrdOutPath/initrd  $HOST
         $SSH $HOST ./kexec --debug --initrd=./initrd --load ./kernel
     
     - name: DHCP initrd
