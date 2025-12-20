@@ -68,7 +68,7 @@ jobs:
     - name: SCP Static IP initrd and Load 
       if: ${{ inputs.networkType == 'static' }}
       run: |
-        scp -v -o StrictHostKeyChecking=no $initrdOutPath/initrd  $HOST
+        scp -v -o StrictHostKeyChecking=no $initrdOutPath/initrd  $HOST:/root
         $SSH $HOST ./kexec --debug --initrd=./initrd --load ./kernel
     
     - name: DHCP initrd
