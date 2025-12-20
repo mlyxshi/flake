@@ -33,13 +33,10 @@ jobs:
     - run: |
         kernelOutPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.kexec-x86_64.config.system.build.kernel)
         initrdOutPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.kexec-x86_64.config.system.build.initialRamdisk)
-        initrdOutPath2=$(nix build --no-link --print-out-paths .#nixosConfigurations.kexec-x86_64-tmp.config.system.build.initialRamdisk)
         kexecOutPath=$(nix build --no-link --print-out-paths nixpkgs#pkgsStatic.kexec-tools)
 
         ln -sf $kernelOutPath/bzImage /tmp/kernel
-        ln -sf $initrdOutPath2/initrd /tmp/initrd-tmp
         
         gh release upload x86_64 /tmp/kernel --clobber
-        gh release upload x86_64 /tmp/initrd-tmp --clobber
         gh release upload x86_64 $initrdOutPath/initrd --clobber
         gh release upload x86_64 $kexecOutPath/bin/kexec --clobber

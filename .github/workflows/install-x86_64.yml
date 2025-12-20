@@ -40,6 +40,19 @@ jobs:
         mkdir -m 0755  ~/.ssh
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
+
+    - if: ${{ inputs.networkType == 'static' }}
+      uses: actions/checkout@v4
+
+    - if: ${{ inputs.networkType == 'static' }}
+      uses: DeterminateSystems/nix-installer-action@main
+
+    - if: ${{ inputs.networkType == 'static' }}
+      run: |
+        sed -i "s/PLACEHOLDER/${{ inputs.flakeAttr }}/g" kexec/template.nix
+        initrdOutPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.kexec-x86_64-static-ip.config.system.build.initialRamdisk)
+        echo "initrdOutPath=$initrdOutPath" >> "$GITHUB_ENV"
+
     - run: |
         until $SSH -o ConnectTimeout=10 $HOST
         do
@@ -54,8 +67,8 @@ jobs:
     - name: Static IP initrd
       if: ${{ inputs.networkType == 'static' }}
       run: |
-        $SSH $HOST curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/initrd-tmp
-        $SSH $HOST ./kexec --debug --initrd=./initrd-tmp --load ./kernel
+        scp -o StrictHostKeyChecking=no $initrdOutPath/initrd  $HOST
+        $SSH $HOST ./kexec --debug --initrd=./initrd --load ./kernel
     
     - name: DHCP initrd
       if: ${{ inputs.networkType == 'dhcp' }}

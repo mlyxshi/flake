@@ -56,11 +56,12 @@
           ];
         };
 
-        kexec-x86_64-tmp = nixpkgs.lib.nixosSystem {
+        kexec-x86_64-static-ip = nixpkgs.lib.nixosSystem {
           modules = [
-            ./kexec/tmp.nix
+            ./kexec/template.nix
             { nixpkgs.hostPlatform = "x86_64-linux"; }
           ];
+          specialArgs = { inherit self; };
         };
 
         kexec-aarch64 = nixpkgs.lib.nixosSystem {
@@ -75,9 +76,9 @@
       }
       // oracleNixosConfigurations;
 
-      packages.x86_64-linux =  packagesSet-x86_64-linux;
+      packages.x86_64-linux = packagesSet-x86_64-linux;
       packages.aarch64-linux = packagesSet-aarch64-linux;
-      
+
       packages.aarch64-darwin.default = x86_64-kexec-test;
       packages.aarch64-darwin.arm-kexec-test = arm-kexec-test;
 
