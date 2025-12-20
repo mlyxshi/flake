@@ -19,12 +19,12 @@
   boot.loader.timeout = 2;
 
   fileSystems."/boot" = {
-    device = "/dev/vda1";
+    device = config.boot.loader.limine.biosDevice + "1";;
     fsType = "vfat";
   };
 
   fileSystems."/" = {
-    device = "/dev/vda2";
+    device = config.boot.loader.limine.biosDevice + "2";;
     fsType = "ext4";
   };
 }
