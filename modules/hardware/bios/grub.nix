@@ -14,7 +14,7 @@
   boot.loader.grub.device = "/dev/vda";
 
   fileSystems."/" = {
-    device = "/dev/vda1";
+    device = config.boot.loader.grub.device + "1";
     fsType = "ext4";
   };
 }

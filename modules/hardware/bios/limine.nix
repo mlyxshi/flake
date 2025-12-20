@@ -19,12 +19,12 @@
   boot.loader.timeout = 2;
 
   fileSystems."/boot" = {
-    device = config.boot.loader.limine.biosDevice + "1";;
+    device = config.boot.loader.limine.biosDevice + "1";
     fsType = "vfat";
   };
 
   fileSystems."/" = {
-    device = config.boot.loader.limine.biosDevice + "2";;
+    device = config.boot.loader.limine.biosDevice + "2";
     fsType = "ext4";
   };
 }
