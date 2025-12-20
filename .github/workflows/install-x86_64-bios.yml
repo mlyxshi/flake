@@ -1,4 +1,4 @@
-name: "Install x86_64 Kexec"
+name: "Install x86_64 BIOS Kexec"
 on:
   workflow_dispatch:
     inputs:
@@ -17,19 +17,11 @@ on:
         options:
           - dhcp
           - static
-      disk:
-        description: 'Disk'
-        type: choice
-        required: true
-        options:
-          - vda
-          - sda
 
 
 env:
   SSH: ssh -o StrictHostKeyChecking=no
   HOST: root@${{ inputs.ip }}
-  DISK: ${{ inputs.disk }}
 
 jobs:
 
@@ -107,17 +99,21 @@ jobs:
           sleep 5
         done
 
-    - run: $SSH $HOST parted -s /dev/$DISK -- mklabel msdos
-    - run: $SSH $HOST parted /dev/$DISK -- mkpart primary fat32 1MiB 257MiB
-    - run: $SSH $HOST parted /dev/$DISK -- set 1 boot on
-    - run: $SSH $HOST parted /dev/$DISK -- mkpart primary ext4 257MiB 100%
+    - run: |
+        DEVICE=$(nix eval --raw .#nixosConfigurations.${{ inputs.flakeAttr }}.config.boot.loader.limine.biosDevice)
+        echo "DEVICE=$DEVICE" >> "$GITHUB_ENV"
 
-    - run: $SSH $HOST mkfs.fat -F 32 /dev/${DISK}1
-    - run: $SSH $HOST mkfs.ext4 -F /dev/${DISK}2
+    - run: $SSH $HOST parted -s $DEVICE -- mklabel msdos
+    - run: $SSH $HOST parted $DEVICE -- mkpart primary fat32 1MiB 257MiB
+    - run: $SSH $HOST parted $DEVICE -- set 1 boot on
+    - run: $SSH $HOST parted $DEVICE -- mkpart primary ext4 257MiB 100%
+
+    - run: $SSH $HOST mkfs.fat -F 32 ${DEVICE}1
+    - run: $SSH $HOST mkfs.ext4 -F ${DEVICE}2
     - run: $SSH $HOST mkdir -p /mnt
-    - run: $SSH $HOST mount /dev/${DISK}2 /mnt
+    - run: $SSH $HOST mount ${DEVICE}2 /mnt
     - run: $SSH $HOST mkdir -p /mnt/boot
-    - run: $SSH $HOST mount /dev/${DISK}1 /mnt/boot
+    - run: $SSH $HOST mount ${DEVICE}1 /mnt/boot
     
     - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --substitute-on-destination --to ssh://$HOST?remote-store=local?root=/mnt $outPath
  
