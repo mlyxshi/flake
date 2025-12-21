@@ -9,7 +9,12 @@
   virtualisation.podman.enable = true;
   virtualisation.podman.defaultNetwork.settings.dns_enabled = true;
 
+  # Enable podman auto update
   systemd.timers.podman-auto-update.wantedBy = [ "timers.target" ];
+  # Podman update may change container IP, so restart traefik and update info
+  systemd.services.podman-auto-update.serviceConfig.ExecStartPost = [
+    "systemctl restart traefik.service"
+  ];
 
   systemd.services."backup-init@" = {
     after = [ "network-online.target" ];
