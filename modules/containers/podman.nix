@@ -25,7 +25,7 @@
     serviceConfig = {
       Type = "oneshot";
       EnvironmentFile = "/secret/restic";
-      ExecStart = "+${pkgs.restic}/bin/restic restore latest --path %S/%i  --target /";
+      ExecStart = "${pkgs.restic}/bin/restic restore latest --path %S/%i  --target /";
     };
   };
 
