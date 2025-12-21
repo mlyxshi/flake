@@ -70,6 +70,7 @@
           "traefik.enable=true"
           "traefik.http.routers.rsshub.rule=Host(`rsshub.${config.networking.domain}`)"
           "traefik.http.routers.rsshub.entrypoints=websecure"
+          "traefik.http.services.rsshub.loadbalancer.server.port=1200"
         ];
   };
 
