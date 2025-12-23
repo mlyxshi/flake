@@ -146,7 +146,8 @@
   boot.initrd.systemd.services.myservice-failed = {
     before = [ "systemd-networkd.service" ];
     script = ''
-        echo "[Match]\nName=en*\n[Network]\nDHCP=YES" > /etc/systemd/network/ethernet.network
+      mkdir -p /etc/systemd/network/ 
+      echo "[Match]\nName=en*\n[Network]\nDHCP=YES" > /etc/systemd/network/ethernet.network
     '';
   };
 
