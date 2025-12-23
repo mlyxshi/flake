@@ -147,15 +147,16 @@
 
     before = [ "systemd-networkd.service" ];
     wantedBy = [ "systemd-networkd.service" ];
-    serviceConfig.ConditionPathExists = "/dev/disk/by-label/cidata";
+    unitConfig.ConditionPathExists = "/dev/disk/by-label/cidata";
 
     script = ''
       mkdir -p /cloud-init
       mount /dev/disk/by-label/cidata /cloud-init
 
-      VERSION=$(yq .version $CLOUD_INIT_CONF)
       NETWORKD_CONF="/etc/systemd/network/ethernet.network"
       CLOUD_INIT_CONF="/cloud-init/network-config"
+
+      VERSION=$(yq .version $CLOUD_INIT_CONF)
 
       if [ "$VERSION" = "1" ]; then
         IP=$(yq .config[0].subnets[0].address $CLOUD_INIT_CONF)
@@ -176,10 +177,10 @@
           echo "Name=en*"
           echo
           echo "[Network]"
-          echo "Address=${IP}/${CIDR}"
+          echo "Address=$IP/$CIDR"
           echo
           echo "[Route]"
-          echo "Gateway=${GATEWAY}"
+          echo "Gateway=$GATEWAY"
           if [ "$CIDR" -eq 32 ]; then
             echo "GatewayOnLink=yes"
           fi
@@ -193,10 +194,10 @@
           echo "Name=en*"
           echo
           echo "[Network]"
-          echo "Address=${IP}"
+          echo "Address=$IP"
           echo
           echo "[Route]"
-          echo "Gateway=${GATEWAY}"
+          echo "Gateway=$GATEWAY"
         } > $NETWORKD_CONF
         case "$IP" in
           */32)

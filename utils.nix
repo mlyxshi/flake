@@ -53,7 +53,7 @@ in
     /opt/homebrew/bin/qemu-system-x86_64 -cpu qemu64 -nographic -m 1G \
       -kernel ${self.nixosConfigurations.kexec-x86_64.config.system.build.kernel}/bzImage \
       -initrd ${self.nixosConfigurations.kexec-x86_64.config.system.build.initialRamdisk}/initrd \
-      -append "console=ttyS0 systemd.journald.forward_to_console ip=dhcp" \
+      -append "console=ttyS0 systemd.journald.forward_to_console" \
       -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
       -device "virtio-scsi-pci,id=scsi0" -drive "file=disk.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
   '';
@@ -62,7 +62,7 @@ in
     /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 4G \
       -kernel ${self.nixosConfigurations.kexec-aarch64.config.system.build.kernel}/Image \
       -initrd ${self.nixosConfigurations.kexec-aarch64.config.system.build.initialRamdisk}/initrd \
-      -append "systemd.journald.forward_to_console ip=dhcp" \
+      -append "systemd.journald.forward_to_console" \
       -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
       -device "virtio-scsi-pci,id=scsi0" -drive "file=disk.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
       -bios $(ls /opt/homebrew/Cellar/qemu/*/share/qemu/edk2-aarch64-code.fd)
