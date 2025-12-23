@@ -25,7 +25,7 @@ curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/initrd
 curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kernel
 curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kexec
 chmod +x kexec
-./kexec --debug --initrd=./initrd --load ./kernel --append=ip=dhcp
+./kexec --debug --initrd=./initrd --load ./kernel
 systemctl kexec -i
 ```
 
@@ -35,10 +35,3 @@ mkdir /test
 cd test
 zstdcat /run/current-system/initrd | cpio -idv 
 ```
-
-
-cat kexec/cloud-init-example/version1.yml| yq .config[0].subnets[0].address
-
-
-cat kexec/cloud-init-example/version2.yml| yq .ethernets.eth0.addresses[0]
-cat kexec/cloud-init-example/version2.yml| yq .ethernets.eth0.gateway4
