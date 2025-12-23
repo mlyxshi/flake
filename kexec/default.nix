@@ -116,6 +116,7 @@
     parted = "${pkgs.parted}/bin/parted"; # MBR
     file = "${pkgs.file}/bin/file";
     lsblk = "${pkgs.util-linux}/bin/lsblk";
+    blkid = "${pkgs.util-linux}/bin/blkid";
 
     # debug
     htop = "${pkgs.htop}/bin/htop";
