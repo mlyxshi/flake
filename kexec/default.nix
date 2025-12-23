@@ -146,10 +146,9 @@
   boot.initrd.systemd.services.cloud-init-network = {
 
     before = [ "systemd-networkd.service" ];
+    after = [ "systemd-udevd.service" ];
     wantedBy = [ "systemd-networkd.service" ];
-
-    requires = [ "dev-disk-by\\x2dlabel-cidata.device" ];
-    after = [ "dev-disk-by\\x2dlabel-cidata.device" ];
+    unitConfig.ConditionPathExists = "/dev/disk/by-label/cidata";
 
     script = ''
       mkdir -p /cloud-init
