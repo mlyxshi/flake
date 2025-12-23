@@ -21,27 +21,27 @@
   systemd.network.enable = true;
   systemd.network.wait-online.anyInterface = true;
 
-  systemd.network.networks.ethernet-default-dhcp = {
-    matchConfig.Name = "en*";
-    networkConfig.DHCP = "yes";
-  };
+  # systemd.network.networks.ethernet-default-dhcp = {
+  #   matchConfig.Name = "en*";
+  #   networkConfig.DHCP = "yes";
+  # };
 
-  systemd.network.networks.ethernet-static = {
-    matchConfig.Name = "en*";
-    networkConfig = {
-      Address = [
-        "154.17.19.228/32"
-      ];
-      # Gateway = "161.248.63.1";
-    };
+  # systemd.network.networks.ethernet-static = {
+  #   matchConfig.Name = "en*";
+  #   networkConfig = {
+  #     Address = [
+  #       "154.17.19.228/32"
+  #     ];
+  #     # Gateway = "161.248.63.1";
+  #   };
 
-    routes = [
-      {
-        Gateway = "193.41.250.250";
-        GatewayOnLink = true; # Special config since gateway isn't in subnet
-      }
-    ];
-  };
+  #   routes = [
+  #     {
+  #       Gateway = "193.41.250.250";
+  #       GatewayOnLink = true; # Special config since gateway isn't in subnet
+  #     }
+  #   ];
+  # };
 
   networking.firewall.enable = false;
 
@@ -51,17 +51,17 @@
   boot.loader.limine.enable = true;
   boot.loader.limine.biosSupport = true;
   boot.loader.limine.efiSupport = false;
-  boot.loader.limine.biosDevice = "/dev/sda";
+  boot.loader.limine.biosDevice = "/dev/vda";
   boot.loader.limine.maxGenerations = 2;
   boot.loader.timeout = 2; # inmediate boot
 
   fileSystems."/boot" = {
-    device = "/dev/sda1";
+    device = config.boot.loader.limine.biosDevice + "1";
     fsType = "vfat";
   };
 
   fileSystems."/" = {
-    device = "/dev/sda2";
+    device = config.boot.loader.limine.biosDevice + "2";
     fsType = "ext4";
   };
 
@@ -96,7 +96,7 @@
       ];
     };
   };
-
+  system.disableInstallerTools = lib.mkForce false;
   environment.systemPackages = with pkgs; [
     git
     wget
