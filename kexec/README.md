@@ -35,3 +35,10 @@ mkdir /test
 cd test
 zstdcat /run/current-system/initrd | cpio -idv 
 ```
+
+
+cat kexec/cloud-init-example/version1.yml| yq .config[0].subnets[0].address
+
+
+cat kexec/cloud-init-example/version2.yml| yq .ethernets.eth0.addresses[0]
+cat kexec/cloud-init-example/version2.yml| yq .ethernets.eth0.gateway4

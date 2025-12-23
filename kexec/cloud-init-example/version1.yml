@@ -1,0 +1,15 @@
+version: 1
+config:
+    - type: physical
+      name: eth0
+      mac_address: 'e6:93:00:eb:84:6d'
+      subnets:
+      - type: static
+        address: '154.17.19.228'
+        netmask: '255.255.255.255'
+        gateway: '193.41.250.250'
+      - type: ipv6_slaac
+    - type: nameserver
+      address:
+      - '1.1.1.1'
+      - '1.0.0.1'
