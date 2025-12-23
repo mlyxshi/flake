@@ -142,17 +142,6 @@
     networkConfig.DHCP = "yes";
   };
 
-  # boot.initrd.systemd.network.networks.ethernet-static = {
-  #   matchConfig.Name = "en*";
-  #   networkConfig.Address = "154.12.190.105/32";
-  #   routes = [
-  #     {
-  #       Gateway = "193.41.250.250";
-  #       GatewayOnLink = true; # Special config since gateway isn't in subnet
-  #     }
-  #   ];
-  # };
-
   # Very limited cloud-init network setup implementation. Only test on cloud provider I use
   boot.initrd.systemd.services.cloud-init-network = {
 
@@ -174,7 +163,7 @@
       if [ "$VERSION" = "1" ]; then
         IP=$(yq .config[0].subnets[0].address $CLOUD_INIT_CONF)
         NETMASK=$(yq .config[0].subnets[0].netmask $CLOUD_INIT_CONF)
-        GATEWAY=$(yq .config[0].routes[0].gateway $CLOUD_INIT_CONF)
+        GATEWAY=$(yq .config[0].subnets[0].gateway $CLOUD_INIT_CONF)
         
         if [ "$NETMASK" = "255.255.255.255" ]; then
           CIDR=32
