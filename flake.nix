@@ -56,14 +56,6 @@
           ];
         };
 
-        kexec-x86_64-static-ip = nixpkgs.lib.nixosSystem {
-          modules = [
-            ./kexec/template.nix
-            { nixpkgs.hostPlatform = "x86_64-linux"; }
-          ];
-          specialArgs = { inherit self; };
-        };
-
         kexec-aarch64 = nixpkgs.lib.nixosSystem {
           modules = [
             ./kexec

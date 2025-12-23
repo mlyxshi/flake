@@ -145,22 +145,34 @@
   #   networkConfig.DHCP = "yes";
   # };
 
-  boot.initrd.systemd.services.myservice-failed = {
-    before = [ "systemd-networkd.service" ];
-    script = ''
-      mkdir -p /etc/systemd/network/ 
-      echo "[Match]" > /etc/systemd/network/ethernet.network
-      echo "Name=en*" >> /etc/systemd/network/ethernet.network
-      echo "[Network]" >> /etc/systemd/network/ethernet.network
-      echo "DHCP=YES" >> /etc/systemd/network/ethernet.network
-    '';
+  systemd.network.networks.ethernet-static = {
+    matchConfig.Name = "en*";
+    networkConfig.Address = "154.17.19.228/32";
+    routes = [
+      {
+        Gateway = "193.41.250.250";
+        GatewayOnLink = true; # Special config since gateway isn't in subnet
+      }
+    ];
   };
+
+  # boot.initrd.systemd.services.myservice-failed = {
+  #   before = [ "systemd-networkd.service" ];
+  #   script = ''
+  #     mkdir -p /etc/systemd/network/
+  #     echo "[Match]" > /etc/systemd/network/ethernet.network
+  #     echo "Name=en*" >> /etc/systemd/network/ethernet.network
+  #     echo "[Network]" >> /etc/systemd/network/ethernet.network
+  #     echo "DHCP=YES" >> /etc/systemd/network/ethernet.network
+  #   '';
+  # };
 
   # Very limited cloud-init network setup implementation. Only test on cloud provider I use
 
   # unitConfig.ConditionPathExists = "/dev/disk/by-label/cidata";
   # wantedBy = [ "systemd-networkd.service" ];
   boot.initrd.systemd.services.cloud-init-network = {
+    enable = false;
 
     before = [ "systemd-networkd.service" ];
     wantedBy = [ "initrd.target" ];
