@@ -137,18 +137,32 @@
   # so systemd will reach initrd.target. Unit will not be cleanup and act like a mini live nixos system.
 
   # Preset dhcp
-  boot.initrd.systemd.network.networks.ethernet = {
-    matchConfig.Name = "en*";
-    networkConfig.DHCP = "yes";
+  # boot.initrd.systemd.network.networks.ethernet = {
+  #   matchConfig.Name = "en*";
+  #   networkConfig.DHCP = "yes";
+  # };
+
+
+  boot.initrd.systemd.services.myservice-failed = {
+    before = [ "systemd-networkd.service" ];
+    script = ''
+        echo "[Match]\nName=en*\n[Network]\nDHCP=YES" > /etc/systemd/network/ethernet.network
+    '';
   };
 
   # Very limited cloud-init network setup implementation. Only test on cloud provider I use
   boot.initrd.systemd.services.cloud-init-network = {
 
     before = [ "systemd-networkd.service" ];
-    after = [ "systemd-udevd.service" ];
-    wantedBy = [ "systemd-networkd.service" ];
-    unitConfig.ConditionPathExists = "/dev/disk/by-label/cidata";
+    wantedBy = [ "initrd.target" ];
+
+    unitConfig.OnFailure = "myservice-failed.service";
+
+    # unitConfig.ConditionPathExists = "/dev/disk/by-label/cidata";
+    # wantedBy = [ "systemd-networkd.service" ];
+
+    requires = [ "dev-disk-by\\x2dlabel-cidata.device" ];
+    after = [ "dev-disk-by\\x2dlabel-cidata.device" ];
 
     script = ''
       mkdir -p /cloud-init
