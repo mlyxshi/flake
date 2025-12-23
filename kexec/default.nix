@@ -26,7 +26,7 @@
   # x86-64 { autoModules = true; }
   # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/kernel/modules-closure.nix
 
-  # qemu + ext4 + vfat + efivarfs + overlay
+  # qemu + ext4 + vfat + efivarfs + overlay + iso9660
   boot.initrd.kernelModules = [
     "virtio_net"
     "virtio_pci"
@@ -48,7 +48,8 @@
   ++ [
     "erofs"
     "overlay"
-  ];
+  ]
+  ++ [ "iso9660" ]; #cloud-init cidata disk
   # boot.initrd.includeDefaultModules also adds some necessary modules
 
   boot.initrd.systemd.contents = {
