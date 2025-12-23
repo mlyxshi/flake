@@ -147,7 +147,10 @@
     before = [ "systemd-networkd.service" ];
     script = ''
       mkdir -p /etc/systemd/network/ 
-      echo "[Match]\nName=en*\n[Network]\nDHCP=YES" > /etc/systemd/network/ethernet.network
+      echo "[Match]" > /etc/systemd/network/ethernet.network
+      echo "Name=en*" >> /etc/systemd/network/ethernet.network
+      echo "[Network]" >> /etc/systemd/network/ethernet.network
+      echo "DHCP=YES" >> /etc/systemd/network/ethernet.network
     '';
   };
 
