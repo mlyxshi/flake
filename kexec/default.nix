@@ -49,7 +49,10 @@
     "erofs"
     "overlay"
   ]
-  ++ [ "iso9660" ]; # cloud-init cidata disk
+  ++ [
+    "iso9660"
+    "scsi_mod"
+  ]; # cloud-init cidata disk
   # boot.initrd.includeDefaultModules also adds some necessary modules
 
   boot.initrd.systemd.contents = {
@@ -142,7 +145,6 @@
   #   networkConfig.DHCP = "yes";
   # };
 
-
   boot.initrd.systemd.services.myservice-failed = {
     before = [ "systemd-networkd.service" ];
     script = ''
@@ -155,15 +157,15 @@
   };
 
   # Very limited cloud-init network setup implementation. Only test on cloud provider I use
+
+  # unitConfig.ConditionPathExists = "/dev/disk/by-label/cidata";
+  # wantedBy = [ "systemd-networkd.service" ];
   boot.initrd.systemd.services.cloud-init-network = {
 
     before = [ "systemd-networkd.service" ];
     wantedBy = [ "initrd.target" ];
 
     unitConfig.OnFailure = "myservice-failed.service";
-
-    # unitConfig.ConditionPathExists = "/dev/disk/by-label/cidata";
-    # wantedBy = [ "systemd-networkd.service" ];
 
     requires = [ "dev-disk-by\\x2dlabel-cidata.device" ];
     after = [ "dev-disk-by\\x2dlabel-cidata.device" ];
