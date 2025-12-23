@@ -142,12 +142,25 @@
     networkConfig.DHCP = "yes";
   };
 
+  # boot.initrd.systemd.network.networks.ethernet-static = {
+  #   matchConfig.Name = "en*";
+  #   networkConfig.Address = "154.12.190.105/32";
+  #   routes = [
+  #     {
+  #       Gateway = "193.41.250.250";
+  #       GatewayOnLink = true; # Special config since gateway isn't in subnet
+  #     }
+  #   ];
+  # };
+
   # Very limited cloud-init network setup implementation. Only test on cloud provider I use
   boot.initrd.systemd.services.cloud-init-network = {
 
     before = [ "systemd-networkd.service" ];
     wantedBy = [ "systemd-networkd.service" ];
-    unitConfig.ConditionPathExists = "/dev/disk/by-label/cidata";
+
+    requires = [ "dev-disk-by\\x2dlabel-cidata.device" ];
+    after = [ "dev-disk-by\\x2dlabel-cidata.device" ];
 
     script = ''
       mkdir -p /cloud-init
