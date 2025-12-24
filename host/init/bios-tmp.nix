@@ -166,15 +166,92 @@
   boot.initrd.systemd.services.force-fail = {
     requiredBy = [ "initrd.target" ];
     before = [ "initrd.target" ];
-    after = [ "initrd-root-fs.target" ];
+    after = [ "cloud-init-network.service" ];
     serviceConfig.ExecStart = "/bin/false";
     unitConfig.OnFailure = [ "emergency.target" ];
   };
-  
+
   boot.initrd.systemd.services.initrd-parse-etc.enable = false;
   system.nixos-init.enable = true;
   systemd.sysusers.enable = true;
   system.etc.overlay.enable = true;
+
+
+  boot.initrd.systemd.enable = true;
+  boot.initrd.systemd.network.enable = true;
+  boot.initrd.systemd.services.cloud-init-network = {
+
+    before = [ "systemd-networkd.service" ];
+    wantedBy = [ "initrd.target" ];
+
+    # unitConfig.OnFailure = "myservice-failed.service";
+
+    requires = [ "dev-disk-by\\x2dlabel-cidata.device" ];
+    after = [ "dev-disk-by\\x2dlabel-cidata.device" ];
+
+    script = ''
+      mkdir -p /cloud-init
+      mount /dev/disk/by-label/cidata /cloud-init
+
+      NETWORKD_CONF="/etc/systemd/network/ethernet.network"
+      CLOUD_INIT_CONF="/cloud-init/network-config"
+
+      VERSION=$(yq .version $CLOUD_INIT_CONF)
+
+      if [ "$VERSION" = "1" ]; then
+        IP=$(yq .config[0].subnets[0].address $CLOUD_INIT_CONF)
+        NETMASK=$(yq .config[0].subnets[0].netmask $CLOUD_INIT_CONF)
+        GATEWAY=$(yq .config[0].subnets[0].gateway $CLOUD_INIT_CONF)
+
+        if [ "$NETMASK" = "255.255.255.255" ]; then
+          CIDR=32
+        elif [ "$NETMASK" = "255.255.255.0" ]; then
+          CIDR=24
+        else
+          echo "Unsupported netmask: $NETMASK" >&2
+          exit 1
+        fi
+
+        {
+          echo "[Match]"
+          echo "Name=en*"
+          echo
+          echo "[Network]"
+          echo "Address=$IP/$CIDR"
+          echo
+          echo "[Route]"
+          echo "Gateway=$GATEWAY"
+          if [ "$CIDR" -eq 32 ]; then
+            echo "GatewayOnLink=yes"
+          fi
+        } > $NETWORKD_CONF
+
+      elif [ "$VERSION" = "2" ]; then
+        IP=$(yq .ethernets.eth0.addresses[0] $CLOUD_INIT_CONF)
+        GATEWAY=$(yq .ethernets.eth0.gateway4 $CLOUD_INIT_CONF)
+        {
+          echo "[Match]"
+          echo "Name=en*"
+          echo
+          echo "[Network]"
+          echo "Address=$IP"
+          echo
+          echo "[Route]"
+          echo "Gateway=$GATEWAY"
+        } > $NETWORKD_CONF
+        case "$IP" in
+          */32)
+            echo "CIDR is /32"
+            echo "GatewayOnLink=yes" >> $NETWORKD_CONF
+            ;;
+          *)
+            echo "CIDR is not /32"
+            ;;
+        esac
+
+      fi
+    '';
+  };
 
   system.build.raw = import "${pkgs.path}/nixos/lib/make-disk-image.nix" {
     inherit config lib pkgs;
