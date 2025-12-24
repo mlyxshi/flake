@@ -11,14 +11,14 @@
     matchConfig.Name = "en*";
     networkConfig = {
       Address = [
-        "2401:e4e0:100:c8::a/128"
+        "161.248.63.190/24"
       ];
     };
 
     routes = [
       {
-        Gateway = "2401:e4e0:100::1";
-        GatewayOnLink = true; # Special config since gateway isn't in subnet
+        Gateway = "161.248.63.1";
+        # GatewayOnLink = true; # Special config since gateway isn't in subnet
       }
     ];
   };
