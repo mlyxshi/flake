@@ -211,27 +211,45 @@
 
       elif [ "$VERSION" = "2" ]; then
         IP=$(yq .ethernets.eth0.addresses[0] $CLOUD_INIT_CONF)
-        GATEWAY=$(yq .ethernets.eth0.gateway4 $CLOUD_INIT_CONF)
-        {
-          echo "[Match]"
-          echo "Name=en*"
-          echo
-          echo "[Network]"
-          echo "Address=$IP"
-          echo
-          echo "[Route]"
-          echo "Gateway=$GATEWAY"
-        } > $NETWORKD_CONF
-        case "$IP" in
-          */32)
-            echo "CIDR is /32"
-            echo "GatewayOnLink=yes" >> $NETWORKD_CONF
-            ;;
-          *)
-            echo "CIDR is not /32"
-            ;;
-        esac
+        GATEWAY4=$(yq .ethernets.eth0.gateway4 $CLOUD_INIT_CONF)
+        
+        if [ "$GATEWAY4" = "null" ]; then
+          echo "IPV6 Only"
+          GATEWAY6=$(yq '.ethernets.eth0.gateway6' $CLOUD_INIT_CONF)
+          {
+            echo "[Match]"
+            echo "Name=en*"
+            echo
+            echo "[Network]"
+            echo "Address=$IP"
+            echo
+            echo "[Route]"
+            echo "Gateway=$GATEWAY6"
+            echo "GatewayOnLink=yes"
+          } > $NETWORKD_CONF
+        else
+          echo "Use IPV4"
+          {
+            echo "[Match]"
+            echo "Name=en*"
+            echo
+            echo "[Network]"
+            echo "Address=$IP"
+            echo
+            echo "[Route]"
+            echo "Gateway=$GATEWAY4"
+          } > $NETWORKD_CONF
+          case "$IP" in
+            */32)
+              echo "CIDR is /32"
+              echo "GatewayOnLink=yes" >> $NETWORKD_CONF
+              ;;
+            *)
+              echo "CIDR is not /32"
+              ;;
+          esac
 
+        fi
       fi
     '';
   };

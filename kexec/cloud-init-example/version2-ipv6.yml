@@ -1,0 +1,12 @@
+version: 2
+ethernets:
+    eth0:
+        match:
+            macaddress: '00:74:c5:08:d9:be'
+        addresses:
+            - '2401:e4e0:100:c8::a/64'
+        gateway6: '2401:e4e0:100::1'
+        nameservers:
+            addresses:
+                - '2401:e4e0:100:4::a'
+                - '2001:4860:4860::8844'

@@ -24,6 +24,14 @@ jobs:
         mkdir -m 0755  ~/.ssh
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
+
+    - name: Set up WARP (IPv6 only)
+      if: contains(inputs.ip, ':')
+      uses: fscarmen/warp-on-actions@v1.4
+      with:
+        stack: dual
+        mode: client    
+
     - run: |
         until $SSH -o ConnectTimeout=10 $HOST
         do
@@ -64,6 +72,13 @@ jobs:
         outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ inputs.flakeAttr }}.config.system.build.toplevel)
         echo "outPath=$outPath" >> "$GITHUB_ENV"
 
+    - name: Set up WARP (IPv6 only)
+      if: contains(inputs.ip, ':')
+      uses: fscarmen/warp-on-actions@v1.4
+      with:
+        stack: dual
+        mode: client 
+        
     - run: |
         until $SSH -o ConnectTimeout=10 $HOST ls /etc/initrd-release
         do
