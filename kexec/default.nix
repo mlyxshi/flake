@@ -132,6 +132,7 @@
 
   boot.initrd.systemd.emergencyAccess = true;
 
+  # force fail for debugging without openssh access
   # boot.initrd.systemd.services.force-fail = {
   #   wantedBy = [ "initrd.target" ];
   #   before = [ "initrd.target" ];
@@ -147,51 +148,24 @@
   # Disable: initrd-parse-etc.service -> initrd-cleanup.service -> initrd-switch-root.target
   # so systemd will reach initrd.target. Unit will not be cleanup and act like a mini live nixos system.
 
-  # Preset dhcp
+  # Preset DHCP
   boot.initrd.systemd.network.networks.ethernet = {
     matchConfig.Name = "en*";
     networkConfig.DHCP = "yes";
   };
 
-  # systemd.network.networks.ethernet-static = {
-  #   matchConfig.Name = "en*";
-  #   networkConfig.Address = "154.17.19.228/32";
-  #   routes = [
-  #     {
-  #       Gateway = "193.41.250.250";
-  #       GatewayOnLink = true; # Special config since gateway isn't in subnet
-  #     }
-  #   ];
-  # };
-
-  # boot.initrd.systemd.services.myservice-failed = {
-  #   before = [ "systemd-networkd.service" ];
-  #   script = ''
-  #     mkdir -p /etc/systemd/network/
-  #     echo "[Match]" > /etc/systemd/network/ethernet.network
-  #     echo "Name=en*" >> /etc/systemd/network/ethernet.network
-  #     echo "[Network]" >> /etc/systemd/network/ethernet.network
-  #     echo "DHCP=YES" >> /etc/systemd/network/ethernet.network
-  #   '';
-  # };
-
   # Very limited cloud-init network setup implementation. Only test on cloud provider I use
 
-  # unitConfig.ConditionPathExists = "/dev/disk/by-label/cidata";
-  # wantedBy = [ "systemd-networkd.service" ];
-
+  # If /dev/disk/by-label/cidata appear in 5s, read /cloud-init/network-config and setup networkd
+  # If /dev/disk/by-label/cidata does not appear, cloud-init-network will fail, networkd will use preset DHCP
   boot.initrd.systemd.services.cloud-init-network = {
 
     before = [ "systemd-networkd.service" ];
-    # after  = [ "systemd-udevd.service" ];
 
     wantedBy = [ "initrd.target" ];
     serviceConfig.Type = "oneshot";
 
-    serviceConfig.ExecStartPre = "/bin/sleep 15";
-
-    # requires = [ "dev-disk-by\\x2dlabel-cidata.device" ];
-    # after = [ "dev-disk-by\\x2dlabel-cidata.device" ];
+    serviceConfig.ExecStartPre = "/bin/sleep 5"; # Wait cidata appear
 
     script = ''
       mkdir -p /cloud-init
