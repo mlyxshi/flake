@@ -168,6 +168,11 @@
     serviceConfig.ExecStartPre = "/bin/sleep 5"; # Wait cidata appear
 
     script = ''
+      if [ ! -e /dev/disk/by-label/cidata ]; then
+        echo "cidata disk not found, skipping cloud-init network config"
+        exit 1
+      fi
+
       mkdir -p /cloud-init
       mount /dev/disk/by-label/cidata /cloud-init
       mkdir -p /etc/systemd/network/
