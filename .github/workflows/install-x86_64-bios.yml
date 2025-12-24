@@ -24,6 +24,18 @@ jobs:
         mkdir -m 0755  ~/.ssh
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
+
+    - run: curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/kexec
+    - run: curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/initrd
+    - run: curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/kernel
+
+    - name: Set up WARP (IPv6 only)
+      if: contains(inputs.ip, ':')
+      uses: fscarmen/warp-on-actions@v1.4
+      with:
+        stack: dual
+        mode: client    
+
     - run: |
         until $SSH -o ConnectTimeout=10 $HOST
         do
@@ -31,9 +43,7 @@ jobs:
           sleep 5
         done
 
-    - run: $SSH $HOST curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/kexec
-    - run: $SSH $HOST curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/initrd
-    - run: $SSH $HOST curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/kernel
+    - run: scp -o StrictHostKeyChecking=no kexec initrd kexec $HOST:/root/
     - run: $SSH $HOST chmod +x kexec
     - run: $SSH $HOST ./kexec --debug --initrd=./initrd --load ./kernel
     - name: Run kexec
@@ -61,6 +71,13 @@ jobs:
         outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ inputs.flakeAttr }}.config.system.build.toplevel)
         echo "outPath=$outPath" >> "$GITHUB_ENV"
 
+    - name: Set up WARP (IPv6 only)
+      if: contains(inputs.ip, ':')
+      uses: fscarmen/warp-on-actions@v1.4
+      with:
+        stack: dual
+        mode: client  
+        
     - run: |
         until $SSH -o ConnectTimeout=10 $HOST ls /etc/initrd-release
         do
