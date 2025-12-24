@@ -62,8 +62,6 @@
             { nixpkgs.hostPlatform = "aarch64-linux"; }
           ];
         };
-
-        jp3 = import ./host/alice { inherit self nixpkgs secret; };
         nrt = import ./host/dmit { inherit self nixpkgs secret; };
       }
       // oracleNixosConfigurations;
