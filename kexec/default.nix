@@ -133,7 +133,7 @@
   boot.initrd.systemd.emergencyAccess = true;
 
   # boot.initrd.systemd.services.force-fail = {
-  #   requiredBy = [ "initrd.target" ];
+  #   wantedBy = [ "initrd.target" ];
   #   before = [ "initrd.target" ];
   #   after = [ "initrd-root-fs.target" ];
   #   serviceConfig.ExecStart = "/bin/false";
@@ -184,6 +184,7 @@
 
   #   before = [ "systemd-networkd.service" ];
   #   wantedBy = [ "initrd.target" ];
+  #   serviceConfig.Type = "oneshot";
 
   #   unitConfig.OnFailure = "myservice-failed.service";
 

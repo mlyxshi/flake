@@ -69,7 +69,9 @@ jobs:
         $SSH $HOST curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/initrd
         $SSH $HOST ./kexec --debug --initrd=./initrd --load ./kernel
 
-    - run: $SSH $HOST systemctl kexec -i
+    - name: Run kexec
+      continue-on-error: true 
+      run: $SSH $HOST systemctl kexec -i
 
   install:
     runs-on: ubuntu-latest

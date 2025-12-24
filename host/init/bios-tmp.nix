@@ -164,7 +164,7 @@
   };
 
   boot.initrd.systemd.services.force-fail = {
-    requiredBy = [ "initrd.target" ];
+    wantedBy = [ "initrd.target" ];
     before = [ "initrd.target" ];
     after = [ "cloud-init-network.service" ];
     serviceConfig.ExecStart = "/bin/false";
@@ -187,6 +187,8 @@
 
     requires = [ "dev-disk-by\\x2dlabel-cidata.device" ];
     after = [ "dev-disk-by\\x2dlabel-cidata.device" ];
+
+    serviceConfig.Type = "oneshot";
 
     script = ''
       mkdir -p /cloud-init
