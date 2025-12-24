@@ -77,7 +77,7 @@ jobs:
       with:
         stack: dual
         mode: client  
-        
+
     - run: |
         until $SSH -o ConnectTimeout=10 $HOST ls /etc/initrd-release
         do
