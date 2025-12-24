@@ -43,7 +43,12 @@ jobs:
           sleep 5
         done
 
+    - run: scp -o StrictHostKeyChecking=no kexec initrd kexec root@[${{ inputs.ip }}]:/root/
+      if: contains(inputs.ip, ':')
+
     - run: scp -o StrictHostKeyChecking=no kexec initrd kexec $HOST:/root/
+      if: ${{ !contains(inputs.ip, ':') }}
+      
     - run: $SSH $HOST chmod +x kexec
     - run: $SSH $HOST ./kexec --debug --initrd=./initrd --load ./kernel
     - name: Run kexec
