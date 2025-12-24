@@ -132,6 +132,14 @@
 
   boot.initrd.systemd.emergencyAccess = true;
 
+  # boot.initrd.systemd.services.force-fail = {
+  #   requiredBy = [ "initrd.target" ];
+  #   before = [ "initrd.target" ];
+  #   after = [ "initrd-root-fs.target" ];
+  #   serviceConfig.ExecStart = "/bin/false";
+  #   unitConfig.OnFailure = [ "emergency.target" ];
+  # };
+
   boot.initrd.systemd.services.initrd-parse-etc.enable = false;
   # https://www.freedesktop.org/software/systemd/man/latest/bootup.html#Bootup%20in%20the%20initrd
   # https://github.com/systemd/systemd/blob/main/units/initrd-parse-etc.service.in
@@ -171,7 +179,7 @@
 
   # unitConfig.ConditionPathExists = "/dev/disk/by-label/cidata";
   # wantedBy = [ "systemd-networkd.service" ];
-  
+
   # boot.initrd.systemd.services.cloud-init-network = {
 
   #   before = [ "systemd-networkd.service" ];
@@ -195,7 +203,7 @@
   #       IP=$(yq .config[0].subnets[0].address $CLOUD_INIT_CONF)
   #       NETMASK=$(yq .config[0].subnets[0].netmask $CLOUD_INIT_CONF)
   #       GATEWAY=$(yq .config[0].subnets[0].gateway $CLOUD_INIT_CONF)
-        
+
   #       if [ "$NETMASK" = "255.255.255.255" ]; then
   #         CIDR=32
   #       elif [ "$NETMASK" = "255.255.255.0" ]; then
@@ -204,7 +212,7 @@
   #         echo "Unsupported netmask: $NETMASK" >&2
   #         exit 1
   #       fi
-        
+
   #       {
   #         echo "[Match]"
   #         echo "Name=en*"
@@ -241,10 +249,9 @@
   #           echo "CIDR is not /32"
   #           ;;
   #       esac
-        
+
   #     fi
   #   '';
   # };
-
 
 }

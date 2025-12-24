@@ -163,6 +163,14 @@
     # strace = "${pkgs.strace}/bin/strace";
   };
 
+  boot.initrd.systemd.services.force-fail = {
+    requiredBy = [ "initrd.target" ];
+    before = [ "initrd.target" ];
+    after = [ "initrd-root-fs.target" ];
+    serviceConfig.ExecStart = "/bin/false";
+    unitConfig.OnFailure = [ "emergency.target" ];
+  };
+  
   boot.initrd.systemd.services.initrd-parse-etc.enable = false;
   system.nixos-init.enable = true;
   systemd.sysusers.enable = true;
