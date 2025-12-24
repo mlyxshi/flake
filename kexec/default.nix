@@ -149,9 +149,24 @@
   # so systemd will reach initrd.target. Unit will not be cleanup and act like a mini live nixos system.
 
   # Preset DHCP
-  boot.initrd.systemd.network.networks.ethernet = {
+  # boot.initrd.systemd.network.networks.ethernet = {
+  #   matchConfig.Name = "en*";
+  #   networkConfig.DHCP = "yes";
+  # };
+
+  systemd.network.networks.ethernet = {
     matchConfig.Name = "en*";
-    networkConfig.DHCP = "yes";
+    networkConfig = {
+      Address = [
+        "161.248.63.190/24"
+      ];
+    };
+
+    routes = [
+      {
+        Gateway = "161.248.63.1";
+      }
+    ];
   };
 
   # Very limited cloud-init network setup implementation. Only test on cloud provider I use
