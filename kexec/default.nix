@@ -50,9 +50,9 @@
     "overlay"
   ]
   ++ [
-    "iso9660"
+    "iso9660" # cloud-init cidata disk
     "scsi_mod"
-  ]; # cloud-init cidata disk
+  ]; 
   # boot.initrd.includeDefaultModules also adds some necessary modules
 
   boot.initrd.systemd.contents = {
