@@ -10,14 +10,6 @@ on:
         description: 'OS Config Hostname'
         type: string
         required: true
-      networkType:
-        description: 'dhcp or static config ip'
-        type: choice
-        required: true
-        options:
-          - dhcp
-          - static
-
 
 env:
   SSH: ssh -o StrictHostKeyChecking=no
@@ -32,43 +24,18 @@ jobs:
         mkdir -m 0755  ~/.ssh
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
-
-    - if: ${{ inputs.networkType == 'static' }}
-      uses: actions/checkout@v4
-
-    - if: ${{ inputs.networkType == 'static' }}
-      uses: DeterminateSystems/nix-installer-action@main
-
-    - name: Build Static IP initrd
-      if: ${{ inputs.networkType == 'static' }}
-      run: |
-        sed -i "s/PLACEHOLDER/${{ inputs.flakeAttr }}/g" kexec/template.nix
-        initrdOutPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.kexec-x86_64-static-ip.config.system.build.initialRamdisk)
-        echo "initrdOutPath=$initrdOutPath" >> "$GITHUB_ENV"
-
     - run: |
         until $SSH -o ConnectTimeout=10 $HOST
         do
           echo "Server Not Reachable, Waiting..."
           sleep 5
         done
-    
+
     - run: $SSH $HOST curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/kexec
+    - run: $SSH $HOST curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/initrd
     - run: $SSH $HOST curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/kernel
     - run: $SSH $HOST chmod +x kexec
-
-    - name: SCP Static IP initrd and Load 
-      if: ${{ inputs.networkType == 'static' }}
-      run: |
-        scp -o StrictHostKeyChecking=no $initrdOutPath/initrd  $HOST:/root
-        $SSH $HOST ./kexec --debug --initrd=./initrd --load ./kernel
-    
-    - name: DHCP initrd
-      if: ${{ inputs.networkType == 'dhcp' }}
-      run: |
-        $SSH $HOST curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/initrd
-        $SSH $HOST ./kexec --debug --initrd=./initrd --load ./kernel
-
+    - run: $SSH $HOST ./kexec --debug --initrd=./initrd --load ./kernel
     - name: Run kexec
       continue-on-error: true 
       run: $SSH $HOST systemctl kexec -i
@@ -126,6 +93,3 @@ jobs:
     - run: $SSH $HOST reboot
 
     - run: curl "https://api.day.app/${{ secrets.BARK_KEY }}/NixOS%20Install%20Done/${{ inputs.flakeAttr }}?group=NixOS&icon=https://hydra.nixos.org/logo"
-
-
-    
