@@ -165,6 +165,8 @@
 
   boot.initrd.systemd.services.initrd-parse-etc.enable = false;
   system.nixos-init.enable = true;
+  systemd.sysusers.enable = true;
+  system.etc.overlay.enable = true;
 
   system.build.raw = import "${pkgs.path}/nixos/lib/make-disk-image.nix" {
     inherit config lib pkgs;
