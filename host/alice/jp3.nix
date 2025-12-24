@@ -11,10 +11,8 @@
     matchConfig.Name = "en*";
     networkConfig = {
       Address = [
-        "161.248.63.8/24"
-        "2401:e4e0:100:8::a/128"
+        "2401:e4e0:100:c8::a/128"
       ];
-      Gateway = "161.248.63.1";
     };
 
     routes = [
