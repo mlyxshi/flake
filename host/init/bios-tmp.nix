@@ -177,7 +177,6 @@
   system.etc.overlay.enable = true;
 
 
-  boot.initrd.systemd.enable = true;
   boot.initrd.systemd.network.enable = true;
   boot.initrd.systemd.services.cloud-init-network = {
 
