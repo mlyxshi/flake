@@ -183,13 +183,12 @@
   boot.initrd.systemd.services.cloud-init-network = {
 
     before = [ "systemd-networkd.service" ];
-    after  = [ "systemd-udevd.service" ];
+    # after  = [ "systemd-udevd.service" ];
+
     wantedBy = [ "initrd.target" ];
     serviceConfig.Type = "oneshot";
 
-    unitConfig.ConditionPathExists = "/dev/disk/by-label/cidata";
-
-    # unitConfig.OnFailure = "myservice-failed.service";
+    serviceConfig.ExecStartPre = "/bin/sleep 15";
 
     # requires = [ "dev-disk-by\\x2dlabel-cidata.device" ];
     # after = [ "dev-disk-by\\x2dlabel-cidata.device" ];
