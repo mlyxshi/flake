@@ -1,6 +1,6 @@
 # CLOUD_INIT_CONF="./version1.yml"
-# CLOUD_INIT_CONF="./version2.yml"
-CLOUD_INIT_CONF="./version2-ipv6.yml"
+CLOUD_INIT_CONF="./version2.yml"
+# CLOUD_INIT_CONF="./version2-ipv6.yml"
 
 NETWORKD_CONF="./test"
 VERSION=$(yq .version $CLOUD_INIT_CONF)

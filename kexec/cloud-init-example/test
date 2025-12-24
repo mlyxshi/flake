@@ -2,8 +2,7 @@
 Name=en*
 
 [Network]
-Address=2401:e4e0:100:c8::a/128
+Address=161.248.63.190/24
 
 [Route]
-Gateway=2401:e4e0:100::1
-GatewayOnLink=yes
+Gateway=161.248.63.1
