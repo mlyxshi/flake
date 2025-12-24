@@ -1,0 +1,9 @@
+[Match]
+Name=en*
+
+[Network]
+Address=2401:e4e0:100:c8::a/128
+
+[Route]
+Gateway=2401:e4e0:100::1
+GatewayOnLink=yes
