@@ -221,7 +221,7 @@
             echo "Name=en*"
             echo
             echo "[Network]"
-            echo "Address=$IP"
+            echo "Address=''${IP%%/*}/128"
             echo
             echo "[Route]"
             echo "Gateway=$GATEWAY6"
