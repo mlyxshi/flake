@@ -100,7 +100,71 @@
   environment.systemPackages = with pkgs; [
     git
     wget
+    yq-go
   ];
+
+  boot.initrd.kernelModules = [
+    "virtio_net"
+    "virtio_pci"
+    "virtio_mmio"
+    "virtio_blk"
+    "virtio_scsi"
+    "virtio_balloon"
+    "virtio_console"
+    "9p"
+    "9pnet_virtio"
+  ]
+  ++ [ "ext4" ]
+  ++ [
+    "vfat"
+    "nls_cp437"
+    "nls_iso8859-1"
+  ]
+  ++ [ "efivarfs" ]
+  ++ [
+    "erofs"
+    "overlay"
+  ]
+  ++ [
+    "iso9660"
+    "scsi_mod"
+  ];
+
+  boot.initrd.systemd.storePaths = [
+    "${pkgs.file}/share/misc/magic.mgc" # file dependency
+  ];
+
+  boot.initrd.systemd.extraBin = {
+    # nix
+    nix = "${pkgs.nix}/bin/nix";
+    nix-store = "${pkgs.nix}/bin/nix-store";
+    nix-env = "${pkgs.nix}/bin/nix-env";
+    nixos-enter = "${pkgs.nixos-install-tools}/bin/nixos-enter";
+    unshare = "${pkgs.util-linux}/bin/unshare"; # nixos-enter dependencies
+
+    # net
+    ip = "${pkgs.iproute2}/bin/ip";
+    curl = "${pkgs.curl}/bin/curl";
+
+    # fs
+    "mkfs.fat" = "${pkgs.dosfstools}/bin/mkfs.fat";
+    "mkfs.ext4" = "${pkgs.e2fsprogs}/sbin/mkfs.ext4";
+    sgdisk = "${pkgs.gptfdisk}/bin/sgdisk"; # GPT
+    parted = "${pkgs.parted}/bin/parted"; # MBR
+    file = "${pkgs.file}/bin/file";
+    lsblk = "${pkgs.util-linux}/bin/lsblk";
+    blkid = "${pkgs.util-linux}/bin/blkid";
+
+    # debug
+    htop = "${pkgs.htop}/bin/htop";
+    yazi = "${pkgs.yazi-unwrapped}/bin/yazi";
+    hx = "${pkgs.helix}/bin/hx";
+    yq = "${pkgs.yq-go}/bin/yq";
+    # strace = "${pkgs.strace}/bin/strace";
+  };
+
+  boot.initrd.systemd.services.initrd-parse-etc.enable = false;
+  system.nixos-init.enable = true;
 
   system.build.raw = import "${pkgs.path}/nixos/lib/make-disk-image.nix" {
     inherit config lib pkgs;
