@@ -109,7 +109,7 @@
     nixos-enter = "${pkgs.nixos-install-tools}/bin/nixos-enter";
     unshare = "${pkgs.util-linux}/bin/unshare"; # nixos-enter dependencies
 
-    # net
+    # net 
     ip = "${pkgs.iproute2}/bin/ip";
     curl = "${pkgs.curl}/bin/curl";
 
@@ -132,14 +132,13 @@
 
   boot.initrd.systemd.emergencyAccess = true;
 
-  # force fail for debugging without openssh access
-  # boot.initrd.systemd.services.force-fail = {
-  #   wantedBy = [ "initrd.target" ];
-  #   before = [ "initrd.target" ];
-  #   after = [ "initrd-root-fs.target" ];
-  #   serviceConfig.ExecStart = "/bin/false";
-  #   unitConfig.OnFailure = [ "emergency.target" ];
-  # };
+  # force fail for debugging without network (VNC)
+  boot.initrd.systemd.services.force-fail = {
+    wantedBy = [ "initrd.target" ];
+    after = [ "initrd.target" ];
+    serviceConfig.ExecStart = "/bin/false";
+    unitConfig.OnFailure = [ "emergency.target" ];
+  };
 
   boot.initrd.systemd.services.initrd-parse-etc.enable = false;
   # https://www.freedesktop.org/software/systemd/man/latest/bootup.html#Bootup%20in%20the%20initrd
@@ -156,7 +155,7 @@
 
   # Very limited cloud-init network setup implementation. Only test on cloud provider I use
 
-  # If /dev/disk/by-label/cidata appear in 5s, read /cloud-init/network-config and setup networkd
+  # If /dev/disk/by-label/cidata appear in 10s, read /cloud-init/network-config and setup networkd
   # If /dev/disk/by-label/cidata does not appear, cloud-init-network will fail, networkd will use preset DHCP
   boot.initrd.systemd.services.cloud-init-network = {
 
@@ -165,7 +164,7 @@
     wantedBy = [ "initrd.target" ];
     serviceConfig.Type = "oneshot";
 
-    serviceConfig.ExecStartPre = "/bin/sleep 5"; # Wait cidata appear
+    serviceConfig.ExecStartPre = "/bin/sleep 10"; # Wait cidata appear
 
     script = ''
       if [ ! -e /dev/disk/by-label/cidata ]; then

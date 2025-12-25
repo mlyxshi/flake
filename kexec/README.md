@@ -29,6 +29,21 @@ chmod +x kexec
 systemctl kexec -i
 ```
 
+# Test from vnc
+```
+wget https://github.com/mlyxshi/flake/releases/download/$(uname -m)/initrd
+wget https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kernel
+cat > /boot/grub/custom.cfg <<EOF
+menuentry "NixOS" --id NixOS {
+  insmod ext2
+  search -f /etc/hostname --set root
+  linux /root/kernel systemd.journald.forward_to_console root=fstab init=/init
+  initrd /root/initrd
+}
+set default="NixOS"
+EOF
+```
+
 # cpio
 ```
 mkdir /test 
