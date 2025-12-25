@@ -67,6 +67,10 @@
           inherit self nixpkgs secret;
           hostName = "jp3";
         };
+        hk = import ./host/alice/mkHost.nix {
+          inherit self nixpkgs secret;
+          hostName = "hk";
+        };
       }
       // oracleNixosConfigurations;
 
