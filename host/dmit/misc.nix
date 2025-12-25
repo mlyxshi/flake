@@ -8,6 +8,8 @@
 }:
 {
   # services.getty.autologinUser = "root";
+  
+  services.qemuGuest.enable = true; # https://t.me/DMIT_INC_CN/768
 
   systemd.network.networks.ethernet-static = {
     matchConfig.Name = "en*";
