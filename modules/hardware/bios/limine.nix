@@ -16,7 +16,7 @@
   boot.loader.limine.efiSupport = false;
   boot.loader.limine.biosDevice = "/dev/vda";
   boot.loader.limine.maxGenerations = 2;
-  boot.loader.timeout = 2;
+  boot.loader.timeout = 1;
 
   fileSystems."/boot" = {
     device = config.boot.loader.limine.biosDevice + "1";
