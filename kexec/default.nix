@@ -132,7 +132,7 @@
 
   boot.initrd.systemd.emergencyAccess = true;
 
-  # force fail for debugging without network (VNC)
+  # force fail to get a debug shell without network (VNC)
   boot.initrd.systemd.services.force-fail = {
     wantedBy = [ "initrd.target" ];
     after = [ "initrd.target" ];
@@ -153,7 +153,7 @@
     networkConfig.DHCP = "yes";
   };
 
-  # Very limited cloud-init network setup implementation. Only test on cloud provider I use
+  # Very limited cloud-init network setup implementation. Only test on cloud provider I use (dmit.io/alice.sh)
 
   # If /dev/disk/by-label/cidata appear in 10s, read /cloud-init/network-config and setup networkd
   # If /dev/disk/by-label/cidata does not appear, cloud-init-network will fail, networkd will use preset DHCP

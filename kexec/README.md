@@ -31,8 +31,9 @@ systemctl kexec -i
 
 # Test from VNC
 ## Useful for 512MB memory vps
-kexec preserves some RAM; GRUB resets it.
-kexec shows ~280 MB while GRUB shows ~80 MB.
+kexec preserves some RAM; Reboot resets it.
+
+kexec cost ~280 MB memory while Reboot cost ~80 MB.
 ```
 wget https://github.com/mlyxshi/flake/releases/download/x86_64/initrd
 wget https://github.com/mlyxshi/flake/releases/download/x86_64/kernel
