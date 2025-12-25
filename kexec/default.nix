@@ -37,22 +37,20 @@
     "virtio_console"
     "9p"
     "9pnet_virtio"
-  ]
-  ++ [ "ext4" ]
-  ++ [
+
+    "ext4"
+
     "vfat"
     "nls_cp437"
     "nls_iso8859-1"
-  ]
-  ++ [ "efivarfs" ]
-  ++ [
+
+    "efivarfs"
+
     "erofs"
     "overlay"
-  ]
-  ++ [
+
     "iso9660" # cloud-init cidata disk
-    "scsi_mod"
-  ]; 
+  ];
   # boot.initrd.includeDefaultModules also adds some necessary modules
 
   boot.initrd.systemd.contents = {
@@ -109,7 +107,7 @@
     nixos-enter = "${pkgs.nixos-install-tools}/bin/nixos-enter";
     unshare = "${pkgs.util-linux}/bin/unshare"; # nixos-enter dependencies
 
-    # net 
+    # net
     ip = "${pkgs.iproute2}/bin/ip";
     curl = "${pkgs.curl}/bin/curl";
 
