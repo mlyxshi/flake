@@ -50,7 +50,7 @@ in
   };
 
   x86_64-kexec-test = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "x86_64-kexec-test" ''
-    /opt/homebrew/bin/qemu-system-x86_64 -cpu qemu64 -nographic -m 1G \
+    /opt/homebrew/bin/qemu-system-x86_64 -cpu qemu64 -nographic -m 4G \
       -kernel ${self.nixosConfigurations.kexec-x86_64.config.system.build.kernel}/bzImage \
       -initrd ${self.nixosConfigurations.kexec-x86_64.config.system.build.initialRamdisk}/initrd \
       -append "console=ttyS0 systemd.journald.forward_to_console" \

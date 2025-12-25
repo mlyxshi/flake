@@ -155,7 +155,7 @@
 
   # Very limited cloud-init network setup implementation. Only test on cloud provider I use (dmit.io/alice.sh)
 
-  # If /dev/disk/by-label/cidata appear in 10s, read /cloud-init/network-config and setup networkd
+  # If /dev/disk/by-label/cidata appear in 5s, read /cloud-init/network-config and setup networkd
   # If /dev/disk/by-label/cidata does not appear, cloud-init-network will fail, networkd will use preset DHCP
   boot.initrd.systemd.services.cloud-init-network = {
 
@@ -164,7 +164,7 @@
     wantedBy = [ "initrd.target" ];
     serviceConfig.Type = "oneshot";
 
-    serviceConfig.ExecStartPre = "/bin/sleep 10"; # Wait cidata appear
+    serviceConfig.ExecStartPre = "/bin/sleep 5"; # Wait cidata appear
 
     script = ''
       if [ ! -e /dev/disk/by-label/cidata ]; then
