@@ -26,7 +26,8 @@
   # x86-64 { autoModules = true; }
   # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/kernel/modules-closure.nix
 
-  # qemu + ext4 + vfat + efivarfs + overlay + iso9660
+  # qemu + ext4 + vfat + efivarfs + overlay + iso9660 
+  # lsmod / modinfo to find/filter necessary modules
   boot.initrd.kernelModules = [
     "virtio_net"
     "virtio_pci"
