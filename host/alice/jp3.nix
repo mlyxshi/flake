@@ -45,7 +45,6 @@
         type = "udp";
         tag = "alice-unlock";
         server = "161.248.63.63";
-        port = 53;
       }
     ];
 
