@@ -15,7 +15,7 @@ if [ "$VERSION" = "1" ]; then
   elif [ "$NETMASK" = "255.255.255.0" ]; then
     CIDR=24
   else
-    echo "Unsupported netmask: $NETMASK" >&2
+    echo "Unsupported netmask: $NETMASK"
     exit 1
   fi
 
