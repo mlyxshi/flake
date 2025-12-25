@@ -14,7 +14,7 @@ nixpkgs.lib.nixosSystem {
     ./${hostName}.nix
     {
       nixpkgs.hostPlatform = "x86_64-linux";
-      networking.hostName = ${hostName};
+      networking.hostName = "${hostName}";
       # services.getty.autologinUser = "root";
     }
   ];
