@@ -29,10 +29,11 @@ chmod +x kexec
 systemctl kexec -i
 ```
 
-# Test from vnc
+# Test from VNC
 ```
-wget https://github.com/mlyxshi/flake/releases/download/$(uname -m)/initrd
-wget https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kernel
+wget https://github.com/mlyxshi/flake/releases/download/x86_64/initrd
+wget https://github.com/mlyxshi/flake/releases/download/x86_64/kernel
+
 cat > /boot/grub/custom.cfg <<EOF
 menuentry "NixOS" --id NixOS {
   insmod ext2
