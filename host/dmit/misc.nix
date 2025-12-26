@@ -10,6 +10,7 @@
   # services.getty.autologinUser = "root";
   
   services.qemuGuest.enable = true; # https://t.me/DMIT_INC_CN/768
+  services.openssh.ports = [ 23333 ];
 
   systemd.network.networks.ethernet-static = {
     matchConfig.Name = "en*";
@@ -31,7 +32,7 @@
         ip protocol icmp accept
         ip6 nexthdr icmpv6 accept
         ct state {established, related} accept
-        tcp dport { 22, 8888 } accept
+        tcp dport { 23333, 8888 } accept
         udp dport { 8888 } accept
       }
     }

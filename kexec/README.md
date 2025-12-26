@@ -42,7 +42,7 @@ cat > /boot/grub/custom.cfg <<EOF
 menuentry "NixOS" --id NixOS {
   insmod ext2
   search -f /etc/hostname --set root
-  linux /root/kernel systemd.journald.forward_to_console root=fstab init=/init
+  linux /root/kernel systemd.journald.forward_to_console root=fstab
   initrd /root/initrd
 }
 set default="NixOS"
