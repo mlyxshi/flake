@@ -1,6 +1,5 @@
 # For small memory server (512MB RAM) 
-# kexec may perserve some memory from previous OS
-# reboot will clear all memory
+# kexec may perserve some memory from previous OS, reboot to grub will clear all memory
 name: "Install x86_64 BIOS Grub"
 on:
   workflow_dispatch:
@@ -28,9 +27,8 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
 
-    - run: curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/kexec
-    - run: curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/initrd
-    - run: curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/kernel
+    - run: wget https://github.com/mlyxshi/flake/releases/download/x86_64/initrd
+    - run: wget https://github.com/mlyxshi/flake/releases/download/x86_64/kernel
 
     - name: Set up WARP (IPv6 only)
       if: contains(inputs.ip, ':')
@@ -57,7 +55,7 @@ jobs:
         menuentry "NixOS" --id NixOS {
           insmod ext2
           search -f /etc/hostname --set root
-          linux /root/kernel systemd.journald.forward_to_console root=fstab init=/init
+          linux /root/kernel systemd.journald.forward_to_console root=fstab
           initrd /root/initrd
         }
         set default="NixOS"
