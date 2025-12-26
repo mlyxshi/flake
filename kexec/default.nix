@@ -2,9 +2,11 @@
   config,
   pkgs,
   lib,
+  modulesPath,
   ...
 }:
 {
+  imports = [ "${modulesPath}/profiles/qemu-guest.nix" ];
 
   system.nixos-init.enable = true;
 
@@ -26,19 +28,9 @@
   # x86-64 { autoModules = true; }
   # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/kernel/modules-closure.nix
 
-  # qemu + ext4 + vfat + efivarfs + overlay + iso9660 
+  # qemu + ext4 + vfat + efivarfs + overlay + iso9660
   # lsmod / modinfo to find/filter necessary modules
   boot.initrd.kernelModules = [
-    "virtio_net"
-    "virtio_pci"
-    "virtio_mmio"
-    "virtio_blk"
-    "virtio_scsi"
-    "virtio_balloon"
-    "virtio_console"
-    "9p"
-    "9pnet_virtio"
-
     "ext4"
 
     "vfat"
