@@ -178,12 +178,13 @@
     	HostName  nrt.mlyxshi.com
       HostKeyAlias nrt
     	User root
-      Port 22
+      Port 23333
 
     Host jp3
     	HostName  jp3.mlyxshi.com
       HostKeyAlias jp3
     	User root
+      Port 23333
 
     Host utm
     	HostName  utm.local

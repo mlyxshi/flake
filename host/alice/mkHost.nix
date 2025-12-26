@@ -16,6 +16,7 @@ nixpkgs.lib.nixosSystem {
       nixpkgs.hostPlatform = "x86_64-linux";
       networking.hostName = "${hostName}";
       # services.getty.autologinUser = "root";
+      services.openssh.ports = [ 23333 ];
     }
   ];
   specialArgs = { inherit self; };
