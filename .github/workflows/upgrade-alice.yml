@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 
 env:
-  SSH: ssh -o StrictHostKeyChecking=no
+  SSH: ssh -o StrictHostKeyChecking=no -p 23333
 
 jobs:
   Update:
@@ -35,6 +35,6 @@ jobs:
     #     stack: dual
     #     mode: client
 
-    - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --to ssh://root@${{ matrix.host }}.mlyxshi.com $outPath
+    - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no -p 23333' nix copy --to ssh://root@${{ matrix.host }}.mlyxshi.com $outPath
     - run: $SSH root@${{ matrix.host }}.mlyxshi.com nix-env -p /nix/var/nix/profiles/system --set $outPath
     - run: $SSH root@${{ matrix.host }}.mlyxshi.com $outPath/bin/switch-to-configuration switch
