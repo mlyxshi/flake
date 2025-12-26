@@ -6,7 +6,7 @@
   ...
 }:
 {
-  imports = [ "${modulesPath}/profiles/qemu-guest.nix" ];
+  imports = [ "${modulesPath}/profiles/qemu-guest.nix" ]; # qemu-guest kernel modules
 
   system.nixos-init.enable = true;
 
@@ -28,7 +28,7 @@
   # x86-64 { autoModules = true; }
   # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/kernel/modules-closure.nix
 
-  # qemu + ext4 + vfat + efivarfs + overlay + iso9660
+  # ext4 + vfat + overlay + iso9660
   # lsmod / modinfo to find/filter necessary modules
   boot.initrd.kernelModules = [
     "ext4"
@@ -37,9 +37,7 @@
     "nls_cp437"
     "nls_iso8859-1"
 
-    "efivarfs"
-
-    "erofs"
+    "erofs"    # etc-overlay
     "overlay"
 
     "iso9660" # cloud-init cidata disk
