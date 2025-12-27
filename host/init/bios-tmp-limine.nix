@@ -48,32 +48,32 @@
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.emergencyAccess = true;
 
-  # boot.loader.limine.enable = true;
-  # boot.loader.limine.biosSupport = true;
-  # boot.loader.limine.efiSupport = false;
-  # boot.loader.limine.biosDevice = "/dev/vda";
-  # boot.loader.limine.maxGenerations = 2;
-  # boot.loader.timeout = 1; # inmediate boot
+  boot.loader.limine.enable = true;
+  boot.loader.limine.biosSupport = true;
+  boot.loader.limine.efiSupport = false;
+  boot.loader.limine.biosDevice = "/dev/vda";
+  boot.loader.limine.maxGenerations = 2;
+  boot.loader.timeout = 1; # inmediate boot
 
-  # fileSystems."/boot" = {
-  #   device = config.boot.loader.limine.biosDevice + "1";
-  #   fsType = "vfat";
-  # };
-
-  # fileSystems."/" = {
-  #   device = config.boot.loader.limine.biosDevice + "2";
-  #   fsType = "ext4";
-  #   autoResize = true;
-  # };
-
-  # boot.growPartition = true;
-
-  boot.loader.grub.device = "/dev/vda";
+  fileSystems."/boot" = {
+    device = config.boot.loader.limine.biosDevice + "1";
+    fsType = "vfat";
+  };
 
   fileSystems."/" = {
-    device = "/dev/vda1";
+    device = config.boot.loader.limine.biosDevice + "2";
     fsType = "ext4";
+    autoResize = true;
   };
+
+  boot.growPartition = true;
+
+  # boot.loader.grub.device = "/dev/vda";
+
+  # fileSystems."/" = {
+  #   device = "/dev/vda1";
+  #   fsType = "ext4";
+  # };
 
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe"
@@ -116,8 +116,8 @@
     inherit config lib pkgs;
     format = "raw";
     copyChannel = false;
-    # partitionTableType = "legacy+boot"; # limine bootloader
-    partitionTableType = "legacy"; # grub bootloader
+    partitionTableType = "legacy+boot"; # limine bootloader
+    # partitionTableType = "legacy"; # grub bootloader
     bootSize = "200M";
     additionalSpace = "128M";
     # diskSize = 10240; # 10G
