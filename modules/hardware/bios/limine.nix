@@ -21,7 +21,7 @@
 
   fileSystems."/boot" = {
     device = config.boot.loader.limine.biosDevice + "2";
-    fsType = "ext4";
+    fsType = "vfat";
   };
 
   fileSystems."/" = {
