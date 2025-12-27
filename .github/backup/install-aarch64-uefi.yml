@@ -74,7 +74,7 @@ jobs:
     # https://superuser.com/questions/1572410/what-is-the-purpose-of-the-linux-home-partition-code-8302
     - run: $SSH $HOST sgdisk --zap-all /dev/sda
     - run: $SSH $HOST sgdisk --new=0:0:+512M --typecode=0:ef00 /dev/sda
-    - run: $SSH $HOST sgdisk --new=0:0:0 --typecode=0:B921B045-1DF0-41C3-AF44-4C6F280D3FAE /dev/sda
+    - run: $SSH $HOST sgdisk --new=0:0:0 --typecode=0:8305 /dev/sda
 
     - run: $SSH $HOST mkfs.fat -F 32 /dev/sda1
     - run: $SSH $HOST mkfs.ext4 -F /dev/sda2
