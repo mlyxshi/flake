@@ -111,6 +111,7 @@
     inherit config lib pkgs;
     format = "raw";
     copyChannel = false;
+    deterministic = false;
     partitionTableType = "legacy+gpt"; # limine bootloader
     # partitionTableType = "legacy"; # grub bootloader
     bootSize = "200M";
