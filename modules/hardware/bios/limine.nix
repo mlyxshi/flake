@@ -18,11 +18,6 @@
   boot.loader.limine.maxGenerations = 2;
   boot.loader.timeout = 1;
 
-  fileSystems."/boot" = {
-    device = config.boot.loader.limine.biosDevice + "1";
-    fsType = "vfat";
-  };
-
   fileSystems."/" = {
     device = config.boot.loader.limine.biosDevice + "2";
     fsType = "ext4";
