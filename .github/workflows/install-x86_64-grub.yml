@@ -96,7 +96,7 @@ jobs:
     - run: |
         until $SSH -o ConnectTimeout=10 $HOST ls /etc/initrd-release
         do
-          echo "Kexec Environment Not Reachable, Waiting..."
+          echo "Initrd Environment Not Reachable, Waiting..."
           sleep 5
         done
 
