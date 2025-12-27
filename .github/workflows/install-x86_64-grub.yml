@@ -19,7 +19,7 @@ env:
 
 jobs:
 
-  kexec:
+  Grub:
     runs-on: ubuntu-latest
     steps:
     - run: |
