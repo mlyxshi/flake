@@ -51,7 +51,7 @@
   boot.loader.limine.enable = true;
   boot.loader.limine.biosSupport = true;
   boot.loader.limine.efiSupport = false;
-  boot.loader.limine.biosDevice = "/dev/vda";
+  boot.loader.limine.biosDevice = "/dev/sda";
   boot.loader.limine.maxGenerations = 2;
   boot.loader.timeout = 1; # inmediate boot
 
