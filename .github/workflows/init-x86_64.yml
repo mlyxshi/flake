@@ -1,4 +1,3 @@
-# Some VPS provider do not support kexec, therefore use takeover and dd
 name: "Init x86_64 DD"
 on:
   workflow_dispatch:
