@@ -21,27 +21,27 @@
   systemd.network.enable = true;
   systemd.network.wait-online.anyInterface = true;
 
-  # systemd.network.networks.ethernet-default-dhcp = {
-  #   matchConfig.Name = "en*";
-  #   networkConfig.DHCP = "yes";
-  # };
-
-  systemd.network.networks.ethernet-static = {
+  systemd.network.networks.ethernet-default-dhcp = {
     matchConfig.Name = "en*";
-    networkConfig = {
-      Address = [
-        "154.17.19.228/32"
-      ];
-      # Gateway = "161.248.63.1";
-    };
-
-    routes = [
-      {
-        Gateway = "193.41.250.250";
-        GatewayOnLink = true; # Special config since gateway isn't in subnet
-      }
-    ];
+    networkConfig.DHCP = "yes";
   };
+
+  # systemd.network.networks.ethernet-static = {
+  #   matchConfig.Name = "en*";
+  #   networkConfig = {
+  #     Address = [
+  #       "154.17.19.228/32"
+  #     ];
+  #     # Gateway = "161.248.63.1";
+  #   };
+
+  #   routes = [
+  #     {
+  #       Gateway = "193.41.250.250";
+  #       GatewayOnLink = true; # Special config since gateway isn't in subnet
+  #     }
+  #   ];
+  # };
 
   networking.firewall.enable = false;
 
