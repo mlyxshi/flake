@@ -63,7 +63,10 @@
   fileSystems."/" = {
     device = config.boot.loader.limine.biosDevice + "2";
     fsType = "ext4";
+    autoResize = true;
   };
+
+  boot.growPartition = true;
 
   # boot.loader.grub.device = "/dev/vda";
 
@@ -115,7 +118,7 @@
     copyChannel = false;
     partitionTableType = "legacy+boot"; # limine bootloader
     # partitionTableType = "legacy"; # grub bootloader
-    bootSize = "300M";
+    bootSize = "200M";
     additionalSpace = "128M";
     # diskSize = 10240; # 10G
     # diskSize = 20480; # 20G
