@@ -40,9 +40,6 @@
         modules = [ ./host/darwin/Macbook.nix ];
       };
       nixosConfigurations = {
-        # make-disk-image
-        bios-init-tmp = nixpkgs.lib.nixosSystem { modules = [ ./host/init/bios-tmp.nix ]; };
-
         # systemd-repart
         arm-init-sda-grow = nixpkgs.lib.nixosSystem { modules = [ ./host/init/arm.nix ]; };
 
