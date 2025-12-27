@@ -33,6 +33,8 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
 
+    - run: wget https://dd.mlyxshi.com/alpine-takeover-rootfs.tar.gz
+
     - name: Set up WARP (IPv6 only)
       if: contains(inputs.ip, ':')
       uses: fscarmen/warp-on-actions@v1.4
@@ -47,9 +49,15 @@ jobs:
           sleep 5
         done
 
+    - run: scp -o StrictHostKeyChecking=no alpine-takeover-rootfs.tar.gz root@[${{ inputs.ip }}]:/root/
+      if: contains(inputs.ip, ':')
+
+    - run: scp -o StrictHostKeyChecking=no alpine-takeover-rootfs.tar.gz $HOST:/root/
+      if: ${{ !contains(inputs.ip, ':') }}
+
     - run: $SSH $HOST 'mkdir -p /takeover' 
     - run: $SSH $HOST 'mount -t tmpfs tmpfs /takeover' 
-    - run: $SSH $HOST 'wget https://dd.mlyxshi.com/alpine-takeover-rootfs.tar.gz' 
+
     - run: $SSH $HOST 'tar -xvf alpine-takeover-rootfs.tar.gz -C /takeover'
     - run: $SSH $HOST 'sh /takeover/takeover-non-interactive.sh'
 
