@@ -97,11 +97,14 @@ jobs:
     # BIOS + GPT    https://linux.die.net/man/8/sgdisk
     - run: $SSH $HOST sgdisk --zap-all $DEVICE
     - run: $SSH $HOST sgdisk --new=0:0:+1M --typecode=0:ef02 $DEVICE
+    - run: $SSH $HOST sgdisk --new=0:0:+200M --typecode=0:8300 $DEVICE
     - run: $SSH $HOST sgdisk --new=0:0:0 --typecode=0:8304 $DEVICE
 
     - run: $SSH $HOST mkdir -p /mnt
-    - run: $SSH $HOST mkfs.ext4 -F ${DEVICE}2
-    - run: $SSH $HOST mount ${DEVICE}2 /mnt
+    - run: $SSH $HOST mkfs.fat -F 32 ${DEVICE}2
+    - run: $SSH $HOST mkfs.ext4 -F ${DEVICE}3
+    - run: $SSH $HOST mount ${DEVICE}3 /mnt
+    - run: $SSH $HOST mount --mkdir ${DEVICE}2 /mnt/boot
     
     - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --substitute-on-destination --to ssh://$HOST?remote-store=local?root=/mnt $outPath
  

@@ -99,7 +99,7 @@
       bat
       bat-extras.batman
       gdu
-      parted
+      gptfdisk
       gitMinimal
 
       (writeShellScriptBin "update" ''
@@ -144,9 +144,6 @@
           exit 1
         fi
       '')
-    ]
-    ++ lib.optionals config.boot.loader.systemd-boot.enable [
-      pkgs.gptfdisk
     ];
 
   programs.fish = {
