@@ -11,7 +11,6 @@ on:
       flakeAttr:
         description: 'OS Config Hostname'
         type: string
-        required: true
 
 env:
   SSH: ssh -o StrictHostKeyChecking=no
@@ -66,6 +65,7 @@ jobs:
       run: $SSH $HOST reboot -f
 
   install:
+    if: ${{ inputs.flakeAttr }}
     runs-on: ubuntu-latest
     steps:
     - run: |
