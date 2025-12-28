@@ -25,8 +25,7 @@ curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/initrd
 curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kernel
 curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kexec
 chmod +x kexec
-encoded_key=$(echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe" | base64 -w0)
-./kexec --initrd=./initrd --load ./kernel --append="root=fstab systemd.set_credential_binary=ssh.authorized_keys.root:$encoded_key"
+./kexec --load ./kernel --initrd=./initrd --append="systemd.set_credential_binary=ssh.authorized_keys.root:c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSU1wYVkzTHlDVzRISHFicDRTQTR0bkErMUJrZ3dydHJvMnMvREVzQmNQRGUK"
 systemctl kexec -i
 ```
 
