@@ -69,7 +69,7 @@
     '';
 
     "/etc/yazi/yazi.toml".text = ''
-      [manager]
+      [mgr]
       show_hidden = true
       linemode = "size"
     '';
@@ -121,12 +121,12 @@
   boot.initrd.systemd.emergencyAccess = true;
 
   # force fail to get a debug shell without network (VNC)
-  boot.initrd.systemd.services.force-fail = {
-    wantedBy = [ "initrd.target" ];
-    after = [ "initrd.target" ];
-    serviceConfig.ExecStart = "/bin/false";
-    unitConfig.OnFailure = [ "emergency.target" ];
-  };
+  # boot.initrd.systemd.services.force-fail = {
+  #   wantedBy = [ "initrd.target" ];
+  #   after = [ "initrd.target" ];
+  #   serviceConfig.ExecStart = "/bin/false";
+  #   unitConfig.OnFailure = [ "emergency.target" ];
+  # };
 
   boot.initrd.systemd.services.initrd-parse-etc.enable = false;
   # https://www.freedesktop.org/software/systemd/man/latest/bootup.html#Bootup%20in%20the%20initrd
