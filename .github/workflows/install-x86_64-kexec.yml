@@ -9,7 +9,7 @@ on:
       flakeAttr:
         description: 'OS Config Hostname'
         type: string
-        required: true
+
 
 env:
   SSH: ssh -o StrictHostKeyChecking=no
@@ -50,12 +50,13 @@ jobs:
       if: ${{ !contains(inputs.ip, ':') }}
 
     - run: $SSH $HOST chmod +x kexec
-    - run: $SSH $HOST ./kexec  --load ./kernel --initrd=./initrd --append="root=fstab systemd.set_credential_binary=ssh.authorized_keys.root:c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSU1wYVkzTHlDVzRISHFicDRTQTR0bkErMUJrZ3dydHJvMnMvREVzQmNQRGUK"
+    - run: $SSH $HOST ./kexec  --load ./kernel --initrd=./initrd --append="systemd.set_credential_binary=ssh.authorized_keys.root:c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSU1wYVkzTHlDVzRISHFicDRTQTR0bkErMUJrZ3dydHJvMnMvREVzQmNQRGUK"
     - name: Run kexec
       continue-on-error: true 
       run: $SSH $HOST systemctl kexec -i
 
   install:
+    if: ${{ inputs.flakeAttr }}
     runs-on: ubuntu-latest
     steps:
     - run: |
