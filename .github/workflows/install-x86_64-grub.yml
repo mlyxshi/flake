@@ -55,7 +55,7 @@ jobs:
         menuentry "NixOS" --id NixOS {
           insmod ext2
           search -f /etc/hostname --set root
-          linux /root/kernel systemd.journald.forward_to_console root=fstab
+          linux /root/kernel systemd.journald.forward_to_console root=fstab systemd.set_credential_binary=ssh.authorized_keys.root:c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSU1wYVkzTHlDVzRISHFicDRTQTR0bkErMUJrZ3dydHJvMnMvREVzQmNQRGUK
           initrd /root/initrd
         }
         set default="NixOS"

@@ -50,7 +50,7 @@ jobs:
       if: ${{ !contains(inputs.ip, ':') }}
 
     - run: $SSH $HOST chmod +x kexec
-    - run: $SSH $HOST ./kexec --initrd=./initrd --load ./kernel
+    - run: $SSH $HOST ./kexec --initrd=./initrd --load ./kernel --append="root=fstab systemd.set_credential_binary=ssh.authorized_keys.root:c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSU1wYVkzTHlDVzRISHFicDRTQTR0bkErMUJrZ3dydHJvMnMvREVzQmNQRGUK"
     - name: Run kexec
       continue-on-error: true 
       run: $SSH $HOST systemctl kexec -i
