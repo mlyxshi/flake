@@ -19,6 +19,19 @@
   boot.initrd.systemd.services.sshd.preStart =
     lib.mkForce "/bin/chmod 0600 /etc/ssh/ssh_host_ed25519_key";
 
+  # https://www.freedesktop.org/software/systemd/man/latest/tmpfiles.d.html#Type%20Modifiers
+  # https://github.com/systemd/systemd/commit/4cebd207d1487e1944fd81bbaf63678dade3ed4e
+  # https://github.com/NixOS/nixpkgs/blob/3e2499d5539c16d0d173ba53552a4ff8547f4539/nixos/modules/system/boot/initrd-ssh.nix#L325
+  boot.initrd.systemd.tmpfiles.settings.root-ssh-keys = {
+    "/etc/ssh/authorized_keys.d"."d=" = {
+      mode = "0700";
+    };
+    "/etc/ssh/authorized_keys.d/root"."f^=" = {
+      mode = "0600";
+      argument = "ssh.authorized_keys.root";
+    };
+  };
+
   # remove unused lvm/bcache from initrd
   boot.initrd.services.lvm.enable = false;
   boot.bcache.enable = false;
@@ -37,7 +50,7 @@
     "nls_cp437"
     "nls_iso8859-1"
 
-    "erofs"    # etc-overlay
+    "erofs" # etc-overlay
     "overlay"
 
     "iso9660" # cloud-init cidata disk
@@ -47,8 +60,6 @@
   boot.initrd.systemd.contents = {
     "/etc/ssl/certs/ca-certificates.crt".source = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
 
-    "/etc/ssh/authorized_keys.d/root".text =
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe";
     # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/keys
     "/etc/ssh/ssh_host_ed25519_key.pub".text =
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJBWcxb/Blaqt1auOtE+F8QUWrUotiC5qBJ+UuEWdVCb";
@@ -96,7 +107,7 @@
     nix-store = "${pkgs.nix}/bin/nix-store";
     nix-env = "${pkgs.nix}/bin/nix-env";
     nixos-enter = "${pkgs.nixos-install-tools}/bin/nixos-enter";
-    unshare = "${pkgs.util-linux}/bin/unshare"; # nixos-enter dependencies
+    unshare = "${pkgs.util-linux}/bin/unshare"; # nixos-enter dependency
 
     # net
     ip = "${pkgs.iproute2}/bin/ip";
@@ -106,7 +117,7 @@
     "mkfs.fat" = "${pkgs.dosfstools}/bin/mkfs.fat";
     "mkfs.ext4" = "${pkgs.e2fsprogs}/sbin/mkfs.ext4";
     sgdisk = "${pkgs.gptfdisk}/bin/sgdisk";
-    file = "${pkgs.file}/bin/file";
+    file = "${pkgs.file}/bin/file"; # yazi dependency
     lsblk = "${pkgs.util-linux}/bin/lsblk";
     blkid = "${pkgs.util-linux}/bin/blkid";
 
@@ -121,12 +132,12 @@
   boot.initrd.systemd.emergencyAccess = true;
 
   # force fail to get a debug shell without network (VNC)
-  # boot.initrd.systemd.services.force-fail = {
-  #   wantedBy = [ "initrd.target" ];
-  #   after = [ "initrd.target" ];
-  #   serviceConfig.ExecStart = "/bin/false";
-  #   unitConfig.OnFailure = [ "emergency.target" ];
-  # };
+  boot.initrd.systemd.services.force-fail = {
+    wantedBy = [ "initrd.target" ];
+    after = [ "initrd.target" ];
+    serviceConfig.ExecStart = "/bin/false";
+    unitConfig.OnFailure = [ "emergency.target" ];
+  };
 
   boot.initrd.systemd.services.initrd-parse-etc.enable = false;
   # https://www.freedesktop.org/software/systemd/man/latest/bootup.html#Bootup%20in%20the%20initrd

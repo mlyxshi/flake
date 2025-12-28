@@ -25,7 +25,8 @@ curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/initrd
 curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kernel
 curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kexec
 chmod +x kexec
-./kexec --initrd=./initrd --load ./kernel
+encoded_key=$(echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe" | base64 -w0)
+./kexec --initrd=./initrd --load ./kernel --append="root=fstab systemd.set_credential_binary=ssh.authorized_keys.root:$encoded_key"
 systemctl kexec -i
 ```
 
@@ -37,12 +38,13 @@ kexec cost ~280 MB memory while Reboot cost ~80 MB.
 ```
 wget https://github.com/mlyxshi/flake/releases/download/x86_64/initrd
 wget https://github.com/mlyxshi/flake/releases/download/x86_64/kernel
+encoded_key=$(echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe" | base64 -w0)
 
 cat > /boot/grub/custom.cfg <<EOF
 menuentry "NixOS" --id NixOS {
   insmod ext2
   search -f /etc/hostname --set root
-  linux /root/kernel systemd.journald.forward_to_console root=fstab
+  linux /root/kernel systemd.journald.forward_to_console root=fstab systemd.set_credential_binary=ssh.authorized_keys.root:$encoded_key
   initrd /root/initrd
 }
 set default="NixOS"
