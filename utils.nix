@@ -50,17 +50,16 @@ in
   };
 
   x86_64-kexec-test = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "x86_64-kexec-test" ''
-    encoded_key=$(echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe" | base64 -w0)
     /opt/homebrew/bin/qemu-system-x86_64 -cpu qemu64 -nographic -m 4G \
       -kernel ${self.nixosConfigurations.kexec-x86_64.config.system.build.kernel}/bzImage \
       -initrd ${self.nixosConfigurations.kexec-x86_64.config.system.build.initialRamdisk}/initrd \
-      -append "console=ttyS0 systemd.journald.forward_to_console root=fstab systemd.set_credential_binary=ssh.authorized_keys.root:$encoded_key" \
+      -append "console=ttyS0 systemd.journald.forward_to_console root=fstab systemd.set_credential_binary=ssh.authorized_keys.root:c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSU1wYVkzTHlDVzRISHFicDRTQTR0bkErMUJrZ3dydHJvMnMvREVzQmNQRGUK" \
       -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
       -device "virtio-scsi-pci,id=scsi0" -drive "file=disk.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
   '';
 
   arm-kexec-test = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "arm-kexec-test" ''
-        encoded_key=$(echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe" | base64 -w0)
+    encoded_key=$(echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe" | base64 -w0)
     /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 4G \
       -kernel ${self.nixosConfigurations.kexec-aarch64.config.system.build.kernel}/Image \
       -initrd ${self.nixosConfigurations.kexec-aarch64.config.system.build.initialRamdisk}/initrd \
