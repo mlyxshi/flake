@@ -19,19 +19,6 @@
   boot.initrd.systemd.services.sshd.preStart =
     lib.mkForce "/bin/chmod 0600 /etc/ssh/ssh_host_ed25519_key";
 
-  # https://www.freedesktop.org/software/systemd/man/latest/tmpfiles.d.html#Type%20Modifiers
-  # https://github.com/systemd/systemd/commit/4cebd207d1487e1944fd81bbaf63678dade3ed4e
-  # https://github.com/NixOS/nixpkgs/blob/3e2499d5539c16d0d173ba53552a4ff8547f4539/nixos/modules/system/boot/initrd-ssh.nix#L325
-  boot.initrd.systemd.tmpfiles.settings.root-ssh-keys = {
-    "/etc/ssh/authorized_keys.d"."d=" = {
-      mode = "0700";
-    };
-    "/etc/ssh/authorized_keys.d/root"."f^=" = {
-      mode = "0600";
-      argument = "ssh.authorized_keys.root";
-    };
-  };
-
   # remove unused lvm/bcache from initrd
   boot.initrd.services.lvm.enable = false;
   boot.bcache.enable = false;
@@ -59,7 +46,9 @@
 
   boot.initrd.systemd.contents = {
     "/etc/ssl/certs/ca-certificates.crt".source = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
-
+    # change to your ssh key
+    "/etc/ssh/authorized_keys.d/root".text =
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe";
     # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/keys
     "/etc/ssh/ssh_host_ed25519_key.pub".text =
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJBWcxb/Blaqt1auOtE+F8QUWrUotiC5qBJ+UuEWdVCb";
