@@ -50,7 +50,7 @@ jobs:
       if: ${{ !contains(inputs.ip, ':') }}
 
     - run: $SSH $HOST chmod +x kexec
-    - run: $SSH $HOST ./kexec  --load ./kernel --initrd=./initrd
+    - run: $SSH $HOST ./kexec  --load ./kernel --initrd=./initrd --append="root=fstab"
     - name: Run kexec
       continue-on-error: true 
       run: $SSH $HOST systemctl kexec -i
