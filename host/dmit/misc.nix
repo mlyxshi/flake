@@ -18,7 +18,7 @@
     matchConfig.Name = "en*";
     networkConfig.IPv6AcceptRA = false;
     networkConfig.Address = [
-      "154.12.190.105/32";
+      "154.12.190.105/32"
       "2403:18c0:1001:179:988d:7aff:fe82:2a34/128"
     ];
     routes = [
