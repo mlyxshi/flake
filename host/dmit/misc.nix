@@ -16,18 +16,13 @@
 
   systemd.network.networks.ethernet-static = {
     matchConfig.Name = "en*";
-    networkConfig.IPv6AcceptRA = false;
     networkConfig.Address = [
       "154.12.190.105/32"
-      "2403:18c0:1001:179:988d:7aff:fe82:2a34/64"
     ];
     routes = [
       {
         Gateway = "193.41.250.250";
         GatewayOnLink = true;
-      }
-      {
-        Gateway = "2403:18c0:1001:179::";
       }
     ];
   };
