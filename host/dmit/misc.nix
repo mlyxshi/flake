@@ -19,7 +19,7 @@
     networkConfig.IPv6AcceptRA = false;
     networkConfig.Address = [
       "154.12.190.105/32"
-      "2403:18c0:1001:179:988d:7aff:fe82:2a34/128"
+      "2403:18c0:1001:179:988d:7aff:fe82:2a34/64"
     ];
     routes = [
       {
@@ -28,7 +28,6 @@
       }
       {
         Gateway = "2403:18c0:1001:179::";
-        GatewayOnLink = true;
       }
     ];
   };
