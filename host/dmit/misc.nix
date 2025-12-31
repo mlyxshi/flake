@@ -7,7 +7,7 @@
   ...
 }:
 {
-  # services.getty.autologinUser = "root";
+  services.getty.autologinUser = "root";
 
   boot.loader.limine.force = true; # DMIT(proxmox) has strange issues with bootloader installation. I don't know why, but this helps
   
