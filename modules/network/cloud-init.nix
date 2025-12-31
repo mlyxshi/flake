@@ -17,6 +17,11 @@
 
   systemd.services.cloud-init-network = {
     serviceConfig.Type = "oneshot";
+    path = [
+      "${pkgs.yq-go}/bin/yq"
+      "${pkgs.util-linux}/bin/mount"
+    ];
+
     script = ''
       mkdir -p /cloud-init
       mount /dev/disk/by-label/cidata /cloud-init
