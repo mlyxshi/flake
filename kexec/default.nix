@@ -142,24 +142,13 @@
   };
 
   # Very limited cloud-init network setup implementation. Only test on cloud provider I use (dmit.io/alice.sh)
+  boot.initrd.services.udev.rules = ''
+    SUBSYSTEM=="block", ENV{ID_FS_LABEL}=="cidata", TAG+="systemd", ENV{SYSTEMD_WANTS}="cloud-init-network.service"
+  '';
 
-  # If /dev/disk/by-label/cidata appear in 5s, read /cloud-init/network-config and setup networkd
-  # If /dev/disk/by-label/cidata does not appear, cloud-init-network will fail, networkd will use preset DHCP
   boot.initrd.systemd.services.cloud-init-network = {
-
-    before = [ "systemd-networkd.service" ];
-
-    wantedBy = [ "initrd.target" ];
     serviceConfig.Type = "oneshot";
-
-    serviceConfig.ExecStartPre = "/bin/sleep 5"; # Wait cidata appear
-
     script = ''
-      if [ ! -e /dev/disk/by-label/cidata ]; then
-        echo "cidata disk not found, skipping cloud-init network config"
-        exit 1
-      fi
-
       mkdir -p /cloud-init
       mount /dev/disk/by-label/cidata /cloud-init
       mkdir -p /etc/systemd/network/
@@ -238,6 +227,8 @@
 
         fi
       fi
+
+      systemctl reload-or-restart systemd-networkd.service
     '';
   };
 
