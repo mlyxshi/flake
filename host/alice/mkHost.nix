@@ -8,7 +8,7 @@ nixpkgs.lib.nixosSystem {
   modules = [
     secret.nixosModules.default
     self.nixosModules.nixos.server
-    self.nixosModules.network.static
+    self.nixosModules.network.cloud-init
     self.nixosModules.hardware.bios.limine
     self.nixosModules.services.komari-agent
     ./${hostName}.nix

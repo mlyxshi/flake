@@ -14,19 +14,6 @@
   services.qemuGuest.enable = true; # https://t.me/DMIT_INC_CN/768
   services.openssh.ports = [ 23333 ];
 
-  systemd.network.networks.ethernet-static = {
-    matchConfig.Name = "en*";
-    networkConfig.Address = [
-      "154.12.190.105/32"
-    ];
-    routes = [
-      {
-        Gateway = "193.41.250.250";
-        GatewayOnLink = true;
-      }
-    ];
-  };
-
   networking.nftables.enable = true;
   networking.nftables.ruleset = ''
     table inet FIREWALL {

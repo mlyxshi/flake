@@ -7,21 +7,6 @@
 }:
 {
 
-  systemd.network.networks.ethernet-static = {
-    matchConfig.Name = "en*";
-    networkConfig = {
-      Address = [
-        "161.248.63.190/24"
-      ];
-    };
-
-    routes = [
-      {
-        Gateway = "161.248.63.1";
-      }
-    ];
-  };
-
   networking.nftables.enable = true;
   networking.nftables.ruleset = ''
     table inet FIREWALL {

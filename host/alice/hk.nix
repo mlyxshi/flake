@@ -7,17 +7,6 @@
 }:
 {
 
-  systemd.network.networks.ethernet-static = {
-    matchConfig.Name = "en*";
-    networkConfig.Address = "2a14:67c0:308:199::a/128";
-    routes = [
-      {
-        Gateway = "2a14:67c0:308::1";
-        GatewayOnLink = true; # Special config since gateway isn't in subnet
-      }
-    ];
-  };
-
   networking.nftables.enable = true;
   networking.nftables.ruleset = ''
     table inet FIREWALL {
