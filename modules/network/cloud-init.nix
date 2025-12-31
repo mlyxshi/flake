@@ -18,8 +18,8 @@
   systemd.services.cloud-init-network = {
     serviceConfig.Type = "oneshot";
     path = [
-      "${pkgs.yq-go}/bin/yq"
-      "${pkgs.util-linux}/bin/mount"
+      pkgs.yq-go
+      pkgs.util-linux
     ];
 
     script = ''
