@@ -30,14 +30,8 @@ jobs:
     - run: curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/kernel
 
     - name: Set up WARP (For IPv6 only server)
+      use: ./.github/actions/setup-ipv6.yml
       if: contains(inputs.ip, ':')
-      run: |
-        curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
-        echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
-        sudo apt update && sudo apt install -y cloudflare-warp
-        warp-cli --accept-tos registration new
-        warp-cli --accept-tos tunnel ip add-range 0.0.0.0/0
-        warp-cli --accept-tos connect
 
     - run: |
         until $SSH -o ConnectTimeout=10 $HOST
@@ -81,14 +75,8 @@ jobs:
         echo "outPath=$outPath" >> "$GITHUB_ENV"
 
     - name: Set up WARP (For IPv6 only server)
+      use: ./.github/actions/setup-ipv6.yml
       if: contains(inputs.ip, ':')
-      run: |
-        curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
-        echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
-        sudo apt update && sudo apt install -y cloudflare-warp
-        warp-cli --accept-tos registration new
-        warp-cli --accept-tos tunnel ip add-range 0.0.0.0/0
-        warp-cli --accept-tos connect
 
     - run: |
         until $SSH -o ConnectTimeout=10 $HOST ls /etc/initrd-release
