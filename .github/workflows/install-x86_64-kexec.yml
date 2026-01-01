@@ -45,9 +45,9 @@ jobs:
           sleep 5
         done
 
-    - run: scp -o StrictHostKeyChecking=no kexec initrd kernel installer:/root/
+    - run: scp kexec initrd kernel installer:/root/
 
-    - run: ssh installer +x kexec
+    - run: ssh installer chmod +x kexec
     - run: ssh installer ./kexec  --load ./kernel --initrd=./initrd --append="root=fstab"
     - name: Run kexec
       continue-on-error: true 
