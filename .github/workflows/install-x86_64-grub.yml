@@ -30,7 +30,7 @@ jobs:
     - run: wget https://github.com/mlyxshi/flake/releases/download/x86_64/kernel
 
     - name: Set up WARP (For IPv6 only server)
-      use: ./.github/actions/setup-ipv6.yml
+      uses: ./.github/actions/setup-ipv6.yml
       if: contains(inputs.ip, ':')
 
     - run: |
@@ -84,7 +84,7 @@ jobs:
         echo "outPath=$outPath" >> "$GITHUB_ENV"
 
     - name: Set up WARP (For IPv6 only server)
-      use: ./.github/actions/setup-ipv6.yml
+      uses: ./.github/actions/setup-ipv6.yml
       if: contains(inputs.ip, ':')
 
     - run: |
