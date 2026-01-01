@@ -46,7 +46,7 @@ jobs:
           sleep 5
         done
 
-    - run: scp kexec initrd kernel installer:/root/
+    - run: scp initrd kernel installer:/root/
 
     - run: |
         ssh installer "cat > /boot/grub/custom.cfg" <<EOF
