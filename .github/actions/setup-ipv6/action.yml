@@ -10,5 +10,4 @@ runs:
         warp-cli --accept-tos registration new
         warp-cli --accept-tos tunnel ip add-range 0.0.0.0/0
         warp-cli --accept-tos connect
-        curl -6 ip.sb
 
