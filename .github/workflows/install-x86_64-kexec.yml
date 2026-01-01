@@ -88,7 +88,7 @@ jobs:
     - run: |
         until ssh -o ConnectTimeout=10 installer ls /etc/initrd-release
         do
-          echo "Kexec Environment Not Reachable, Waiting..."
+          echo "Initramfs Environment Not Reachable, Waiting..."
           sleep 5
         done
 
@@ -110,7 +110,7 @@ jobs:
     - run: ssh installer mount ${DEVICE}3 /mnt
     - run: ssh installer mount --mkdir ${DEVICE}2 /mnt/boot
     
-    - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --substitute-on-destination --to ssh://installer?remote-store=local?root=/mnt $outPath
+    - run: nix copy --substitute-on-destination --to ssh://installer?remote-store=local?root=/mnt $outPath
  
     - run: ssh installer nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $outPath
     - run: ssh installer mkdir /mnt/{etc,tmp}
