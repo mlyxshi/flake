@@ -33,7 +33,6 @@
     iperf
     tree
     libarchive
-    nix-output-monitor
     nix-tree
     nix-inspect
     yazi
@@ -46,7 +45,6 @@
     zoxide
     eza
     xh
-    tealdeer
     bandwhich
     bat
     bat-extras.batman
@@ -64,6 +62,7 @@
 
       if [ -n "$SYSTEM" ]
       then
+        [[ -e "/run/current-system" ]] && nix store diff-closures /run/current-system $SYSTEM
         sudo -H --preserve-env=PATH env nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
         sudo -H --preserve-env=PATH $SYSTEM/activate
       else

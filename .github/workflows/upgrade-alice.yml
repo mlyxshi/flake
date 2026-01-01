@@ -29,12 +29,6 @@ jobs:
         outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel)
         echo "outPath=$outPath" >> "$GITHUB_ENV"
 
-    # - name: Set up WARP
-    #   uses: fscarmen/warp-on-actions@v1.4
-    #   with:
-    #     stack: dual
-    #     mode: client
-
     - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no -p 23333' nix copy --to ssh://root@${{ matrix.host }}.mlyxshi.com $outPath
     - run: $SSH root@${{ matrix.host }}.mlyxshi.com nix-env -p /nix/var/nix/profiles/system --set $outPath
     - run: $SSH root@${{ matrix.host }}.mlyxshi.com $outPath/bin/switch-to-configuration switch
