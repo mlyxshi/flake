@@ -9,8 +9,6 @@
 {
   services.getty.autologinUser = "root";
 
-  boot.loader.limine.force = true; # DMIT(proxmox) has strange issues with bootloader installation. I don't know why, but this helps
-  
   services.qemuGuest.enable = true; # https://t.me/DMIT_INC_CN/768
   services.openssh.ports = [ 23333 ];
 
