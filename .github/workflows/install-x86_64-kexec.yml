@@ -93,19 +93,8 @@ jobs:
         DEVICE=$(nix eval --raw .#nixosConfigurations.${{ inputs.flakeAttr }}.config.boot.loader.limine.biosDevice)
         echo "DEVICE=$DEVICE" >> "$GITHUB_ENV"
 
-    # BIOS + GPT
-    - run: ssh installer sgdisk --zap-all $DEVICE
-    - run: ssh installer sgdisk -n 0:0:+1M -t 0:ef02 $DEVICE
-    - run: ssh installer sgdisk -n 0:0:+200M $DEVICE
-    - run: ssh installer sgdisk -n 0:0:0  $DEVICE
-    # limine require raw partition
-    - run: ssh installer dd if=/dev/zero of=${DEVICE}1 bs=1M count=1
-
-    - run: ssh installer mkdir -p /mnt
-    - run: ssh installer mkfs.fat -F 32 ${DEVICE}2
-    - run: ssh installer mkfs.ext4 -F ${DEVICE}3
-    - run: ssh installer mount ${DEVICE}3 /mnt
-    - run: ssh installer mount --mkdir ${DEVICE}2 /mnt/boot
+    - name: Create and mount partitions for BIOS + GPT
+      uses: ./.github/actions/bios-gpt
     
     - run: nix copy --substitute-on-destination --to ssh://installer?remote-store=local?root=/mnt $outPath
  
