@@ -1,0 +1,19 @@
+runs:
+  using: composite
+  steps:
+    - name: Setup ssh key and host
+      shell: bash
+      run: |
+        mkdir -m 0755  ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+        chmod 600 ~/.ssh/id_ed25519
+
+        cat > ~/.ssh/config <<EOF
+        Host installer
+          HostName ${{ inputs.ip }}
+          HostKeyAlias installer
+          User root
+          StrictHostKeyChecking no
+        EOF
+
+
