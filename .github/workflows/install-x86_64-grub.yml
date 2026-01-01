@@ -117,7 +117,8 @@ jobs:
     - run: ssh installer mount ${DEVICE}3 /mnt
     - run: ssh installer mount --mkdir ${DEVICE}2 /mnt/boot
     
-    - run: nix copy --substitute-on-destination --to ssh://installer?remote-store=local?root=/mnt $outPath
+    # --substitute-on-destination 
+    - run: nix copy --to ssh://installer?remote-store=local?root=/mnt $outPath
  
     - run: ssh installer nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $outPath
     - run: ssh installer mkdir /mnt/{etc,tmp}
