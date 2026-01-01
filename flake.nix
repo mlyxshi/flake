@@ -25,8 +25,8 @@
         packagesSet-x86_64-linux
         packagesSet-aarch64-linux
         oracleNixosConfigurations
-        x86_64-kexec-test
-        arm-kexec-test
+        x86_64-initramfs-test
+        arm-initramfs-test
         ;
     in
     {
@@ -47,16 +47,16 @@
         # Apple Silicon (M3 and later) supports nested virtualization via Apple's Hypervisor Framework for build nixos image require kvm
         utm = nixpkgs.lib.nixosSystem { modules = [ ./host/init/utm.nix ]; };
 
-        kexec-x86_64 = nixpkgs.lib.nixosSystem {
+        initramfs-x86_64 = nixpkgs.lib.nixosSystem {
           modules = [
-            ./kexec
+            ./initramfs
             { nixpkgs.hostPlatform = "x86_64-linux"; }
           ];
         };
 
-        kexec-aarch64 = nixpkgs.lib.nixosSystem {
+        initramfs-aarch64 = nixpkgs.lib.nixosSystem {
           modules = [
-            ./kexec
+            ./initramfs
             { nixpkgs.hostPlatform = "aarch64-linux"; }
           ];
         };
@@ -75,8 +75,8 @@
       packages.x86_64-linux = packagesSet-x86_64-linux;
       packages.aarch64-linux = packagesSet-aarch64-linux;
 
-      packages.aarch64-darwin.default = x86_64-kexec-test;
-      packages.aarch64-darwin.arm-kexec-test = arm-kexec-test;
+      packages.aarch64-darwin.default = x86_64-initramfs-test;
+      packages.aarch64-darwin.arm-kexec-test = arm-initramfs-test;
 
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt-tree;
     };

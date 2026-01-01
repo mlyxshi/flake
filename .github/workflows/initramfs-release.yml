@@ -1,4 +1,4 @@
-name: "Kexec Release"
+name: "initramfs Release"
 on:
   workflow_dispatch:
 
@@ -13,8 +13,8 @@ jobs:
     - uses: DeterminateSystems/nix-installer-action@main
     
     - run: |
-        kernelOutPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.kexec-aarch64.config.system.build.kernel)
-        initrdOutPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.kexec-aarch64.config.system.build.initialRamdisk)
+        kernelOutPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.initramfs-aarch64.config.system.build.kernel)
+        initrdOutPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.initramfs-aarch64.config.system.build.initialRamdisk)
         kexecOutPath=$(nix build --no-link --print-out-paths nixpkgs#pkgsStatic.kexec-tools)
         
         ln -sf $kernelOutPath/Image /tmp/kernel
@@ -31,8 +31,8 @@ jobs:
     - uses: DeterminateSystems/nix-installer-action@main
     
     - run: |
-        kernelOutPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.kexec-x86_64.config.system.build.kernel)
-        initrdOutPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.kexec-x86_64.config.system.build.initialRamdisk)
+        kernelOutPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.initramfs-x86_64.config.system.build.kernel)
+        initrdOutPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.initramfs-x86_64.config.system.build.initialRamdisk)
         kexecOutPath=$(nix build --no-link --print-out-paths nixpkgs#pkgsStatic.kexec-tools)
 
         ln -sf $kernelOutPath/bzImage /tmp/kernel
