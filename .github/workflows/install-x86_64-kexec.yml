@@ -62,10 +62,7 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
 
-        cat > ~/.ssh/ssh_config <<EOF
-        Host github.com
-          User git
-          IdentityFile ~/.ssh/id_ed25519
+        cat > ~/.ssh/config <<EOF
         Host installer
           HostName ${{ inputs.ip }}
           HostKeyAlias installer
