@@ -1,5 +1,3 @@
-name: Setup Cloudflare WARP (IPv6 only)
-
 runs:
   using: composite
   steps:

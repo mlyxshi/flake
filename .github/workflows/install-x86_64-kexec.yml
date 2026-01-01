@@ -25,6 +25,8 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
 
+    - uses: actions/checkout@master
+
     - run: curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/kexec
     - run: curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/initrd
     - run: curl -LO https://github.com/mlyxshi/flake/releases/download/x86_64/kernel
