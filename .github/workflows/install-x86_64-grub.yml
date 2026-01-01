@@ -29,12 +29,15 @@ jobs:
     - run: wget https://github.com/mlyxshi/flake/releases/download/x86_64/initrd
     - run: wget https://github.com/mlyxshi/flake/releases/download/x86_64/kernel
 
-    - name: Set up WARP (IPv6 only)
+    - name: Set up WARP (For IPv6 only server)
       if: contains(inputs.ip, ':')
-      uses: fscarmen/warp-on-actions@v1.4
-      with:
-        stack: dual
-        mode: client    
+    - run: |
+        curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
+        echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
+        sudo apt update && sudo apt install -y cloudflare-warp
+        warp-cli --accept-tos registration new
+        warp-cli --accept-tos tunnel ip add-range 0.0.0.0/0
+        warp-cli --accept-tos connect
 
     - run: |
         until $SSH -o ConnectTimeout=10 $HOST
@@ -86,12 +89,15 @@ jobs:
         outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ inputs.flakeAttr }}.config.system.build.toplevel)
         echo "outPath=$outPath" >> "$GITHUB_ENV"
 
-    - name: Set up WARP (IPv6 only)
+    - name: Set up WARP (For IPv6 only server)
       if: contains(inputs.ip, ':')
-      uses: fscarmen/warp-on-actions@v1.4
-      with:
-        stack: dual
-        mode: client  
+    - run: |
+        curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
+        echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
+        sudo apt update && sudo apt install -y cloudflare-warp
+        warp-cli --accept-tos registration new
+        warp-cli --accept-tos tunnel ip add-range 0.0.0.0/0
+        warp-cli --accept-tos connect
 
     - run: |
         until $SSH -o ConnectTimeout=10 $HOST ls /etc/initrd-release
