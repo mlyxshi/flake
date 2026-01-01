@@ -80,7 +80,6 @@ jobs:
           StrictHostKeyChecking no
         EOF
 
-
     - uses: actions/checkout@master
     - uses: DeterminateSystems/nix-installer-action@main
 
