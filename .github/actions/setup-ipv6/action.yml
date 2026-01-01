@@ -10,5 +10,5 @@ runs:
         warp-cli --accept-tos registration new
         warp-cli --accept-tos tunnel ip add-range 0.0.0.0/0
         warp-cli --accept-tos connect
-        curl -sm8 --retry 3 -A Mozilla https://api-ipv6.ip.sb/geoip
+
 
