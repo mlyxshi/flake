@@ -10,11 +10,6 @@ on:
         description: 'OS Config Hostname'
         type: string
 
-
-env:
-  SSH: ssh -o StrictHostKeyChecking=no
-  HOST: root@${{ inputs.ip }}
-
 jobs:
 
   kexec:
@@ -24,6 +19,14 @@ jobs:
         mkdir -m 0755  ~/.ssh
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
+
+        cat > ~/.ssh/config <<EOF
+        Host installer
+          HostName ${{ inputs.ip }}
+          HostKeyAlias installer
+          User root
+          StrictHostKeyChecking no
+        EOF
 
     - uses: actions/checkout@master
 
@@ -36,23 +39,19 @@ jobs:
       if: contains(inputs.ip, ':')
 
     - run: |
-        until $SSH -o ConnectTimeout=10 $HOST
+        until ssh -o ConnectTimeout=10 installer
         do
           echo "Server Not Reachable, Waiting..."
           sleep 5
         done
 
-    - run: scp -o StrictHostKeyChecking=no kexec initrd kernel root@[${{ inputs.ip }}]:/root/
-      if: contains(inputs.ip, ':')
+    - run: scp -o StrictHostKeyChecking=no kexec initrd kernel installer:/root/
 
-    - run: scp -o StrictHostKeyChecking=no kexec initrd kernel $HOST:/root/
-      if: ${{ !contains(inputs.ip, ':') }}
-
-    - run: $SSH $HOST chmod +x kexec
-    - run: $SSH $HOST ./kexec  --load ./kernel --initrd=./initrd --append="root=fstab"
+    - run: ssh installer +x kexec
+    - run: ssh installer ./kexec  --load ./kernel --initrd=./initrd --append="root=fstab"
     - name: Run kexec
       continue-on-error: true 
-      run: $SSH $HOST systemctl kexec -i
+      run: ssh installer systemctl kexec -i
 
   install:
     if: ${{ inputs.flakeAttr }}
@@ -67,7 +66,13 @@ jobs:
         Host github.com
           User git
           IdentityFile ~/.ssh/id_ed25519
+        Host installer
+          HostName ${{ inputs.ip }}
+          HostKeyAlias installer
+          User root
+          StrictHostKeyChecking no
         EOF
+
 
     - uses: actions/checkout@master
     - uses: DeterminateSystems/nix-installer-action@main
@@ -81,7 +86,7 @@ jobs:
       if: contains(inputs.ip, ':')
 
     - run: |
-        until $SSH -o ConnectTimeout=10 $HOST ls /etc/initrd-release
+        until ssh -o ConnectTimeout=10 installer ls /etc/initrd-release
         do
           echo "Kexec Environment Not Reachable, Waiting..."
           sleep 5
@@ -92,25 +97,25 @@ jobs:
         echo "DEVICE=$DEVICE" >> "$GITHUB_ENV"
 
     # BIOS + GPT
-    - run: $SSH $HOST sgdisk --zap-all $DEVICE
-    - run: $SSH $HOST sgdisk -n 0:0:+1M -t 0:ef02 $DEVICE
-    - run: $SSH $HOST sgdisk -n 0:0:+200M $DEVICE
-    - run: $SSH $HOST sgdisk -n 0:0:0  $DEVICE
+    - run: ssh installer sgdisk --zap-all $DEVICE
+    - run: ssh installer sgdisk -n 0:0:+1M -t 0:ef02 $DEVICE
+    - run: ssh installer sgdisk -n 0:0:+200M $DEVICE
+    - run: ssh installer sgdisk -n 0:0:0  $DEVICE
     # limine require raw partition
-    - run: $SSH $HOST dd if=/dev/zero of=${DEVICE}1 bs=1M count=1
+    - run: ssh installer dd if=/dev/zero of=${DEVICE}1 bs=1M count=1
 
-    - run: $SSH $HOST mkdir -p /mnt
-    - run: $SSH $HOST mkfs.fat -F 32 ${DEVICE}2
-    - run: $SSH $HOST mkfs.ext4 -F ${DEVICE}3
-    - run: $SSH $HOST mount ${DEVICE}3 /mnt
-    - run: $SSH $HOST mount --mkdir ${DEVICE}2 /mnt/boot
+    - run: ssh installer mkdir -p /mnt
+    - run: ssh installer mkfs.fat -F 32 ${DEVICE}2
+    - run: ssh installer mkfs.ext4 -F ${DEVICE}3
+    - run: ssh installer mount ${DEVICE}3 /mnt
+    - run: ssh installer mount --mkdir ${DEVICE}2 /mnt/boot
     
-    - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --substitute-on-destination --to ssh://$HOST?remote-store=local?root=/mnt $outPath
+    - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --substitute-on-destination --to ssh://installer?remote-store=local?root=/mnt $outPath
  
-    - run: $SSH $HOST nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $outPath
-    - run: $SSH $HOST mkdir /mnt/{etc,tmp}
-    - run: $SSH $HOST touch /mnt/etc/NIXOS
-    - run: $SSH $HOST NIXOS_INSTALL_BOOTLOADER=1 nixos-enter --root /mnt -- /run/current-system/bin/switch-to-configuration boot
-    - run: $SSH $HOST reboot
+    - run: ssh installer nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $outPath
+    - run: ssh installer mkdir /mnt/{etc,tmp}
+    - run: ssh installer touch /mnt/etc/NIXOS
+    - run: ssh installer NIXOS_INSTALL_BOOTLOADER=1 nixos-enter --root /mnt -- /run/current-system/bin/switch-to-configuration boot
+    - run: ssh installer reboot
 
     - run: curl "https://api.day.app/${{ secrets.BARK_KEY }}/NixOS%20Install%20Done/${{ inputs.flakeAttr }}?group=NixOS&icon=https://hydra.nixos.org/logo"
