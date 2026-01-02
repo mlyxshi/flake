@@ -11,8 +11,18 @@ runs:
       shell: bash
       run:  nix copy --substitute-on-destination --to ssh://${{ matrix.host }} $outPath
     
-    - run: ssh ${{ matrix.host }} nix store diff-closures /run/current-system $outPath
-    - run: ssh ${{ matrix.host }} nix-env -p /nix/var/nix/profiles/system --set $outPath
-    - run: ssh ${{ matrix.host }} $outPath/bin/switch-to-configuration switch
+    - name: Diff closures
+      shell: bash
+      run:  ssh ${{ matrix.host }} nix store diff-closures /run/current-system $outPath
+    
+    - name: Set system profile
+      shell: bash
+      run:  ssh ${{ matrix.host }} nix-env -p /nix/var/nix/profiles/system --set $outPath
+    
+    - name: Switch configuration
+      shell: bash
+      run:  ssh ${{ matrix.host }} $outPath/bin/switch-to-configuration switch
+
+
 
 
