@@ -21,8 +21,8 @@
         ip protocol icmp accept
         ip6 nexthdr icmpv6 accept
         ct state {established, related} accept
-        tcp dport { 23333, 8888 } accept
-        udp dport { 8888 } accept
+        tcp dport { 23333, 8888, 9999 } accept
+        udp dport { 9999 } accept
       }
     }
   '';
