@@ -28,11 +28,5 @@ jobs:
           StrictHostKeyChecking no
         EOF
         
-    - run: |
-        outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel)
-        echo "outPath=$outPath" >> "$GITHUB_ENV"
-
-    - run: nix copy --substitute-on-destination --to ssh://${{ matrix.host }} $outPath
-    - run: ssh ${{ matrix.host }} nix store diff-closures /run/current-system $outPath
-    - run: ssh ${{ matrix.host }} nix-env -p /nix/var/nix/profiles/system --set $outPath
-    - run: ssh ${{ matrix.host }} $outPath/bin/switch-to-configuration switch
+    - name: Build and Deploy
+      uses: ./.github/actions/system-upgrade
