@@ -2,9 +2,6 @@ name: "System Upgrade Alice"
 on:
   workflow_dispatch:
 
-env:
-  SSH: ssh -o StrictHostKeyChecking=no -p 23333
-
 jobs:
   Update:
     runs-on: ubuntu-latest  
@@ -20,16 +17,14 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
 
-        cat > ~/.ssh/ssh_config <<EOF
-        Host github.com
-          User git
-          IdentityFile ~/.ssh/id_ed25519
+        cat > ~/.ssh/config <<EOF
+        Host ${{ matrix.host }}
+          HostName ${{ matrix.host }}.mlyxshi.com
+          HostKeyAlias ${{ matrix.host }}
+          User root
+          Port 23333
+          StrictHostKeyChecking no
         EOF
-    - run: |
-        outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel)
-        echo "outPath=$outPath" >> "$GITHUB_ENV"
-
-    - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no -p 23333' nix copy --to ssh://root@${{ matrix.host }}.mlyxshi.com $outPath
-    - run: $SSH root@${{ matrix.host }}.mlyxshi.com nix store diff-closures /run/current-system $outPath
-    - run: $SSH root@${{ matrix.host }}.mlyxshi.com nix-env -p /nix/var/nix/profiles/system --set $outPath
-    - run: $SSH root@${{ matrix.host }}.mlyxshi.com $outPath/bin/switch-to-configuration switch
+        
+    - name: Build and Deploy
+      uses: ./.github/actions/system-upgrade
