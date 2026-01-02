@@ -5,9 +5,6 @@ on:
       - 'flake.lock'
   workflow_dispatch:
 
-env:
-  SSH: ssh -o StrictHostKeyChecking=no
-
 jobs:
   aarch64:
     runs-on: ubuntu-24.04-arm
@@ -23,15 +20,19 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
 
-        cat > ~/.ssh/ssh_config <<EOF
-        Host github.com
-          User git
-          IdentityFile ~/.ssh/id_ed25519
+        cat > ~/.ssh/config <<EOF
+        Host ${{ matrix.host }}
+          HostName ${{ matrix.host }}.mlyxshi.com
+          HostKeyAlias ${{ matrix.host }}
+          User root
+          StrictHostKeyChecking no
         EOF
+        
     - run: |
         outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel)
         echo "outPath=$outPath" >> "$GITHUB_ENV"
 
-    - run: NIX_SSHOPTS='-o StrictHostKeyChecking=no' nix copy --substitute-on-destination --to ssh://root@${{ matrix.host }}.mlyxshi.com $outPath
-    - run: $SSH root@${{ matrix.host }}.mlyxshi.com nix-env -p /nix/var/nix/profiles/system --set $outPath
-    - run: $SSH root@${{ matrix.host }}.mlyxshi.com $outPath/bin/switch-to-configuration switch
+    - run: nix copy --substitute-on-destination --to ssh://${{ matrix.host }} $outPath
+    - run: ssh ${{ matrix.host }} nix store diff-closures /run/current-system $outPath
+    - run: ssh ${{ matrix.host }} nix-env -p /nix/var/nix/profiles/system --set $outPath
+    - run: ssh ${{ matrix.host }} $outPath/bin/switch-to-configuration switch

@@ -197,10 +197,6 @@
 
   '';
 
-  system.activationScripts.postActivation.text = ''
-    [[ -e "/run/current-system" ]] && nix store  diff-closures /run/current-system "$systemConfig"
-  '';
-
   programs.fish = {
     enable = true;
     shellAliases = {
