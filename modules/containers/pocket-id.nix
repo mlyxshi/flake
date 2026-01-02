@@ -13,6 +13,7 @@
       APP_URL = "https://sso.${config.networking.domain}";
       TRUST_PROXY = "true";
       ANALYTICS_DISABLED = "true";
+      ENCRYPTION_KEY_FILE = "/secret/pocket-id";
     };
     extraOptions =
       lib.concatMap
