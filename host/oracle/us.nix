@@ -40,11 +40,15 @@
         listen_port = 9999;
         users = [
           {
+            name = "sekai";
             password = {
               _secret = "/secret/ss-password-2022";
             };
           }
         ];
+        # tls = {
+        #   enabled = true;
+        # };
       }
     ];
   };
