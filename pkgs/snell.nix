@@ -45,7 +45,7 @@ stdenv.mkDerivation (finalAttrs: {
   meta = {
     description = "Lean encrypted proxy protocol";
     homepage = "https://kb.nssurge.com/surge-knowledge-base/release-notes/snell";
-    license = lib.licenses.unfree;
+    # license = lib.licenses.unfree;
     platforms = [
       "x86_64-linux"
       "aarch64-linux"

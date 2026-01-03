@@ -23,8 +23,6 @@
     builder.memoryBytes = 1024 * 1024 * 1024 * 10;
   };
 
-  nixpkgs.config.allowUnfree = true;
-
   environment.systemPackages = with pkgs; [
     wget
     dig
