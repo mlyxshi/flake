@@ -1,7 +1,6 @@
 {
   inputs = {
     # nixpkgs.url = "github:NixOS/nixpkgs/pull/388231/head";
-    # nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
     # nixpkgs.url = "git+https://github.com/NixOS/nixpkgs.git?ref=master&shallow=1";
     nixpkgs.url = "git+https://github.com/NixOS/nixpkgs.git?ref=nixos-unstable&shallow=1";
 

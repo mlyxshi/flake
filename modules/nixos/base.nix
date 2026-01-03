@@ -16,6 +16,8 @@
   system.stateVersion = "26.05";
   system.nixos-init.enable = true;
 
+  nixpkgs.config.allowUnfree = true;
+
   nix = {
     package = pkgs.nixVersions.latest;
     channel.enable = false;
