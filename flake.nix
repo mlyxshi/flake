@@ -77,7 +77,7 @@
       };
 
       nixosModules = nixpkgs.lib.packagesFromDirectoryRecursive {
-        callPackage = path: _: import path;
+        callPackage = path: _: path;
         directory = ./modules;
       };
 
