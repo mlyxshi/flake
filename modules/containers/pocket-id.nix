@@ -7,14 +7,14 @@
 {
 
   virtualisation.oci-containers.containers.pocket-id = {
-    image = "ghcr.io/pocket-id/pocket-id";
+    image = "ghcr.io/pocket-id/pocket-id:v2";
     volumes = [ "/var/lib/pocket-id:/app/data" ];
     environment = {
       APP_URL = "https://sso.${config.networking.domain}";
       TRUST_PROXY = "true";
       ANALYTICS_DISABLED = "true";
     };
-    environmentFiles = [ /secret/pocket-id];
+    environmentFiles = [ /secret/pocket-id ];
     extraOptions =
       lib.concatMap
         (x: [
