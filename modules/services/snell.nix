@@ -9,8 +9,6 @@ let
   package = self.packages.${config.nixpkgs.hostPlatform.system}.snell;
 in
 {
-  programs.nix-ld.enable = true;
-
   systemd.services.snell = {
     after = [ "network.target" ];
     serviceConfig = {

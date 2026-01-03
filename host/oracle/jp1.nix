@@ -9,6 +9,7 @@
   imports = [
     self.nixosModules.containers.podman
     self.nixosModules.containers.pocket-id
+    self.nixosModules.services.snell
   ];
 
   services.sing-box.enable = true;
