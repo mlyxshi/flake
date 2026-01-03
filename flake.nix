@@ -18,26 +18,16 @@
       darwin,
       secret,
     }:
-    let
-      utils = import ./utils.nix { inherit self nixpkgs secret; };
-      inherit (utils)
-        modulesFromDirectoryRecursive
-        packagesSet-x86_64-linux
-        packagesSet-aarch64-linux
-        oracleNixosConfigurations
-        x86_64-initramfs-test
-        arm-initramfs-test
-        ;
-    in
     {
-      nixosModules = modulesFromDirectoryRecursive ./modules;
-      darwinConfigurations.M4 = darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        modules = [ ./host/darwin/M4.nix ];
-      };
-      darwinConfigurations.Macbook = darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        modules = [ ./host/darwin/Macbook.nix ];
+      darwinConfigurations = {
+        M4 = darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          modules = [ ./host/darwin/M4.nix ];
+        };
+        Macbook = darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          modules = [ ./host/darwin/Macbook.nix ];
+        };
       };
       nixosConfigurations = {
         # systemd-repart
@@ -69,14 +59,52 @@
           inherit self nixpkgs secret;
           hostName = "hk";
         };
-      }
-      // oracleNixosConfigurations;
 
-      packages.x86_64-linux = packagesSet-x86_64-linux;
-      packages.aarch64-linux = packagesSet-aarch64-linux;
+        jp1 = import ./host/oracle/mkHost.nix {
+          inherit self nixpkgs secret;
+          hostName = "jp1";
+        };
 
-      packages.aarch64-darwin.default = x86_64-initramfs-test;
-      packages.aarch64-darwin.arm-kexec-test = arm-initramfs-test;
+        jp2 = import ./host/oracle/mkHost.nix {
+          inherit self nixpkgs secret;
+          hostName = "jp2";
+        };
+
+        us = import ./host/oracle/mkHost.nix {
+          inherit self nixpkgs secret;
+          hostName = "us";
+        };
+      };
+
+      nixosModules = nixpkgs.lib.packagesFromDirectoryRecursive {
+        callPackage = path: _: import path;
+        directory = ./modules;
+      };
+
+      packages.x86_64-linux = {
+        snell = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/snell.nix { };
+      };
+
+      packages.aarch64-darwin = {
+        default = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "x86_64-initramfs-test" ''
+          /opt/homebrew/bin/qemu-system-x86_64 -cpu qemu64 -nographic -m 4G \
+            -kernel ${self.nixosConfigurations.initramfs-x86_64.config.system.build.kernel}/bzImage \
+            -initrd ${self.nixosConfigurations.initramfs-x86_64.config.system.build.initialRamdisk}/initrd \
+            -append "console=ttyS0 systemd.journald.forward_to_console root=fstab" \
+            -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
+            -device "virtio-scsi-pci,id=scsi0" -drive "file=disk.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
+        '';
+
+        arm-initramfs-test = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "arm-initramfs-test" ''
+          /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 4G \
+            -kernel ${self.nixosConfigurations.initramfs-aarch64.config.system.build.kernel}/Image \
+            -initrd ${self.nixosConfigurations.initramfs-aarch64.config.system.build.initialRamdisk}/initrd \
+            -append "systemd.journald.forward_to_console root=fstab" \
+            -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
+            -device "virtio-scsi-pci,id=scsi0" -drive "file=disk.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
+            -bios $(ls /opt/homebrew/Cellar/qemu/*/share/qemu/edk2-aarch64-code.fd)
+        '';
+      };
 
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt-tree;
     };
