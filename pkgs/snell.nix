@@ -4,7 +4,7 @@
   fetchzip,
   autoPatchelfHook,
   upx,
-  # gcc,
+  gcc,
   ...
 }:
 
@@ -33,9 +33,9 @@ stdenv.mkDerivation (finalAttrs: {
     upx
     autoPatchelfHook
   ];
-  # buildInputs = [
-  #   gcc.cc.lib
-  # ];
+  buildInputs = [
+    gcc.cc.lib
+  ];
   installPhase = ''
     upx -d snell-server
     install -Dm755 snell-server $out/bin/snell-server
