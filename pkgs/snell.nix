@@ -44,7 +44,7 @@ stdenv.mkDerivation (finalAttrs: {
   meta = {
     description = "Snell is a lean encrypted proxy protocol developed by Surge team";
     homepage = "https://kb.nssurge.com/surge-knowledge-base/release-notes/snell";
-    license = lib.licenses.unfree;
+    # license = lib.licenses.unfree;
     platforms = [
       "x86_64-linux"
       "aarch64-linux"
