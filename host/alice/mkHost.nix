@@ -2,7 +2,7 @@
   self,
   nixpkgs,
   secret,
-  hostName
+  hostName,
 }:
 nixpkgs.lib.nixosSystem {
   modules = [

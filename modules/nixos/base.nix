@@ -74,77 +74,75 @@
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  environment.systemPackages =
-    with pkgs;
-    [
-      wget
-      dig
-      file
-      htop
-      tree
-      libarchive
-      nix-output-monitor
-      nix-tree
-      nix-inspect
-      nixfmt
-      yazi-unwrapped
-      helix
-      nil
-      fd
-      ripgrep
-      starship
-      zoxide
-      eza
-      xh
-      bat
-      bat-extras.batman
-      gdu
-      gptfdisk
-      gitMinimal
+  environment.systemPackages = with pkgs; [
+    wget
+    dig
+    file
+    htop
+    tree
+    libarchive
+    nix-output-monitor
+    nix-tree
+    nix-inspect
+    nixfmt
+    yazi-unwrapped
+    helix
+    nil
+    fd
+    ripgrep
+    starship
+    zoxide
+    eza
+    xh
+    bat
+    bat-extras.batman
+    gdu
+    gptfdisk
+    gitMinimal
 
-      (writeShellScriptBin "update" ''
-        if [[ -e "/flake/flake.nix" ]]
-        then
-          cd /flake
-          git pull   
-        else
-          git clone --depth=1  git@github.com:mlyxshi/flake /flake
-          cd /flake
-        fi  
-
-
-        # bash -c '[[ $- == *i* ]] && echo Interactive || echo not-interactive
-        [[ $- == *i* ]] && NIX=nom || NIX=nix 
-        HOST=''${1:-$(hostnamectl hostname)} 
-
-        SYSTEM=$($NIX build --no-link --print-out-paths .#nixosConfigurations.$HOST.config.system.build.toplevel)
-
-        if [ -n "$SYSTEM" ]
-        then
-          [[ -e "/run/current-system" ]] && nix store diff-closures /run/current-system $SYSTEM
-          nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
-          $SYSTEM/bin/switch-to-configuration switch
-        else
-          echo "Build Failed"
-          exit 1
-        fi
-      '')
-
-      (writeShellScriptBin "local-update" ''
+    (writeShellScriptBin "update" ''
+      if [[ -e "/flake/flake.nix" ]]
+      then
         cd /flake
+        git pull   
+      else
+        git clone --depth=1  git@github.com:mlyxshi/flake /flake
+        cd /flake
+      fi  
 
-        SYSTEM=$(nom build --no-link --print-out-paths .#nixosConfigurations.$(hostnamectl hostname).config.system.build.toplevel)
 
-        if [ -n "$SYSTEM" ]
-        then
-          nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
-          $SYSTEM/bin/switch-to-configuration switch
-        else
-          echo "Build Failed"
-          exit 1
-        fi
-      '')
-    ];
+      # bash -c '[[ $- == *i* ]] && echo Interactive || echo not-interactive
+      [[ $- == *i* ]] && NIX=nom || NIX=nix 
+      HOST=''${1:-$(hostnamectl hostname)} 
+
+      SYSTEM=$($NIX build --no-link --print-out-paths .#nixosConfigurations.$HOST.config.system.build.toplevel)
+
+      if [ -n "$SYSTEM" ]
+      then
+        [[ -e "/run/current-system" ]] && nix store diff-closures /run/current-system $SYSTEM
+        nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
+        $SYSTEM/bin/switch-to-configuration switch
+      else
+        echo "Build Failed"
+        exit 1
+      fi
+    '')
+
+    (writeShellScriptBin "local-update" ''
+      cd /flake
+
+      SYSTEM=$(nom build --no-link --print-out-paths .#nixosConfigurations.$(hostnamectl hostname).config.system.build.toplevel)
+
+      if [ -n "$SYSTEM" ]
+      then
+        nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
+        $SYSTEM/bin/switch-to-configuration switch
+      else
+        echo "Build Failed"
+        exit 1
+      fi
+    '')
+  ];
 
   programs.fish = {
     enable = true;

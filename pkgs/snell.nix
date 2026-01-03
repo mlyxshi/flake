@@ -4,8 +4,6 @@
   fetchzip,
   autoPatchelfHook,
   upx,
-  gcc,
-  ...
 }:
 let
   platformMap = {
@@ -14,7 +12,7 @@ let
   };
   system = stdenv.hostPlatform.system;
   platform = platformMap.${system} or (throw "Unsupported platform: ${system}");
-  sha256s = {
+  hashs = {
     "x86_64-linux" = "sha256-J2kRVJRC0GhxLMarg7Ucdk8uvzTsKbFHePEflPjwsHU=";
     "aarch64-linux" = "sha256-UT+Rd6TEMYL/+xfqGxGN/tiSBvN8ntDrkCBj4PuMRwg=";
   };
@@ -25,7 +23,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   src = fetchzip {
     url = "https://dl.nssurge.com/snell/snell-server-v${finalAttrs.version}-${platform}.zip";
-    sha256 = sha256s.${system};
+    hash = hashs.${system};
   };
 
   nativeBuildInputs = [
@@ -33,15 +31,19 @@ stdenv.mkDerivation (finalAttrs: {
     autoPatchelfHook
   ];
   buildInputs = [
-    gcc.cc.lib
+    (lib.getLib stdenv.cc.cc)
   ];
   installPhase = ''
+    runHook preInstall
+
     upx -d snell-server
     install -Dm755 snell-server $out/bin/snell-server
+
+    runHook postInstall
   '';
 
   meta = {
-    description = "Snell is a lean encrypted proxy protocol developed by Surge team";
+    description = "Lean encrypted proxy protocol";
     homepage = "https://kb.nssurge.com/surge-knowledge-base/release-notes/snell";
     # license = lib.licenses.unfree;
     platforms = [
