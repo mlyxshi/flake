@@ -17,6 +17,8 @@
 
   nix.enable = false; # DeterminateSystems  Nix
 
+  nixpkgs.config.allowUnfree = true;
+
   # https://docs.determinate.systems/determinate-nix/#determinate-nixd-configuration
   # Default Determinate Native Linux builder is 8GB and tmpfs on root, which is enough for most builds. But nixos image required more memory.
   environment.etc."determinate/config.json".text = builtins.toJSON {
