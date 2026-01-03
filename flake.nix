@@ -85,6 +85,10 @@
         snell = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/snell.nix { };
       };
 
+      packages.aarch64-linux = {
+        snell = nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/snell.nix { };
+      };
+
       packages.aarch64-darwin = {
         default = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "x86_64-initramfs-test" ''
           /opt/homebrew/bin/qemu-system-x86_64 -cpu qemu64 -nographic -m 4G \

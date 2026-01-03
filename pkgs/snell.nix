@@ -1,18 +1,58 @@
-{ stdenvNoCC, fetchzip }:
-stdenvNoCC.mkDerivation rec {
-  pname = "snell";
+{
+  lib,
+  stdenv,
+  fetchurl,
+  unzip,
+  autoPatchelfHook,
+  upx,
+  gcc,
+  ...
+}:
+stdenv.mkDerivation rec {
+  pname = "snell-server";
   version = "5.0.1";
 
-  src = fetchzip {
-    url = "https://dl.nssurge.com/snell/snell-server-v${version}-linux-amd64.zip";
-    hash = "sha256-J2kRVJRC0GhxLMarg7Ucdk8uvzTsKbFHePEflPjwsHU=";
-  };
+  src =
+    let
+      urls = {
+        "x86_64-linux" = {
+          url = "https://dl.nssurge.com/snell/snell-server-v${version}-linux-amd64.zip";
+          sha256 = "";
+        };
+        "aarch64-linux" = {
+          url = "https://dl.nssurge.com/snell/snell-v${version}-linux-aarch64.zip";
+          sha256 = "";
+        };
+      };
+      platformInfo =
+        urls.${stdenv.hostPlatform.system}
+          or (throw "Unsupported architecture: ${stdenv.hostPlatform.system}");
+    in
+    fetchurl platformInfo;
 
+  nativeBuildInputs = [
+    upx
+    unzip
+    autoPatchelfHook
+  ];
+  buildInputs = [
+    gcc.cc.lib
+  ];
+  unpackPhase = ''
+    unzip $src
+    upx -d snell-server
+  '';
   installPhase = ''
-    mkdir -p $out/bin
-    cp snell-server $out/bin/snell-server
+    install -Dm755 snell-server $out/bin/snell-server
   '';
 
-  meta.description = "https://kb.nssurge.com/surge-knowledge-base/zh/release-notes/snell";
-  meta.platforms = [ "x86_64-linux" ];
+  meta = {
+    description = "Snell is a lean encrypted proxy protocol developed by Surge team";
+    homepage = "https://kb.nssurge.com/surge-knowledge-base/release-notes/snell";
+    license = lib.licenses.unfree;
+    platforms = [
+      "x86_64-linux"
+      "aarch64-linux"
+    ];
+  };
 }
