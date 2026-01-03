@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
           sha256 = "";
         };
         "aarch64-linux" = {
-          url = "https://dl.nssurge.com/snell/snell-v${version}-linux-aarch64.zip";
+          url = "https://dl.nssurge.com/snell/snell-server-v${version}-linux-aarch64.zip";
           sha256 = "";
         };
       };
