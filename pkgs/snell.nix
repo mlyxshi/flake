@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
         };
         "aarch64-linux" = {
           url = "https://dl.nssurge.com/snell/snell-server-v${version}-linux-aarch64.zip";
-          sha256 = "";
+          sha256 = "sha256-LxeL9axGjOGhMEVO+kCgYD+75OR+zEiAqYn0q8f4JM8=";
         };
       };
       platformInfo =
@@ -54,5 +54,9 @@ stdenv.mkDerivation rec {
       "x86_64-linux"
       "aarch64-linux"
     ];
+    maintainers = with lib.maintainers; [
+      mlyxshi
+    ];
+    mainProgram = "snell-server";
   };
 }
