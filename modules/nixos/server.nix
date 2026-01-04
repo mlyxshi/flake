@@ -25,18 +25,18 @@
 
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/minimal.nix
   xdg = {
-    autostart.enable = mkDefault false;
-    icons.enable = mkDefault false;
-    mime.enable = mkDefault false;
-    sounds.enable = mkDefault false;
+    autostart.enable = false;
+    icons.enable = false;
+    mime.enable = false;
+    sounds.enable = false;
   };
 
   documentation = {
-    enable = mkDefault false;
-    doc.enable = mkDefault false;
-    info.enable = mkDefault false;
-    man.enable = mkDefault false;
-    nixos.enable = mkDefault false;
+    enable = false;
+    doc.enable = false;
+    info.enable = false;
+    man.enable = false;
+    nixos.enable = false;
   };
 
 
