@@ -23,7 +23,7 @@
 
   fonts.fontconfig.enable = false;
 
-  # nixos/modules/profiles/minimal.nix
+  # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/minimal.nix
   xdg.autostart.enable = false;
   xdg.icons.enable = false;
   xdg.menus.enable = false;
@@ -33,7 +33,7 @@
   documentation.enable = false;
 
 
-  # perlless
+  # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/perlless.nix
   systemd.sysusers.enable = true;
   system.etc.overlay.enable = true;
 
