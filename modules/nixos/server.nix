@@ -41,6 +41,7 @@
   systemd.sysusers.enable = true;
   system.etc.overlay.enable = true;
 
-  system.disableInstallerTools = true;
+  system.tools.nixos-generate-config.enable = false;
   environment.defaultPackages = [ ];
+  system.forbiddenDependenciesRegexes = [ "perl" ];
 }

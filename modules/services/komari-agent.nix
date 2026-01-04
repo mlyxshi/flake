@@ -6,6 +6,12 @@
   ...
 }:
 {
+  # nixpkgs.overlays = [
+  #   (final: prev: {
+  #     komari-agent = prev.callPackage (self + "/pkgs/komari-agent.nix") { };
+  #   })
+  # ];
+
   systemd.services.komari-agent = {
     environment = {
       AGENT_ENDPOINT = "https://top.mlyxshi.com";
@@ -14,7 +20,7 @@
       AGENT_MONTH_ROTATE = lib.mkDefault "1";
       AGENT_CONFIG_FILE = "/secret/komari"; # token
     };
-    serviceConfig.ExecStart = lib.mkDefault "${pkgs.komari-agent}/bin/komari-agent";
+    serviceConfig.ExecStart = "${pkgs.komari-agent}/bin/komari-agent";
     serviceConfig.DynamicUser = true;
     wants = [ "network-online.target" ];
     after = [ "network-online.target" ];
