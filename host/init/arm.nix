@@ -18,7 +18,6 @@
   services.getty.autologinUser = "root";
 
   networking.useDHCP = false;
-  networking.dhcpcd.enable = false;
 
   systemd.network.enable = true;
   systemd.network.wait-online.anyInterface = true;

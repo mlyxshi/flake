@@ -23,19 +23,15 @@
 
   fonts.fontconfig.enable = false;
 
+  # nixos/modules/profiles/minimal.nix
   xdg.autostart.enable = false;
   xdg.icons.enable = false;
   xdg.menus.enable = false;
   xdg.mime.enable = false;
   xdg.sounds.enable = false;
 
-  documentation = {
-    enable = false;
-    doc.enable = false;
-    info.enable = false;
-    man.enable = false;
-    nixos.enable = false;
-  };
+  documentation.enable = false;
+
 
   # perlless
   systemd.sysusers.enable = true;
