@@ -127,21 +127,6 @@
         exit 1
       fi
     '')
-
-    (writeShellScriptBin "local-update" ''
-      cd /flake
-
-      SYSTEM=$(nom build --no-link --print-out-paths .#nixosConfigurations.$(hostnamectl hostname).config.system.build.toplevel)
-
-      if [ -n "$SYSTEM" ]
-      then
-        nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
-        $SYSTEM/bin/switch-to-configuration switch
-      else
-        echo "Build Failed"
-        exit 1
-      fi
-    '')
   ];
 
   programs.fish = {
