@@ -5,15 +5,17 @@
   config,
   ...
 }:
-let
-  package = self.packages.${config.nixpkgs.hostPlatform.system}.snell;
-in
 {
+
+  nixpkgs.overlays = [
+    (final: prev: {
+      snell = prev.callPackage self + "/pkgs/snell.nix" { };
+    })
+  ];
+
   systemd.services.snell = {
     after = [ "network.target" ];
-    serviceConfig = {
-      ExecStart = "${package}/bin/snell-server -c /secret/snell";
-    };
+    serviceConfig.ExecStart = "${pkgs.snell}/bin/snell-server -c /secret/snell";
     wantedBy = [ "multi-user.target" ];
   };
 }
