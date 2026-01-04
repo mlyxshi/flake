@@ -24,13 +24,21 @@
   fonts.fontconfig.enable = false;
 
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/minimal.nix
-  xdg.autostart.enable = false;
-  xdg.icons.enable = false;
-  xdg.menus.enable = false;
-  xdg.mime.enable = false;
-  xdg.sounds.enable = false;
+  xdg = {
+    autostart.enable = mkDefault false;
+    icons.enable = mkDefault false;
+    mime.enable = mkDefault false;
+    sounds.enable = mkDefault false;
+  };
 
-  documentation.enable = false;
+  documentation = {
+    enable = mkDefault false;
+    doc.enable = mkDefault false;
+    info.enable = mkDefault false;
+    man.enable = mkDefault false;
+    nixos.enable = mkDefault false;
+  };
+
 
 
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/perlless.nix
