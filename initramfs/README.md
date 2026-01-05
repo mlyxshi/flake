@@ -52,6 +52,6 @@ EOF
 # cpio
 ```
 mkdir /test 
-cd test
+cd /test
 zstdcat /run/current-system/initrd | cpio -idv 
 ```
