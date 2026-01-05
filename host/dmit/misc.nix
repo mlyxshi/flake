@@ -12,6 +12,8 @@
   services.qemuGuest.enable = true; # https://t.me/DMIT_INC_CN/768
   services.openssh.ports = [ 23333 ];
 
+  boot.blacklistedKernelModules = [ "virtio_balloon" ];
+
   networking.nftables.enable = true;
   networking.nftables.ruleset = ''
     table inet FIREWALL {

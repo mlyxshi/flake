@@ -17,6 +17,7 @@ nixpkgs.lib.nixosSystem {
       networking.hostName = "${hostName}";
       # services.getty.autologinUser = "root";
       services.openssh.ports = [ 23333 ];
+      boot.blacklistedKernelModules = [ "virtio_balloon" ];
     }
   ];
   specialArgs = { inherit self; };
