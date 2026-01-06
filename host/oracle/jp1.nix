@@ -20,7 +20,7 @@
         type = "anytls";
         tag = "anytls-in";
         listen = "0.0.0.0";
-        listen_port = 9999;
+        listen_port = 8888;
         users = [
           {
             password = {
