@@ -19,8 +19,6 @@
 
   environment.systemPackages = with pkgs; [
     nix-index
-    hath-rust
-
     (pkgs.writeShellScriptBin "update-index" ''
       filename="index-$(uname -m | sed 's/^arm64$/aarch64/')-$(uname | tr A-Z a-z)"
       mkdir -p ~/.cache/nix-index && cd ~/.cache/nix-index

@@ -146,7 +146,6 @@
       sstat = "systemctl status";
       scat = "systemctl cat";
       slog = "journalctl -u";
-      nixpkgs = "hx ${config.nixpkgs.flake.source}";
     };
 
     shellInit = ''
@@ -157,9 +156,6 @@
         readlink -f $(which $argv) 
       end
 
-      function cnar
-        curl https://cache.mlyxshi.com/$argv.narinfo  
-      end
 
       function drv
         nix show-derivation $(nix-store -q --deriver $argv)

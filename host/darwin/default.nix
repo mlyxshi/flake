@@ -224,17 +224,6 @@
         codesign -fs - --deep  $argv
       end
 
-      function updatesb
-        set tag (curl -s https://api.github.com/repos/SagerNet/sing-box/releases | jq -r '[.[] | select(.prerelease)][0].name')
-        cd /Users/dominic/Downloads
-        wget https://github.com/SagerNet/sing-box/releases/download/v$tag/SFM-$tag-universal.dmg
-        open SFM-$tag-universal.dmg
-      end
-
-      function cnar
-        curl https://cache.mlyxshi.com/$argv.narinfo  
-      end
-
       function drv
         nix show-derivation $(nix-store -q --deriver $argv)
       end
