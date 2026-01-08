@@ -22,6 +22,7 @@
       "cloudflared"
       "oci-cli"
       "ipatool"
+      "flyctl"
     ];
 
     casks = [

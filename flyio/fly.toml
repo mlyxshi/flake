@@ -1,0 +1,20 @@
+app = 'commit-notifier'
+primary_region = 'lax'
+
+[build]
+  image = 'ghcr.io/linyinfeng/commit-notifier'
+
+[env]
+  COMMIT_NOTIFIER_CRON = '0 * * * * *'
+  EXTRA_ARGS = '--admin-chat-id=696869490'
+
+[[mounts]]
+  source = 'commit_notifier_data'
+  destination = '/data'
+
+[[vm]]
+  size = 'shared-cpu-1x'
+  memory = '256mb'
+  cpus = 1
+  memory_mb = 256
+
