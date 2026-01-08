@@ -9,7 +9,6 @@
   imports = [
     self.nixosModules.containers.podman
     self.nixosModules.containers.pocket-id
-    self.nixosModules.containers.commit-notifier
     # self.nixosModules.services.snell
   ];
 
