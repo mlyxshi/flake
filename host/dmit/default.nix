@@ -12,6 +12,8 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.services.komari-agent
     self.nixosModules.services.cloudflare-warp
     self.nixosModules.services.snell
+    self.nixosModules.containers.podman
+    self.nixosModules.containers.commit-notifier
     ./misc.nix
     {
       nixpkgs.hostPlatform = "x86_64-linux";
