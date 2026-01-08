@@ -1,4 +1,4 @@
-name: calculate-snell-hashes
+name: Snell hashes
 
 on:
   workflow_dispatch:
@@ -11,34 +11,53 @@ on:
 jobs:
   calculate-hash:
     runs-on: ubuntu-latest
+    outputs:
+      version_hash: ${{ steps.hash.outputs.version_hash }}
 
     steps:
     - uses: DeterminateSystems/nix-installer-action@main
-    
+
     - name: calculate SRI hash for fetchzip
+      id: hash
       run: |
         downloadUrl="https://dl.nssurge.com/snell/snell-server-v${{ inputs.version }}-linux-amd64.zip"
         BUILD_OUTPUT=$(nix-build -E "with import <nixpkgs> {}; fetchzip { url = \"$downloadUrl\"; sha256 = lib.fakeSha256; }" 2>&1 || true)
-        VERSION_HASH=$(echo "$BUILD_OUTPUT" | grep "got:" | awk '{print $2}' || echo "")
+        VERSION_HASH=$(echo "$BUILD_OUTPUT" | grep "got:" | awk '{print $2}')
         if [ -z "$VERSION_HASH" ]; then
           echo "Failed to extract hash"
           exit 1
         fi
-        echo $VERSION_HASH
+        echo "version_hash=$VERSION_HASH" >> "$GITHUB_OUTPUT"
+
 
   calculate-hash-arm64:
     runs-on: ubuntu-24.04-arm
+    outputs:
+      version_hash: ${{ steps.hash.outputs.version_hash }}
 
     steps:
     - uses: DeterminateSystems/nix-installer-action@main
-    
+
     - name: calculate SRI hash for fetchzip
+      id: hash
       run: |
         downloadUrl="https://dl.nssurge.com/snell/snell-server-v${{ inputs.version }}-linux-aarch64.zip"
         BUILD_OUTPUT=$(nix-build -E "with import <nixpkgs> {}; fetchzip { url = \"$downloadUrl\"; sha256 = lib.fakeSha256; }" 2>&1 || true)
-        VERSION_HASH=$(echo "$BUILD_OUTPUT" | grep "got:" | awk '{print $2}' || echo "")
+        VERSION_HASH=$(echo "$BUILD_OUTPUT" | grep "got:" | awk '{print $2}')
         if [ -z "$VERSION_HASH" ]; then
           echo "Failed to extract hash"
           exit 1
         fi
-        echo $VERSION_HASH
+        echo "version_hash=$VERSION_HASH" >> "$GITHUB_OUTPUT"
+
+  show-hashes:
+    runs-on: ubuntu-latest
+    needs:
+      - calculate-hash
+      - calculate-hash-arm64
+
+    steps:
+    - name: Show VERSION_HASH values
+      run: |
+        echo "x86_64 hash:  ${{ needs.calculate-hash.outputs.version_hash }}"
+        echo "aarch64 hash:  ${{ needs.calculate-hash-arm64.outputs.version_hash }}"
