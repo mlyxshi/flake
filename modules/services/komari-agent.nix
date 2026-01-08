@@ -6,12 +6,6 @@
   ...
 }:
 {
-  # nixpkgs.overlays = [
-  #   (final: prev: {
-  #     komari-agent = prev.callPackage (self + "/pkgs/komari-agent.nix") { };
-  #   })
-  # ];
-
   systemd.services.komari-agent = {
     environment = {
       AGENT_ENDPOINT = "https://top.mlyxshi.com";

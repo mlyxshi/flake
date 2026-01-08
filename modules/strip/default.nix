@@ -17,6 +17,4 @@
   services.logrotate.enable = false;
   programs.fuse.enable = false;
   environment.stub-ld.enable = false;
-
-  system.disableInstallerTools = true;
 }
