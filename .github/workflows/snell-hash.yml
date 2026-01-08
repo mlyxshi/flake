@@ -1,0 +1,44 @@
+name: calculate-snell-hashes
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: version
+        required: true
+        type: string
+
+jobs:
+  calculate-hash:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: DeterminateSystems/nix-installer-action@main
+    
+    - name: calculate SRI hash for fetchzip
+      run: |
+        downloadUrl="https://dl.nssurge.com/snell/snell-server-v${{ inputs.version }}-linux-amd64.zip"
+        BUILD_OUTPUT=$(nix-build -E "with import <nixpkgs> {}; fetchzip { url = \"$downloadUrl\"; sha256 = lib.fakeSha256; }" 2>&1 || true)
+        VERSION_HASH=$(echo "$BUILD_OUTPUT" | grep "got:" | awk '{print $2}' || echo "")
+        if [ -z "$VERSION_HASH" ]; then
+          echo "Failed to extract hash"
+          exit 1
+        fi
+        echo $VERSION_HASH
+
+  calculate-hash-arm64:
+    runs-on: ubuntu-24.04-arm
+
+    steps:
+    - uses: DeterminateSystems/nix-installer-action@main
+    
+    - name: calculate SRI hash for fetchzip
+      run: |
+        downloadUrl="https://dl.nssurge.com/snell/snell-server-v${{ inputs.version }}-linux-aarch64.zip"
+        BUILD_OUTPUT=$(nix-build -E "with import <nixpkgs> {}; fetchzip { url = \"$downloadUrl\"; sha256 = lib.fakeSha256; }" 2>&1 || true)
+        VERSION_HASH=$(echo "$BUILD_OUTPUT" | grep "got:" | awk '{print $2}' || echo "")
+        if [ -z "$VERSION_HASH" ]; then
+          echo "Failed to extract hash"
+          exit 1
+        fi
+        echo $VERSION_HASH
