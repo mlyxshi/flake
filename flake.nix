@@ -86,6 +86,7 @@
 
       packages.aarch64-linux = {
         snell = nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/snell.nix { };
+        commit-notifier = nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/commit-notifier.nix { };
       };
 
       packages.aarch64-darwin = {
