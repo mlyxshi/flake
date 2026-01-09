@@ -3,9 +3,9 @@
   rustPlatform,
   fetchFromGitHub,
   pkg-config,
-  openssl,
   sqlite,
   libgit2,
+  openssl,
 }:
 
 rustPlatform.buildRustPackage (finalAttrs: {
@@ -23,9 +23,9 @@ rustPlatform.buildRustPackage (finalAttrs: {
   nativeBuildInputs = [ pkg-config ];
 
   buildInputs = [
-    openssl
     sqlite
     libgit2
+    openssl
   ];
 
   meta = {
