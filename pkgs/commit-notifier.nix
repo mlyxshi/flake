@@ -8,7 +8,7 @@
   fetchFromGitHub,
 }:
 
-rustPlatform.buildRustPackage rec {
+rustPlatform.buildRustPackage (finalAttrs: {
   pname = "commit-notifier";
   version = "0-unstable-2026-01-03";
   src = fetchFromGitHub ({
@@ -23,6 +23,8 @@ rustPlatform.buildRustPackage rec {
 
   RUSTC_BOOTSTRAP = 1;
 
+  nativeBuildInputs = [ pkg-config ];
+
   buildInputs = [
     openssl
     sqlite
@@ -30,7 +32,16 @@ rustPlatform.buildRustPackage rec {
     zlib
   ];
 
-  # TODO libssh2-sys failed to pass test
-  # doCheck = false;
-  nativeBuildInputs = [ pkg-config ];
-}
+  passthru.updateScript = nix-update-script { };
+
+  meta = {
+    description = "A simple telegram bot monitoring commit status.";
+    homepage = "https://github.com/linyinfeng/commit-notifier";
+    license = lib.licenses.mit;
+    maintainers = with lib.maintainers; [
+      mlyxshi
+    ];
+    mainProgram = "commit-notifier";
+  };
+
+})
