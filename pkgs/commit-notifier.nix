@@ -1,12 +1,11 @@
 {
   lib,
   rustPlatform,
+  fetchFromGitHub,
   pkg-config,
   openssl,
   sqlite,
-  zlib,
   libgit2,
-  fetchFromGitHub,
 }:
 
 rustPlatform.buildRustPackage (finalAttrs: {
@@ -27,7 +26,6 @@ rustPlatform.buildRustPackage (finalAttrs: {
     openssl
     sqlite
     libgit2
-    zlib
   ];
 
   meta = {
