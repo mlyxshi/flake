@@ -35,6 +35,7 @@ rustPlatform.buildRustPackage (finalAttrs: {
     maintainers = with lib.maintainers; [
       mlyxshi
     ];
+    platforms = lib.platforms.linux;
     mainProgram = "commit-notifier";
   };
 
