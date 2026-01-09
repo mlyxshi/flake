@@ -13,11 +13,11 @@
     })
   ];
 
-# mkdir -p /data/chats/696869490
-# /notifier repo-add nixpkgs https://github.com/NixOS/nixpkgs
-# /notifier repo-edit nixpkgs --branch-regex master|nixos-unstable|nixos-unstable-small
-# /notifier condition-add —type remove-if-in-branch —expr nixos-unstable nixpkgs in-nixos-unstable
-# /notifier pr-add https://github.com/NixOS/nixpkgs/pull/476546
+  # mkdir -p /data/chats/696869490
+  # /notifier repo-add nixpkgs https://github.com/NixOS/nixpkgs
+  # /notifier repo-edit nixpkgs --branch-regex master|nixos-unstable|nixos-unstable-small
+  # /notifier condition-add —type remove-if-in-branch —expr nixos-unstable nixpkgs in-nixos-unstable
+  # /notifier pr-add https://github.com/NixOS/nixpkgs/pull/476546
 
   systemd.services.commit-notifier = {
     path = [
@@ -27,8 +27,16 @@
       RUST_LOG = "info";
     };
     preStart = "mkdir -p /var/lib/commit-notifier/chats/696869490";
-    serviceConfig.ExecStart = "${pkgs.commit-notifier}/bin/commit-notifier --working-dir /var/lib/commit-notifier  --cron "0 * * * * *"   --admin-chat-id=696869490";
+    script = ''
+      export TELOXIDE_TOKEN=$(cat "$CREDENTIALS_DIRECTORY/telegram-bot")
+      export GITHUB_TOKEN=$(cat "$CREDENTIALS_DIRECTORY/github")
+      ${pkgs.commit-notifier}/bin/commit-notifier --working-dir /var/lib/commit-notifier  --cron "0 * * * * *"   --admin-chat-id=696869490
+    '';
     serviceConfig.StateDirectory = "commit-notifier";
+    serviceConfig.LoadCredential = [
+          "telegram-bot:${cfg.tokenFiles.telegramBot}"
+          "github:${cfg.tokenFiles.github}"
+        ];
     wants = [ "network-online.target" ];
     after = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
