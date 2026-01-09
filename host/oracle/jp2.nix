@@ -10,6 +10,7 @@
     self.nixosModules.services.prometheus
     self.nixosModules.services.transmission.default
     self.nixosModules.services.hath
+    self.nixosModules.services.commit-notifier
 
     self.nixosModules.containers.podman
     self.nixosModules.containers.miniflux
