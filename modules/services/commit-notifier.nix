@@ -28,15 +28,11 @@
     };
     preStart = "mkdir -p /var/lib/commit-notifier/chats/696869490";
     script = ''
-      export TELOXIDE_TOKEN=$(cat "$CREDENTIALS_DIRECTORY/telegram-bot")
-      export GITHUB_TOKEN=$(cat "$CREDENTIALS_DIRECTORY/github")
+      export TELOXIDE_TOKEN=$(cat "/secret/telegram-bot-token")
+      export GITHUB_TOKEN=$(cat "/secret/github-no-premission")
       ${pkgs.commit-notifier}/bin/commit-notifier --working-dir /var/lib/commit-notifier  --cron "0 * * * * *"   --admin-chat-id=696869490
     '';
     serviceConfig.StateDirectory = "commit-notifier";
-    serviceConfig.LoadCredential = [
-          "telegram-bot:${cfg.tokenFiles.telegramBot}"
-          "github:${cfg.tokenFiles.github}"
-        ];
     wants = [ "network-online.target" ];
     after = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
