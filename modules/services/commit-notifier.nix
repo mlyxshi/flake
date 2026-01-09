@@ -26,13 +26,15 @@
     environment = {
       RUST_LOG = "info";
     };
-    postStart = "mkdir -p /var/lib/commit-notifier/chats/696869490";
-    script = ''
-      export TELOXIDE_TOKEN=$(cat "/secret/telegram-bot-token")
-      export GITHUB_TOKEN=$(cat "/secret/github-no-premission")
-      ${pkgs.commit-notifier}/bin/commit-notifier --working-dir /var/lib/commit-notifier  --cron "0 * * * * *"   --admin-chat-id=696869490
-    '';
-    serviceConfig.StateDirectory = "commit-notifier";
+
+    serviceConfig = {
+      Type = "oneshot";
+      EnvironmentFile = "/secret/commit-notifier";
+      StateDirectory = "commit-notifier";
+      ExecStart = "${pkgs.commit-notifier}/bin/commit-notifier --working-dir /var/lib/commit-notifier  --cron "0 * * * * *"   --admin-chat-id=696869490";
+      ExecStartPost="mkdir -p /var/lib/commit-notifier/chats/696869490";
+    };
+
     wants = [ "network-online.target" ];
     after = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
