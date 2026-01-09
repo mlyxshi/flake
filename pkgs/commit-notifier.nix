@@ -16,7 +16,6 @@ rustPlatform.buildRustPackage (finalAttrs: {
     owner = "linyinfeng";
     repo = "commit-notifier";
     rev = "21c6617645d1bdb0ce213f14053665e3474756bd";
-    fetchSubmodules = true;
     sha256 = "sha256-iKdqHMI+TJNbxxmFC/SP6DMCh1EiTWAnrXJ0Q6iSK6g=";
   });
 
