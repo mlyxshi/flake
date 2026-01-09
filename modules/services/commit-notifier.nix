@@ -21,7 +21,7 @@
 
   systemd.services.commit-notifier = {
     path = [
-      pkgs.git
+      pkgs.gitMinimal
     ];
     environment = {
       RUST_LOG = "info";
