@@ -1,4 +1,5 @@
 {
+  lib,
   rustPlatform,
   pkg-config,
   openssl,
