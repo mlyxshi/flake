@@ -26,7 +26,7 @@
     environment = {
       RUST_LOG = "info";
     };
-    preStart = "mkdir -p /var/lib/commit-notifier/chats/696869490";
+    postStart = "mkdir -p /var/lib/commit-notifier/chats/696869490";
     script = ''
       export TELOXIDE_TOKEN=$(cat "/secret/telegram-bot-token")
       export GITHUB_TOKEN=$(cat "/secret/github-no-premission")
