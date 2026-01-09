@@ -15,7 +15,7 @@ rustPlatform.buildRustPackage rec {
     hash = "sha256-iKdqHMI+TJNbxxmFC/SP6DMCh1EiTWAnrXJ0Q6iSK6g=";
   };
 
-  cargoHash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+  cargoHash = "sha256-OTXNRVEHT8cor76mNTbstb0GZBPal9qlie1wz2W5gpA=";
 
   meta = {
     description = "A simple bot tracking git commits/PRs/issues/branches";
