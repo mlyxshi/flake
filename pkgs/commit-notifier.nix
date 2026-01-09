@@ -7,7 +7,6 @@
   zlib,
   libgit2,
   fetchFromGitHub,
-  nix-update-script,
 }:
 
 rustPlatform.buildRustPackage (finalAttrs: {
@@ -33,8 +32,6 @@ rustPlatform.buildRustPackage (finalAttrs: {
     libgit2
     zlib
   ];
-
-  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "A simple telegram bot monitoring commit status.";
