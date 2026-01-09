@@ -31,6 +31,6 @@ rustPlatform.buildRustPackage rec {
   ];
 
   # TODO libssh2-sys failed to pass test
-  doCheck = false;
+  # doCheck = false;
   nativeBuildInputs = [ pkg-config ];
 }
