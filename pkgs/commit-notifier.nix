@@ -7,6 +7,7 @@
   zlib,
   libgit2,
   fetchFromGitHub,
+  nix-update-script,
 }:
 
 rustPlatform.buildRustPackage (finalAttrs: {
