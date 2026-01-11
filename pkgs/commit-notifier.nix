@@ -6,9 +6,10 @@
   sqlite,
   libgit2,
   openssl,
+  nix-update-script,
 }:
 
-rustPlatform.buildRustPackage (finalAttrs: {
+rustPlatform.buildRustPackage {
   pname = "commit-notifier";
   version = "0-unstable-2026-01-10";
   src = fetchFromGitHub {
@@ -28,15 +29,14 @@ rustPlatform.buildRustPackage (finalAttrs: {
     openssl
   ];
 
+  passthru.updateScript = nix-update-script { extraArgs = [ "--version=branch" ]; };
+
   meta = {
-    description = "A simple telegram bot monitoring commit status.";
+    description = "Simple telegram bot monitoring commit status";
     homepage = "https://github.com/linyinfeng/commit-notifier";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [
-      mlyxshi
-    ];
     platforms = lib.platforms.linux;
     mainProgram = "commit-notifier";
   };
 
-})
+}

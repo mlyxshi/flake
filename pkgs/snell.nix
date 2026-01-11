@@ -30,9 +30,11 @@ stdenv.mkDerivation (finalAttrs: {
     upx
     autoPatchelfHook
   ];
+
   buildInputs = [
     (lib.getLib stdenv.cc.cc)
   ];
+  
   installPhase = ''
     runHook preInstall
 
