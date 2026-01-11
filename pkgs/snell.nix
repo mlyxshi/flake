@@ -12,6 +12,7 @@ let
   };
   system = stdenv.hostPlatform.system;
   platform = platformMap.${system} or (throw "Unsupported platform: ${system}");
+  version = "5.0.1";
   hashs = {
     "x86_64-linux" = "sha256-J2kRVJRC0GhxLMarg7Ucdk8uvzTsKbFHePEflPjwsHU=";
     "aarch64-linux" = "sha256-UT+Rd6TEMYL/+xfqGxGN/tiSBvN8ntDrkCBj4PuMRwg=";
@@ -19,7 +20,7 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "snell-server";
-  version = "5.0.1";
+  inherit version;
 
   src = fetchzip {
     url = "https://dl.nssurge.com/snell/snell-server-v${finalAttrs.version}-${platform}.zip";
