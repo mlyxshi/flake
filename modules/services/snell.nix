@@ -9,7 +9,7 @@
 
   nixpkgs.overlays = [
     (final: prev: {
-      snell = prev.callPackage (self + "/pkgs/snell.nix") { };
+      snell = prev.callPackage (self + "/pkgs/snell/package.nix") { };
     })
   ];
 
