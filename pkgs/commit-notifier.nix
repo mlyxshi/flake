@@ -28,13 +28,5 @@ rustPlatform.buildRustPackage {
     libgit2
     openssl
   ];
-
-  meta = {
-    description = "Simple telegram bot monitoring commit status";
-    homepage = "https://github.com/linyinfeng/commit-notifier";
-    license = lib.licenses.mit;
-    platforms = lib.platforms.linux;
-    mainProgram = "commit-notifier";
-  };
-
+  
 }
