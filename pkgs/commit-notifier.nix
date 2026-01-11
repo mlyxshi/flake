@@ -1,3 +1,4 @@
+# nix-update --version=branch --flake packages.aarch64-linux.commit-notifier 
 {
   lib,
   rustPlatform,
@@ -6,7 +7,6 @@
   sqlite,
   libgit2,
   openssl,
-  nix-update-script,
 }:
 
 rustPlatform.buildRustPackage {
@@ -28,8 +28,6 @@ rustPlatform.buildRustPackage {
     libgit2
     openssl
   ];
-
-  passthru.updateScript = nix-update-script { extraArgs = [ "--version=branch" ]; };
 
   meta = {
     description = "Simple telegram bot monitoring commit status";

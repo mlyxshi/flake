@@ -82,7 +82,6 @@
 
       packages.x86_64-linux = {
         snell = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/snell.nix { };
-        commit-notifier = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/commit-notifier.nix { };
       };
 
       packages.aarch64-linux = {

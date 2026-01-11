@@ -1,11 +1,6 @@
 name: "Package Update"
 on:
   workflow_dispatch:
-    inputs:
-      package:
-        description: 'package name'
-        type: string
-        required: true
 
 jobs:
   CI:
@@ -19,5 +14,5 @@ jobs:
 
     - run: git config user.name github-actions[bot] && git config user.email github-actions[bot]@users.noreply.github.com
     - run: nix profile add nixpkgs#nix-update
-    - run: nix-update --commit --use-update-script --flake ${{ inputs.package }}
+    - run: nix-update --commit --version=branch --flake packages.aarch64-linux.commit-notifier 
     - run: git push
