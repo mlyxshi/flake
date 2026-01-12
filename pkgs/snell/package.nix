@@ -7,25 +7,14 @@
   upx,
 }:
 let
-  info = import ./version.nix;
-  inherit (info) version hash;
-
-  platformMap = {
-    "x86_64-linux" = "linux-amd64";
-    "aarch64-linux" = "linux-aarch64";
-  };
+  sources = import ./sources.nix;
   system = stdenv.hostPlatform.system;
-  platform = platformMap.${system};
-  fetchSrc = {
-    url = "https://dl.nssurge.com/snell/snell-server-v${version}-${platform}.zip";
-    hash = hash.${system};
-  };
 in
 stdenv.mkDerivation {
   pname = "snell-server";
-  inherit version;
+  inherit (sources) version;
 
-  src = fetchurl fetchSrc;
+  src = fetchurl sources.${system};
 
   nativeBuildInputs = [
     unzip
