@@ -1,13 +1,13 @@
 version=$(curl -s https://kb.nssurge.com/surge-knowledge-base/release-notes/snell \
-  | grep -o 'snell-server-v[0-9][0-9.]*-linux-amd64\.zip' \
-  | sed 's/snell-server-v//; s/-linux-amd64\.zip//' \
+  | grep -oE 'snell-server-v[0-9]+\.[0-9]+\.[0-9]+' \
+  | sed 's/snell-server-v//' \
   | sort -V | tail -n1)
   
-x86_64_url="https://dl.nssurge.com/snell/snell-server-v${version}-linux-amd64.zip"
-aarch64_url="https://dl.nssurge.com/snell/snell-server-v${version}-linux-aarch64.zip"
+linux_amd64_url="https://dl.nssurge.com/snell/snell-server-v${version}-linux-amd64.zip"
+linux_arm64_url="https://dl.nssurge.com/snell/snell-server-v${version}-linux-aarch64.zip"
 
-x86_64_hash=$(nix hash convert --to sri --hash-algo sha256 $(nix-prefetch-url $x86_64_url))
-aarch64_hash=$(nix hash convert --to sri --hash-algo sha256 $(nix-prefetch-url $aarch64_url))
+linux_amd64_hash=$(nix hash convert --to sri --hash-algo sha256 $(nix-prefetch-url $linux_amd64_url))
+linux_arm64_hash=$(nix hash convert --to sri --hash-algo sha256 $(nix-prefetch-url $linux_arm64_url))
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
@@ -17,12 +17,12 @@ cat > sources.nix <<EOF
 {
   version = "$version";
   x86_64-linux = {
-    url = "$x86_64_url";
-    hash = "$x86_64_hash";
+    url = "$linux_amd64_url";
+    hash = "$linux_amd64_hash";
   };
   aarch64-linux = {
-    url = "$aarch64_url";
-    hash = "$aarch64_hash";
+    url = "$linux_arm64_url";
+    hash = "$linux_arm64_hash";
   };
 }
 EOF
