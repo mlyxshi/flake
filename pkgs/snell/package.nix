@@ -8,13 +8,15 @@
 }:
 let
   sources = import ./sources.nix;
-  system = stdenv.hostPlatform.system;
+  source =
+    sources.${stdenv.hostPlatform.system}
+      or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
 in
 stdenv.mkDerivation {
   pname = "snell-server";
   inherit (sources) version;
 
-  src = fetchurl sources.${system};
+  src = fetchurl source;
 
   nativeBuildInputs = [
     unzip
@@ -34,4 +36,6 @@ stdenv.mkDerivation {
   installPhase = ''
     install -Dm755 snell-server $out/bin/snell-server
   '';
+
+  passthru.updateScript = ./update.sh;
 }
