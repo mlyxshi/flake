@@ -3,7 +3,7 @@ version=$(curl -s https://kb.nssurge.com/surge-knowledge-base/release-notes/snel
   | sort -V | tail -n1)
   
 x86_64_url="https://dl.nssurge.com/snell/snell-server-v${version}-linux-amd64.zip"
-aarch64_url= "https://dl.nssurge.com/snell/snell-server-v${version}-linux-aarch64.zip"
+aarch64_url="https://dl.nssurge.com/snell/snell-server-v${version}-linux-aarch64.zip"
 
 x86_64_hash=$(nix hash convert --to sri --hash-algo sha256 $(nix-prefetch-url $x86_64_url))
 aarch64_hash=$(nix hash convert --to sri --hash-algo sha256 $(nix-prefetch-url $aarch64_url))
