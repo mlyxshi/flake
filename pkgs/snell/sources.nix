@@ -7,7 +7,7 @@
     hash = "sha256-m+ocK541tzsxY0hWwE0Yw5MHK55dzeajJ4HYuPkIxTk=";
   };
   aarch64-linux = {
-    url = "https://dl.nssurge.com/snell/snell-server-v5.0.1-linux-amd64.zip";
+    url = "https://dl.nssurge.com/snell/snell-server-v5.0.1-linux-aarch64.zip";
     hash = "sha256-LxeL9axGjOGhMEVO+kCgYD+75OR+zEiAqYn0q8f4JM8=";
   };
 }

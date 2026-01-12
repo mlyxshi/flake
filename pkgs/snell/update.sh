@@ -21,7 +21,7 @@ cat > sources.nix <<EOF
     hash = "$x86_64_hash";
   };
   aarch64-linux = {
-    url = "$x86_64_url";
+    url = "$aarch64_url";
     hash = "$aarch64_hash";
   };
 }
