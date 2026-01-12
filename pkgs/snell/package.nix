@@ -36,6 +36,4 @@ stdenv.mkDerivation {
   installPhase = ''
     install -Dm755 snell-server $out/bin/snell-server
   '';
-
-  passthru.updateScript = ./update.sh;
 }
