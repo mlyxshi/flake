@@ -18,6 +18,31 @@
     self.nixosModules.containers.komari-monitor
   ];
 
+  services.sing-box.enable = true;
+  services.sing-box.settings = {
+    log.level = "info";
+    inbounds = [
+      {
+        type = "anytls";
+        tag = "anytls-in";
+        listen = "0.0.0.0";
+        listen_port = 8888;
+        users = [
+          {
+            password = {
+              _secret = "/secret/ss-password-2022";
+            };
+          }
+        ];
+        # tls = {
+        #   enabled = true;
+        #   certificate_path = "/root/certificate";
+        #   key_path = "/root/key";
+        # };
+      }
+    ];
+  };
+
   environment.systemPackages = with pkgs; [
     nix-index
     (pkgs.writeShellScriptBin "update-index" ''
