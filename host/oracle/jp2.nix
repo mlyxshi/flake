@@ -35,7 +35,7 @@
           }
         ];
         tls = {
-          enable = true;
+          enabled = true;
           insecure = false;
         };
       }
