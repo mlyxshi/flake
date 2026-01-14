@@ -34,11 +34,9 @@
             };
           }
         ];
-        # tls = {
-        #   enabled = true;
-        #   certificate_path = "/root/certificate";
-        #   key_path = "/root/key";
-        # };
+        tls = {
+          insecure = false;
+        };
       }
     ];
   };
