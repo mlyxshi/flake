@@ -29,30 +29,5 @@
     }
   '';
 
-  # services.sing-box.enable = true;
-  # services.sing-box.settings = {
-  #   log.level = "info";
-  #   inbounds = [
-  #     {
-  #       type = "anytls";
-  #       tag = "anytls-in";
-  #       listen = "0.0.0.0";
-  #       listen_port = 9999;
-  #       users = [
-  #         {
-  #           password = {
-  #             _secret = "/secret/proxy-pwd";
-  #           };
-  #         }
-  #       ];
-  #       tls = {
-  #         enabled = true;
-  #         certificate_path = "/secret/self-sign-certificate";
-  #         key_path = "/secret/self-sign-key";
-  #       };
-  #     }
-  #   ];
-  # };
-
   systemd.services.komari-agent.environment.AGENT_MONTH_ROTATE = "24";
 }
