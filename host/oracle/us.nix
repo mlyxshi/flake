@@ -14,40 +14,26 @@
     "net.ipv4.ip_forward" = 1;
   };
 
-  # services.sing-box.package = self.packages.${config.nixpkgs.hostPlatform.system}.sing-box;
   services.sing-box.enable = true;
   services.sing-box.settings = {
     log.level = "info";
     inbounds = [
       {
-        type = "shadowsocks";
-        tag = "ss-in";
-        listen = "0.0.0.0";
-        listen_port = 8888;
-        network = "tcp";
-        method = "2022-blake3-aes-128-gcm";
-        password = {
-          _secret = "/secret/ss-password-2022";
-        };
-        multiplex = {
-          enabled = true;
-        };
-      }
-      {
         type = "anytls";
         tag = "anytls-in";
         listen = "0.0.0.0";
-        listen_port = 9999;
+        listen_port = 8888;
         users = [
           {
             password = {
-              _secret = "/secret/ss-password-2022";
+              _secret = "/secret/proxy-pwd";
             };
           }
         ];
-        # tls = {
-        #   enabled = true;
-        # };
+        tls = {
+          enabled = true;
+          insecure = true;
+        };
       }
     ];
   };

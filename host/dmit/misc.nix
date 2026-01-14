@@ -41,7 +41,7 @@
   #       users = [
   #         {
   #           password = {
-  #             _secret = "/secret/ss-password-2022";
+  #             _secret = "/secret/proxy-pwd";
   #           };
   #         }
   #       ];

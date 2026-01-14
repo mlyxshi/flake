@@ -42,7 +42,7 @@
         network = "tcp";
         method = "2022-blake3-aes-128-gcm";
         password = {
-          _secret = "/secret/ss-password-2022";
+          _secret = "/secret/proxy-pwd";
         };
       }
     ];
