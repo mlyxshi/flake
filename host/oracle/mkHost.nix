@@ -13,7 +13,6 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.services.komari-agent
     self.nixosModules.services.traefik
     self.nixosModules.services.telegraf
-    self.nixosModules.services.waste
     ./${hostName}.nix
     {
       nixpkgs.hostPlatform = "aarch64-linux";
