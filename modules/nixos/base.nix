@@ -87,7 +87,7 @@
     nixfmt
     yazi-unwrapped
     helix
-    nil
+    nixd
     fd
     ripgrep
     starship

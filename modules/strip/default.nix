@@ -1,8 +1,6 @@
 # Remove and disable unnecessary modules
 {
-  pkgs,
   lib,
-  config,
   ...
 }:
 {

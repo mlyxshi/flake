@@ -1,6 +1,5 @@
 {
   pkgs,
-  lib,
   config,
   ...
 }:
@@ -37,7 +36,7 @@
     nix-inspect
     yazi
     helix
-    nil
+    nixd
     fd
     rclone
     ripgrep

@@ -8,7 +8,7 @@
 }:
 let
   sources = import ./sources.nix;
-  source = sources.${stdenv.hostPlatform.system}
+  source = sources.${stdenv.hostPlatform.system};
 in
 stdenv.mkDerivation {
   pname = "snell-server";

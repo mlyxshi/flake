@@ -1,8 +1,5 @@
 {
-  self,
-  config,
   pkgs,
-  lib,
   ...
 }:
 {

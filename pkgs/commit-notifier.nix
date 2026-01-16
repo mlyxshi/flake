@@ -1,6 +1,5 @@
 # nix-update --version=branch --flake packages.aarch64-linux.commit-notifier
 {
-  lib,
   rustPlatform,
   fetchFromGitHub,
   pkg-config,
