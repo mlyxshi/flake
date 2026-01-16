@@ -102,7 +102,7 @@
               title NixOS Init
               linux /EFI/nixos/${config.system.boot.loader.kernelFile}
               initrd /EFI/nixos/${config.system.boot.loader.initrdFile}
-              options init=${config.system.build.toplevel}/init ${builtins.toString config.boot.kernelParams}
+              options init=${config.system.build.toplevel}/init ${toString config.boot.kernelParams}
             '';
 
             "/EFI/netbootxyz.efi".source = "${pkgs.netbootxyz-efi}"; # emergency rescue on oracle arm
