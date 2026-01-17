@@ -141,7 +141,7 @@
     networkConfig.DHCP = "yes";
   };
 
-  # Very limited cloud-init network setup implementation. Only test on cloud provider I use (dmit.io/alice.sh)
+  # Very limited cloud-init network setup implementation. Only test on cloud provider I use (dmit.io/alice.sh/v.ps)
   boot.initrd.services.udev.rules = ''
     SUBSYSTEM=="block", ENV{ID_FS_LABEL}=="cidata", TAG+="systemd", ENV{SYSTEMD_WANTS}="cloud-init-network.service"
   '';
