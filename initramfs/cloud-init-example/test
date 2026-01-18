@@ -2,7 +2,8 @@
 Name=en*
 
 [Network]
-Address=161.248.63.190/24
+Address=154.17.19.228/32
 
 [Route]
-Gateway=161.248.63.1
+Gateway=193.41.250.250
+GatewayOnLink=yes

@@ -39,8 +39,6 @@
     nixos.enable = false;
   };
 
-
-
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/perlless.nix
   systemd.sysusers.enable = true;
   system.etc.overlay.enable = true;

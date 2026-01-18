@@ -28,9 +28,6 @@
         "cgroups"
         "auto-allocate-uids"
       ];
-      # substituters = [ "https://mlyxshi.cachix.org" ];
-      # trusted-public-keys = [ "mlyxshi.cachix.org-1:BVd+/1A5uLMI8pTUdhdh6sdefTRdj+/PVgrUh9L2hWw=" ];
-      log-lines = 25;
       # experimental
       use-cgroups = true;
       auto-allocate-uids = true;
