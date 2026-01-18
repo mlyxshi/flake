@@ -43,8 +43,8 @@
 
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/perlless.nix
   systemd.sysusers.enable = true;
-  users.mutableUsers = false;
   system.etc.overlay.enable = true;
+  system.etc.overlay.mutable = false;
 
   system.tools.nixos-generate-config.enable = false;
   environment.defaultPackages = [ ];

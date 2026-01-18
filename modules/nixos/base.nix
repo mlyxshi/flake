@@ -61,6 +61,28 @@
     settings.PasswordAuthentication = false;
   };
 
+  # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/keys
+  # This is convienient for immutable /etc. I don't think anyone can do a MITM attack
+  environment.etc = {
+    "ssh/ssh_host_ed25519_key.pub" = {
+      text = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJBWcxb/Blaqt1auOtE+F8QUWrUotiC5qBJ+UuEWdVCb";
+      mode = "0644";
+    };
+    "ssh/ssh_host_ed25519_key" = {
+      text = ''
+        -----BEGIN OPENSSH PRIVATE KEY-----
+        b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+        QyNTUxOQAAACCQVnMW/wZWqrdWrjrRPhfEFFq1KLYguagSflLhFnVQmwAAAJASuMMnErjD
+        JwAAAAtzc2gtZWQyNTUxOQAAACCQVnMW/wZWqrdWrjrRPhfEFFq1KLYguagSflLhFnVQmw
+        AAAEDIN2VWFyggtoSPXcAFy8dtG1uAig8sCuyE21eMDt2GgJBWcxb/Blaqt1auOtE+F8QU
+        WrUotiC5qBJ+UuEWdVCbAAAACnJvb3RAbml4b3MBAgM=
+        -----END OPENSSH PRIVATE KEY-----
+      '';
+      mode = "0600";
+    };
+    "machine-id".text = "f94755ad039f4e96a1796d58cbef4c73"; # make systemd happy
+  };
+
   programs.ssh.knownHosts."github.com".publicKey =
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
 
