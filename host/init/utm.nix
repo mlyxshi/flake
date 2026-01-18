@@ -14,6 +14,10 @@
 
   services.getty.autologinUser = "root";
 
+  system.etc.overlay.enable = true;
+  system.etc.overlay.mutable = false;
+  systemd.sysusers.enable = true;
+
   networking.useDHCP = false;
 
   systemd.network.enable = true;
