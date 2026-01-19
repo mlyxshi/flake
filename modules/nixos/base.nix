@@ -59,7 +59,7 @@
   };
 
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/keys
-  # This is convenient for immutable /etc.
+  # This is convenient for immutable /etc. I use it at my own risk.
   environment.etc = {
     "ssh/ssh_host_ed25519_key.pub" = {
       text = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJBWcxb/Blaqt1auOtE+F8QUWrUotiC5qBJ+UuEWdVCb";
@@ -173,29 +173,6 @@
 
       function loc
         readlink -f $(which $argv) 
-      end
-
-
-      function drv
-        nix show-derivation $(nix-store -q --deriver $argv)
-      end
-
-      # immediate reference(1 level)
-      function ref
-        nix-store -q --references $(readlink -f $(which $argv))
-      end
-
-      # recursive reference (All level)
-      function closure 
-        nix-store -q --requisites $(readlink -f $(which $argv))
-      end
-
-      function ref-re
-        nix-store -q --referrers $(readlink -f $(which $argv))
-      end
-
-      function closure-re
-        nix-store -q --referrers-closure $(readlink -f $(which $argv))
       end
     '';
 

@@ -217,28 +217,6 @@
         codesign -fs - --deep  $argv
       end
 
-      function drv
-        nix show-derivation $(nix-store -q --deriver $argv)
-      end
-
-      # immediate reference(1 level)
-      function ref
-        nix-store -q --references $(readlink -f $(which $argv))
-      end
-
-      # recursive reference (All level)
-      function closure 
-        nix-store -q --requisites $(readlink -f $(which $argv))
-      end
-
-      function ref-re
-        nix-store -q --referrers $(readlink -f $(which $argv))
-      end
-
-      function closure-re
-        nix-store -q --referrers-closure $(readlink -f $(which $argv))
-      end
-
       set -gx EDITOR hx
       set -gx PAGER bat
         
