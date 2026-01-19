@@ -50,7 +50,6 @@
           ];
         };
         nrt = import ./host/dmit { inherit self nixpkgs secret; };
-        sjc = import ./host/xtom { inherit self nixpkgs secret; };
 
         jp1 = import ./host/oracle/mkHost.nix {
           inherit self nixpkgs secret;

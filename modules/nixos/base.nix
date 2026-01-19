@@ -59,7 +59,7 @@
   };
 
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/keys
-  # This is convienient for immutable /etc. I don't think anyone can do a MITM attack
+  # This is convenient for immutable /etc.
   environment.etc = {
     "ssh/ssh_host_ed25519_key.pub" = {
       text = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJBWcxb/Blaqt1auOtE+F8QUWrUotiC5qBJ+UuEWdVCb";
