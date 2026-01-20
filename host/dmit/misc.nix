@@ -7,7 +7,7 @@
   ...
 }:
 {
-  services.getty.autologinUser = "root";
+  # services.getty.autologinUser = "root";
 
   services.qemuGuest.enable = true; # https://t.me/DMIT_INC_CN/768
   services.openssh.ports = [ 23333 ];
