@@ -16,6 +16,8 @@ stdenv.mkDerivation {
 
   src = fetchurl source;
 
+  sourceRoot = ".";
+
   nativeBuildInputs = [
     unzip
     upx
