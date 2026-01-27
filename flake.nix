@@ -49,6 +49,7 @@
             { nixpkgs.hostPlatform = "aarch64-linux"; }
           ];
         };
+        
         nrt = import ./host/dmit { inherit self nixpkgs secret; };
 
         jp1 = import ./host/oracle/mkHost.nix {
@@ -78,6 +79,7 @@
 
       packages.aarch64-linux = {
         commit-notifier = nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/commit-notifier.nix { };
+        transmission = nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/transmission.nix { };
       };
 
       packages.aarch64-darwin = {
