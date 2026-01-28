@@ -73,15 +73,6 @@
         directory = ./modules;
       };
 
-      packages.x86_64-linux = {
-        snell = nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/snell/package.nix { };
-      };
-
-      packages.aarch64-linux = {
-        commit-notifier = nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/commit-notifier.nix { };
-        transmission = nixpkgs.legacyPackages.aarch64-linux.callPackage ./pkgs/transmission.nix { };
-      };
-
       packages.aarch64-darwin = {
         default = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "x86_64-initramfs-test" ''
           /opt/homebrew/bin/qemu-system-x86_64 -cpu qemu64 -nographic -m 4G \

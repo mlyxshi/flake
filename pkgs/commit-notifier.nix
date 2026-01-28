@@ -1,4 +1,4 @@
-# nix-update --version=branch --flake packages.aarch64-linux.commit-notifier
+# nix-update commit-notifier --version=branch
 {
   rustPlatform,
   fetchFromGitHub,
@@ -10,15 +10,15 @@
 
 rustPlatform.buildRustPackage {
   pname = "commit-notifier";
-  version = "0-unstable-2026-01-10";
+  version = "0-unstable-2026-01-24";
   src = fetchFromGitHub {
     owner = "linyinfeng";
     repo = "commit-notifier";
-    rev = "74d95c00f7922aa2032dee0016f3df4dfe2b3637";
-    sha256 = "sha256-WZyWjom12nVYkCb+YrUhrCHLaZGJuOik0yrmreMNGj8=";
+    rev = "8db71d60aa311aa5ca0e3b15fe43bfef1977b99f";
+    sha256 = "sha256-rhkqGrgU/O0OiV5MPzAq68KQcfek7fVOiKCYqDuSTts=";
   };
 
-  cargoHash = "sha256-z5t6JpSX7o3VI7DQIO65aBn5QajvtkeyAeWVDIThLh8=";
+  cargoHash = "sha256-sPfaHXQHaadk+p4+lI+g5EicO/2NdZA4s5lKqaOQWUQ=";
 
   nativeBuildInputs = [ pkg-config ];
 
