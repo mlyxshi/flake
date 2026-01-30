@@ -1,4 +1,3 @@
-# nix-update commit-notifier --version=branch
 {
   rustPlatform,
   fetchFromGitHub,
@@ -27,5 +26,4 @@ rustPlatform.buildRustPackage {
     libgit2
     openssl
   ];
-  
 }

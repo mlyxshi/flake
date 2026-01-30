@@ -13,7 +13,7 @@
 
   security.sudo.enable = false;
 
-  system.stateVersion = "26.05";
+  system.stateVersion = lib.trivial.release;
   system.nixos-init.enable = true;
 
   nixpkgs.config.allowUnfree = true;
