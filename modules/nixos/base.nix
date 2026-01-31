@@ -47,6 +47,8 @@
     shell = pkgs.fish;
   };
 
+  services.dbus.implementation = "broker";
+
   services.openssh = {
     enable = true;
     hostKeys = [
