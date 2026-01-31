@@ -4,8 +4,6 @@
   ...
 }:
 {
-
-  # https://traefik.io/blog/traefik-2-0-docker-101-fc2893944b9d/
   services.traefik = {
     enable = true;
     group = if config.virtualisation.podman.enable then "podman" else "traefik"; # podman backend
@@ -27,7 +25,7 @@
         service = "api@internal";
         middlewares = "auth";
       };
-    }; # dynamicConfigOptions
+    };
 
     staticConfigOptions = {
       api = { };
@@ -50,11 +48,10 @@
       };
     }
     // lib.optionalAttrs config.virtualisation.podman.enable {
-
       providers.docker = {
         endpoint = "unix:///run/podman/podman.sock";
         exposedByDefault = false;
       };
-    }; # staticConfigOptions
-  }; # services.traefik
+    };
+  };
 }

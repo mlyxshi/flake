@@ -3,7 +3,6 @@
   ...
 }:
 {
-
   systemd.services.hath = {
     serviceConfig.ExecStart = "${pkgs.hath-rust}/bin/hath-rust";
     serviceConfig.StateDirectory = "hath";
@@ -12,5 +11,4 @@
     after = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
   };
-
 }

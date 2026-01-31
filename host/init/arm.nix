@@ -91,19 +91,9 @@
 
             "/EFI/systemd/systemd-boot${efiArch}.efi".source =
               "${config.systemd.package}/lib/systemd/boot/efi/systemd-boot${efiArch}.efi";
-
-            "/EFI/nixos/${config.system.boot.loader.kernelFile}".source =
-              "${config.boot.kernelPackages.kernel}/${config.system.boot.loader.kernelFile}";
-
-            "/EFI/nixos/${config.system.boot.loader.initrdFile}".source =
-              "${config.system.build.initialRamdisk}/${config.system.boot.loader.initrdFile}";
-
-            "/loader/entries/nixos-generation-1.conf".source = pkgs.writeText "nixos-generation-1.conf" ''
-              title NixOS Init
-              linux /EFI/nixos/${config.system.boot.loader.kernelFile}
-              initrd /EFI/nixos/${config.system.boot.loader.initrdFile}
-              options init=${config.system.build.toplevel}/init ${toString config.boot.kernelParams}
-            '';
+              
+            "/EFI/Linux/${config.system.boot.loader.ukiFile}".source =
+              "${config.system.build.uki}/${config.system.boot.loader.ukiFile}";
 
             "/EFI/netbootxyz.efi".source = "${pkgs.netbootxyz-efi}"; # emergency rescue on oracle arm
           };
