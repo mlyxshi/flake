@@ -10,7 +10,7 @@ jobs:
     - uses: actions/checkout@master
 
     - run: |
-        outPath=$(nix build --no-link --print-out-paths -f pkgs/default.nix commit-notifier-container)
+        outPath=$(nix build --no-link --print-out-paths -f pkgs commit-notifier-container)
         echo "outPath=$outPath" >> "$GITHUB_ENV"
 
     - run: |
