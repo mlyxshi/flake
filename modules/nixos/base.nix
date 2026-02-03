@@ -98,21 +98,17 @@
     dig
     file
     htop
-    tree
     libarchive
     nix-output-monitor
     nix-tree
     nix-inspect
-    nixfmt
     yazi-unwrapped
     helix
-    nixd
     fd
     ripgrep
     starship
     zoxide
     eza
-    xh
     bat
     bat-extras.batman
     gdu

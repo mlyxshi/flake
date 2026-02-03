@@ -1,0 +1,17 @@
+name: "Commit-notifier container update"
+on:
+  workflow_dispatch:
+
+jobs:
+  container:
+    runs-on: ubuntu-24.04-arm
+    steps:
+    - uses: DeterminateSystems/nix-installer-action@main
+    - uses: actions/checkout@master
+
+    - run: |
+        outPath=$(nix build --no-link --print-out-paths -f pkgs/default.nix commit-notifier-container)
+        echo "outPath=$outPath" >> "$GITHUB_ENV"
+
+    - run: |
+        skopeo copy --dest-creds "mlyxshi:${{ secrets.GIT_TOKEN }}" "docker-archive:$outPath" "docker://ghcr.io/mlyxshi/commit-notifier-arm64:latest"

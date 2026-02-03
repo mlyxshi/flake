@@ -39,7 +39,6 @@ rec {
         "GITHUB_TOKEN="
         "RUST_LOG=commit_notifier=info"
       ];
-      WorkingDirectory = "/data";
       Volumes = {
         "/data" = { };
       };
@@ -48,5 +47,3 @@ rec {
 }
 # nix-update commit-notifier --version=branch
 # nix-update transmission
-
-# skopeo copy --dest-creds "mlyxshi:TOKEN" "docker-archive:$image_archive" "docker://ghcr.io/mlyxshi/commit-notifier-arm64:latest"

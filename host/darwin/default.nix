@@ -30,7 +30,6 @@
     file
     htop
     iperf
-    tree
     libarchive
     nix-tree
     nix-inspect
@@ -43,8 +42,6 @@
     starship
     zoxide
     eza
-    xh
-    bandwhich
     bat
     bat-extras.batman
     gdu
