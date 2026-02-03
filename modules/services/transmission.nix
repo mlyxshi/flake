@@ -31,6 +31,7 @@
     "/var/lib/transmission/settings.json".C = {
       user = "transmission";
       group = "transmission";
+      mode = "0640";
       argument = "${pkgs.writeText "settings.json" ''
         {
           "rpc-whitelist-enabled": false,
