@@ -29,8 +29,8 @@
     };
 
     "/var/lib/transmission/settings.json".C = {
-      user = "qbittorrent";
-      group = "qbittorrent";
+      user = "transmission";
+      group = "transmission";
       argument = "${pkgs.writeText "settings.json" ''
         {
           "rpc-whitelist-enabled": false,
