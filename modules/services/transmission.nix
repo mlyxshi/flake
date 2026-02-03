@@ -43,10 +43,7 @@
   };
 
   systemd.services.transmission = {
-    after = [
-      "transmission-init.service"
-      "network-online.target"
-    ];
+    after = [ "network-online.target" ];
     wants = [ "network-online.target" ];
     environment = {
       TRANSMISSION_HOME = "%S/transmission";
