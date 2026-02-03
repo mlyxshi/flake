@@ -31,15 +31,13 @@
     "/var/lib/transmission/settings.json".C = {
       user = "qbittorrent";
       group = "qbittorrent";
-      argument = (
-        pkgs.writeText "settings.json" ''
-          {
-            "rpc-whitelist-enabled": false,
-            "rpc-authentication-required": true,
-            "download-dir": "/var/lib/transmission/Downloads"
-          }
-        ''
-      );
+      argument = "${pkgs.writeText "settings.json" ''
+        {
+          "rpc-whitelist-enabled": false,
+          "rpc-authentication-required": true,
+          "download-dir": "/var/lib/transmission/Downloads"
+        }
+      ''}";
     };
   };
 
