@@ -10,7 +10,10 @@
     image = "ghcr.io/mlyxshi/commit-notifier-arm64";
     volumes = [ "/var/lib/commit-notifier:/data" ];
     environmentFiles = [ /secret/commit-notifier ];
-    extraOptions = [ "io.containers.autoupdate=registry" ];
+    extraOptions = [
+      "--label"
+      "io.containers.autoupdate=registry"
+    ];
   };
 
   # mkdir -p /var/lib/commit-notifier/chats/696869490
