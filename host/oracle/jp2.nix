@@ -8,7 +8,7 @@
 {
   imports = [
     self.nixosModules.services.prometheus
-    self.nixosModules.services.transmission.default
+    self.nixosModules.services.transmission
     self.nixosModules.services.hath
 
     self.nixosModules.containers.podman

@@ -7,7 +7,7 @@
 }:
 {
   imports = [
-    self.nixosModules.services.transmission.default
+    self.nixosModules.services.transmission
   ];
 
   boot.kernel.sysctl = {

@@ -22,17 +22,24 @@
     groups.transmission = { };
   };
 
-  # systemd.services.transmission-init = {
-  #   unitConfig.ConditionPathExists = "!%S/transmission/settings.json";
-  #   script = ''
-  #     cat ${./settings.json} > settings.json
-  #   '';
-  #   serviceConfig.User = "transmission";
-  #   serviceConfig.Type = "oneshot";
-  #   serviceConfig.StateDirectory = "transmission";
-  #   serviceConfig.WorkingDirectory = "%S/transmission";
-  #   wantedBy = [ "multi-user.target" ];
-  # };
+  systemd.services.transmission-init = {
+    unitConfig.ConditionPathExists = "!%S/transmission/settings.json";
+    script =
+      let
+        settings = builtins.toJSON {
+          "rpc-whitelist-enabled" = false;
+          "rpc-authentication-required" = true;
+        };
+      in
+      ''
+        cat ${settings} > settings.json
+      '';
+    serviceConfig.User = "transmission";
+    serviceConfig.Type = "oneshot";
+    serviceConfig.StateDirectory = "transmission";
+    serviceConfig.WorkingDirectory = "%S/transmission";
+    wantedBy = [ "multi-user.target" ];
+  };
 
   systemd.services.transmission = {
     after = [
@@ -46,7 +53,7 @@
     };
     serviceConfig.EnvironmentFile = [ "/secret/transmission" ];
     serviceConfig.User = "transmission";
-    serviceConfig.ExecStart = "${pkgs.transmission}/bin/transmission-daemon --foreground --username $ADMIN --password $PASSWORD --download-dir files";
+    serviceConfig.ExecStart = "${pkgs.transmission}/bin/transmission-daemon --foreground --username $ADMIN --password $PASSWORD";
     serviceConfig.WorkingDirectory = "%S/transmission";
     serviceConfig.StateDirectory = "transmission";
     wantedBy = [ "multi-user.target" ];
