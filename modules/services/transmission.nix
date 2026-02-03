@@ -36,7 +36,7 @@
         {
           "rpc-whitelist-enabled": false,
           "rpc-authentication-required": true,
-          "download-dir": "/var/lib/transmission/Downloads"
+          "download-dir": "/var/lib/transmission/files"
         }
       ''}";
     };
