@@ -4,6 +4,7 @@
 rec {
   transmission = pkgs.callPackage ./transmission.nix { };
 
+  # https://github.com/linyinfeng/commit-notifier/blob/main/flake.nix
   commit-notifier = pkgs.callPackage ./commit-notifier.nix { };
   commit-notifier-container = pkgs.dockerTools.buildImage {
     name = "commit-notifier";
@@ -12,7 +13,7 @@ rec {
       paths =
         (with pkgs; [
           git
-          coreutils 
+          coreutils
         ])
         ++ (with pkgs.dockerTools; [
           usrBinEnv
@@ -47,3 +48,5 @@ rec {
 }
 # nix-update commit-notifier --version=branch
 # nix-update transmission
+
+# skopeo copy --dest-creds "mlyxshi:TOKEN" "docker-archive:$image_archive" "docker://ghcr.io/mlyxshi/commit-notifier-arm64:latest"
