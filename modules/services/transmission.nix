@@ -22,22 +22,25 @@
     groups.transmission = { };
   };
 
-  systemd.services.transmission-init = {
-    unitConfig.ConditionPathExists = "!%S/transmission/settings.json";
-    script = ''
-      cat > settings.json <<'EOF'
-      {
-        "rpc-whitelist-enabled": false,
-        "rpc-authentication-required": true,
-        "download-dir": "/var/lib/transmission/Downloads"
-      }
-      EOF
-    '';
-    serviceConfig.User = "transmission";
-    serviceConfig.Type = "oneshot";
-    serviceConfig.StateDirectory = "transmission";
-    serviceConfig.WorkingDirectory = "%S/transmission";
-    wantedBy = [ "multi-user.target" ];
+  systemd.tmpfiles.settings."10-transmission-init" = {
+    "/var/lib/transmission".d = {
+      user = "transmission";
+      group = "transmission";
+    };
+
+    "/var/lib/transmission/settings.json".C = {
+      user = "qbittorrent";
+      group = "qbittorrent";
+      argument = (
+        pkgs.writeText "settings.json" ''
+          {
+            "rpc-whitelist-enabled": false,
+            "rpc-authentication-required": true,
+            "download-dir": "/var/lib/transmission/Downloads"
+          }
+        ''
+      );
+    };
   };
 
   systemd.services.transmission = {
@@ -54,7 +57,6 @@
     serviceConfig.User = "transmission";
     serviceConfig.ExecStart = "${pkgs.transmission}/bin/transmission-daemon --foreground --username $ADMIN --password $PASSWORD";
     serviceConfig.WorkingDirectory = "%S/transmission";
-    serviceConfig.StateDirectory = "transmission";
     wantedBy = [ "multi-user.target" ];
   };
 
