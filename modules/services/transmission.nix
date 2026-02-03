@@ -28,7 +28,8 @@
       cat > settings.json <<'EOF'
       {
         "rpc-whitelist-enabled": false,
-        "rpc-authentication-required": true
+        "rpc-authentication-required": true,
+        "download-dir": "/var/lib/transmission/Downloads"
       }
       EOF
     '';
