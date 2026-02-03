@@ -24,16 +24,14 @@
 
   systemd.services.transmission-init = {
     unitConfig.ConditionPathExists = "!%S/transmission/settings.json";
-    script =
-      let
-        settings = builtins.toJSON {
-          "rpc-whitelist-enabled" = false;
-          "rpc-authentication-required" = true;
-        };
-      in
-      ''
-        cat ${settings} > settings.json
-      '';
+    script = ''
+      cat > settings.json <<'EOF'
+      {
+        "rpc-whitelist-enabled": false,
+        "rpc-authentication-required": true
+      }
+      EOF
+    '';
     serviceConfig.User = "transmission";
     serviceConfig.Type = "oneshot";
     serviceConfig.StateDirectory = "transmission";
