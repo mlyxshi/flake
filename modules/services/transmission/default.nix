@@ -48,6 +48,7 @@
     serviceConfig.User = "transmission";
     serviceConfig.ExecStart = "${pkgs.transmission}/bin/transmission-daemon --foreground --username $ADMIN --password $PASSWORD --download-dir files";
     serviceConfig.WorkingDirectory = "%S/transmission";
+    serviceConfig.StateDirectory = "transmission";
     wantedBy = [ "multi-user.target" ];
   };
 
