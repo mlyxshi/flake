@@ -2,6 +2,7 @@
   pkgs ? import <nixpkgs> { },
 }:
 rec {
+  snell = pkgs.callPackage ./snell.nix { };
   transmission = pkgs.callPackage ./transmission.nix { };
 
   # https://github.com/linyinfeng/commit-notifier/blob/main/flake.nix
