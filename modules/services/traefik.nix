@@ -7,6 +7,8 @@
   services.traefik = {
     enable = true;
     group = if config.virtualisation.podman.enable then "podman" else "traefik"; # podman backend
+    
+    # supplementaryGroups = lib.optionals config.virtualisation.podman.enable [ "podman" ];  
 
     dynamicConfigOptions = {
 

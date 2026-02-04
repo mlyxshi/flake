@@ -32,7 +32,6 @@
     iperf
     libarchive
     nix-tree
-    nix-inspect
     yazi
     helix
     nixd

@@ -101,7 +101,6 @@
     libarchive
     nix-output-monitor
     nix-tree
-    nix-inspect
     yazi-unwrapped
     helix
     fd
