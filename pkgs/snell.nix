@@ -1,8 +1,8 @@
 {
   lib,
   stdenv,
-  stdenvNoCC,
   fetchzip,
+  glibc,
   upx,
   autoPatchelfHook,
   versionCheckHook,
@@ -10,7 +10,7 @@
   nix-update,
 }:
 
-stdenvNoCC.mkDerivation (finalAttrs: {
+stdenv.mkDerivation (finalAttrs: {
   pname = "snell-server";
   version = "5.0.1";
 
@@ -36,7 +36,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     versionCheckHook
   ];
 
-  buildInputs = [ (lib.getLib stdenv.cc.cc) ];
+  buildInputs = [ glibc ];
 
   installPhase = ''
     runHook preInstall
