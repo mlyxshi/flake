@@ -35,6 +35,8 @@
       "telegram-desktop"
 
       "monitorcontrol"
+
+      "impactor"
     ];
   };
 

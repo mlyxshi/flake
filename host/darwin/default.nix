@@ -1,3 +1,7 @@
+# GC
+# sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations old
+# sudo HOME=/var/root nix-env --profile /nix/var/nix/profiles/per-user/root/profile --delete-generations old
+# nix-collect-garbage -d
 {
   pkgs,
   config,
