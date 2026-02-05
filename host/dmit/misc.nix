@@ -8,8 +8,8 @@
 }:
 {
   # services.getty.autologinUser = "root";
-
-  services.qemuGuest.enable = true; # https://t.me/DMIT_INC_CN/768
+  # # For security reasons, disable qemu-guest-agent, https://t.me/DMIT_INC_CN/768
+  # services.qemuGuest.enable = true;  
   services.openssh.ports = [ 23333 ];
 
   boot.blacklistedKernelModules = [ "virtio_balloon" ];
