@@ -12,7 +12,7 @@
       AGENT_MONTH_ROTATE = lib.mkDefault "1";
       AGENT_CONFIG_FILE = "/secret/komari"; # token
     };
-    serviceConfig.ExecStart = "${pkgs.komari-agent}/bin/komari-agent";
+    serviceConfig.ExecStart = "${lib.getExe pkgs.komari-agent}";
     serviceConfig.DynamicUser = true;
     wants = [ "network-online.target" ];
     after = [ "network-online.target" ];

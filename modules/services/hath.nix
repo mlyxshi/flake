@@ -1,10 +1,11 @@
 {
   pkgs,
+  lib,
   ...
 }:
 {
   systemd.services.hath = {
-    serviceConfig.ExecStart = "${pkgs.hath-rust}/bin/hath-rust";
+    serviceConfig.ExecStart = "${lib.getExe pkgs.hath-rust}";
     serviceConfig.StateDirectory = "hath";
     serviceConfig.WorkingDirectory = "%S/hath";
     wants = [ "network-online.target" ];

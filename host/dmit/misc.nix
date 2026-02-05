@@ -8,7 +8,7 @@
 }:
 {
   # services.getty.autologinUser = "root";
-  # # For security reasons, disable qemu-guest-agent, https://t.me/DMIT_INC_CN/768
+  # # For security reasons, disable qemu-guest-agent. Enable it temporarily when change IP in dashboard.
   # services.qemuGuest.enable = true;  
   services.openssh.ports = [ 23333 ];
 

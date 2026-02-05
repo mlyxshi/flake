@@ -1,12 +1,12 @@
 {
   pkgs,
-  self,
+  lib,
   ...
 }:
 {
   systemd.services.snell = {
     after = [ "network.target" ];
-    serviceConfig.ExecStart = "${pkgs.snell}/bin/snell-server -c /secret/snell";
+    serviceConfig.ExecStart = "${lib.getExe pkgs.snell} -c /secret/snell";
     wantedBy = [ "multi-user.target" ];
   };
 }
