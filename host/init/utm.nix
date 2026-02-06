@@ -15,6 +15,7 @@
   services.getty.autologinUser = "root";
 
   networking.useDHCP = false;
+  networking.firewall.enable = false;
 
   systemd.network.enable = true;
   systemd.network.wait-online.anyInterface = true;
@@ -23,7 +24,6 @@
     networkConfig.DHCP = "yes";
     networkConfig.MulticastDNS = "yes"; # mDNS advertise + resolve
   };
-  networking.firewall.enable = false;
 
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.emergencyAccess = true;
@@ -77,7 +77,12 @@
       experimental-features = [
         "nix-command"
         "flakes"
+        "cgroups"
+        "auto-allocate-uids"
       ];
+      # experimental
+      use-cgroups = true;
+      auto-allocate-uids = true;
     };
   };
 
@@ -92,7 +97,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    git
+    gitMinimal
     wget
     rclone
     helix
@@ -126,4 +131,11 @@
       fi
     '')
   ];
+
+  system.stateVersion = lib.trivial.release;
+  system.nixos-init.enable = true;
+  # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/perlless.nix
+  systemd.sysusers.enable = true;
+  system.etc.overlay.enable = true;
+  system.etc.overlay.mutable = false;
 }
