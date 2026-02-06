@@ -22,4 +22,7 @@
   # /notifier condition-remove nixpkgs in-master
   # /notifier condition-add —type remove-if-in-branch —expr nixos-unstable-small nixpkgs in-nixos-unstable-small
   # /notifier pr-add https://github.com/NixOS/nixpkgs/pull/476546
+
+
+  # /notifier repo-add systemd https://github.com/systemd/systemd
 }

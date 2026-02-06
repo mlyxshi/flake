@@ -31,17 +31,9 @@
   boot.loader.systemd-boot.configurationLimit = 3;
   boot.loader.timeout = 1;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.systemd-boot.netbootxyz.enable = true; # emergency rescue on oracle arm
 
-  fileSystems."/boot" = {
-    device = "/dev/vda1";
-    fsType = "vfat";
-  };
-
-  fileSystems."/" = {
-    device = "/dev/vda2";
-    fsType = "ext4";
-  };
+  boot.initrd.systemd.root = "gpt-auto";
+  boot.initrd.supportedFilesystems = [ "ext4" ];
 
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe"
@@ -78,6 +70,32 @@
     git
     wget
     rclone
+    helix
+    yazi-unwrapped
+    (writeShellScriptBin "update" ''
+      if [[ -e "/flake/flake.nix" ]]
+      then
+        cd /flake
+        git pull   
+      else
+        git clone --depth=1  git@github.com:mlyxshi/flake /flake
+        cd /flake
+      fi  
+
+      HOST=''${1:-$(hostnamectl hostname)} 
+
+      SYSTEM=$(nix build --no-link --print-out-paths .#nixosConfigurations.$HOST.config.system.build.toplevel)
+
+      if [ -n "$SYSTEM" ]
+      then
+        [[ -e "/run/current-system" ]] && nix store diff-closures /run/current-system $SYSTEM
+        nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
+        $SYSTEM/bin/switch-to-configuration switch
+      else
+        echo "Build Failed"
+        exit 1
+      fi
+    '')
   ];
 
 }

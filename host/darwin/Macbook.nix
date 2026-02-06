@@ -13,7 +13,6 @@
   networking.hostName = "Macbook";
 
   environment.systemPackages = with pkgs; [
-    sing-box
   ];
 
   homebrew = {

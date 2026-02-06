@@ -36,7 +36,7 @@
     iperf
     libarchive
     nix-tree
-    yazi
+    yazi-unwrapped
     helix
     nixd
     fd
