@@ -10,7 +10,7 @@ let
   closureInfo = pkgs.closureInfo {
     rootPaths = [ config.system.build.toplevel ];
   };
-  
+
   nixState = pkgs.runCommand "nix-state" { nativeBuildInputs = [ pkgs.buildPackages.nix ]; } ''
     mkdir -p $out/profiles
     ln -s ${config.system.build.toplevel} $out/profiles/system-1-link
@@ -41,9 +41,6 @@ in
     matchConfig.Name = "en*";
     networkConfig.DHCP = "yes";
   };
-
-  system.stateVersion = lib.trivial.release;
-  system.nixos-init.enable = true;
 
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.emergencyAccess = true;
@@ -128,6 +125,8 @@ in
     nixos.enable = false;
   };
 
+  system.stateVersion = lib.trivial.release;
+  system.nixos-init.enable = true;
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/perlless.nix
   systemd.sysusers.enable = true;
   system.etc.overlay.enable = true;
