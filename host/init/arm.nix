@@ -1,3 +1,4 @@
+# https://github.com/NixOS/nixpkgs/pull/351699
 {
   config,
   pkgs,
@@ -5,6 +6,25 @@
   modulesPath,
   ...
 }:
+let
+  closureInfo = pkgs.closureInfo {
+    rootPaths = [ config.system.build.toplevel ];
+  };
+
+  # Build the nix state at /nix/var/nix for the image
+  #
+  # This does two things:
+  # (1) Setup the initial profile
+  # (2) Create an initial Nix DB so that the nix tools work
+  nixState = pkgs.runCommand "nix-state" { nativeBuildInputs = [ pkgs.buildPackages.nix ]; } ''
+    mkdir -p $out/profiles
+    ln -s ${config.system.build.toplevel} $out/profiles/system-1-link
+    ln -s /nix/var/nix/profiles/system-1-link $out/profiles/system
+
+    export NIX_STATE_DIR=$out
+    nix-store --load-db < ${closureInfo}/registration
+  '';
+in
 {
 
   imports = [
@@ -12,7 +32,7 @@
     "${modulesPath}/image/repart.nix"
   ];
 
-  networking.hostName = "arm-sda-grow";
+  networking.hostName = "arm-init-grow";
   nixpkgs.hostPlatform = "aarch64-linux";
 
   services.getty.autologinUser = "root";
@@ -154,6 +174,9 @@
       };
       "root" = {
         storePaths = [ config.system.build.toplevel ];
+        contents = {
+          "/nix/var/nix".source = nixState;
+        };
         repartConfig = {
           Type = "root";
           Format = "ext4";

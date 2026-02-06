@@ -30,6 +30,7 @@
       };
       nixosConfigurations = {
         # systemd-repart
+        # nix build.#nixosConfigurations.arm-init-grow.config.system.build.image
         arm-init-grow = nixpkgs.lib.nixosSystem { modules = [ ./host/init/arm.nix ]; };
         # bios test
         bios = nixpkgs.lib.nixosSystem { modules = [ ./host/init/bios.nix ]; };
