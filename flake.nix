@@ -30,7 +30,7 @@
       };
       nixosConfigurations = {
         # systemd-repart
-        arm-init-sda-grow = nixpkgs.lib.nixosSystem { modules = [ ./host/init/arm.nix ]; };
+        arm-init-grow = nixpkgs.lib.nixosSystem { modules = [ ./host/init/arm.nix ]; };
         # bios test
         bios = nixpkgs.lib.nixosSystem { modules = [ ./host/init/bios.nix ]; };
         # Apple Silicon (M3 and later) supports nested virtualization via Apple's Hypervisor Framework for build nixos image require kvm
@@ -83,7 +83,7 @@
             -device "virtio-scsi-pci,id=scsi0" -drive "file=disk.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
         '';
 
-        arm-initramfs-test = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "arm-initramfs-test" ''
+        arm-initramfs-test = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "aarch64-initramfs-test" ''
           /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 4G \
             -kernel ${self.nixosConfigurations.initramfs-aarch64.config.system.build.kernel}/Image \
             -initrd ${self.nixosConfigurations.initramfs-aarch64.config.system.build.initialRamdisk}/initrd \

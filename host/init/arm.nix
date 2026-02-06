@@ -12,12 +12,13 @@
     "${modulesPath}/image/repart.nix"
   ];
 
-  networking.hostName = "arm-init-sda-grow";
+  networking.hostName = "arm-sda-grow";
   nixpkgs.hostPlatform = "aarch64-linux";
 
   services.getty.autologinUser = "root";
 
   networking.useDHCP = false;
+  networking.firewall.enable = false;
 
   systemd.network.enable = true;
   systemd.network.wait-online.anyInterface = true;
@@ -25,7 +26,9 @@
     matchConfig.Name = "en*";
     networkConfig.DHCP = "yes";
   };
-  networking.firewall.enable = false;
+
+  system.stateVersion = lib.trivial.release;
+  system.nixos-init.enable = true;
 
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.emergencyAccess = true;
@@ -37,15 +40,6 @@
   boot.loader.systemd-boot.configurationLimit = 3;
   boot.loader.timeout = 1;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  # resize root partition and filesystem after switch-root
-  systemd.repart.enable = true;
-  systemd.repart.partitions = {
-    root = {
-      Type = "root";
-      GrowFileSystem = "yes";
-    };
-  };
 
   environment.etc = {
     "ssh/ssh_host_ed25519_key.pub" = {
@@ -93,9 +87,44 @@
   };
 
   environment.systemPackages = with pkgs; [
-    git
-    wget
+    gitMinimal
   ];
+
+  fonts.fontconfig.enable = false;
+
+  # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/minimal.nix
+  xdg = {
+    autostart.enable = false;
+    icons.enable = false;
+    mime.enable = false;
+    sounds.enable = false;
+  };
+
+  documentation = {
+    enable = false;
+    doc.enable = false;
+    info.enable = false;
+    man.enable = false;
+    nixos.enable = false;
+  };
+
+  # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/perlless.nix
+  systemd.sysusers.enable = true;
+  system.etc.overlay.enable = true;
+  system.etc.overlay.mutable = false;
+
+  system.tools.nixos-generate-config.enable = false;
+  environment.defaultPackages = [ ];
+  system.forbiddenDependenciesRegexes = [ "perl" ];
+
+  # resize root partition and filesystem after switch-root
+  systemd.repart.enable = true;
+  systemd.repart.partitions = {
+    root = {
+      Type = "root";
+      GrowFileSystem = "yes";
+    };
+  };
 
   image.repart = {
     name = config.networking.hostName;
