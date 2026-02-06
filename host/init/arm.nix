@@ -102,7 +102,12 @@ in
       experimental-features = [
         "nix-command"
         "flakes"
+        "cgroups"
+        "auto-allocate-uids"
       ];
+      # experimental
+      use-cgroups = true;
+      auto-allocate-uids = true;
     };
   };
 
