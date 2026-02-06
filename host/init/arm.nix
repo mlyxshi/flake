@@ -10,12 +10,7 @@ let
   closureInfo = pkgs.closureInfo {
     rootPaths = [ config.system.build.toplevel ];
   };
-
-  # Build the nix state at /nix/var/nix for the image
-  #
-  # This does two things:
-  # (1) Setup the initial profile
-  # (2) Create an initial Nix DB so that the nix tools work
+  
   nixState = pkgs.runCommand "nix-state" { nativeBuildInputs = [ pkgs.buildPackages.nix ]; } ''
     mkdir -p $out/profiles
     ln -s ${config.system.build.toplevel} $out/profiles/system-1-link
