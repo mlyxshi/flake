@@ -101,5 +101,29 @@
     htop
     qemu_kvm
     socat
+    (writeShellScriptBin "update" ''
+      if [[ -e "/flake/flake.nix" ]]
+      then
+        cd /flake
+        git pull   
+      else
+        git clone --depth=1  git@github.com:mlyxshi/flake /flake
+        cd /flake
+      fi  
+
+      HOST=''${1:-$(hostnamectl hostname)} 
+
+      SYSTEM=$(nix build --no-link --print-out-paths .#nixosConfigurations.$HOST.config.system.build.toplevel)
+
+      if [ -n "$SYSTEM" ]
+      then
+        [[ -e "/run/current-system" ]] && nix store diff-closures /run/current-system $SYSTEM
+        nix-env -p /nix/var/nix/profiles/system --set $SYSTEM
+        $SYSTEM/bin/switch-to-configuration switch
+      else
+        echo "Build Failed"
+        exit 1
+      fi
+    '')
   ];
 }
