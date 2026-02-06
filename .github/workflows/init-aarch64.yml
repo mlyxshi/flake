@@ -52,7 +52,7 @@ jobs:
         done
 
 
-    - run: $SSH $HOST "curl https://dd.mlyxshi.com/arm-init-sda-grow.raw | dd of=/dev/sda"
+    - run: $SSH $HOST "curl https://dd.mlyxshi.com/arm-init-grow.raw | dd of=/dev/sda"
 
     - name: Force Reboot
       continue-on-error: true 
