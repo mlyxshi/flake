@@ -47,6 +47,26 @@
     };
   };
 
+  environment.etc = {
+    "ssh/ssh_host_ed25519_key.pub" = {
+      text = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJBWcxb/Blaqt1auOtE+F8QUWrUotiC5qBJ+UuEWdVCb";
+      mode = "0400";
+    };
+    "ssh/ssh_host_ed25519_key" = {
+      text = ''
+        -----BEGIN OPENSSH PRIVATE KEY-----
+        b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+        QyNTUxOQAAACCQVnMW/wZWqrdWrjrRPhfEFFq1KLYguagSflLhFnVQmwAAAJASuMMnErjD
+        JwAAAAtzc2gtZWQyNTUxOQAAACCQVnMW/wZWqrdWrjrRPhfEFFq1KLYguagSflLhFnVQmw
+        AAAEDIN2VWFyggtoSPXcAFy8dtG1uAig8sCuyE21eMDt2GgJBWcxb/Blaqt1auOtE+F8QU
+        WrUotiC5qBJ+UuEWdVCbAAAACnJvb3RAbml4b3MBAgM=
+        -----END OPENSSH PRIVATE KEY-----
+      '';
+      mode = "0400";
+    };
+    "machine-id".text = "f94755ad039f4e96a1796d58cbef4c73"; # make systemd happy
+  };
+
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe"
   ];
@@ -91,7 +111,7 @@
 
             "/EFI/systemd/systemd-boot${efiArch}.efi".source =
               "${config.systemd.package}/lib/systemd/boot/efi/systemd-boot${efiArch}.efi";
-              
+
             "/EFI/Linux/${config.system.boot.loader.ukiFile}".source =
               "${config.system.build.uki}/${config.system.boot.loader.ukiFile}";
 

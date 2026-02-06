@@ -26,14 +26,35 @@
   networking.firewall.enable = false;
 
   boot.initrd.systemd.enable = true;
+  boot.initrd.systemd.emergencyAccess = true;
+
+  boot.initrd.systemd.root = "gpt-auto";
+  boot.initrd.supportedFilesystems = [ "ext4" ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 3;
   boot.loader.timeout = 1;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.initrd.systemd.root = "gpt-auto";
-  boot.initrd.supportedFilesystems = [ "ext4" ];
+  environment.etc = {
+    "ssh/ssh_host_ed25519_key.pub" = {
+      text = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJBWcxb/Blaqt1auOtE+F8QUWrUotiC5qBJ+UuEWdVCb";
+      mode = "0400";
+    };
+    "ssh/ssh_host_ed25519_key" = {
+      text = ''
+        -----BEGIN OPENSSH PRIVATE KEY-----
+        b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+        QyNTUxOQAAACCQVnMW/wZWqrdWrjrRPhfEFFq1KLYguagSflLhFnVQmwAAAJASuMMnErjD
+        JwAAAAtzc2gtZWQyNTUxOQAAACCQVnMW/wZWqrdWrjrRPhfEFFq1KLYguagSflLhFnVQmw
+        AAAEDIN2VWFyggtoSPXcAFy8dtG1uAig8sCuyE21eMDt2GgJBWcxb/Blaqt1auOtE+F8QU
+        WrUotiC5qBJ+UuEWdVCbAAAACnJvb3RAbml4b3MBAgM=
+        -----END OPENSSH PRIVATE KEY-----
+      '';
+      mode = "0400";
+    };
+    "machine-id".text = "f94755ad039f4e96a1796d58cbef4c73"; # make systemd happy
+  };
 
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe"
@@ -58,12 +79,16 @@
         "flakes"
       ];
     };
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
-    };
-    optimise.automatic = true;
+  };
+
+  programs.bash.shellAliases = {
+    r = "yazi";
+    sall = "systemctl list-units";
+    slist = "systemctl list-units --type=service";
+    stimer = "systemctl list-timers";
+    sstat = "systemctl status";
+    scat = "systemctl cat";
+    slog = "journalctl -u";
   };
 
   environment.systemPackages = with pkgs; [
@@ -72,6 +97,9 @@
     rclone
     helix
     yazi-unwrapped
+    nix-tree
+    htop
+    qemu_kvm
+    socat
   ];
-
 }
