@@ -160,6 +160,8 @@
       sstat = "systemctl status";
       scat = "systemctl cat";
       slog = "journalctl -u";
+
+      nds = "nix derivation show";
     };
 
     shellInit = ''
@@ -168,6 +170,10 @@
 
       function loc
         readlink -f $(which $argv) 
+      end
+
+      function nids
+        nix derivation show $(nix-instantiate -A $argv)
       end
     '';
 
