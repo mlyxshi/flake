@@ -187,7 +187,13 @@
       User runner
       StrictHostKeyChecking no
       ProxyCommand /opt/homebrew/bin/cloudflared access ssh --hostname github-action-ssh.mlyxshi.com
-
+    
+    Host vscode-nrt
+    	HostName  nrt.mlyxshi.com
+      HostKeyAlias nrt
+    	User root
+      Port 23333
+      RemoteCommand /run/current-system/sw/bin/bash
   '';
 
   programs.fish = {

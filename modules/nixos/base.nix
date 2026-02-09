@@ -44,7 +44,7 @@
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe"
     ];
-    shell = pkgs.fish;
+    # shell = pkgs.fish;
   };
 
   services.dbus.implementation = "broker";
