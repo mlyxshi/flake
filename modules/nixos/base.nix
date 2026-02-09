@@ -143,42 +143,42 @@
     '')
   ];
 
-  programs.fish = {
-    enable = true;
-    shellAliases = {
-      l = "eza -algh";
-      r = "yazi";
-      g = "lazygit";
-      c = "bat";
-      man = "batman";
-      P = "echo $PATH";
-      nt = "nexttrace";
+  # programs.fish = {
+  #   enable = true;
+  #   shellAliases = {
+  #     l = "eza -algh";
+  #     r = "yazi";
+  #     g = "lazygit";
+  #     c = "bat";
+  #     man = "batman";
+  #     P = "echo $PATH";
+  #     nt = "nexttrace";
 
-      sall = "systemctl list-units";
-      slist = "systemctl list-units --type=service";
-      stimer = "systemctl list-timers";
-      sstat = "systemctl status";
-      scat = "systemctl cat";
-      slog = "journalctl -u";
+  #     sall = "systemctl list-units";
+  #     slist = "systemctl list-units --type=service";
+  #     stimer = "systemctl list-timers";
+  #     sstat = "systemctl status";
+  #     scat = "systemctl cat";
+  #     slog = "journalctl -u";
 
-      nds = "nix derivation show";
-    };
+  #     nds = "nix derivation show";
+  #   };
 
-    shellInit = ''
-      set -U fish_greeting
-      zoxide init fish | source
+  #   shellInit = ''
+  #     set -U fish_greeting
+  #     zoxide init fish | source
 
-      function loc
-        readlink -f $(which $argv) 
-      end
+  #     function loc
+  #       readlink -f $(which $argv) 
+  #     end
 
-      function nids
-        nix derivation show $(nix-instantiate -A $argv)
-      end
-    '';
+  #     function nids
+  #       nix derivation show $(nix-instantiate -A $argv)
+  #     end
+  #   '';
 
-    promptInit = ''
-      eval (starship init fish)
-    '';
-  };
+  #   promptInit = ''
+  #     eval (starship init fish)
+  #   '';
+  # };
 }
