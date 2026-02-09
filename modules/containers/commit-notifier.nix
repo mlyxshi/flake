@@ -37,19 +37,11 @@
 #         }
 #       }
 #     },
-#     "master-to-staging-next": {
+#     "master-to-staging-next-to-staging": {
 #       "condition": {
 #         "SuppressFromTo": {
 #           "from_regex": "^master$",
-#           "to_regex": "^staging-next$"
-#         }
-#       }
-#     },
-#     "staging-next-to-staging": {
-#       "condition": {
-#         "SuppressFromTo": {
-#           "from_regex": "^staging-next$",
-#           "to_regex": "^staging$"
+#           "to_regex": "^(staging-next|staging)$"
 #         }
 #       }
 #     }
