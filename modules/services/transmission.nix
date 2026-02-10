@@ -62,25 +62,23 @@
     file_server browse
   '';
 
-  services.traefik = {
-    dynamicConfigOptions = {
-      http = {
-        routers.transmission = {
-          rule = "Host(`transmission-${config.networking.hostName}.${config.networking.domain}`)";
-          entryPoints = [ "websecure" ];
-          service = "transmission";
-        };
-
-        services.transmission.loadBalancer.servers = [ { url = "http://127.0.0.1:9091"; } ];
-
-        routers.transmission-index = {
-          rule = "Host(`transmission-${config.networking.hostName}-index.${config.networking.domain}`)";
-          entryPoints = [ "web" ];
-          service = "transmission-index";
-        };
-
-        services.transmission-index.loadBalancer.servers = [ { url = "http://127.0.0.1:8010"; } ];
+  services.traefik.dynamic.files."transmission".settings = {
+    http = {
+      routers.transmission = {
+        rule = "Host(`transmission-${config.networking.hostName}.${config.networking.domain}`)";
+        entryPoints = [ "websecure" ];
+        service = "transmission";
       };
+
+      services.transmission.loadBalancer.servers = [ { url = "http://127.0.0.1:9091"; } ];
+
+      routers.transmission-index = {
+        rule = "Host(`transmission-${config.networking.hostName}-index.${config.networking.domain}`)";
+        entryPoints = [ "web" ];
+        service = "transmission-index";
+      };
+
+      services.transmission-index.loadBalancer.servers = [ { url = "http://127.0.0.1:8010"; } ];
     };
   };
 }

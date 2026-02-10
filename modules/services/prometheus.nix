@@ -113,27 +113,25 @@ in
     };
   };
 
-  services.traefik = {
-    dynamicConfigOptions = {
-      http = {
-        routers = {
-          prometheus = {
-            rule = "Host(`metric.${config.networking.domain}`)";
-            entryPoints = [ "websecure" ];
-            service = "prometheus";
-          };
-
-          alertmanager = {
-            rule = "Host(`alert.${config.networking.domain}`)";
-            entryPoints = [ "websecure" ];
-            service = "alertmanager";
-          };
+  services.traefik.dynamic.files."prometheus".settings = {
+    http = {
+      routers = {
+        prometheus = {
+          rule = "Host(`metric.${config.networking.domain}`)";
+          entryPoints = [ "websecure" ];
+          service = "prometheus";
         };
 
-        services = {
-          prometheus.loadBalancer.servers = [ { url = "http://127.0.0.1:9090"; } ];
-          alertmanager.loadBalancer.servers = [ { url = "http://127.0.0.1:9093"; } ];
+        alertmanager = {
+          rule = "Host(`alert.${config.networking.domain}`)";
+          entryPoints = [ "websecure" ];
+          service = "alertmanager";
         };
+      };
+
+      services = {
+        prometheus.loadBalancer.servers = [ { url = "http://127.0.0.1:9090"; } ];
+        alertmanager.loadBalancer.servers = [ { url = "http://127.0.0.1:9093"; } ];
       };
     };
   };

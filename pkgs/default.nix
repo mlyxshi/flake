@@ -106,6 +106,7 @@ rec {
     name = "visible-path";
     system = builtins.currentSystem;
     builder = "/bin/sh";
+    whatever-file = ./whatever-file;
     args = [
       "-c"
       "${busybox}/bin/ls  -al /nix/store > $out"
