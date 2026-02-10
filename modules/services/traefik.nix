@@ -6,11 +6,9 @@
 {
   services.traefik = {
     enable = true;
-    group = if config.virtualisation.podman.enable then "podman" else "traefik"; # podman backend
-    
-    # supplementaryGroups = lib.optionals config.virtualisation.podman.enable [ "podman" ];  
+    supplementaryGroups = lib.optionals config.virtualisation.podman.enable [ "podman" ];  
 
-    dynamicConfigOptions = {
+    dynamic.files."dashboard".settings = {
 
       http.middlewares = {
         web-redirect.redirectScheme.scheme = "https";
@@ -29,7 +27,7 @@
       };
     };
 
-    staticConfigOptions = {
+    static.settings = {
       api = { };
 
       entryPoints = {
@@ -46,7 +44,7 @@
       certificatesResolvers.letsencrypt.acme = {
         dnsChallenge.provider = "cloudflare";
         email = "blackhole@${config.networking.domain}";
-        storage = "${config.services.traefik.dataDir}/acme.json"; # "/var/lib/traefik/acme.json"
+        storage = "/var/lib/traefik/acme.json"; 
       };
     }
     // lib.optionalAttrs config.virtualisation.podman.enable {

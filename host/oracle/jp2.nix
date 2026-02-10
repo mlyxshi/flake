@@ -10,12 +10,12 @@
     self.nixosModules.services.prometheus
     self.nixosModules.services.transmission
     self.nixosModules.services.hath
+    self.nixosModules.services.commit-notifier
 
     self.nixosModules.containers.podman
     self.nixosModules.containers.miniflux
     self.nixosModules.containers.change-detection
     self.nixosModules.containers.komari-monitor
-    self.nixosModules.containers.commit-notifier
   ];
 
   environment.systemPackages = with pkgs; [
