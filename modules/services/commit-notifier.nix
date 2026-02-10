@@ -1,12 +1,12 @@
 {
   pkgs,
+  lib,
   ...
 }:
 {
   systemd.services.commit-notifier = {
-    path = [
-      pkgs.gitMinimal
-    ];
+    path = [ pkgs.gitMinimal ];
+
     environment = {
       RUST_LOG = "info";
     };
@@ -14,7 +14,7 @@
     serviceConfig = {
       EnvironmentFile = "/secret/commit-notifier";
       StateDirectory = "commit-notifier";
-      ExecStart = "${pkgs.commit-notifier}/bin/commit-notifier --working-dir /var/lib/commit-notifier  --cron '0 * * * * *'   --admin-chat-id=696869490";
+      ExecStart = "${lib.getExe pkgs.commit-notifier} --working-dir /var/lib/commit-notifier  --cron '0 * * * * *'   --admin-chat-id=696869490";
     };
 
     wants = [ "network-online.target" ];
