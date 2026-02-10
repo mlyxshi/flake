@@ -8,6 +8,7 @@
     enable = true;
     supplementaryGroups = lib.optionals config.virtualisation.podman.enable [ "podman" ];  
 
+    dynamic.dir = "/var/lib/traefik/dynamic";
     dynamic.files."dashboard".settings = {
 
       http.middlewares = {
