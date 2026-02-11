@@ -39,9 +39,16 @@ rec {
     name = "dep2";
     system = builtins.currentSystem;
     builder = "/bin/sh";
+    outputs = [
+      "out"
+      "lib"
+    ];
     args = [
       "-c"
-      "echo ${dep1} > $out"
+      ''
+        echo ${dep1} > $out
+        echo hello > $lib
+      ''
     ];
   };
 
@@ -55,13 +62,13 @@ rec {
     ];
   };
 
-  # Get run/build time dependency
+  # Get runtime dependency
   # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/closure-info.nix
   graph = derivation {
     name = "graph";
     system = builtins.currentSystem;
     __structuredAttrs = true;
-    exportReferencesGraph.closure = [ fin1 ]; # build time dependency: hello.drvPath
+    exportReferencesGraph.closure = [ fin1 ];
     builder = "${bash}/bin/bash";
     args = [
       "-c"
@@ -106,7 +113,7 @@ rec {
     name = "visible-path";
     system = builtins.currentSystem;
     builder = "/bin/sh";
-    whatever-file = ./whatever-file;
+    fin1 = fin1;
     args = [
       "-c"
       "${busybox}/bin/ls  -al /nix/store > $out"
