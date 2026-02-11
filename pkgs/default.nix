@@ -62,6 +62,41 @@ rec {
     ];
   };
 
+  # __structuredAttrs = true
+  # builtins.toJSON set -> bash string(json)
+  # list   -> bash array
+  # string -> bash string
+  # outputs -> bash dictionary
+  structure = derivation {
+    name = "structure";
+    system = builtins.currentSystem;
+    __structuredAttrs = true;
+    list = [
+      1
+      2
+    ];
+    set = builtins.toJSON { a = "hello"; };
+    string = "hello";
+    number = 1;
+    outputs = [
+      "out"
+      "lib"
+    ];
+    builder = "${bash}/bin/bash";
+    args = [
+      "-c"
+      ''
+        . $NIX_ATTRS_SH_FILE
+        out=''${outputs[out]}
+        lib=''${outputs[lib]}
+        ${coreutils}/bin/mkdir -p $out $lib
+        ${coreutils}/bin/cat $NIX_ATTRS_JSON_FILE > $out/attr.json
+        ${coreutils}/bin/cat $NIX_ATTRS_SH_FILE > $out/attr.sh
+        ${coreutils}/bin/printenv > $out/env
+      ''
+    ];
+  };
+
   # Get runtime dependency
   # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/closure-info.nix
   graph = derivation {
@@ -117,6 +152,17 @@ rec {
     args = [
       "-c"
       "${busybox}/bin/ls  -al /nix/store > $out"
+    ];
+  };
+
+  buildEnv = pkgs.buildEnv {
+    name = "my-env";
+    paths = [
+      pkgs.wget
+      pkgs.curl
+    ];
+    pathsToLink = [
+      "/bin"
     ];
   };
 
