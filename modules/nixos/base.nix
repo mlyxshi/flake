@@ -79,7 +79,8 @@
       '';
       mode = "0400";
     };
-    "machine-id".text = "f94755ad039f4e96a1796d58cbef4c73"; # make systemd happy
+    "machine-id".text = "6a9857a393724b7a981ebb5b8495b9ea"; # make systemd happy
+    "machine-id".mode = "0444";
   };
 
   programs.ssh.knownHosts."github.com".publicKey =

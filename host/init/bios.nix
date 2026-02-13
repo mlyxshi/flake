@@ -11,6 +11,7 @@
 
   networking.hostName = "nixos-example";
   nixpkgs.hostPlatform = "x86_64-linux";
+  # nixpkgs.hostPlatform = "aarch64-linux";
 
   services.getty.autologinUser = "root";
 

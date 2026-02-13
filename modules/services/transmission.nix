@@ -8,11 +8,11 @@
   ...
 }:
 {
-  nixpkgs.overlays = [
-    (final: prev: {
-      transmission = prev.callPackage (self + "/pkgs/transmission.nix") { };
-    })
-  ];
+  # nixpkgs.overlays = [
+  #   (final: prev: {
+  #     transmission = prev.callPackage (self + "/pkgs/transmission.nix") { };
+  #   })
+  # ];
 
   users = {
     users.transmission = {

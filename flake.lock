@@ -7,10 +7,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1770184146,
-        "narHash": "sha256-DsqnN6LvXmohTRaal7tVZO/AKBuZ02kPBiZKSU4qa/k=",
+        "lastModified": 1770922915,
+        "narHash": "sha256-6J/JoK9iL7sHvKJcGW2KId2agaKv1OGypsa7kN+ZBD4=",
         "ref": "refs/heads/master",
-        "rev": "0d7874ef7e3ba02d58bebb871e6e29da36fa1b37",
+        "rev": "6c5a56295d2a24e43bcd8af838def1b9a95746b2",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/nix-darwin/nix-darwin.git"
@@ -23,19 +23,19 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1770836573,
-        "narHash": "sha256-PDF3rLfM7x/uzh1GtpSt+J+VDpgxx5UCh+rld5XMjCA=",
-        "ref": "initrd-discard-references",
-        "rev": "8eb867762ac8b32298a5fcf4acece6e11ca9c31c",
+        "lastModified": 1770956962,
+        "narHash": "sha256-dakX5wYFRTckgej29qy//68/DjFsEA/XNYfnltnaDlo=",
+        "ref": "nixos-unstable-small",
+        "rev": "2c4dbe7e217aa8f06a0e5a76169cc28f5de10b4b",
         "shallow": true,
         "type": "git",
-        "url": "https://github.com/mlyxshi/nixpkgs.git"
+        "url": "https://github.com/NixOS/nixpkgs.git"
       },
       "original": {
-        "ref": "initrd-discard-references",
+        "ref": "nixos-unstable-small",
         "shallow": true,
         "type": "git",
-        "url": "https://github.com/mlyxshi/nixpkgs.git"
+        "url": "https://github.com/NixOS/nixpkgs.git"
       }
     },
     "root": {
