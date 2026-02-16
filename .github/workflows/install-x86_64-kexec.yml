@@ -48,7 +48,7 @@ jobs:
     - run: scp kexec initrd kernel installer:/root/
 
     - run: ssh installer chmod +x kexec
-    - run: ssh installer ./kexec  --load ./kernel --initrd=./initrd --append="root=fstab"
+    - run: ssh installer ./kexec  --load ./kernel --initrd=./initrd --append="root=fstab rd.systemd.break=pre-switch-root"
     - name: Run kexec
       continue-on-error: true 
       run: ssh installer systemctl kexec -i

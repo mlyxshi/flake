@@ -28,6 +28,12 @@ rec {
   dep1 = derivation {
     name = "dep1";
     system = builtins.currentSystem;
+    env1 = "env1"; # string -> bash string
+    env2 = [
+      "a"
+      "b"
+      "c"
+    ]; # list -> bash string with blankspace   env2="a b c"
     builder = "/bin/sh";
     args = [
       "-c"

@@ -31,7 +31,7 @@ jobs:
     - run: $SSH $HOST curl -LO https://github.com/mlyxshi/flake/releases/download/aarch64/initrd
     - run: $SSH $HOST curl -LO https://github.com/mlyxshi/flake/releases/download/aarch64/kernel
     - run: $SSH $HOST chmod +x kexec
-    - run: $SSH $HOST ./kexec  --load ./kernel --initrd=./initrd --append="systemd.set_credential_binary=ssh.authorized_keys.root:c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSU1wYVkzTHlDVzRISHFicDRTQTR0bkErMUJrZ3dydHJvMnMvREVzQmNQRGUK"
+    - run: $SSH $HOST ./kexec  --load ./kernel --initrd=./initrd --append="root=fstab rd.systemd.break=pre-switch-root"
     - name: Run kexec
       continue-on-error: true 
       run: $SSH $HOST systemctl kexec -i

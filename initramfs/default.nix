@@ -118,22 +118,13 @@
     # strace = "${pkgs.strace}/bin/strace";
   };
 
-  boot.initrd.systemd.emergencyAccess = true;
+  # https://www.freedesktop.org/software/systemd/man/latest/systemd-debug-generator.html
+  # https://github.com/systemd/systemd/blob/main/units/breakpoint-pre-switch-root.service.in
+  # Pause the boot process at a certain point and spawn a debug shell. After exiting this shell, the system will resume booting
+  # So systemd-initrd will reach initrd.target, and behaves like a minimal live NixOS system running in RAM
+  # Now we can perform normal OS installation tasks, such as formatting disks and copying the system closure.
+  boot.initrd.systemd.additionalUpstreamUnits = [ "breakpoint-pre-switch-root.service" ];
 
-  # force fail to get a debug shell without network (VNC)
-  boot.initrd.systemd.services.force-fail = {
-    wantedBy = [ "initrd.target" ];
-    after = [ "initrd.target" ];
-    serviceConfig.ExecStart = "/bin/false";
-    unitConfig.OnFailure = [ "emergency.target" ];
-  };
-
-  boot.initrd.systemd.services.initrd-parse-etc.enable = false;
-  # https://www.freedesktop.org/software/systemd/man/latest/bootup.html#Bootup%20in%20the%20initrd
-  # https://github.com/systemd/systemd/blob/main/units/initrd-parse-etc.service.in
-  # https://github.com/systemd/systemd/blob/main/units/initrd-cleanup.service
-  # Disable: initrd-parse-etc.service -> initrd-cleanup.service -> initrd-switch-root.target
-  # so systemd will reach initrd.target. Unit will not be cleanup and act like a mini live nixos system.
 
   # Preset DHCP
   boot.initrd.systemd.network.networks.ethernet = {
