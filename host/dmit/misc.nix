@@ -6,13 +6,7 @@
   self,
   ...
 }:
-{
-
-  # programs.nix-ld.enable = true;
-  # programs.nix-ld.libraries = [
-
-  # ];
-  
+{  
   services.openssh.ports = [ 23333 ];
 
   boot.blacklistedKernelModules = [ "virtio_balloon" ];

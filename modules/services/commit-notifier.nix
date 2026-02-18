@@ -30,7 +30,7 @@
 #  /var/lib/commit-notifier/repositories/nixpkgs/settings.json
 
 # {
-#   "branch_regex": "^(master|nixos-unstable-small|staging|staging-next)$",
+#   "branch_regex": "^(master|nixos-unstable-small|staging|staging-next|staging-nixos)$",
 #   "github_info": {
 #     "owner": "NixOS",
 #     "repo": "nixpkgs"
@@ -47,7 +47,7 @@
 #       "condition": {
 #         "SuppressFromTo": {
 #           "from_regex": "^master$",
-#           "to_regex": "^(staging-next|staging)$"
+#           "to_regex": "^(staging-next|staging|staging-nixos)$"
 #         }
 #       }
 #     }
