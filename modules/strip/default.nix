@@ -6,6 +6,7 @@
 {
   # https://nixos.org/manual/nixos/unstable/#sec-replace-modules
   disabledModules = [
+    "services/web-servers/traefik.nix"
   ];
 
   programs.nano.enable = false;
