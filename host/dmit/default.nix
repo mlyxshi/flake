@@ -12,6 +12,7 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.services.komari-agent
     self.nixosModules.services.cloudflare-warp
     self.nixosModules.services.snell
+    self.nixosModules.pr.traefik
     ./misc.nix
     {
       nixpkgs.hostPlatform = "x86_64-linux";
