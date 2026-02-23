@@ -7,6 +7,7 @@
   # https://nixos.org/manual/nixos/unstable/#sec-replace-modules
   disabledModules = [
     "services/web-servers/traefik.nix"
+    "services/networking/pangolin.nix"
   ];
 
   programs.nano.enable = false;
