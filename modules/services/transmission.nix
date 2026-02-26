@@ -47,11 +47,11 @@
     wants = [ "network-online.target" ];
     environment = {
       TRANSMISSION_HOME = "%S/transmission";
-      TRANSMISSION_WEB_HOME = "${pkgs.transmission}/share/transmission/public_html";
+      TRANSMISSION_WEB_HOME = "${pkgs.transmission_4}/share/transmission/public_html";
     };
     serviceConfig.EnvironmentFile = [ "/secret/transmission" ];
     serviceConfig.User = "transmission";
-    serviceConfig.ExecStart = "${pkgs.transmission}/bin/transmission-daemon --foreground --username $ADMIN --password $PASSWORD";
+    serviceConfig.ExecStart = "${pkgs.transmission_4}/bin/transmission-daemon --foreground --username $ADMIN --password $PASSWORD";
     serviceConfig.WorkingDirectory = "%S/transmission";
     wantedBy = [ "multi-user.target" ];
   };
