@@ -10,7 +10,7 @@
 {
   # nixpkgs.overlays = [
   #   (final: prev: {
-  #     transmission = prev.callPackage (self + "/pkgs/transmission.nix") { };
+  #     transmission_4 = prev.callPackage (self + "/pkgs/transmission.nix") { };
   #   })
   # ];
 
