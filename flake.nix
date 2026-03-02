@@ -1,7 +1,7 @@
 {
   inputs = {
     # nixpkgs.url = "github:NixOS/nixpkgs/pull/388231/head";
-    # nixpkgs.url = "git+https://github.com/NixOS/nixpkgs.git?ref=master&shallow=1";    
+    # nixpkgs.url = "git+https://github.com/NixOS/nixpkgs.git?ref=master&shallow=1";
     # nixpkgs.url = "path:/Users/dominic/nixpkgs/";
     # nixpkgs.url = "git+https://github.com/mlyxshi/nixpkgs.git?ref=initrd-discard-references&shallow=1";
     nixpkgs.url = "git+https://github.com/NixOS/nixpkgs.git?ref=nixos-unstable-small&shallow=1";
@@ -32,12 +32,12 @@
       };
       nixosConfigurations = {
         # systemd-repart
-        # nix build .#nixosConfigurations.arm-init-grow.config.system.build.image
+        # nix build --no-link --print-out-paths .#nixosConfigurations.arm-init-grow.config.system.build.image
         arm-init-grow = nixpkgs.lib.nixosSystem { modules = [ ./host/init/arm.nix ]; };
         # bios test
         bios = nixpkgs.lib.nixosSystem { modules = [ ./host/init/bios.nix ]; };
         # Apple Silicon (M3 and later) supports nested virtualization via Apple's Virtualization Framework for build nixos image require kvm
-        utm = nixpkgs.lib.nixosSystem { modules = [ ./host/init/utm.nix ]; };
+        builder = nixpkgs.lib.nixosSystem { modules = [ ./host/init/builder.nix ]; };
 
         initramfs-x86_64 = nixpkgs.lib.nixosSystem {
           modules = [
@@ -52,7 +52,7 @@
             { nixpkgs.hostPlatform = "aarch64-linux"; }
           ];
         };
-        
+
         nrt = import ./host/dmit { inherit self nixpkgs secret; };
 
         jp1 = import ./host/oracle/mkHost.nix {
@@ -77,7 +77,17 @@
       };
 
       packages.aarch64-darwin = {
-        default = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "x86_64-initramfs-test" ''
+        # nix build --no-link --print-out-paths .#nixosConfigurations.arm-init-grow.config.system.build.image
+        # qemu-img resize nixos.raw 60G
+        aarch64-linux-builder = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "vfkit-aarch64-initramfs-test" ''
+          /opt/homebrew/bin/vfkit --cpus 4 --memory 8192 \
+          --bootloader efi,variable-store=/Users/dominic/vfkit/efi-variable-store,create \
+          --device virtio-blk,path=/Users/dominic/vfkit/nixos.raw \
+          --device virtio-serial,stdio \
+          --device virtio-net,nat,mac=72:20:43:d4:39:63
+        '';
+
+        qemu-x86_64-initramfs-test = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "x86_64-initramfs-test" ''
           /opt/homebrew/bin/qemu-system-x86_64 -cpu qemu64 -nographic -m 4G \
             -kernel ${self.nixosConfigurations.initramfs-x86_64.config.system.build.kernel}/bzImage \
             -initrd ${self.nixosConfigurations.initramfs-x86_64.config.system.build.initialRamdisk}/initrd \
@@ -86,7 +96,7 @@
             -device "virtio-scsi-pci,id=scsi0" -drive "file=disk.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
         '';
 
-        arm-initramfs-test = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "aarch64-initramfs-test" ''
+        qemu-arm-initramfs-test = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "aarch64-initramfs-test" ''
           /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 4G \
             -kernel ${self.nixosConfigurations.initramfs-aarch64.config.system.build.kernel}/Image \
             -initrd ${self.nixosConfigurations.initramfs-aarch64.config.system.build.initialRamdisk}/initrd \

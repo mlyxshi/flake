@@ -128,6 +128,7 @@
       "qemu"
       "mole"
       "container"
+      "vfkit"
     ];
 
     casks = [

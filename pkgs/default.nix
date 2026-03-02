@@ -33,7 +33,7 @@ rec {
       "a"
       "b"
       "c"
-    ]; # list -> bash string with blankspace   env2="a b c"
+    ]; # list -> bash string with space   env2="a b c"
     builder = "/bin/sh";
     args = [
       "-c"
