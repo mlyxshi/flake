@@ -78,7 +78,7 @@
 
       packages.aarch64-darwin = {
         # nix build --no-link --print-out-paths .#nixosConfigurations.arm-init-grow.config.system.build.image
-        # qemu-img resize nixos.raw 60G
+        # qemu-img resize nixos.raw 50G
         aarch64-linux-builder = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "vfkit-aarch64-initramfs-test" ''
           /opt/homebrew/bin/vfkit --cpus 4 --memory 8192 \
           --bootloader efi,variable-store=/Users/dominic/vfkit/efi-variable-store,create \

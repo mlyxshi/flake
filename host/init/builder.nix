@@ -105,6 +105,7 @@
     rclone
     helix
     yazi-unwrapped
+    file
     nix-tree
     htop
     qemu_kvm

@@ -172,5 +172,15 @@ rec {
     ];
   };
 
+  builder = derivation {
+    name = "builder-test";
+    system = "aarch64-linux"; 
+    builder = "/bin/sh"; 
+    args = [
+      "-c"
+      "echo hello-aaa > $out"
+    ];
+  };
+
   transmission = pkgs.callPackage ./transmission.nix { };
 }

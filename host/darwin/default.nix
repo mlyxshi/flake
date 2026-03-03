@@ -2,12 +2,24 @@
 # sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations old
 # sudo HOME=/var/root nix-env --profile /nix/var/nix/profiles/per-user/root/profile --delete-generations old
 # nix-collect-garbage -d
+
+# Restart nix-daemon
+# sudo launchctl kickstart -k system/org.nixos.nix-daemon
 {
   pkgs,
   config,
   ...
 }:
 {
+  # https://github.com/NixOS/nix-installer
+  nix.enable = false; 
+
+  # sudo nano /etc/nix/nix.custom.conf
+  # extra-trusted-users = dominic
+  # builders-use-substitutes = true
+  
+  # sudo nano /etc/nix/machines
+  # ssh-ng://root@builder.local aarch64-linux /Users/dominic/.ssh/id_ed25519 4 - kvm - c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUpCV2N4Yi9CbGFxdDFhdU90RStGOFFVV3JVb3RpQzVxQkorVXVFV2RWQ2I=
 
   system.stateVersion = 6;
 
@@ -18,15 +30,7 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe"
   ];
 
-  nix.enable = false; # DeterminateSystems  Nix
-
   nixpkgs.config.allowUnfree = true;
-
-  # https://docs.determinate.systems/determinate-nix/#determinate-nixd-configuration
-  # Default Determinate Native Linux builder is 8GB and tmpfs on root, which is enough for most builds. But nixos image required more memory.
-  environment.etc."determinate/config.json".text = builtins.toJSON {
-    builder.memoryBytes = 1024 * 1024 * 1024 * 10;
-  };
 
   environment.systemPackages = with pkgs; [
     wget
