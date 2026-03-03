@@ -36,6 +36,9 @@
   boot.loader.timeout = 1;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # https://github.com/papercomputeco/stereOS/blob/7588b5a2267b0333effabac2d555a54b03cc56fc/modules/boot.nix#L45
+  boot.kernelParams = [ "console=hvc0" ];
+  
   environment.etc = {
     "ssh/ssh_host_ed25519_key.pub" = {
       text = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJBWcxb/Blaqt1auOtE+F8QUWrUotiC5qBJ+UuEWdVCb";
