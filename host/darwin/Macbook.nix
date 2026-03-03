@@ -12,8 +12,8 @@
 
   networking.hostName = "Macbook";
 
-  environment.systemPackages = with pkgs; [
-  ];
+  # environment.systemPackages = with pkgs; [
+  # ];
 
   homebrew = {
 

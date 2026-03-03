@@ -77,15 +77,6 @@
       };
 
       packages.aarch64-darwin = {
-        # nix build --no-link --print-out-paths .#nixosConfigurations.arm-init-grow.config.system.build.image
-        # qemu-img resize nixos.raw 50G
-        aarch64-linux-builder = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "vfkit-aarch64-initramfs-test" ''
-          /opt/homebrew/bin/vfkit --cpus 4 --memory 8192 \
-          --bootloader efi,variable-store=/Users/dominic/vfkit/efi-variable-store,create \
-          --device virtio-blk,path=/Users/dominic/vfkit/nixos.raw \
-          --device virtio-serial,stdio \
-          --device virtio-net,nat,mac=72:20:43:d4:39:63
-        '';
 
         qemu-x86_64-initramfs-test = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "x86_64-initramfs-test" ''
           /opt/homebrew/bin/qemu-system-x86_64 -cpu qemu64 -nographic -m 4G \
@@ -96,7 +87,7 @@
             -device "virtio-scsi-pci,id=scsi0" -drive "file=disk.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
         '';
 
-        qemu-arm-initramfs-test = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "aarch64-initramfs-test" ''
+        default = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "aarch64-initramfs-test" ''
           /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 4G \
             -kernel ${self.nixosConfigurations.initramfs-aarch64.config.system.build.kernel}/Image \
             -initrd ${self.nixosConfigurations.initramfs-aarch64.config.system.build.initialRamdisk}/initrd \

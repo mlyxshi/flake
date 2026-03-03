@@ -25,7 +25,7 @@ curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/initrd
 curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kernel
 curl -LO https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kexec
 chmod +x kexec
-./kexec --load ./kernel --initrd=./initrd --append="root=fstab"
+./kexec --load ./kernel --initrd=./initrd --append="systemd.journald.forward_to_console root=fstab rd.systemd.break=pre-switch-root"
 systemctl kexec -i
 ```
 

@@ -12,12 +12,12 @@
 }:
 {
   # https://github.com/NixOS/nix-installer
-  nix.enable = false; 
+  nix.enable = false;
 
   # sudo nano /etc/nix/nix.custom.conf
   # extra-trusted-users = dominic
   # builders-use-substitutes = true
-  
+
   # sudo nano /etc/nix/machines
   # ssh-ng://root@builder.local aarch64-linux /Users/dominic/.ssh/id_ed25519 4 - kvm - c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUpCV2N4Yi9CbGFxdDFhdU90RStGOFFVV3JVb3RpQzVxQkorVXVFV2RWQ2I=
 
@@ -146,7 +146,6 @@
       "uninstallpkg"
       "suspicious-package"
       "google-chrome"
-      "orbstack"
       "utm"
       "crystalfetch"
       "openmtp"
@@ -183,11 +182,6 @@
     	User root
       Port 23333
 
-    Host utm
-    	HostName  utm.local
-      HostKeyAlias utm
-    	User root
-
     Host gh
       User runner
       StrictHostKeyChecking no
@@ -208,6 +202,10 @@
       nt = "nexttrace";
 
       nds = "nix derivation show";
+
+      # nix build --no-link --print-out-paths .#nixosConfigurations.arm-init-grow.config.system.build.image
+      # qemu-img resize nixos.raw 50G
+      builder = "/opt/homebrew/bin/vfkit --cpus 4 --memory 8192 --bootloader efi,variable-store=/Users/dominic/vfkit/efi-variable-store,create --device virtio-blk,path=/Users/dominic/vfkit/nixos.raw  --device virtio-serial,stdio --device virtio-net,nat,mac=72:20:43:d4:39:63";
     };
 
     shellInit = ''
