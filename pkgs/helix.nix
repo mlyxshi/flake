@@ -1,11 +1,11 @@
 {
   lib,
-  fetchFromGitHub,
-  helix,
-  installShellFiles,
-  nix-update-script,
   rustPlatform,
+  fetchFromGitHub,
+  installShellFiles,
+  mdbook,
   versionCheckHook,
+  nix-update-script,
 }:
 
 rustPlatform.buildRustPackage (finalAttrs: {
@@ -26,13 +26,31 @@ rustPlatform.buildRustPackage (finalAttrs: {
 
   cargoHash = "sha256-Mf0nrgMk1MlZkSyUN6mlM5lmTcrOHn3xBNzmVGtApEU=";
 
-  nativeBuildInputs = [ installShellFiles ];
+  patches = [
+    # Support mdbook 0.5.x: escape HTML tags in command descriptions
+    ./mdbook-0.5-support.patch
+  ];
+
+  postPatch = ''
+    # mdbook 0.5 uses asset hashing for CSS/JS files
+    # Remove custom theme to use default mdbook theme with correct asset references
+    rm -f book/theme/index.hbs
+  '';
+
+  nativeBuildInputs = [
+    installShellFiles
+    mdbook
+  ];
 
   env = {
     # disable fetching and building of tree-sitter grammars in the helix-term build.rs
     HELIX_DISABLE_AUTO_GRAMMAR_BUILD = "1";
     HELIX_DEFAULT_RUNTIME = "${finalAttrs.src}/runtime";
   };
+
+  postBuild = ''
+    mdbook build book -d ../book-html
+  '';
 
   postInstall = ''
     mkdir -p $out/lib $doc/share/doc
