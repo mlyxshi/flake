@@ -174,13 +174,31 @@ rec {
 
   builder = derivation {
     name = "builder-test";
-    system = "aarch64-linux"; 
-    builder = "/bin/sh"; 
+    system = "aarch64-linux";
+    builder = "/bin/sh";
     args = [
       "-c"
       "echo hello-aaa > $out"
     ];
   };
 
+  stdenv-test = stdenv.mkDerivation {
+    __structuredAttrs = true;
+    pname = "test";
+    version = "1.0";
+
+    env = {
+      env1 = 1;
+      env2 = 2;
+    };
+    env3 = 3;
+
+
+    buildCommand = ''
+      ${coreutils}/bin/printenv > $out
+    '';
+  };
+
   transmission = pkgs.callPackage ./transmission.nix { };
+  helix = pkgs.callPackage ./helix.nix { };
 }
