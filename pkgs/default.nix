@@ -200,5 +200,7 @@ rec {
   };
 
   transmission = pkgs.callPackage ./transmission.nix { };
-  helix = pkgs.callPackage ./helix.nix { };
+  helix-mini = pkgs.callPackage ./helix-mini.nix { };
+
+  my-helix = pkgs.callPackage ./my-helix.nix { };
 }
