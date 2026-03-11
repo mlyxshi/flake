@@ -96,12 +96,6 @@
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  nixpkgs.overlays = [
-    (final: prev: {
-      my-helix = final.callPackage (self + "/pkgs/my-helix.nix") { };
-    })
-  ];
-
   environment.systemPackages = with pkgs; [
     wget
     dig
@@ -111,7 +105,7 @@
     nix-output-monitor
     nix-tree
     yazi-unwrapped
-    my-helix
+    helix
     fd
     ripgrep
     starship
