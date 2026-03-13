@@ -113,7 +113,7 @@
     # debug
     htop = "${pkgs.htop}/bin/htop";
     yazi = "${pkgs.yazi-unwrapped}/bin/yazi";
-    hx = "${pkgs.helix}/bin/hx";
+    hx = "${pkgs.helix-unwrapped}/bin/hx";
     yq = "${pkgs.yq-go}/bin/yq";
     # strace = "${pkgs.strace}/bin/strace";
   };
