@@ -106,7 +106,7 @@
     gitMinimal
     wget
     rclone
-    helix
+    helix-unwrapped
     yazi-unwrapped
     file
     nix-tree

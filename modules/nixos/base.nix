@@ -105,7 +105,7 @@
     nix-output-monitor
     nix-tree
     yazi-unwrapped
-    helix
+    helix-unwrapped
     fd
     ripgrep
     starship

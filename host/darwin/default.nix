@@ -41,7 +41,7 @@
     libarchive
     nix-tree
     yazi-unwrapped
-    helix
+    helix-unwrapped
     nixd
     fd
     rclone
