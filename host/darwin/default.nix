@@ -5,6 +5,10 @@
 
 # Restart nix-daemon
 # sudo launchctl kickstart -k system/org.nixos.nix-daemon
+
+# Set fish 
+# cat /etc/shells
+# chsh -s /run/current-system/sw/bin/fish
 {
   pkgs,
   config,
@@ -17,6 +21,7 @@
   # sudo nano /etc/nix/nix.custom.conf
   # extra-trusted-users = dominic
   # builders-use-substitutes = true
+  # upgrade-nix-store-path-url = https://install.determinate.systems/nix-upgrade/stable/universal
 
   # sudo nano /etc/nix/machines
   # ssh-ng://root@builder.local aarch64-linux /Users/dominic/.ssh/id_ed25519 4 - kvm - c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUpCV2N4Yi9CbGFxdDFhdU90RStGOFFVV3JVb3RpQzVxQkorVXVFV2RWQ2I=
