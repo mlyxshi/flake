@@ -6,9 +6,6 @@
 # Restart nix-daemon
 # sudo launchctl kickstart -k system/org.nixos.nix-daemon
 
-# Set fish 
-# cat /etc/shells
-# chsh -s /run/current-system/sw/bin/fish
 {
   pkgs,
   config,
@@ -30,10 +27,13 @@
 
   system.primaryUser = "dominic";
 
-  users.users.dominic.home = "/Users/dominic";
-  users.users.dominic.openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe"
-  ];
+  users.users.dominic = {
+    home = "/Users/dominic";
+    shell = pkgs.fish;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe"
+    ];
+  };
 
   nixpkgs.config.allowUnfree = true;
 
