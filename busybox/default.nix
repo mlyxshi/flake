@@ -14,7 +14,7 @@ rec {
   # For qemu guest, firmware is not necessary
   dummy-firmware = stdenvNoCC.mkDerivation {
     name = "dummy-firmware";
-    buildCommand = "mkdir $out/lib/firmware";
+    buildCommand = "mkdir -p $out/lib/firmware";
   };
 
   modulesClosure = pkgs.makeModulesClosure {
