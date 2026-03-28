@@ -1,0 +1,11 @@
+#!/bin/sh
+
+echo "hello world"
+
+# mount important directories
+mkdir -p /dev /proc /sys
+mount -t devtmpfs devtmpfs /dev
+mount -t proc procfs /proc
+mount -t sysfs sysfs /sys
+
+/bin/sh

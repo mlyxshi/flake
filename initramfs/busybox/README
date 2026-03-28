@@ -1,0 +1,2 @@
+Minimal BusyBox-based initrd for experimentation and learning.
+For daily use, prefer a systemd-based initrd.
