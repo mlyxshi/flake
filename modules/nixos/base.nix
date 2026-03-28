@@ -169,7 +169,7 @@
 
     shellInit = ''
       # VSCode's Remote SSH only support bash
-      if status is-interactive; and set -q SSH_CONNECTION
+      if not status is-interactive; and set -q SSH_CONNECTION
         exec bash
       end
 
