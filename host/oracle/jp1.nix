@@ -12,6 +12,8 @@
     self.nixosModules.services.snell
   ];
 
+  programs.nix-ld.enable = true;
+
   # services.sing-box.enable = true;
   # services.sing-box.settings = {
   #   log.level = "info";
