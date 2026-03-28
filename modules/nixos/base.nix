@@ -169,8 +169,10 @@
 
     shellInit = ''
       # If launched by VSCode, exec bash instead (VSCode's Remote SSH only support bash)
-      if string match -q 'vscode*' -- $TERM_PROGRAM
-          exec bash
+      if not status is-login; or not status is-interactive
+        if set -q SSH_CONNECTION
+          exec bash -l
+        end
       end
 
       set -U fish_greeting
