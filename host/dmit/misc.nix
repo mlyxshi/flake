@@ -7,6 +7,8 @@
   ...
 }:
 {  
+  programs.nix-ld.enable = true;
+  
   services.openssh.ports = [ 23333 ];
 
   boot.blacklistedKernelModules = [ "virtio_balloon" ];
