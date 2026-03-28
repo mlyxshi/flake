@@ -117,7 +117,7 @@
     gptfdisk
     gitMinimal
 
-    #vscode remote dev
+    # vscode remote dev
     nixfmt
     nixd
 

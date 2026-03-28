@@ -13,7 +13,7 @@
   ];
 
   programs.nix-ld.enable = true;
-  # Hacky way to make vscode happy(https://code.visualstudio.com/docs/remote/linux ), so it can proceed to install bin under ~/.vscode-server
+  # Hacky way to meet prerequisites(https://code.visualstudio.com/docs/remote/linux) make vscode happy, so it can proceed to install bin under ~/.vscode-server
   # mkdir /usr/lib64/ && ln -s /run/current-system/sw/share/nix-ld/lib/libstdc++.so.6 /usr/lib64/libstdc++.so.6
 
 
