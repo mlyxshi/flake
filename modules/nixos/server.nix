@@ -15,7 +15,6 @@
     iperf
     nexttrace
     ookla-speedtest
-    vscode-extensions.ms-vscode-remote.remote-ssh
   ];
 
   environment.variables.BROWSER = "echo"; # Print the URL instead on servers
