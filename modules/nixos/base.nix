@@ -168,11 +168,9 @@
     };
 
     shellInit = ''
-      # If launched by VSCode, exec bash instead (VSCode's Remote SSH only support bash)
-      if not status is-login; or not status is-interactive
-        if set -q SSH_CONNECTION
-          exec bash -l
-        end
+      # VSCode's Remote SSH only support bash
+      if status is-interactive; and set -q SSH_CONNECTION
+        exec bash
       end
 
       set -U fish_greeting
