@@ -17,9 +17,10 @@
   openssl,
   zlib,
   krb5,
-  enableFHS ? false,
-  nodejsPackage ? null,
-  extraRuntimeDependencies ? [ ],
+  enableFHS ? true,
+  pkgs,
+  nodejsPackage ? pkgs.nodejs_20,
+  extraRuntimeDependencies ? with pkgs; [git bashInteractive coreutils],
   installPath ? [ "$HOME/.vscode-server" ],
   postPatch ? "",
 }: let
