@@ -21,11 +21,11 @@
       # NO, error  "can not find libstdc++.so or ldconfig for GNU environments"
       # Yes, continue to download other parts and binary of vscode server to ~/.vscode-server
 
-  # systemd.tmpfiles.settings."10-vscode-remote-ssh-workaround" = {
-  #   "/usr/lib64/".d = {};
-  #   "/usr/lib64/libstdc++.so.6"."L+" = {
-  #     argument = "${lib.getLib pkgs.stdenv.cc.cc}/lib/libstdc++.so.6";
-  #   };
-  # };
+  systemd.tmpfiles.settings."10-vscode-remote-ssh-workaround" = {
+    "/usr/lib64/".d = {};
+    "/usr/lib64/libstdc++.so.6"."L+" = {
+      argument = "${lib.getLib pkgs.stdenv.cc.cc}/lib/libstdc++.so.6";
+    };
+  };
 
 }
