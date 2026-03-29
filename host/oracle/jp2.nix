@@ -7,6 +7,8 @@
 }:
 {
   imports = [
+    self.nixosModules.programs.vscode-ssh-remote
+
     self.nixosModules.services.prometheus
     self.nixosModules.services.transmission
     self.nixosModules.services.hath

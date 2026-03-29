@@ -117,9 +117,6 @@
     gptfdisk
     gitMinimal
 
-    # vscode remote dev
-    nixfmt
-    nixd
 
     (writeShellScriptBin "update" ''
       if [[ -e "/flake/flake.nix" ]]
