@@ -169,11 +169,6 @@
     };
 
     shellInit = ''
-      # VSCode's Remote SSH only support bash
-      if not status is-interactive; and set -q SSH_CONNECTION
-        exec bash
-      end
-
       set -U fish_greeting
       zoxide init fish | source
 
