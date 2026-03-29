@@ -10,7 +10,7 @@
     nixd
   ];
 
-  # let pre-builded binary run without patchelf
+  # run pre-built binaries without patchelf
   programs.nix-ld.enable = true;
 
   # The process of vscode remote server setup
@@ -23,7 +23,7 @@
   #   - find libstdc++.so or ldconfig for GNU environments
   #   - find /lib/ld-musl-aarch64.so.1, which is required to run the Visual Studio Code Server in musl environments
 
-  # So we need to make Visual Studio Code CLI Standalone happy, then it can continue install code-server bin in ~/.vscode-server/cli/servers
+  # So we need to make Visual Studio Code CLI Standalone happy, then it can continue install code-server bin to ~/.vscode-server/cli/servers
 
   systemd.tmpfiles.settings."10-vscode-remote-ssh-workaround" = {
     "/usr/lib64/".d = {};
