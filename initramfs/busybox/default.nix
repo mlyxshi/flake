@@ -13,11 +13,14 @@ rec {
     makeInitrdNGTool
     cpio
     zstd
+    systemd
+    kmod
+    writeText
     ;
 
   kernel = pkgs.linuxPackages.kernel;
 
-  # For qemu guest, firmware is not necessary
+  # only run in qemu/cloud vps, so firmware is not required
   dummy-firmware = stdenvNoCC.mkDerivation {
     name = "dummy-firmware";
     buildCommand = "mkdir -p $out/lib/firmware";
@@ -32,21 +35,13 @@ rec {
       "virtio_mmio"
       "virtio_blk"
       "virtio_scsi"
-      "9p"
-      "9pnet_virtio"
 
       "virtio_balloon"
       "virtio_console"
       "virtio_rng"
       "virtio_gpu"
 
-      "ext4"
-
-      "vfat"
-      "nls_cp437"
-      "nls_iso8859-1"
-
-      "iso9660" # cloud-init cidata disk
+      "af_packet"
     ];
     firmware = dummy-firmware;
   };
@@ -56,6 +51,21 @@ rec {
     buildCommand = ''
       cat ${./init} > $out
       chmod +x $out
+    '';
+  };
+
+  bin = pkgs.buildEnv {
+    name = "bin";
+    paths = [
+      kmod
+      busybox # https://github.com/NixOS/nixpkgs/blob/8110df5ad7abf5d4c0f6fb0f8f978390e77f9685/pkgs/os-specific/linux/busybox/default.nix#L198
+    ];
+    pathsToLink = [
+      "/bin"
+    ];
+    # add extraBin
+    postBuild = ''
+      # ln -sf ${pkgs.curl}/bin/curl $out/bin/curl
     '';
   };
 
@@ -72,16 +82,19 @@ rec {
 
     contentsJSON = builtins.toJSON [
       {
+        source = init;
+        target = "/init";
+      }
+      {
         source = "${modulesClosure}/lib";
         target = "/lib";
       }
       {
-        source = "${busybox}/bin";
+        source = "${bin}/bin";
         target = "/bin";
       }
       {
-        source = init;
-        target = "/init";
+        source = "${busybox}/default.script";  # default udhcpc script
       }
     ];
 
@@ -92,12 +105,13 @@ rec {
       (cd root && find . -print0 | sort -z | cpio --quiet -o -H newc -R +0:+0 --reproducible --null | zstd -10 >> "$out/initrd")
     '';
   };
-  
+
   test = pkgs-macos.writeShellScriptBin "aarch64-initramfs-test" ''
-    /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 4G \
+    ls -lh ${initrd}/initrd | awk '{print $5}'
+    /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 1G \
       -kernel ${kernel}/Image \
       -initrd ${initrd}/initrd \
-      -device "virtio-scsi-pci,id=scsi0" -drive "file=../test/disk.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
-      -bios $(ls /opt/homebrew/Cellar/qemu/*/share/qemu/edk2-aarch64-code.fd)
+      -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0" \
+      -device "virtio-scsi-pci,id=scsi0" -drive "file=../../test/disk.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0"
   '';
 }
