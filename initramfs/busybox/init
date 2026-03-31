@@ -21,14 +21,13 @@ modprobe virtio_pci
 modprobe virtio_net
 modprobe af_packet
 
-# default eth0, default.script
-# -q: exit immediately after lease | -n: Exit if no lease obtained after 9s
-udhcpc -q -n
+# dhcp
+udhcpc -q -n # -q: exit immediately after lease;  -n: Exit if no lease obtained after 9s
 
 if [ $? -eq 0 ]; then
   echo "DHCP success"
 else
-  echo "DMIT special case"
+  echo "Get network config from cloud-init nocloud" # only support network-config version1
 
   modprobe sr_mod
   modprobe ahci

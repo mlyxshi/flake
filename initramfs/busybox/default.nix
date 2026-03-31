@@ -61,7 +61,8 @@ rec {
 
   cloud-init-networkcfg = stdenv.mkDerivation {
     name = "cloud-init-networkcfg";
-    buildCommand = ''
+    dontUnpack = true;
+    installPhase = ''
       gcc ${./cloud-init-networkcfg.c} -o cloud-init-networkcfg
       mkdir -p $out/bin
       cp cloud-init-networkcfg $out/bin
