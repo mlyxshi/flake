@@ -9,6 +9,7 @@
 rec {
 
   inherit (pkgs)
+    stdenv
     stdenvNoCC
     busybox
     makeInitrdNGTool
@@ -45,7 +46,7 @@ rec {
 
       "sr_mod" # SCSI CD-ROM driver (/dev/srX) cloud-init cidata disk
       "ahci" # SATA controllers
-      "iso9660" # mount -t iso9660 /dev/sr1 /cloud-init
+      "isofs" # mount /dev/sr1 /cloud-init
     ];
     firmware = dummy-firmware;
   };
@@ -58,12 +59,22 @@ rec {
     '';
   };
 
+  cloud-init-networkcfg = stdenv.mkDerivation {
+    name = "cloud-init-networkcfg";
+    buildCommand = ''
+      gcc ${./cloud-init-networkcfg.c} -o cloud-init-networkcfg
+      mkdir -p $out/bin
+      cp cloud-init-networkcfg $out/bin
+    '';
+  };
+
   bin = pkgs.buildEnv {
     name = "bin";
     paths = [
       tinyssh
       kmod
       busybox # https://github.com/NixOS/nixpkgs/blob/8110df5ad7abf5d4c0f6fb0f8f978390e77f9685/pkgs/os-specific/linux/busybox/default.nix#L198
+      cloud-init-networkcfg
     ];
     pathsToLink = [
       "/bin"

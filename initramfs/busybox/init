@@ -24,13 +24,26 @@ modprobe af_packet
 # default eth0, default.script
 # -q: exit immediately after lease | -n: Exit if no lease obtained after 9s
 udhcpc -q -n
+
 if [ $? -eq 0 ]; then
   echo "DHCP success"
 else
   echo "DMIT special case"
-  ip link set eth0 up
-  ip addr add 64.186.235.3/32 dev eth0
-  ip route add default via 193.41.250.250 dev eth0 onlink
+
+  modprobe sr_mod
+  modprobe ahci
+  modprobe isofs
+  mkdir /cloud-init
+  mount /dev/sr1 /cloud-init
+
+  eval $(cloud-init-networkcfg /cloud-init/network-config)
+  if [ "$NETMASK" = "255.255.255.255" ]; then
+    ip route add default via "$GATEWAY" dev eth0 onlink
+  else
+    ip route add default via "$GATEWAY" dev eth0
+  fi
+
+  echo "nameserver 1.1.1.1" > /etc/resolv.conf
 fi
 
 # sshd
@@ -43,10 +56,10 @@ echo "root:x:0:0:root:/root:/bin/sh" > /etc/passwd
 tcpsvd -v 0 22 tinysshd -v /etc/tinyssh/sshkeydir > sshd.log 2>&1 &
 
 # /dev/sda
-# modprobe virtio_scsi 
-# modprobe sd_mod
+modprobe virtio_scsi 
+modprobe sd_mod
 
-# # /dev/vda
-# modprobe virtio_blk
+# /dev/vda
+modprobe virtio_blk
 
 /bin/sh

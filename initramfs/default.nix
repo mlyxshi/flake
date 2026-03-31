@@ -41,7 +41,7 @@
     "erofs" # etc-overlay
     "overlay"
 
-    "iso9660" # cloud-init cidata disk
+    "isofs" # mount cloud-init cidata disk
   ];
   # boot.initrd.includeDefaultModules also adds some necessary modules
 
