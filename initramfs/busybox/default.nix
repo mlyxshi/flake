@@ -45,6 +45,9 @@ rec {
 
       "iso9660" # cloud-init cidata disk
       "sr_mod" # SCSI CD-ROM driver (/dev/srX)
+      "ahci"
+      "ata_piix"
+
     ];
     firmware = dummy-firmware;
   };
