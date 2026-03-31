@@ -38,12 +38,13 @@ rec {
       "af_packet"
 
       # Disk
-      "virtio_scsi" # Virtio SCSI controller  # -device virtio-scsi-pci  (/dev/sda)
+      "virtio_scsi" # Virtio SCSI controller  # -device virtio-scsi-pci  (/dev/sdX)
       "sd_mod" # SCSI disk driver # -device scsi-hd
 
-      "virtio_blk" # -device virtio-blk-pci (/dev/vda)
+      "virtio_blk" # -device virtio-blk-pci (/dev/vdX)
 
       "iso9660" # cloud-init cidata disk
+      "sr_mod" # SCSI CD-ROM driver (/dev/srX)
     ];
     firmware = dummy-firmware;
   };
