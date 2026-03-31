@@ -9,6 +9,8 @@
 
   imports = [ "${modulesPath}/profiles/qemu-guest.nix" ];
 
+  virtualisation.rosetta.enable = true; # --device rosetta,mountTag=rosetta
+
   networking.hostName = "builder";
   nixpkgs.hostPlatform = "aarch64-linux";
 
