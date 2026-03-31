@@ -16,9 +16,14 @@ ln -sfn /proc/self/fd/2 /dev/stderr
 mkdir /etc
 touch /etc/initrd-release
 
+modprobe virtio_console
+
+# network
+modprobe virtio_pci
+modprobe virtio_net
 modprobe af_packet
 
-# default eth0,default.script
+# default eth0, default.script
 udhcpc -q
 
 # sshd
@@ -28,9 +33,10 @@ mkdir -p /root/.ssh/ /etc/tinyssh/
 echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe" > /root/.ssh/authorized_keys
 tinysshd-makekey /etc/tinyssh/sshkeydir
 echo "root:x:0:0:root:/root:/bin/sh" > /etc/passwd
-
 tcpsvd -v 0 22 tinysshd -v /etc/tinyssh/sshkeydir > sshd.log 2>&1 &
 
+# /dev/sda
 modprobe virtio_scsi 
+modprobe sd_mod
 
 /bin/sh

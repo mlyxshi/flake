@@ -1,6 +1,7 @@
 {
   pkgs ? import <nixpkgs> {
-    system = "aarch64-linux";
+    # system = "aarch64-linux";
+    system = "x86_64-linux";
   },
   pkgs-macos ? import <nixpkgs> { },
   lib ? pkgs.lib,
@@ -35,7 +36,7 @@ rec {
       "virtio_pci"
       "virtio_mmio"
       "virtio_blk"
-      "virtio_scsi"
+      "virtio_scsi" # Virtio SCSI controller
 
       "virtio_balloon"
       "virtio_console"
@@ -43,6 +44,8 @@ rec {
       "virtio_gpu"
 
       "af_packet"
+
+      "sd_mod" # SCSI disk driver
 
       "ahci"
       "ata_piix"
@@ -112,12 +115,22 @@ rec {
     '';
   };
 
-  test = pkgs-macos.writeShellScriptBin "aarch64-initramfs-test" ''
+  test-arm = pkgs-macos.writeShellScriptBin "aarch64-initramfs-test" ''
     ls -lh ${initrd}/initrd | awk '{print $5}'
     /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 1G \
       -kernel ${kernel}/Image \
       -initrd ${initrd}/initrd \
       -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
       -device "virtio-scsi-pci,id=scsi0" -drive "file=../../test/disk.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0"
+  '';
+
+  test = pkgs-macos.writeShellScriptBin "x86-64-initramfs-test" ''
+    ls -lh ${initrd}/initrd | awk '{print $5}'
+    /opt/homebrew/bin/qemu-system-x86_64 -cpu qemu64 -nographic -m 1G \
+      -kernel ${kernel}/bzImage \
+      -initrd ${initrd}/initrd \
+      -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
+      -device "virtio-scsi-pci,id=scsi0" -drive "file=../../test/disk.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
+      -append "console=ttyS0,115200"
   '';
 }
