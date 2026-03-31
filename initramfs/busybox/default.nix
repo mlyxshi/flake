@@ -39,7 +39,7 @@ rec {
 
       # Disk
       "virtio_scsi" # Virtio SCSI controller  # -device virtio-scsi-pci  (/dev/sda)
-      "sd_mod" # SCSI disk driver
+      "sd_mod" # SCSI disk driver # -device scsi-hd
 
       "virtio_blk" # -device virtio-blk-pci (/dev/vda)
     ];

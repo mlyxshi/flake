@@ -38,6 +38,6 @@ modprobe virtio_scsi
 modprobe sd_mod
 
 # /dev/vda
-modprobe virtio-blk-pci
+modprobe virtio_blk
 
 /bin/sh
