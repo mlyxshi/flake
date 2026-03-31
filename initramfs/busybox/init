@@ -22,7 +22,13 @@ modprobe virtio_net
 modprobe af_packet
 
 # default eth0, default.script
-udhcpc -q
+# -q: exit immediately after lease | -n: Exit if no lease obtained after 9s
+udhcpc -q -n
+if [ $? -eq 0 ]; then
+  echo "dhcp success"
+else
+  echo "error"
+fi
 
 # sshd
 mkdir -p /dev/pts

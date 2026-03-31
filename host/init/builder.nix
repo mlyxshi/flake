@@ -35,7 +35,7 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 3;
-  boot.loader.timeout = 1;
+  boot.loader.timeout = 0;
   boot.loader.efi.canTouchEfiVariables = true;
 
   # https://github.com/papercomputeco/stereOS/blob/7588b5a2267b0333effabac2d555a54b03cc56fc/modules/boot.nix#L45
