@@ -43,11 +43,9 @@ rec {
 
       "virtio_blk" # -device virtio-blk-pci (/dev/vdX)
 
-      "iso9660" # cloud-init cidata disk
-      "sr_mod" # SCSI CD-ROM driver (/dev/srX)
-      "ahci"
-      "ata_piix"
-
+      "sr_mod" # SCSI CD-ROM driver (/dev/srX) cloud-init cidata disk
+      "ahci" # SATA controllers
+      "iso9660" # mount -t iso9660 /dev/sr1 /cloud-init
     ];
     firmware = dummy-firmware;
   };
