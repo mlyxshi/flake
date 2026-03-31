@@ -37,6 +37,7 @@ else
   mount /dev/sr1 /cloud-init
 
   eval $(cloud-init-networkcfg /cloud-init/network-config)
+  ifconfig eth0 "$IP" netmask "$NETMASK" up
   if [ "$NETMASK" = "255.255.255.255" ]; then
     ip route add default via "$GATEWAY" dev eth0 onlink
   else
