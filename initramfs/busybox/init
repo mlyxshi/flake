@@ -25,9 +25,12 @@ modprobe af_packet
 # -q: exit immediately after lease | -n: Exit if no lease obtained after 9s
 udhcpc -q -n
 if [ $? -eq 0 ]; then
-  echo "dhcp success"
+  echo "DHCP success"
 else
-  echo "error"
+  echo "DMIT special case"
+  ip link set eth0 up
+  ip addr add 64.186.235.3/32 dev eth0
+  ip route add default via 193.41.250.250 dev eth0 onlink
 fi
 
 # sshd
