@@ -45,6 +45,6 @@ jobs:
         ln -sf $busyboxInitrd/initrd  /tmp/busybox-initrd
         
         gh release upload x86_64 /tmp/kernel --clobber
-        gh release upload aarch64 /tmp/busybox-initrd --clobber
+        gh release upload x86_64 /tmp/busybox-initrd --clobber
         gh release upload x86_64 $initrdOutPath/initrd --clobber
         gh release upload x86_64 $kexecOutPath/bin/kexec --clobber
