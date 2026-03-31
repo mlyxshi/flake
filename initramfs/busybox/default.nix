@@ -41,10 +41,7 @@ rec {
       "virtio_scsi" # Virtio SCSI controller  # -device virtio-scsi-pci  (/dev/sda)
       "sd_mod" # SCSI disk driver
 
-      # Maybe useful? Not test yet 
       "virtio_blk" # -device virtio-blk-pci (/dev/vda)
-      "ahci" # -device ahci
-      "ata_piix"
     ];
     firmware = dummy-firmware;
   };

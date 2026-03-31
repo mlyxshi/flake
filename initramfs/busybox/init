@@ -37,4 +37,7 @@ tcpsvd -v 0 22 tinysshd -v /etc/tinyssh/sshkeydir > sshd.log 2>&1 &
 modprobe virtio_scsi 
 modprobe sd_mod
 
+# /dev/vda
+modprobe virtio-blk-pci
+
 /bin/sh
