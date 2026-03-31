@@ -31,6 +31,6 @@ echo "root:x:0:0:root:/root:/bin/sh" > /etc/passwd
 
 tcpsvd -v 0 22 tinysshd -v /etc/tinyssh/sshkeydir > sshd.log 2>&1 &
 
-# modprobe virtio_scsi 
+modprobe virtio_scsi 
 
 /bin/sh
