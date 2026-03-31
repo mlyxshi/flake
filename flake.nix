@@ -79,16 +79,16 @@
       packages.aarch64-darwin = {
 
         qemu-x86_64-initramfs-test = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "x86_64-initramfs-test" ''
-          /opt/homebrew/bin/qemu-system-x86_64 -cpu qemu64 -nographic -m 4G \
+          /opt/homebrew/bin/qemu-system-x86_64 -cpu qemu64 -nographic -m 1G \
             -kernel ${self.nixosConfigurations.initramfs-x86_64.config.system.build.kernel}/bzImage \
             -initrd ${self.nixosConfigurations.initramfs-x86_64.config.system.build.initialRamdisk}/initrd \
             -append "console=ttyS0 systemd.journald.forward_to_console root=fstab rd.systemd.break=pre-switch-root" \
             -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
-            -device "virtio-scsi-pci,id=scsi0" -drive "file=disk.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
+            -device "virtio-scsi-pci,id=scsi0" -drive "file=/Users/dominic/flake/test/disk.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
         '';
 
         default = nixpkgs.legacyPackages.aarch64-darwin.writeShellScriptBin "aarch64-initramfs-test" ''
-          /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 4G \
+          /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 1G \
             -kernel ${self.nixosConfigurations.initramfs-aarch64.config.system.build.kernel}/Image \
             -initrd ${self.nixosConfigurations.initramfs-aarch64.config.system.build.initialRamdisk}/initrd \
             -append "systemd.journald.forward_to_console root=fstab rd.systemd.break=pre-switch-root" \

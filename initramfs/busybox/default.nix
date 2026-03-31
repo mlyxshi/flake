@@ -31,23 +31,19 @@ rec {
   modulesClosure = pkgs.makeModulesClosure {
     kernel = lib.getOutput "modules" kernel;
     rootModules = [
-      # copy from https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/profiles/qemu-guest.nix
-      "virtio_net"
       "virtio_pci"
-      "virtio_mmio"
-      "virtio_blk"
-      "virtio_scsi" # Virtio SCSI controller
 
-      "virtio_balloon"
-      "virtio_console"
-      "virtio_rng"
-      "virtio_gpu"
-
+      # Network
+      "virtio_net"
       "af_packet"
 
+      # Disk
+      "virtio_scsi" # Virtio SCSI controller  # -device virtio-scsi-pci  (/dev/sda)
       "sd_mod" # SCSI disk driver
 
-      "ahci"
+      # Maybe useful? Not test yet 
+      "virtio_blk" # -device virtio-blk-pci (/dev/vda)
+      "ahci" # -device ahci
       "ata_piix"
     ];
     firmware = dummy-firmware;
