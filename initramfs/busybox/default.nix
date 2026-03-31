@@ -70,7 +70,8 @@ rec {
     ];
     # add extraBin
     postBuild = ''
-      # ln -sf ${pkgs.curl}/bin/curl $out/bin/curl
+      ln -sf ${pkgs.util-linux}/bin/lsblk $out/bin/lsblk
+      ln -sf ${pkgs.util-linux}/bin/blkid $out/bin/blkid
     '';
   };
 
@@ -99,7 +100,7 @@ rec {
         target = "/bin";
       }
       {
-        source = "${busybox}/default.script";  # default udhcpc script
+        source = "${busybox}/default.script"; # default udhcpc script
       }
     ];
 
