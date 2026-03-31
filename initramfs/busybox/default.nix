@@ -43,6 +43,9 @@ rec {
       "virtio_gpu"
 
       "af_packet"
+
+      "ahci"
+      "ata_piix"
     ];
     firmware = dummy-firmware;
   };
