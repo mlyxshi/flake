@@ -43,10 +43,10 @@ echo "root:x:0:0:root:/root:/bin/sh" > /etc/passwd
 tcpsvd -v 0 22 tinysshd -v /etc/tinyssh/sshkeydir > sshd.log 2>&1 &
 
 # /dev/sda
-modprobe virtio_scsi 
-modprobe sd_mod
+# modprobe virtio_scsi 
+# modprobe sd_mod
 
-# /dev/vda
-modprobe virtio_blk
+# # /dev/vda
+# modprobe virtio_blk
 
 /bin/sh
