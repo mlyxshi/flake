@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # mount important directories
-mkdir -p /dev /proc /sys /run
+mkdir -p /dev /proc /sys /run 
 mount -t devtmpfs devtmpfs /dev
 mount -t proc procfs /proc
 mount -t sysfs sysfs /sys
@@ -16,10 +16,21 @@ ln -sfn /proc/self/fd/2 /dev/stderr
 mkdir /etc
 touch /etc/initrd-release
 
-modprobe virtio_scsi 
 modprobe af_packet
 
 # default eth0,default.script
 udhcpc -q
+
+# sshd
+mkdir -p /dev/pts
+mount -t devpts devpts /dev/pts
+mkdir -p /root/.ssh/ /etc/tinyssh/
+echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe" > /root/.ssh/authorized_keys
+tinysshd-makekey /etc/tinyssh/sshkeydir
+echo "root:x:0:0:root:/root:/bin/sh" > /etc/passwd
+
+tcpsvd -v 0 22 tinysshd -v /etc/tinyssh/sshkeydir > sshd.log 2>&1 &
+
+modprobe virtio_scsi 
 
 /bin/sh

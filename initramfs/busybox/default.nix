@@ -15,6 +15,7 @@ rec {
     zstd
     systemd
     kmod
+    tinyssh
     writeText
     ;
 
@@ -57,6 +58,7 @@ rec {
   bin = pkgs.buildEnv {
     name = "bin";
     paths = [
+      tinyssh
       kmod
       busybox # https://github.com/NixOS/nixpkgs/blob/8110df5ad7abf5d4c0f6fb0f8f978390e77f9685/pkgs/os-specific/linux/busybox/default.nix#L198
     ];
@@ -111,7 +113,7 @@ rec {
     /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 1G \
       -kernel ${kernel}/Image \
       -initrd ${initrd}/initrd \
-      -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0" \
+      -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
       -device "virtio-scsi-pci,id=scsi0" -drive "file=../../test/disk.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0"
   '';
 }
