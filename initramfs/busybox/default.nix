@@ -42,6 +42,8 @@ rec {
       "sd_mod" # SCSI disk driver # -device scsi-hd
 
       "virtio_blk" # -device virtio-blk-pci (/dev/vda)
+
+      "iso9660" # cloud-init cidata disk
     ];
     firmware = dummy-firmware;
   };
