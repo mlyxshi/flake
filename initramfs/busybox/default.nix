@@ -19,7 +19,7 @@ rec {
     writeText
     ;
 
-  kernel = pkgs.linuxPackages.kernel;
+  kernel = pkgs.linuxPackages_latest.kernel;
 
   # only run in qemu/cloud vps, so firmware is not required
   dummy-firmware = stdenvNoCC.mkDerivation {

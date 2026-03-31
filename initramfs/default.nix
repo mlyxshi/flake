@@ -8,6 +8,7 @@
 {
   imports = [ "${modulesPath}/profiles/qemu-guest.nix" ]; # qemu-guest kernel modules
 
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   system.nixos-init.enable = true;
 
   networking.hostName = "systemd-initrd";
