@@ -33,16 +33,13 @@ else
   modprobe ahci
   modprobe isofs
   mkdir /cloud-init
-  mount /dev/sr1 /cloud-init
+  mount $(blkid -L cidata) /cloud-init
 
   eval $(cloud-init-networkcfg /cloud-init/network-config)
   ifconfig eth0 "$IP" netmask "$NETMASK" up
-  if [ "$NETMASK" = "255.255.255.255" ]; then
-    ip route add default via "$GATEWAY" dev eth0 onlink
-  else
-    ip route add default via "$GATEWAY" dev eth0
-  fi
-
+  [ "$NETMASK" = "255.255.255.255" ] && ONLINK="onlink" || ONLINK=""
+  ip route add default via "$GATEWAY" dev eth0 $ONLINK
+  
   echo "nameserver 1.1.1.1" > /etc/resolv.conf
 fi
 
