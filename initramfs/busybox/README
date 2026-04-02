@@ -3,24 +3,20 @@ For daily use, prefer a systemd-based initrd.
 
 
 ```
-rootModules = [
-  "virtio_pci"
+"virtio_pci"
 
-  # Network
-  "virtio_net"
-  "af_packet"
+# Network
+"virtio_net"
+"af_packet"
 
-  # Disk
-  "virtio_blk" # -device virtio-blk-pci (/dev/vdX)
+# Disk
+"virtio_blk" # -device virtio-blk-pci (/dev/vdX)
 
-  "virtio_scsi" # Virtio SCSI controller  # -device virtio-scsi-pci  (/dev/sdX)
-  "sd_mod" # SCSI disk driver # -device scsi-hd
-  "sr_mod" # SCSI CD-ROM driver (/dev/srX) cloud-init cidata disk
+"virtio_scsi" # Virtio SCSI controller  # -device virtio-scsi-pci  
+"sd_mod" # SCSI DISK driver (/dev/sdX) # -device scsi-hd
+"sr_mod" # SCSI CD-ROM driver (/dev/srX) # cloud-init cidata disk
 
-  "ahci" # SATA controllers
-  "isofs" # mount /dev/sr1 /cloud-init
-];
+"ahci" # SATA controllers
+"isofs" # mount /dev/sr1 /cloud-init
 ```
 
-make ARCH=arm64 defconfig
-./scripts/kconfig/merge_config.sh -m .config  arch/arm64/configs/virt.config

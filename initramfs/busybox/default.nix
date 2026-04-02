@@ -1,7 +1,7 @@
 {
   pkgs ? import <nixpkgs> {
-    # system = "aarch64-linux";
-    system = "x86_64-linux";
+    system = "aarch64-linux";
+    # system = "x86_64-linux";
   },
   pkgs-macos ? import <nixpkgs> { },
   lib ? pkgs.lib,
@@ -16,39 +16,27 @@ rec {
     cpio
     zstd
     systemd
-    kmod
     tinyssh
-    writeText
     ;
 
-  kernel = pkgs.linuxPackages_latest.kernel;
-
-  # only run in qemu/cloud vps, so firmware is not required
-  dummy-firmware = stdenvNoCC.mkDerivation {
-    name = "dummy-firmware";
-    buildCommand = "mkdir -p $out/lib/firmware";
-  };
-
-  modulesClosure = pkgs.makeModulesClosure {
-    kernel = lib.getOutput "modules" kernel;
-    rootModules = [
-      "virtio_pci"
-
-      # Network
-      "virtio_net"
-      "af_packet"
-
-      # Disk
-      "virtio_scsi" # Virtio SCSI controller  # -device virtio-scsi-pci  (/dev/sdX)
-      "sd_mod" # SCSI disk driver # -device scsi-hd
-
-      "virtio_blk" # -device virtio-blk-pci (/dev/vdX)
-
-      "ahci" # SATA controllers
-      "sr_mod" # SCSI CD-ROM driver (/dev/srX) cloud-init cidata disk
-      "isofs" # mount /dev/sr1 /cloud-init
-    ];
-    firmware = dummy-firmware;
+  kernel = stdenv.mkDerivation {
+    name = "kernel";
+    src = pkgs.linuxPackages_latest.kernel.src;
+    nativeBuildInputs = pkgs.linuxPackages_latest.kernel.nativeBuildInputs;
+    configurePhase = ''
+      make defconfig
+      ./scripts/kconfig/merge_config.sh -m .config  ${./virt.kconfig}
+      make olddefconfig
+    '';
+    buildPhase = "make -j4";
+    installPhase = ''
+      mkdir -p $out
+      if [ "${stdenv.hostPlatform.linuxArch}" = "arm64" ]; then
+        cp arch/arm64/boot/Image $out
+      else
+        cp arch/x86/boot/bzImage $out
+      fi
+    '';
   };
 
   init = stdenvNoCC.mkDerivation {
@@ -73,8 +61,7 @@ rec {
     name = "bin";
     paths = [
       tinyssh
-      kmod
-      busybox # https://github.com/NixOS/nixpkgs/blob/8110df5ad7abf5d4c0f6fb0f8f978390e77f9685/pkgs/os-specific/linux/busybox/default.nix#L198
+      busybox
       cloud-init-networkcfg
     ];
     pathsToLink = [
@@ -102,10 +89,6 @@ rec {
       {
         source = init;
         target = "/init";
-      }
-      {
-        source = "${modulesClosure}/lib";
-        target = "/lib";
       }
       {
         source = "${bin}/bin";

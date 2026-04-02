@@ -16,11 +16,6 @@ ln -sfn /proc/self/fd/2 /dev/stderr
 mkdir /etc
 touch /etc/initrd-release
 
-# network
-modprobe virtio_pci
-modprobe virtio_net
-modprobe af_packet
-
 # dhcp
 udhcpc -q -n # -q: exit immediately after lease;  -n: Exit if no lease obtained after 9s
 
@@ -29,9 +24,6 @@ if [ $? -eq 0 ]; then
 else
   echo "Get network config from cloud-init nocloud" # only support network-config version1
 
-  modprobe sr_mod
-  modprobe ahci
-  modprobe isofs
   mkdir /cloud-init
   mount $(blkid -L cidata) /cloud-init
 
@@ -52,11 +44,5 @@ tinysshd-makekey /etc/tinyssh/sshkeydir
 echo "root:x:0:0:root:/root:/bin/sh" > /etc/passwd
 tcpsvd -v 0 22 tinysshd -v /etc/tinyssh/sshkeydir > sshd.log 2>&1 &
 
-# /dev/sda
-modprobe virtio_scsi 
-modprobe sd_mod
-
-# /dev/vda
-modprobe virtio_blk
 
 /bin/sh
