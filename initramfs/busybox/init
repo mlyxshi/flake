@@ -2,10 +2,10 @@
 
 # mount important directories
 mkdir -p /dev /proc /sys /run
-mount -t devtmpfs devtmpfs /dev
-mount -t proc procfs /proc
-mount -t sysfs sysfs /sys
-mount -t tmpfs tmpfs /run
+mount -t devtmpfs none /dev
+mount -t proc none /proc
+mount -t sysfs none /sys
+mount -t tmpfs none /run
 
 ln -sfn /proc/self/fd /dev/fd
 ln -sfn /proc/self/fd/0 /dev/stdin

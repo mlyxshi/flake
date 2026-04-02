@@ -1,0 +1,59 @@
+
+CONFIG_MODULES=n
+
+# initrd
+BLK_DEV_INITRD=y
+
+# initrd zstd compression
+RD_ZSTD=y
+
+# elf
+BINFMT_ELF=y
+
+# init scripts starting with #!
+BINFMT_SCRIPT=y
+
+# virtio_pci
+CONFIG_VIRTIO_PCI=y
+
+# DISK
+# virtio_blk
+CONFIG_VIRTIO_BLK=y
+
+# virtio_scsi
+CONFIG_SCSI_VIRTIO=y
+# sd_mod SCSI DISK
+CONFIG_BLK_DEV_SD=y
+# sr_mod SCSI CSROM
+CONFIG_BLK_DEV_SR=y
+
+# isofs
+CONFIG_ISO9660_FS=y
+# achi
+CONFIG_SATA_AHCI=y
+
+
+
+# NET 
+# virtio_net
+VIRTIO_NET=y
+# af_packet
+CONFIG_PACKET=y
+
+
+# MISC
+CONFIG_BT=n
+CONFIG_NETWORK_FILESYSTEMS=n
+CONFIG_USB_SUPPORT=n
+CONFIG_MMC=n
+CONFIG_SOUND=n
+CONFIG_HID_SUPPORT=n
+CONFIG_SCSI_UFSHCD=n
+CONFIG_FPGA=n
+CONFIG_MEDIA_SUPPORT=n
+CONFIG_RC_CORE=n
+CONFIG_REGULATOR=n
+CONFIG_HWMON=n
+CONFIG_WATCHDOG=n
+CONFIG_MD=n
+
