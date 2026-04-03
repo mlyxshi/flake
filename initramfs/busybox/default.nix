@@ -76,7 +76,6 @@ rec {
     ];
     # add extraBin
     postBuild = ''
-      ln -sf ${pkgs.util-linux}/bin/lsblk $out/bin/lsblk
       ln -sf ${pkgs.util-linux}/bin/blkid $out/bin/blkid
     '';
   };
