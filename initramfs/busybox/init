@@ -17,7 +17,7 @@ mkdir /etc
 touch /etc/initrd-release
 
 # dhcp
-udhcpc -q -n # -q: exit immediately after lease;  -n: Exit if no lease obtained after 9s
+udhcpc -s /udhcpc.sh -q -n # -q: exit immediately after lease;  -n: Exit if no lease obtained after 9s
 
 if [ $? -eq 0 ]; then
   echo "DHCP success"

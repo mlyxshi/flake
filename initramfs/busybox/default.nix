@@ -11,11 +11,10 @@ rec {
   inherit (pkgs)
     stdenv
     stdenvNoCC
-    busybox
     makeInitrdNGTool
     cpio
     zstd
-    systemd
+    busybox
     tinyssh
     ;
 
@@ -33,7 +32,7 @@ rec {
     ];
     configurePhase = ''
       make defconfig
-      ./scripts/kconfig/merge_config.sh -m .config  ${./virt.kconfig}
+      ./scripts/kconfig/merge_config.sh -m .config  ${./qemu.kconfig}
       make olddefconfig
     '';
     installPhase = ''
@@ -46,10 +45,38 @@ rec {
     '';
   };
 
+  busybox_merge_config = stdenvNoCC.mkDerivation {
+    name = "merge_config";
+    buildCommand = ''
+      cat ${./busybox_merge_config.sh} > $out
+      chmod +x $out
+    '';
+  };
+
+  busybox-small = stdenv.mkDerivation {
+    enableParallelBuilding = true;
+    name = "busybox-small";
+    inherit (busybox) src patches;
+    configurePhase = ''
+      make defconfig
+      printf 'CONFIG_PREFIX "%s"\n' $out | ${busybox_merge_config}
+      ${busybox_merge_config} < ${./busybox.config}
+      make oldconfig
+    '';
+  };
+
   init = stdenvNoCC.mkDerivation {
     name = "init";
     buildCommand = ''
       cat ${./init} > $out
+      chmod +x $out
+    '';
+  };
+
+  udhcpc-script = stdenvNoCC.mkDerivation {
+    name = "udhcpc-script";
+    buildCommand = ''
+      cat ${./udhcpc.sh} > $out
       chmod +x $out
     '';
   };
@@ -68,7 +95,7 @@ rec {
     name = "bin";
     paths = [
       tinyssh
-      busybox
+      busybox-small
       cloud-init-networkcfg
     ];
     pathsToLink = [
@@ -101,7 +128,8 @@ rec {
         target = "/bin";
       }
       {
-        source = "${busybox}/default.script"; # default udhcpc script
+        source = udhcpc-script;
+        target = "/udhcpc.sh";
       }
     ];
 
