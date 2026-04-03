@@ -21,8 +21,14 @@ rec {
 
   kernel = stdenv.mkDerivation {
     name = "kernel";
-    src = pkgs.linuxPackages_latest.kernel.src;
-    nativeBuildInputs = pkgs.linuxPackages_latest.kernel.nativeBuildInputs;
+    inherit (pkgs.linuxPackages_latest.kernel) src;
+    nativeBuildInputs = with pkgs; [
+      bison
+      flex
+      bc
+      perl
+      openssl
+    ];
     configurePhase = ''
       make defconfig
       ./scripts/kconfig/merge_config.sh -m .config  ${./virt.kconfig}
