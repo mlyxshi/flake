@@ -28,6 +28,7 @@ rec {
       bc
       perl
       openssl
+      elfutils
     ];
     configurePhase = ''
       make defconfig
