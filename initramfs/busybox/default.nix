@@ -20,6 +20,7 @@ rec {
     ;
 
   kernel = stdenv.mkDerivation {
+    enableParallelBuilding = true;
     name = "kernel";
     inherit (pkgs.linuxPackages_latest.kernel) src;
     nativeBuildInputs = with pkgs; [
@@ -35,7 +36,6 @@ rec {
       ./scripts/kconfig/merge_config.sh -m .config  ${./virt.kconfig}
       make olddefconfig
     '';
-    buildPhase = "make -j4";
     installPhase = ''
       mkdir -p $out
       if [ "${stdenv.hostPlatform.linuxArch}" = "arm64" ]; then
