@@ -11,6 +11,7 @@ rec {
   inherit (pkgs)
     stdenv
     stdenvNoCC
+    pkgsMusl
     makeInitrdNGTool
     cpio
     zstd
@@ -53,7 +54,7 @@ rec {
     '';
   };
 
-  busybox-small = stdenv.mkDerivation {
+  busybox-small = pkgsMusl.stdenv.mkDerivation {
     enableParallelBuilding = true;
     name = "busybox-small";
     inherit (busybox) src patches;
@@ -81,7 +82,7 @@ rec {
     '';
   };
 
-  cloud-init-networkcfg = stdenv.mkDerivation {
+  cloud-init-networkcfg = pkgsMusl.stdenv.mkDerivation {
     name = "cloud-init-networkcfg";
     dontUnpack = true;
     installPhase = ''
@@ -91,10 +92,21 @@ rec {
     '';
   };
 
+  blkid-small = pkgsMusl.stdenv.mkDerivation {
+    name = "blkid-small";
+    dontUnpack = true;
+    installPhase = ''
+      gcc ${./blkid-small.c} -o blkid
+      mkdir -p $out/bin
+      cp blkid $out/bin
+    '';
+  };
+
   bin = pkgs.buildEnv {
     name = "bin";
     paths = [
-      tinyssh
+      pkgsMusl.tinyssh
+      blkid-small
       busybox-small
       cloud-init-networkcfg
     ];
@@ -102,9 +114,7 @@ rec {
       "/bin"
     ];
     # add extraBin
-    postBuild = ''
-      ln -sf ${pkgs.util-linux}/bin/blkid $out/bin/blkid
-    '';
+    postBuild = "";
   };
 
   initrd = stdenvNoCC.mkDerivation {
