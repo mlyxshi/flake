@@ -1,7 +1,7 @@
 /*
  * blkid.c - mimic `blkid` / `blkid -L` By Claude Sonnet 4.6
  *
- * Supports: ext2/3/4, xfs, btrfs, vfat, f2fs, ntfs, iso9660
+ * Supports: ext2/3/4, xfs, btrfs, vfat, f2fs, iso9660
  *
  * Build: gcc -O2 -o blkid blkid.c
  * Usage: ./blkid              -> print all block devices; with FS: LABEL + TYPE
@@ -43,8 +43,6 @@
 #define FAT_LABEL_OFF_32    71
 #define FAT_LABEL_LEN       11
 
-#define NTFS_MAGIC          "NTFS    "
-
 #define F2FS_SB_OFFSET      4096
 #define F2FS_MAGIC          0xF2F52010u
 #define F2FS_LABEL_OFF      108
@@ -70,8 +68,7 @@ static void rtrim(char *s, size_t max)
     while (len > 0 && s[len-1] == ' ') s[--len] = '\0';
 }
 
-static void utf16le_to_ascii(const uint8_t *src, size_t src_bytes,
-                              char *dst, size_t dst_max)
+static void utf16le_to_ascii(const uint8_t *src, size_t src_bytes, char *dst, size_t dst_max)
 {
     size_t j = 0;
     for (size_t i = 0; i + 1 < src_bytes && j + 1 < dst_max; i += 2) {
@@ -145,15 +142,6 @@ static const char *probe_vfat(int fd, char *label)
     return NULL;
 }
 
-static const char *probe_ntfs(int fd, char *label)
-{
-    uint8_t sb[16];
-    if (read_at(fd, 0, sb, sizeof sb) < 0) return NULL;
-    if (memcmp(sb + 3, NTFS_MAGIC, 8) != 0) return NULL;
-    label[0] = '\0';
-    return "ntfs";
-}
-
 static const char *probe_f2fs(int fd, char *label)
 {
     uint8_t sb[F2FS_LABEL_OFF + F2FS_LABEL_LEN];
@@ -189,7 +177,6 @@ static const char *probe_device(const char *path, char *label)
     else if ((fstype = probe_xfs(fd, buf)))   {}
     else if ((fstype = probe_btrfs(fd, buf))) {}
     else if ((fstype = probe_vfat(fd, buf)))  {}
-    else if ((fstype = probe_ntfs(fd, buf)))  {}
     else if ((fstype = probe_f2fs(fd, buf)))  {}
     else if ((fstype = probe_iso(fd, buf)))   {}
 

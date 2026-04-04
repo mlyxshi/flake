@@ -1,6 +1,5 @@
 #!/bin/sh
 
-# mount important directories
 mkdir -p /dev /proc /sys /run
 mount -t devtmpfs none /dev
 mount -t proc none /proc
@@ -14,10 +13,12 @@ ln -sfn /proc/self/fd/2 /dev/stderr
 
 
 mkdir /etc
-touch /etc/initrd-release
+echo " " > /etc/initrd-release
+
 
 # dhcp
-udhcpc -s /udhcpc.sh -q -n # -q: exit immediately after lease;  -n: Exit if no lease obtained after 9s
+ip link set eth0 up
+udhcpc -i eth0 -s /udhcpc.sh -q -n # -q: exit immediately after lease;  -n: Exit if no lease obtained after 9s
 
 if [ $? -eq 0 ]; then
   echo "DHCP success"
@@ -43,6 +44,5 @@ echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DE
 tinysshd-makekey /etc/tinyssh/sshkeydir
 echo "root:x:0:0:root:/root:/bin/sh" > /etc/passwd
 tcpsvd -v 0 22 tinysshd -v /etc/tinyssh/sshkeydir > sshd.log 2>&1 &
-
 
 /bin/sh

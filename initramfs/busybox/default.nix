@@ -57,10 +57,9 @@ rec {
     name = "busybox-small";
     inherit (pkgs.busybox) src patches;
     configurePhase = ''
-      make defconfig
+      make allnoconfig
       printf 'CONFIG_PREFIX "%s"\n' $out | ${busybox_merge_config}
       ${busybox_merge_config} < ${./busybox.config}
-      make oldconfig
     '';
   };
 
