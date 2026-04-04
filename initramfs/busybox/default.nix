@@ -26,12 +26,12 @@ rec {
       flex
       bc
       perl
-      openssl
-      elfutils
+      # openssl
+      # elfutils
     ];
     configurePhase = ''
-      make defconfig
-      ./scripts/kconfig/merge_config.sh -m .config  ${./qemu.kconfig}
+      make allnoconfig
+      ./scripts/kconfig/merge_config.sh -m .config  ${./kernel.config}
       make olddefconfig
     '';
     installPhase = ''
@@ -55,7 +55,7 @@ rec {
   busybox-small = pkgsMusl.stdenv.mkDerivation {
     enableParallelBuilding = true;
     name = "busybox-small";
-    inherit (pkgs.busybox) src patches;
+    inherit (pkgs.busybox) src;
     configurePhase = ''
       make allnoconfig
       printf 'CONFIG_PREFIX "%s"\n' $out | ${busybox_merge_config}
@@ -160,6 +160,7 @@ rec {
   };
 
   test-arm = pkgs-macos.writeShellScriptBin "aarch64-initramfs-test" ''
+    ls -lh ${kernel}/Image | awk '{print $5}'
     ls -lh ${initrd}/initrd | awk '{print $5}'
     /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 1G \
       -kernel ${kernel}/Image \
@@ -169,6 +170,7 @@ rec {
   '';
 
   test = pkgs-macos.writeShellScriptBin "x86-64-initramfs-test" ''
+    ls -lh ${kernel}/bzImage  | awk '{print $5}'
     ls -lh ${initrd}/initrd | awk '{print $5}'
     /opt/homebrew/bin/qemu-system-x86_64 -cpu qemu64 -nographic -m 1G \
       -kernel ${kernel}/bzImage \

@@ -6,6 +6,7 @@
  * Build: gcc -O2 -o blkid blkid.c
  * Usage: ./blkid              -> print all block devices; with FS: LABEL + TYPE
  *        ./blkid -L <label>  -> print device path for that label
+ * By Claude
  */
 
 #include <stdio.h>
