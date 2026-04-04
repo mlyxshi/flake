@@ -15,8 +15,6 @@ rec {
     makeInitrdNGTool
     cpio
     zstd
-    busybox
-    tinyssh
     ;
 
   kernel = stdenv.mkDerivation {
@@ -57,12 +55,23 @@ rec {
   busybox-small = pkgsMusl.stdenv.mkDerivation {
     enableParallelBuilding = true;
     name = "busybox-small";
-    inherit (busybox) src patches;
+    inherit (pkgs.busybox) src patches;
     configurePhase = ''
       make defconfig
       printf 'CONFIG_PREFIX "%s"\n' $out | ${busybox_merge_config}
       ${busybox_merge_config} < ${./busybox.config}
       make oldconfig
+    '';
+  };
+
+  tinyssh-small = pkgsMusl.stdenv.mkDerivation {
+    enableParallelBuilding = true;
+    name = "tinyssh-small";
+    inherit (pkgs.tinyssh) src;
+    installPhase = ''
+      mkdir -p $out/bin
+      cp tinysshd $out/bin/
+      ln -s tinysshd $out/bin/tinysshd-makekey
     '';
   };
 
@@ -105,7 +114,7 @@ rec {
   bin = pkgs.buildEnv {
     name = "bin";
     paths = [
-      pkgsMusl.tinyssh
+      tinyssh-small
       blkid-small
       busybox-small
       cloud-init-networkcfg

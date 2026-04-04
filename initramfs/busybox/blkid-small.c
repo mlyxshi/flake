@@ -1,5 +1,5 @@
 /*
- * blkid.c - mimic `blkid` / `blkid -L`
+ * blkid.c - mimic `blkid` / `blkid -L` By Claude Sonnet 4.6
  *
  * Supports: ext2/3/4, xfs, btrfs, vfat, f2fs, ntfs, iso9660
  *

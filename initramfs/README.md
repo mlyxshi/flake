@@ -55,3 +55,10 @@ mkdir /test
 cd /test
 zstdcat /run/current-system/initrd | cpio -idv 
 ```
+
+
+```
+INITRD_TMP_DIR=$(mktemp -d)
+zstdcat result/initrd | (cd "$INITRD_TMP_DIR" && cpio -idv)
+echo $INITRD_TMP_DIR
+```
