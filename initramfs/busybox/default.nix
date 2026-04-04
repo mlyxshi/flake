@@ -26,8 +26,7 @@ rec {
       flex
       bc
       perl
-      # openssl
-      # elfutils
+      elfutils
     ];
     configurePhase = ''
       make allnoconfig
