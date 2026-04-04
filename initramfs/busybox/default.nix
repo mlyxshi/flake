@@ -1,7 +1,7 @@
 {
   pkgs ? import <nixpkgs> {
-    system = "aarch64-linux";
-    # system = "x86_64-linux";
+    # system = "aarch64-linux";
+    system = "x86_64-linux";
   },
   pkgs-macos ? import <nixpkgs> { },
   lib ? pkgs.lib,
