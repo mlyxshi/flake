@@ -163,7 +163,7 @@ rec {
     ls -lh ${kernel}/Image | awk '{print $5}'
     ls -lh ${initrd}/initrd | awk '{print $5}'
     /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 1G \
-      -kernel ${kernel}/Image \
+      -kernel ${kernel}/Image -append "earlycon=pl011,mmio32,0x9000000"\
       -initrd ${initrd}/initrd \
       -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
       -device "virtio-scsi-pci,id=scsi0" -drive "file=/Users/dominic/flake/test/disk-scsi.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
