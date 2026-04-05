@@ -166,7 +166,8 @@ rec {
       -kernel ${kernel}/Image \
       -initrd ${initrd}/initrd \
       -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
-      -device "virtio-scsi-pci,id=scsi0" -drive "file=../../test/disk.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0"
+      -device "virtio-scsi-pci,id=scsi0" -drive "file=/Users/dominic/flake/test/disk-scsi.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
+      -device "virtio-blk-pci,drive=hd0" -drive "file=/Users/dominic/flake/test/disk-blk.img,if=none,format=qcow2,id=hd0"
   '';
 
   test-x86-64 = pkgs-macos.writeShellScriptBin "x86-64-initramfs-test" ''
@@ -176,9 +177,10 @@ rec {
       -kernel ${kernel}/bzImage \
       -initrd ${initrd}/initrd \
       -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
-      -device "virtio-scsi-pci,id=scsi0" -drive "file=../../test/disk.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
-      -append "console=ttyS0,115200"
+      -append "console=ttyS0" \
+      -device "virtio-scsi-pci,id=scsi0" -drive "file=/Users/dominic/flake/test/disk-scsi.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
+      -device "virtio-blk-pci,drive=hd0" -drive "file=/Users/dominic/flake/test/disk-blk.img,if=none,format=qcow2,id=hd0"
   '';
 
-  test = if stdenv.hostPlatform.system == "x86_64-linux"  then test-x86-64 else test-arm64;
+  test = if stdenv.hostPlatform.system == "x86_64-linux" then test-x86-64 else test-arm64;
 }
