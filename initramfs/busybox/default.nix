@@ -1,7 +1,7 @@
 {
   pkgs ? import <nixpkgs> {
-    # system = "aarch64-linux";
-    system = "x86_64-linux";
+    system = "aarch64-linux";
+    # system = "x86_64-linux";
   },
   pkgs-macos ? import <nixpkgs> { },
   lib ? pkgs.lib,
@@ -27,11 +27,12 @@ rec {
       bc
       perl
       elfutils
+      zstd
     ];
     configurePhase = ''
-      make allnoconfig
+      make ARCH=${stdenv.hostPlatform.linuxArch} allnoconfig
       ./scripts/kconfig/merge_config.sh -m .config  ${./kernel.config}
-      make olddefconfig
+      make ARCH=${stdenv.hostPlatform.linuxArch} olddefconfig
     '';
     installPhase = ''
       mkdir -p $out
@@ -158,7 +159,7 @@ rec {
     '';
   };
 
-  test-arm = pkgs-macos.writeShellScriptBin "aarch64-initramfs-test" ''
+  test-arm64 = pkgs-macos.writeShellScriptBin "aarch64-initramfs-test" ''
     ls -lh ${kernel}/Image | awk '{print $5}'
     ls -lh ${initrd}/initrd | awk '{print $5}'
     /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 1G \
@@ -168,7 +169,7 @@ rec {
       -device "virtio-scsi-pci,id=scsi0" -drive "file=../../test/disk.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0"
   '';
 
-  test = pkgs-macos.writeShellScriptBin "x86-64-initramfs-test" ''
+  test-x86-64 = pkgs-macos.writeShellScriptBin "x86-64-initramfs-test" ''
     ls -lh ${kernel}/bzImage  | awk '{print $5}'
     ls -lh ${initrd}/initrd | awk '{print $5}'
     /opt/homebrew/bin/qemu-system-x86_64 -cpu qemu64 -nographic -m 1G \
@@ -178,4 +179,6 @@ rec {
       -device "virtio-scsi-pci,id=scsi0" -drive "file=../../test/disk.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
       -append "console=ttyS0,115200"
   '';
+
+  test = if stdenv.hostPlatform.system == "x86_64-linux"  then test-x86-64 else test-arm64;
 }
