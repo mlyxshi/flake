@@ -12,9 +12,6 @@ rec {
     stdenv
     stdenvNoCC
     pkgsMusl
-    makeInitrdNGTool
-    cpio
-    zstd
     ;
 
   kernel = stdenv.mkDerivation {
@@ -27,7 +24,6 @@ rec {
       bc
       perl
       elfutils
-      zstd
     ];
     configurePhase = ''
       make ARCH=${stdenv.hostPlatform.linuxArch} allnoconfig
@@ -121,8 +117,6 @@ rec {
     pathsToLink = [
       "/bin"
     ];
-    # add extraBin
-    postBuild = "";
   };
 
   initrd = stdenvNoCC.mkDerivation {
@@ -130,10 +124,9 @@ rec {
     unsafeDiscardReferences.out = true;
 
     name = "initrd";
-    nativeBuildInputs = [
+    nativeBuildInputs = with pkgs;[
       makeInitrdNGTool
       cpio
-      zstd
     ];
 
     contentsJSON = builtins.toJSON [
@@ -155,7 +148,7 @@ rec {
       make-initrd-ng <(echo "$contentsJSON") ./root
       mkdir "$out"
       (cd root && find . -exec touch -h -d '@1' '{}' +)
-      (cd root && find . -print0 | sort -z | cpio --quiet -o -H newc -R +0:+0 --reproducible --null | zstd -10 >> "$out/initrd")
+      (cd root && find . -print0 | sort -z | cpio --quiet -o -H newc -R +0:+0 --reproducible --null  >> "$out/initrd")
     '';
   };
 
