@@ -21,7 +21,7 @@
   # upgrade-nix-store-path-url = https://install.determinate.systems/nix-upgrade/stable/universal
 
   # sudo nano /etc/nix/machines
-  # ssh-ng://root@builder.local aarch64-linux,x86_64-linux /Users/dominic/.ssh/id_ed25519 4 - kvm - c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUpCV2N4Yi9CbGFxdDFhdU90RStGOFFVV3JVb3RpQzVxQkorVXVFV2RWQ2I=
+  # ssh-ng://root@builder.local aarch64-linux,x86_64-linux /Users/dominic/.ssh/id_ed25519 8 - kvm - c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUpCV2N4Yi9CbGFxdDFhdU90RStGOFFVV3JVb3RpQzVxQkorVXVFV2RWQ2I=
 
   system.stateVersion = 6;
 
@@ -210,7 +210,7 @@
 
       # nix build --no-link --print-out-paths .#nixosConfigurations.arm-init-grow.config.system.build.image
       # qemu-img resize nixos.raw 50G
-      builder = "/opt/homebrew/bin/vfkit --cpus 4 --memory 8192 --bootloader efi,variable-store=/Users/dominic/vfkit/efi-variable-store,create --device virtio-blk,path=/Users/dominic/vfkit/nixos.raw  --device virtio-serial,stdio --device virtio-net,nat,mac=72:20:43:d4:39:63 --device rosetta,mountTag=rosetta";
+      builder = "/opt/homebrew/bin/vfkit --cpus 8 --memory 8192 --bootloader efi,variable-store=/Users/dominic/vfkit/efi-variable-store,create --device virtio-blk,path=/Users/dominic/vfkit/nixos.raw  --device virtio-serial,stdio --device virtio-net,nat,mac=72:20:43:d4:39:63 --device rosetta,mountTag=rosetta";
     };
 
     shellInit = ''
