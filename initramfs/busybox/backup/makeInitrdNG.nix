@@ -64,6 +64,14 @@ rec {
     '';
   };
 
+  init = stdenvNoCC.mkDerivation {
+    name = "init";
+    buildCommand = ''
+      cat ${./init} > $out
+      chmod +x $out
+    '';
+  };
+
   cloud-init-networkcfg = pkgsStatic.stdenv.mkDerivation {
     name = "cloud-init-networkcfg";
     dontUnpack = true;
@@ -84,21 +92,47 @@ rec {
     '';
   };
 
+  bin = pkgs.buildEnv {
+    name = "bin";
+    paths = [
+      busybox-small
+      blkid-small
+      cloud-init-networkcfg
+    ];
+    pathsToLink = [
+      "/bin"
+    ];
+    postBuild = ''
+      cat ${./udhcpc-script.sh} > $out/bin/udhcpc-script.sh
+      chmod +x $out/bin/udhcpc-script.sh
+    '';
+  };
+
   initrd = stdenvNoCC.mkDerivation {
     __structuredAttrs = true;
     unsafeDiscardReferences.out = true;
+
     name = "initrd";
     nativeBuildInputs = with pkgs; [
+      makeInitrdNGTool
       cpio
       zstd
     ];
+
+    contentsJSON = builtins.toJSON [
+      {
+        source = init;
+        target = "/init";
+      }
+      {
+        source = "${bin}/bin";
+        target = "/bin";
+      }
+    ];
+
     buildCommand = ''
-      mkdir -p ./root/bin  $out
-      install -m755 ${./init} root/init
-      install -m755 ${./udhcpc-script.sh} root/bin/udhcpc-script.sh
-      install -m755 ${busybox-small}/bin/busybox root/bin/
-      install -m755 ${blkid-small}/bin/blkid root/bin/
-      install -m755 ${cloud-init-networkcfg}/bin/cloud-init-networkcfg root/bin/
+      mkdir $out
+      make-initrd-ng <(echo "$contentsJSON") ./root
       cd root
       find . -exec touch -h -d '@1' '{}' +
       find . -print0 | sort -z | cpio --quiet -o -H newc -R +0:+0 --reproducible --null | zstd -19 > $out/initrd
