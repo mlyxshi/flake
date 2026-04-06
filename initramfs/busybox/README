@@ -2,21 +2,18 @@ Minimal BusyBox-based initrd for experimentation and learning.
 For daily use, prefer a systemd-based initrd.
 
 
-```
-"virtio_pci"
 
-# Network
-"virtio_net"
-"af_packet"
+virtio_pci
 
-# Disk
-"virtio_blk" # -device virtio-blk-pci (/dev/vdX)
+virtio_net
+af_packet
 
-"virtio_scsi" # Virtio SCSI controller  # -device virtio-scsi-pci  
-"sd_mod" # SCSI DISK driver (/dev/sdX) # -device scsi-hd
-"sr_mod" # SCSI CD-ROM driver (/dev/srX) # cloud-init cidata disk
+virtio_blk # -device virtio-blk-pci (/dev/vdX)
 
-"ahci" # SATA controllers
-"isofs" # mount /dev/sr1 /cloud-init
-```
+virtio_scsi # Virtio SCSI controller  # -device virtio-scsi-pci  
+sd_mod # SCSI DISK driver (/dev/sdX) # -device scsi-hd
+sr_mod # SCSI CD-ROM driver (/dev/srX) # cloud-init cidata disk
+
+ahci # SATA controllers
+isofs # mount /dev/sr1 /cloud-init
 
