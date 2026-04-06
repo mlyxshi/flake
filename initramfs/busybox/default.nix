@@ -50,7 +50,6 @@ rec {
     configurePhase = ''
       source ${./busybox_merge_config.sh}
       make allnoconfig
-      printf 'CONFIG_PREFIX "%s"' $out | busybox_merge_config
       printf "CONFIG_STATIC y" | busybox_merge_config
       busybox_merge_config < ${./busybox.config}
       runHook postConfigure
