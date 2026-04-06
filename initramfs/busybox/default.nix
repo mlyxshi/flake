@@ -57,6 +57,10 @@ rec {
       printf 'CONFIG_PREFIX "%s"\n' $out | ${busybox_merge_config}
       ${busybox_merge_config} < ${./busybox.config}
     '';
+    installPhase = ''
+      mkdir -p $out/bin
+      cp busybox $out/bin
+    '';
   };
 
   tinyssh-small = pkgsMusl.stdenv.mkDerivation {
@@ -66,7 +70,6 @@ rec {
     installPhase = ''
       mkdir -p $out/bin
       cp tinysshd $out/bin/
-      ln -s tinysshd $out/bin/tinysshd-makekey
     '';
   };
 
@@ -109,9 +112,9 @@ rec {
   bin = pkgs.buildEnv {
     name = "bin";
     paths = [
+      busybox-small
       tinyssh-small
       blkid-small
-      busybox-small
       cloud-init-networkcfg
     ];
     pathsToLink = [
@@ -124,9 +127,10 @@ rec {
     unsafeDiscardReferences.out = true;
 
     name = "initrd";
-    nativeBuildInputs = with pkgs;[
+    nativeBuildInputs = with pkgs; [
       makeInitrdNGTool
       cpio
+      zstd
     ];
 
     contentsJSON = builtins.toJSON [
@@ -149,7 +153,7 @@ rec {
       make-initrd-ng <(echo "$contentsJSON") ./root
       cd root
       find . -exec touch -h -d '@1' '{}' +
-      find . -print0 | sort -z | cpio --quiet -o -H newc -R +0:+0 --reproducible --null  > $out/initrd
+      find . -print0 | sort -z | cpio --quiet -o -H newc -R +0:+0 --reproducible --null | zstd -19 > $out/initrd
     '';
   };
 
