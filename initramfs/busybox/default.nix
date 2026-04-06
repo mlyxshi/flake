@@ -81,14 +81,6 @@ rec {
     '';
   };
 
-  udhcpc-script = stdenvNoCC.mkDerivation {
-    name = "udhcpc-script";
-    buildCommand = ''
-      cat ${./udhcpc.sh} > $out
-      chmod +x $out
-    '';
-  };
-
   cloud-init-networkcfg = pkgsMusl.stdenv.mkDerivation {
     name = "cloud-init-networkcfg";
     dontUnpack = true;
@@ -120,6 +112,10 @@ rec {
     pathsToLink = [
       "/bin"
     ];
+    postBuild =''
+      cat ${./udhcpc-script.sh} > $out/bin/udhcpc-script.sh
+      chmod +x $out/bin/udhcpc-script.sh
+    '';
   };
 
   initrd = stdenvNoCC.mkDerivation {
@@ -141,10 +137,6 @@ rec {
       {
         source = "${bin}/bin";
         target = "/bin";
-      }
-      {
-        source = udhcpc-script;
-        target = "/udhcpc.sh";
       }
     ];
 

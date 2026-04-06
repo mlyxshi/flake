@@ -31,7 +31,7 @@ setup_cloud_init_net() {
 
 ip link set eth0 up
 # -q: exit immediately after lease;  -n: Exit if no lease obtained after 9s
-udhcpc -i eth0 -s /udhcpc.sh -q -n || setup_cloud_init_net
+udhcpc -i eth0 -s /bin/udhcpc-script.sh -q -n || setup_cloud_init_net
 
 # sshd
 mkdir -p /dev/pts
