@@ -76,7 +76,7 @@ rec {
     name = "cloud-init-networkcfg";
     dontUnpack = true;
     installPhase = ''
-      $CC ${./cloud-init-networkcfg.c} -o cloud-init-networkcfg
+      $CC -s ${./cloud-init-networkcfg.c} -o cloud-init-networkcfg
       mkdir -p $out/bin
       cp cloud-init-networkcfg $out/bin
     '';
@@ -86,7 +86,7 @@ rec {
     name = "blkid-small";
     dontUnpack = true;
     installPhase = ''
-      $CC ${./blkid-small.c} -o blkid
+      $CC -s ${./blkid-small.c} -o blkid
       mkdir -p $out/bin
       cp blkid $out/bin
     '';
