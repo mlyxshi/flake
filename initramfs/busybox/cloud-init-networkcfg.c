@@ -1,13 +1,18 @@
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
 
 // See cloud-init-example/version1.yml
 // By Claude Sonnet4.6
 
 static int netmask_to_prefix(const char *mask) {
-    unsigned int a, b, c, d;
-    if (sscanf(mask, "%u.%u.%u.%u", &a, &b, &c, &d) != 4) return -1;
+    unsigned int a = 0, b = 0, c = 0, d = 0;
+    const char *p = mask;
+    
+    while(*p >= '0' && *p <= '9') a = a * 10 + (*p++ - '0'); if(*p == '.') p++;
+    while(*p >= '0' && *p <= '9') b = b * 10 + (*p++ - '0'); if(*p == '.') p++;
+    while(*p >= '0' && *p <= '9') c = c * 10 + (*p++ - '0'); if(*p == '.') p++;
+    while(*p >= '0' && *p <= '9') d = d * 10 + (*p++ - '0');
+
     unsigned int bits = (a << 24) | (b << 16) | (c << 8) | d;
     int prefix = 0;
     while (bits & 0x80000000u) { prefix++; bits <<= 1; }

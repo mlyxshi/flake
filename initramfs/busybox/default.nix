@@ -11,7 +11,8 @@ rec {
   inherit (pkgs)
     stdenv
     stdenvNoCC
-    pkgsMusl
+    pkgsStatic
+    musl
     ;
 
   kernel = stdenv.mkDerivation {
@@ -40,15 +41,22 @@ rec {
     '';
   };
 
-  busybox-small = pkgsMusl.stdenv.mkDerivation {
+  # Busybox uses a complex build system, copy ideas from https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/os-specific/linux/busybox/default.nix
+  busybox-small = stdenv.mkDerivation {
     enableParallelBuilding = true;
     name = "busybox-small";
     inherit (pkgs.busybox) src;
+    nativeBuildInputs = [ stdenv.cc ];
     configurePhase = ''
       source ${./busybox_merge_config.sh}
       make allnoconfig
       printf 'CONFIG_PREFIX "%s"' $out | busybox_merge_config
+      printf "CONFIG_STATIC y" | busybox_merge_config
       busybox_merge_config < ${./busybox.config}
+      runHook postConfigure
+    '';
+    postConfigure = ''
+      makeFlagsArray+=("CC=cc -isystem ${musl.dev}/include -B${musl}/lib -L${musl}/lib")
     '';
     installPhase = ''
       mkdir -p $out/bin
@@ -64,21 +72,21 @@ rec {
     '';
   };
 
-  cloud-init-networkcfg = pkgsMusl.stdenv.mkDerivation {
+  cloud-init-networkcfg = pkgsStatic.stdenv.mkDerivation {
     name = "cloud-init-networkcfg";
     dontUnpack = true;
     installPhase = ''
-      gcc ${./cloud-init-networkcfg.c} -o cloud-init-networkcfg
+      $CC ${./cloud-init-networkcfg.c} -o cloud-init-networkcfg
       mkdir -p $out/bin
       cp cloud-init-networkcfg $out/bin
     '';
   };
 
-  blkid-small = pkgsMusl.stdenv.mkDerivation {
+  blkid-small = pkgsStatic.stdenv.mkDerivation {
     name = "blkid-small";
     dontUnpack = true;
     installPhase = ''
-      gcc ${./blkid-small.c} -o blkid
+      $CC ${./blkid-small.c} -o blkid
       mkdir -p $out/bin
       cp blkid $out/bin
     '';
