@@ -1,7 +1,32 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+
+static int netmask_to_prefix(const char *mask) {
+    unsigned int a, b, c, d;
+    if (sscanf(mask, "%u.%u.%u.%u", &a, &b, &c, &d) != 4) return -1;
+    unsigned int bits = (a << 24) | (b << 16) | (c << 8) | d;
+    int prefix = 0;
+    while (bits & 0x80000000u) { prefix++; bits <<= 1; }
+    return prefix;
+}
+
+/* Extract the value between the first pair of single quotes in `line`. */
+static int extract_quoted(const char *line, char *out, int outsz) {
+    const char *p = strchr(line, '\'');
+    if (!p) return 0;
+    p++;
+    const char *q = strchr(p, '\'');
+    if (!q) return 0;
+    int len = (int)(q - p);
+    if (len >= outsz) len = outsz - 1;
+    memcpy(out, p, len);
+    out[len] = '\0';
+    return 1;
+}
 
 int main(int argc, char *argv[]) {
+    if (argc < 2) return 1;
     FILE *fp = fopen(argv[1], "r");
     if (!fp) return 1;
 
@@ -10,31 +35,26 @@ int main(int argc, char *argv[]) {
     int inside_static = 0;
 
     while (fgets(line, sizeof(line), fp)) {
-        // Only start looking for IP/GW/Mask after we hit 'type: static'
-        if (strstr(line, "type: static")) {
-            inside_static = 1;
+        /* New subnet block — reset state */
+        if (strstr(line, "- type:") || strstr(line, "-  type:")) {
+            if (inside_static && ip[0]) break; /* done with static block */
+            inside_static = strstr(line, "static") != NULL;
             continue;
         }
 
-        if (inside_static) {
-            // sscanf with %*[^']' is a trick to skip everything until the first quote
-            // then %31[^'] captures everything until the closing quote
-            if (strstr(line, "address:")) 
-                sscanf(line, "%*[^']'%31[^']", ip);
-            else if (strstr(line, "netmask:")) 
-                sscanf(line, "%*[^']'%31[^']", mask);
-            else if (strstr(line, "gateway:")) 
-                sscanf(line, "%*[^']'%31[^']", gw);
-        }
-        
-        // If we hit a new block (indented 'type'), stop looking in static
-        if (inside_static && strstr(line, " - type:") && !strstr(line, "static")) {
-            if (ip[0] && gw[0]) break; 
-        }
+        if (!inside_static) continue;
+
+        if      (strstr(line, "address:") && !ip[0])   extract_quoted(line, ip,   sizeof ip);
+        else if (strstr(line, "netmask:") && !mask[0]) extract_quoted(line, mask, sizeof mask);
+        else if (strstr(line, "gateway:") && !gw[0])   extract_quoted(line, gw,   sizeof gw);
     }
 
-    printf("IP=%s\nGATEWAY=%s\nNETMASK=%s\n", ip, gw, mask);
-
     fclose(fp);
+
+    int prefix = netmask_to_prefix(mask);
+    const char *onlink = (prefix == 32) ? "onlink" : "";
+
+    printf("IP=%s\nGATEWAY=%s\nPREFIX=%d\nONLINK=%s\n", ip, gw, prefix, onlink);
+
     return 0;
 }

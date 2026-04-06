@@ -1,6 +1,6 @@
 #!/bin/busybox sh
 
-for i in sh ln cd ls cat free poweroff reboot dd mkdir mount ps ip ifconfig udhcpc wget tcpsvd; do
+for i in sh ln cd ls cat free poweroff reboot dd mkdir mount ps ip udhcpc wget tcpsvd; do
   /bin/busybox ln -s /bin/busybox /bin/$i
 done
 
@@ -14,17 +14,15 @@ ln -s /proc/self/fd/0 /dev/stdin
 ln -s /proc/self/fd/1 /dev/stdout
 ln -s /proc/self/fd/2 /dev/stderr
 
-mkdir /etc
-echo "" > /etc/initrd-release
+mkdir /etc && > /etc/initrd-release
 
 # only support nocloud network-config version1
 setup_cloud_init_net() {
   mkdir /cloud-init
   mount $(blkid -L cidata) /cloud-init
   eval $(cloud-init-networkcfg /cloud-init/network-config)
-  ifconfig eth0 "$IP" netmask "$NETMASK" up
-  [ "$NETMASK" = "255.255.255.255" ] && ONLINK="onlink"
-  ip route add default via "$GATEWAY" dev eth0 $ONLINK
+  ip addr add "$IP/$PREFIX" dev eth0
+  ip route add default via $GATEWAY dev eth0 $ONLINK
   echo "nameserver 1.1.1.1" > /etc/resolv.conf
 }
 
