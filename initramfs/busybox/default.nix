@@ -12,6 +12,7 @@ rec {
     stdenv
     stdenvNoCC
     pkgsMusl
+    fetchgit
     ;
 
   kernel = stdenv.mkDerivation {
@@ -44,6 +45,11 @@ rec {
     enableParallelBuilding = true;
     name = "busybox-small";
     inherit (pkgs.busybox) src;
+    # src = fetchgit {
+    #   url = "https://git.busybox.net/busybox/";
+    #   rev = "bee252057c7ac69909b8aafeafb8e414e34c7685";
+    #   hash = "sha256-bd2vqffLh4uvWJ+TjvX2eK162Bci4Z3TBqIblMOyOuk=";
+    # };
     configurePhase = ''
       source ${./busybox_merge_config.sh}
       make allnoconfig
@@ -105,7 +111,7 @@ rec {
     pathsToLink = [
       "/bin"
     ];
-    postBuild =''
+    postBuild = ''
       cat ${./udhcpc-script.sh} > $out/bin/udhcpc-script.sh
       chmod +x $out/bin/udhcpc-script.sh
     '';
