@@ -145,10 +145,11 @@ rec {
     ];
 
     buildCommand = ''
+      mkdir $out
       make-initrd-ng <(echo "$contentsJSON") ./root
-      mkdir "$out"
-      (cd root && find . -exec touch -h -d '@1' '{}' +)
-      (cd root && find . -print0 | sort -z | cpio --quiet -o -H newc -R +0:+0 --reproducible --null  >> "$out/initrd")
+      cd root
+      find . -exec touch -h -d '@1' '{}' +
+      find . -print0 | sort -z | cpio --quiet -o -H newc -R +0:+0 --reproducible --null  > $out/initrd
     '';
   };
 
