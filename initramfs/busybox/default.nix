@@ -12,7 +12,6 @@ rec {
     stdenv
     stdenvNoCC
     pkgsMusl
-    fetchgit
     ;
 
   kernel = stdenv.mkDerivation {
@@ -45,30 +44,15 @@ rec {
     enableParallelBuilding = true;
     name = "busybox-small";
     inherit (pkgs.busybox) src;
-    # src = fetchgit {
-    #   url = "https://git.busybox.net/busybox/";
-    #   rev = "bee252057c7ac69909b8aafeafb8e414e34c7685";
-    #   hash = "sha256-bd2vqffLh4uvWJ+TjvX2eK162Bci4Z3TBqIblMOyOuk=";
-    # };
     configurePhase = ''
       source ${./busybox_merge_config.sh}
       make allnoconfig
-      printf 'CONFIG_PREFIX "%s"\n' $out | busybox_merge_config
+      printf 'CONFIG_PREFIX "%s"' $out | busybox_merge_config
       busybox_merge_config < ${./busybox.config}
     '';
     installPhase = ''
       mkdir -p $out/bin
       cp busybox $out/bin
-    '';
-  };
-
-  tinyssh-small = pkgsMusl.stdenv.mkDerivation {
-    enableParallelBuilding = true;
-    name = "tinyssh-small";
-    inherit (pkgs.tinyssh) src;
-    installPhase = ''
-      mkdir -p $out/bin
-      cp tinysshd $out/bin/
     '';
   };
 
@@ -104,7 +88,6 @@ rec {
     name = "bin";
     paths = [
       busybox-small
-      tinyssh-small
       blkid-small
       cloud-init-networkcfg
     ];
@@ -154,7 +137,7 @@ rec {
     /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 1G \
       -kernel ${kernel}/Image -append "earlycon=pl011,mmio32,0x9000000"\
       -initrd ${initrd}/initrd \
-      -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
+      -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:23333" \
       -bios $(ls /opt/homebrew/Cellar/qemu/*/share/qemu/edk2-aarch64-code.fd) \
       -device "virtio-scsi-pci,id=scsi0" -drive "file=/Users/dominic/flake/test/disk-scsi.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
       -device "virtio-blk-pci,drive=hd0" -drive "file=/Users/dominic/flake/test/disk-blk.img,if=none,format=qcow2,id=hd0"
@@ -166,7 +149,7 @@ rec {
     /opt/homebrew/bin/qemu-system-x86_64 -cpu qemu64 -nographic -m 1G \
       -kernel ${kernel}/bzImage \
       -initrd ${initrd}/initrd \
-      -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:22" \
+      -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:23333" \
       -append "console=ttyS0" \
       -device "virtio-scsi-pci,id=scsi0" -drive "file=/Users/dominic/flake/test/disk-scsi.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
       -device "virtio-blk-pci,drive=hd0" -drive "file=/Users/dominic/flake/test/disk-blk.img,if=none,format=qcow2,id=hd0"
