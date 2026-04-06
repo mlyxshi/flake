@@ -40,22 +40,15 @@ rec {
     '';
   };
 
-  busybox_merge_config = stdenvNoCC.mkDerivation {
-    name = "merge_config";
-    buildCommand = ''
-      cat ${./busybox_merge_config.sh} > $out
-      chmod +x $out
-    '';
-  };
-
   busybox-small = pkgsMusl.stdenv.mkDerivation {
     enableParallelBuilding = true;
     name = "busybox-small";
     inherit (pkgs.busybox) src;
     configurePhase = ''
+      source ${./busybox_merge_config.sh}
       make allnoconfig
-      printf 'CONFIG_PREFIX "%s"\n' $out | ${busybox_merge_config}
-      ${busybox_merge_config} < ${./busybox.config}
+      printf 'CONFIG_PREFIX "%s"\n' $out | busybox_merge_config
+      busybox_merge_config < ${./busybox.config}
     '';
     installPhase = ''
       mkdir -p $out/bin

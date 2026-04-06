@@ -16,7 +16,7 @@ ln -s /proc/self/fd/1 /dev/stdout
 ln -s /proc/self/fd/2 /dev/stderr
 
 mkdir /etc
-echo " " > /etc/initrd-release
+echo "" > /etc/initrd-release
 
 # only support nocloud network-config version1
 setup_cloud_init_net() {
@@ -41,6 +41,6 @@ echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMpaY3LyCW4HHqbp4SA4tnA+1Bkgwrtro2s/DE
 ln -s /bin/tinysshd /bin/tinysshd-makekey
 tinysshd-makekey /etc/tinyssh/sshkeydir
 echo "root:x:0:0:root:/root:/bin/sh" > /etc/passwd
-tcpsvd -v 0 22 tinysshd -v /etc/tinyssh/sshkeydir > sshd.log 2>&1 &
+tcpsvd -v 0 22 tinysshd -v /etc/tinyssh/sshkeydir > /run/sshd.log 2>&1 &
 
 /bin/sh

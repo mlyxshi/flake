@@ -1,16 +1,19 @@
-while read -r NAME OPTION; do
-  [[ $NAME =~ ^CONFIG_ ]] || continue
+function busybox_merge_config (){
+  while read -r NAME OPTION; do
+    [[ $NAME =~ ^CONFIG_ ]] || continue
 
-  echo "parseconfig: removing $NAME"
+    echo "parseconfig: removing $NAME"
 
-  sed -i "/^$NAME=/d" .config
-  sed -i "/^# $NAME is not set/d" .config
+    sed -i "/^$NAME=/d" .config
+    sed -i "/^# $NAME is not set/d" .config
 
-  echo "parseconfig: setting $NAME=$OPTION"
+    echo "parseconfig: setting $NAME=$OPTION"
 
-  if [ "$OPTION" = "n" ]; then
-    echo "# $NAME is not set" >> .config
-  else
-    echo "$NAME=$OPTION" >> .config
-  fi
-done
+    if [ "$OPTION" = "n" ]; then
+      echo "# $NAME is not set" >> .config
+    else
+      echo "$NAME=$OPTION" >> .config
+    fi
+  done
+}
+
