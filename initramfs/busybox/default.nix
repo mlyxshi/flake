@@ -10,7 +10,6 @@ rec {
 
   inherit (pkgs)
     stdenv
-    stdenvNoCC
     pkgsStatic
     writeText
     musl
@@ -56,21 +55,16 @@ rec {
     '';
   };
 
-  # Busybox uses a complex build system, copy ideas from https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/os-specific/linux/busybox/default.nix
-  busybox-small = stdenv.mkDerivation {
+  busybox-small = pkgsStatic.stdenv.mkDerivation {
     enableParallelBuilding = true;
     name = "busybox-small";
     inherit (pkgs.busybox) src;
     nativeBuildInputs = [ stdenv.cc ];
+    buildInputs = [  pkgsStatic.stdenv.cc.libc ];
     configurePhase = ''
       source ${./busybox_merge_config.sh}
       make allnoconfig
-      printf "CONFIG_STATIC y" | busybox_merge_config
       busybox_merge_config < ${./busybox.config}
-      runHook postConfigure
-    '';
-    postConfigure = ''
-      makeFlagsArray+=("CC=cc -isystem ${musl.dev}/include -B${musl}/lib -L${musl}/lib")
     '';
     installPhase = ''
       mkdir -p $out/bin
@@ -100,6 +94,7 @@ rec {
 
   test-arm64 = pkgs-macos.writeShellScriptBin "aarch64-initramfs-test" ''
     ls -lh ${kernel}/Image | awk '{print $5}'
+    ls -lh ${busybox-small}/bin/busybox | awk '{print $5}'
     /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 1G \
       -kernel ${kernel}/Image -append "earlycon=pl011,mmio32,0x9000000"\
       -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:23333" \
