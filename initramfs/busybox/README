@@ -3,6 +3,31 @@ For daily use, prefer a systemd-based initrd.
 
 
 
+
+wget https://github.com/mlyxshi/flake/releases/download/$(uname -m)/busybox-kernel
+cat > /boot/grub/custom.cfg <<EOF
+menuentry "KernelBusyBox" --id KernelBusyBox {
+  insmod ext2
+  search -f /etc/hostname --set root
+  linux /root/busybox-kernel
+}
+set default="KernelBusyBox"
+EOF
+reboot
+
+
+wget -qO- https://dd.mlyxshi.com/arm-init-grow.raw | dd of=/dev/sda
+
+
+
+wget https://github.com/mlyxshi/flake/releases/download/$(uname -m)/busybox-kernel
+wget https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kexec
+chmod +x kexec
+./kexec --load ./busybox-kernel
+systemctl kexec -i
+
+
+
 virtio_pci
 
 virtio_net
