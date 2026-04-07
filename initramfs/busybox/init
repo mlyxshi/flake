@@ -14,7 +14,7 @@ ln -s /proc/self/fd/0 /dev/stdin
 ln -s /proc/self/fd/1 /dev/stdout
 ln -s /proc/self/fd/2 /dev/stderr
 
-mkdir /etc && > /etc/initrd-release
+mkdir /etc
 
 # only support nocloud network-config version1
 setup_cloud_init_net() {
