@@ -7,7 +7,6 @@
   lib ? pkgs.lib,
 }:
 rec {
-
   inherit (pkgs)
     stdenv
     pkgsStatic
@@ -16,7 +15,6 @@ rec {
     ;
 
   kernel = stdenv.mkDerivation {
-    enableParallelBuilding = true;
     name = "kernel";
     inherit (pkgs.linuxPackages_latest.kernel) src;
     # https://github.com/torvalds/linux/blob/master/usr/gen_init_cpio.c
@@ -38,7 +36,7 @@ rec {
       perl
       elfutils
     ];
-
+    buildPhase = "make ${stdenv.hostPlatform.linux-kernel.target} -j$NIX_BUILD_CORES";
     configurePhase = ''
       make ARCH=${stdenv.hostPlatform.linuxArch} allnoconfig
       ./scripts/kconfig/merge_config.sh -m .config  ${./kernel.config} 
@@ -56,40 +54,33 @@ rec {
   };
 
   busybox-small = pkgsStatic.stdenv.mkDerivation {
-    enableParallelBuilding = true;
     name = "busybox-small";
     inherit (pkgs.busybox) src;
-    nativeBuildInputs = [ stdenv.cc ];
-    buildInputs = [  pkgsStatic.stdenv.cc.libc ];
+    nativeBuildInputs = [ pkgs.stdenv.cc ]; # build kConfig
+    buildInputs = [ pkgsStatic.stdenv.cc.libc ];
     configurePhase = ''
       source ${./busybox_merge_config.sh}
       make allnoconfig
       busybox_merge_config < ${./busybox.config}
     '';
-    installPhase = ''
-      mkdir -p $out/bin
-      cp busybox $out/bin
-    '';
+    buildPhase = "make busybox -j$NIX_BUILD_CORES";
+    installPhase = "install -Dm755 busybox $out/bin/busybox";
   };
 
   cloud-init-networkcfg = pkgsStatic.stdenv.mkDerivation {
     name = "cloud-init-networkcfg";
+    src = ./cloud-init-networkcfg.c;
     dontUnpack = true;
-    installPhase = ''
-      $CC -s ${./cloud-init-networkcfg.c} -o cloud-init-networkcfg
-      mkdir -p $out/bin
-      cp cloud-init-networkcfg $out/bin
-    '';
+    buildPhase = "$CC -s $src -o cloud-init-networkcfg";
+    installPhase = "install -Dm755 cloud-init-networkcfg $out/bin/cloud-init-networkcfg";
   };
 
   blkid-small = pkgsStatic.stdenv.mkDerivation {
     name = "blkid-small";
+    src = ./blkid-small.c;
     dontUnpack = true;
-    installPhase = ''
-      $CC -s ${./blkid-small.c} -o blkid
-      mkdir -p $out/bin
-      cp blkid $out/bin
-    '';
+    buildPhase = "$CC -s $src -o blkid";
+    installPhase = "install -Dm755 blkid $out/bin/blkid";
   };
 
   test-arm64 = pkgs-macos.writeShellScriptBin "aarch64-initramfs-test" ''

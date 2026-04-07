@@ -4,6 +4,25 @@ For daily use, prefer a systemd-based initrd.
 
 
 
+aka pkgsMusl
+pkgsMuslDynamic = import <nixpkgs> {
+  localSystem = {
+    config = "aarch64-unknown-linux-musl";
+  };
+};
+
+aka pkgsStatic
+pkgsMuslStatic = import <nixpkgs> {
+  localSystem = {
+    config = "aarch64-unknown-linux-gnu";
+  };
+  crossSystem = {
+    config = "aarch64-unknown-linux-musl";
+    isStatic = true;
+  };
+};
+
+
 wget https://github.com/mlyxshi/flake/releases/download/$(uname -m)/busybox-kernel
 cat > /boot/grub/custom.cfg <<EOF
 menuentry "KernelBusyBox" --id KernelBusyBox {
