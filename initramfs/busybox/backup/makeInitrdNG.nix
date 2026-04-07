@@ -1,3 +1,5 @@
+# musl dynamic link
+
 {
   pkgs ? import <nixpkgs> {
     system = "aarch64-linux";
@@ -11,7 +13,7 @@ rec {
   inherit (pkgs)
     stdenv
     stdenvNoCC
-    pkgsStatic
+    pkgsMusl
     musl
     ;
 
@@ -41,22 +43,14 @@ rec {
     '';
   };
 
-  # Busybox uses a complex build system, copy ideas from https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/os-specific/linux/busybox/default.nix
-  busybox-small = stdenv.mkDerivation {
+  busybox-small = pkgsMusl.stdenv.mkDerivation {
     enableParallelBuilding = true;
     name = "busybox-small";
     inherit (pkgs.busybox) src;
-    nativeBuildInputs = [ stdenv.cc ];
     configurePhase = ''
       source ${./busybox_merge_config.sh}
       make allnoconfig
-      printf 'CONFIG_PREFIX "%s"' $out | busybox_merge_config
-      printf "CONFIG_STATIC y" | busybox_merge_config
       busybox_merge_config < ${./busybox.config}
-      runHook postConfigure
-    '';
-    postConfigure = ''
-      makeFlagsArray+=("CC=cc -isystem ${musl.dev}/include -B${musl}/lib -L${musl}/lib")
     '';
     installPhase = ''
       mkdir -p $out/bin
@@ -72,7 +66,7 @@ rec {
     '';
   };
 
-  cloud-init-networkcfg = pkgsStatic.stdenv.mkDerivation {
+  cloud-init-networkcfg = pkgsMusl.stdenv.mkDerivation {
     name = "cloud-init-networkcfg";
     dontUnpack = true;
     installPhase = ''
@@ -82,7 +76,7 @@ rec {
     '';
   };
 
-  blkid-small = pkgsStatic.stdenv.mkDerivation {
+  blkid-small = pkgsMusl.stdenv.mkDerivation {
     name = "blkid-small";
     dontUnpack = true;
     installPhase = ''
@@ -116,7 +110,6 @@ rec {
     nativeBuildInputs = with pkgs; [
       makeInitrdNGTool
       cpio
-      zstd
     ];
 
     contentsJSON = builtins.toJSON [
@@ -135,7 +128,7 @@ rec {
       make-initrd-ng <(echo "$contentsJSON") ./root
       cd root
       find . -exec touch -h -d '@1' '{}' +
-      find . -print0 | sort -z | cpio --quiet -o -H newc -R +0:+0 --reproducible --null | zstd -19 > $out/initrd
+      find . -print0 | sort -z | cpio --quiet -o -H newc -R +0:+0 --reproducible --null > $out/initrd
     '';
   };
 

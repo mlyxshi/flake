@@ -12,6 +12,7 @@ rec {
     stdenv
     stdenvNoCC
     pkgsStatic
+    writeText
     musl
     ;
 
@@ -19,6 +20,18 @@ rec {
     enableParallelBuilding = true;
     name = "kernel";
     inherit (pkgs.linuxPackages_latest.kernel) src;
+    # https://github.com/torvalds/linux/blob/master/usr/gen_init_cpio.c
+    initrd_cpio_list = writeText "initrd_cpio_list" ''
+      dir /dev 0755 0 0
+      nod /dev/console 0600 0 0 c 5 1
+
+      file /init ${./init} 0755 0 0
+      dir /bin 0755 0 0
+      file /bin/busybox ${busybox-small}/bin/busybox 0755 0 0
+      file /bin/udhcpc-script.sh ${./udhcpc-script.sh} 0755 0 0
+      file /bin/blkid ${blkid-small}/bin/blkid 0755 0 0
+      file /bin/cloud-init-networkcfg ${cloud-init-networkcfg}/bin/cloud-init-networkcfg 0755 0 0
+    '';
     nativeBuildInputs = with pkgs; [
       bison
       flex
@@ -26,9 +39,11 @@ rec {
       perl
       elfutils
     ];
+
     configurePhase = ''
       make ARCH=${stdenv.hostPlatform.linuxArch} allnoconfig
-      ./scripts/kconfig/merge_config.sh -m .config  ${./kernel.config}
+      ./scripts/kconfig/merge_config.sh -m .config  ${./kernel.config} 
+      ./scripts/kconfig/merge_config.sh -m .config <(printf 'CONFIG_INITRAMFS_SOURCE="%s"' $initrd_cpio_list)
       make ARCH=${stdenv.hostPlatform.linuxArch} olddefconfig
     '';
     installPhase = ''
@@ -83,33 +98,10 @@ rec {
     '';
   };
 
-  initrd = stdenvNoCC.mkDerivation {
-    __structuredAttrs = true;
-    unsafeDiscardReferences.out = true;
-    name = "initrd";
-    nativeBuildInputs = with pkgs; [
-      cpio
-      zstd
-    ];
-    buildCommand = ''
-      mkdir -p ./root/bin  $out
-      install -m755 ${./init} root/init
-      install -m755 ${./udhcpc-script.sh} root/bin/udhcpc-script.sh
-      install -m755 ${busybox-small}/bin/busybox root/bin/
-      install -m755 ${blkid-small}/bin/blkid root/bin/
-      install -m755 ${cloud-init-networkcfg}/bin/cloud-init-networkcfg root/bin/
-      cd root
-      find . -exec touch -h -d '@1' '{}' +
-      find . -print0 | sort -z | cpio --quiet -o -H newc -R +0:+0 --reproducible --null | zstd -19 > $out/initrd
-    '';
-  };
-
   test-arm64 = pkgs-macos.writeShellScriptBin "aarch64-initramfs-test" ''
     ls -lh ${kernel}/Image | awk '{print $5}'
-    ls -lh ${initrd}/initrd | awk '{print $5}'
     /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 1G \
       -kernel ${kernel}/Image -append "earlycon=pl011,mmio32,0x9000000"\
-      -initrd ${initrd}/initrd \
       -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:23333" \
       -bios $(ls /opt/homebrew/Cellar/qemu/*/share/qemu/edk2-aarch64-code.fd) \
       -device "virtio-scsi-pci,id=scsi0" -drive "file=/Users/dominic/flake/test/disk-scsi.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
@@ -118,10 +110,8 @@ rec {
 
   test-x86-64 = pkgs-macos.writeShellScriptBin "x86-64-initramfs-test" ''
     ls -lh ${kernel}/bzImage  | awk '{print $5}'
-    ls -lh ${initrd}/initrd | awk '{print $5}'
     /opt/homebrew/bin/qemu-system-x86_64 -cpu qemu64 -nographic -m 1G \
       -kernel ${kernel}/bzImage \
-      -initrd ${initrd}/initrd \
       -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:23333" \
       -append "console=ttyS0" \
       -device "virtio-scsi-pci,id=scsi0" -drive "file=/Users/dominic/flake/test/disk-scsi.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
