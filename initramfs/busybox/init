@@ -1,6 +1,6 @@
 #!/bin/busybox sh
 
-for i in sh ln cd ls cat free poweroff reboot dd mkdir mount ps ip udhcpc wget nc; do
+for i in sh ln cd ls cat free poweroff reboot dd mkdir mount blkid ps ip udhcpc wget nc; do
   /bin/busybox ln -s /bin/busybox /bin/$i
 done
 
@@ -19,7 +19,7 @@ mkdir /etc
 # only support nocloud network-config version1
 setup_cloud_init_net() {
   mkdir /cloud-init
-  mount $(blkid -L cidata) /cloud-init
+  mount $(cloud-init-networkcfg -L cidata) /cloud-init
   eval $(cloud-init-networkcfg /cloud-init/network-config)
   ip addr add "$IP/$PREFIX" dev eth0
   ip route add default via $GATEWAY dev eth0 $ONLINK

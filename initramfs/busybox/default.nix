@@ -24,9 +24,8 @@ rec {
 
       file /init ${./init} 0755 0 0
       dir /bin 0755 0 0
-      file /bin/busybox ${busybox-small}/bin/busybox 0755 0 0
+      file /bin/busybox ${busybox}/bin/busybox 0755 0 0
       file /bin/udhcpc-script.sh ${./udhcpc-script.sh} 0755 0 0
-      file /bin/blkid ${blkid-small}/bin/blkid 0755 0 0
       file /bin/cloud-init-networkcfg ${cloud-init-networkcfg}/bin/cloud-init-networkcfg 0755 0 0
     '';
     nativeBuildInputs = with pkgs; [
@@ -52,8 +51,8 @@ rec {
     '';
   };
 
-  busybox-small = pkgsStatic.stdenv.mkDerivation {
-    name = "busybox-small";
+  busybox = pkgsStatic.stdenv.mkDerivation {
+    name = "busybox";
     inherit (pkgs.busybox) src;
     nativeBuildInputs = [ pkgs.stdenv.cc ]; # build kConfig
     buildInputs = [ pkgsStatic.stdenv.cc.libc ];
@@ -74,17 +73,9 @@ rec {
     installPhase = "install -Dm755 cloud-init-networkcfg $out/bin/cloud-init-networkcfg";
   };
 
-  blkid-small = pkgsStatic.stdenv.mkDerivation {
-    name = "blkid-small";
-    src = ./blkid-small.c;
-    dontUnpack = true;
-    buildPhase = "$CC -s $src -o blkid";
-    installPhase = "install -Dm755 blkid $out/bin/blkid";
-  };
-
   test-arm64 = pkgs-macos.writeShellScriptBin "aarch64-initramfs-test" ''
     ls -lh ${kernel}/Image | awk '{print $5}'
-    ls -lh ${busybox-small}/bin/busybox | awk '{print $5}'
+    ls -lh ${busybox}/bin/busybox | awk '{print $5}'
     /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 1G \
       -kernel ${kernel}/Image -append "earlycon=pl011,mmio32,0x9000000"\
       -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:23333" \
