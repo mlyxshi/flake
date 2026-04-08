@@ -37,11 +37,10 @@ rec {
       elfutils
     ];
     buildPhase = "make ${stdenv.hostPlatform.linux-kernel.target} -j$NIX_BUILD_CORES";
+    # https://kernel.org/doc/Documentation/kbuild/kconfig.txt
     configurePhase = ''
-      make ARCH=${stdenv.hostPlatform.linuxArch} allnoconfig
-      ./scripts/kconfig/merge_config.sh -m .config  ${./kernel.config} 
-      ./scripts/kconfig/merge_config.sh -m .config <(printf 'CONFIG_INITRAMFS_SOURCE="%s"' $initrd_cpio_list)
-      make ARCH=${stdenv.hostPlatform.linuxArch} olddefconfig
+      make ARCH=${stdenv.hostPlatform.linuxArch} KCONFIG_ALLCONFIG=${./kernel.config} allnoconfig
+      patchShebangs scripts/config && scripts/config --set-str INITRAMFS_SOURCE $initrd_cpio_list
     '';
     installPhase = ''
       mkdir -p $out
