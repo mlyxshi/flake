@@ -40,7 +40,7 @@ rec {
     # https://kernel.org/doc/Documentation/kbuild/kconfig.txt
     configurePhase = ''
       make ARCH=${stdenv.hostPlatform.linuxArch} KCONFIG_ALLCONFIG=${./kernel.config} allnoconfig
-      patchShebangs scripts/config && scripts/config --set-str INITRAMFS_SOURCE $initrd_cpio_list
+      sed -i "s|^CONFIG_INITRAMFS_SOURCE=\"\"|CONFIG_INITRAMFS_SOURCE=\"$initrd_cpio_list\"|" .config
     '';
     installPhase = ''
       mkdir -p $out
