@@ -36,6 +36,7 @@ reboot
 
 wget -qO- https://dd.mlyxshi.com/custom_os.img | dd of=/dev/sda
 wget -qO- https://dd.mlyxshi.com/arm-init-grow.raw | dd of=/dev/sda
+wget -qO- https://dd.mlyxshi.com/bios-init.raw | dd of=/dev/vda
 
 
 
