@@ -33,12 +33,12 @@
       nixosConfigurations = {
         # systemd-repart
         # nix build --no-link --print-out-paths .#nixosConfigurations.arm-init-grow.config.system.build.image
-        arm-init-grow = nixpkgs.lib.nixosSystem { modules = [ ./host/init/arm.nix ]; };
+        arm-init-grow = nixpkgs.lib.nixosSystem { modules = [ ./dd/arm.nix ]; };
 
-        bios-vda-init = nixpkgs.lib.nixosSystem { modules = [ ./host/init/bios.nix ]; };
+        bios-vda-init = nixpkgs.lib.nixosSystem { modules = [ ./dd/bios.nix ]; };
         bios-sda-init = nixpkgs.lib.nixosSystem {
           modules = [
-            ./host/init/bios.nix
+            ./dd/bios.nix
             { boot.loader.limine.biosDevice = "/dev/sda"; }
           ];
         };
