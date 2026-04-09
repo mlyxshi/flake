@@ -34,7 +34,7 @@ set default="KernelBusyBox"
 EOF
 reboot
 
-
+wget -qO- https://dd.mlyxshi.com/custom_os.img | dd of=/dev/sda
 wget -qO- https://dd.mlyxshi.com/arm-init-grow.raw | dd of=/dev/sda
 
 

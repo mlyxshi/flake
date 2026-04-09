@@ -8,7 +8,7 @@
     ./default.nix
   ];
 
-  # Very limited cloud-init network setup implementation. Only test on cloud provider I use (dmit.io/alice.sh)
+  # Very limited cloud-init network setup implementation. Only test on cloud provider I use (dmit.io)
   services.udev.extraRules = ''
     SUBSYSTEM=="block", ENV{ID_FS_LABEL}=="cidata", TAG+="systemd", ENV{SYSTEMD_WANTS}="cloud-init-network.service"
   '';
