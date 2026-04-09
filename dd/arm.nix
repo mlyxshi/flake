@@ -51,7 +51,7 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 3;
   boot.loader.timeout = 1;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.canTouchEfiVariables = false;
 
   environment.etc = {
     "ssh/ssh_host_ed25519_key.pub" = {

@@ -9,9 +9,8 @@
 
   imports = [ "${modulesPath}/profiles/qemu-guest.nix" ];
 
-  networking.hostName = "x86_64-init";
+  networking.hostName = "x86-64-bios-init";
   nixpkgs.hostPlatform = "x86_64-linux";
-  # nixpkgs.hostPlatform = "aarch64-linux";
 
   services.getty.autologinUser = "root";
 
@@ -32,7 +31,8 @@
   boot.loader.limine.enable = true;
   boot.loader.limine.biosSupport = true;
   boot.loader.limine.efiSupport = false;
-  boot.loader.limine.biosDevice = lib.mkDefault "/dev/vda";
+  # Only the stage 2 bootloader will be installed, install stage1 separately manuanlly
+  boot.loader.limine.biosDevice = "nodev";
   boot.loader.limine.maxGenerations = 2;
   boot.loader.timeout = 1;
 

@@ -35,13 +35,8 @@
         # nix build --no-link --print-out-paths .#nixosConfigurations.arm-init-grow.config.system.build.image
         arm-init-grow = nixpkgs.lib.nixosSystem { modules = [ ./dd/arm.nix ]; };
 
-        bios-vda-init = nixpkgs.lib.nixosSystem { modules = [ ./dd/bios.nix ]; };
-        bios-sda-init = nixpkgs.lib.nixosSystem {
-          modules = [
-            ./dd/bios.nix
-            { boot.loader.limine.biosDevice = "/dev/sda"; }
-          ];
-        };
+        bios-init = nixpkgs.lib.nixosSystem { modules = [ ./dd/bios.nix ]; };
+
         # Apple Silicon (M3 and later) supports nested virtualization via Apple's Virtualization Framework for build nixos image require kvm
         builder = nixpkgs.lib.nixosSystem { modules = [ ./host/darwin/macos-builder.nix ]; };
 
