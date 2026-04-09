@@ -46,6 +46,8 @@
     fsType = "ext4";
   };
 
+  boot.growPartition = true;
+
   environment.etc = {
     "ssh/ssh_host_ed25519_key.pub" = {
       text = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJBWcxb/Blaqt1auOtE+F8QUWrUotiC5qBJ+UuEWdVCb";
