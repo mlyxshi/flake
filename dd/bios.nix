@@ -44,9 +44,10 @@
   fileSystems."/" = {
     device = lib.mkDefault "/dev/vda3";
     fsType = "ext4";
+    autoResize = true; # grow fs
   };
 
-  boot.growPartition = true;
+  boot.growPartition = true; # grow partition
 
   environment.etc = {
     "ssh/ssh_host_ed25519_key.pub" = {
