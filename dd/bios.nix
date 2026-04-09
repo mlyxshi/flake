@@ -37,12 +37,12 @@
   boot.loader.timeout = 1;
 
   fileSystems."/boot" = {
-    device = config.boot.loader.limine.biosDevice + "2";
+    device = lib.mkDefault "/dev/vda2";
     fsType = "vfat";
   };
 
   fileSystems."/" = {
-    device = config.boot.loader.limine.biosDevice + "3";
+    device = lib.mkDefault "/dev/vda3";
     fsType = "ext4";
   };
 
