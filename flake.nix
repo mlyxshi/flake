@@ -31,10 +31,7 @@
         };
       };
       nixosConfigurations = {
-        # systemd-repart
-        # nix build --no-link --print-out-paths .#nixosConfigurations.arm-init-grow.config.system.build.image
-        arm-init-grow = nixpkgs.lib.nixosSystem { modules = [ ./dd/arm.nix ]; };
-
+        arm-init = nixpkgs.lib.nixosSystem { modules = [ ./dd/arm.nix ]; };
         bios-vda-init = nixpkgs.lib.nixosSystem { modules = [ ./dd/bios.nix ]; };
         bios-sda-init = nixpkgs.lib.nixosSystem {
           modules = [
