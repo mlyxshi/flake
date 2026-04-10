@@ -44,13 +44,13 @@ mkdir -p /mnt
 mount /dev/loop1p3 /mnt
 mount --mkdir /dev/loop1p2 /mnt/boot
 
-outPath=$(nix build --store /mnt --no-link --print-out-paths /flake#nixosConfigurations.bios-sda-init.config.system.build.toplevel)
+outPath=$(nix build --store /mnt --no-link --print-out-paths /flake#nixosConfigurations.bios-vda-init.config.system.build.toplevel)
 nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $outPath
 mkdir /mnt/etc && touch /mnt/etc/NIXOS
 NIXOS_INSTALL_BOOTLOADER=1 nixos-enter --root /mnt -- /run/current-system/bin/switch-to-configuration boot
 
 
-limine bios-install /dev/loop1
+nix run nixpkgs#limine bios-install /dev/loop1
 
 umount /dev/loop1p2
 umount /dev/loop1p3
