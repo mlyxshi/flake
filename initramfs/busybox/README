@@ -2,8 +2,6 @@ Minimal BusyBox-based initrd for experimentation and learning.
 For daily use, prefer a systemd-based initrd.
 
 
-
-
 aka pkgsMusl
 pkgsMuslDynamic = import <nixpkgs> {
   localSystem = {
@@ -21,31 +19,6 @@ pkgsMuslStatic = import <nixpkgs> {
     isStatic = true;
   };
 };
-
-
-wget https://github.com/mlyxshi/flake/releases/download/$(uname -m)/busybox-kernel
-cat > /boot/grub/custom.cfg <<EOF
-menuentry "KernelBusyBox" --id KernelBusyBox {
-  insmod ext2
-  search -f /etc/hostname --set root
-  linux /root/busybox-kernel
-}
-set default="KernelBusyBox"
-EOF
-reboot
-
-wget -qO- https://dd.mlyxshi.com/custom_os.img | dd of=/dev/sda
-wget -qO- https://dd.mlyxshi.com/arm-init-grow.raw | dd of=/dev/sda
-wget -qO- https://dd.mlyxshi.com/bios-init.raw | dd of=/dev/vda
-
-
-
-wget https://github.com/mlyxshi/flake/releases/download/$(uname -m)/busybox-kernel
-wget https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kexec
-chmod +x kexec
-./kexec --load ./busybox-kernel
-systemctl kexec -i
-
 
 
 virtio_pci
