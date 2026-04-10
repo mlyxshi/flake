@@ -34,7 +34,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 3;
   boot.loader.timeout = 1;
-  boot.loader.efi.canTouchEfiVariables = false;
 
   environment.etc = {
     "ssh/ssh_host_ed25519_key.pub" = {
@@ -122,8 +121,8 @@
   environment.defaultPackages = [ ];
   system.forbiddenDependenciesRegexes = [ "perl" ];
 
-  # resize root partition and filesystem after switch-root
-  systemd.repart.enable = true;
+  # resize root partition and filesystem
+  boot.initrd.systemd.repart.enable = true;
   systemd.repart.partitions = {
     root = {
       Type = "root";

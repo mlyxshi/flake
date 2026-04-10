@@ -69,8 +69,15 @@ set default="KernelBusyBox"
 EOF
 reboot
 
-wget -qO- https://dd.mlyxshi.com/custom_os.img | dd of=/dev/sda
+wget -qO- https://dd.mlyxshi.com/arm-init.raw | dd of=/dev/sda
 
 wget -qO- https://dd.mlyxshi.com/bios-vda-init.raw | dd of=/dev/vda
 
 wget -qO- https://dd.mlyxshi.com/bios-sda-init.raw | dd of=/dev/sda
+
+
+wget https://github.com/mlyxshi/flake/releases/download/$(uname -m)/busybox-kernel
+wget https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kexec
+chmod +x kexec
+./kexec --load ./busybox-kernel
+systemctl kexec -i
