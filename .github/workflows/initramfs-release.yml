@@ -17,7 +17,7 @@ jobs:
         initrdOutPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.initramfs-aarch64.config.system.build.initialRamdisk)
         kexecOutPath=$(nix build --no-link --print-out-paths nixpkgs#pkgsStatic.kexec-tools)
 
-        busyboxKernel=$(nix build --no-link --print-out-paths -f initramfs/busybox/default.nix kernel --arg pkgs 'import <nixpkgs> { system = builtins.currentSystem; }')
+        busyboxKernel=$(nix build --no-link --print-out-paths -f dd/busybox/default.nix kernel --arg pkgs 'import <nixpkgs> { system = builtins.currentSystem; }')
 
         ln -sf $kernelOutPath/Image /tmp/kernel
         ln -sf $busyboxKernel/Image /tmp/busybox-kernel
@@ -39,7 +39,7 @@ jobs:
         initrdOutPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.initramfs-x86_64.config.system.build.initialRamdisk)
         kexecOutPath=$(nix build --no-link --print-out-paths nixpkgs#pkgsStatic.kexec-tools)
 
-        busyboxKernel=$(nix build --no-link --print-out-paths -f initramfs/busybox/default.nix kernel --arg pkgs 'import <nixpkgs> { system = builtins.currentSystem; }')
+        busyboxKernel=$(nix build --no-link --print-out-paths -f dd/busybox/default.nix kernel --arg pkgs 'import <nixpkgs> { system = builtins.currentSystem; }')
 
         ln -sf $kernelOutPath/bzImage /tmp/kernel
         ln -sf $busyboxKernel/bzImage /tmp/busybox-kernel

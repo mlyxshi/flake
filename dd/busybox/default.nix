@@ -1,5 +1,3 @@
-# musl dynamic link
-
 {
   pkgs ? import <nixpkgs> {
     system = "aarch64-linux";
@@ -9,18 +7,27 @@
   lib ? pkgs.lib,
 }:
 rec {
-
   inherit (pkgs)
     stdenv
-    stdenvNoCC
-    pkgsMusl
+    pkgsStatic
+    writeText
     musl
     ;
 
   kernel = stdenv.mkDerivation {
-    enableParallelBuilding = true;
     name = "kernel";
     inherit (pkgs.linuxPackages_latest.kernel) src;
+    # https://github.com/torvalds/linux/blob/master/usr/gen_init_cpio.c
+    initrd_cpio_list = writeText "initrd_cpio_list" ''
+      dir /dev 0755 0 0
+      nod /dev/console 0600 0 0 c 5 1
+
+      file /init ${./init} 0755 0 0
+      dir /bin 0755 0 0
+      file /bin/busybox ${busybox}/bin/busybox 0755 0 0
+      file /bin/udhcpc-script.sh ${./udhcpc-script.sh} 0755 0 0
+      file /bin/cloud-init-networkcfg ${cloud-init-networkcfg}/bin/cloud-init-networkcfg 0755 0 0
+    '';
     nativeBuildInputs = with pkgs; [
       bison
       flex
@@ -28,11 +35,12 @@ rec {
       perl
       elfutils
     ];
+    # https://kernel.org/doc/Documentation/kbuild/kconfig.txt
     configurePhase = ''
-      make ARCH=${stdenv.hostPlatform.linuxArch} allnoconfig
-      ./scripts/kconfig/merge_config.sh -m .config  ${./kernel.config}
-      make ARCH=${stdenv.hostPlatform.linuxArch} olddefconfig
+      make ARCH=${stdenv.hostPlatform.linuxArch} KCONFIG_ALLCONFIG=${./kernel.config} allnoconfig
+      sed -i "s|^CONFIG_INITRAMFS_SOURCE=\"\"|CONFIG_INITRAMFS_SOURCE=\"$initrd_cpio_list\"|" .config
     '';
+    buildPhase = "make ${stdenv.hostPlatform.linux-kernel.target} -j$NIX_BUILD_CORES";
     installPhase = ''
       mkdir -p $out
       if [ "${stdenv.hostPlatform.linuxArch}" = "arm64" ]; then
@@ -43,101 +51,33 @@ rec {
     '';
   };
 
-  busybox-small = pkgsMusl.stdenv.mkDerivation {
-    enableParallelBuilding = true;
-    name = "busybox-small";
+  busybox = pkgsStatic.stdenv.mkDerivation {
+    name = "busybox";
     inherit (pkgs.busybox) src;
+    nativeBuildInputs = [ pkgs.stdenv.cc ]; # build kConfig
+    buildInputs = [ pkgsStatic.stdenv.cc.libc ];
     configurePhase = ''
       source ${./busybox_merge_config.sh}
       make allnoconfig
       busybox_merge_config < ${./busybox.config}
     '';
-    installPhase = ''
-      mkdir -p $out/bin
-      cp busybox $out/bin
-    '';
+    buildPhase = "make busybox -j$NIX_BUILD_CORES";
+    installPhase = "install -Dm755 busybox $out/bin/busybox";
   };
 
-  init = stdenvNoCC.mkDerivation {
-    name = "init";
-    buildCommand = ''
-      cat ${./init} > $out
-      chmod +x $out
-    '';
-  };
-
-  cloud-init-networkcfg = pkgsMusl.stdenv.mkDerivation {
+  cloud-init-networkcfg = pkgsStatic.stdenv.mkDerivation {
     name = "cloud-init-networkcfg";
+    src = ./cloud-init-networkcfg.c;
     dontUnpack = true;
-    installPhase = ''
-      $CC -s ${./cloud-init-networkcfg.c} -o cloud-init-networkcfg
-      mkdir -p $out/bin
-      cp cloud-init-networkcfg $out/bin
-    '';
-  };
-
-  blkid-small = pkgsMusl.stdenv.mkDerivation {
-    name = "blkid-small";
-    dontUnpack = true;
-    installPhase = ''
-      $CC -s ${./blkid-small.c} -o blkid
-      mkdir -p $out/bin
-      cp blkid $out/bin
-    '';
-  };
-
-  bin = pkgs.buildEnv {
-    name = "bin";
-    paths = [
-      busybox-small
-      blkid-small
-      cloud-init-networkcfg
-    ];
-    pathsToLink = [
-      "/bin"
-    ];
-    postBuild = ''
-      cat ${./udhcpc-script.sh} > $out/bin/udhcpc-script.sh
-      chmod +x $out/bin/udhcpc-script.sh
-    '';
-  };
-
-  initrd = stdenvNoCC.mkDerivation {
-    __structuredAttrs = true;
-    unsafeDiscardReferences.out = true;
-
-    name = "initrd";
-    nativeBuildInputs = with pkgs; [
-      makeInitrdNGTool
-      cpio
-    ];
-
-    contentsJSON = builtins.toJSON [
-      {
-        source = init;
-        target = "/init";
-      }
-      {
-        source = "${bin}/bin";
-        target = "/bin";
-      }
-    ];
-
-    buildCommand = ''
-      mkdir $out
-      make-initrd-ng <(echo "$contentsJSON") ./root
-      cd root
-      find . -exec touch -h -d '@1' '{}' +
-      find . -print0 | sort -z | cpio --quiet -o -H newc -R +0:+0 --reproducible --null > $out/initrd
-    '';
+    buildPhase = "$CC -s $src -o cloud-init-networkcfg";
+    installPhase = "install -Dm755 cloud-init-networkcfg $out/bin/cloud-init-networkcfg";
   };
 
   test-arm64 = pkgs-macos.writeShellScriptBin "aarch64-initramfs-test" ''
     ls -lh ${kernel}/Image | awk '{print $5}'
-    ls -lh ${initrd}/initrd | awk '{print $5}'
+    ls -lh ${busybox}/bin/busybox | awk '{print $5}'
     /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 1G \
       -kernel ${kernel}/Image -append "earlycon=pl011,mmio32,0x9000000"\
-      -initrd ${initrd}/initrd \
       -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:23333" \
       -bios $(ls /opt/homebrew/Cellar/qemu/*/share/qemu/edk2-aarch64-code.fd) \
       -device "virtio-scsi-pci,id=scsi0" -drive "file=/Users/dominic/flake/test/disk-scsi.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
@@ -146,10 +86,8 @@ rec {
 
   test-x86-64 = pkgs-macos.writeShellScriptBin "x86-64-initramfs-test" ''
     ls -lh ${kernel}/bzImage  | awk '{print $5}'
-    ls -lh ${initrd}/initrd | awk '{print $5}'
     /opt/homebrew/bin/qemu-system-x86_64 -cpu qemu64 -nographic -m 1G \
       -kernel ${kernel}/bzImage \
-      -initrd ${initrd}/initrd \
       -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:23333" \
       -append "console=ttyS0" \
       -device "virtio-scsi-pci,id=scsi0" -drive "file=/Users/dominic/flake/test/disk-scsi.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \

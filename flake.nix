@@ -43,7 +43,6 @@
             }
           ];
         };
-        # Apple Silicon (M3 and later) supports nested virtualization via Apple's Virtualization Framework for build nixos image require kvm
         builder = nixpkgs.lib.nixosSystem { modules = [ ./host/darwin/macos-builder.nix ]; };
 
         initramfs-x86_64 = nixpkgs.lib.nixosSystem {

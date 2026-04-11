@@ -208,7 +208,7 @@
 
       nds = "nix derivation show";
 
-      # nix build --no-link --print-out-paths .#nixosConfigurations.arm-init-grow.config.system.build.image
+      # nix build --no-link --print-out-paths .#nixosConfigurations.builder.config.system.build.image
       # qemu-img resize nixos.raw 50G
       builder = "/opt/homebrew/bin/vfkit --cpus 8 --memory 8192 --bootloader efi,variable-store=/Users/dominic/vfkit/efi-variable-store,create --device virtio-blk,path=/Users/dominic/vfkit/nixos.raw  --device virtio-serial,stdio --device virtio-net,nat,mac=72:20:43:d4:39:63 --device rosetta,mountTag=rosetta";
     };
