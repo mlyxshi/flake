@@ -7,43 +7,58 @@ env:
   GH_TOKEN: ${{ github.token }}
 
 jobs:
-  build-x86-64:
-    name: Build x86-64
-    runs-on: ubuntu-latest
+  build:
+    name: Build (${{ matrix.arch }})
+    runs-on: ${{ matrix.runner }}
     container:
-      image: alpine:latest      
+      image: alpine:latest
+
+    strategy:
+      matrix:
+        include:
+          - arch: x86_64
+            runner: ubuntu-latest
+            kernel_target: bzImage
+            kernel_path: arch/x86/boot/bzImage
+            release_name: x86_64
+
+          - arch: arm64
+            runner: ubuntu-24.04-arm
+            kernel_target: Image
+            kernel_path: arch/arm64/boot/Image
+            release_name: aarch64
+
     steps:
-      - name: Run Custom Build Script
+      - name: Build
         run: |
-          set -e # Exit immediately if a command exits with a non-zero status
-          
+          set -e
+
           echo ">>> Installing dependencies..."
-          apk update
-          apk add git github-cli build-base ncurses-dev bison flex bc perl elfutils-dev linux-headers
+          apk add --no-cache \
+            git github-cli build-base ncurses-dev \
+            bison flex bc perl elfutils-dev linux-headers
 
           echo ">>> Cloning repositories..."
           git clone --depth=1 https://github.com/mlyxshi/flake /flake
           git clone --depth=1 https://git.busybox.net/busybox/ /busybox
           git clone --depth=1 https://github.com/torvalds/linux /linux
 
-          echo ">>> Setting up build directory..."
+          echo ">>> Preparing build files..."
           mkdir -p /build
-          for f in init kernel.config cloud-init-networkcfg.c udhcpc-script.sh; do
-            cp "/flake/dd/busybox/$f" /build/
-          done
-          
-          echo ">>> Compiling cloud-init network config..."
+          cp /flake/dd/busybox/{init,kernel.config,cloud-init-networkcfg.c,udhcpc-script.sh} /build/
+
+          echo ">>> Compiling helper..."
           gcc -s --static /build/cloud-init-networkcfg.c -o /build/cloud-init-networkcfg
 
           echo ">>> Building BusyBox..."
           cd /busybox
           make allnoconfig
-          cp /flake/dd/busybox/busybox-config.sh /flake/dd/busybox/busybox.config .
-          source busybox-config.sh
+          cp /flake/dd/busybox/{busybox-config.sh,busybox.config} .
+          . ./busybox-config.sh
           LDFLAGS="--static" make -j$(nproc)
           cp busybox /build/
 
-          echo ">>> Creating initramfs cpio.list..."
+          echo ">>> Creating initramfs..."
           cat > /build/cpio.list <<EOF
           dir /dev 0755 0 0
           nod /dev/console 0600 0 0 c 5 1
@@ -54,70 +69,14 @@ jobs:
           file /bin/cloud-init-networkcfg /build/cloud-init-networkcfg 0755 0 0
           EOF
 
-          echo ">>> Building Kernel with embedded initramfs..."
+          echo ">>> Building kernel..."
           cd /linux
           echo 'CONFIG_INITRAMFS_SOURCE="/build/cpio.list"' >> /build/kernel.config
-          
-          make ARCH=x86_64 KCONFIG_ALLCONFIG=/build/kernel.config allnoconfig
-          make bzImage -j$(nproc)
-          cp arch/x86/boot/bzImage /build/busybox-kernel
 
-          gh release upload x86_64 /build/busybox-kernel --clobber
+          make ARCH=${{ matrix.arch }} KCONFIG_ALLCONFIG=/build/kernel.config allnoconfig
+          make ${{ matrix.kernel_target }} -j$(nproc)
 
+          cp ${{ matrix.kernel_path }} /build/busybox-kernel
 
-  build-arm64:
-    name: Build arm64
-    runs-on: ubuntu-24.04-arm
-    container:
-      image: alpine:latest      
-    steps:
-      - name: Run Custom Build Script
-        run: |
-          set -e # Exit immediately if a command exits with a non-zero status
-          
-          echo ">>> Installing dependencies..."
-          apk update
-          apk add git github-cli build-base ncurses-dev bison flex bc perl elfutils-dev linux-headers
-
-          echo ">>> Cloning repositories..."
-          git clone --depth=1 https://github.com/mlyxshi/flake /flake
-          git clone --depth=1 https://git.busybox.net/busybox/ /busybox
-          git clone --depth=1 https://github.com/torvalds/linux /linux
-
-          echo ">>> Setting up build directory..."
-          mkdir -p /build
-          for f in init kernel.config cloud-init-networkcfg.c udhcpc-script.sh; do
-            cp "/flake/dd/busybox/$f" /build/
-          done
-          
-          echo ">>> Compiling cloud-init network config..."
-          gcc -s --static /build/cloud-init-networkcfg.c -o /build/cloud-init-networkcfg
-
-          echo ">>> Building BusyBox..."
-          cd /busybox
-          make allnoconfig
-          cp /flake/dd/busybox/busybox-config.sh /flake/dd/busybox/busybox.config .
-          source busybox-config.sh
-          LDFLAGS="--static" make -j$(nproc)
-          cp busybox /build/
-
-          echo ">>> Creating initramfs cpio.list..."
-          cat > /build/cpio.list <<EOF
-          dir /dev 0755 0 0
-          nod /dev/console 0600 0 0 c 5 1
-          file /init /build/init 0755 0 0
-          dir /bin 0755 0 0
-          file /bin/busybox /build/busybox 0755 0 0
-          file /bin/udhcpc-script.sh /build/udhcpc-script.sh 0755 0 0
-          file /bin/cloud-init-networkcfg /build/cloud-init-networkcfg 0755 0 0
-          EOF
-
-          echo ">>> Building Kernel with embedded initramfs..."
-          cd /linux
-          echo 'CONFIG_INITRAMFS_SOURCE="/build/cpio.list"' >> /build/kernel.config
-          
-          make ARCH=arm64 KCONFIG_ALLCONFIG=/build/kernel.config allnoconfig
-          make Image -j$(nproc)
-          cp /linux/arch/arm64/boot/Image /build/busybox-kernel
-
-          gh release upload aarch64 /build/busybox-kernel --clobber
+          echo ">>> Uploading release..."
+          gh release upload ${{ matrix.release_name }} /build/busybox-kernel --clobber
