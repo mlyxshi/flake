@@ -28,12 +28,10 @@ rec {
       file /bin/udhcpc-script.sh ${./udhcpc-script.sh} 0755 0 0
       file /bin/cloud-init-networkcfg ${cloud-init-networkcfg}/bin/cloud-init-networkcfg 0755 0 0
     '';
-    kernel_config = writeText "kernel_config" (
-      builtins.readFile ./kernel.config
-      + ''
-        CONFIG_INITRAMFS_SOURCE="${finalAttrs.initrd_cpio_list}"
-      ''
-    );
+    kernel_config = writeText "kernel_config" ''
+      ${builtins.readFile ./kernel.config}
+      CONFIG_INITRAMFS_SOURCE="${finalAttrs.initrd_cpio_list}"
+    '';
     nativeBuildInputs = with pkgs; [
       bison
       flex
