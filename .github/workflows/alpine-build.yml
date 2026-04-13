@@ -3,18 +3,14 @@ name: Build Minimal BusyBox Kernel
 on:
   workflow_dispatch:
 
-
 jobs:
-  build:
+  build-x86-64:
     name: Build in Alpine
-    runs-on: ubuntu-latest
+    # runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     container:
-      image: alpine:latest
-      
+      image: alpine:latest      
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
       - name: Run Custom Build Script
         run: |
           set -e # Exit immediately if a command exits with a non-zero status
@@ -75,11 +71,12 @@ jobs:
           fi
 
       - name: Upload Kernel Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@master
         with:
           name: busybox-kernel
           path: /build/busybox-kernel
           retention-days: 1
+          archive: false
 
   # release:
   #   name: Create GitHub Release
