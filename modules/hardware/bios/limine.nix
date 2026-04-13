@@ -7,7 +7,6 @@
 {
   imports = [ "${modulesPath}/profiles/qemu-guest.nix" ];
 
-  boot.initrd.systemd.enable = true;
   boot.initrd.systemd.emergencyAccess = true;
 
   boot.loader.limine.enable = true;

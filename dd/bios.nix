@@ -25,7 +25,6 @@
     networkConfig.DHCP = "yes";
   };
 
-  boot.initrd.systemd.enable = true;
   boot.initrd.systemd.emergencyAccess = true;
 
   boot.loader.limine.enable = true;

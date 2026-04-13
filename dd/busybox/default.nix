@@ -14,7 +14,7 @@ rec {
     musl
     ;
 
-  kernel = stdenv.mkDerivation {
+  kernel = stdenv.mkDerivation (finalAttrs: {
     name = "kernel";
     inherit (pkgs.linuxPackages_latest.kernel) src;
     # https://github.com/torvalds/linux/blob/master/usr/gen_init_cpio.c
@@ -28,6 +28,9 @@ rec {
       file /bin/udhcpc-script.sh ${./udhcpc-script.sh} 0755 0 0
       file /bin/cloud-init-networkcfg ${cloud-init-networkcfg}/bin/cloud-init-networkcfg 0755 0 0
     '';
+    kernel_config = writeText "kernel_config" (builtins.readFile ./kernel.config + ''
+      CONFIG_INITRAMFS_SOURCE="${finalAttrs.initrd_cpio_list}"
+    ''); 
     nativeBuildInputs = with pkgs; [
       bison
       flex
@@ -36,10 +39,7 @@ rec {
       elfutils
     ];
     # https://kernel.org/doc/Documentation/kbuild/kconfig.txt
-    configurePhase = ''
-      make ARCH=${stdenv.hostPlatform.linuxArch} KCONFIG_ALLCONFIG=${./kernel.config} allnoconfig
-      sed -i "s|^CONFIG_INITRAMFS_SOURCE=\"\"|CONFIG_INITRAMFS_SOURCE=\"$initrd_cpio_list\"|" .config
-    '';
+    configurePhase = "make ARCH=${stdenv.hostPlatform.linuxArch} KCONFIG_ALLCONFIG=${finalAttrs.kernel_config} allnoconfig";
     buildPhase = "make ${stdenv.hostPlatform.linux-kernel.target} -j$NIX_BUILD_CORES";
     installPhase = ''
       mkdir -p $out
@@ -49,7 +49,7 @@ rec {
         cp arch/x86/boot/bzImage $out
       fi
     '';
-  };
+  });
 
   busybox = pkgsStatic.stdenv.mkDerivation {
     name = "busybox";
@@ -57,9 +57,9 @@ rec {
     nativeBuildInputs = [ pkgs.stdenv.cc ]; # build kConfig
     buildInputs = [ pkgsStatic.stdenv.cc.libc ];
     configurePhase = ''
-      source ${./busybox_merge_config.sh}
       make allnoconfig
-      busybox_merge_config < ${./busybox.config}
+      cat ${./busybox.config} > ./busybox.config
+      source ${./busybox-config.sh}
     '';
     buildPhase = "make busybox -j$NIX_BUILD_CORES";
     installPhase = "install -Dm755 busybox $out/bin/busybox";

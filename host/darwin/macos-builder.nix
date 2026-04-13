@@ -27,7 +27,6 @@
     networkConfig.MulticastDNS = "yes"; # mDNS advertise + resolve
   };
 
-  boot.initrd.systemd.enable = true;
   boot.initrd.systemd.emergencyAccess = true;
 
   boot.initrd.systemd.root = "gpt-auto";

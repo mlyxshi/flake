@@ -13,7 +13,6 @@
 
   networking.hostName = "systemd-initrd";
 
-  boot.initrd.systemd.enable = true;
   boot.initrd.systemd.network.enable = true;
 
   boot.initrd.network.ssh.enable = true;
@@ -119,13 +118,12 @@
     # strace = "${pkgs.strace}/bin/strace";
   };
 
+  # rd.systemd.break=pre-switch-root
   # https://www.freedesktop.org/software/systemd/man/latest/systemd-debug-generator.html
   # https://github.com/systemd/systemd/blob/main/units/breakpoint-pre-switch-root.service.in
   # Pause the boot process at a certain point and spawn a debug shell. After exiting this shell, the system will resume booting
   # So systemd-initrd will reach initrd.target, and behaves like a minimal live NixOS system running in RAM
   # Now we can perform normal OS installation tasks, such as formatting disks and copying the system closure.
-  boot.initrd.systemd.additionalUpstreamUnits = [ "breakpoint-pre-switch-root.service" ];
-
 
   # Preset DHCP
   boot.initrd.systemd.network.networks.ethernet = {
