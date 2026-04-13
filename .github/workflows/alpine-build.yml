@@ -39,9 +39,9 @@ jobs:
             bison flex bc perl elfutils-dev linux-headers
 
           echo ">>> Cloning repositories..."
-          git clone  https://git.busybox.net/busybox/
-          git clone --depth=1 https://github.com/torvalds/linux
-          git clone --depth=1 https://github.com/mlyxshi/flake
+          git clone https://git.busybox.net/busybox/ /busybox
+          git clone --depth=1 https://github.com/torvalds/linux /linux
+          git clone --depth=1 https://github.com/mlyxshi/flake /flake
 
           echo ">>> Preparing build files..."
           mkdir -p /build
