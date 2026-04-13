@@ -3,9 +3,6 @@ name: Build Minimal BusyBox Kernel
 on:
   workflow_dispatch:
 
-env:
-  GH_TOKEN: ${{ github.token }}
-
 jobs:
   build:
     name: Build (${{ matrix.arch }})
@@ -30,6 +27,8 @@ jobs:
 
     steps:
       - name: Build
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -e
 
@@ -45,7 +44,9 @@ jobs:
 
           echo ">>> Preparing build files..."
           mkdir -p /build
-          cp /flake/dd/busybox/{init,kernel.config,cloud-init-networkcfg.c,udhcpc-script.sh} /build/
+          for f in init kernel.config cloud-init-networkcfg.c udhcpc-script.sh; do
+            cp "/flake/dd/busybox/$f" /build
+          done
 
           echo ">>> Compiling helper..."
           gcc -s --static /build/cloud-init-networkcfg.c -o /build/cloud-init-networkcfg
@@ -53,7 +54,7 @@ jobs:
           echo ">>> Building BusyBox..."
           cd /busybox
           make allnoconfig
-          cp /flake/dd/busybox/{busybox-config.sh,busybox.config} .
+          cp /flake/dd/busybox/busybox-config.sh /flake/dd/busybox/busybox.config .
           . ./busybox-config.sh
           LDFLAGS="--static" make -j$(nproc)
           cp busybox /build/
