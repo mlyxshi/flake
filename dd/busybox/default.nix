@@ -28,9 +28,12 @@ rec {
       file /bin/udhcpc-script.sh ${./udhcpc-script.sh} 0755 0 0
       file /bin/cloud-init-networkcfg ${cloud-init-networkcfg}/bin/cloud-init-networkcfg 0755 0 0
     '';
-    kernel_config = writeText "kernel_config" (builtins.readFile ./kernel.config + ''
-      CONFIG_INITRAMFS_SOURCE="${finalAttrs.initrd_cpio_list}"
-    ''); 
+    kernel_config = writeText "kernel_config" (
+      builtins.readFile ./kernel.config
+      + ''
+        CONFIG_INITRAMFS_SOURCE="${finalAttrs.initrd_cpio_list}"
+      ''
+    );
     nativeBuildInputs = with pkgs; [
       bison
       flex
@@ -51,15 +54,19 @@ rec {
     '';
   });
 
-  # src is not git repo
   busybox = pkgsStatic.stdenv.mkDerivation {
     name = "busybox";
     inherit (pkgs.busybox) src;
-    nativeBuildInputs = [ pkgs.stdenv.cc pkgs.git ]; # build kConfig
+    nativeBuildInputs = [ pkgs.stdenv.cc ]; # build kConfig
     buildInputs = [ pkgsStatic.stdenv.cc.libc ];
     # https://bugs.busybox.net/show_bug.cgi?id=10296
+    # https://github.com/mirror/busybox/commits/master/scripts/kconfig/conf.c
+    oldConf = pkgs.fetchurl {
+      url = "https://raw.githubusercontent.com/mirror/busybox/fcbc641fe36a2ceff334362cc6ba62b000c842a5/scripts/kconfig/conf.c";
+      hash = "sha256-veFFCU3brzLrJ6myfW9XYPIGYLWv4/HfJsfmySb3Tec=";
+    };
     configurePhase = ''
-      git restore --source 0b1c62934215a08351a80977c7cf8e9346683a1e^  -- scripts/kconfig/conf.c
+      cp $oldConf scripts/kconfig/conf.c
       make allnoconfig KCONFIG_ALLCONFIG=${./busybox.config}
     '';
     buildPhase = "make busybox -j$NIX_BUILD_CORES";

@@ -44,10 +44,13 @@ rec {
   busybox = pkgsMusl.stdenv.mkDerivation {
     name = "busybox";
     inherit (pkgs.busybox) src;
+    oldConf = pkgs.fetchurl {
+      url = "https://raw.githubusercontent.com/mirror/busybox/fcbc641fe36a2ceff334362cc6ba62b000c842a5/scripts/kconfig/conf.c";
+      hash = "sha256-veFFCU3brzLrJ6myfW9XYPIGYLWv4/HfJsfmySb3Tec=";
+    };
     configurePhase = ''
-      source ${../busybox_merge_config.sh}
-      make allnoconfig
-      busybox_merge_config < ${../busybox.config}
+      cp $oldConf scripts/kconfig/conf.c
+      make allnoconfig KCONFIG_ALLCONFIG=${./busybox.config}
     '';
     buildPhase = "make busybox -j$NIX_BUILD_CORES";
     installPhase = "install -Dm755 busybox $out/bin/busybox";
