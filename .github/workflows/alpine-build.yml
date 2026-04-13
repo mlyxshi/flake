@@ -3,11 +3,13 @@ name: Build Minimal BusyBox Kernel
 on:
   workflow_dispatch:
 
+env:
+  GH_TOKEN: ${{ github.token }}
+
 jobs:
   build-x86-64:
-    name: Build in Alpine
-    # runs-on: ubuntu-latest
-    runs-on: ubuntu-24.04-arm
+    name: Build x86-64
+    runs-on: ubuntu-latest
     container:
       image: alpine:latest      
     steps:
@@ -17,7 +19,7 @@ jobs:
           
           echo ">>> Installing dependencies..."
           apk update
-          apk add git build-base ncurses-dev bison flex bc perl elfutils-dev linux-headers
+          apk add git github-cli build-base ncurses-dev bison flex bc perl elfutils-dev linux-headers
 
           echo ">>> Cloning repositories..."
           git clone --depth=1 https://github.com/mlyxshi/flake /flake
@@ -56,46 +58,66 @@ jobs:
           cd /linux
           echo 'CONFIG_INITRAMFS_SOURCE="/build/cpio.list"' >> /build/kernel.config
           
-          arch=$(uname -m)
-          if [ "$arch" = "x86_64" ]; then
-            make ARCH=x86_64 KCONFIG_ALLCONFIG=/build/kernel.config allnoconfig
-            make bzImage -j$(nproc)
-            cp arch/x86/boot/bzImage /build/busybox-kernel
-          elif [ "$arch" = "aarch64" ]; then
-            make ARCH=arm64 KCONFIG_ALLCONFIG=/build/kernel.config allnoconfig
-            make Image -j$(nproc)
-            cp /linux/arch/arm64/boot/Image /build/busybox-kernel
-          else
-            echo "Unsupported arch: $arch"
-            exit 1
-          fi
+          make ARCH=x86_64 KCONFIG_ALLCONFIG=/build/kernel.config allnoconfig
+          make bzImage -j$(nproc)
+          cp arch/x86/boot/bzImage /build/busybox-kernel
 
-      - name: Upload Kernel Artifact
-        uses: actions/upload-artifact@master
-        with:
-          name: busybox-kernel
-          path: /build/busybox-kernel
-          retention-days: 1
-          archive: false
+          gh release upload x86_64 /build/busybox-kernel --clobber
 
-  # release:
-  #   name: Create GitHub Release
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     contents: write 
-      
-  #   steps:
-  #     - name: Download Artifact
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: busybox-kernel
+
+  build-arm64:
+    name: Build arm64
+    runs-on: ubuntu-24.04-arm
+    container:
+      image: alpine:latest      
+    steps:
+      - name: Run Custom Build Script
+        run: |
+          set -e # Exit immediately if a command exits with a non-zero status
           
-  #     - name: Publish GitHub Release
-  #       # Only create a release if triggered by a tag
-  #       if: startsWith(github.ref, 'refs/tags/v')
-  #       uses: softprops/action-gh-release@v2
-  #       with:
-  #         files: busybox-kernel-final
-  #         name: Minimal BusyBox Kernel ${{ github.ref_name }}
-  #         generate_release_notes: true
+          echo ">>> Installing dependencies..."
+          apk update
+          apk add git github-cli build-base ncurses-dev bison flex bc perl elfutils-dev linux-headers
+
+          echo ">>> Cloning repositories..."
+          git clone --depth=1 https://github.com/mlyxshi/flake /flake
+          git clone --depth=1 https://git.busybox.net/busybox/ /busybox
+          git clone --depth=1 https://github.com/torvalds/linux /linux
+
+          echo ">>> Setting up build directory..."
+          mkdir -p /build
+          for f in init kernel.config cloud-init-networkcfg.c udhcpc-script.sh; do
+            cp "/flake/dd/busybox/$f" /build/
+          done
+          
+          echo ">>> Compiling cloud-init network config..."
+          gcc -s --static /build/cloud-init-networkcfg.c -o /build/cloud-init-networkcfg
+
+          echo ">>> Building BusyBox..."
+          cd /busybox
+          make allnoconfig
+          cp /flake/dd/busybox/busybox-config.sh /flake/dd/busybox/busybox.config .
+          source busybox-config.sh
+          LDFLAGS="--static" make -j$(nproc)
+          cp busybox /build/
+
+          echo ">>> Creating initramfs cpio.list..."
+          cat > /build/cpio.list <<EOF
+          dir /dev 0755 0 0
+          nod /dev/console 0600 0 0 c 5 1
+          file /init /build/init 0755 0 0
+          dir /bin 0755 0 0
+          file /bin/busybox /build/busybox 0755 0 0
+          file /bin/udhcpc-script.sh /build/udhcpc-script.sh 0755 0 0
+          file /bin/cloud-init-networkcfg /build/cloud-init-networkcfg 0755 0 0
+          EOF
+
+          echo ">>> Building Kernel with embedded initramfs..."
+          cd /linux
+          echo 'CONFIG_INITRAMFS_SOURCE="/build/cpio.list"' >> /build/kernel.config
+          
+          make ARCH=arm64 KCONFIG_ALLCONFIG=/build/kernel.config allnoconfig
+          make Image -j$(nproc)
+          cp /linux/arch/arm64/boot/Image /build/busybox-kernel
+
+          gh release upload aarch64 /build/busybox-kernel --clobber
