@@ -51,15 +51,16 @@ rec {
     '';
   });
 
+  # src is not git repo
   busybox = pkgsStatic.stdenv.mkDerivation {
     name = "busybox";
     inherit (pkgs.busybox) src;
-    nativeBuildInputs = [ pkgs.stdenv.cc ]; # build kConfig
+    nativeBuildInputs = [ pkgs.stdenv.cc pkgs.git ]; # build kConfig
     buildInputs = [ pkgsStatic.stdenv.cc.libc ];
+    # https://bugs.busybox.net/show_bug.cgi?id=10296
     configurePhase = ''
-      make allnoconfig
-      cat ${./busybox.config} > ./busybox.config
-      source ${./busybox-config.sh}
+      git restore --source 0b1c62934215a08351a80977c7cf8e9346683a1e^  -- scripts/kconfig/conf.c
+      make allnoconfig KCONFIG_ALLCONFIG=${./busybox.config}
     '';
     buildPhase = "make busybox -j$NIX_BUILD_CORES";
     installPhase = "install -Dm755 busybox $out/bin/busybox";

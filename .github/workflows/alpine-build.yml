@@ -39,13 +39,13 @@ jobs:
             bison flex bc perl elfutils-dev linux-headers
 
           echo ">>> Cloning repositories..."
-          git clone --depth=1 https://github.com/mlyxshi/flake /flake
-          git clone --depth=1 https://git.busybox.net/busybox/ /busybox
-          git clone --depth=1 https://github.com/torvalds/linux /linux
+          git clone  https://git.busybox.net/busybox/
+          git clone --depth=1 https://github.com/torvalds/linux
+          git clone --depth=1 https://github.com/mlyxshi/flake 
 
           echo ">>> Preparing build files..."
           mkdir -p /build
-          for f in init kernel.config cloud-init-networkcfg.c udhcpc-script.sh; do
+          for f in init kernel.config busybox.config cloud-init-networkcfg.c udhcpc-script.sh; do
             cp "/flake/dd/busybox/$f" /build
           done
 
@@ -54,11 +54,11 @@ jobs:
 
           echo ">>> Building BusyBox..."
           cd /busybox
-          make allnoconfig
-          cp /flake/dd/busybox/busybox-config.sh /flake/dd/busybox/busybox.config .
-          . ./busybox-config.sh
-          LDFLAGS="--static" make -j$(nproc)
-          cp busybox /build/
+          # https://bugs.busybox.net/show_bug.cgi?id=10296
+          git restore --source 0b1c62934215a08351a80977c7cf8e9346683a1e^  -- scripts/kconfig/conf.c
+          make allnoconfig KCONFIG_ALLCONFIG=/build/busybox.config
+          LDFLAGS="--static" make -j4
+          cp busybox /build
 
           echo ">>> Creating initramfs..."
           cat > /build/cpio.list <<EOF

@@ -1,20 +1,20 @@
 apk update
 apk add git build-base ncurses-dev bison flex bc perl elfutils-dev linux-headers
 
-git clone --depth=1 https://github.com/mlyxshi/flake 
-git clone --depth=1 https://git.busybox.net/busybox/
+git clone  https://git.busybox.net/busybox/
 git clone --depth=1 https://github.com/torvalds/linux
+git clone --depth=1 https://github.com/mlyxshi/flake 
 
 mkdir /build
-for f in init kernel.config cloud-init-networkcfg.c udhcpc-script.sh; do
+for f in init kernel.config busybox.config cloud-init-networkcfg.c udhcpc-script.sh; do
   cp "/flake/dd/busybox/$f" /build
 done
 gcc -s --static /build/cloud-init-networkcfg.c -o /build/cloud-init-networkcfg
 
 cd /busybox
-make allnoconfig
-cp /flake/dd/busybox/busybox-config.sh /flake/dd/busybox/busybox.config .
-source busybox-config.sh
+# https://bugs.busybox.net/show_bug.cgi?id=10296
+git restore --source 0b1c62934215a08351a80977c7cf8e9346683a1e^  -- scripts/kconfig/conf.c
+make allnoconfig KCONFIG_ALLCONFIG=/build/busybox.config
 LDFLAGS="--static" make -j4
 cp busybox /build
 
