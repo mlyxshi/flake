@@ -41,12 +41,12 @@ jobs:
           echo ">>> Cloning repositories..."
           git clone  https://git.busybox.net/busybox/
           git clone --depth=1 https://github.com/torvalds/linux
-          git clone --depth=1 https://github.com/mlyxshi/flake 
+          git clone --depth=1 https://github.com/mlyxshi/flake
 
           echo ">>> Preparing build files..."
           mkdir -p /build
           for f in init kernel.config busybox.config cloud-init-networkcfg.c udhcpc-script.sh; do
-            cp "/flake/dd/busybox/$f" /build
+            cp /flake/dd/busybox/$f /build
           done
 
           echo ">>> Compiling helper..."
@@ -57,7 +57,7 @@ jobs:
           # https://bugs.busybox.net/show_bug.cgi?id=10296
           git restore --source 0b1c62934215a08351a80977c7cf8e9346683a1e^  -- scripts/kconfig/conf.c
           make allnoconfig KCONFIG_ALLCONFIG=/build/busybox.config
-          LDFLAGS="--static" make -j4
+          LDFLAGS="--static" make -j$(nproc)
           cp busybox /build
 
           echo ">>> Creating initramfs..."
