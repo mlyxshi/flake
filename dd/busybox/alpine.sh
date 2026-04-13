@@ -1,5 +1,5 @@
 apk update
-apk add git build-base ncurses-dev bison flex bc perl elfutils linux linux-headers
+apk add git build-base ncurses-dev bison flex bc perl elfutils-dev linux-headers
 
 git clone --depth=1 https://github.com/mlyxshi/flake 
 git clone --depth=1 https://git.busybox.net/busybox/

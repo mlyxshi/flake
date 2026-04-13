@@ -21,7 +21,7 @@ jobs:
           
           echo ">>> Installing dependencies..."
           apk update
-          apk add git build-base ncurses-dev bison flex bc perl elfutils linux-headers
+          apk add git build-base ncurses-dev bison flex bc perl elfutils-dev linux-headers
 
           echo ">>> Cloning repositories..."
           git clone --depth=1 https://github.com/mlyxshi/flake /flake
