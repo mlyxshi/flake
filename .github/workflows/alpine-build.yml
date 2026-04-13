@@ -81,4 +81,4 @@ jobs:
           cp ${{ matrix.kernel_path }} /build/busybox-kernel
 
           echo ">>> Uploading release..."
-          gh release -R mlyxshi/flakes upload ${{ matrix.release_name }} /build/busybox-kernel --clobber
+          gh release -R mlyxshi/flake upload ${{ matrix.release_name }} /build/busybox-kernel --clobber
