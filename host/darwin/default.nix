@@ -9,6 +9,7 @@
 {
   pkgs,
   config,
+  nixpkgs,
   ...
 }:
 {
@@ -22,6 +23,23 @@
 
   # sudo nano /etc/nix/machines
   # ssh-ng://root@builder.local aarch64-linux,x86_64-linux /Users/dominic/.ssh/id_ed25519 8 - kvm - c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUpCV2N4Yi9CbGFxdDFhdU90RStGOFFVV3JVb3RpQzVxQkorVXVFV2RWQ2I=
+
+  environment.etc."nix/registry.json".text = builtins.toJSON {
+    flakes = [
+      {
+        exact = true;
+        from = {
+          id = "nixpkgs";
+          type = "indirect";
+        };
+        to = {
+          path = "${nixpkgs}" ;
+          type = "path";
+        };
+      }
+    ];
+    version = 2;
+  };
 
   system.stateVersion = 6;
 
@@ -55,7 +73,6 @@
     zoxide
     eza
     bat
-    bat-extras.batman
     gdu
     gh
     jq
@@ -133,7 +150,7 @@
     brews = [
       "iproute2mac"
       "nexttrace"
-      "payload-dumper-go"
+      # "payload-dumper-go"
       "qemu"
       "mole"
       "container"

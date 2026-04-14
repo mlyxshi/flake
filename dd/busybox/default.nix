@@ -11,7 +11,6 @@ rec {
     stdenv
     pkgsStatic
     writeText
-    musl
     ;
 
   kernel = stdenv.mkDerivation (finalAttrs: {
@@ -44,11 +43,7 @@ rec {
     buildPhase = "make ${stdenv.hostPlatform.linux-kernel.target} -j$NIX_BUILD_CORES";
     installPhase = ''
       mkdir -p $out
-      if [ "${stdenv.hostPlatform.linuxArch}" = "arm64" ]; then
-        cp arch/arm64/boot/Image $out
-      else
-        cp arch/x86/boot/bzImage $out
-      fi
+      cp arch/${if stdenv.hostPlatform.isAarch64 then "arm64/boot/Image" else "x86/boot/bzImage"} $out
     '';
   });
 
