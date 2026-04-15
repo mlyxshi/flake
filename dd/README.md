@@ -20,13 +20,29 @@ mkdir -p /mnt
 mount /dev/loop1p3 /mnt
 mount --mkdir /dev/loop1p2 /mnt/boot
 
+# nixos-install 
 outPath=$(nix build --store /mnt --no-link --print-out-paths /flake#nixosConfigurations.bios-vda-init.config.system.build.toplevel)
 nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $outPath
-mkdir /mnt/etc && touch /mnt/etc/NIXOS
-NIXOS_INSTALL_BOOTLOADER=1 nixos-enter --root /mnt -- /run/current-system/bin/switch-to-configuration boot
 
+# nixos-enter
+mkdir -p /mnt/dev /mnt/sys /mnt/proc
+chmod 0755 /mnt/dev /mnt/sys /mnt/proc
+mount --rbind /dev /mnt/dev
+mount --rbind /sys /mnt/sys
+mount --rbind /proc /mnt/proc
+
+mkdir /mnt/etc
+chroot /mnt /nix/var/nix/profiles/system/activate
+chroot /mnt /nix/var/nix/profiles/system/bin/switch-to-configuration boot
 
 nix run nixpkgs#limine bios-install /dev/loop1
+
+umount -Rl /mnt/dev
+umount -Rl /mnt/sys
+umount -Rl /mnt/proc
+umount -Rl /mnt/run
+umount -Rl /mnt/etc
+
 
 umount /dev/loop1p2
 umount /dev/loop1p3
