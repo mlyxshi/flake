@@ -24,12 +24,10 @@
         M4 = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           modules = [ ./host/darwin/M4.nix ];
-          specialArgs = { inherit nixpkgs; };
         };
         Macbook = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           modules = [ ./host/darwin/Macbook.nix ];
-          specialArgs = { inherit nixpkgs; };
         };
       };
       nixosConfigurations = {

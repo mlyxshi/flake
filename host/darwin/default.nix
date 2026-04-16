@@ -9,7 +9,6 @@
 {
   pkgs,
   config,
-  nixpkgs,
   ...
 }:
 {
@@ -33,7 +32,7 @@
           type = "indirect";
         };
         to = {
-          path = "${nixpkgs}" ;
+          path = config.nixpkgs.flake.source;
           type = "path";
         };
       }
