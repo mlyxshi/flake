@@ -12,6 +12,7 @@ rec {
     coreutils
     jq
     bash
+    removeReferencesTo
     ;
 
   # minimal derivation
@@ -141,6 +142,16 @@ rec {
     ];
   };
 
+  # removeReferencesTo                /nix/store/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-dep2
+  removeRef = stdenv.mkDerivation {
+    name = "removeRef";
+    nativeBuildInputs = [ removeReferencesTo ];
+    buildCommand = ''
+      echo ${dep2} > $out 
+      remove-references-to -t ${dep2} $out
+    '';
+  };
+
   # In sandbox, only inputs runtime closure is visible
 
   # m3dxfi2gq218pw8h73al024f6r69a5mj-busybox-1.37.0            <- libstore(nix-store) provide a default `/bin/sh`
@@ -192,7 +203,6 @@ rec {
       env2 = 2;
     };
     env3 = 3;
-
 
     buildCommand = ''
       ${coreutils}/bin/printenv > $out

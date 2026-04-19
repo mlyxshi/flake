@@ -152,7 +152,6 @@
     shellAliases = {
       l = "eza -algh";
       r = "yazi";
-      g = "lazygit";
       c = "bat";
       man = "batman";
       P = "echo $PATH";

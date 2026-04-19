@@ -75,7 +75,6 @@
     gdu
     gh
     jq
-    lazygit
     restic
     nix-init
     nix-update
@@ -168,8 +167,8 @@
       "suspicious-package"
       "google-chrome"
       "utm"
-      "crystalfetch"
       "openmtp"
+      # "lite-edit"
     ];
   };
 
@@ -214,7 +213,6 @@
     shellAliases = {
       l = "eza -algh";
       r = "yazi";
-      g = "lazygit";
       c = "bat";
       man = "batman";
       P = "echo $PATH";
