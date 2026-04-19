@@ -50,8 +50,6 @@ rec {
   busybox = pkgsStatic.stdenv.mkDerivation {
     name = "busybox";
     inherit (pkgs.busybox) src;
-    nativeBuildInputs = [ pkgs.stdenv.cc ]; # build kConfig
-    buildInputs = [ pkgsStatic.stdenv.cc.libc ];
     # https://bugs.busybox.net/show_bug.cgi?id=10296
     # https://github.com/mirror/busybox/commits/master/scripts/kconfig/conf.c
     oldConf = pkgs.fetchurl {
@@ -60,9 +58,9 @@ rec {
     };
     configurePhase = ''
       cp $oldConf scripts/kconfig/conf.c
-      make allnoconfig KCONFIG_ALLCONFIG=${./busybox.config}
+      make HOSTCC=$CC KCONFIG_ALLCONFIG=${./busybox.config} allnoconfig
     '';
-    buildPhase = "make busybox -j$NIX_BUILD_CORES";
+    buildPhase = "make HOSTCC=$CC CROSS_COMPILE=${pkgsStatic.stdenv.cc.targetPrefix}  busybox -j$NIX_BUILD_CORES";
     installPhase = "install -Dm755 busybox $out/bin/busybox";
   };
 
