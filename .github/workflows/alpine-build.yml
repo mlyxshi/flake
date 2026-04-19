@@ -39,7 +39,7 @@ jobs:
             bison flex bc perl elfutils-dev linux-headers
 
           echo ">>> Cloning repositories..."
-          git clone https://git.busybox.net/busybox/ /busybox
+          git clone https://github.com/mirror/busybox /busybox
           git clone --depth=1 https://github.com/torvalds/linux /linux
           git clone --depth=1 https://github.com/mlyxshi/flake /flake
 
