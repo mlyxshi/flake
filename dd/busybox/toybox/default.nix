@@ -15,6 +15,7 @@ rec {
     stdenvNoCC
     pkgsMusl
     musl
+    fetchFromGitHub
     ;
 
   kernel = stdenv.mkDerivation {
@@ -45,7 +46,12 @@ rec {
   # patchShebangs .
   toybox = pkgsMusl.stdenv.mkDerivation {
     name = "toybox";
-    inherit (pkgs.toybox) src;
+    src = fetchFromGitHub {
+      owner = "landley";
+      repo = "toybox";
+      rev = "a0206a4dce5d296514b5725b0288467c98a6ce3c";
+      hash = "sha256-HG97s54xmCbHPSoo8pOYy71UEkGNFwX8HbrKrF78Hck=";
+    };
     hardeningDisable = [ "fortify" ]; # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/by-name/to/toybox/package.nix
     configurePhase = ''
       patchShebangs .
