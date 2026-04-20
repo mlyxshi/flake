@@ -21,12 +21,14 @@ jobs:
             kernel_target: bzImage
             kernel_path: arch/x86/boot/bzImage
             release_name: x86_64
+            gh_cli: amd64
 
           - arch: arm64
             runner: ubuntu-24.04-arm
             kernel_target: Image
             kernel_path: arch/arm64/boot/Image
             release_name: aarch64
+            gh_cli: arm64
 
     steps:
       - name: Build
@@ -79,4 +81,7 @@ jobs:
           cp ${{ matrix.kernel_path }} /build/busybox-kernel
 
           echo ">>> Uploading release..."
-          gh release -R mlyxshi/flake upload ${{ matrix.release_name }} /build/busybox-kernel --clobber
+          cd /root
+          curl -LO https://github.com/cli/cli/releases/download/v2.90.0/gh_2.90.0_linux_${{ matrix.gh_cli }}.tar.gz
+          tar -xvf gh_2.90.0_linux_${{ matrix.gh_cli }}.tar.gz
+          /root/gh_2.90.0_linux_${{ matrix.gh_cli }}/bin release -R mlyxshi/flake upload ${{ matrix.release_name }} /build/busybox-kernel --clobber
