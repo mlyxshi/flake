@@ -1,8 +1,17 @@
 podman run --rm --network=host  -it ghcr.io/eweos/docker:master  /bin/sh
 
 git clone --depth=1 https://github.com/torvalds/linux
-pacman -S git base-devel lld
+pacman -S git base-devel lld linux-headers musl-static 
 
+make LLVM=1 
+
+
+
+
+git clone https://github.com/mirror/busybox /busybox
+git restore --source 0b1c62934215a08351a80977c7cf8e9346683a1e^  -- scripts/kconfig/conf.c
+make HOSTCC=clang CC=clang KCONFIG_ALLCONFIG=my.config allnoconfig 
+make HOSTCC=clang CC=clang LDFLAGS="--static" -j4 busybox
 
 
 apk update

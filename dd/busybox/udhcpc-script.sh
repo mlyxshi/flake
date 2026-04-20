@@ -1,6 +1,6 @@
 #!/bin/sh
 case "$1" in
-    bound|renew)
+    bound)
         ip addr add "$ip/$mask" dev eth0
         [ "$mask" = "32" ] && onlink="onlink"
         ip route add default via "$router" dev eth0 $onlink

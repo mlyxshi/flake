@@ -1,6 +1,6 @@
 #!/bin/toybox sh
 
-for i in sh ln cd ls echo cat free poweroff reboot dd mkdir mount blkid ps ip dhcp wget netcat; do
+for i in sh ln cd ls echo cat free poweroff reboot dd mkdir mount blkid ps ip dhcp netcat; do
   /bin/toybox ln -s /bin/toybox /bin/$i
 done
 
