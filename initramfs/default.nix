@@ -85,7 +85,7 @@
 
     # macos default terminal is xterm-256color
     "/etc/terminfo/x/xterm-256color".source = "${pkgs.ncurses}/share/terminfo/x/xterm-256color";
-    "/etc/terminfo/l/linux".source = "${pkgs.ncurses}/share/terminfo/l/linuxr";
+    "/etc/terminfo/l/linux".source = "${pkgs.ncurses}/share/terminfo/l/linux";
   };
 
   boot.initrd.systemd.storePaths = [
