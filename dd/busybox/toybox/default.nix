@@ -65,7 +65,7 @@ rec {
 
   cloud-init-networkcfg = pkgsMusl.stdenv.mkDerivation {
     name = "cloud-init-networkcfg";
-    src = ../cloud-init-networkcfg.c;
+    src = ./cloud-init-networkcfg.c;
     dontUnpack = true;
     buildPhase = "$CC -s $src -o cloud-init-networkcfg";
     installPhase = "install -Dm755 cloud-init-networkcfg $out/bin/cloud-init-networkcfg";

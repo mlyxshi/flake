@@ -22,10 +22,8 @@ setup_cloud_init_net() {
   mount $(blkid -L cidata) /cloud-init
   eval $(cloud-init-networkcfg /cloud-init/network-config)
   ip addr add "$IP/$PREFIX" dev eth0
-
-  ip route via $GATEWAY dev eth0 
-  ip route add default via $GATEWAY dev eth0 
-
+  ip route add $GATEWAY dev eth0 
+  ip route add default via $GATEWAY
   echo "nameserver 1.1.1.1" > /etc/resolv.conf
 }
 
