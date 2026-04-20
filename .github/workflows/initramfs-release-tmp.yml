@@ -1,0 +1,28 @@
+name: "initramfs Release"
+on:
+  workflow_dispatch:
+
+env:
+  GH_TOKEN: ${{ github.token }}
+
+jobs:
+  aarch64:
+    runs-on: ubuntu-24.04-arm
+    steps:
+    - uses: actions/checkout@master
+    - uses: DeterminateSystems/nix-installer-action@main
+    
+    - run: |
+        OutPath=$(nix build --no-link --print-out-paths nixpkgs#pkgsStatic.findutils)
+        gh release upload aarch64 $OutPath/bin/find
+
+
+  x86_64:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: DeterminateSystems/nix-installer-action@main
+    
+    - run: |
+        OutPath=$(nix build --no-link --print-out-paths nixpkgs#pkgsStatic.findutils)
+        gh release upload x86_64 $OutPath/bin/find
