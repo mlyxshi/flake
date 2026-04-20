@@ -22,6 +22,9 @@ setup_cloud_init_net() {
   mkdir /cloud-init
   mount $(blkid -L cidata) /cloud-init
   eval $(cloud-init-networkcfg /cloud-init/network-config)
+  echo $IP
+  echo $PREFIX
+  echo $GATEWAY
   ip addr add "$IP/$PREFIX" dev eth0
   ip route add $GATEWAY dev eth0 
   ip route add default via $GATEWAY
