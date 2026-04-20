@@ -63,9 +63,9 @@ reboot
 ```
 
 ```
-wget -qO- https://dd.mlyxshi.com/arm-init.raw | dd of=/dev/sda
+wget -qO- https://dd.mlyxshi.com/arm-init.raw | dd of=/dev/sda bs=1M
 
-wget -qO- https://dd.mlyxshi.com/bios-vda-init.raw | dd of=/dev/vda
+wget -qO- https://dd.mlyxshi.com/bios-vda-init.raw | dd of=/dev/vda bs=1M
 
 ```
 
@@ -76,3 +76,11 @@ chmod +x kexec
 ./kexec --load ./busybox-kernel
 systemctl kexec -i
 ```
+
+
+### Note
+dd 3GB              time 
+bs=512(default)     6:15    
+bs=1M               1:40
+
+In conclusion, always add bs=1M 
