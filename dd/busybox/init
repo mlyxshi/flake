@@ -24,6 +24,7 @@ setup_cloud_init_net() {
   ip addr add "$IP/$PREFIX" dev eth0
   ip route add default via $GATEWAY dev eth0 $ONLINK
   echo "nameserver 1.1.1.1" > /etc/resolv.conf
+  ip addr show
 }
 
 ip link set eth0 up
