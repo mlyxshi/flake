@@ -116,7 +116,7 @@
     yazi = "${pkgs.yazi-unwrapped}/bin/yazi";
     hx = "${pkgs.helix-unwrapped}/bin/hx";
     yq = "${pkgs.yq-go}/bin/yq";
-    toybox = "${pkgs.toybox}/bin/toybox";
+    toybox = "${pkgs.toybox.override{extraConfig="CONFIG_IP=y";}}/bin/toybox";
     # strace = "${pkgs.strace}/bin/strace";
   };
 
