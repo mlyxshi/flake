@@ -39,8 +39,9 @@ jobs:
           pacman -S --noconfirm git base-devel libelf lld linux-headers musl-static 
 
           # Use GNU Findutils, busybox-find does not support "-printf", https://github.com/torvalds/linux/blob/master/usr/gen_initramfs.sh
-          curl -L -o /usr/sbin/find  https://github.com/mlyxshi/flake/releases/download/${{ matrix.release_name }}/find
-
+          curl -L -o /usr/local/sbin/find  https://github.com/mlyxshi/flake/releases/download/${{ matrix.release_name }}/find
+          chmod +x /usr/local/sbin/find
+          
           echo ">>> Cloning repositories..."
           git clone https://github.com/mirror/busybox /busybox
           git clone --depth=1 https://github.com/torvalds/linux /linux
