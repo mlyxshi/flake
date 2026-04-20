@@ -34,7 +34,7 @@ jobs:
           set -e
 
           echo ">>> Installing dependencies..."
-          pacman -S --noconfirm git base-devel lld linux-headers musl-static 
+          pacman -S --noconfirm git base-devel libelf lld linux-headers musl-static 
 
           echo ">>> Cloning repositories..."
           git clone https://github.com/mirror/busybox /busybox
