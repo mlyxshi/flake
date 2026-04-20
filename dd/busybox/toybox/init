@@ -15,25 +15,24 @@ ln -s /proc/self/fd/1 /dev/stdout
 ln -s /proc/self/fd/2 /dev/stderr
 
 mkdir /etc
+ip link set eth0 up
 
-# only support nocloud network-config version1
-setup_cloud_init_net() {
-  echo "Setting cloud-init"
+# Check for the cloud-init nocloud volume
+CIDATA_DEV=$(blkid -L cidata)
+
+if [ -n "$CIDATA_DEV" ]; then
+  echo "Configuring via cidata..."
   mkdir /cloud-init
-  mount $(blkid -L cidata) /cloud-init
+  mount "$CIDATA_DEV" /cloud-init
   eval $(cloud-init-networkcfg /cloud-init/network-config)
-  echo $IP
-  echo $PREFIX
-  echo $GATEWAY
   ip addr add "$IP/$PREFIX" dev eth0
   ip route add $GATEWAY dev eth0 
   ip route add default via $GATEWAY
   echo "nameserver 1.1.1.1" > /etc/resolv.conf
-}
-
-ip link set eth0 up
-# -q: exit immediately after lease;  -n: Exit if no lease obtained after 9s
-dhcp -i eth0 -s /bin/udhcpc-script.sh -q -n || setup_cloud_init_net
+else
+  # -q: exit immediately after lease;  -n: Exit if no lease obtained after 9s
+  dhcp -i eth0 -s /bin/udhcpc-script.sh -q -n
+fi
 
 ip link set lo up
 netcat -l -p 23333 /bin/sh &

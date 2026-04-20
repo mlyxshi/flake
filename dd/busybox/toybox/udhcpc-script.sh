@@ -1,6 +1,6 @@
 #!/bin/sh
 case "$1" in
-    bound|renew)
+    bound)
         ip addr add "$ip/$subnet" dev eth0
         ip route add "$router" dev eth0 
         ip route add default via "$router"

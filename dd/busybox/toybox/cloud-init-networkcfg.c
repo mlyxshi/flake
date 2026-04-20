@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-// See cloud-init-example/version1.yml
+// See cloud-init-example/version1.yml, only support nocloud network-config version1
 // By Claude Sonnet4.6
 
 static int netmask_to_prefix(const char *mask) {
