@@ -79,8 +79,9 @@ systemctl kexec -i
 
 
 ### Note
+```
 dd 3GB              time 
 bs=512(default)     6:15    
 bs=1M               1:40
-
+```
 In conclusion, always add bs=1M 
