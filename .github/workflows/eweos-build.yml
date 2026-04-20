@@ -84,4 +84,4 @@ jobs:
           cd /root
           curl -LO https://github.com/cli/cli/releases/download/v2.90.0/gh_2.90.0_linux_${{ matrix.gh_cli }}.tar.gz
           tar -xvf gh_2.90.0_linux_${{ matrix.gh_cli }}.tar.gz
-          /root/gh_2.90.0_linux_${{ matrix.gh_cli }}/bin release -R mlyxshi/flake upload ${{ matrix.release_name }} /build/busybox-kernel --clobber
+          /root/gh_2.90.0_linux_${{ matrix.gh_cli }}/bin/gh release -R mlyxshi/flake upload ${{ matrix.release_name }} /build/busybox-kernel --clobber
