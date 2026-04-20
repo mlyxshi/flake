@@ -1,4 +1,4 @@
-name: "initramfs Release"
+name: "initramfs Release Systemd"
 on:
   workflow_dispatch:
 
