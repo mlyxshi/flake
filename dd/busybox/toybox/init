@@ -1,0 +1,39 @@
+#!/bin/toybox sh
+
+for i in sh ln cd ls cat free poweroff reboot dd mkdir mount blkid ps ip dhcp wget netcat; do
+  /bin/toybox ln -s /bin/toybox /bin/$i
+done
+
+mkdir -p /dev /proc /sys
+mount -t devtmpfs none /dev
+mount -t proc none /proc
+mount -t sysfs none /sys
+
+ln -s /proc/self/fd /dev/fd
+ln -s /proc/self/fd/0 /dev/stdin
+ln -s /proc/self/fd/1 /dev/stdout
+ln -s /proc/self/fd/2 /dev/stderr
+
+mkdir /etc
+
+# only support nocloud network-config version1
+setup_cloud_init_net() {
+  mkdir /cloud-init
+  mount $(blkid -L cidata) /cloud-init
+  eval $(cloud-init-networkcfg /cloud-init/network-config)
+  ip addr add "$IP/$PREFIX" dev eth0
+
+  ip route via $GATEWAY dev eth0 
+  ip route add default via $GATEWAY dev eth0 
+
+  echo "nameserver 1.1.1.1" > /etc/resolv.conf
+}
+
+ip link set eth0 up
+# -q: exit immediately after lease;  -n: Exit if no lease obtained after 9s
+dhcp -i eth0 -s /bin/udhcpc-script.sh -q -n || setup_cloud_init_net
+
+ip link set lo up
+netcat -l -p 23333 /bin/sh &
+
+/bin/sh

@@ -41,25 +41,24 @@ rec {
     '';
   };
 
-  busybox = pkgsMusl.stdenv.mkDerivation {
-    name = "busybox";
-    inherit (pkgs.busybox) src;
-    oldConf = pkgs.fetchurl {
-      url = "https://raw.githubusercontent.com/mirror/busybox/fcbc641fe36a2ceff334362cc6ba62b000c842a5/scripts/kconfig/conf.c";
-      hash = "sha256-veFFCU3brzLrJ6myfW9XYPIGYLWv4/HfJsfmySb3Tec=";
-    };
+  # substituteInPlace kconfig/Makefile  --replace-fail '-lcurses' '-lncurses'
+  # patchShebangs .
+  toybox = pkgsMusl.stdenv.mkDerivation {
+    name = "toybox";
+    inherit (pkgs.toybox) src;
+    hardeningDisable = [ "fortify" ]; # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/by-name/to/toybox/package.nix
     configurePhase = ''
-      cp $oldConf scripts/kconfig/conf.c
-      make allnoconfig KCONFIG_ALLCONFIG=${./busybox.config}
+      patchShebangs .
+      make allnoconfig KCONFIG_ALLCONFIG=${./toybox.config}
     '';
-    buildPhase = "make busybox -j$NIX_BUILD_CORES";
-    installPhase = "install -Dm755 busybox $out/bin/busybox";
+    buildPhase = "make toybox -j$NIX_BUILD_CORES";
+    installPhase = "install -Dm755 toybox $out/bin/toybox";
   };
 
   init = stdenvNoCC.mkDerivation {
     name = "init";
     buildCommand = ''
-      cat ${../init} > $out
+      cat ${./init} > $out
       chmod +x $out
     '';
   };
@@ -75,14 +74,14 @@ rec {
   bin = pkgs.buildEnv {
     name = "bin";
     paths = [
-      busybox
+      toybox
       cloud-init-networkcfg
     ];
     pathsToLink = [
       "/bin"
     ];
     postBuild = ''
-      cat ${../udhcpc-script.sh} > $out/bin/udhcpc-script.sh
+      cat ${./udhcpc-script.sh} > $out/bin/udhcpc-script.sh
       chmod +x $out/bin/udhcpc-script.sh
     '';
   };
@@ -105,10 +104,6 @@ rec {
       {
         source = "${bin}/bin";
         target = "/bin";
-      }
-      {
-        source = "${pkgs.file}/bin/file";
-        target = "/test";
       }
     ];
 
