@@ -75,8 +75,6 @@ jobs:
           file /bin/cloud-init-networkcfg /build/cloud-init-networkcfg 0755 0 0
           EOF
 
-          cat /build/cpio.list
-
           echo ">>> Building kernel..."
           cd /linux
           echo 'CONFIG_INITRAMFS_SOURCE="/build/cpio.list"' >> /build/kernel.config

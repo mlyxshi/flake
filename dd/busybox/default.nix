@@ -76,7 +76,7 @@ rec {
     ls -lh ${kernel}/Image | awk '{print $5}'
     ls -lh ${busybox}/bin/busybox | awk '{print $5}'
     /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 1G \
-      -kernel ./busybox-kernel -append "earlycon=pl011,mmio32,0x9000000"\
+      -kernel ${kernel}/Image -append "earlycon=pl011,mmio32,0x9000000"\
       -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:23333" \
       -bios $(ls /opt/homebrew/Cellar/qemu/*/share/qemu/edk2-aarch64-code.fd) \
       -device "virtio-scsi-pci,id=scsi0" -drive "file=/Users/dominic/flake/test/disk-scsi.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
@@ -84,8 +84,9 @@ rec {
   '';
 
   test-x86-64 = pkgs-macos.writeShellScriptBin "x86-64-initramfs-test" ''
+    ls -lh ${kernel}/bzImage  | awk '{print $5}'
     /opt/homebrew/bin/qemu-system-x86_64 -cpu qemu64 -nographic -m 1G \
-      -kernel ./busybox-kernel \
+      -kernel ${kernel}/bzImage \
       -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:23333" \
       -append "console=ttyS0" \
       -device "virtio-scsi-pci,id=scsi0" -drive "file=/Users/dominic/flake/test/disk-scsi.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
