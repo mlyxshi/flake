@@ -61,7 +61,7 @@ jobs:
           # https://bugs.busybox.net/show_bug.cgi?id=10296
           git restore --source 0b1c62934215a08351a80977c7cf8e9346683a1e^  -- scripts/kconfig/conf.c
           make HOSTCC=clang CC=clang KCONFIG_ALLCONFIG=/build/busybox.config allnoconfig 
-          make HOSTCC=clang CC=clang LDFLAGS="--static" -j$(nproc) busybox
+          make HOSTCC=clang CC=clang LDFLAGS=--static -j$(nproc) busybox
           cp busybox /build
 
           echo ">>> Creating initramfs..."
