@@ -32,6 +32,23 @@ ip link set eth0 up
 # -q: exit immediately after lease;  -n: Exit if no lease obtained after 9s
 udhcpc -i eth0 -s /bin/udhcpc-script.sh -q -n || setup_cloud_init_net
 
-nc -l -p 23333 -e /bin/sh &
+for arg in $(cat /proc/cmdline); do
+  case $arg in
+    device=*)
+      DEVICE="${arg#device=}"
+      ;;
+    url=*)
+      URL="${arg#url=}"
+      ;;
+  esac
+done
+
+if [ -n "$DEVICE" ]; then
+  echo "Target Device: $DEVICE | Target URL: $URL"
+  wget -qO $DEVICE $URL
+  reboot -f
+else
+  nc -l -p 23333 -e /bin/sh &
+fi
 
 /bin/sh
