@@ -49,6 +49,8 @@ umount /dev/loop1p3
 losetup -d /dev/loop1
 ```
 
+
+# NC 
 ```
 wget https://github.com/mlyxshi/flake/releases/download/$(uname -m)/busybox-kernel
 cat > /boot/grub/custom.cfg <<EOF
@@ -61,6 +63,37 @@ set default="KernelBusyBox"
 EOF
 reboot
 ```
+
+
+# ARM UEFI sda init
+```
+wget https://github.com/mlyxshi/flake/releases/download/$(uname -m)/busybox-kernel
+cat > /boot/grub/custom.cfg <<EOF
+menuentry "KernelBusyBox" --id KernelBusyBox {
+  insmod ext2
+  search -f /etc/hostname --set root
+  linux /root/busybox-kernel device=/dev/sda url=https://dd.mlyxshi.com/arm-init.raw
+}
+set default="KernelBusyBox"
+EOF
+reboot
+```
+
+# x86_64 BIOS vda int
+```
+wget https://github.com/mlyxshi/flake/releases/download/$(uname -m)/busybox-kernel
+cat > /boot/grub/custom.cfg <<EOF
+menuentry "KernelBusyBox" --id KernelBusyBox {
+  insmod ext2
+  search -f /etc/hostname --set root
+  linux /root/busybox-kernel device=/dev/vda url=https://dd.mlyxshi.com/bios-vda-init.raw
+}
+set default="KernelBusyBox"
+EOF
+reboot
+```
+
+
 
 ```
 wget -qO /dev/sda https://dd.mlyxshi.com/arm-init.raw 
