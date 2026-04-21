@@ -1,4 +1,4 @@
-name: "initramfs Release Busybox"
+name: "Nixpkgs Build Minimal BusyBox Kernel"
 on:
   workflow_dispatch:
 
