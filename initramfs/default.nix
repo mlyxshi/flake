@@ -85,7 +85,6 @@
 
     # macos default terminal is xterm-256color
     "/etc/terminfo/x/xterm-256color".source = "${pkgs.ncurses}/share/terminfo/x/xterm-256color";
-    "/etc/terminfo/l/linux".source = "${pkgs.ncurses}/share/terminfo/l/linux";
   };
 
   boot.initrd.systemd.storePaths = [
@@ -117,7 +116,6 @@
     yazi = "${pkgs.yazi-unwrapped}/bin/yazi";
     hx = "${pkgs.helix-unwrapped}/bin/hx";
     yq = "${pkgs.yq-go}/bin/yq";
-    toybox = "${pkgs.toybox.override { extraConfig = "CONFIG_IP=y"; }}/bin/toybox";
     # strace = "${pkgs.strace}/bin/strace";
   };
 
