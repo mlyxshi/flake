@@ -1,3 +1,4 @@
+# nix develop -f /flake/dd/busybox/shell.nix 
 {
   pkgs ? import <nixpkgs> { },
   lib ? pkgs.lib,
