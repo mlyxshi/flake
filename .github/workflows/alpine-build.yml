@@ -1,4 +1,4 @@
-name: Build Minimal BusyBox Kernel
+name: Alpine Build Minimal BusyBox Kernel
 
 on:
   workflow_dispatch:

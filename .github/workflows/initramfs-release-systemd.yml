@@ -1,4 +1,4 @@
-name: "initramfs Release Systemd"
+name: "Nixpkgs Build Minimal Systemd Initrd"
 on:
   workflow_dispatch:
 
