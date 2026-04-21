@@ -75,7 +75,7 @@ rec {
   test-arm64 = pkgs-macos.writeShellScriptBin "aarch64-initramfs-test" ''
     ls -lh ${kernel}/Image | awk '{print $5}'
     ls -lh ${busybox}/bin/busybox | awk '{print $5}'
-    /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 1G \
+    /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 256M \
       -kernel ${kernel}/Image -append "earlycon=pl011,mmio32,0x9000000"\
       -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:23333" \
       -bios $(ls /opt/homebrew/Cellar/qemu/*/share/qemu/edk2-aarch64-code.fd) \
@@ -85,7 +85,7 @@ rec {
 
   test-x86-64 = pkgs-macos.writeShellScriptBin "x86-64-initramfs-test" ''
     ls -lh ${kernel}/bzImage  | awk '{print $5}'
-    /opt/homebrew/bin/qemu-system-x86_64 -cpu qemu64 -nographic -m 1G \
+    /opt/homebrew/bin/qemu-system-x86_64 -cpu qemu64 -nographic -m 256M \
       -kernel ${kernel}/bzImage \
       -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:23333" \
       -append "console=ttyS0" \
@@ -94,7 +94,7 @@ rec {
   '';
 
   local = pkgs-macos.writeShellScriptBin "aarch64-initramfs-test" ''
-    /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 1G \
+    /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 256M \
       -kernel ./busybox-kernel -append "earlycon=pl011,mmio32,0x9000000"\
       -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:23333" \
       -bios $(ls /opt/homebrew/Cellar/qemu/*/share/qemu/edk2-aarch64-code.fd) \

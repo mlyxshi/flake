@@ -1,6 +1,6 @@
 #!/bin/toybox sh
 
-for i in sh ln cd ls echo cat free poweroff reboot dd mkdir mount blkid ps ip dhcp netcat; do
+for i in sh ln cd ls echo cat free poweroff reboot mkdir mount blkid ps ip wget dhcp netcat; do
   /bin/toybox ln -s /bin/toybox /bin/$i
 done
 
@@ -29,6 +29,8 @@ if [ -n "$CIDATA_DEV" ]; then
   ip route add $GATEWAY dev eth0 
   ip route add default via $GATEWAY
   echo "nameserver 1.1.1.1" > /etc/resolv.conf
+  ip addr show eth0
+  ip route show
 else
   # -q: exit immediately after lease;  -n: Exit if no lease obtained after 9s
   dhcp -i eth0 -s /bin/udhcpc-script.sh -q -n

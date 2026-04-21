@@ -14,6 +14,7 @@ rec {
     stdenv
     stdenvNoCC
     pkgsMusl
+    pkgsStatic
     musl
     fetchFromGitHub
     ;
@@ -29,7 +30,7 @@ rec {
       elfutils
     ];
     configurePhase = ''
-      make ARCH=${stdenv.hostPlatform.linuxArch} KCONFIG_ALLCONFIG=${../kernel.config} allnoconfig
+      make ARCH=${stdenv.hostPlatform.linuxArch} KCONFIG_ALLCONFIG=${./kernel.config} allnoconfig
     '';
     buildPhase = "make ${stdenv.hostPlatform.linux-kernel.target} -j$NIX_BUILD_CORES";
     installPhase = ''
@@ -44,7 +45,7 @@ rec {
 
   # substituteInPlace kconfig/Makefile  --replace-fail '-lcurses' '-lncurses'
   # patchShebangs .
-  toybox = pkgsMusl.stdenv.mkDerivation {
+  toybox = pkgsStatic.stdenv.mkDerivation {
     name = "toybox";
     src = fetchFromGitHub {
       owner = "landley";
@@ -55,9 +56,9 @@ rec {
     hardeningDisable = [ "fortify" ]; # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/by-name/to/toybox/package.nix
     configurePhase = ''
       patchShebangs .
-      make allnoconfig KCONFIG_ALLCONFIG=${./toybox.config}
+      make HOSTCC=$CC KCONFIG_ALLCONFIG=${./toybox.config} allnoconfig
     '';
-    buildPhase = "make toybox -j$NIX_BUILD_CORES";
+    buildPhase = "make HOSTCC=$CC toybox -j$NIX_BUILD_CORES";
     installPhase = "install -Dm755 toybox $out/bin/toybox";
   };
 

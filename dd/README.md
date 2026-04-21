@@ -64,7 +64,6 @@ reboot
 
 ```
 wget -qO /dev/sda https://dd.mlyxshi.com/arm-init.raw 
-
 wget -qO /dev/vda https://dd.mlyxshi.com/bios-vda-init.raw
 ```
 
