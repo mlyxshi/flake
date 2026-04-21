@@ -79,7 +79,7 @@ jobs:
           cd /linux
  
           make ARCH=${{ matrix.arch }} KCONFIG_ALLCONFIG=/build/kernel.config allnoconfig
-          ./scripts/config --set-str CONFIG_INITRAMFS_SOURCE /root/build/cpio.list
+          ./scripts/config --set-str CONFIG_INITRAMFS_SOURCE /build/cpio.list
           make ${{ matrix.kernel_target }} -j$(nproc)
 
           cp ${{ matrix.kernel_path }} /build/busybox-kernel
