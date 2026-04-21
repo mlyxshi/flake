@@ -6,9 +6,12 @@
   self,
   ...
 }:
-{  
-  programs.nix-ld.enable = true;
-  
+{
+
+  imports = [
+    self.nixosModules.programs.vscode-ssh-remote
+  ];
+
   services.openssh.ports = [ 23333 ];
 
   boot.blacklistedKernelModules = [ "virtio_balloon" ];
