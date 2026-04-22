@@ -13,35 +13,38 @@ rec {
     writeText
     ;
 
-  kernel = stdenv.mkDerivation (finalAttrs: 
-  let 
-    arch = stdenv.hostPlatform.linuxArch;
-    target  = if stdenv.hostPlatform.isAarch64 then "vmlinuz.efi" else "bzImage";
-    bootDir = if stdenv.hostPlatform.isAarch64 then "arch/arm64/boot" else "arch/x86/boot";
-  in {
-    name = "kernel";
-    inherit (pkgs.linuxPackages_latest.kernel) src;
-    # https://github.com/torvalds/linux/blob/master/usr/gen_init_cpio.c
-    initrd_cpio_list = writeText "initrd_cpio_list" ''
-      dir /dev 0755 0 0
-      nod /dev/console 0600 0 0 c 5 1
-      dir /bin 0755 0 0
-      file /init ${./init} 0755 0 0
-      file /bin/busybox ${busybox}/bin/busybox 0755 0 0
-    '';
-    nativeBuildInputs = with pkgs; [
-      bison
-      flex
-      bc
-      perl
-      elfutils
-      hexdump
-    ];
-    # https://kernel.org/doc/Documentation/kbuild/kconfig.txt
-    configurePhase = "make ARCH=${arch} KCONFIG_ALLCONFIG=${./kernel.config} allnoconfig";
-    buildPhase = "make CONFIG_INITRAMFS_SOURCE=${finalAttrs.initrd_cpio_list} -j$NIX_BUILD_CORES ${target}";
-    installPhase = "install -Dm444 ${bootDir}/${target} $out/${target}";
-  });
+  kernel = stdenv.mkDerivation (
+    finalAttrs:
+    let
+      arch = stdenv.hostPlatform.linuxArch;
+      target = if stdenv.hostPlatform.isAarch64 then "vmlinuz.efi" else "bzImage";
+      bootDir = if stdenv.hostPlatform.isAarch64 then "arch/arm64/boot" else "arch/x86/boot";
+    in
+    {
+      name = "kernel";
+      inherit (pkgs.linuxPackages_latest.kernel) src;
+      # https://github.com/torvalds/linux/blob/master/usr/gen_init_cpio.c
+      initrd_cpio_list = writeText "initrd_cpio_list" ''
+        dir /dev 0755 0 0
+        nod /dev/console 0600 0 0 c 5 1
+        dir /bin 0755 0 0
+        file /init ${./init} 0755 0 0
+        file /bin/busybox ${busybox}/bin/busybox 0755 0 0
+      '';
+      nativeBuildInputs = with pkgs; [
+        bison
+        flex
+        bc
+        perl
+        elfutils
+        hexdump
+      ];
+      # https://kernel.org/doc/Documentation/kbuild/kconfig.txt
+      configurePhase = "make ARCH=${arch} KCONFIG_ALLCONFIG=${./kernel.config} allnoconfig";
+      buildPhase = "make CONFIG_INITRAMFS_SOURCE=${finalAttrs.initrd_cpio_list} -j$NIX_BUILD_CORES ${target}";
+      installPhase = "install -Dm444 ${bootDir}/${target} $out/${target}";
+    }
+  );
 
   busybox = pkgsStatic.stdenv.mkDerivation {
     name = "busybox";
