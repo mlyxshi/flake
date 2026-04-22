@@ -40,7 +40,12 @@ rec {
         hexdump
       ];
       # https://kernel.org/doc/Documentation/kbuild/kconfig.txt
-      configurePhase = "make ARCH=${arch} KCONFIG_ALLCONFIG=${./kernel.config} allnoconfig";
+      configurePhase = ''
+        make ARCH=${arch} KCONFIG_ALLCONFIG=${./kernel.config} allnoconfig
+        patchShebangs scripts/config
+        scripts/config --enable EXPERT --disable ELF_CORE --disable MULTIUSER --disable KALLSYMS --disable BUG
+        make olddefconfig
+      '';
       buildPhase = "make CONFIG_INITRAMFS_SOURCE=${finalAttrs.initrd_cpio_list} -j$NIX_BUILD_CORES ${target}";
       installPhase = "install -Dm444 ${bootDir}/${target} $out/${target}";
     }
