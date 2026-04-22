@@ -47,6 +47,8 @@ jobs:
           git clone --depth=1 https://github.com/torvalds/linux /linux
           git clone --depth=1 https://github.com/mlyxshi/flake /flake
 
+          mkdir /build
+
           echo ">>> Building BusyBox..."
           cd /busybox
           # https://bugs.busybox.net/show_bug.cgi?id=10296
