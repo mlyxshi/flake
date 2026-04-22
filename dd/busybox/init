@@ -16,7 +16,7 @@ if [ -n "$1" ]; then
     leasefail)
       # only support nocloud network-config version1
       mkdir /cloud-init
-      mount $(findfs LABEL=cidata) /cloud-init
+      mount -r $(findfs LABEL=cidata) /cloud-init
       eval $(cloud-init-networkcfg /cloud-init/network-config)
       ip addr add "$IP/$PREFIX" dev eth0
       ip route add default via $GATEWAY dev eth0 $ONLINK

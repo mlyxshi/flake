@@ -1,4 +1,5 @@
 # nix develop -f /flake/dd/shell.nix 
+# For kernel/busybox:  make menuconfig
 {
   pkgs ? import <nixpkgs> { },
   lib ? pkgs.lib,
