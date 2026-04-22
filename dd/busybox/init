@@ -1,5 +1,34 @@
 #!/bin/busybox sh
 
+# udhcpc callback: invoked as `/init <event>` by `udhcpc -s /init`
+# https://gitlab.alpinelinux.org/alpine/aports/-/blob/master/main/busybox/default.script
+if [ -n "$1" ]; then
+  echo "DHCP: $1"
+  case "$1" in
+    bound)
+      ip addr add "$ip/$mask" dev eth0
+      [ "$mask" = "32" ] && onlink="onlink"
+      ip route add default via "$router" dev eth0 $onlink
+      for srv in $dns; do
+        echo "nameserver $srv"
+      done > /etc/resolv.conf
+      ;;
+    leasefail)
+      # only support nocloud network-config version1
+      mkdir /cloud-init
+      mount $(findfs LABEL=cidata) /cloud-init
+      eval $(cloud-init-networkcfg /cloud-init/network-config)
+      ip addr add "$IP/$PREFIX" dev eth0
+      ip route add default via $GATEWAY dev eth0 $ONLINK
+      echo "nameserver 1.1.1.1" > /etc/resolv.conf
+      ip addr show eth0
+      ip route show
+      ;;
+  esac
+  exit 0
+fi
+
+# --- below here: PID 1 init ---
 /bin/busybox --install -s /bin
 
 mkdir -p /dev /proc /sys /etc
@@ -7,22 +36,10 @@ mount -t devtmpfs none /dev
 mount -t proc    none /proc
 mount -t sysfs   none /sys
 
-# only support nocloud network-config version1
-setup_cloud_init_net() {
-  mkdir /cloud-init
-  mount $(cloud-init-networkcfg -L cidata) /cloud-init
-  eval $(cloud-init-networkcfg /cloud-init/network-config)
-  ip addr add "$IP/$PREFIX" dev eth0
-  ip route add default via $GATEWAY dev eth0 $ONLINK
-  echo "nameserver 1.1.1.1" > /etc/resolv.conf
-  ip addr show eth0
-  ip route show
-}
-
 
 ip link set eth0 up
 # -q: exit immediately after lease;  -n: exit if no lease obtained after 9s
-udhcpc -i eth0 -s /bin/udhcpc-script.sh -q -n || setup_cloud_init_net
+udhcpc -i eth0 -s /init -q -n
 
 DEVICE= URL=
 for arg in $(cat /proc/cmdline); do

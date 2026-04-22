@@ -20,12 +20,9 @@ rec {
     initrd_cpio_list = writeText "initrd_cpio_list" ''
       dir /dev 0755 0 0
       nod /dev/console 0600 0 0 c 5 1
-
-      file /init ${./init} 0755 0 0
       dir /bin 0755 0 0
+      file /init ${./init} 0755 0 0
       file /bin/busybox ${busybox}/bin/busybox 0755 0 0
-      file /bin/udhcpc-script.sh ${./udhcpc-script.sh} 0755 0 0
-      file /bin/cloud-init-networkcfg ${cloud-init-networkcfg}/bin/cloud-init-networkcfg 0755 0 0
     '';
     kernel_config = writeText "kernel_config" ''
       ${builtins.readFile ./kernel.config}
@@ -58,16 +55,12 @@ rec {
     };
     configurePhase = ''
       cp $oldConf scripts/kconfig/conf.c
+      cp ${./cloud_init_networkcfg.c} miscutils/cloud_init_networkcfg.c
       make HOSTCC=$CC KCONFIG_ALLCONFIG=${./busybox.config} allnoconfig
     '';
     buildPhase = "make HOSTCC=$CC CROSS_COMPILE=${pkgsStatic.stdenv.cc.targetPrefix}  busybox -j$NIX_BUILD_CORES";
     installPhase = "install -Dm755 busybox $out/bin/busybox";
   };
-
-  cloud-init-networkcfg = pkgsStatic.runCommandCC "cloud-init-networkcfg" { } ''
-    mkdir -p $out/bin
-    $CC -static -s ${./cloud-init-networkcfg.c} -o $out/bin/cloud-init-networkcfg
-  '';
 
   test-arm64 = pkgs-macos.writeShellScriptBin "aarch64-initramfs-test" ''
     ls -lh ${kernel}/Image | awk '{print $5}'
