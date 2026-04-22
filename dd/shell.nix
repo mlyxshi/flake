@@ -1,4 +1,4 @@
-# nix develop -f /flake/dd/busybox/shell.nix 
+# nix develop -f /flake/dd/shell.nix 
 {
   pkgs ? import <nixpkgs> { },
   lib ? pkgs.lib,
@@ -8,6 +8,7 @@ pkgs.mkShell {
   nativeBuildInputs = with pkgs; [     
     gcc
     gnumake
+    pkg-config
 
     # configure
     flex
