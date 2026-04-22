@@ -34,4 +34,3 @@ sr_mod # SCSI CD-ROM driver (/dev/srX) # cloud-init cidata disk
 
 ahci # SATA controllers
 isofs # mount /dev/sr1 /cloud-init
-

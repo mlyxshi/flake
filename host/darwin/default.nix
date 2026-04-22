@@ -247,7 +247,7 @@
       set -gx EDITOR hx
       set -gx PAGER bat
         
-      set PATH $PATH /opt/homebrew/bin ~/go/bin /Applications/Surge.app/Contents/Applications
+      set PATH $PATH /opt/homebrew/bin ~/go/bin ~/.local/bin /Applications/Surge.app/Contents/Applications
     '';
 
     promptInit = ''
