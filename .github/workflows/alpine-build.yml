@@ -47,7 +47,6 @@ jobs:
           git clone --depth=1 https://github.com/torvalds/linux /linux
           git clone --depth=1 https://github.com/mlyxshi/flake /flake
 
-          mkdir /build
 
           echo ">>> Building BusyBox..."
           cd /busybox
@@ -56,25 +55,25 @@ jobs:
           cp  /flake/dd/busybox/cloud_init_networkcfg.c  miscutils/cloud_init_networkcfg.c
           make allnoconfig KCONFIG_ALLCONFIG=/flake/dd/busybox/busybox.config
           make LDFLAGS=--static -j$(nproc)
-          cp busybox /build
+
 
           echo ">>> Creating initramfs list..."
-          cat > /build/cpio.list <<EOF
+          cat > /tmp/cpio.list <<EOF
           dir /dev 0755 0 0
           nod /dev/console 0600 0 0 c 5 1
           dir /bin 0755 0 0
-          file /init /build/init 0755 0 0
-          file /bin/busybox /build/busybox 0755 0 0
+          file /init /flake/dd/busybox/init 0755 0 0
+          file /bin/busybox /busybox/busybox 0755 0 0
           EOF
 
           echo ">>> Building kernel..."
           cd /linux
  
           make ARCH=${{ matrix.arch }} KCONFIG_ALLCONFIG=/flake/dd/busybox/kernel.config allnoconfig
-          ./scripts/config --set-str CONFIG_INITRAMFS_SOURCE /build/cpio.list
+          ./scripts/config --set-str CONFIG_INITRAMFS_SOURCE /tmp/cpio.list
           make ${{ matrix.kernel_target }} -j$(nproc)
 
-          cp ${{ matrix.kernel_path }} /build/busybox-kernel
+          cp ${{ matrix.kernel_path }} /tmp/busybox-kernel
 
           echo ">>> Uploading release..."
-          gh release -R mlyxshi/flake upload ${{ matrix.release_name }} /build/busybox-kernel --clobber
+          gh release -R mlyxshi/flake upload ${{ matrix.release_name }} /tmp/busybox-kernel --clobber

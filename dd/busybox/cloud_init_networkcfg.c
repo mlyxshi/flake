@@ -27,7 +27,7 @@
 //usage:
 //usage:#define cloud_init_networkcfg_example_usage
 //usage:       "$ cloud-init-networkcfg /run/cloud-init/network-config.yaml\n"
-//usage:       "IP=154.17.19.228\n"
+//usage:       "IP=154.17.19.222\n"
 //usage:       "GATEWAY=193.41.250.250\n"
 //usage:       "PREFIX=32\n"
 //usage:       "ONLINK=onlink\n"
