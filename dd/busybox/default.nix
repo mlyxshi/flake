@@ -13,7 +13,12 @@ rec {
     writeText
     ;
 
-  kernel = stdenv.mkDerivation (finalAttrs: {
+  kernel = stdenv.mkDerivation (finalAttrs: 
+  let 
+    arch = stdenv.hostPlatform.linuxArch;
+    target  = if stdenv.hostPlatform.isAarch64 then "vmlinuz.efi" else "bzImage";
+    bootDir = if stdenv.hostPlatform.isAarch64 then "arch/arm64/boot" else "arch/x86/boot";
+  in {
     name = "kernel";
     inherit (pkgs.linuxPackages_latest.kernel) src;
     # https://github.com/torvalds/linux/blob/master/usr/gen_init_cpio.c
@@ -33,14 +38,9 @@ rec {
       hexdump
     ];
     # https://kernel.org/doc/Documentation/kbuild/kconfig.txt
-    configurePhase = "make ARCH=${stdenv.hostPlatform.linuxArch} KCONFIG_ALLCONFIG=${./kernel.config} allnoconfig";
-    buildPhase = ''
-      make CONFIG_INITRAMFS_SOURCE=${finalAttrs.initrd_cpio_list} -j$NIX_BUILD_CORES ${if stdenv.hostPlatform.isAarch64 then "vmlinuz.efi" else "bzImage"}
-    '';
-    installPhase = ''
-      mkdir -p $out
-      cp arch/${if stdenv.hostPlatform.isAarch64 then "arm64/boot/vmlinuz.efi" else "x86/boot/bzImage"} $out
-    '';
+    configurePhase = "make ARCH=${arch} KCONFIG_ALLCONFIG=${./kernel.config} allnoconfig";
+    buildPhase = "make CONFIG_INITRAMFS_SOURCE=${finalAttrs.initrd_cpio_list} -j$NIX_BUILD_CORES ${target}";
+    installPhase = "install -Dm444 ${bootDir}/${target} $out/${target}";
   });
 
   busybox = pkgsStatic.stdenv.mkDerivation {
