@@ -30,13 +30,16 @@ rec {
       bc
       perl
       elfutils
+      hexdump
     ];
     # https://kernel.org/doc/Documentation/kbuild/kconfig.txt
     configurePhase = "make ARCH=${stdenv.hostPlatform.linuxArch} KCONFIG_ALLCONFIG=${./kernel.config} allnoconfig";
-    buildPhase = "make CONFIG_INITRAMFS_SOURCE=${finalAttrs.initrd_cpio_list} -j$NIX_BUILD_CORES ${stdenv.hostPlatform.linux-kernel.target}";
+    buildPhase = ''
+      make CONFIG_INITRAMFS_SOURCE=${finalAttrs.initrd_cpio_list} -j$NIX_BUILD_CORES ${if stdenv.hostPlatform.isAarch64 then "vmlinuz.efi" else "bzImage"}
+    '';
     installPhase = ''
       mkdir -p $out
-      cp arch/${if stdenv.hostPlatform.isAarch64 then "arm64/boot/Image" else "x86/boot/bzImage"} $out
+      cp arch/${if stdenv.hostPlatform.isAarch64 then "arm64/boot/vmlinuz.efi" else "x86/boot/bzImage"} $out
     '';
   });
 
@@ -53,10 +56,10 @@ rec {
   };
 
   test-arm64 = pkgs-macos.writeShellScriptBin "aarch64-initramfs-test" ''
-    ls -lh ${kernel}/Image | awk '{print $5}'
+    ls -lh ${kernel}/vmlinuz.efi | awk '{print $5}'
     ls -lh ${busybox}/bin/busybox | awk '{print $5}'
     /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 256M \
-      -kernel ${kernel}/Image -append "earlycon=pl011,mmio32,0x9000000"\
+      -kernel ${kernel}/vmlinuz.efi -append "earlycon=pl011,mmio32,0x9000000"\
       -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:23333" \
       -bios $(ls /opt/homebrew/Cellar/qemu/*/share/qemu/edk2-aarch64-code.fd) \
       -device "virtio-scsi-pci,id=scsi0" -drive "file=/Users/dominic/flake/test/disk-scsi.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \

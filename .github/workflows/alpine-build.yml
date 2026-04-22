@@ -24,8 +24,8 @@ jobs:
 
           - arch: arm64
             runner: ubuntu-24.04-arm
-            kernel_target: Image
-            kernel_path: arch/arm64/boot/Image
+            kernel_target: vmlinuz.efi
+            kernel_path: arch/arm64/boot/vmlinuz.efi
             release_name: aarch64
 
     steps:
