@@ -24,10 +24,6 @@ rec {
       file /init ${./init} 0755 0 0
       file /bin/busybox ${busybox}/bin/busybox 0755 0 0
     '';
-    kernel_config = writeText "kernel_config" ''
-      ${builtins.readFile ./kernel.config}
-      CONFIG_INITRAMFS_SOURCE="${finalAttrs.initrd_cpio_list}"
-    '';
     nativeBuildInputs = with pkgs; [
       bison
       flex
@@ -36,8 +32,8 @@ rec {
       elfutils
     ];
     # https://kernel.org/doc/Documentation/kbuild/kconfig.txt
-    configurePhase = "make ARCH=${stdenv.hostPlatform.linuxArch} KCONFIG_ALLCONFIG=${finalAttrs.kernel_config} allnoconfig";
-    buildPhase = "make ${stdenv.hostPlatform.linux-kernel.target} -j$NIX_BUILD_CORES";
+    configurePhase = "make ARCH=${stdenv.hostPlatform.linuxArch} KCONFIG_ALLCONFIG=${./kernel.config} allnoconfig";
+    buildPhase = "make CONFIG_INITRAMFS_SOURCE=${finalAttrs.initrd_cpio_list} -j$NIX_BUILD_CORES ${stdenv.hostPlatform.linux-kernel.target}";
     installPhase = ''
       mkdir -p $out
       cp arch/${if stdenv.hostPlatform.isAarch64 then "arm64/boot/Image" else "x86/boot/bzImage"} $out
