@@ -47,16 +47,10 @@ rec {
   busybox = pkgsStatic.stdenv.mkDerivation {
     name = "busybox";
     inherit (pkgs.busybox) src;
-    # https://bugs.busybox.net/show_bug.cgi?id=10296
-    # https://github.com/mirror/busybox/commits/master/scripts/kconfig/conf.c
-    oldConf = pkgs.fetchurl {
-      url = "https://raw.githubusercontent.com/mirror/busybox/fcbc641fe36a2ceff334362cc6ba62b000c842a5/scripts/kconfig/conf.c";
-      hash = "sha256-veFFCU3brzLrJ6myfW9XYPIGYLWv4/HfJsfmySb3Tec=";
-    };
     configurePhase = ''
-      cp $oldConf scripts/kconfig/conf.c
       cp ${./cloud_init_networkcfg.c} miscutils/cloud_init_networkcfg.c
-      make HOSTCC=$CC KCONFIG_ALLCONFIG=${./busybox.config} allnoconfig
+      make HOSTCC=$CC allnoconfig
+      for opt in $(grep '^CONFIG_.*' ${./busybox.config}); do sed -i "s|^# $opt is not set|$opt=y|" .config; done
     '';
     buildPhase = "make HOSTCC=$CC CROSS_COMPILE=${pkgsStatic.stdenv.cc.targetPrefix}  busybox -j$NIX_BUILD_CORES";
     installPhase = "install -Dm755 busybox $out/bin/busybox";

@@ -43,17 +43,16 @@ jobs:
           chmod +x /usr/local/bin/find
 
           echo ">>> Cloning repositories..."
-          git clone https://github.com/mirror/busybox /busybox
+          git clone --depth=1 https://git.busybox.net/busybox/ /busybox
           git clone --depth=1 https://github.com/torvalds/linux /linux
           git clone --depth=1 https://github.com/mlyxshi/flake /flake
 
 
           echo ">>> Building BusyBox..."
           cd /busybox
-          # https://bugs.busybox.net/show_bug.cgi?id=10296
-          git restore --source 0b1c62934215a08351a80977c7cf8e9346683a1e^  -- scripts/kconfig/conf.c
           cp  /flake/dd/busybox/cloud_init_networkcfg.c  miscutils/cloud_init_networkcfg.c
-          make allnoconfig KCONFIG_ALLCONFIG=/flake/dd/busybox/busybox.config
+          make allnoconfig
+          for opt in $(grep '^CONFIG_.*' /flake/dd/busybox/busybox.config); do sed -i "s|^# $opt is not set|$opt=y|" .config; done
           make LDFLAGS=--static -j$(nproc)
 
 
