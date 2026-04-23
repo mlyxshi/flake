@@ -47,7 +47,7 @@ for arg in $(cat /proc/cmdline); do
 done
 
 if [ -n "$DEVICE" ]; then
-  echo "Target Device: $DEVICE | Target URL: $URL"
+  echo "Target Device: $DEVICE <  $URL"
   wget -qO "$DEVICE" "$URL"
   reboot -f
 else
