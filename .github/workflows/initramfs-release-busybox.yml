@@ -14,7 +14,7 @@ jobs:
     
     - run: |
         busyboxKernel=$(nix build --no-link --print-out-paths -f dd/busybox/default.nix kernel --arg pkgs 'import <nixpkgs> { system = builtins.currentSystem; }')
-        ln -sf $busyboxKernel/Image /tmp/busybox-kernel
+        ln -sf $busyboxKernel/vmlinuz.efi /tmp/busybox-kernel
         gh release upload aarch64 /tmp/busybox-kernel --clobber
 
 
