@@ -1,8 +1,14 @@
+# tty0
 CONFIG_VT=y
 CONFIG_VT_CONSOLE=y
 
+# Legacy VGA Console Support (Text Mode)
+CONFIG_VGA_CONSOLE=y
+
+
+# ttyS0
 #CONFIG_SERIAL_8250=y
 #CONFIG_SERIAL_8250_CONSOLE=y
 
-#CONFIG_VGA_CONSOLE=y
+
 
