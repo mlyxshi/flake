@@ -57,7 +57,7 @@ cat > /boot/grub/custom.cfg <<EOF
 menuentry "KernelBusyBox" --id KernelBusyBox {
   insmod ext2
   search -f /etc/hostname --set root
-  linux /root/busybox-kernel
+  linux /root/busybox-kernel console=tty0
 }
 set default="KernelBusyBox"
 EOF
@@ -72,7 +72,7 @@ cat > /boot/grub/custom.cfg <<EOF
 menuentry "KernelBusyBox" --id KernelBusyBox {
   insmod ext2
   search -f /etc/hostname --set root
-  linux /root/busybox-kernel device=/dev/sda url=https://dd.mlyxshi.com/arm-init.raw
+  linux /root/busybox-kernel console=tty0 device=/dev/sda url=https://dd.mlyxshi.com/arm-init.raw
 }
 set default="KernelBusyBox"
 EOF
@@ -86,7 +86,7 @@ cat > /boot/grub/custom.cfg <<EOF
 menuentry "KernelBusyBox" --id KernelBusyBox {
   insmod ext2
   search -f /etc/hostname --set root
-  linux /root/busybox-kernel device=/dev/vda url=https://dd.mlyxshi.com/bios-vda-init.raw
+  linux /root/busybox-kernel console=tty0 device=/dev/vda url=https://dd.mlyxshi.com/bios-vda-init.raw
 }
 set default="KernelBusyBox"
 EOF
@@ -104,6 +104,6 @@ wget -qO /dev/vda https://dd.mlyxshi.com/bios-vda-init.raw
 wget https://github.com/mlyxshi/flake/releases/download/$(uname -m)/busybox-kernel
 wget https://github.com/mlyxshi/flake/releases/download/$(uname -m)/kexec
 chmod +x kexec
-./kexec --load ./busybox-kernel
+./kexec --load ./busybox-kernel --append="console=tty0"
 systemctl kexec -i
 ```
