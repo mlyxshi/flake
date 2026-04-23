@@ -64,7 +64,7 @@ rec {
   test-arm64 = pkgs-macos.writeShellScriptBin "aarch64-initramfs-test" ''
     ls -lh ${kernel}/vmlinuz.efi | awk '{print $5}'
     ls -lh ${busybox}/bin/busybox | awk '{print $5}'
-    /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -serial stdio -m 256M \
+    /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -serial stdio -display none -m 256M \
       -kernel ${kernel}/vmlinuz.efi -append "earlycon=pl011,mmio32,0x9000000"\
       -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:23333" \
       -drive if=pflash,format=raw,readonly=on,file=/Users/dominic/vfkit/edk2-aarch64-code.fd \
@@ -79,7 +79,6 @@ rec {
     /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -m 256M \
       -kernel ${kernel}/vmlinuz.efi -append "console=ttyAMA0 console=tty0"\
       -device virtio-gpu-pci -display cocoa,zoom-to-fit=on -serial stdio\
-      -device virtio-keyboard-pci\
       -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:23333" \
       -drive if=pflash,format=raw,readonly=on,file=/Users/dominic/vfkit/edk2-aarch64-code.fd \
       -drive if=pflash,format=raw,file=/Users/dominic/vfkit/edk2-arm-vars.fd \

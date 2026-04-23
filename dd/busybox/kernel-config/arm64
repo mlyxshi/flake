@@ -1,6 +1,7 @@
 # https://lore.kernel.org/all/20220910081152.2238369-1-ardb@kernel.org/
 CONFIG_EFI_ZBOOT=y
 
+# ttyAMA0
 CONFIG_SERIAL_AMBA_PL011=y
 CONFIG_SERIAL_AMBA_PL011_CONSOLE=y
 
@@ -13,8 +14,8 @@ CONFIG_DRM_VIRTIO_GPU_KMS=y
 CONFIG_DRM_FBDEV_EMULATION=y
 CONFIG_FRAMEBUFFER_CONSOLE=y
 
+# tty0
 CONFIG_VT=y
 CONFIG_VT_CONSOLE=y
 
-# Keyboard
-CONFIG_VIRTIO_INPUT=y
+# For Keyboard, https://wiki.gentoo.org/wiki/Hetzner_Cloud_(ARM64)
