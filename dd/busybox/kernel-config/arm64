@@ -13,9 +13,3 @@ CONFIG_DRM_VIRTIO_GPU_KMS=y
 # The Bridge (Required for text console)
 CONFIG_DRM_FBDEV_EMULATION=y
 CONFIG_FRAMEBUFFER_CONSOLE=y
-
-# tty0
-CONFIG_VT=y
-CONFIG_VT_CONSOLE=y
-
-# For Keyboard, https://wiki.gentoo.org/wiki/Hetzner_Cloud_(ARM64)

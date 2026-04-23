@@ -1,7 +1,11 @@
 # https://www.youtube.com/watch?v=u2Juz5sQyYQ
+# lspci (nix run nixpkgs#pciutils)
+
 CONFIG_EXPERT=y
 CONFIG_PRINTK=y
-CONFIG_TTY=y
+
+# https://github.com/torvalds/linux/blob/master/kernel/configs/tiny.config
+CONFIG_CC_OPTIMIZE_FOR_SIZE=y
 
 CONFIG_PROC_FS=y
 CONFIG_SYSFS=y
@@ -47,7 +51,27 @@ CONFIG_HW_RANDOM_VIRTIO=y
 CONFIG_EFI=y
 CONFIG_ACPI=y
 
-# https://github.com/torvalds/linux/blob/master/kernel/configs/tiny.config
-CONFIG_CC_OPTIMIZE_FOR_SIZE=y
+# tty0
+CONFIG_TTY=y
+CONFIG_VT=y
+CONFIG_VT_CONSOLE=y
 
+# Virtio Keyboard (-device virtio-keyboard-pci)
+CONFIG_VIRTIO_INPUT=y
 
+# USB Keyboard
+# xHCI (USB 3.0)
+# EHCI (USB 2.0) 
+# OHCI (USB 1.1)  
+CONFIG_USB_SUPPORT=y
+CONFIG_USB=y
+CONFIG_USB_PCI=y
+
+CONFIG_USB_XHCI_HCD=y
+CONFIG_USB_EHCI_HCD=y 
+CONFIG_USB_OHCI_HCD=y
+
+CONFIG_HID_SUPPORT=y
+CONFIG_HID=y
+CONFIG_HID_GENERIC=y
+CONFIG_USB_HID=y

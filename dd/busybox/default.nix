@@ -4,7 +4,6 @@
     # system = "x86_64-linux";
   },
   pkgs-macos ? import <nixpkgs> { },
-  lib ? pkgs.lib,
 }:
 rec {
   inherit (pkgs)
@@ -57,7 +56,7 @@ rec {
       make HOSTCC=$CC allnoconfig
       for opt in $(grep '^CONFIG_.*' ${./busybox.config}); do sed -i "s|^# $opt is not set|$opt=y|" .config; done
     '';
-    buildPhase = "make HOSTCC=$CC CROSS_COMPILE=${pkgsStatic.stdenv.cc.targetPrefix}  busybox -j$NIX_BUILD_CORES";
+    buildPhase = "make HOSTCC=$CC CROSS_COMPILE=${pkgsStatic.stdenv.cc.targetPrefix} busybox -j$NIX_BUILD_CORES";
     installPhase = "install -Dm755 busybox $out/bin/busybox";
   };
 
@@ -78,7 +77,8 @@ rec {
     ls -lh ${busybox}/bin/busybox | awk '{print $5}'
     /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -m 256M \
       -kernel ${kernel}/vmlinuz.efi -append "console=ttyAMA0 console=tty0"\
-      -device virtio-gpu-pci -display cocoa,zoom-to-fit=on -serial stdio\
+      -device virtio-gpu-pci -display cocoa,zoom-to-fit=on -serial stdio \
+      -device qemu-xhci,id=xhci -device usb-kbd,bus=xhci.0 \
       -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:23333" \
       -drive if=pflash,format=raw,readonly=on,file=/Users/dominic/vfkit/edk2-aarch64-code.fd \
       -drive if=pflash,format=raw,file=/Users/dominic/vfkit/edk2-arm-vars.fd \
