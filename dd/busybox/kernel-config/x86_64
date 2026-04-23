@@ -1,14 +1,16 @@
-# tty0
+# tty1
 CONFIG_VT=y
 CONFIG_VT_CONSOLE=y
 
-# Legacy VGA Console Support (Text Mode)
+# Some VPS providers use Proxmox -> SeaBIOS
+# VGA Console Support (Text Mode)
+# https://github.com/coreboot/seabios/blob/8fcd351a936ff3b63571a6f6776f5cfc3f2b8e3e/src/bootsplash.c#L40
 CONFIG_VGA_CONSOLE=y
 
 
 # ttyS0
-#CONFIG_SERIAL_8250=y
-#CONFIG_SERIAL_8250_CONSOLE=y
+# CONFIG_SERIAL_8250=y
+# CONFIG_SERIAL_8250_CONSOLE=y
 
 
 

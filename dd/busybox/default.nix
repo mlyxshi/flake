@@ -1,7 +1,7 @@
 {
   pkgs ? import <nixpkgs> {
-    # system = "aarch64-linux";
-    system = "x86_64-linux";
+    system = "aarch64-linux";
+    # system = "x86_64-linux";
   },
   pkgs-macos ? import <nixpkgs> { },
   lib ? pkgs.lib,
@@ -74,7 +74,7 @@ rec {
 
   test-x86-64 = pkgs-macos.writeShellScriptBin "x86-64-initramfs-test" ''
     ls -lh ${kernel}/bzImage  | awk '{print $5}'
-    /opt/homebrew/bin/qemu-system-x86_64 -cpu qemu64 -nographic -m 256M \
+    /opt/homebrew/bin/qemu-system-x86_64 -cpu qemu64 -m 256M \
       -kernel ${kernel}/bzImage \
       -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:23333" \
       -device "virtio-scsi-pci,id=scsi0" -drive "file=/Users/dominic/flake/test/disk-scsi.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
