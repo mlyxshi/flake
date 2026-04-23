@@ -64,10 +64,24 @@ rec {
   test-arm64 = pkgs-macos.writeShellScriptBin "aarch64-initramfs-test" ''
     ls -lh ${kernel}/vmlinuz.efi | awk '{print $5}'
     ls -lh ${busybox}/bin/busybox | awk '{print $5}'
-    /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -nographic -m 256M \
+    /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -serial stdio -m 256M \
       -kernel ${kernel}/vmlinuz.efi -append "earlycon=pl011,mmio32,0x9000000"\
       -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:23333" \
-      -bios $(ls /opt/homebrew/Cellar/qemu/*/share/qemu/edk2-aarch64-code.fd) -device virtio-rng-pci \
+      -drive if=pflash,format=raw,readonly=on,file=/Users/dominic/vfkit/edk2-aarch64-code.fd \
+      -drive if=pflash,format=raw,file=/Users/dominic/vfkit/edk2-arm-vars.fd \
+      -device "virtio-scsi-pci,id=scsi0" -drive "file=/Users/dominic/flake/test/disk-scsi.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
+      -device "virtio-blk-pci,drive=hd0" -drive "file=/Users/dominic/flake/test/disk-blk.img,if=none,format=qcow2,id=hd0"
+  '';
+
+  tty = pkgs-macos.writeShellScriptBin "aarch64-initramfs-test" ''
+    ls -lh ${kernel}/vmlinuz.efi | awk '{print $5}'
+    ls -lh ${busybox}/bin/busybox | awk '{print $5}'
+    /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -m 256M \
+      -kernel ${kernel}/vmlinuz.efi -append "console=tty0 console=ttyAMA0"\
+      -device virtio-gpu-pci -display cocoa,zoom-to-fit=on -serial stdio\
+      -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:23333" \
+      -drive if=pflash,format=raw,readonly=on,file=/Users/dominic/vfkit/edk2-aarch64-code.fd \
+      -drive if=pflash,format=raw,file=/Users/dominic/vfkit/edk2-arm-vars.fd \
       -device "virtio-scsi-pci,id=scsi0" -drive "file=/Users/dominic/flake/test/disk-scsi.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
       -device "virtio-blk-pci,drive=hd0" -drive "file=/Users/dominic/flake/test/disk-blk.img,if=none,format=qcow2,id=hd0"
   '';
