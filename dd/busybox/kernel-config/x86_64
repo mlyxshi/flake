@@ -2,6 +2,9 @@
 CONFIG_SERIAL_8250=y
 CONFIG_SERIAL_8250_CONSOLE=y
 
+# vga
+CONFIG_DRM_BOCHS=y
+
 # cat /proc/bus/input/devices
 # Standard AT or PS/2 keyboard 
 CONFIG_INPUT_KEYBOARD=y
