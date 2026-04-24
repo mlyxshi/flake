@@ -7,6 +7,7 @@ CONFIG_SERIAL_8250_CONSOLE=y
 # https://github.com/coreboot/seabios/blob/8fcd351a936ff3b63571a6f6776f5cfc3f2b8e3e/src/bootsplash.c#L40
 CONFIG_VGA_CONSOLE=y
 
-# Standard AT or PS/2 keyboard
+# cat /proc/bus/input/devices
+# Standard AT or PS/2 keyboard 
 CONFIG_INPUT_KEYBOARD=y
 CONFIG_KEYBOARD_ATKBD=y
