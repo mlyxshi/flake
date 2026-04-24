@@ -8,7 +8,7 @@
 {
   imports = [ "${modulesPath}/profiles/qemu-guest.nix" ]; # qemu-guest kernel modules
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
   system.nixos-init.enable = true;
 
   networking.hostName = "systemd-initrd";
@@ -110,6 +110,7 @@
     file = "${pkgs.file}/bin/file"; # yazi dependency
     lsblk = "${pkgs.util-linux}/bin/lsblk";
     blkid = "${pkgs.util-linux}/bin/blkid";
+    fdisk = "${pkgs.util-linux}/bin/fdisk";
 
     # debug
     htop = "${pkgs.htop}/bin/htop";
