@@ -59,8 +59,7 @@ CONFIG_VT_CONSOLE=y
 # Virtio Keyboard (-device virtio-keyboard-pci)
 CONFIG_VIRTIO_INPUT=y
 
-# USB Keyboard
-# xHCI (USB 3.0)
+# USB Keyboard (xHCI USB 3.0)
 CONFIG_USB_SUPPORT=y
 CONFIG_USB=y
 CONFIG_USB_PCI=y
