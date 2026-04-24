@@ -56,10 +56,21 @@ CONFIG_TTY=y
 CONFIG_VT=y
 CONFIG_VT_CONSOLE=y
 
-# Virtio Keyboard (-device virtio-keyboard-pci)
+CONFIG_DRM=y
+# virtio-gpu-pci
+CONFIG_DRM_VIRTIO_GPU=y
+CONFIG_DRM_VIRTIO_GPU_KMS=y
+# vga
+CONFIG_DRM_BOCHS=y
+# bridge drm to fb console
+CONFIG_DRM_FBDEV_EMULATION=y
+CONFIG_FRAMEBUFFER_CONSOLE=y
+
+
+# virtio keyboard (-device virtio-keyboard-pci)
 CONFIG_VIRTIO_INPUT=y
 
-# USB Keyboard (xHCI USB 3.0)
+# usb keyboard (xHCI USB 3.0)
 CONFIG_USB_SUPPORT=y
 CONFIG_USB=y
 CONFIG_USB_PCI=y

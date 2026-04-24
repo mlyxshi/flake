@@ -2,11 +2,6 @@
 CONFIG_SERIAL_8250=y
 CONFIG_SERIAL_8250_CONSOLE=y
 
-# Some VPS providers use Proxmox -> SeaBIOS
-# VGA Console Support (Text Mode)
-# https://github.com/coreboot/seabios/blob/8fcd351a936ff3b63571a6f6776f5cfc3f2b8e3e/src/bootsplash.c#L40
-CONFIG_VGA_CONSOLE=y
-
 # cat /proc/bus/input/devices
 # Standard AT or PS/2 keyboard 
 CONFIG_INPUT_KEYBOARD=y

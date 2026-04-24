@@ -76,8 +76,9 @@ rec {
     ls -lh ${kernel}/vmlinuz.efi | awk '{print $5}'
     ls -lh ${busybox}/bin/busybox | awk '{print $5}'
     /opt/homebrew/bin/qemu-system-aarch64 -machine virt -cpu host -accel hvf -m 256M \
-      -kernel ${kernel}/vmlinuz.efi -append "console=ttyAMA0 console=tty0"\
-      -device virtio-gpu-pci -display cocoa,zoom-to-fit=on -serial stdio \
+      -kernel ${kernel}/vmlinuz.efi -append "console=ttyAMA0 console=tty0" \
+      -device virtio-gpu-pci \
+      -display cocoa,zoom-to-fit=on -serial stdio \
       -device qemu-xhci,id=xhci -device usb-kbd,bus=xhci.0 \
       -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:23333" \
       -drive if=pflash,format=raw,readonly=on,file=/Users/dominic/vfkit/edk2-aarch64-code.fd \
@@ -89,7 +90,9 @@ rec {
   test-x86-64 = pkgs-macos.writeShellScriptBin "x86-64-initramfs-test" ''
     ls -lh ${kernel}/bzImage  | awk '{print $5}'
     /opt/homebrew/bin/qemu-system-x86_64 -cpu qemu64 -m 256M \
-      -kernel ${kernel}/bzImage \
+      -kernel ${kernel}/bzImage -append "console=ttyS0 console=tty0" \
+      -vga std \
+      -display cocoa,zoom-to-fit=on -serial stdio \
       -device "virtio-net-pci,netdev=net0" -netdev "user,id=net0,hostfwd=tcp::8022-:23333" \
       -device "virtio-scsi-pci,id=scsi0" -drive "file=/Users/dominic/flake/test/disk-scsi.img,if=none,format=qcow2,id=drive0" -device "scsi-hd,drive=drive0,bus=scsi0.0" \
       -device "virtio-blk-pci,drive=hd0" -drive "file=/Users/dominic/flake/test/disk-blk.img,if=none,format=qcow2,id=hd0"
