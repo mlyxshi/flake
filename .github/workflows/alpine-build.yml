@@ -67,11 +67,10 @@ jobs:
 
           echo ">>> Building kernel..."
           cd /linux
- 
-          make ARCH=${{ matrix.arch }} KCONFIG_ALLCONFIG=/flake/dd/busybox/kernel.config allnoconfig
-          scripts/config --enable EXPERT --disable ELF_CORE --disable MULTIUSER --disable KALLSYMS --disable BUG
-          make olddefconfig
-          make CONFIG_INITRAMFS_SOURCE=/tmp/cpio.list -j$(nproc) ${{ matrix.kernel_target }}
+
+          cat /flake/dd/busybox/kernel-config/common /flake/dd/busybox/kernel-config/${{ matrix.arch }} > mini.config
+          make ARCH=${{ matrix.arch }} KCONFIG_ALLCONFIG=mini.config allnoconfig
+          make ARCH=${{ matrix.arch }} CONFIG_INITRAMFS_SOURCE=/tmp/cpio.list -j$(nproc) ${{ matrix.kernel_target }}
 
           cp ${{ matrix.kernel_path }} /tmp/busybox-kernel
 
