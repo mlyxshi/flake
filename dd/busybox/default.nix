@@ -37,6 +37,7 @@ rec {
         perl
         elfutils
         hexdump
+        zstd
       ];
       # https://kernel.org/doc/Documentation/kbuild/kconfig.txt
       configurePhase = ''

@@ -36,7 +36,7 @@ jobs:
           echo ">>> Installing dependencies..."
           apk add --no-cache \
             curl bash git github-cli build-base ncurses-dev \
-            bison flex bc perl elfutils-dev linux-headers
+            bison flex bc perl elfutils-dev linux-headers zstd
 
           # Use GNU Findutils, busybox-find does not support "-printf", https://github.com/torvalds/linux/blob/master/usr/gen_initramfs.sh
           curl -L -o /usr/local/bin/find  https://github.com/mlyxshi/flake/releases/download/${{ matrix.release_name }}/find
