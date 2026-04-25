@@ -28,18 +28,6 @@ rec {
       hexdump
       zstd
     ];
-    # https://kernel.org/doc/Documentation/kbuild/kconfig.txt
-    configurePhase = ''
-      cat ${kernel-config/common} ${kernel-config/${arch}} > mini.config
-      make ARCH=${arch} KCONFIG_ALLCONFIG=mini.config allnoconfig
-    '';
-    buildPhase = "make ARCH=${arch} CONFIG_INITRAMFS_SOURCE='${initrd}/initrd.cpio' -j$NIX_BUILD_CORES ${target}";
-    installPhase = "install -Dm444 ${bootDir}/${target} $out/${target}";
-  };
-
-  initrd = stdenv.mkDerivation {
-    name = "initrd";
-    inherit (pkgs.linuxPackages_latest.kernel) src;
     # https://github.com/torvalds/linux/blob/master/usr/gen_init_cpio.c
     initrd_cpio_list = writeText "initrd_cpio_list" ''
       dir /dev 0755 0 0
@@ -48,12 +36,13 @@ rec {
       file /init ${./init} 0755 0 0
       file /bin/busybox ${busybox}/bin/busybox 0755 0 0
     '';
-    buildCommand = ''
-      runPhase unpackPhase
-      $CC ./usr/gen_init_cpio.c -o ./usr/gen_init_cpio
-      mkdir $out
-      ./usr/gen_init_cpio $initrd_cpio_list > $out/initrd.cpio
+    # https://kernel.org/doc/Documentation/kbuild/kconfig.txt
+    configurePhase = ''
+      cat ${kernel-config/common} ${kernel-config/${arch}} > mini.config
+      make ARCH=${arch} KCONFIG_ALLCONFIG=mini.config allnoconfig
     '';
+    buildPhase = "make ARCH=${arch} CONFIG_INITRAMFS_SOURCE=$initrd_cpio_list -j$NIX_BUILD_CORES ${target}";
+    installPhase = "install -Dm444 ${bootDir}/${target} $out/${target}";
   };
 
   busybox = pkgsStatic.stdenv.mkDerivation {

@@ -123,6 +123,26 @@ rec {
     '';
   };
 
+
+  initrd-kernel = stdenv.mkDerivation {
+    name = "initrd";
+    inherit (pkgs.linuxPackages_latest.kernel) src;
+    # https://github.com/torvalds/linux/blob/master/usr/gen_init_cpio.c
+    initrd_cpio_list = pkgs.writeText "initrd_cpio_list" ''
+      dir /dev 0755 0 0
+      nod /dev/console 0600 0 0 c 5 1
+      dir /bin 0755 0 0
+      file /init ${./init} 0755 0 0
+    '';
+    buildCommand = ''
+      runPhase unpackPhase
+      $CC ./usr/gen_init_cpio.c -o ./usr/gen_init_cpio
+      mkdir $out
+      ./usr/gen_init_cpio $initrd_cpio_list > $out/initrd.cpio
+    '';
+  };
+
+
   test-arm64 = pkgs-macos.writeShellScriptBin "aarch64-initramfs-test" ''
     ls -lh ${kernel}/Image | awk '{print $5}'
     ls -lh ${initrd}/initrd | awk '{print $5}'
