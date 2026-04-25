@@ -8,22 +8,6 @@
     enable = true;
     extraConfig = {
       inputs = {
-        cpu = { };
-        disk = {
-          ignore_fs = [
-            "tmpfs"
-            "devtmpfs"
-            "devfs"
-            "overlay"
-            "aufs"
-            "squashfs"
-            "vfat"
-          ];
-        };
-        diskio = { };
-        mem = { };
-        net = { };
-        processes = { };
         system = { };
         systemd_units = { };
       };

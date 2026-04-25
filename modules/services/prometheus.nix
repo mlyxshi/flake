@@ -71,14 +71,6 @@ in
                   summary = "Miniflux Broken Feed";
                 };
               }
-              {
-                alert = "Storage Full";
-                expr = ''disk_used_percent{job="Node",path="/var"} > 90'';
-                for = "2m";
-                annotations = {
-                  summary = "Storage Full {{ $labels.host }}";
-                };
-              }
             ];
           }
         ];
