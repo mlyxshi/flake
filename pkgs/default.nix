@@ -211,5 +211,4 @@ rec {
 
   transmission = pkgs.callPackage ./transmission.nix { };
 
-  vscode-fix = pkgs.callPackage ./vscode.nix { };
 }
