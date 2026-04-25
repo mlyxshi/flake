@@ -69,11 +69,10 @@ CONFIG_FRAMEBUFFER_CONSOLE=y
 # virtio keyboard (-device virtio-keyboard-pci)
 CONFIG_VIRTIO_INPUT=y
 
-# usb keyboard (xHCI USB 3.0)
+# usb keyboard (XHCI USB 3.0)
 CONFIG_USB_SUPPORT=y
 CONFIG_USB=y
 CONFIG_USB_PCI=y
-
 CONFIG_USB_XHCI_HCD=y
 
 CONFIG_HID_SUPPORT=y
