@@ -9,7 +9,6 @@ rec {
   inherit (pkgs)
     stdenv
     pkgsStatic
-    writeText
     ;
 
   arch = stdenv.hostPlatform.linuxArch;
@@ -29,7 +28,7 @@ rec {
       zstd
     ];
     # https://github.com/torvalds/linux/blob/master/usr/gen_init_cpio.c
-    initrd_cpio_list = writeText "initrd_cpio_list" ''
+    initrd_cpio_list = pkgs.writeText "initrd_cpio_list" ''
       dir /dev 0755 0 0
       nod /dev/console 0600 0 0 c 5 1
       dir /bin 0755 0 0

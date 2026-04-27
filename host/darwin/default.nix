@@ -72,6 +72,7 @@
     zoxide
     eza
     bat
+    bat-extras.batman
     gdu
     gh
     jq
