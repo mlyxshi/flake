@@ -114,7 +114,6 @@
     gptfdisk
     gitMinimal
 
-
     (writeShellScriptBin "update" ''
       if [[ -e "/flake/flake.nix" ]]
       then

@@ -8,7 +8,9 @@ rc-update add avahi-daemon default
 rc-service avahi-daemon start
 
 
+# repo
 
+vi  /etc/apt/repositories 
 
 # for vscode remote
 vi /etc/ssh/sshd_config

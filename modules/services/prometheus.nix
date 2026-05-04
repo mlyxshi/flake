@@ -63,7 +63,7 @@ in
                 };
               }
               {
-                # 2 reddit feed 
+                # 2 reddit feed
                 alert = "Miniflux Broken Feed";
                 expr = ''miniflux_broken_feeds{job="Miniflux"} > 2'';
                 for = "600m";

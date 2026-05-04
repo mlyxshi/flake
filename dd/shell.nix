@@ -1,4 +1,4 @@
-# nix develop -f /flake/dd/shell.nix 
+# nix develop -f /flake/dd/shell.nix
 # For kernel/busybox:  make menuconfig
 {
   pkgs ? import <nixpkgs> { },
@@ -6,7 +6,7 @@
 }:
 
 pkgs.mkShell {
-  nativeBuildInputs = with pkgs; [     
+  nativeBuildInputs = with pkgs; [
     gcc
     gnumake
     pkg-config
@@ -19,7 +19,7 @@ pkgs.mkShell {
     bc
   ];
 
-  buildInputs = with pkgs;[
+  buildInputs = with pkgs; [
     # make menuconfig
     ncurses
   ];

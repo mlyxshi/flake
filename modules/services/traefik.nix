@@ -6,7 +6,7 @@
 {
   services.traefik = {
     enable = true;
-    supplementaryGroups = lib.optionals config.virtualisation.podman.enable [ "podman" ];  
+    supplementaryGroups = lib.optionals config.virtualisation.podman.enable [ "podman" ];
 
     dynamic.dir = "/var/lib/traefik/dynamic";
     dynamic.files."dashboard".settings = {
@@ -45,7 +45,7 @@
       certificatesResolvers.letsencrypt.acme = {
         dnsChallenge.provider = "cloudflare";
         email = "blackhole@${config.networking.domain}";
-        storage = "/var/lib/traefik/acme.json"; 
+        storage = "/var/lib/traefik/acme.json";
       };
     }
     // lib.optionalAttrs config.virtualisation.podman.enable {

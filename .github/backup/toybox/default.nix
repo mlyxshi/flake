@@ -123,7 +123,6 @@ rec {
     '';
   };
 
-
   initrd-kernel = stdenv.mkDerivation {
     name = "initrd";
     inherit (pkgs.linuxPackages_latest.kernel) src;
@@ -141,7 +140,6 @@ rec {
       ./usr/gen_init_cpio $initrd_cpio_list > $out/initrd.cpio
     '';
   };
-
 
   test-arm64 = pkgs-macos.writeShellScriptBin "aarch64-initramfs-test" ''
     ls -lh ${kernel}/Image | awk '{print $5}'

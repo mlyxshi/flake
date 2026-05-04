@@ -79,7 +79,7 @@
     restic
     nix-init
     nix-update
-    nixfmt
+    nixfmt-rs
     (pkgs.writeShellScriptBin "update" ''
       cd /Users/dominic/flake
       SYSTEM=$(nix build --no-link --print-out-paths .#darwinConfigurations.${config.networking.hostName}.system)
@@ -142,10 +142,6 @@
       cleanup = "uninstall";
     };
 
-    taps = [
-      "tw93/tap"
-    ];
-
     brews = [
       "iproute2mac"
       "nexttrace"
@@ -154,6 +150,9 @@
       "mole"
       "container"
       "vfkit"
+      "riscv64-elf-gcc"
+      "riscv64-elf-gdb"
+      "msedit"
     ];
 
     casks = [
@@ -167,9 +166,8 @@
       "uninstallpkg"
       "suspicious-package"
       "google-chrome"
-      "utm"
+      # "utm"
       "openmtp"
-      # "lite-edit"
     ];
   };
 
