@@ -25,7 +25,7 @@ jobs:
           HostName ${{ matrix.host }}.mlyxshi.com
           HostKeyAlias ${{ matrix.host }}
           User root
-          Port 22
+          Port 23333
           StrictHostKeyChecking no
         EOF
         
