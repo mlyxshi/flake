@@ -168,6 +168,7 @@
       "google-chrome"
       # "utm"
       "openmtp"
+      "ghostty"
     ];
   };
 
