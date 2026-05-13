@@ -91,6 +91,7 @@
     "${pkgs.file}/share/misc/magic.mgc" # file dependency
   ];
 
+  nixpkgs.config.allowUnfree = true;
   boot.initrd.systemd.extraBin = {
     # nix
     nix = "${pkgs.nix}/bin/nix";
@@ -102,6 +103,7 @@
     # net
     ip = "${pkgs.iproute2}/bin/ip";
     curl = "${pkgs.curl}/bin/curl";
+    snell-server = "${pkgs.snell}/bin/snell-server";
 
     # fs
     "mkfs.fat" = "${pkgs.dosfstools}/bin/mkfs.fat";
