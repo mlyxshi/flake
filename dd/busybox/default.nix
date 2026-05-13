@@ -47,12 +47,13 @@ rec {
   busybox = pkgsStatic.stdenv.mkDerivation {
     name = "busybox";
     inherit (pkgs.busybox) src;
+    depsBuildBuild = [ pkgs.buildPackages.stdenv.cc ];
     configurePhase = ''
       cp ${./cloud_init_networkcfg.c} miscutils/cloud_init_networkcfg.c
-      make HOSTCC=$CC allnoconfig
+      make allnoconfig
       for opt in $(grep '^CONFIG_.*' ${./busybox.config}); do sed -i "s|^# $opt is not set|$opt=y|" .config; done
     '';
-    buildPhase = "make HOSTCC=$CC CROSS_COMPILE=${pkgsStatic.stdenv.cc.targetPrefix} busybox -j$NIX_BUILD_CORES";
+    buildPhase = "make CROSS_COMPILE=${pkgsStatic.stdenv.cc.targetPrefix} busybox -j$NIX_BUILD_CORES";
     installPhase = "install -Dm755 busybox $out/bin/busybox";
   };
 
