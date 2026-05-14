@@ -40,12 +40,28 @@
     outbounds = [
       {
         type = "socks";
+        tag = "warp";
+        server = "127.0.0.1";
+        server_port = 40000;
+        version = "5";
+      }
+      {
+        type = "socks";
         tag = "tor";
         server = "127.0.0.1";
         server_port = 9050;
         version = "5";
       }
     ];
+    route = {
+      rules = [
+        {
+          domain_suffix = [ ".onion" ];
+          outbound = "tor";
+        }
+      ];
+      final = "warp";
+    };
   };
 
   services.openssh.ports = [ 23333 ];
