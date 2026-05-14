@@ -10,9 +10,8 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.hardware.bios.limine
     self.nixosModules.network.cloud-init
     self.nixosModules.services.komari-agent
-    self.nixosModules.services.cloudflare-warp
-    self.nixosModules.services.snell
     self.nixosModules.services.warp-tor
+    self.nixosModules.services.snell
     self.nixosModules.pr.traefik
     ./misc.nix
     {
