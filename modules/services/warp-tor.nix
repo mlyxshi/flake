@@ -57,11 +57,6 @@
     route = {
       rules = [
         {
-          action = "route-options";
-          override_address = "bookszlibb74ugqojhzhg2a63w5i2atv5bqarulgczawnbmsb6s6qead.onion";
-          domain_suffix = [ "z.mlyxshi.com" ];
-        }
-        {
           action = "route";
           domain_suffix = [ ".onion" ];
           outbound = "tor";
