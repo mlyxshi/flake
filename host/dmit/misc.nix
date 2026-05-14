@@ -12,6 +12,9 @@
     self.nixosModules.programs.vscode-ssh-remote
   ];
 
+  services.tor.enable = true;
+  services.tor.client.enable = true;
+
   services.openssh.ports = [ 23333 ];
 
   boot.blacklistedKernelModules = [ "virtio_balloon" ];
