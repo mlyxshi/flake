@@ -12,7 +12,7 @@
     self.nixosModules.programs.vscode-ssh-remote
   ];
 
-  # services.tor.enable = true;
+  services.tor.enable = true;
   services.tor.client.enable = true;
 
   services.sing-box.enable = true;
