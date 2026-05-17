@@ -50,7 +50,7 @@ losetup -d /dev/loop1
 ```
 
 
-# NC 
+# NC tty
 ```
 wget https://github.com/mlyxshi/flake/releases/download/$(uname -m)/busybox-kernel
 cat > /boot/grub/custom.cfg <<EOF
@@ -58,6 +58,20 @@ menuentry "KernelBusyBox" --id KernelBusyBox {
   insmod ext2
   search -f /etc/hostname --set root
   linux /root/busybox-kernel console=tty0
+}
+set default="KernelBusyBox"
+EOF
+reboot
+```
+
+# NC serial
+```
+wget https://github.com/mlyxshi/flake/releases/download/$(uname -m)/busybox-kernel
+cat > /boot/grub/custom.cfg <<EOF
+menuentry "KernelBusyBox" --id KernelBusyBox {
+  insmod ext2
+  search -f /etc/hostname --set root
+  linux /root/busybox-kernel console=ttyS0
 }
 set default="KernelBusyBox"
 EOF

@@ -21,6 +21,7 @@
           "traefik.http.routers.komari.rule=Host(`top.${config.networking.domain}`)"
           "traefik.http.routers.komari.entrypoints=websecure"
 
+          # GCP free upload to CDN will cost money, so use ip directly 
           "traefik.http.routers.komari-ip.rule=Host(`138.2.16.45`)"
           "traefik.http.routers.komari-ip.entrypoints=web"
         ];
