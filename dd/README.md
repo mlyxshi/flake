@@ -94,6 +94,20 @@ reboot
 ```
 
 
+# x86_64 UEFI sda int
+```
+wget https://github.com/mlyxshi/flake/releases/download/$(uname -m)/busybox-kernel
+cat > /boot/grub/custom.cfg <<EOF
+menuentry "KernelBusyBox" --id KernelBusyBox {
+  insmod ext2
+  search -f /etc/hostname --set root
+  linux /root/busybox-kernel console=tty0 device=/dev/sda url=https://dd.mlyxshi.com/amd-init.raw
+}
+set default="KernelBusyBox"
+EOF
+reboot
+```
+
 
 ```
 wget -qO /dev/sda https://dd.mlyxshi.com/arm-init.raw 

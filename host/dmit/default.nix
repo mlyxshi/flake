@@ -9,6 +9,7 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.nixos.server
     self.nixosModules.hardware.bios.limine
     self.nixosModules.network.cloud-init
+    
     self.nixosModules.services.komari-agent
     self.nixosModules.services.warp-tor
     self.nixosModules.services.snell
