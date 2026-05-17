@@ -1,0 +1,49 @@
+name: "System Upgrade GCP"
+on:
+  # push:
+  #   paths: 
+  #     - 'flake.lock'
+  workflow_dispatch:
+
+jobs:
+  Update:
+    runs-on: ubuntu-latest  
+
+    steps:
+    - uses: actions/checkout@master
+    - uses: DeterminateSystems/nix-installer-action@main
+    - run: |
+        mkdir -m 0755  ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+        chmod 600 ~/.ssh/id_ed25519
+
+        cat > ~/.ssh/config <<EOF
+        Host gcp
+          HostName 35.212.172.97
+          HostKeyAlias gcp
+          User root
+          StrictHostKeyChecking no
+        EOF
+        
+    - name: System Build
+      shell: bash
+      run: |
+        outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.gcp.config.system.build.toplevel)
+        echo "outPath=$outPath" >> "$GITHUB_ENV"
+
+    - name: Nix copy
+      shell: bash
+      run:  nix copy --to ssh://gcp $outPath
+    
+    - name: Diff closures
+      shell: bash
+      run:  ssh gcp nix store diff-closures /run/current-system $outPath
+    
+    - name: Set system profile
+      shell: bash
+      run:  ssh gcp nix-env -p /nix/var/nix/profiles/system --set $outPath
+    
+    - name: Switch configuration
+      shell: bash
+      run:  ssh gcp $outPath/bin/switch-to-configuration switch
+
