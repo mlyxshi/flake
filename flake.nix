@@ -33,6 +33,15 @@
       nixosConfigurations = {
         # nix build --no-link --print-out-paths .#nixosConfigurations.arm-init.config.system.build.image
         arm-init = nixpkgs.lib.nixosSystem { modules = [ ./dd/arm.nix ]; };
+        amd-init = nixpkgs.lib.nixosSystem {
+          modules = [
+            ./dd/arm.nix
+            {
+              networking.hostName = "amd-init";
+              nixpkgs.hostPlatform = "x86_64-linux";
+            }
+          ];
+        };
         bios-vda-init = nixpkgs.lib.nixosSystem { modules = [ ./dd/bios.nix ]; };
         bios-sda-init = nixpkgs.lib.nixosSystem {
           modules = [

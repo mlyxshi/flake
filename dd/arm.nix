@@ -27,8 +27,8 @@ in
     "${modulesPath}/image/repart.nix"
   ];
 
-  networking.hostName = "arm-init";
-  nixpkgs.hostPlatform = "aarch64-linux";
+  networking.hostName = lib.mkDefault "arm-init";
+  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 
   services.getty.autologinUser = "root";
 
