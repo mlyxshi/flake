@@ -50,8 +50,9 @@ let
 in
 {
 
-  # imports = [
-  # ];
+  imports = [
+    self.nixosModules.services.commit-notifier
+  ];
 
   boot.kernelParams = [ "console=ttyS0,115200" ];
   services.getty.autologinUser = "root";
