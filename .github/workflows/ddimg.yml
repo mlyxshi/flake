@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  Update:
+  build:
     runs-on: ubuntu-latest  
 
     steps:
@@ -19,7 +19,6 @@ jobs:
         echo "${{ secrets.OCI_API_KEY}}" > ~/.oci/oci_api_key.pem  
         
     - name: System Build
-      shell: bash
       run: |
         git clone https://github.com/mlyxshi/flake
 
@@ -65,4 +64,4 @@ jobs:
 
 
     - name: Upload
-      run: oci os object put --bucket-name oracle-us --file bios-init.raw
+      run: nix run nixpkgs#oci-cli os object put --bucket-name oracle-us --file bios-init.raw
