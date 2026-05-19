@@ -27,8 +27,8 @@ jobs:
         sudo sgdisk -n 0:0:+200M /dev/loop0
         sudo sgdisk -n 0:0:0 /dev/loop0
 
-        mkfs.fat -F 32 /dev/loop0p2
-        mkfs.ext4 /dev/loop0p3
+        sudo mkfs.fat -F 32 /dev/loop0p2
+        sudo mkfs.ext4 /dev/loop0p3
         mkdir -p /mnt
         mount /dev/loop0p3 /mnt
         mount --mkdir /dev/loop0p2 /mnt/boot
