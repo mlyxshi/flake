@@ -33,8 +33,8 @@ jobs:
         sudo mount /dev/loop0p3 /mnt
         sudo mount --mkdir /dev/loop0p2 /mnt/boot
 
-        outPath=$(sudo nix build --store /mnt --no-link --print-out-paths ./flake#nixosConfigurations.bios-vda-init.config.system.build.toplevel)
-        sudo nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $outPath
+        outPath=$(sudo /nix/var/nix/profiles/default/bin/nix build --store /mnt --no-link --print-out-paths ./flake#nixosConfigurations.bios-vda-init.config.system.build.toplevel)
+        sudo /nix/var/nix/profiles/default/bin/nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $outPath
 
         sudo mkdir -p /mnt/dev /mnt/sys /mnt/proc
         sudo chmod 0755 /mnt/dev /mnt/sys /mnt/proc
@@ -46,7 +46,7 @@ jobs:
         sudo chroot /mnt /nix/var/nix/profiles/system/activate
         sudo chroot /mnt /nix/var/nix/profiles/system/bin/switch-to-configuration boot
 
-        sudo nix run nixpkgs#limine bios-install /dev/loop0
+        sudo /nix/var/nix/profiles/default/bin/nix run nixpkgs#limine bios-install /dev/loop0
 
         sudo umount -Rl /mnt/dev
         sudo umount -Rl /mnt/sys
