@@ -93,7 +93,7 @@ jobs:
 
     - name: System Build
       run: |
-        outPath=$(sudo /nix/var/nix/profiles/default/bin/nix build --no-link --print-out-paths .#nixosConfigurations.amd-init.config.system.build.image)
+        outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.amd-init.config.system.build.image)
         echo "outPath=$outPath" >> "$GITHUB_ENV"
 
     - name: Upload
