@@ -13,6 +13,10 @@ jobs:
         mkdir -m 0755  ~/.ssh
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
+  
+        mkdir -m 0755  ~/.oci
+        echo "${{ secrets.OCI_CONFIG }}" > ~/.oci/config
+        echo "${{ secrets.OCI_API_KEY}}" > ~/.oci/oci_api_key.pem  
         
     - name: System Build
       shell: bash
@@ -59,7 +63,6 @@ jobs:
         sudo umount /dev/loop0p3
         sudo losetup -d /dev/loop0
 
-        ls -alh bios-init.raw
 
-
-
+    - name: Upload
+      run: oci os object put --bucket-name oracle-us --file bios-init.raw
