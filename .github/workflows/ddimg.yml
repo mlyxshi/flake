@@ -22,10 +22,10 @@ jobs:
         fallocate -l 3G bios-init.raw
         sudo losetup -fP --show bios-init.raw
 
-        sgdisk -n 0:0:+1M -t 0:ef02 /dev/loop0
+        sudo sgdisk -n 0:0:+1M -t 0:ef02 /dev/loop0
 
-        sgdisk -n 0:0:+200M /dev/loop0
-        sgdisk -n 0:0:0 /dev/loop0
+        sudo sgdisk -n 0:0:+200M /dev/loop0
+        sudo sgdisk -n 0:0:0 /dev/loop0
 
         mkfs.fat -F 32 /dev/loop0p2
         mkfs.ext4 /dev/loop0p3
