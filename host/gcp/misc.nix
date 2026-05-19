@@ -51,14 +51,14 @@ in
 {
 
   imports = [
-    self.nixosModules.services.commit-notifier
+
   ];
 
   boot.kernelParams = [ "console=ttyS0,115200" ];
   services.getty.autologinUser = "root";
 
   systemd.services.komari-agent.environment.AGENT_ENDPOINT = "http://138.2.16.45";
-  systemd.services.komari-agent.environment.AGENT_CUSTOM_IPV4 = "35.212.172.97";
+  systemd.services.komari-agent.environment.AGENT_CUSTOM_IPV4 = "1.1.1.1";
 
   networking.nftables.enable = true;
   networking.nftables.ruleset = ''
