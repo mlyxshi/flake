@@ -10,10 +10,6 @@ jobs:
     - uses: actions/checkout@master
     - uses: DeterminateSystems/nix-installer-action@main
     - run: |
-        mkdir -m 0755  ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-        chmod 600 ~/.ssh/id_ed25519
-  
         mkdir ~/.oci
         echo "${{ secrets.OCI_CONFIG }}" > ~/.oci/config
         echo "${{ secrets.OCI_API_KEY}}" > ~/.oci/oci_api_key.pem  
@@ -78,10 +74,6 @@ jobs:
     - uses: actions/checkout@master
     - uses: DeterminateSystems/nix-installer-action@main
     - run: |
-        mkdir -m 0755  ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-        chmod 600 ~/.ssh/id_ed25519
-  
         mkdir ~/.oci
         echo "${{ secrets.OCI_CONFIG }}" > ~/.oci/config
         echo "${{ secrets.OCI_API_KEY}}" > ~/.oci/oci_api_key.pem  
@@ -109,10 +101,6 @@ jobs:
     - uses: actions/checkout@master
     - uses: DeterminateSystems/nix-installer-action@main
     - run: |
-        mkdir -m 0755  ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-        chmod 600 ~/.ssh/id_ed25519
-  
         mkdir ~/.oci
         echo "${{ secrets.OCI_CONFIG }}" > ~/.oci/config
         echo "${{ secrets.OCI_API_KEY}}" > ~/.oci/oci_api_key.pem  

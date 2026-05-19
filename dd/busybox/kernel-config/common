@@ -35,6 +35,9 @@ CONFIG_BLOCK=y
 CONFIG_BLK_DEV=y
 CONFIG_VIRTIO_BLK=y
 
+# TODO: support nvme, very expensive machine use nvme
+# CONFIG_BLK_DEV_NVME
+
 CONFIG_SCSI=y
 CONFIG_BLK_DEV_SD=y
 CONFIG_BLK_DEV_SR=y

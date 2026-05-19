@@ -86,7 +86,7 @@ cat > /boot/grub/custom.cfg <<EOF
 menuentry "KernelBusyBox" --id KernelBusyBox {
   insmod ext2
   search -f /etc/hostname --set root
-  linux /root/busybox-kernel console=tty0 device=/dev/sda url=https://dd.mlyxshi.com/arm-init.raw
+  linux /root/busybox-kernel console=tty0 device=/dev/sda url=url=https://objectstorage.us-sanjose-1.oraclecloud.com/n/axb5pq9tjzal/b/us/o/arm-init.raw
 }
 set default="KernelBusyBox"
 EOF
@@ -100,7 +100,7 @@ cat > /boot/grub/custom.cfg <<EOF
 menuentry "KernelBusyBox" --id KernelBusyBox {
   insmod ext2
   search -f /etc/hostname --set root
-  linux /root/busybox-kernel console=tty0 device=/dev/vda url=https://dd.mlyxshi.com/bios-vda-init.raw
+  linux /root/busybox-kernel console=tty0 device=/dev/vda url=https://objectstorage.us-sanjose-1.oraclecloud.com/n/axb5pq9tjzal/b/us/o/bios-init.raw
 }
 set default="KernelBusyBox"
 EOF
@@ -115,7 +115,7 @@ cat > /boot/grub/custom.cfg <<EOF
 menuentry "KernelBusyBox" --id KernelBusyBox {
   insmod ext2
   search -f /etc/hostname --set root
-  linux /root/busybox-kernel console=tty0 device=/dev/sda url=https://dd.mlyxshi.com/amd-init.raw
+  linux /root/busybox-kernel console=tty0 device=/dev/sda url=https://objectstorage.us-sanjose-1.oraclecloud.com/n/axb5pq9tjzal/b/us/o/amd-init.raw
 }
 set default="KernelBusyBox"
 EOF
