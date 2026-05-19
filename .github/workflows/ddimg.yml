@@ -13,6 +13,7 @@ jobs:
         wget https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh
         chmod +x install.sh
         ./install.sh --accept-all-defaults 
+
         mkdir -m 0755  ~/.ssh
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
@@ -20,6 +21,7 @@ jobs:
         mkdir -m 0755  ~/.oci
         echo "${{ secrets.OCI_CONFIG }}" > ~/.oci/config
         echo "${{ secrets.OCI_API_KEY}}" > ~/.oci/oci_api_key.pem  
+        chmod 600 ~/.oci/oci_api_key.pem  
         
     - name: System Build
       run: |
