@@ -10,21 +10,21 @@ jobs:
     - uses: actions/checkout@master
     - uses: DeterminateSystems/nix-installer-action@main
     - run: |
-        wget https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh
-        chmod +x install.sh
-        ./install.sh --accept-all-defaults 
-
         mkdir -m 0755  ~/.ssh
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
   
-        mkdir -m 0755  ~/.oci
+        mkdir ~/.oci
         echo "${{ secrets.OCI_CONFIG }}" > ~/.oci/config
         echo "${{ secrets.OCI_API_KEY}}" > ~/.oci/oci_api_key.pem  
-        chmod 600 ~/.oci/config 
-        chmod 600 ~/.oci/oci_api_key.pem  
+        chmod 600 ~/.oci/config
+        chmod 600 ~/.oci/oci_api_key.pem
 
-                /home/runner/bin/oci os object put --bucket-name oracle-us --file /nix/var/nix/profiles/default/bin/nix
+        mkdir -p ~/.config/rclone
+        echo "${{ secrets.RCLONE_CONFIG }}" > ~/.config/rclone/rclone.conf
+
+        nix run nixpkgs#rclone copy  /nix/var/nix/profiles/default/bin/nix  oracle:us
+
         
     - name: System Build
       run: |
@@ -72,5 +72,5 @@ jobs:
 
 
     - name: Upload
-      run: |
-        /home/runner/bin/oci os object put --bucket-name oracle-us --file bios-init.raw
+      run: nix run nixpkgs#rclone copy  bios-init.raw  oracle:us
+
