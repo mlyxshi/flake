@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  bios-init:
     runs-on: ubuntu-latest  
 
     steps:
@@ -23,13 +23,8 @@ jobs:
         mkdir -p ~/.config/rclone
         echo "${{ secrets.RCLONE_CONFIG }}" > ~/.config/rclone/rclone.conf
 
-        nix run nixpkgs#rclone copy  /nix/var/nix/profiles/default/bin/nix  oracle:us
-
-        
     - name: System Build
       run: |
-        git clone https://github.com/mlyxshi/flake
-
         fallocate -l 3G bios-init.raw
         sudo losetup -fP --show bios-init.raw
 
@@ -44,7 +39,7 @@ jobs:
         sudo mount /dev/loop0p3 /mnt
         sudo mount --mkdir /dev/loop0p2 /mnt/boot
 
-        outPath=$(sudo /nix/var/nix/profiles/default/bin/nix build --store /mnt --no-link --print-out-paths ./flake#nixosConfigurations.bios-vda-init.config.system.build.toplevel)
+        outPath=$(sudo /nix/var/nix/profiles/default/bin/nix build --store /mnt --no-link --print-out-paths .#nixosConfigurations.bios-vda-init.config.system.build.toplevel)
         sudo /nix/var/nix/profiles/default/bin/nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $outPath
 
         sudo mkdir -p /mnt/dev /mnt/sys /mnt/proc
