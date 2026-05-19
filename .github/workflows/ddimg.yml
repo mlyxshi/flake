@@ -93,8 +93,37 @@ jobs:
 
     - name: System Build
       run: |
-        outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.arm-init.config.system.build.image)
+        outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.amd-init.config.system.build.image)
         echo "outPath=$outPath" >> "$GITHUB_ENV"
 
     - name: Upload
       run: nix run nixpkgs#rclone copy $outPath/amd-init.raw  oracle:us
+
+
+  arm-init:
+    runs-on: ubuntu-24.04-arm
+
+    steps:
+    - uses: actions/checkout@master
+    - uses: DeterminateSystems/nix-installer-action@main
+    - run: |
+        mkdir -m 0755  ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+        chmod 600 ~/.ssh/id_ed25519
+  
+        mkdir ~/.oci
+        echo "${{ secrets.OCI_CONFIG }}" > ~/.oci/config
+        echo "${{ secrets.OCI_API_KEY}}" > ~/.oci/oci_api_key.pem  
+        chmod 600 ~/.oci/config
+        chmod 600 ~/.oci/oci_api_key.pem
+
+        mkdir -p ~/.config/rclone
+        echo "${{ secrets.RCLONE_CONFIG }}" > ~/.config/rclone/rclone.conf
+
+    - name: System Build
+      run: |
+        outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.arm-init.config.system.build.image)
+        echo "outPath=$outPath" >> "$GITHUB_ENV"
+
+    - name: Upload
+      run: nix run nixpkgs#rclone copy $outPath/arm-init.raw  oracle:us
