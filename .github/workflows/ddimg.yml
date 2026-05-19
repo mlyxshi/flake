@@ -64,4 +64,6 @@ jobs:
 
 
     - name: Upload
-      run: nix run nixpkgs#oci-cli os object put --bucket-name oracle-us --file bios-init.raw
+      run: |
+        nix profile add nixpkgs#oci-cli 
+        oci os object put --bucket-name oracle-us --file bios-init.raw
