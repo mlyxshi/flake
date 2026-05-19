@@ -15,7 +15,7 @@ jobs:
         chmod 600 ~/.ssh/id_ed25519
         
     - name: System Build
-      - shell: sudo -E bash -e {0}
+      shell: sudo -E bash -e {0}
       run: |
         git clone https://github.com/mlyxshi/flake
 
