@@ -15,20 +15,20 @@ jobs:
         chmod 600 ~/.ssh/id_ed25519
         
     - name: System Build
-      shell: bash
+      - shell: sudo -E bash -e {0}
       run: |
         git clone https://github.com/mlyxshi/flake
 
         fallocate -l 3G bios-init.raw
-        sudo losetup -fP --show bios-init.raw
+        losetup -fP --show bios-init.raw
 
-        sudo sgdisk -n 0:0:+1M -t 0:ef02 /dev/loop0
+        sgdisk -n 0:0:+1M -t 0:ef02 /dev/loop0
 
-        sudo sgdisk -n 0:0:+200M /dev/loop0
-        sudo sgdisk -n 0:0:0 /dev/loop0
+        sgdisk -n 0:0:+200M /dev/loop0
+        sgdisk -n 0:0:0 /dev/loop0
 
-        sudo mkfs.fat -F 32 /dev/loop0p2
-        sudo mkfs.ext4 /dev/loop0p3
+        mkfs.fat -F 32 /dev/loop0p2
+        mkfs.ext4 /dev/loop0p3
         mkdir -p /mnt
         mount /dev/loop0p3 /mnt
         mount --mkdir /dev/loop0p2 /mnt/boot
@@ -57,7 +57,7 @@ jobs:
 
         umount /dev/loop0p2
         umount /dev/loop0p3
-        sudo losetup -d /dev/loop0
+        losetup -d /dev/loop0
 
         ls -alh bios-init.raw
 
