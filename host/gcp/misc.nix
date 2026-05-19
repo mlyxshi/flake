@@ -99,8 +99,6 @@ in
     timerConfig = {
       OnBootSec = "1min";
       OnCalendar = "monthly";        # = *-*-01 00:00:00
-      Persistent = true;
-      RandomizedDelaySec = "1h";
     };
   };
 
