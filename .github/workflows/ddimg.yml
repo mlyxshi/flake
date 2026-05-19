@@ -17,11 +17,10 @@ jobs:
     - name: System Build
       shell: bash
       run: |
-        sudo -i
         git clone https://github.com/mlyxshi/flake
 
         fallocate -l 3G bios-init.raw
-        losetup -fP --show bios-init.raw
+        sudo losetup -fP --show bios-init.raw
 
         sgdisk -n 0:0:+1M -t 0:ef02 /dev/loop0
 
@@ -34,7 +33,7 @@ jobs:
         mount /dev/loop0p3 /mnt
         mount --mkdir /dev/loop0p2 /mnt/boot
 
-        outPath=$(nix build --store /mnt --no-link --print-out-paths .#nixosConfigurations.bios-vda-init.config.system.build.toplevel)
+        outPath=$(nix build --store /mnt --no-link --print-out-paths ./flake#nixosConfigurations.bios-vda-init.config.system.build.toplevel)
         nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $outPath
 
         mkdir -p /mnt/dev /mnt/sys /mnt/proc
@@ -58,7 +57,7 @@ jobs:
 
         umount /dev/loop0p2
         umount /dev/loop0p3
-        losetup -d /dev/loop0
+        sudo losetup -d /dev/loop0
 
         ls -alh bios-init.raw
 
