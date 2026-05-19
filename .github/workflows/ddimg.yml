@@ -1,0 +1,66 @@
+name: "Create DD image"
+on:
+  workflow_dispatch:
+
+jobs:
+  Update:
+    runs-on: ubuntu-latest  
+
+    steps:
+    - uses: actions/checkout@master
+    - uses: DeterminateSystems/nix-installer-action@main
+    - run: |
+        mkdir -m 0755  ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+        chmod 600 ~/.ssh/id_ed25519
+        
+    - name: System Build
+      shell: bash
+      run: |
+        sudo -i
+        git clone https://github.com/mlyxshi/flake
+
+        fallocate -l 3G bios-init.raw
+        losetup -fP --show bios-init.raw
+
+        sgdisk -n 0:0:+1M -t 0:ef02 /dev/loop0
+
+        sgdisk -n 0:0:+200M /dev/loop0
+        sgdisk -n 0:0:0 /dev/loop0
+
+        mkfs.fat -F 32 /dev/loop0p2
+        mkfs.ext4 /dev/loop0p3
+        mkdir -p /mnt
+        mount /dev/loop0p3 /mnt
+        mount --mkdir /dev/loop0p2 /mnt/boot
+
+        outPath=$(nix build --store /mnt --no-link --print-out-paths .#nixosConfigurations.bios-vda-init.config.system.build.toplevel)
+        nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $outPath
+
+        mkdir -p /mnt/dev /mnt/sys /mnt/proc
+        chmod 0755 /mnt/dev /mnt/sys /mnt/proc
+        mount --rbind /dev /mnt/dev
+        mount --rbind /sys /mnt/sys
+        mount --rbind /proc /mnt/proc
+
+        mkdir /mnt/etc
+        chroot /mnt /nix/var/nix/profiles/system/activate
+        chroot /mnt /nix/var/nix/profiles/system/bin/switch-to-configuration boot
+
+        nix run nixpkgs#limine bios-install /dev/loop0
+
+        umount -Rl /mnt/dev
+        umount -Rl /mnt/sys
+        umount -Rl /mnt/proc
+        umount -Rl /mnt/run
+        umount -Rl /mnt/etc
+
+
+        umount /dev/loop0p2
+        umount /dev/loop0p3
+        losetup -d /dev/loop0
+
+        ls -alh bios-init.raw
+
+
+
