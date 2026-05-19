@@ -19,7 +19,7 @@ jobs:
 
         cat > ~/.ssh/config <<EOF
         Host gcp
-          HostName 35.212.172.97
+          HostName 35.212.163.143
           HostKeyAlias gcp
           User root
           StrictHostKeyChecking no
