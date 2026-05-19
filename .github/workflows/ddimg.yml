@@ -15,50 +15,51 @@ jobs:
         chmod 600 ~/.ssh/id_ed25519
         
     - name: System Build
-      shell: sudo -E bash -e {0}
+      shell: bash
       run: |
-        git clone https://github.com/mlyxshi/flake
+        sudo git clone https://github.com/mlyxshi/flake
 
-        fallocate -l 3G bios-init.raw
-        losetup -fP --show bios-init.raw
+        sudo fallocate -l 3G bios-init.raw
+        sudo losetup -fP --show bios-init.raw
 
-        sgdisk -n 0:0:+1M -t 0:ef02 /dev/loop0
+        sudo sgdisk -n 0:0:+1M -t 0:ef02 /dev/loop0
 
-        sgdisk -n 0:0:+200M /dev/loop0
-        sgdisk -n 0:0:0 /dev/loop0
+        sudo sgdisk -n 0:0:+200M /dev/loop0
+        sudo sgdisk -n 0:0:0 /dev/loop0
 
-        mkfs.fat -F 32 /dev/loop0p2
-        mkfs.ext4 /dev/loop0p3
-        mkdir -p /mnt
-        mount /dev/loop0p3 /mnt
-        mount --mkdir /dev/loop0p2 /mnt/boot
+        sudo mkfs.fat -F 32 /dev/loop0p2
+        sudo mkfs.ext4 /dev/loop0p3
+        sudo mkdir -p /mnt
+        sudo mount /dev/loop0p3 /mnt
+        sudo mount --mkdir /dev/loop0p2 /mnt/boot
 
-        outPath=$(nix build --store /mnt --no-link --print-out-paths ./flake#nixosConfigurations.bios-vda-init.config.system.build.toplevel)
-        nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $outPath
+        outPath=$(sudo nix build --store /mnt --no-link --print-out-paths ./flake#nixosConfigurations.bios-vda-init.config.system.build.toplevel)
+        sudo nix-env --store /mnt -p /mnt/nix/var/nix/profiles/system --set $outPath
 
-        mkdir -p /mnt/dev /mnt/sys /mnt/proc
-        chmod 0755 /mnt/dev /mnt/sys /mnt/proc
-        mount --rbind /dev /mnt/dev
-        mount --rbind /sys /mnt/sys
-        mount --rbind /proc /mnt/proc
+        sudo mkdir -p /mnt/dev /mnt/sys /mnt/proc
+        sudo chmod 0755 /mnt/dev /mnt/sys /mnt/proc
+        sudo mount --rbind /dev /mnt/dev
+        sudo mount --rbind /sys /mnt/sys
+        sudo mount --rbind /proc /mnt/proc
 
-        mkdir /mnt/etc
-        chroot /mnt /nix/var/nix/profiles/system/activate
-        chroot /mnt /nix/var/nix/profiles/system/bin/switch-to-configuration boot
+        sudo mkdir /mnt/etc
+        sudo chroot /mnt /nix/var/nix/profiles/system/activate
+        sudo chroot /mnt /nix/var/nix/profiles/system/bin/switch-to-configuration boot
 
-        nix run nixpkgs#limine bios-install /dev/loop0
+        sudo nix run nixpkgs#limine bios-install /dev/loop0
 
-        umount -Rl /mnt/dev
-        umount -Rl /mnt/sys
-        umount -Rl /mnt/proc
-        umount -Rl /mnt/run
-        umount -Rl /mnt/etc
+        sudo umount -Rl /mnt/dev
+        sudo umount -Rl /mnt/sys
+        sudo umount -Rl /mnt/proc
+        sudo umount -Rl /mnt/run
+        sudo umount -Rl /mnt/etc
 
 
-        umount /dev/loop0p2
-        umount /dev/loop0p3
-        losetup -d /dev/loop0
+        sudo umount /dev/loop0p2
+        sudo umount /dev/loop0p3
+        sudo losetup -d /dev/loop0
 
+        sudo  ls -alh bios-init.raw
         ls -alh bios-init.raw
 
 
