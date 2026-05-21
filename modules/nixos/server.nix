@@ -15,7 +15,7 @@
     iperf
     nexttrace
     ookla-speedtest
-    fastfetchMinimal
+    fastfetch.minimal
   ];
 
   environment.variables.BROWSER = "echo"; # Print the URL instead on servers

@@ -73,6 +73,24 @@
         ];
   };
 
+  virtualisation.oci-containers.containers.rsstt = {
+    image = "docker.io/rongronggg9/rss-to-telegram";
+    environmentFiles = [ /secret/rsshub ];
+    volumes = [ "/var/lib/rsstt:/app/config" ];
+    extraOptions =
+      lib.concatMap
+        (x: [
+          "--label"
+          x
+        ])
+        [
+          "io.containers.autoupdate=registry"
+          "traefik.enable=true"
+          # "traefik.http.routers.rsshub.rule=Host(`rsshub.${config.networking.domain}`)"
+          # "traefik.http.routers.rsshub.entrypoints=websecure"
+        ];
+  };
+
   virtualisation.oci-containers.containers.apprise = {
     image = "ghcr.io/caronc/apprise";
     extraOptions =

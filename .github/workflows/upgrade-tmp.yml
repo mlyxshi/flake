@@ -1,4 +1,4 @@
-name: "System Upgrade GCP"
+name: "System Upgrade"
 on:
   # push:
   #   paths: 
@@ -26,24 +26,19 @@ jobs:
         EOF
         
     - name: System Build
-      shell: bash
       run: |
         outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.gcp.config.system.build.toplevel)
         echo "outPath=$outPath" >> "$GITHUB_ENV"
 
     - name: Nix copy
-      shell: bash
       run:  nix copy --to ssh://gcp $outPath
     
     - name: Diff closures
-      shell: bash
       run:  ssh gcp nix store diff-closures /run/current-system $outPath
     
     - name: Set system profile
-      shell: bash
       run:  ssh gcp nix-env -p /nix/var/nix/profiles/system --set $outPath
     
     - name: Switch configuration
-      shell: bash
       run:  ssh gcp $outPath/bin/switch-to-configuration switch
 

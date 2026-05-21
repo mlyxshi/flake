@@ -23,16 +23,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1779256649,
-        "narHash": "sha256-MMGQKedKCs9ujmq0SPIQcmaAmSFVNYP5sbUDRW5+Cnw=",
-        "ref": "master",
-        "rev": "64db7c1094e1e09a5794e4c42094d6fb8ffc2b76",
+        "lastModified": 1779273561,
+        "narHash": "sha256-O3UFKrh5oDyOwqD4Njdf7+SIxptOl3gHZyesYvNsIbw=",
+        "ref": "nixos-unstable-small",
+        "rev": "8e72e9888e67ce593df16546cd31e0d75544ad0d",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/NixOS/nixpkgs.git"
       },
       "original": {
-        "ref": "master",
+        "ref": "nixos-unstable-small",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/NixOS/nixpkgs.git"
@@ -47,10 +47,10 @@
     },
     "secret": {
       "locked": {
-        "lastModified": 1779028831,
-        "narHash": "sha256-f1CHfM0L6cg65DHhZY+4B4eZReEuRLkh21OmuB3mdcg=",
+        "lastModified": 1779343334,
+        "narHash": "sha256-Mk5DsV8dt//OSypVfxrpq9GkPxeIHnJns01yLLGvER8=",
         "ref": "refs/heads/main",
-        "rev": "8e05d1ce8e8cf24280e51f4cd7456d85a3c01ee7",
+        "rev": "82483ea4876122aaabe53ae7d40ab525f7bda44c",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/mlyxshi/secret.git"
