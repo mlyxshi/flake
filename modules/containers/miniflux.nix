@@ -12,6 +12,13 @@
   systemd.services."backup@miniflux-postgres".startAt = "09:00";
   systemd.services."backup@miniflux-postgres".overrideStrategy = "asDropin";
 
+
+  systemd.services."backup-init@rsstt".wantedBy = [ "multi-user.target" ];
+  systemd.services."backup-init@rsstt".overrideStrategy = "asDropin";
+
+  systemd.services."backup@rsstt".startAt = "10:00";
+  systemd.services."backup@rsstt".overrideStrategy = "asDropin";
+
   virtualisation.oci-containers.containers.miniflux = {
     image = "ghcr.io/miniflux/miniflux";
     dependsOn = [ "miniflux-postgres" ];
@@ -77,18 +84,10 @@
     image = "docker.io/rongronggg9/rss-to-telegram";
     environmentFiles = [ /secret/rsshub ];
     volumes = [ "/var/lib/rsstt:/app/config" ];
-    extraOptions =
-      lib.concatMap
-        (x: [
-          "--label"
-          x
-        ])
-        [
-          "io.containers.autoupdate=registry"
-          "traefik.enable=true"
-          # "traefik.http.routers.rsshub.rule=Host(`rsshub.${config.networking.domain}`)"
-          # "traefik.http.routers.rsshub.entrypoints=websecure"
-        ];
+    extraOptions = [
+      "--label"
+      "io.containers.autoupdate=registry"
+    ];
   };
 
   virtualisation.oci-containers.containers.apprise = {
