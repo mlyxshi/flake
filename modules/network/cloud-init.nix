@@ -22,7 +22,7 @@
 
     script = ''
       mkdir -p /cloud-init
-      mount /dev/disk/by-label/cidata /cloud-init
+      mount -r /dev/disk/by-label/cidata /cloud-init
       mkdir -p /run/systemd/network/
       NETWORKD_CONF="/run/systemd/network/ethernet.network"
       CLOUD_INIT_CONF="/cloud-init/network-config"
