@@ -1,9 +1,15 @@
 name: "System Upgrade"
+
 on:
-  # push:
-  #   paths: 
-  #     - 'flake.lock'
   workflow_dispatch:
+    inputs:
+      ip:
+        description: 'Ip or Domain'
+        type: string
+        required: true
+      flakeAttr:
+        description: 'OS Config Hostname'
+        type: string
 
 jobs:
   Update:
@@ -18,27 +24,27 @@ jobs:
         chmod 600 ~/.ssh/id_ed25519
 
         cat > ~/.ssh/config <<EOF
-        Host gcp
-          HostName 35.212.163.143
-          HostKeyAlias gcp
+        Host installee
+          HostName ${{ inputs.ip }}
+          HostKeyAlias installee
           User root
           StrictHostKeyChecking no
         EOF
         
     - name: System Build
       run: |
-        outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.gcp.config.system.build.toplevel)
+        outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ inputs.flakeAttr }}.config.system.build.toplevel)
         echo "outPath=$outPath" >> "$GITHUB_ENV"
 
     - name: Nix copy
-      run:  nix copy --to ssh://gcp $outPath
+      run:  nix copy --to ssh://installee $outPath
     
     - name: Diff closures
-      run:  ssh gcp nix store diff-closures /run/current-system $outPath
+      run:  ssh installee nix store diff-closures /run/current-system $outPath
     
     - name: Set system profile
-      run:  ssh gcp nix-env -p /nix/var/nix/profiles/system --set $outPath
+      run:  ssh installee nix-env -p /nix/var/nix/profiles/system --set $outPath
     
     - name: Switch configuration
-      run:  ssh gcp $outPath/bin/switch-to-configuration switch
+      run:  ssh installee $outPath/bin/switch-to-configuration switch
 
