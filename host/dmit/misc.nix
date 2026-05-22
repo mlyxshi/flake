@@ -22,7 +22,6 @@
     file_server browse
   '';
 
-
   networking.nftables.enable = true;
   networking.nftables.ruleset = ''
     table inet FIREWALL {
@@ -32,11 +31,17 @@
         ip protocol icmp accept
         ip6 nexthdr icmpv6 accept
         ct state {established, related} accept
-        tcp dport { 23333, 8888, 8889, 5201, 8010 } accept
+        tcp dport { 23333, 8888, 8889, 5201, 8010, 9999 } accept
         udp dport { 5201 } accept
       }
     }
   '';
+
+  systemd.services.snell2 = {
+    after = [ "network.target" ];
+    serviceConfig.ExecStart = "${lib.getExe pkgs.snell} -c /secret/snell2";
+    wantedBy = [ "multi-user.target" ];
+  };
 
   systemd.services.komari-agent.environment.AGENT_MONTH_ROTATE = "24";
 }
