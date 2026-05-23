@@ -10,10 +10,18 @@ on:
       flakeAttr:
         description: 'OS Config Hostname'
         type: string
+      arch:
+        description: 'Target architecture'
+        type: choice
+        required: true
+        default: 'x86_64'
+        options:
+          - x86_64
+          - aarch64
 
 jobs:
   Update:
-    runs-on: ubuntu-latest  
+    runs-on: ${{ inputs.arch == 'aarch64' && 'ubuntu-24.04-arm' || 'ubuntu-latest' }}
 
     steps:
     - uses: actions/checkout@master
