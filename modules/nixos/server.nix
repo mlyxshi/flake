@@ -21,6 +21,8 @@
     fastfetch.minimal
   ];
 
+  system.etc.overlay.mutable = false;
+
   environment.variables.BROWSER = "echo"; # Print the URL instead on servers
 
   networking.domain = "mlyxshi.com";
