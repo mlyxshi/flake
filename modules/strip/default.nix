@@ -14,7 +14,5 @@
   programs.less.enable = lib.mkForce false;
   boot.bcache.enable = false;
   services.lvm.enable = false;
-  services.logrotate.enable = false;
   programs.fuse.enable = false;
-  environment.stub-ld.enable = false;
 }
