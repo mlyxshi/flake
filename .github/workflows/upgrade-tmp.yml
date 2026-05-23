@@ -44,6 +44,13 @@ jobs:
         outPath=$(nix build --no-link --print-out-paths .#nixosConfigurations.${{ inputs.flakeAttr }}.config.system.build.toplevel)
         echo "outPath=$outPath" >> "$GITHUB_ENV"
 
+    - run: |
+        until ssh -o ConnectTimeout=10 installee ls /etc/os-release
+        do
+          echo "Machine Not Reachable, Waiting..."
+          sleep 5
+        done
+
     - name: Nix copy
       run:  nix copy --to ssh://installee $outPath
     
