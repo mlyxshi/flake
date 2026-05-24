@@ -167,7 +167,6 @@
       "suspicious-package"
       "google-chrome"
       # "utm"
-      "openmtp"
       "ghostty"
     ];
   };
