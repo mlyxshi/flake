@@ -1,3 +1,5 @@
+# TODO: Rewrite with nft quota
+
 {
   config,
   pkgs,
