@@ -30,6 +30,11 @@ jobs:
           User git
           IdentityFile ~/.ssh/id_ed25519
         EOF
+
+        # StrictModes: sshd silently refuses authorized_keys if $HOME is group/other-writable
+        ls -ld "$HOME" ~/.ssh ~/.ssh/authorized_keys
+        chmod g-w,o-w "$HOME"
+        ls -ld "$HOME" ~/.ssh ~/.ssh/authorized_keys
         
 
     - uses: actions/checkout@master
