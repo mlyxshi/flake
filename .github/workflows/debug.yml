@@ -67,5 +67,5 @@ jobs:
     #     fi
 
     - run: |
-        sudo journalctl -u ssh -f
+        # sudo journalctl -u ssh -f
         sleep 72000
