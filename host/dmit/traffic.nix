@@ -69,8 +69,8 @@ in
     unitConfig.AssertPathExists = "/secret/bot"; # fail if secret is missing
   };
 
-  # Every minute: if traffic is over the limit, stop snell2.
-  # Skip entirely once snell2 is already stopped.
+  # Every minute: if traffic is over the limit, stop snell-share.
+  # Skip entirely once snell-share is already stopped.
   systemd.services.traffic-guard = {
     path = [
       pkgs.nftables
@@ -93,7 +93,7 @@ in
     };
   };
 
-  # Monthly (24th, 00:00 UTC): reset counters and bring snell2 back up.
+  # Monthly (24th, 00:00 UTC): reset counters and bring snell-share back up.
   systemd.services.traffic-reset = {
     path = [
       pkgs.nftables
