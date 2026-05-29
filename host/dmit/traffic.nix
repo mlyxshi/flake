@@ -8,7 +8,8 @@
 }:
 let
   port = "9999";
-  
+  snell = "snell-share";
+
   limitBytes = 150 * 1024 * 1024 * 1024; # set limit /GiB
 
   python = pkgs.python3.withPackages (ps: [ ps.python-telegram-bot ]);
@@ -23,9 +24,10 @@ let
 in
 {
 
-  systemd.services.snell2 = {
+  systemd.services.${snell} = {
     after = [ "network.target" ];
-    serviceConfig.ExecStart = "${lib.getExe pkgs.snell} -c /secret/snell2";
+    serviceConfig.ExecStart = "${lib.getExe pkgs.snell} -c /secret/${snell}";
+    unitConfig.AssertPathExists = "/secret/${snell}"; # fail if secret is missing
     wantedBy = [ "multi-user.target" ];
   };
 
@@ -64,6 +66,7 @@ in
     serviceConfig = {
       ExecStart = "${python}/bin/python3 ${./traffic-tg-bot.py} ${port}";
     };
+    unitConfig.AssertPathExists = "/secret/bot"; # fail if secret is missing
   };
 
   # Every minute: if traffic is over the limit, stop snell2.
@@ -76,8 +79,8 @@ in
     serviceConfig = {
       Type = "oneshot";
       ExecStart = pkgs.writeShellScript "traffic-guard" ''
-        systemctl is-active --quiet snell2.service || exit 0
-        [ "$(traffic ${port} -b)" -gt ${toString limitBytes} ] && systemctl stop snell2.service
+        systemctl is-active --quiet ${snell}.service || exit 0
+        [ "$(traffic ${port} -b)" -gt ${toString limitBytes} ] && systemctl stop ${snell}.service
         exit 0
       '';
     };
@@ -99,7 +102,7 @@ in
       Type = "oneshot";
       ExecStart = pkgs.writeShellScript "traffic-reset" ''
         nft reset counters table inet TRAFFIC
-        systemctl restart snell2.service
+        systemctl restart ${snell}.service
       '';
     };
   };
