@@ -8,6 +8,14 @@
 }:
 let
   python = pkgs.python3.withPackages (ps: [ ps.python-telegram-bot ]);
+
+  # C tool that reads the inet TRAFFIC counters and prints them.
+  # `traffic`     -> human-readable breakdown
+  # `traffic -b`  -> raw total bytes
+  traffic-tool = pkgs.runCommandCC "traffic" { } ''
+    mkdir -p $out/bin
+    cc -O2 -Wall -o $out/bin/traffic ${./traffic.c}
+  '';
 in
 {
 
@@ -45,7 +53,10 @@ in
       "nftables.service"
     ];
     wantedBy = [ "multi-user.target" ];
-    path = [ pkgs.nftables ];
+    path = [
+      pkgs.nftables
+      traffic-tool
+    ];
     serviceConfig = {
       ExecStart = "${python}/bin/python3 ${./traffic.py}";
     };
