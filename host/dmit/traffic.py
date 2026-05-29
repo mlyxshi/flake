@@ -1,13 +1,14 @@
-import subprocess
+import subprocess, sys
 
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
 
 TOKEN = open("/secret/bot").read().strip()
+PORT = sys.argv[1]
 
 def reply_text():
   return subprocess.run(
-    ["traffic", "8888"], capture_output=True, text=True, check=True).stdout
+    ["traffic", PORT], capture_output=True, text=True, check=True).stdout
 
 async def traffic(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
   await update.message.reply_text(reply_text())
