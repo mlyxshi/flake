@@ -8,10 +8,12 @@
 }:
 let
   trafficBot = pkgs.writeText "traffic-bot.py" ''
-    import json, subprocess, urllib.request, urllib.parse, time
+    import json, subprocess
+
+    from telegram import Update
+    from telegram.ext import Application, CommandHandler, ContextTypes
 
     TOKEN = open("/secret/bot").read().strip()
-    API = "https://api.telegram.org/bot" + TOKEN
 
     def human(n):
         n = float(n)
@@ -43,28 +45,19 @@ let
                 "total:    %s") % (human(tu), human(td), human(uu),
                                    human(ud), human(total))
 
-    def send(chat_id, text):
-        data = urllib.parse.urlencode({"chat_id": chat_id, "text": text}).encode()
-        urllib.request.urlopen(API + "/sendMessage", data=data)
+    async def traffic(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
+        await update.message.reply_text(reply_text())
 
     def main():
-        offset = 0
-        while True:
-            try:
-                url = "%s/getUpdates?timeout=30&offset=%d" % (API, offset)
-                resp = json.load(urllib.request.urlopen(url, timeout=40))
-                for upd in resp.get("result", []):
-                    offset = upd["update_id"] + 1
-                    msg = upd.get("message") or {}
-                    text = (msg.get("text") or "").strip()
-                    if text.split("@")[0] == "/traffic":
-                        send(msg["chat"]["id"], reply_text())
-            except Exception:
-                time.sleep(5)
+        app = Application.builder().token(TOKEN).build()
+        app.add_handler(CommandHandler("traffic", traffic))
+        app.run_polling()
 
     if __name__ == "__main__":
         main()
   '';
+
+  python = pkgs.python3.withPackages (ps: [ ps.python-telegram-bot ]);
 in
 {
 
@@ -123,7 +116,7 @@ in
     wantedBy = [ "multi-user.target" ];
     path = [ pkgs.nftables ];
     serviceConfig = {
-      ExecStart = "${pkgs.python3}/bin/python3 ${trafficBot}";
+      ExecStart = "${python}/bin/python3 ${trafficBot}";
     };
   };
 }
