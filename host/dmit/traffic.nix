@@ -8,7 +8,7 @@
 }:
 let
   port = "8888";
-  limitBytes = 0.5 * 1024 * 1024 * 1024; # 100 GiB
+  limitBytes = 1 * 1024 * 1024 * 1024; # 100 GiB
 
   python = pkgs.python3.withPackages (ps: [ ps.python-telegram-bot ]);
 
