@@ -1,20 +1,18 @@
-/* traffic — print the inet TRAFFIC nftables counters for port 8888.
+/* traffic — print the inet TRAFFIC nftables counters for a given port.
  *
- * Reads `nft list counters table inet TRAFFIC`, sums tcp/udp in/out
- * byte counts, and prints a human-readable breakdown plus total.
+ * Reads `nft list counters table inet TRAFFIC`, sums the tcp/udp in/out
+ * byte counts for counters named tcp<PORT>_in / _out / udp<PORT>_in / _out,
+ * and prints a human-readable breakdown plus total.
  *
  * Build:  cc -O2 -Wall -o traffic traffic.c
- * Usage:  traffic            # human-readable
- *         traffic -b         # raw total bytes only (for scripts)
+ * Usage:  traffic PORT          # human-readable
+ *         traffic PORT -b       # raw total bytes only (for scripts)
  */
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
-static const char *NAMES[] = {
-    "tcp8888_in", "tcp8888_out", "udp8888_in", "udp8888_out",
-};
 enum { N = 4 };
 
 static void human(uint64_t n, char *buf, size_t len) {
@@ -29,7 +27,24 @@ static void human(uint64_t n, char *buf, size_t len) {
 }
 
 int main(int argc, char **argv) {
-    int bytes_only = (argc > 1 && strcmp(argv[1], "-b") == 0);
+    const char *port = NULL;
+    int bytes_only = 0;
+
+    for (int i = 1; i < argc; i++) {
+        if (strcmp(argv[i], "-b") == 0) bytes_only = 1;
+        else if (!port) port = argv[i];
+    }
+    if (!port) {
+        fprintf(stderr, "usage: %s PORT [-b]\n", argv[0]);
+        return 2;
+    }
+
+    /* counter names we care about, derived from the port */
+    char names[N][80];
+    snprintf(names[0], sizeof names[0], "tcp_%s_in", port);
+    snprintf(names[1], sizeof names[1], "tcp_%s_out", port);
+    snprintf(names[2], sizeof names[2], "udp_%s_in", port);
+    snprintf(names[3], sizeof names[3], "udp_%s_out", port);
 
     FILE *fp = popen("nft list counters table inet TRAFFIC 2>/dev/null", "r");
     if (!fp) {
@@ -39,13 +54,13 @@ int main(int argc, char **argv) {
 
     uint64_t b[N] = {0};
     char line[512];
-    char cur[64] = {0};            /* name of counter block we're inside */
+    char cur[80] = {0};            /* name of counter block we're inside */
 
     while (fgets(line, sizeof line, fp)) {
-        char name[64];
+        char name[80];
         unsigned long long pkts, byts;
         /* "counter NAME {"  — opens a block */
-        if (sscanf(line, " counter %63s {", name) == 1) {
+        if (sscanf(line, " counter %79s {", name) == 1) {
             snprintf(cur, sizeof cur, "%s", name);
             continue;
         }
@@ -53,7 +68,7 @@ int main(int argc, char **argv) {
         if (cur[0] &&
             sscanf(line, " packets %llu bytes %llu", &pkts, &byts) == 2) {
             for (int i = 0; i < N; i++)
-                if (strcmp(cur, NAMES[i]) == 0) b[i] = byts;
+                if (strcmp(cur, names[i]) == 0) b[i] = byts;
             cur[0] = 0;
         }
     }

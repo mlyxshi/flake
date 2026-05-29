@@ -7,7 +7,7 @@ TOKEN = open("/secret/bot").read().strip()
 
 def reply_text():
   return subprocess.run(
-    ["traffic"], capture_output=True, text=True, check=True).stdout
+    ["traffic", "8888"], capture_output=True, text=True, check=True).stdout
 
 async def traffic(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
   await update.message.reply_text(reply_text())
