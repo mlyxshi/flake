@@ -36,6 +36,8 @@ jobs:
     - uses: DeterminateSystems/nix-installer-action@main
     # ssh
     - run: |
+        sudo ss -tlnp | grep ':22 ' || echo "nothing on :22"
+        
         if [ ${{ inputs.os }} == "ubuntu-latest" ]; then
           curl -L --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb  
           sudo dpkg -i cloudflared.deb 
