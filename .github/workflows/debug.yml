@@ -37,13 +37,15 @@ jobs:
     # ssh
     - run: |
         sudo ss -tlnp | grep ':22 ' || echo "nothing on :22"
-        
+
         if [ ${{ inputs.os }} == "ubuntu-latest" ]; then
           curl -L --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb  
           sudo dpkg -i cloudflared.deb 
         elif [ ${{ inputs.os }} == "ubuntu-24.04-arm" ]; then
           curl -L --output cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64.deb  
           sudo dpkg -i cloudflared.deb 
+          sudo systemctl enable --now ssh.socket 2>/dev/null || sudo systemctl enable --now ssh
+          sudo ss -tlnp | grep ':22 ' || echo "still nothing on :22"
         else
           brew install cloudflared
           sudo mv /etc/nix/nix.conf /etc/nix/nix.conf.before-nix-darwin   
