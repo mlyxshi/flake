@@ -62,5 +62,5 @@ jobs:
     #     fi
 
     - run: |
-        sudo journalctl -t sshd --no-pager | tail -30 || sudo grep -i sshd /var/log/auth.log | tail -30 
+        sudo journalctl -u ssh -f
         sleep 72000
