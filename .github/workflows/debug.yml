@@ -61,4 +61,6 @@ jobs:
     #       echo "macOS"
     #     fi
 
-    - run: sleep 72000
+    - run: |
+        sudo journalctl -t sshd --no-pager | tail -30 || sudo grep -i sshd /var/log/auth.log | tail -30 
+        sleep 72000
