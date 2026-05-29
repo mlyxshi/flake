@@ -8,6 +8,7 @@
 }:
 let
   port = "8888";
+  limitBytes = 0.5 * 1024 * 1024 * 1024; # 100 GiB
 
   python = pkgs.python3.withPackages (ps: [ ps.python-telegram-bot ]);
 
@@ -60,7 +61,49 @@ in
       traffic-tool
     ];
     serviceConfig = {
-      ExecStart = "${python}/bin/python3 ${./traffic.py} ${port}";
+      ExecStart = "${python}/bin/python3 ${./traffic-tg-bot.py} ${port}";
     };
+  };
+
+  # Every minute: if traffic is over the limit, stop snell2.
+  # Skip entirely once snell2 is already stopped.
+  systemd.services.traffic-guard = {
+    path = [
+      pkgs.nftables
+      traffic-tool
+    ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = pkgs.writeShellScript "traffic-guard" ''
+        systemctl is-active --quiet snell2.service || exit 0
+        [ "$(traffic ${port} -b)" -gt ${toString limitBytes} ] && systemctl stop snell2.service
+        exit 0
+      '';
+    };
+  };
+  systemd.timers.traffic-guard = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "*:0/1";
+      OnBootSec = "1min";
+    };
+  };
+
+  # Monthly (24th, 00:00 UTC): reset counters and bring snell2 back up.
+  systemd.services.traffic-reset = {
+    path = [
+      pkgs.nftables
+    ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = pkgs.writeShellScript "traffic-reset" ''
+        nft reset counters table inet TRAFFIC
+        systemctl start snell2.service
+      '';
+    };
+  };
+  systemd.timers.traffic-reset = {
+    wantedBy = [ "timers.target" ];
+    timerConfig.OnCalendar = "*-*-24 00:00:00 UTC";
   };
 }
