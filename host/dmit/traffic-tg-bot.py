@@ -1,7 +1,7 @@
 import subprocess, sys
 
 from telegram import Update
-from telegram.ext import Application, CommandHandler, ContextTypes
+from telegram.ext import Application, CommandHandler, ContextTypes, filters
 
 TOKEN = open("/secret/bot").read().strip()
 PORT = sys.argv[1]
@@ -15,7 +15,8 @@ async def traffic(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
 
 def main():
   app = Application.builder().token(TOKEN).build()
-  app.add_handler(CommandHandler("traffic", traffic))
+  # Groups only — ignore private DMs entirely.
+  app.add_handler(CommandHandler("traffic", traffic, filters=~filters.ChatType.PRIVATE))
   app.run_polling()
 
 if __name__ == "__main__":
