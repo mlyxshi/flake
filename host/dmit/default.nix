@@ -15,6 +15,7 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.services.snell
 
     ./misc.nix
+    ./traffic.nix
     {
       nixpkgs.hostPlatform = "x86_64-linux";
       networking.hostName = "nrt";
