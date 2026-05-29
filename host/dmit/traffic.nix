@@ -99,7 +99,7 @@ in
       Type = "oneshot";
       ExecStart = pkgs.writeShellScript "traffic-reset" ''
         nft reset counters table inet TRAFFIC
-        systemctl start snell2.service
+        systemctl restart snell2.service
       '';
     };
   };
