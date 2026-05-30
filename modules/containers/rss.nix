@@ -12,7 +12,6 @@
   systemd.services."backup@miniflux-postgres".startAt = "09:00";
   systemd.services."backup@miniflux-postgres".overrideStrategy = "asDropin";
 
-
   systemd.services."backup-init@rsstt".wantedBy = [ "multi-user.target" ];
   systemd.services."backup-init@rsstt".overrideStrategy = "asDropin";
 
@@ -77,6 +76,24 @@
           "traefik.enable=true"
           "traefik.http.routers.rsshub.rule=Host(`rsshub.${config.networking.domain}`)"
           "traefik.http.routers.rsshub.entrypoints=websecure"
+        ];
+  };
+
+  virtualisation.oci-containers.containers.freshrss = {
+    image = "ghcr.io/freshrss/freshrss";
+    # environmentFiles = [ /secret/rsshub ];
+    volumes = [ "/var/lib/freshrss:/var/www/FreshRSS" ];
+    extraOptions =
+      lib.concatMap
+        (x: [
+          "--label"
+          x
+        ])
+        [
+          "io.containers.autoupdate=registry"
+          "traefik.enable=true"
+          "traefik.http.routers.freshrss.rule=Host(`freshrss.${config.networking.domain}`)"
+          "traefik.http.routers.freshrss.entrypoints=websecure"
         ];
   };
 

@@ -15,7 +15,7 @@
     self.nixosModules.services.commit-notifier
 
     self.nixosModules.containers.podman
-    self.nixosModules.containers.miniflux
+    self.nixosModules.containers.rss
     self.nixosModules.containers.change-detection
     self.nixosModules.containers.komari-monitor
   ];
