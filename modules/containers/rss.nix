@@ -85,7 +85,7 @@
     environment = {
       CRON_MIN="1,31";
     };
-    volumes = [ "/var/lib/freshrss:/var/www/FreshRSS" ];
+    volumes = [ "/var/lib/freshrss:/var/www/FreshRSS/data" ];
     extraOptions =
       lib.concatMap
         (x: [
