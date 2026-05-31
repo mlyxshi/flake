@@ -81,7 +81,6 @@
 
   virtualisation.oci-containers.containers.freshrss = {
     image = "ghcr.io/freshrss/freshrss";
-    # environmentFiles = [ /secret/rsshub ];
     environment = {
       CRON_MIN="1,31";
     };
