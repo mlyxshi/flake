@@ -49,34 +49,15 @@
 
   services.openssh = {
     enable = true;
+    # NixOS automatically generate SSH host keys to /etc/ssh/
+    # For immutable etc, manually set host keys to /var/lib/nixos
     hostKeys = [
       {
-        path = "/etc/ssh/ssh_host_ed25519_key";
+        path = "/var/lib/nixos/ssh_host_ed25519_key";
         type = "ed25519";
       }
     ];
     settings.PasswordAuthentication = false;
-  };
-
-  # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/keys
-  # This is convenient for immutable /etc. I use it at my own risk.
-  environment.etc = {
-    "ssh/ssh_host_ed25519_key.pub" = {
-      text = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJBWcxb/Blaqt1auOtE+F8QUWrUotiC5qBJ+UuEWdVCb";
-      mode = "0400";
-    };
-    "ssh/ssh_host_ed25519_key" = {
-      text = ''
-        -----BEGIN OPENSSH PRIVATE KEY-----
-        b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
-        QyNTUxOQAAACCQVnMW/wZWqrdWrjrRPhfEFFq1KLYguagSflLhFnVQmwAAAJASuMMnErjD
-        JwAAAAtzc2gtZWQyNTUxOQAAACCQVnMW/wZWqrdWrjrRPhfEFFq1KLYguagSflLhFnVQmw
-        AAAEDIN2VWFyggtoSPXcAFy8dtG1uAig8sCuyE21eMDt2GgJBWcxb/Blaqt1auOtE+F8QU
-        WrUotiC5qBJ+UuEWdVCbAAAACnJvb3RAbml4b3MBAgM=
-        -----END OPENSSH PRIVATE KEY-----
-      '';
-      mode = "0400";
-    };
   };
 
   programs.ssh.knownHosts."github.com".publicKey =
