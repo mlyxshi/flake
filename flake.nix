@@ -1,10 +1,11 @@
 {
   inputs = {
     # nixpkgs.url = "github:NixOS/nixpkgs/pull/498754/head";
-    # nixpkgs.url = "git+https://github.com/NixOS/nixpkgs.git?ref=master&shallow=1";
     # nixpkgs.url = "path:/Users/dominic/nixpkgs/";
     # nixpkgs.url = "git+https://github.com/mlyxshi/nixpkgs.git?ref=initrd-discard-references&shallow=1";
-    nixpkgs.url = "git+https://github.com/NixOS/nixpkgs.git?ref=nixos-unstable-small&shallow=1";
+
+    nixpkgs.url = "git+https://github.com/NixOS/nixpkgs.git?ref=master&shallow=1";
+    # nixpkgs.url = "git+https://github.com/NixOS/nixpkgs.git?ref=nixos-unstable-small&shallow=1";
 
     darwin.url = "git+https://github.com/nix-darwin/nix-darwin.git?shallow=1";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -12,6 +13,7 @@
     secret.url = "git+ssh://git@github.com/mlyxshi/secret.git?shallow=1";
   };
 
+  # https://isabelroses.com/blog/custom-lib-nixossystem/
   outputs =
     {
       self,
