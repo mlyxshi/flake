@@ -60,6 +60,11 @@
     settings.PasswordAuthentication = false;
   };
 
+  environment.etc.machine-id = {
+    text = "6a9857a393724b7a981ebb5b8495b9ea"; # make systemd happy
+    mode = "0444";
+  };
+
   programs.ssh.knownHosts."github.com".publicKey =
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl";
 
