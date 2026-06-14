@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-24.04-arm
     steps:
     - uses: actions/checkout@master
-    - uses: DeterminateSystems/nix-installer-action@main
+    - uses: NixOS/nix-installer-action@main
     
     - run: |
         busyboxKernel=$(nix build --no-link --print-out-paths -f dd/busybox/default.nix kernel --arg pkgs 'import <nixpkgs> { system = builtins.currentSystem; }')

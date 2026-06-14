@@ -25,7 +25,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@master
-    - uses: DeterminateSystems/nix-installer-action@main
+    - uses: NixOS/nix-installer-action@main
     - run: |
         mkdir -m 0755  ~/.ssh
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
