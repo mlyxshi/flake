@@ -15,6 +15,7 @@
       EnvironmentFile = "/secret/commit-notifier";
       StateDirectory = "commit-notifier";
       ExecStart = "${lib.getExe pkgs.commit-notifier} --working-dir /var/lib/commit-notifier  --cron '0 * * * * *'   --admin-chat-id=696869490";
+      LimitNOFILE = 65536;
     };
 
     wants = [ "network-online.target" ];
