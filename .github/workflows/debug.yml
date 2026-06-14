@@ -32,7 +32,7 @@ jobs:
         EOF 
 
     - uses: actions/checkout@master
-    - uses: DeterminateSystems/nix-installer-action@main
+    - uses: NixOS/nix-installer-action@main
     # ssh
     - run: |
         if [ ${{ inputs.os }} == "ubuntu-latest" ]; then

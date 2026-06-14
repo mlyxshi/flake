@@ -26,6 +26,7 @@
 # mkdir -p /var/lib/commit-notifier/chats/696869490
 # /notifier repo-add nixpkgs https://github.com/NixOS/nixpkgs
 # /notifier repo-add systemd https://github.com/systemd/systemd
+# /notifier repo-add nix-darwin https://github.com/nix-darwin/nix-darwin
 
 #  /var/lib/commit-notifier/repositories/nixpkgs/settings.json
 

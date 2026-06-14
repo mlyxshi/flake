@@ -33,7 +33,7 @@
       "element"
       "telegram-desktop"
 
-      "monitorcontrol"
+      # "monitorcontrol"
 
       "impactor"
     ];

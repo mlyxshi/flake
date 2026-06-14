@@ -152,7 +152,6 @@
       "vfkit"
       "riscv64-elf-gcc"
       "riscv64-elf-gdb"
-      "msedit"
     ];
 
     casks = [
