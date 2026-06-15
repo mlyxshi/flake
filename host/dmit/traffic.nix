@@ -32,12 +32,11 @@ in
     wantedBy = [ "multi-user.target" ];
   };
 
-  # 51200
   networking.nftables.tables.TRAFFIC = {
     family = "inet";
     content = ''
       quota Shallistera { over 102400 mbytes }
-      quota williamwang { over 1024 mbytes }
+      quota williamwang { over 51200 mbytes }
 
       chain input {
         type filter hook input priority filter; policy accept;
