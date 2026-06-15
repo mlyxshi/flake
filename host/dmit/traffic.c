@@ -1,19 +1,23 @@
-/* traffic — print the inet TRAFFIC nftables counters for a given port.
+/* traffic — list nftables quotas with their limits and current usage.
  *
- * Reads `nft list counters table inet TRAFFIC`, sums the tcp in/out
- * byte counts for counters named tcp<PORT>_in / _out,
- * and prints a human-readable breakdown plus total.
+ * Parses `nft list quotas` and prints each quota name, used, limit, percent.
  *
  * Build:  cc -O2 -Wall -o traffic traffic.c
- * Usage:  traffic PORT          # human-readable
- *         traffic PORT -b       # raw total bytes only (for scripts)
+ * Usage:  traffic
  */
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <strings.h>
 
-enum { N = 2 };
+static uint64_t unit_mul(const char *u) {
+    if (!strcasecmp(u, "bytes") || !strcasecmp(u, "byte")) return 1ULL;
+    if (!strcasecmp(u, "kbytes")) return 1024ULL;
+    if (!strcasecmp(u, "mbytes")) return 1024ULL * 1024;
+    if (!strcasecmp(u, "gbytes")) return 1024ULL * 1024 * 1024;
+    return 0;
+}
 
 static void human(uint64_t n, char *buf, size_t len) {
     const char *u[] = {"B", "KiB", "MiB", "GiB", "TiB"};
@@ -26,74 +30,90 @@ static void human(uint64_t n, char *buf, size_t len) {
         snprintf(buf, len, "%.2f %s", v, u[i]);
 }
 
-int main(int argc, char **argv) {
-    const char *port = NULL;
-    int bytes_only = 0;
+struct row {
+    char     name[80];
+    uint64_t limit;
+    uint64_t used;
+};
 
-    for (int i = 1; i < argc; i++) {
-        if (strcmp(argv[i], "-b") == 0) bytes_only = 1;
-        else if (!port) port = argv[i];
-    }
-    if (!port) {
-        fprintf(stderr, "usage: %s PORT [-b]\n", argv[0]);
-        return 2;
-    }
-
-    /* counter names we care about, derived from the port */
-    char names[N][80];
-    snprintf(names[0], sizeof names[0], "tcp_%s_in", port);
-    snprintf(names[1], sizeof names[1], "tcp_%s_out", port);
-
-    FILE *fp = popen("nft list counters table inet TRAFFIC 2>/dev/null", "r");
+int main(void) {
+    FILE *fp = popen("nft list quotas 2>/dev/null", "r");
     if (!fp) {
         fprintf(stderr, "traffic: failed to run nft\n");
         return 1;
     }
 
-    uint64_t b[N] = {0};
+    struct row rows[256];
+    int nrows = 0;
+    int name_w = 4;
+    int in_quota = 0;          /* 1 once we've seen `quota NAME {` */
     char line[512];
-    char cur[80] = {0};            /* name of counter block we're inside */
 
-    while (fgets(line, sizeof line, fp)) {
+    while (fgets(line, sizeof line, fp) && nrows < (int)(sizeof rows / sizeof rows[0])) {
         char name[80];
-        unsigned long long pkts, byts;
-        /* "counter NAME {"  — opens a block */
-        if (sscanf(line, " counter %79s {", name) == 1) {
-            snprintf(cur, sizeof cur, "%s", name);
+
+        /* `quota NAME {` opens a block */
+        if (sscanf(line, " quota %79s {", name) == 1) {
+            char *brace = strchr(name, '{');
+            if (brace) *brace = 0;
+            snprintf(rows[nrows].name, sizeof rows[nrows].name, "%s", name);
+            rows[nrows].limit = 0;
+            rows[nrows].used  = 0;
+            in_quota = 1;
             continue;
         }
-        /* "packets N bytes M" — the body line */
-        if (cur[0] &&
-            sscanf(line, " packets %llu bytes %llu", &pkts, &byts) == 2) {
-            for (int i = 0; i < N; i++)
-                if (strcmp(cur, names[i]) == 0) b[i] = byts;
-            cur[0] = 0;
+
+        if (!in_quota) continue;
+
+        /* `over N UNIT used M UNIT` or `over N UNIT` */
+        char lim_u[16], used_u[16];
+        unsigned long long lim_n, used_n;
+        int n = sscanf(line, " over %llu %15s used %llu %15s",
+                       &lim_n, lim_u, &used_n, used_u);
+        if (n == 4) {
+            uint64_t lm = unit_mul(lim_u), um = unit_mul(used_u);
+            if (lm && um) {
+                rows[nrows].limit = (uint64_t)lim_n * lm;
+                rows[nrows].used  = (uint64_t)used_n * um;
+            }
+        } else {
+            n = sscanf(line, " over %llu %15s", &lim_n, lim_u);
+            if (n == 2) {
+                uint64_t lm = unit_mul(lim_u);
+                if (lm) rows[nrows].limit = (uint64_t)lim_n * lm;
+            }
+        }
+
+        /* close-brace ends the current quota block */
+        if (strchr(line, '}')) {
+            int wlen = (int)strlen(rows[nrows].name);
+            if (wlen > name_w) name_w = wlen;
+            nrows++;
+            in_quota = 0;
         }
     }
 
     int rc = pclose(fp);
     if (rc != 0) {
         fprintf(stderr, "traffic: nft exited with status %d "
-                        "(table missing or insufficient privileges?)\n", rc);
+                        "(insufficient privileges?)\n", rc);
         return 1;
     }
 
-    uint64_t td = b[0], tu = b[1];
-    uint64_t total = td + tu;
-
-    if (bytes_only) {
-        printf("%llu\n", (unsigned long long)total);
-        return 0;
+    if (nrows == 0) {
+        fprintf(stderr, "traffic: no quotas found\n");
+        return 1;
     }
 
-    char s[3][32];
-    human(tu, s[0], sizeof s[0]);
-    human(td, s[1], sizeof s[1]);
-    human(total, s[2], sizeof s[2]);
-
-    printf("tcp up:   %s\n"
-           "tcp down: %s\n"
-           "total:    %s\n",
-           s[0], s[1], s[2]);
+    for (int i = 0; i < nrows; i++) {
+        char us[32], ls[32];
+        human(rows[i].used,  us, sizeof us);
+        human(rows[i].limit, ls, sizeof ls);
+        double pct = rows[i].limit
+            ? 100.0 * (double)rows[i].used / (double)rows[i].limit
+            : 0.0;
+        printf("%-*s  %12s / %-12s  %6.2f%%\n",
+               name_w, rows[i].name, us, ls, pct);
+    }
     return 0;
 }

@@ -60,21 +60,21 @@ in
     '';
   };
 
-  # systemd.services.traffic-bot = {
-  #   after = [
-  #     "network.target"
-  #     "nftables.service"
-  #   ];
-  #   wantedBy = [ "multi-user.target" ];
-  #   path = [
-  #     pkgs.nftables
-  #     traffic-tool
-  #   ];
-  #   serviceConfig = {
-  #     ExecStart = "${python}/bin/python3 ${./traffic-tg-bot.py} ${port}";
-  #   };
-  #   unitConfig.AssertPathExists = "/secret/bot"; # fail if secret is missing
-  # };
+  systemd.services.traffic-bot = {
+    after = [
+      "network.target"
+      "nftables.service"
+    ];
+    wantedBy = [ "multi-user.target" ];
+    path = [
+      pkgs.nftables
+      traffic-tool
+    ];
+    serviceConfig = {
+      ExecStart = "${python}/bin/python3 ${./traffic-tg-bot.py} ${port}";
+    };
+    unitConfig.AssertPathExists = "/secret/bot"; # fail if secret is missing
+  };
 
 
   # # Monthly (24th, 00:00 UTC): nft reset quotas
