@@ -71,7 +71,7 @@ in
       traffic-tool
     ];
     serviceConfig = {
-      ExecStart = "${python}/bin/python3 ${./traffic-tg-bot.py} ${port}";
+      ExecStart = "${python}/bin/python3 ${./traffic-tg-bot.py}";
     };
     unitConfig.AssertPathExists = "/secret/bot"; # fail if secret is missing
   };
