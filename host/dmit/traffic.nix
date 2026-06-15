@@ -36,7 +36,7 @@ in
   networking.nftables.tables.TRAFFIC = {
     family = "inet";
     content = ''
-      quota s0 { over 1 gbytes }
+      quota s0 { over 1024 mbytes }
 
       chain input {
         type filter hook input priority filter; policy accept;
