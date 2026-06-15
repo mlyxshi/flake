@@ -38,19 +38,15 @@ in
     content = ''
       counter tcp_${port}_in  { }
       counter tcp_${port}_out { }
-      counter udp_${port}_in  { }
-      counter udp_${port}_out { }
 
       chain COUNT_IN {
         type filter hook input priority -10; policy accept;
         meta nfproto ipv4 tcp dport ${port} counter name "tcp_${port}_in"
-        meta nfproto ipv4 udp dport ${port} counter name "udp_${port}_in"
       }
 
       chain COUNT_OUT {
         type filter hook output priority -10; policy accept;
         meta nfproto ipv4 tcp sport ${port} counter name "tcp_${port}_out"
-        meta nfproto ipv4 udp sport ${port} counter name "udp_${port}_out"
       }
     '';
   };
