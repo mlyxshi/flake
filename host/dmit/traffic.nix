@@ -9,16 +9,8 @@
   ...
 }:
 let
-  port = "9999";
-  snell = "snell-share";
-
-  limitBytes = 150 * 1024 * 1024 * 1024; # set limit /GiB
-
   python = pkgs.python3.withPackages (ps: [ ps.python-telegram-bot ]);
 
-  # C tool that reads the inet TRAFFIC counters and prints them.
-  # `traffic PORT`     -> human-readable breakdown
-  # `traffic PORT -b`  -> raw total bytes
   traffic-tool = pkgs.runCommandCC "traffic" { } ''
     mkdir -p $out/bin
     cc -O2 -Wall -o $out/bin/traffic ${./traffic.c}
@@ -75,7 +67,6 @@ in
     };
     unitConfig.AssertPathExists = "/secret/bot"; # fail if secret is missing
   };
-
 
   # # Monthly (24th, 00:00 UTC): nft reset quotas
   # systemd.services.traffic-reset = {
