@@ -26,26 +26,36 @@ let
 in
 {
 
-  systemd.services.${snell} = {
+  systemd.services.snell-share1 = {
     after = [ "network.target" ];
-    serviceConfig.ExecStart = "${lib.getExe pkgs.snell} -c /secret/${snell}";
-    unitConfig.AssertPathExists = "/secret/${snell}"; # fail if secret is missing
+    serviceConfig.ExecStart = "${lib.getExe pkgs.snell} -c /secret/snell-share1";
+    unitConfig.AssertPathExists = "/secret/snell-share1"; # fail if secret is missing
+    wantedBy = [ "multi-user.target" ];
+  };
+
+  systemd.services.snell-share2 = {
+    after = [ "network.target" ];
+    serviceConfig.ExecStart = "${lib.getExe pkgs.snell} -c /secret/snell-share2";
+    unitConfig.AssertPathExists = "/secret/snell-share2"; # fail if secret is missing
     wantedBy = [ "multi-user.target" ];
   };
 
   networking.nftables.tables.TRAFFIC = {
     family = "inet";
     content = ''
-      quota s0 { over 1024 mbytes }
+      quota Shallistera { over 102400 mbytes }
+      quota williamwang { over 51200 mbytes }
 
       chain input {
         type filter hook input priority filter; policy accept;
-        tcp dport 8888 quota name "s0" drop
+        tcp dport 9999 quota name "Shallistera" drop
+        tcp dport 10000 quota name "williamwang" drop
       }
 
       chain output {
         type filter hook output priority filter; policy accept;
-        tcp sport 8888 quota name "s0" drop
+        tcp dport 9999 quota name "Shallistera" drop
+        tcp sport 10000 quota name "williamwang" drop
       }
     '';
   };
@@ -66,41 +76,15 @@ in
   #   unitConfig.AssertPathExists = "/secret/bot"; # fail if secret is missing
   # };
 
-  # # Every minute: if traffic is over the limit, stop snell-share.
-  # # Skip entirely once snell-share is already stopped.
-  # systemd.services.traffic-guard = {
-  #   path = [
-  #     pkgs.nftables
-  #     traffic-tool
-  #   ];
-  #   serviceConfig = {
-  #     Type = "oneshot";
-  #     ExecStart = pkgs.writeShellScript "traffic-guard" ''
-  #       systemctl is-active --quiet ${snell}.service || exit 0
-  #       [ "$(traffic ${port} -b)" -gt ${toString limitBytes} ] && systemctl stop ${snell}.service
-  #       exit 0
-  #     '';
-  #   };
-  # };
-  # systemd.timers.traffic-guard = {
-  #   wantedBy = [ "timers.target" ];
-  #   timerConfig = {
-  #     OnCalendar = "*:0/1";
-  #     OnBootSec = "1min";
-  #   };
-  # };
 
-  # # Monthly (24th, 00:00 UTC): reset counters and bring snell-share back up.
+  # # Monthly (24th, 00:00 UTC): nft reset quotas
   # systemd.services.traffic-reset = {
   #   path = [
   #     pkgs.nftables
   #   ];
   #   serviceConfig = {
   #     Type = "oneshot";
-  #     ExecStart = pkgs.writeShellScript "traffic-reset" ''
-  #       nft reset counters table inet TRAFFIC
-  #       systemctl restart ${snell}.service
-  #     '';
+  #     ExecStart = "nft reset quotas";
   #   };
   # };
   # systemd.timers.traffic-reset = {
