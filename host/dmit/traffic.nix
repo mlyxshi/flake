@@ -1,5 +1,3 @@
-# TODO: Rewrite with nft quota
-
 {
   config,
   pkgs,
@@ -34,8 +32,9 @@ in
 
   networking.nftables.tables.TRAFFIC = {
     family = "inet";
+    # 50G 51200 mbytes / 100G 102400 mbytes / 150G 153600 mbytes
     content = ''
-      quota Shallistera { over 102400 mbytes }
+      quota Shallistera { over 153600 mbytes }
       quota williamwang { over 51200 mbytes }
 
       chain input {
@@ -68,18 +67,18 @@ in
     unitConfig.AssertPathExists = "/secret/bot"; # fail if secret is missing
   };
 
-  # # Monthly (24th, 00:00 UTC): nft reset quotas
-  # systemd.services.traffic-reset = {
-  #   path = [
-  #     pkgs.nftables
-  #   ];
-  #   serviceConfig = {
-  #     Type = "oneshot";
-  #     ExecStart = "nft reset quotas";
-  #   };
-  # };
-  # systemd.timers.traffic-reset = {
-  #   wantedBy = [ "timers.target" ];
-  #   timerConfig.OnCalendar = "*-*-24 00:00:00 UTC";
-  # };
+  # Monthly (24th, 00:00 UTC): nft reset quotas
+  systemd.services.traffic-reset = {
+    path = [
+      pkgs.nftables
+    ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "nft reset quotas";
+    };
+  };
+  systemd.timers.traffic-reset = {
+    wantedBy = [ "timers.target" ];
+    timerConfig.OnCalendar = "*-*-24 00:00:00 UTC";
+  };
 }
