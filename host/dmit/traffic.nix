@@ -45,7 +45,7 @@ in
 
       chain output {
         type filter hook output priority filter; policy accept;
-        tcp dport 9999 quota name "Shallistera" drop
+        tcp sport 9999 quota name "Shallistera" drop
         tcp sport 10000 quota name "williamwang" drop
       }
     '';
