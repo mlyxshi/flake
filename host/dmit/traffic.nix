@@ -23,30 +23,20 @@ in
     wantedBy = [ "multi-user.target" ];
   };
 
-  systemd.services.snell-share2 = {
-    after = [ "network.target" ];
-    serviceConfig.ExecStart = "${lib.getExe pkgs.snell} -c /secret/snell-share2";
-    unitConfig.AssertPathExists = "/secret/snell-share2"; # fail if secret is missing
-    wantedBy = [ "multi-user.target" ];
-  };
-
   networking.nftables.tables.TRAFFIC = {
     family = "inet";
     # 50G 51200 mbytes / 100G 102400 mbytes / 150G 153600 mbytes
     content = ''
       quota Shallistera { over 153600 mbytes }
-      quota williamwang { over 102400 mbytes }
 
       chain input {
         type filter hook input priority filter; policy accept;
         tcp dport 9999 quota name "Shallistera" drop
-        tcp dport 10000 quota name "williamwang" drop
       }
 
       chain output {
         type filter hook output priority filter; policy accept;
         tcp sport 9999 quota name "Shallistera" drop
-        tcp sport 10000 quota name "williamwang" drop
       }
     '';
   };
