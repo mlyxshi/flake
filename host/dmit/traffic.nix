@@ -59,12 +59,9 @@ in
 
   # Monthly (24th, 00:00 UTC): nft reset quotas
   systemd.services.traffic-reset = {
-    path = [
-      pkgs.nftables
-    ];
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = "nft reset quotas";
+      ExecStart = "${pkgs.nftable}/bin/nft reset quotas";
     };
   };
   systemd.timers.traffic-reset = {
