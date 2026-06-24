@@ -61,7 +61,7 @@ in
   systemd.services.traffic-reset = {
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = "${pkgs.nftable}/bin/nft reset quotas";
+      ExecStart = "${pkgs.nftables}/bin/nft reset quotas";
     };
   };
   systemd.timers.traffic-reset = {
