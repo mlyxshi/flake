@@ -31,9 +31,9 @@
       "neteasemusic"
       "iina"
       "element"
-      "telegram-desktop"
 
       # "monitorcontrol"
+      "imazing"
 
       "impactor"
     ];

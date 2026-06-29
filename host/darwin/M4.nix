@@ -25,7 +25,6 @@
     ];
 
     casks = [
-      "imazing"
       "drivedx"
     ];
   };
