@@ -4,6 +4,7 @@
     # nixpkgs.url = "path:/Users/dominic/nixpkgs/";
     # nixpkgs.url = "git+https://github.com/mlyxshi/nixpkgs.git?ref=initrd-discard-references&shallow=1";
 
+    nixpkgs-staging.url = "git+https://github.com/NixOS/nixpkgs.git?ref=staging&shallow=1";
     # nixpkgs.url = "git+https://github.com/NixOS/nixpkgs.git?ref=master&shallow=1";
     nixpkgs.url = "git+https://github.com/NixOS/nixpkgs.git?ref=nixos-unstable-small&shallow=1";
 
@@ -18,6 +19,7 @@
     {
       self,
       nixpkgs,
+      nixpkgs-staging,
       darwin,
       secret,
     }:
@@ -33,7 +35,7 @@
         };
       };
       nixosConfigurations = {
-        
+
         builder = nixpkgs.lib.nixosSystem { modules = [ ./host/darwin/macos-builder.nix ]; };
 
         initramfs-x86_64 = nixpkgs.lib.nixosSystem {
@@ -63,7 +65,7 @@
         };
 
         us = import ./host/oracle/mkHost.nix {
-          inherit self nixpkgs secret;
+          inherit self nixpkgs-staging secret;
           hostName = "us";
         };
       };

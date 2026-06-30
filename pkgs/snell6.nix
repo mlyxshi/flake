@@ -10,7 +10,7 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "snell-server";
-  version = "v6.0.0b4";
+  version = "6.0.0b4";
 
   src =
     let
@@ -23,8 +23,8 @@ stdenv.mkDerivation (finalAttrs: {
     fetchzip {
       url = "https://dl.nssurge.com/snell/snell-server-v${finalAttrs.version}-linux-${arch}.zip";
       hash = selectSystem {
-        x86_64-linux = "sha256-J2kRVJRC0GhxLMarg7Ucdk8uvzTsKbFHePEflPjwsHU=";
-        aarch64-linux = "sha256-UT+Rd6TEMYL/+xfqGxGN/tiSBvN8ntDrkCBj4PuMRwg=";
+        x86_64-linux = "";
+        aarch64-linux = "sha256-C+W69jh08mSjRKWsN3Og+sl3iTnFs02+IjlGr6ByuKs=";
       };
     };
 

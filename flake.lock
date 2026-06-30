@@ -23,10 +23,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1781736998,
-        "narHash": "sha256-tFjtdQkEO4WQZjF6o5fUqXcp/Vb+DUDCoQMYiTMNPbw=",
+        "lastModified": 1782774429,
+        "narHash": "sha256-1tRFhlVVSBP2UAyJ4fWV3wRxofOZQCIWmbXJS/kQw7U=",
         "ref": "nixos-unstable-small",
-        "rev": "89ccddc4c5565410c9c5c81eef193c93e6eda92a",
+        "rev": "c3db893991ef9cf1902c661c2d61249bcfb051dc",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/NixOS/nixpkgs.git"
@@ -38,10 +38,28 @@
         "url": "https://github.com/NixOS/nixpkgs.git"
       }
     },
+    "nixpkgs-staging": {
+      "locked": {
+        "lastModified": 1782780341,
+        "narHash": "sha256-a2t5tjAHa5h2iVNpQdQWU3UWSyiOcb3SHjVjwo0FsWE=",
+        "ref": "staging",
+        "rev": "4236c602cacb0dbed95718e42978df42f17699dc",
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/NixOS/nixpkgs.git"
+      },
+      "original": {
+        "ref": "staging",
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/NixOS/nixpkgs.git"
+      }
+    },
     "root": {
       "inputs": {
         "darwin": "darwin",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-staging": "nixpkgs-staging",
         "secret": "secret"
       }
     },
