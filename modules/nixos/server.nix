@@ -18,7 +18,7 @@
     iperf
     nexttrace
     ookla-speedtest
-    fastfetch.minimal
+    fastfetch-unwrapped
   ];
 
   system.etc.overlay.mutable = false;

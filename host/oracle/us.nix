@@ -6,12 +6,7 @@
   ...
 }:
 {
-  imports = [
-    self.nixosModules.programs.vscode-ssh-remote
-
-    self.nixosModules.services.transmission
-  ];
-
+  
   boot.kernel.sysctl = {
     "net.ipv4.ip_forward" = 1;
   };
