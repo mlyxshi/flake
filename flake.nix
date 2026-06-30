@@ -18,7 +18,6 @@
     {
       self,
       nixpkgs,
-      nixpkgs-stable,
       darwin,
       secret,
     }:
