@@ -52,6 +52,8 @@
 
         nrt = import ./host/dmit { inherit self nixpkgs secret; };
 
+        random = import ./host/dmit { inherit self nixpkgs secret; };
+
         jp2 = import ./host/oracle/mkHost.nix {
           inherit self nixpkgs secret;
           hostName = "jp2";
