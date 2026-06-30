@@ -4,7 +4,6 @@
 }:
 let
   oracle-serverlist = [
-    "jp1"
     "jp2"
     "us"
   ];

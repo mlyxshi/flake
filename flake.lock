@@ -38,28 +38,10 @@
         "url": "https://github.com/NixOS/nixpkgs.git"
       }
     },
-    "nixpkgs-staging": {
-      "locked": {
-        "lastModified": 1782780341,
-        "narHash": "sha256-a2t5tjAHa5h2iVNpQdQWU3UWSyiOcb3SHjVjwo0FsWE=",
-        "ref": "staging",
-        "rev": "4236c602cacb0dbed95718e42978df42f17699dc",
-        "shallow": true,
-        "type": "git",
-        "url": "https://github.com/NixOS/nixpkgs.git"
-      },
-      "original": {
-        "ref": "staging",
-        "shallow": true,
-        "type": "git",
-        "url": "https://github.com/NixOS/nixpkgs.git"
-      }
-    },
     "root": {
       "inputs": {
         "darwin": "darwin",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-staging": "nixpkgs-staging",
         "secret": "secret"
       }
     },

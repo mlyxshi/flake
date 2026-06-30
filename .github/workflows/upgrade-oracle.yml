@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        host: [jp1,jp2,us]
+        host: [jp2,us]
     steps:
     - uses: actions/checkout@master
     - uses: NixOS/nix-installer-action@main

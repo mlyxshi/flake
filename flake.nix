@@ -4,7 +4,6 @@
     # nixpkgs.url = "path:/Users/dominic/nixpkgs/";
     # nixpkgs.url = "git+https://github.com/mlyxshi/nixpkgs.git?ref=initrd-discard-references&shallow=1";
 
-    nixpkgs-staging.url = "git+https://github.com/NixOS/nixpkgs.git?ref=staging&shallow=1";
     # nixpkgs.url = "git+https://github.com/NixOS/nixpkgs.git?ref=master&shallow=1";
     nixpkgs.url = "git+https://github.com/NixOS/nixpkgs.git?ref=nixos-unstable-small&shallow=1";
 
@@ -19,7 +18,6 @@
     {
       self,
       nixpkgs,
-      nixpkgs-staging,
       darwin,
       secret,
     }:
@@ -65,8 +63,7 @@
         };
 
         us = import ./host/oracle/mkHost.nix {
-          inherit self secret;
-          nixpkgs = nixpkgs-staging;
+          inherit self nixpkgs secret;
           hostName = "us";
         };
       };

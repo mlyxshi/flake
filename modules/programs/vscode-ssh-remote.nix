@@ -37,7 +37,6 @@
   # if remote server default shell is fish
   # "remote.SSH.remotePlatform": {
   #     "jp2": "linux",
-  #     "jp1": "linux",
   #     "us": "linux"
   # },
 
