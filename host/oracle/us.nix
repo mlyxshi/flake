@@ -16,7 +16,7 @@
     "net.ipv4.ip_forward" = 1;
   };
 
-  services.sing-box.package = nixpkgs-stable.sing-box;
+  services.sing-box.package = nixpkgs-stable.legacyPackages.${pkgs.system}.sing-box;
   services.sing-box.enable = true;
   services.sing-box.settings = {
     log.level = "info";
