@@ -1,6 +1,7 @@
 {
   self,
   nixpkgs,
+  nixpkgs-stable,
   secret,
   hostName,
 }:
@@ -22,5 +23,5 @@ nixpkgs.lib.nixosSystem {
       services.getty.autologinUser = "root";
     }
   ];
-  specialArgs = { inherit self; };
+  specialArgs = { inherit self nixpkgs-stable; };
 }
