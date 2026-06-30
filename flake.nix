@@ -7,6 +7,8 @@
     # nixpkgs.url = "git+https://github.com/NixOS/nixpkgs.git?ref=master&shallow=1";
     nixpkgs.url = "git+https://github.com/NixOS/nixpkgs.git?ref=nixos-unstable-small&shallow=1";
 
+    nixpkgs-stable.url = "git+https://github.com/NixOS/nixpkgs.git?rev=e6f23dc08d3624daab7094b701aa3954923c6bbb&shallow=1";
+
     darwin.url = "git+https://github.com/nix-darwin/nix-darwin.git?shallow=1";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -18,6 +20,7 @@
     {
       self,
       nixpkgs,
+      nixpkgs-stable,
       darwin,
       secret,
     }:
@@ -58,7 +61,7 @@
         };
 
         us = import ./host/oracle/mkHost.nix {
-          inherit self nixpkgs secret;
+          inherit self secret nixpkgs nixpkgs-stable;
           hostName = "us";
         };
       };
