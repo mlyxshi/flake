@@ -5,6 +5,13 @@
   lib,
   ...
 }:
+let
+    old-pkgs = import (builtins.fetchTarball {
+        url = "https://github.com/NixOS/nixpkgs/archive/e6f23dc08d3624daab7094b701aa3954923c6bbb.tar.gz";
+    }) {};
+
+    sing-box-stable = old-pkgs.sing-box;
+in
 {
 
   imports = [
@@ -15,6 +22,7 @@
     "net.ipv4.ip_forward" = 1;
   };
 
+  services.sing-box.package = sing-box-stable;
   services.sing-box.enable = true;
   services.sing-box.settings = {
     log.level = "info";
