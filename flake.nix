@@ -65,7 +65,8 @@
         };
 
         us = import ./host/oracle/mkHost.nix {
-          inherit self nixpkgs-staging secret;
+          inherit self secret;
+          nixpkgs = nixpkgs-staging;
           hostName = "us";
         };
       };
