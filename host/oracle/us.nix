@@ -14,6 +14,7 @@
     self.nixosModules.services.sing-box
   ];
 
-   services.sing-box-server.i2p.enable =true;
+  services.sing-box-server.i2p.enable = true;
+  services.sing-box-server.tor.enable = true;
 
 }
