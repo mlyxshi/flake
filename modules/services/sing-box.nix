@@ -140,12 +140,73 @@ in
       };
     }
 
+
+
+
     (lib.mkIf cfg.i2p.enable {
+
+
+
       services.i2pd = {
         enable = true;
         address = "127.0.0.1";
         proto = {
           socksProxy.enable = true;
+        };
+      };
+    })
+
+
+
+
+    (lib.mkIf cfg.tor.enable {
+      users = {
+        users.arti = {
+          group = "arti";
+          isSystemUser = true;
+        };
+        groups.arti = { };
+      };
+
+      systemd.services.arti = {
+        after = [ "network-online.target" ];
+        requires = [ "network-online.target" ];
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig = {
+          User = "arti";
+          Group = "arti";
+          StateDirectory = "arti";
+          Environment = "HOME=%S/arti";
+          ExecStart = "${lib.getExe pkgs.arti} proxy";
+        };
+      };
+
+    })
+
+
+
+    (lib.mkIf cfg.warp.enable {
+      users = {
+        users.usque = {
+          group = "usque";
+          isSystemUser = true;
+        };
+        groups.usque = { };
+      };
+
+      systemd.services.usque = {
+        after = [ "network-online.target" ];
+        requires = [ "network-online.target" ];
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig = {
+          User = "usque";
+          Group = "usque";
+          WorkingDirectory = "%S/usque";
+          StateDirectory = "usque";
+          ExecStartPre = pkgs.writeShellScript "usque-register" ''
+            [ -f config.json ] || ${lib.getExe pkgs.usque} register --accept-tos
+          '';
+          ExecStart = "${lib.getExe pkgs.usque} socks -b 127.0.0.1 -p 40000";
         };
       };
     })
