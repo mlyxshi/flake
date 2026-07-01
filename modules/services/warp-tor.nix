@@ -7,13 +7,37 @@
   services.tor.enable = true;
   services.tor.client.enable = true;
 
-  systemd.services.cloudflare-warp-daemon = {
-    after = [ "network.target" ];
-    serviceConfig.ExecStart = "${lib.getExe' (pkgs.cloudflare-warp.override {
-      headless = true;
-    }) "warp-svc"}";
-    serviceConfig.StateDirectory = "cloudflare-warp";
+  # systemd.services.cloudflare-warp-daemon = {
+  #   after = [ "network.target" ];
+  #   serviceConfig.ExecStart = "${lib.getExe' (pkgs.cloudflare-warp.override {
+  #     headless = true;
+  #   }) "warp-svc"}";
+  #   serviceConfig.StateDirectory = "cloudflare-warp";
+  #   wantedBy = [ "multi-user.target" ];
+  # };
+
+  users = {
+    users.usque = {
+      group = "usque";
+      isSystemUser = true;
+    };
+    groups.usque = { };
+  };
+
+  systemd.services.usque = {
+    after = [ "network-online.target" ];
+    requires = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      User = "usque";
+      Group = "usque";
+      WorkingDirectory = "%S/usque";
+      StateDirectory = "usque";
+      ExecStartPre = pkgs.writeShellScript "usque-register" ''
+        [ -f config.json ] || ${lib.getExe pkgs.usque} register --accept-tos
+      '';
+      ExecStart = "${lib.getExe pkgs.usque} socks -b 127.0.0.1 -p 40000";
+    };
   };
 
   services.sing-box.enable = true;
