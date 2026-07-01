@@ -62,10 +62,9 @@
     };
   };
 
-  
-  systemd.services.sing-box.serviceConfig.ConfigurationDirectory = lib.mkForce "";
-  services.sing-box.enable = true;
-  services.sing-box.settings = {
+
+  services.sing-box-server.enable = true;
+  services.sing-box-server.settings = {
     log.level = "info";
     inbounds = [
       {
