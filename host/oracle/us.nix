@@ -15,6 +15,9 @@
     self.nixosModules.services.warp-tor
   ];
 
+
+  services.i2pd.enable =true;
+
   # services.sing-box.enable = true;
   # services.sing-box.settings = {
   #   log.level = "info";

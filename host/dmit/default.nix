@@ -11,6 +11,7 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.network.cloud-init
 
     self.nixosModules.services.komari-agent
+    self.nixosModules.services.sing-box
     self.nixosModules.services.warp-tor
     self.nixosModules.services.snell
 
