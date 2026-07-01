@@ -42,6 +42,7 @@
       Group = "arti";
       WorkingDirectory = "%S/arti";
       StateDirectory = "arti";
+      Environment = "HOME=%S/arti";
       ExecStart = "${lib.getExe pkgs.arti} proxy";
     };
   };
