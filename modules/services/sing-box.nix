@@ -65,28 +65,8 @@ in
             type = "direct";
             tag = "direct";
           }
-        ]
-        ++ lib.optional cfg.warp.enable {
-          type = "socks";
-          tag = "warp";
-          server = "127.0.0.1";
-          server_port = 40000;
-          version = "5";
-        }
-        ++ lib.optional cfg.tor.enable {
-          type = "socks";
-          tag = "tor";
-          server = "127.0.0.1";
-          server_port = 9150;
-          version = "5";
-        }
-        ++ lib.optional cfg.i2p.enable {
-          type = "socks";
-          tag = "i2p";
-          server = "127.0.0.1";
-          server_port = 4447;
-          version = "5";
-        };
+        ];
+
         route = {
           rules = [
             {
@@ -140,12 +120,17 @@ in
       };
     }
 
-
-
-
     (lib.mkIf cfg.i2p.enable {
 
-
+      services.sing-box-server.settings.outbounds = lib.mkAfter [
+        {
+          type = "socks";
+          tag = "i2p";
+          server = "127.0.0.1";
+          server_port = 4447;
+          version = "5";
+        }
+      ];
 
       services.i2pd = {
         enable = true;
@@ -156,10 +141,18 @@ in
       };
     })
 
-
-
-
     (lib.mkIf cfg.tor.enable {
+
+      services.sing-box-server.settings.outbounds = lib.mkAfter [
+        {
+          type = "socks";
+          tag = "tor";
+          server = "127.0.0.1";
+          server_port = 9150;
+          version = "5";
+        }
+      ];
+
       users = {
         users.arti = {
           group = "arti";
@@ -183,9 +176,18 @@ in
 
     })
 
-
-
     (lib.mkIf cfg.warp.enable {
+
+      services.sing-box-server.settings.outbounds = lib.mkAfter [
+        {
+          type = "socks";
+          tag = "warp";
+          server = "127.0.0.1";
+          server_port = 40000;
+          version = "5";
+        }
+      ];
+
       users = {
         users.usque = {
           group = "usque";
