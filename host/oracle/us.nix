@@ -15,6 +15,4 @@
   ];
 
   services.sing-box-server.i2p.enable = true;
-  services.sing-box-server.tor.enable = true;
-
 }
