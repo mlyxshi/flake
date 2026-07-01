@@ -4,8 +4,8 @@
   ...
 }:
 {
-  services.tor.enable = true;
-  services.tor.client.enable = true;
+  # services.tor.enable = true;
+  # services.tor.client.enable = true;
 
   # systemd.services.cloudflare-warp-daemon = {
   #   after = [ "network.target" ];
@@ -17,11 +17,33 @@
   # };
 
   users = {
-    users.usque = {
-      group = "usque";
-      isSystemUser = true;
+    users = {
+      usque = {
+        group = "usque";
+        isSystemUser = true;
+      };
+      arti = {
+        group = "arti";
+        isSystemUser = true;
+      };
     };
-    groups.usque = { };
+    groups = {
+      usque = { };
+      arti = { };
+    };
+  };
+
+  systemd.services.arti = {
+    after = [ "network-online.target" ];
+    requires = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      User = "arti";
+      Group = "arti";
+      WorkingDirectory = "%S/arti";
+      StateDirectory = "arti";
+      ExecStart = "${lib.getExe pkgs.arti} proxy";
+    };
   };
 
   systemd.services.usque = {
@@ -74,7 +96,7 @@
         type = "socks";
         tag = "tor";
         server = "127.0.0.1";
-        server_port = 9050;
+        server_port = 9150;
         version = "5";
       }
     ];

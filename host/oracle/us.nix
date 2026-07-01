@@ -10,11 +10,8 @@
   imports = [
     self.nixosModules.programs.vscode-ssh-remote
     self.nixosModules.services.snell
+    self.nixosModules.services.warp-tor
   ];
-
-  boot.kernel.sysctl = {
-    "net.ipv4.ip_forward" = 1;
-  };
 
   # services.sing-box.enable = true;
   # services.sing-box.settings = {
