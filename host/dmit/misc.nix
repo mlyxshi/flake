@@ -10,7 +10,7 @@
 
   imports = [
     self.nixosModules.programs.vscode-ssh-remote
-    self.nixosModules.services.sing-box
+    self.nixosModules.services.sing-box.default
   ];
 
   services.sing-box-server.tor.enable = true;
