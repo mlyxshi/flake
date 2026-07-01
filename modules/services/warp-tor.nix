@@ -40,7 +40,6 @@
     serviceConfig = {
       User = "arti";
       Group = "arti";
-      WorkingDirectory = "%S/arti";
       StateDirectory = "arti";
       Environment = "HOME=%S/arti";
       ExecStart = "${lib.getExe pkgs.arti} proxy";
@@ -63,6 +62,8 @@
     };
   };
 
+  
+  systemd.services.sing-box.serviceConfig.ConfigurationDirectory = lib.mkForce "";
   services.sing-box.enable = true;
   services.sing-box.settings = {
     log.level = "info";
