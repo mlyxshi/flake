@@ -8,6 +8,11 @@
 }:
 {
 
+  imports = [
+    self.nixosModules.network.cloud-init
+    self.nixosModules.services.snell
+  ];
+
   boot.blacklistedKernelModules = [ "virtio_balloon" ];
 
   networking.nftables.enable = true;
