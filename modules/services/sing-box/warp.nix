@@ -13,7 +13,7 @@ in
   config = lib.mkIf cfg.enable {
 
     services.sing-box-server.settings.route.final = lib.mkForce "warp";
-    services.sing-box-server.settings.outbounds = lib.mkAfter [
+    services.sing-box-server.settings.outbounds = [
       {
         type = "socks";
         tag = "warp";
