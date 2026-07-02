@@ -12,7 +12,7 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    services.sing-box-server.settings.outbounds = lib.mkAfter [
+    services.sing-box-server.settings.outbounds = [
       {
         type = "socks";
         tag = "i2p";
@@ -22,7 +22,7 @@ in
       }
     ];
 
-    services.sing-box-server.settings.route.rules = lib.mkAfter [
+    services.sing-box-server.settings.route.rules = [
       {
         action = "route";
         domain_suffix = [ ".i2p" ];
