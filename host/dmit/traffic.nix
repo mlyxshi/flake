@@ -27,7 +27,7 @@ in
     family = "inet";
     # 50G 51200 mbytes / 100G 102400 mbytes / 150G 153600 mbytes
     content = ''
-      quota Shallistera { over 153600 mbytes }
+      quota Shallistera { over 204800 mbytes }
 
       chain input {
         type filter hook input priority filter; policy accept;
