@@ -12,7 +12,6 @@ in
 {
 
   imports = [
-    ./i2p.nix
     ./tor.nix
     ./warp.nix
   ];
