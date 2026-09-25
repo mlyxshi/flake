@@ -21,12 +21,7 @@
   virtualisation.oci-containers.containers.miniflux = {
     image = "ghcr.io/miniflux/miniflux";
     dependsOn = [ "miniflux-postgres" ];
-    environmentFiles = [ /secret/miniflux-oidc ];
     environment = {
-      OAUTH2_PROVIDER = "oidc";
-      OAUTH2_REDIRECT_URL = "https://miniflux.${config.networking.domain}/oauth2/oidc/callback";
-      OAUTH2_OIDC_DISCOVERY_ENDPOINT = "https://sso.${config.networking.domain}";
-      OAUTH2_USER_CREATION = "1";
       # DISABLE_LOCAL_AUTH = "1";
       # CREATE_ADMIN = "1";
       RUN_MIGRATIONS = "1";
