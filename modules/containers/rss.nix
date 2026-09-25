@@ -22,7 +22,6 @@
     image = "ghcr.io/miniflux/miniflux";
     dependsOn = [ "miniflux-postgres" ];
     environment = {
-      # DISABLE_LOCAL_AUTH = "1";
       # CREATE_ADMIN = "1";
       RUN_MIGRATIONS = "1";
       SCHEDULER_ROUND_ROBIN_MIN_INTERVAL = "10";
@@ -59,7 +58,7 @@
 
   virtualisation.oci-containers.containers.rsshub = {
     image = "ghcr.io/diygod/rsshub:chromium-bundled";
-    environmentFiles = [ /secret/rsshub ];
+    environmentFiles = [ "/secret/rsshub" ];
     extraOptions =
       lib.concatMap
         (x: [
@@ -96,7 +95,7 @@
 
   virtualisation.oci-containers.containers.rsstt = {
     image = "docker.io/rongronggg9/rss-to-telegram";
-    environmentFiles = [ /secret/rsshub ];
+    environmentFiles = [ "/secret/rsshub" ];
     volumes = [ "/var/lib/rsstt:/app/config" ];
     extraOptions = [
       "--label"
