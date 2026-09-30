@@ -50,7 +50,15 @@
           ];
         };
 
-        nrt = import ./host/dmit { inherit self nixpkgs secret; };
+        nrt = import ./host/dmit/mkHost.nix {
+          inherit self nixpkgs secret;
+          hostName = "nrt";
+        };
+
+        hk = import ./host/dmit/mkHost.nix {
+          inherit self nixpkgs secret;
+          hostName = "hk";
+        };
 
         test = import ./host/bios/mkHost.nix {
           inherit self nixpkgs secret;

@@ -2,6 +2,7 @@
   self,
   nixpkgs,
   secret,
+  hostName,
 }:
 nixpkgs.lib.nixosSystem {
   modules = [
@@ -13,10 +14,10 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.services.komari-agent
     self.nixosModules.services.snell
 
-    ./misc.nix
+    ./${hostName}.nix
     {
       nixpkgs.hostPlatform = "x86_64-linux";
-      networking.hostName = "nrt";
+      networking.hostName = "${hostName}";
     }
   ];
   specialArgs = { inherit self; };
