@@ -200,6 +200,12 @@
     	User root
       Port 23333
 
+    Host hk
+    	HostName  hk.mlyxshi.com
+      HostKeyAlias hk
+    	User root
+      Port 23333
+
     Host gh
       User runner
       StrictHostKeyChecking no
