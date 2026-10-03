@@ -37,20 +37,13 @@ in
       log.level = "info";
       inbounds = [
         {
-          type = "anytls";
-          tag = "anytls-in";
+          type = "snell";
+          tag = "snell-in";
           listen = "0.0.0.0";
           listen_port = 8889;
-          users = [
-            {
-              password = {
-                _secret = "/secret/proxy-pwd";
-              };
-            }
-          ];
-          tls = {
-            enabled = true;
-            insecure = true;
+          version = 5;
+          psk = {
+            _secret = "/secret/proxy-pwd";
           };
         }
       ];

@@ -35,7 +35,6 @@
       # "monitorcontrol"
       "imazing"
 
-      "impactor"
     ];
   };
 

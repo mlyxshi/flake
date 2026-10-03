@@ -206,6 +206,11 @@
     	User root
       Port 23333
 
+    Host router
+    	HostName 192.168.0.1
+      HostKeyAlias router
+    	User root
+
     Host gh
       User runner
       StrictHostKeyChecking no

@@ -26,6 +26,7 @@
 
     casks = [
       "drivedx"
+      "impactor"
     ];
   };
 }
