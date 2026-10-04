@@ -13,7 +13,7 @@ in
 
   imports = [
     ./tor.nix
-    ./warp.nix
+    # ./warp.nix
   ];
 
   options = {
@@ -40,7 +40,7 @@ in
           type = "snell";
           tag = "snell-in";
           listen = "0.0.0.0";
-          listen_port = 8889;
+          listen_port = 8888;
           version = 5;
           psk = {
             _secret = "/secret/proxy-pwd";

@@ -13,7 +13,7 @@
     self.nixosModules.services.sing-box.default
   ];
 
-  services.sing-box-server.tor.enable = true;
+  # services.sing-box-server.tor.enable = true;
   services.sing-box-server.warp.enable = true;
 
   services.openssh.ports = [ 23333 ];

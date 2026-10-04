@@ -12,7 +12,6 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.network.cloud-init
 
     self.nixosModules.services.komari-agent
-    self.nixosModules.services.snell
 
     ./${hostName}.nix
     {
