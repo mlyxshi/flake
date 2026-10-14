@@ -1,0 +1,33 @@
+# Fly.io legacy Hobby plan — stays inside the free allowance:
+#   up to 3 shared-cpu-1x 256MB machines, 3GB volumes, 160GB outbound/month.
+# Avoid: dedicated IPv4 ($2/mo), bigger VM sizes, extra volumes beyond 3GB total.
+
+app = "de-mlyx"          # must be globally unique; change if taken
+primary_region = "fra"       # Frankfurt, Germany
+
+[build]
+  image = "debian:trixie-slim"
+
+[processes]
+  app = "sh -c 'if [ -x /data/start.sh ]; then exec /data/start.sh; else exec sleep infinity; fi'"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "256mb"
+
+[mounts]
+  source = "data"
+  destination = "/data"
+  initial_size = "1gb"
+
+
+[[services]]
+  processes = ["app"]
+  internal_port = 8888
+  protocol = "tcp"
+  auto_stop_machines = "off"
+  auto_start_machines = false
+  min_machines_running = 1
+
+  [[services.ports]]
+    port = 8888

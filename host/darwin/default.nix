@@ -150,8 +150,8 @@
       "mole"
       "container"
       "vfkit"
-      "riscv64-elf-gcc"
-      "riscv64-elf-gdb"
+      # "riscv64-elf-gcc"
+      # "riscv64-elf-gdb"
     ];
 
     casks = [

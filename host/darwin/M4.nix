@@ -22,11 +22,19 @@
 
     brews = [
       "smartmontools"
+      "flyctl"
     ];
 
     casks = [
       "drivedx"
       "impactor"
+      "iina"
+      "realvnc-connect-viewer"
+      "snipaste"
+      # "neteasemusic"
+      "element"
+      "imazing"
+      "openmtp"
     ];
   };
 }

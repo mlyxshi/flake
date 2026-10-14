@@ -21,19 +21,9 @@
       "cloudflared"
       "oci-cli"
       "ipatool"
-      # "flyctl"
     ];
 
     casks = [
-      "vnc-viewer"
-      "snipaste"
-
-      "neteasemusic"
-      "iina"
-      "element"
-
-      # "monitorcontrol"
-      "imazing"
 
     ];
   };
