@@ -36,6 +36,7 @@ in
     services.sing-box-server.settings = {
       log.level = "info";
       inbounds = [
+        # anytls support udp
         {
           type = "anytls";
           tag = "anytls-in";
