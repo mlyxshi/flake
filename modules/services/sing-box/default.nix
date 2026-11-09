@@ -37,15 +37,32 @@ in
       log.level = "info";
       inbounds = [
         {
-          type = "snell";
-          tag = "snell-in";
+          type = "anytls";
+          tag = "anytls-in";
           listen = "0.0.0.0";
           listen_port = 8888;
-          version = 5;
-          psk = {
-            _secret = "/secret/proxy-pwd";
+          users = [
+            {
+              password = {
+                _secret = "/secret/proxy-pwd";
+              };
+            }
+          ];
+          tls = {
+            enabled = true;
+            insecure = true;
           };
         }
+        # {
+        #   type = "snell";
+        #   tag = "snell-in";
+        #   listen = "0.0.0.0";
+        #   listen_port = 8888;
+        #   version = 5;
+        #   psk = {
+        #     _secret = "/secret/proxy-pwd";
+        #   };
+        # }
       ];
       outbounds = [
         {

@@ -2,9 +2,8 @@
 #   up to 3 shared-cpu-1x 256MB machines, 3GB volumes, 160GB outbound/month.
 # Avoid: dedicated IPv4 ($2/mo), bigger VM sizes, extra volumes beyond 3GB total.
 
-app = "de-mlyx"          # must be globally unique; change if taken
-primary_region = "fra"       # Frankfurt, Germany
-
+app = "nl-mlyx"          # must be globally unique; change if taken
+primary_region = "ams"       # NL
 [build]
   image = "debian:trixie-slim"
 
