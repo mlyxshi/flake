@@ -16,6 +16,71 @@
   services.sing-box-server.tor.enable = true;
   # services.sing-box-server.warp.enable = true;
 
+  services.sing-box-server.settings = {
+    inbounds = [
+      {
+        type = "anytls";
+        tag = "anytls-in-us";
+        listen = "0.0.0.0";
+        listen_port = 9000;
+        users = [
+          {
+            password = {
+              _secret = "/secret/proxy-pwd";
+            };
+          }
+        ];
+        tls = {
+          enabled = true;
+          insecure = true;
+        };
+      }
+      {
+        type = "anytls";
+        tag = "anytls-in-sw";
+        listen = "0.0.0.0";
+        listen_port = 9001;
+        users = [
+          {
+            password = {
+              _secret = "/secret/proxy-pwd";
+            };
+          }
+        ];
+        tls = {
+          enabled = true;
+          insecure = true;
+        };
+      }
+    ];
+    outbounds = [
+      {
+        type = "anytls";
+        tag = "anytls-out-us";
+        server = "155.248.196.71";
+        server_port = 8888;
+        password = {
+          _secret = "/secret/proxy-pwd";
+        };
+        tls = {
+          enabled = true;
+          insecure = true;
+        };
+      }
+    ];
+
+    route = {
+      rules = [
+        {
+          action = "route";
+          inbound = "anytls-in-us";
+          outbound = "anytls-out-us";
+        }
+      ];
+
+    };
+  };
+
   services.openssh.ports = [ 23333 ];
 
   boot.blacklistedKernelModules = [ "virtio_balloon" ];
@@ -30,8 +95,8 @@
         ip protocol icmp accept
         ip6 nexthdr icmpv6 accept
         ct state {established, related} accept
-        tcp dport { 23333, 8888, 8889, 5201, 8010} accept
-        udp dport { 5201, 8888 } accept
+        tcp dport { 23333, 8888, 9000, 9001, 5201, 8010} accept
+        udp dport { 5201, 8888, 9000, 9001 } accept
       }
     '';
   };
