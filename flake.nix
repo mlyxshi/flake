@@ -74,6 +74,12 @@
           inherit self secret nixpkgs;
           hostName = "us";
         };
+
+
+        sw2 = import ./host/oracle/mkHost.nix {
+          inherit self secret nixpkgs;
+          hostName = "sw2";
+        };
       };
 
       nixosModules = nixpkgs.lib.packagesFromDirectoryRecursive {

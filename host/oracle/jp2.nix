@@ -7,6 +7,10 @@
 }:
 {
   imports = [
+    self.nixosModules.services.traefik
+    self.nixosModules.pr.traefik
+    self.nixosModules.services.telegraf
+
     self.nixosModules.programs.vscode-ssh-remote
 
     self.nixosModules.services.prometheus
@@ -19,6 +23,8 @@
     self.nixosModules.containers.change-detection
     self.nixosModules.containers.komari-monitor
   ];
+
+  nixpkgs.hostPlatform = "aarch64-linux";
 
   environment.systemPackages = with pkgs; [
     nix-index

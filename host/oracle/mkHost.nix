@@ -12,12 +12,8 @@ nixpkgs.lib.nixosSystem {
     self.nixosModules.network.dhcp
     
     self.nixosModules.services.komari-agent
-    self.nixosModules.services.traefik
-    self.nixosModules.pr.traefik
-    self.nixosModules.services.telegraf
     ./${hostName}.nix
     {
-      nixpkgs.hostPlatform = "aarch64-linux";
       networking.hostName = "${hostName}";
       services.getty.autologinUser = "root";
     }
