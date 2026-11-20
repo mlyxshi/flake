@@ -194,15 +194,14 @@
       HostKeyAlias jp2
     	User root
 
+    Host sw2
+    	HostName  sw2.mlyxshi.com
+      HostKeyAlias sw2
+    	User root
+      
     Host nrt
     	HostName  nrt.mlyxshi.com
       HostKeyAlias nrt
-    	User root
-      Port 23333
-
-    Host hk
-    	HostName  hk.mlyxshi.com
-      HostKeyAlias hk
     	User root
       Port 23333
 
