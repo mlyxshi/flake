@@ -75,6 +75,11 @@
           hostName = "us";
         };
 
+        sw1 = import ./host/oracle/mkHost.nix {
+          inherit self secret nixpkgs;
+          hostName = "sw1";
+        };
+
 
         sw2 = import ./host/oracle/mkHost.nix {
           inherit self secret nixpkgs;
