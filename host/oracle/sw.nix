@@ -11,5 +11,5 @@
     self.nixosModules.services.sing-box.default
   ];
 
-  nixpkgs.hostPlatform = "x86_64-linux";
+  nixpkgs.hostPlatform = "aarch64-linux";
 }
