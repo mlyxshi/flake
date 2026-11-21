@@ -70,7 +70,7 @@
       {
         type = "anytls";
         tag = "anytls-out-sw";
-        server = "140.238.170.77";
+        server = "140.238.209.228";
         server_port = 8888;
         password = {
           _secret = "/secret/proxy-pwd";

@@ -194,9 +194,9 @@
       HostKeyAlias jp2
     	User root
 
-    Host sw2
-    	HostName  sw2.mlyxshi.com
-      HostKeyAlias sw2
+    Host sw
+    	HostName  sw.mlyxshi.com
+      HostKeyAlias sw
     	User root
       
     Host nrt
