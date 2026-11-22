@@ -54,60 +54,7 @@ let
       cfg.static.file;
 in
 {
-  imports = [
-    (mkRenamedOptionModule
-      [
-        "services"
-        "traefik"
-        "staticConfigFile"
-      ]
-      [
-        "services"
-        "traefik"
-        "static"
-        "file"
-      ]
-    )
-    (mkRenamedOptionModule
-      [
-        "services"
-        "traefik"
-        "staticConfigOptions"
-      ]
-      [
-        "services"
-        "traefik"
-        "static"
-        "settings"
-      ]
-    )
-    (mkRenamedOptionModule
-      [
-        "services"
-        "traefik"
-        "dynamicConfigFile"
-      ]
-      [
-        "services"
-        "traefik"
-        "dynamic"
-        "file"
-      ]
-    )
-    (mkRenamedOptionModule
-      [
-        "services"
-        "traefik"
-        "dynamicConfigOptions"
-      ]
-      [
-        "services"
-        "traefik"
-        "dynamic"
-        "settings"
-      ]
-    )
-  ];
+    
   options.services.traefik = {
     enable = mkEnableOption "Traefik web server";
     package = mkPackageOption pkgs "traefik" { };
@@ -126,32 +73,9 @@ in
         '';
       };
       settings = mkOption {
-        description = ''
-          Static configuration for Traefik, written in Nix.
-
-          ::: {.note}
-          This will be serialized to JSON (which is considered valid YAML) at build, and passed to Traefik as `--configfile`.
-          :::
-        '';
         type = format.type;
         default = {
           entryPoints.http.address = ":80";
-        };
-        example = {
-          entryPoints = {
-            "web" = {
-              address = ":80";
-              http.redirections.entryPoint = {
-                permanent = true;
-                scheme = "https";
-                to = "websecure";
-              };
-            };
-            "websecure" = {
-              address = ":443";
-              asDefault = true;
-            };
-          };
         };
       };
     };
@@ -330,93 +254,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    assertions = [
-      {
-        assertion =
-          cfg.static.file != opt.static.file.default -> cfg.static.settings == opt.static.settings.default;
-        message = ''
-          The 'services.traefik.static.file' and 'services.traefik.static.settings'
-          options are mutually exclusive for the Traefik static config.
-          It is recommended to use 'settings'.
-        '';
-      }
-      {
-        assertion =
-          cfg.static.file != opt.static.file.default
-          -> (
-            cfg.dynamic.files == opt.dynamic.files.default
-            && cfg.dynamic.dir == opt.dynamic.dir.default
-            && cfg.dynamic.file == opt.dynamic.file.default
-          );
-        message = ''
-          None of the dynamic configuration options may be used if Traefik is being managed imperatively.
-          The following options have non-default values:
-            - ${
-              concatMapStringsSep "\n  - " (str: "'services.traefik.dynamic.${str}'") (
-                filter (attr: cfg.dynamic.${attr} != opt.dynamic.${attr}.default) [
-                  "files"
-                  "dir"
-                  "file"
-                  "settings" # TODO: Drop in 26.11.
-                ]
-              )
-            }
-        '';
-      }
-      {
-        assertion =
-          cfg.dynamic.file != opt.dynamic.file.default -> cfg.dynamic.dir == opt.dynamic.dir.default;
-        message = ''
-          The 'services.traefik.dynamic.file' and 'services.traefik.dynamic.dir' options
-          are mutually exclusive for the Traefik dynamic config. It is recommended to use
-          'services.traefik.dynamic.dir' with 'services.traefik.dynamic.files'.
-        '';
-      }
-      {
-        assertion = cfg.dynamic.files != opt.dynamic.files.default -> cfg.dynamic.dir != null;
-        message = ''
-          'services.traefik.dynamic.files' requires the dynamic file provider to be set
-          to a directory. Please set a path for 'services.traefik.dynamic.dir'.
-        '';
-      }
-      {
-        assertion = cfg.group != "docker";
-        message = ''
-          Setting the primary group to 'docker' will cause files, such as those generated
-          by 'services.traefik.dynamic.files', to be owned by the group 'docker', which
-          may be a security risk. Use 'services.traefik.supplementaryGroups' instead.
-        '';
-      }
-    ];
-
-    warnings =
-      optional (!(builtins.elem "docker" cfg.supplementaryGroups -> config.virtualisation.docker.enable))
-        "'services.traefik.supplementaryGroups' contains the 'docker' group, but 'services.docker' is not enabled."
-      ++ optional (cfg.dynamic.settings != opt.dynamic.settings.default) ''
-        'services.traefik.dynamic.settings' is in use, but that option is deprecated.
-        Please migrate your configuration to an explicit file instead.
-
-        You may do so by moving the value of 'services.traefik.dynamic.settings' to
-        'services.traefik.dynamic.files.<name>.settings', where <name> is an arbitrary
-        string that ideally identifies the configuration's purpose.
-
-        The following files define 'services.traefik.dynamic.settings' and should be migrated:
-          - ${
-            concatStringsSep "\n  - " (
-              remove ./traefik.nix (map (attr: attr.file) opt.dynamic.settings.definitionsWithLocations)
-            )
-          }
-      ''
-      ++ optional (!builtins.all id (map (plugin: plugin._isTraefikPlugin or false) cfg.localPlugins)) ''
-        Some of the Traefik local plugins in 'services.traefik.localPlugins' may be misconfigured.
-        The following paths are built from derivations that do not have the '_isTraefikPlugin' attribute set to 'true':
-        - ${
-          concatMapStringsSep "\n- " (badPlugin: badPlugin.outPath) (
-            filter (plugin: plugin._isTraefikPlugin or false) cfg.localPlugins
-          )
-        }
-      '';
-
+ 
     # https://github.com/quic-go/quic-go/wiki/UDP-Buffer-Sizes
     boot.kernel.sysctl = {
       "net.core.rmem_max" = 2500000;
@@ -532,11 +370,4 @@ in
     };
   };
 
-  meta = {
-    maintainers = with lib.maintainers; [
-      jackr
-      therealgramdalf
-    ];
-    doc = ./traefik.md;
-  };
 }
